@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/search_user_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#fff" >
+
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
+        xmlns:ptr="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/page_tab_listview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#F8F8F8"
+        android:cacheColorHint="@color/white"
+        android:divider="@color/transparent"
+        android:dividerHeight="0dip"
+        android:fadingEdge="none"
+        android:fastScrollEnabled="false"
+        android:listSelector="@color/transparent"
+        android:smoothScrollbar="true"
+        android:visibility="visible"
+        ptr:ptrHeaderTextColor="@color/color_grey_999999" />
+
+    <LinearLayout
+        android:id="@+id/fragment_search_user_list_empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="120dp"
+            android:background="@drawable/ic_pencil" />
+
+        <TextView
+            android:id="@+id/empty_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:textColor="#8D8D8D"
+            android:textSize="15dp" />
+    </LinearLayout>
+
+</FrameLayout>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:paddingBottom="10dp"
+    android:paddingTop="10dp" >
+    
+	<!--先隐藏，需要设计  -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:textColor="#6E6F73"
+        android:text="已经到底啦"
+        android:textSize="15dp"
+        android:visibility="invisible" />
+
+</RelativeLayout>

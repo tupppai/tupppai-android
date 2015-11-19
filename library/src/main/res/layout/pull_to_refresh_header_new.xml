@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>  
+<!-- 自定义loading header -->
+<merge xmlns:android="http://schemas.android.com/apk/res/android" >  
+    <FrameLayout  
+        android:id="@+id/fl_inner"  
+        android:layout_width="fill_parent"  
+        android:layout_height="46dp"
+        android:background="#F8F8F8" >  
+  	
+        <RelativeLayout
+            android:id="@+id/pull_to_refresh_area"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+            
+            <ImageView  
+		        android:id="@+id/pull_to_refresh_image"  
+		        android:layout_width="wrap_content"  
+	            android:layout_height="wrap_content"  
+	            android:layout_marginTop="15dp"
+				android:layout_centerHorizontal="true"
+		        /> 	           
+        	
+
+        </RelativeLayout>
+    </FrameLayout>  
+  
+</merge>  

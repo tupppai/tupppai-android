@@ -1,0 +1,150 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="true"
+	android:fitsSystemWindows="true"
+	android:id="@+id/activity_main_parent"
+	android:background="#FFFFFF" >
+
+    <FrameLayout
+        android:id="@+id/psgod_fl_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/middle"
+        android:background="@color/white" >
+    </FrameLayout>
+
+	<!-- 底部切换tab栏 -->
+	<RadioGroup
+        android:id="@+id/psgod_rg_tab"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:orientation="horizontal" >
+
+        <com.psgod.ui.view.DrawableCenterRadioButton
+            android:id="@+id/activity_main_tab_home_page"
+            style="@style/main_activity_bottom_tabbar"
+            android:checked="true"
+            android:layout_marginTop="4.5dp"
+            android:textSize="10dp"
+            android:drawableTop="@drawable/selector_main_activity_home_tab" />
+
+        <com.psgod.ui.view.DrawableCenterRadioButton
+            android:id="@+id/activity_main_tab_recent"
+            style="@style/main_activity_bottom_tabbar"
+            android:layout_marginTop="4.5dp"
+            android:textSize="10dp"
+            android:drawableTop="@drawable/selector_main_activity_recent_page_tab" />
+        
+        <ImageView
+            android:id="@+id/activity_main_tab_add"
+            style="@style/main_activity_bottom_tabbar"
+            android:textSize="10dp"
+            android:src="@drawable/tab_add"
+            android:layout_marginTop="4.5dp"
+            android:layout_marginBottom="4.5dp" />
+
+        <com.psgod.ui.view.DrawableCenterRadioButton
+            android:id="@+id/activity_main_tab_inprogressing"
+            style="@style/main_activity_bottom_tabbar"
+            android:layout_marginTop="4.5dp"
+            android:textSize="10dp"
+            android:drawableTop="@drawable/selector_main_activity_inprogressing_tab" />
+
+        <com.psgod.ui.view.DrawableCenterRadioButton
+            android:id="@+id/activity_main_tab_user"
+            style="@style/main_activity_bottom_tabbar"
+            android:layout_marginTop="4.5dp"
+            android:textSize="10dp"
+            android:drawableTop="@drawable/selector_main_activity_user_tab" />
+    </RadioGroup>
+    
+	<!-- Tab栏上方小红点区域 -->
+    <LinearLayout 
+        android:id="@+id/psgod_rg_tab_tips"
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+		android:layout_alignTop="@id/psgod_rg_tab"
+		android:layout_marginTop="2dp"
+        android:background="@null">
+        <LinearLayout
+            android:id="@+id/psgod_rg_tab_tips_home"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal|bottom"
+            android:visibility="invisible"
+            android:layout_weight="1">
+	            <View 
+		            android:layout_width="8dp"
+		            android:layout_height="8dp"
+		            android:layout_marginLeft="16dp"
+		            android:background="@drawable/shape_bottom_tab_tip"
+	            />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:id="@+id/psgod_rg_tab_tips_recent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal|bottom"
+            android:visibility="invisible"
+            android:layout_weight="1">
+	            <View 
+		            android:layout_width="8dp"
+		            android:layout_height="8dp"
+		            android:layout_marginLeft="16dp"
+		            android:background="@drawable/shape_bottom_tab_tip"
+	            />
+        </LinearLayout>
+        
+        <!-- 占位用 -->
+        <LinearLayout 
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal|bottom"
+            android:visibility="invisible"
+            android:layout_weight="1"
+            ></LinearLayout>
+        
+        <LinearLayout
+            android:id="@+id/psgod_rg_tab_tips_inprogressing"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal|bottom"
+            android:visibility="invisible"
+            android:layout_weight="1">
+	            <View 
+		            android:layout_width="8dp"
+		            android:layout_height="8dp"
+		            android:layout_marginLeft="16dp"
+		            android:background="@drawable/shape_bottom_tab_tip"
+	            />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:id="@+id/psgod_rg_tab_tips_user"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal|bottom"
+            android:visibility="invisible"
+            android:layout_weight="1">
+	            <View 
+		            android:layout_width="8dp"
+		            android:layout_height="8dp"
+		            android:layout_marginLeft="16dp"
+		            android:background="@drawable/shape_bottom_tab_tip"
+	            />
+        </LinearLayout>
+    </LinearLayout>
+    
+    <View
+        android:id="@+id/middle"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_above="@+id/psgod_rg_tab_tips"
+        android:background="#1A000000" />
+
+</RelativeLayout>

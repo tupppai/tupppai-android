@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:psgod="http://schemas.android.com/apk/res/com.psgod"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF" 
+    android:clipToPadding="true"
+	android:fitsSystemWindows="true">
+	
+    <LinearLayout 
+        android:layout_width="match_parent"
+    	android:layout_height="match_parent"
+    	android:background="#FFFFFF"
+    	android:orientation="vertical">
+        
+	    <com.psgod.ui.widget.ActionBar
+	        android:id="@+id/actionbar"
+	        android:layout_width="match_parent"
+	        android:layout_height="@dimen/actionbar_height"
+	        psgod:rightBtnVisibility="gone"
+	        psgod:title="消息提醒" />
+	    
+	    <ScrollView
+        	android:layout_width="match_parent"
+        	android:layout_height="wrap_content" >
+		    <LinearLayout 
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:orientation="vertical">
+		        
+			    <RelativeLayout
+			        android:layout_width="match_parent"
+			        android:layout_height="65dp"
+			        android:gravity="center_vertical"
+			        android:paddingLeft="16dp"
+			        android:paddingRight="16dp"
+			        android:background="#FFFFFF" >
+			
+			        <TextView
+						android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:textColor="#000000"
+				        android:textSize="15dp"
+			            android:text="评论" />
+			
+			        <ToggleButton
+			            android:id="@+id/activity_setting_notification_switch_comment"
+			            style="@style/setting_notification_btn_toggle" />
+			    </RelativeLayout>
+			
+			    <View 
+				    android:layout_width="match_parent"
+				    android:layout_height="0.5dp"
+				    android:layout_marginLeft="16dp"
+				    android:layout_marginRight="15dp"
+				    android:background="#1A000000"
+				    />
+			
+			    <RelativeLayout
+			        android:layout_width="match_parent"
+			        android:layout_height="65dp"
+			        android:gravity="center_vertical"
+			        android:paddingLeft="16dp"
+			        android:paddingRight="15dp"
+			        android:background="#FFFFFF" >
+			
+			        <TextView
+			            android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:textColor="#000000"
+				        android:textSize="15dp"
+			            android:text="帖子回复" />
+			
+			        <ToggleButton
+			            android:id="@+id/activity_setting_notification_switch_reply"
+			            style="@style/setting_notification_btn_toggle" />
+			    </RelativeLayout>
+			
+			    <View 
+				    android:layout_width="match_parent"
+				    android:layout_height="0.5dp"
+				    android:layout_marginLeft="16dp"
+				    android:layout_marginRight="15dp"
+				    android:background="#1A000000"
+				    />
+			
+			    <RelativeLayout
+			        android:layout_width="match_parent"
+			        android:layout_height="65dp"
+			        android:gravity="center_vertical"
+			        android:paddingLeft="16dp"
+			        android:paddingRight="15dp"
+			        android:background="#FFFFFF" >
+			
+			        <TextView
+			            android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:textColor="#000000"
+				        android:textSize="15dp"
+			            android:text="关注通知" />
+			
+			        <ToggleButton
+			            android:id="@+id/activity_setting_notification_switch_follow"
+			            style="@style/setting_notification_btn_toggle" />
+			    </RelativeLayout>
+			
+			    <View 
+				    android:layout_width="match_parent"
+				    android:layout_height="0.5dp"
+				    android:layout_marginLeft="16dp"
+				    android:layout_marginRight="15dp"
+				    android:background="#1A000000"
+				    />
+			
+			    <RelativeLayout
+			        android:layout_width="match_parent"
+			        android:layout_height="65dp"
+			        android:gravity="center_vertical"
+			        android:paddingLeft="16dp"
+			        android:paddingRight="15dp"
+			        android:background="#FFFFFF" >
+			
+			        <TextView
+			            android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:textColor="#000000"
+				        android:textSize="15dp"
+			            android:text="点赞通知" />
+			
+			        <ToggleButton
+			            android:id="@+id/activity_setting_notification_switch_like"
+			            style="@style/setting_notification_btn_toggle" />
+			    </RelativeLayout>
+			
+			    <View 
+				    android:layout_width="match_parent"
+				    android:layout_height="0.5dp"
+				    android:layout_marginLeft="16dp"
+				    android:layout_marginRight="15dp"
+				    android:background="#1A000000"
+				    />
+			
+			    <RelativeLayout
+			        android:layout_width="match_parent"
+			        android:layout_height="65dp"
+			        android:gravity="center_vertical"
+			        android:paddingLeft="16dp"
+			        android:paddingRight="15dp"
+			        android:background="#FFFFFF" >
+			
+			        <TextView
+			            android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:textColor="#000000"
+				        android:textSize="15dp"
+			            android:text="系统通知" />
+			
+			        <ToggleButton
+			            android:id="@+id/activity_setting_notification_switch_system"
+			            style="@style/setting_notification_btn_toggle" />
+			    </RelativeLayout>
+			
+			    <View 
+				    android:layout_width="match_parent"
+				    android:layout_height="0.5dp"
+				    android:layout_marginLeft="16dp"
+				    android:layout_marginRight="15dp"
+				    android:background="#1A000000" />
+		    </LinearLayout>
+		</ScrollView>
+	    
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true" >
+
+    <RelativeLayout
+        android:id="@+id/hot_photo_detail_header"
+        android:layout_width="match_parent"
+        android:layout_height="48dp" >
+
+        <ImageView
+            android:id="@+id/hot_photo_detail_btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:src="@drawable/ic_back_gray" />
+
+        <ImageView
+            android:id="@+id/hot_photo_detail_perch_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true" />
+
+        <ImageView
+            android:id="@+id/hot_photo_detail_cursor"
+            android:layout_width="match_parent"
+            android:layout_height="4.5dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignLeft="@+id/hot_photo_detail_tab1_layout"
+            android:layout_marginTop="-4.5dp"
+            android:padding="0dp"
+            android:scaleType="matrix"
+            android:src="@drawable/shape_carouse_photo_detail_cursor" />
+
+        <LinearLayout
+            android:id="@+id/hot_photo_detail_tab1_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical"
+            android:layout_marginRight="27dp"
+            android:layout_toLeftOf="@+id/hot_photo_detail_perch_img"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/hot_photo_detail_tab1_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="原图"
+                android:textSize="17dp" />
+
+            <TextView
+                android:id="@+id/hot_photo_detail_tab1_num_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="（1/1）"
+                android:textSize="13dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/hot_photo_detail_tab2_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="27dp"
+            android:layout_toRightOf="@+id/hot_photo_detail_perch_img"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/hot_photo_detail_tab2_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="作品"
+                android:textColor="#66000000"
+                android:textSize="17dp" />
+
+            <TextView
+                android:id="@+id/hot_photo_detail_tab2_num_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="（1/1）"
+                android:textColor="#66000000"
+                android:textSize="13dp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <com.psgod.ui.widget.CustomScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/hot_photo_detail_header" >
+
+        <FrameLayout
+            android:id="@+id/hot_photo_detail_photo_info"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <com.psgod.ui.view.BackGroundImage
+                android:id="@+id/backgraound_img"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <RelativeLayout
+                android:id="@+id/hot_photo_detail_photos_container"
+                android:layout_width="match_parent"
+                android:layout_height="360dp"
+                android:background="@null"
+                android:clipChildren="false" >
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/hot_photo_detail_viewpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginRight="50dp"
+                    android:clipChildren="false" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/fragment_hot_detail_photo_info"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="360dp"
+                android:background="#66000000" >
+
+                <TextView
+                    android:id="@+id/fragment_hot_detail_user_nickname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="23.5dp"
+                    android:text="nickname"
+                    android:textColor="#FFFFFF"
+                    android:textSize="13dp" />
+
+                <TextView
+                    android:id="@+id/fragment_hot_detail_created"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/fragment_hot_detail_user_nickname"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="5dp"
+                    android:text="created_time"
+                    android:textColor="#66FFFFFF"
+                    android:textSize="10dp" />
+
+                <org.sufficientlysecure.htmltextview.HtmlTextView
+                    android:id="@+id/fragment_hot_detail_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/fragment_hot_detail_created"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="14dp"
+                    android:textColor="#FFFFFF"
+                    android:textSize="15dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp" />
+
+                <ImageButton
+                    android:id="@+id/fragment_hot_like_btn" 
+                    android:layout_width="42.5dp"
+                    android:layout_height="42.5dp"
+                    android:layout_below="@id/fragment_hot_detail_desc"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="60dp"
+                    android:background="@null"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/hot_detail_like_normal" />
+
+                <ImageButton
+                    android:id="@+id/fragment_bang_btn"
+                    android:layout_width="42.5dp"
+                    android:layout_height="42.5dp"
+                    android:layout_below="@id/fragment_hot_detail_desc"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="60dp"
+                    android:background="@null"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/btn_p"
+                    android:visibility="gone" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_below="@id/fragment_hot_like_btn" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_below="@id/fragment_bang_btn" />
+            </RelativeLayout>
+
+            <com.psgod.ui.widget.AvatarImageView
+                android:id="@+id/fragment_hot_detail_user_avatar"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="342.5dp"
+                android:src="@drawable/head_portrait" />
+        </FrameLayout>
+    </com.psgod.ui.widget.CustomScrollView>
+
+</RelativeLayout>

@@ -1,0 +1,83 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 19
+    buildToolsVersion "23.0.1"
+
+    defaultConfig {
+        applicationId "com.psgod"
+        minSdkVersion 8
+        targetSdkVersion 18
+        multiDexEnabled true
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
+        manifestPlaceholders = [UMENG_CHANNEL_VALUE: "umeng"]
+    }
+
+    lintOptions {
+        abortOnError false
+    } 
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+
+	signingConfigs {
+        debug {
+        }
+
+        release {
+            storeFile file (RELEASE_STORE_FILE)
+            storePassword RELEASE_STORE_PASSWORD
+            keyAlias RELEASE_KEY_ALIAS
+            keyPassword RELEASE_KEY_PASSWORD
+        }
+    }
+
+    productFlavors {
+        umeng {}
+        xiaomi {}
+        _360 {}
+        baidu {}
+        wandoujia {}
+    }  
+
+    productFlavors.all { 
+        flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name] 
+    }
+
+
+
+}
+
+dependencies {
+    compile project(':library')
+    compile project(':waterfall')
+    compile files('libs/AutoScrollViewpager.jar')
+    compile files('libs/com.umeng.message.lib_v2.2.0.jar')
+    compile files('libs/eventbus-2.4.0.jar')
+    compile files('libs/fastjson-1.1.46.android.jar')
+    compile files('libs/mframework.jar')
+    compile files('libs/nineoldandroids.jar')
+    compile files('libs/ormlite-android-4.48.jar')
+    compile files('libs/ormlite-core-4.48.jar')
+    compile files('libs/picasso-2.4.0.jar')
+    compile files('libs/ShareSDK-Core-2.5.9.jar')
+    compile files('libs/ShareSDK-QQ-2.5.9.jar')
+    compile files('libs/ShareSDK-QZone-2.5.9.jar')
+    compile files('libs/ShareSDK-SinaWeibo-2.5.9.jar')
+    compile files('libs/ShareSDK-Wechat-2.5.9.jar')
+    compile files('libs/ShareSDK-Wechat-Core-2.5.9.jar')
+    compile files('libs/ShareSDK-Wechat-Moments-2.5.9.jar')
+    compile files('libs/swipemenulistview.jar')
+    compile files('libs/uk-co-senab-photoview.jar')
+    compile files('libs/umeng-analytics-v5.6.1.jar')
+    compile files('libs/umeng-update-v2.6.0.1.jar')
+    compile files('libs/universal-image-loader.jar')
+    compile 'com.android.support:support-v4:19.1.0'
+    compile 'com.android.support:appcompat-v7:19.1.0'
+}

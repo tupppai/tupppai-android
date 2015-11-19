@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:psgod="http://schemas.android.com/apk/res/com.psgod"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white" >
+
+    <com.psgod.ui.widget.ActionBar
+        android:id="@+id/actionbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/actionbar_height"
+        psgod:leftBtnVisibility="gone"
+        psgod:rightBtnVisibility="gone"
+        psgod:title="我的" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/actionbar"
+        android:scrollbars="none" >
+
+        <RelativeLayout
+            android:id="@+id/fragment_user_bg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/actionbar" >
+
+            <com.psgod.ui.widget.AvatarImageView
+                android:id="@+id/fragment_user_avatar_imageview"
+                android:layout_width="81dp"
+                android:layout_height="81dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"
+                android:src="@drawable/head_portrait" />
+
+            <TextView
+                android:id="@+id/fragment_user_followers_count_tag"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/fragment_user_avatar_imageview"
+                android:layout_marginRight="25dp"
+                android:layout_marginTop="26dp"
+                android:layout_toLeftOf="@id/fragment_user_avatar_imageview"
+                android:gravity="center"
+                android:text="0"
+                android:textColor="#74C3FF"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/fragment_user_followers_tag"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/fragment_user_followers_count_tag"
+                android:layout_marginRight="25dp"
+                android:layout_marginTop="7dp"
+                android:layout_toLeftOf="@id/fragment_user_avatar_imageview"
+                android:gravity="center"
+                android:text="粉丝"
+                android:textColor="#ACB8C1"
+                android:textSize="11dp" />
+
+            <TextView
+                android:id="@+id/fragment_user_like_count_tag"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/fragment_user_avatar_imageview"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="26dp"
+                android:layout_toRightOf="@id/fragment_user_avatar_imageview"
+                android:gravity="center"
+                android:text="0"
+                android:textColor="#74C3FF"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/fragment_user_like_tag"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/fragment_user_followers_count_tag"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="7dp"
+                android:layout_toRightOf="@id/fragment_user_avatar_imageview"
+                android:gravity="center"
+                android:text="赞"
+                android:textColor="#ACB8C1"
+                android:textSize="11dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/fragment_user_avatar_imageview"
+                android:layout_marginTop="50dp"
+                android:orientation="vertical" >
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="#E5E5E5" />
+
+                <!-- 我的求P -->
+
+                <TextView
+                    android:id="@+id/fragment_user_my_askp_btn"
+                    style="@style/user_fragment_btn"
+                    android:drawableLeft="@drawable/ic_my"
+                    android:text="我的求P" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:background="#E5E5E5" />
+
+                <!-- 我的作品 -->
+
+                <TextView
+                    android:id="@+id/fragment_user_my_works_btn"
+                    style="@style/user_fragment_btn"
+                    android:drawableLeft="@drawable/ic_images"
+                    android:text="我的作品" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:background="#E5E5E5" />
+
+                <!-- 进行中 -->
+
+                <TextView
+                    android:id="@+id/fragment_user_in_progress_btn"
+                    style="@style/user_fragment_btn"
+                    android:drawableLeft="@drawable/ic_draft"
+                    android:text="进行中" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:background="#E5E5E5" />
+
+                <!-- 我的收藏 -->
+
+                <TextView
+                    android:id="@+id/fragment_user_collections_btn"
+                    style="@style/user_fragment_btn"
+                    android:drawableLeft="@drawable/ic_favorite"
+                    android:text="收藏" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="8dp"
+                    android:background="#F3F3F3" />
+
+                <!-- 我的关注 -->
+
+                <TextView
+                    android:id="@+id/fragment_user_my_follow_btn"
+                    style="@style/user_fragment_btn"
+                    android:drawableLeft="@drawable/ic_focus_selected"
+                    android:text="我的关注" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:background="#E5E5E5" />
+
+                <!-- 用户设置 -->
+
+                <TextView
+                    android:id="@+id/fragment_user_setting_btn"
+                    style="@style/user_fragment_btn"
+                    android:drawableLeft="@drawable/ic_setting"
+                    android:text="用户设置" />
+
+            </LinearLayout>
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>

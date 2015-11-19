@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    <RelativeLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:background="#000000" >    
+	    <ImageView
+	        android:id="@+id/widget_photo_broswer_imageview"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:gravity="center"
+	        android:adjustViewBounds="true"
+	        android:scaleType="centerCrop" />    
+	</RelativeLayout>
+	
+	<Button 
+		android:id="@+id/widget_photo_broswer_upload_btn"
+	    android:layout_width="30dp"
+	    android:layout_height="30dp" 
+	    android:background="@drawable/ic_download"
+	   	android:layout_gravity="bottom|center_horizontal"
+	    android:layout_marginBottom="30dp"
+	    android:layout_alignParentBottom="true"
+	    android:visibility="gone" />
+</FrameLayout>
+

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:psgod="http://schemas.android.com/apk/res/com.psgod"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F8F8F8" >
+
+    <com.psgod.ui.widget.ActionBar
+        android:id="@+id/actionbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/actionbar_height"
+        psgod:leftBtnVisibility="gone"
+        psgod:rightBtnVisibility="gone"
+        psgod:title="关注" />
+
+    <com.handmark.pulltorefresh.library.PullToRefreshExpandableListView 
+        android:id="@+id/fragment_focus_photo_lv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:groupIndicator="@null"
+        android:divider="@null"
+        android:layout_below="@id/actionbar" />
+    
+    <LinearLayout
+        android:id="@+id/fragment_focus_list_empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/actionbar"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:background="@drawable/ic_gui" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:text="暂时没有任何关注哟~"
+            android:textColor="#8D8D8D"
+            android:textSize="15dp" />
+        
+        <Button 
+            android:id="@+id/recommend_focus_btn"
+            android:layout_width="127dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="93dp"
+            android:layout_gravity="center_horizontal"
+            android:text="推荐关注  +"
+            android:textSize="15dp"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/selector_recommend_focus_btn"
+            />
+    </LinearLayout>
+
+</RelativeLayout>

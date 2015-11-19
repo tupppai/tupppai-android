@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <View 
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="#F7F7F7" />
+    
+    <RelativeLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content" 
+	    android:background="#FFFFFF"
+	    android:paddingTop="14dp"
+	    android:paddingLeft="16dp"
+	    android:paddingBottom="14dp" >
+	    
+	    <RelativeLayout 
+	        android:id="@+id/item_user_profile_asks_top_panel"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content">
+	
+	    	<TextView 
+	    	    android:id="@+id/item_user_profile_asks_time"
+	    	    android:layout_width="wrap_content"
+	    	    android:layout_height="wrap_content"
+	    	    android:textSize="11dp"
+	    	    android:textColor="#50484B"
+	    	    android:layout_alignParentLeft="true"
+	    	    android:drawableLeft="@drawable/time"
+	    	    android:drawablePadding="3dp" />
+	    	
+	    	<TextView 
+	    	    android:id="@+id/item_user_profile_asks_reply_count"
+	    	    android:layout_width="wrap_content" 
+	    	    android:layout_height="wrap_content" 
+	    	    android:textSize="11dp"
+	    	    android:textColor="#FEAA2B"
+	    	    android:layout_alignParentRight="true"
+	    	    android:layout_marginRight="16dp" />
+	    </RelativeLayout>
+	    
+	    <RelativeLayout 
+	        android:id="@+id/item_user_profile_origin_reply"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@id/item_user_profile_asks_top_panel" >
+	    	
+	        <RelativeLayout 
+	           	android:id="@+id/origin_layout_first"
+	            android:layout_width="84dp"
+		        android:layout_height="84dp"
+		        android:layout_marginTop="12dp" >
+	                
+		        <ImageView 
+			        android:id="@+id/item_user_profile_asks_origin_pic_first"
+			        android:layout_width="84dp"
+			        android:layout_height="84dp"
+			        android:scaleType="center" />
+		        
+		        <ImageView 
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:src="@drawable/ic_yuantu"
+		            android:scaleType="centerCrop"
+		            android:layout_alignParentTop="true"
+		            android:layout_alignParentLeft="true" />
+		        
+	        </RelativeLayout>
+	        
+	        <RelativeLayout 
+	           	android:id="@+id/origin_layout_second"
+	            android:layout_width="84dp"
+		        android:layout_height="84dp"
+		        android:layout_marginLeft="10dp"
+		        android:layout_marginTop="12dp"
+		        android:layout_toRightOf="@id/origin_layout_first"
+		        android:visibility="gone" >
+	                
+		        <ImageView 
+			        android:id="@+id/item_user_profile_asks_origin_pic_second"
+			        android:layout_width="84dp"
+			        android:layout_height="84dp"
+			        android:scaleType="center" />
+		        
+		        <ImageView 
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:src="@drawable/ic_yuantu"
+		            android:scaleType="centerCrop"
+		            android:layout_alignParentTop="true"
+		            android:layout_alignParentLeft="true" />
+		        
+	        </RelativeLayout>
+	            
+	        <HorizontalScrollView 
+		        android:id="@+id/item_user_profile_asks_scrollview"
+		        android:layout_width="match_parent"
+		        android:layout_height="match_parent"
+		        android:layout_toRightOf="@id/origin_layout_second"
+		        android:layout_marginLeft="10dp"
+		        android:scrollbars="none" >
+		        
+		        <LinearLayout 
+			        android:id="@+id/item_user_profile_asks_middle_panel"
+			        android:layout_width="match_parent"
+			        android:layout_height="wrap_content"
+			        android:layout_marginTop="12dp"
+			        android:orientation="horizontal" >
+		            
+		    	</LinearLayout>
+		    </HorizontalScrollView>
+	        
+	    </RelativeLayout>
+	    
+	    <RelativeLayout 
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@id/item_user_profile_origin_reply"
+	        android:layout_marginTop="12dp" >
+	        
+		    <TextView 
+		        android:id="@+id/item_user_profile_asks_text"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:textSize="14dp"
+		        android:textColor="#50484B"
+		        android:text="要求: " />
+		    
+		    <org.sufficientlysecure.htmltextview.HtmlTextView 
+		        android:id="@+id/item_user_profile_asks_bottom_desc_edit"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_toRightOf="@id/item_user_profile_asks_text"
+		        android:background="@null"
+		        android:layout_marginRight="50dp"
+		        android:textSize="14dp"
+		        android:textColor="#50484B"
+		        android:visibility="visible" />
+		    
+	    </RelativeLayout>
+	   
+	</RelativeLayout>
+</LinearLayout>

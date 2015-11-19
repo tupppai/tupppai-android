@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:orientation="vertical"
+    android:background="#FFFFFF"
+    android:descendantFocusability="blocksDescendants" >
+    
+    <ImageView
+        android:id="@+id/reply_imageview"
+        android:layout_width="113dp"
+        android:layout_height="113dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="2dp"
+        android:scaleType="centerCrop" />
+    
+    <com.psgod.ui.widget.AvatarImageView
+        android:id="@+id/avatar_imgview"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_toRightOf="@id/reply_imageview"
+        android:layout_marginLeft="14dp"
+        android:layout_marginTop="10dp" />
+    
+    <TextView
+        android:id="@+id/nickname_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/avatar_imgview"
+        android:layout_marginLeft="5dp"
+        android:textSize="12dp"
+        android:textColor="#4A4A4A"
+        android:gravity="center_vertical"
+        android:layout_alignTop="@id/avatar_imgview"
+        android:layout_alignBottom="@id/avatar_imgview" />
+    
+    <TextView
+        android:id="@+id/item_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="10dp"
+        android:textSize="10dp"
+        android:textColor="#4A4A4A" />
+    
+    <org.sufficientlysecure.htmltextview.HtmlTextView
+        android:id="@+id/ask_desc_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/avatar_imgview"
+        android:layout_below="@id/avatar_imgview"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="15dp"
+        android:textSize="13dp"
+        android:textColor="#000000" />
+    
+    <View 
+        android:id="@+id/bottom_view"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@id/reply_imageview"
+        android:layout_marginTop="7dp"
+        android:layout_alignLeft="@id/avatar_imgview"
+        android:background="#1A000000" />
+    
+    <ImageView
+        android:id="@+id/upload_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/bottom_view"
+        android:layout_marginBottom="11dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="7dp"
+        android:src="@drawable/icon_upload" />
+    
+    <ImageView 
+        android:id="@+id/download_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/upload_iv"
+        android:layout_marginRight="7dp"
+        android:layout_alignBottom="@id/upload_iv"
+        android:src="@drawable/icon_download"/>
+
+</RelativeLayout>

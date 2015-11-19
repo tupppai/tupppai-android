@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.psgod"
+    
+    android:versionCode="32"
+    android:versionName="1.0.1" >
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="18" />
+
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <!-- 开机启动添加 -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <!-- 设置前台是否显示通知，需要设置这个权限 -->
+    <uses-permission android:name="android.permission.GET_TASKS" />
+
+    <!-- 可选 -->
+    <uses-permission android:name="android.permission.BROADCAST_PACKAGE_ADDED" />
+    <uses-permission android:name="android.permission.BROADCAST_PACKAGE_CHANGED" />
+    <uses-permission android:name="android.permission.BROADCAST_PACKAGE_INSTALL" />
+    <uses-permission android:name="android.permission.BROADCAST_PACKAGE_REPLACED" />
+    <uses-permission android:name="android.permission.RESTART_PACKAGES" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <application
+        android:name="com.psgod.PSGodApplication"
+        android:allowBackup="true"
+        android:icon="@drawable/ic_logo"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="com.psgod.ui.activity.AppStartActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.activity.MainActivity"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustResize" >
+        </activity>
+
+        <!-- 微信分享回调 -->
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
+            android:name="com.psgod.ui.activity.WelcomeActivity"
+            android:launchMode="singleTask" />
+        <activity android:name="com.psgod.ui.activity.WelcomeScrollActivity" />
+        <activity android:name="com.psgod.ui.activity.UserAgreementActivity" />
+        <activity android:name="com.psgod.ui.activity.SetInfoActivity" />
+        <activity android:name="com.psgod.ui.activity.RegisterPhoneActivity" />
+        <activity android:name="com.psgod.ui.activity.RegisterVerifyActivity" />
+        <activity
+            android:name="com.psgod.ui.activity.LoginActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity android:name="com.psgod.ui.activity.PhotoDetailActivity" />
+        <activity android:name="com.psgod.ui.activity.CarouselPhotoDetailActivity" />
+        <activity android:name="com.psgod.ui.activity.NotificationListActivity" />
+        <activity android:name="com.psgod.ui.view.ExtendsScrollView" />
+        <activity
+            android:name="com.psgod.ui.activity.EditProfileActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name="com.psgod.ui.activity.SettingActivity"
+            android:launchMode="singleTop" />
+        <activity android:name="com.psgod.ui.activity.UploadImageActivity" />
+        <activity
+            android:name="com.psgod.ui.activity.CommentListActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity android:name="com.psgod.ui.activity.NewMessageActivity" >
+        </activity>
+        <activity android:name="com.psgod.ui.activity.FollowerListActivity" />
+        <activity android:name="com.psgod.ui.activity.FollowingListActivity" />
+        <activity android:name="com.psgod.ui.activity.OthersFollowerListActivity" />
+        <activity
+            android:name="com.psgod.ui.activity.MyAskActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name="com.psgod.ui.activity.MyWorksActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name="com.psgod.ui.activity.MyInProgressActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name="com.psgod.ui.activity.MyCollectionsActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name="com.psgod.ui.activity.UserProfileActivity"
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+        <activity
+            android:name="com.psgod.ui.activity.SettingNotificationActivity"
+            android:launchMode="singleTop" />
+        <activity android:name="com.psgod.ui.activity.TestActivity" />
+        <activity android:name="com.psgod.ui.activity.SetAvatarActivity" />
+        <activity android:name="com.psgod.ui.activity.SettingPasswordActivity" />
+        <activity
+            android:name="com.psgod.ui.activity.SinglePhotoDetail"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity android:name="com.psgod.ui.activity.ChoosePhotoActivity" />
+        <activity android:name="com.psgod.ui.activity.FeedBackActivity" />
+        <activity android:name="com.psgod.ui.activity.InvitationListActivity" />
+        <activity android:name="com.psgod.ui.activity.PhotoBrowserActivity" />
+        <activity android:name="com.psgod.ui.activity.AccountBindingActivity" />
+        <activity android:name="com.psgod.ui.activity.ResetPasswordInputPhoneActivity" />
+        <activity android:name="com.psgod.ui.activity.ResetPasswordCaptchaActivity" />
+        <activity android:name="com.psgod.ui.activity.ResetPasswordActivity" />
+        <activity android:name="com.psgod.ui.activity.RecommendFocusActivity" />
+        <activity android:name="com.psgod.ui.activity.WebBrowserActivity" />
+        <activity android:name="com.psgod.ui.activity.MultiImageSelectActivity" />
+        <activity
+            android:name="com.psgod.ui.activity.UploadMultiImageActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity android:name="com.psgod.ui.activity.WorksListActivity" />
+        <activity android:name="com.psgod.ui.activity.UploadSelectReplyListActivity" />
+        <activity android:name="com.psgod.ui.activity.MessageActivity" />
+        <activity android:name="com.psgod.ui.activity.SettingLikedActivity" />
+        <activity android:name="com.psgod.ui.activity.SettingCommentActivity" />
+        <activity android:name="com.psgod.ui.activity.SettingAccountSafeActivity" />
+        <activity android:name="com.psgod.ui.activity.MessageLikeActivity" />
+        <activity android:name="com.psgod.ui.activity.MessageSystemActivity" />
+        <activity android:name="com.psgod.ui.activity.SearchActivity" >
+        </activity>
+
+        <!-- sharesdk -->
+        <activity
+            android:name="cn.sharesdk.framework.ShareSDKUIShell"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:windowSoftInputMode="stateHidden|adjustResize" >
+            <intent-filter>
+                <data android:scheme="tencent100371282" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <!-- 友盟推送相关 -->
+        <receiver
+            android:name="com.umeng.message.NotificationProxyBroadcastReceiver"
+            android:exported="false"
+            android:process=":push" >
+        </receiver>
+        <receiver
+            android:name="com.umeng.message.SystemReceiver"
+            android:process=":push" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.umeng.message.MessageReceiver"
+            android:process=":push" >
+            <intent-filter>
+                <action android:name="org.agoo.android.intent.action.RECEIVE" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.umeng.message.ElectionReceiver"
+            android:process=":push" >
+            <intent-filter>
+                <action android:name="org.agoo.android.intent.action.ELECTION_RESULT_V4" />
+
+                <category android:name="umeng" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.umeng.message.RegistrationReceiver"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.psgod.intent.action.COMMAND" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name="com.umeng.message.BootBroadcastReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name="com.psgod.service.UploadCrashService" >
+            <intent-filter>
+                <action android:name="com.psgod.service.UploadCrashServiceT" />
+            </intent-filter>
+        </service>
+        <service
+            android:name="com.umeng.message.UmengService"
+            android:exported="true"
+            android:label="PushService"
+            android:process=":push" >
+            <intent-filter>
+                <action android:name="com.psgod.intent.action.START" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.psgod.intent.action.COCKROACH" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="org.agoo.android.intent.action.PING_V4" />
+
+                <category android:name="umeng" />
+            </intent-filter>
+        </service>
+        <service
+            android:name="com.umeng.message.UmengIntentService"
+            android:process=":push" />
+        <service
+            android:name="com.umeng.message.UmengMessageIntentReceiverService"
+            android:exported="true"
+            android:process=":push" >
+            <intent-filter>
+                <action android:name="org.android.agoo.client.MessageReceiverService" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="org.android.agoo.client.ElectionReceiverService" />
+            </intent-filter>
+        </service>
+
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="5534c256e0f55aa48c002909" >
+        </meta-data>
+        <meta-data
+            android:name="UMENG_MESSAGE_SECRET"
+            android:value="c8f974673fbd1188aa00218f7d3cbac5" >
+        </meta-data>
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="${UMENG_CHANNEL_VALUE}" >
+        </meta-data>
+
+        <service android:name="com.umeng.message.UmengDownloadResourceService" >
+        </service>
+
+        <!-- 友盟自动更新 -->
+        <service
+            android:name="com.umeng.update.net.DownloadingService"
+            android:process=":DownloadingService" >
+        </service>
+
+        <activity
+            android:name="com.umeng.update.UpdateDialogActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+        </activity>
+    </application>
+
+</manifest>

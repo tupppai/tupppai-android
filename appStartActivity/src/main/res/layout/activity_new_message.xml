@@ -1,0 +1,163 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:psgod="http://schemas.android.com/apk/res/com.psgod"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF" >
+
+        <com.psgod.ui.widget.ActionBar
+            android:id="@+id/actionbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/actionbar_height"
+            psgod:rightBtnVisibility="gone"
+            psgod:title="消息" />
+        
+        <RelativeLayout 
+            android:id="@+id/system_message_layout"
+            android:layout_width="match_parent"
+            android:layout_height="47dp"
+            android:layout_below="@id/actionbar"
+            android:background="@drawable/selector_notification_btn_bg"
+            android:clickable="true"
+            android:gravity="center_vertical">
+            
+            <ImageView
+                android:id="@+id/system_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:src="@drawable/ic_system" />
+            
+            <View 
+                android:id="@+id/activity_system_message_tip"
+	            android:layout_width="8dp"
+	            android:layout_height="8dp"
+	            android:layout_toRightOf="@id/system_icon"
+	            android:layout_alignTop="@id/system_icon"
+	            android:background="@drawable/shape_bottom_tab_tip"
+	            android:visibility="gone" />
+            
+            <TextView
+                android:id="@+id/system_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/system_icon"
+                android:layout_marginLeft="23dp"
+                android:text="系统消息"
+                android:textColor="#000000"
+                android:textSize="14dp" />
+            
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="14dp"
+                android:src="@drawable/ic_arrow" />
+        </RelativeLayout>
+        
+        <View
+            android:id="@+id/message_view"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_below="@id/system_message_layout"
+            android:layout_marginLeft="56dp"
+            android:layout_marginRight="14dp"
+            android:background="#1A000000" />
+        
+        <RelativeLayout 
+            android:id="@+id/like_message_layout"
+            android:layout_width="match_parent"
+            android:layout_height="47dp"
+            android:layout_below="@id/message_view"
+            android:background="@drawable/selector_notification_btn_bg"
+            android:gravity="center_vertical"
+            android:clickable="true" >
+            
+            <ImageView
+                android:id="@+id/like_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:src="@drawable/ic_like_message" />
+            
+            <View 
+                android:id="@+id/activity_like_message_tip"
+	            android:layout_width="8dp"
+	            android:layout_height="8dp"
+	            android:layout_toRightOf="@id/like_icon"
+	            android:layout_alignTop="@id/like_icon"
+	            android:background="@drawable/shape_bottom_tab_tip"
+	            android:visibility="gone" />
+            
+            <TextView
+                android:id="@+id/like_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/like_icon"
+                android:layout_marginLeft="23dp"
+                android:text="收到的赞"
+                android:textColor="#000000"
+                android:textSize="14dp" />
+            
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="14dp"
+                android:src="@drawable/ic_arrow" />
+        </RelativeLayout>
+        
+        <TextView
+            android:id="@+id/recent_message_text"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@id/like_message_layout"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="16dp"
+            android:background="#F7F7F7"
+            android:text="最近消息"
+            android:textSize="12dp"
+            android:textColor="#CC000000" />
+
+        <com.handmark.pulltorefresh.library.PullToRefreshListView
+            android:id="@+id/activity_new_message_list_listview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/recent_message_text"
+            android:background="#F8F8F8"
+            android:divider="@null"
+            android:scrollbars="none" />
+
+        <LinearLayout
+            android:id="@+id/activity_new_message_list_empty_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/actionbar"
+            android:gravity="center_horizontal|top"
+            android:orientation="vertical"
+            android:visibility="gone" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="60dp"
+                android:background="@drawable/ic_pencil" />
+
+            <TextView
+                android:id="@+id/empty_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="35dp"
+                android:text="暂时还没有消息"
+                android:textColor="#8D8D8D"
+                android:textSize="15dp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

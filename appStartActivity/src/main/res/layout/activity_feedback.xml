@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:psgod="http://schemas.android.com/apk/res/com.psgod"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF" >
+
+        <com.psgod.ui.widget.ActionBar
+            android:id="@+id/actionbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/actionbar_height"
+            psgod:rightBtnText="发送"
+            psgod:title="反馈建议" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/actionbar" >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <EditText
+                    android:id="@+id/activity_feed_back_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="193dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="23dp"
+                    android:background="@drawable/shape_feedback_background"
+                    android:gravity="top"
+                    android:hint="欢迎从『产品建议』 『产品体验』 『使用疑惑』等方面向我们提出建议哦"
+                    android:inputType="textMultiLine"
+                    android:paddingBottom="12dp"
+                    android:paddingLeft="9dp"
+                    android:paddingRight="9dp"
+                    android:paddingTop="12dp"
+                    android:textColor="#666666"
+                    android:textColorHint="#9B9B9B"
+                    android:textSize="15dp" />
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/activity_feed_back_content"
+                    android:layout_marginLeft="18dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="16dp" >
+
+                    <TextView
+                        android:id="@+id/activity_feed_txt1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:text="也可发送截图到"
+                        android:textColor="#4a4a4a"
+                        android:textSize="14dp" />
+
+                    <TextView
+                        android:id="@+id/activity_feed_txt2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/activity_feed_txt1"
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginRight="2dp"
+                        android:layout_toRightOf="@+id/activity_feed_txt1"
+                        android:background="#fef07b"
+                        android:text="官方客服"
+                        android:textColor="#4a4a4a"
+                        android:textSize="15dp" />
+
+                    <TextView
+                        android:id="@+id/activity_feed_txt3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/activity_feed_txt2"
+                        android:layout_toRightOf="@+id/activity_feed_txt2"
+                        android:text="QQ2974252463,快速解决;"
+                        android:textColor="#4a4a4a"
+                        android:textSize="14dp" />
+
+                    <TextView
+                        android:id="@+id/activity_feed_txt4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignLeft="@+id/activity_feed_txt1"
+                        android:layout_below="@+id/activity_feed_txt1"
+                        android:layout_marginTop="10dp"
+                        android:text="或加入我们的"
+                        android:textColor="#4a4a4a"
+                        android:textSize="14dp" />
+
+                    <TextView
+                        android:id="@+id/activity_feed_txt5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/activity_feed_txt4"
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginRight="2dp"
+                        android:layout_toRightOf="@+id/activity_feed_txt4"
+                        android:background="#fef07b"
+                        android:text="QQ交流群"
+                        android:textColor="#4a4a4a"
+                        android:textSize="15dp" />
+
+                    <TextView
+                        android:id="@+id/activity_feed_txt6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/activity_feed_txt5"
+                        android:layout_toRightOf="@+id/activity_feed_txt5"
+                        android:text="511828428"
+                        android:textColor="#4a4a4a"
+                        android:textSize="14dp" />
+                </RelativeLayout>
+            </RelativeLayout>
+        </ScrollView>
+    </RelativeLayout>
+
+</RelativeLayout>

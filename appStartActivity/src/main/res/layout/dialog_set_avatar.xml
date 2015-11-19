@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:baselineAligned="false"
+    android:orientation="vertical" 
+        android:layout_marginLeft="7dp"
+    android:layout_marginRight="7dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/shape_dialog_corner"
+        android:paddingTop="24.5dp"
+        android:gravity="bottom"
+        android:orientation="vertical"
+        >
+		
+        <Button
+            android:id="@+id/dialog_set_avatar_take_photo"
+            style="@style/action_sheet_dialog_blue_btn"
+            android:text="拍照" />
+        
+		<View 
+		    android:layout_width="match_parent"
+		    android:layout_height="12dp"
+		    android:background="#FFFFFF"
+		    />
+		
+        <Button
+            android:id="@+id/dialog_set_avatar_choose_photo"
+            style="@style/action_sheet_dialog_blue_btn"
+            android:text="从手机相册选取" />
+        
+		<View 
+		    android:layout_width="match_parent"
+		    android:layout_height="17dp"
+		    android:background="#FFFFFF"
+		    />
+		
+        <Button
+            android:id="@+id/dialog_set_avatar_cancel"
+            style="@style/action_sheet_dialog_gray_btn_new"
+            android:text="取消" />
+        
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="21dp"
+            android:background="#FFFFFF" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:psgod="http://schemas.android.com/apk/res/com.psgod"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F8F8F8" >
+    
+    <com.handmark.pulltorefresh.library.PullToRefreshListView 
+        android:id="@+id/fragment_homepage_focus_lv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:groupIndicator="@null"
+        android:divider="@null" />
+    
+    <LinearLayout
+        android:id="@+id/fragment_homepage_focus_emptyview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/actionbar"
+        android:gravity="center_horizontal|top"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:background="@drawable/ic_pencil" />
+
+        <TextView
+            android:id="@+id/empty_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:text="赶快去关注些大神吧"
+            android:textColor="#8D8D8D"
+            android:textSize="15dp" />
+    </LinearLayout>
+    
+</RelativeLayout>

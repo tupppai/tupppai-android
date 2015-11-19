@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:psgod="http://schemas.android.com/apk/res/com.psgod"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#2c2c2c"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffffff" >
+
+        <RelativeLayout
+            android:id="@+id/actionbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/actionbar_height"
+            android:background="#2c2c2c" >
+
+            <ImageButton
+                android:id="@+id/btn_back"
+                android:layout_width="21dp"
+                android:layout_height="21dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="19dp"
+                android:background="@null"
+                android:padding="5dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_back_white" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="发布预览"
+                android:textColor="#FFFFFF"
+                android:textSize="16dp" />
+
+            <Button
+                android:id="@+id/btn_complete"
+                android:layout_width="48dp"
+                android:layout_height="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="17dp"
+                android:background="@drawable/shape_upload_btn"
+                android:gravity="center"
+                android:text="发布"
+                android:textColor="#aa000000"
+                android:textSize="12dp" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/image_layout"
+            android:layout_width="match_parent"
+            android:layout_height="82dp"
+            android:layout_below="@id/actionbar"
+            android:layout_marginLeft="14dp"
+            android:layout_marginRight="14dp"
+            android:layout_marginTop="13dp" />
+
+        <EditText
+            android:id="@+id/upload_text"
+            android:layout_width="match_parent"
+            android:layout_height="53dp"
+            android:layout_below="@id/image_layout"
+            android:layout_marginLeft="14dp"
+            android:layout_marginRight="14dp"
+            android:layout_marginTop="15dp"
+            android:background="@null"
+            android:focusable="true"
+            android:gravity="top"
+            android:hint="写下你要说的图片修改需求吧"
+            android:inputType="textMultiLine"
+            android:textColor="#000000"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/text_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/upload_text"
+            android:layout_marginRight="14dp"
+            android:text="0/18"
+            android:textColor="#7F000000"
+            android:textSize="10dp"
+            android:visibility="gone" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="57dp"
+            android:layout_alignParentBottom="true"
+            android:background="#f7f7f7" >
+
+            <TextView
+                android:id="@+id/text_synchronous"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="13dp"
+                android:text="同步到"
+                android:textColor="#7F000000"
+                android:textSize="14dp" />
+
+            <ToggleButton
+                android:id="@+id/activity_upload_image_share_qzone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="16dp"
+                android:background="@drawable/selector_share_qzone"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:textOff=""
+                android:textOn="" />
+
+            <ToggleButton
+                android:id="@+id/activity_upload_image_share_moment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="18dp"
+                android:layout_toLeftOf="@id/activity_upload_image_share_qzone"
+                android:background="@drawable/selector_share_weixing"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:textOff=""
+                android:textOn="" />
+
+            <ToggleButton
+                android:id="@+id/activity_upload_image_share_weibo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="18dp"
+                android:layout_toLeftOf="@id/activity_upload_image_share_moment"
+                android:background="@drawable/selector_share_weibo"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:textOff=""
+                android:textOn="" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

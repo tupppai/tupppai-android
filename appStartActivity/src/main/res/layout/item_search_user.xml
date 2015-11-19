@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff" >
+
+    <Button
+        android:id="@+id/item_search_user_follow_img"
+        android:layout_width="58dp"
+        android:layout_height="28dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="17dp"
+        android:layout_marginTop="23dp"
+        android:background="@drawable/btn_follow"
+        android:textSize="11dp" />
+
+    <com.psgod.ui.widget.ChildGridView
+        android:id="@+id/item_search_user_grid"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/item_search_user_click_layout"
+        android:columnWidth="7dp"
+        android:numColumns="4"
+        android:paddingLeft="16dp" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/item_search_user_grid"
+        android:layout_marginTop="15dp"
+        android:background="#19000000" />
+
+    <RelativeLayout
+        android:id="@+id/item_search_user_click_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/item_search_user_follow_img"
+        android:layout_toStartOf="@+id/item_search_user_follow_img"
+        android:paddingBottom="20dp" >
+
+        <com.psgod.ui.widget.AvatarImageView
+            android:id="@+id/item_search_user_avatar_img"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="21dp" />
+
+        <TextView
+            android:id="@+id/item_search_user_name_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/item_search_user_avatar_img"
+            android:layout_marginLeft="15dp"
+            android:layout_toEndOf="@+id/item_search_user_avatar_img"
+            android:layout_toRightOf="@+id/item_search_user_avatar_img"
+            android:text="咩咩"
+            android:textColor="#e5000000"
+            android:textSize="14dp" />
+
+        <TextView
+            android:id="@+id/item_search_user_work_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/item_search_user_following_txt"
+            android:layout_marginLeft="13dp"
+            android:layout_toRightOf="@+id/item_search_user_following_txt"
+            android:text="11作品"
+            android:textColor="#c24a4a4a"
+            android:textSize="11dp" />
+
+        <TextView
+            android:id="@+id/item_search_user_follow_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/item_search_user_name_txt"
+            android:layout_below="@+id/item_search_user_name_txt"
+            android:layout_marginTop="2dp"
+            android:text="22粉丝"
+            android:textColor="#c24a4a4a"
+            android:textSize="11dp" />
+
+        <TextView
+            android:id="@+id/item_search_user_following_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/item_search_user_follow_txt"
+            android:layout_marginLeft="13dp"
+            android:layout_toRightOf="@+id/item_search_user_follow_txt"
+            android:text="232关注"
+            android:textColor="#c24a4a4a"
+            android:textSize="11dp" />
+    </RelativeLayout>
+
+</RelativeLayout>

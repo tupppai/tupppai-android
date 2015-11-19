@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:psgod="http://schemas.android.com/apk/res/com.psgod"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical" >
+
+    <com.psgod.ui.widget.ActionBar
+        android:id="@+id/actionbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/actionbar_height"
+        psgod:rightBtnVisibility="gone"
+        psgod:title="收到的赞" />
+
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
+        android:id="@+id/activity_new_message_like_list_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F8F8F8"
+        android:divider="@null"
+        android:scrollbars="none" />
+
+    <LinearLayout
+        android:id="@+id/activity_message_like_list_empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/actionbar"
+        android:gravity="center_horizontal|top"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:background="@drawable/ic_pencil" />
+
+        <TextView
+            android:id="@+id/empty_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:text="你还没有收到赞"
+            android:textColor="#8D8D8D"
+            android:textSize="15dp" />
+    </LinearLayout>
+
+</LinearLayout>

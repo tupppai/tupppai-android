@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#00000000">
+
+    <LinearLayout
+        android:layout_width="260dp"
+        android:layout_height="wrap_content"
+        android:background="#00000000"
+        android:orientation="vertical"
+        android:layout_centerInParent="true" >
+
+        <TextView
+            android:id="@+id/dialog_custom_content_tv"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:padding="30dp"
+            android:textSize="16dp"
+            android:textColor="#737373"
+            android:background="@drawable/shape_custom_dialog" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#E5E5E5" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/dialog_custom_left_btn"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/bottom_dialog_btn_height"
+                android:layout_weight="1"
+                android:background="@drawable/selector_custom_dialog_left_btn"
+                android:gravity="center"
+                android:text="确认"
+                android:textColor="#FFCB3C"
+                android:textSize="17dp" />
+
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="@dimen/bottom_dialog_btn_height"
+                android:background="#E5E5E5" />
+
+            <Button
+                android:id="@+id/dialog_custom_right_btn"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/bottom_dialog_btn_height"
+                android:layout_weight="1"
+                android:background="@drawable/selector_custom_dialog_right_btn"
+                android:gravity="center"
+                android:text="取消"
+                android:textColor="#FFCB3C"
+                android:textSize="17dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

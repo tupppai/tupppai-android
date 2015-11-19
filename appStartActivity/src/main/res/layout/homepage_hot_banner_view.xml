@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/fragment_homepage_header"
+        android:layout_width="match_parent"
+        android:layout_height="166dp"
+        android:background="@null" >
+
+        <cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager
+            android:id="@+id/hot_banner_viewpager"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center" >
+
+            <android.support.v4.view.PagerTitleStrip
+                android:id="@+id/banner_pagertitle"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_gravity="bottom"
+                android:background="#0000"
+                android:textColor="#ffff" />
+        </cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/hot_banner_viewpager"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="8dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:id="@+id/scroll_dot0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="matrix"
+                android:src="@drawable/shape_scroll_banner_select"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/scroll_dot1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:scaleType="matrix"
+                android:src="@drawable/shape_scroll_banner_unselect"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/scroll_dot2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:scaleType="matrix"
+                android:src="@drawable/shape_scroll_banner_unselect"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/scroll_dot3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:scaleType="matrix"
+                android:src="@drawable/shape_scroll_banner_unselect"
+                android:visibility="gone" />
+            
+            <ImageView
+                android:id="@+id/scroll_dot4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:scaleType="matrix"
+                android:src="@drawable/shape_scroll_banner_unselect"
+                android:visibility="gone" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

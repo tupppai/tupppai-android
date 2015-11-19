@@ -1,0 +1,47 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:psgod="http://schemas.android.com/apk/res/com.psgod"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF" 
+    android:clipToPadding="true"
+    android:id="@+id/single_photo_detail_parent"
+	android:fitsSystemWindows="true">
+
+    <RelativeLayout 
+        android:layout_width="match_parent"
+    	android:layout_height="match_parent"
+    	android:background="#F8F8F8" >
+    	
+	    <com.psgod.ui.widget.ActionBar
+	        android:id="@+id/actionbar"
+	        android:layout_width="match_parent"
+	        android:layout_height="@dimen/actionbar_height"
+	        psgod:rightBtnVisibility="gone"
+	        psgod:title="浏览图片" />
+		
+	    <LinearLayout
+	        android:id="@+id/rl_bottom"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentBottom="true" >
+	
+	        <!-- 聊天输入框 -->
+	        <include
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            layout="@layout/widge_face_relativelayout" />
+	    </LinearLayout>
+	    
+	    <com.handmark.pulltorefresh.library.PullToRefreshExpandableListView
+	        android:id="@+id/activity_photo_detail_expandable_list"
+	  	    android:layout_width="match_parent"
+	  	    android:layout_height="match_parent"
+	  	    android:scrollbars="none"
+	  	    android:groupIndicator="@null"
+	  	    android:divider="@null"
+	  	    android:listSelector="#00000000"
+	  	    android:layout_above="@id/rl_bottom"
+		    android:layout_below="@id/actionbar" />
+    </RelativeLayout>
+    
+</RelativeLayout>

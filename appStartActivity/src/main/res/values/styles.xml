@@ -1,0 +1,251 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+
+    -->
+    <style name="AppBaseTheme" parent="android:Theme.Light">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+
+        -->
+    </style>
+
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme">
+        <item name="android:windowAnimationStyle">@style/activityAnimation</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <!-- 界面切换时的动画 -->
+    <style name="activityAnimation" parent="@android:style/Animation">
+        <item name="android:activityOpenEnterAnimation">@anim/slide_right_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/slide_left_out</item>
+        <item name="android:activityCloseEnterAnimation">@anim/slide_left_in</item>
+        <item name="android:activityCloseExitAnimation">@anim/slide_right_out</item>
+    </style>
+
+    <style name="popwindow_anim_style">
+        <item name="android:windowEnterAnimation">@anim/popwindow_show</item>
+        <!-- 指定显示的动画xml -->
+        <item name="android:windowExitAnimation">@anim/popwindow_hide</item>
+        <!-- 指定消失的动画xml -->
+    </style>
+
+    <style name="popwindow_com_anim_style">
+        <item name="android:windowEnterAnimation">@anim/popwindow_com_show</item>
+        <!-- 指定显示的动画xml -->
+        <item name="android:windowExitAnimation">@anim/popwindow_com_hide</item>
+        <!-- 指定消失的动画xml -->
+    </style>
+
+    <style name="imgdialog_anim_style">
+        <item name="android:windowEnterAnimation">@anim/imgdialog_show</item>
+        <!-- 指定显示的动画xml -->
+        <item name="android:windowExitAnimation">@anim/imgdialog_hide</item>
+        <!-- 指定消失的动画xml -->
+    </style>
+
+    <style name="main_activity_bottom_tabbar">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:button">@null</item>
+        <item name="android:padding">0dp</item>
+    </style>
+
+    <style name="upload_image_crop_image_radio_btn">
+        <item name="android:layout_height">25dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:textColor">@color/selector_upload_image_crop_image_radio_btn</item>
+        <item name="android:textSize">11dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:button">@null</item>
+        <item name="android:background">@drawable/shape_crop_image_btn</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+    </style>
+
+    <style name="homepage_top_tabbar">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">56dp</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:textSize">16dp</item>
+        <item name="android:textColor">@color/selector_homepage_top_tabbar</item>
+        <item name="android:button">@null</item>
+    </style>
+
+    <style name="homepage_inprogress_top_tabbar">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">16dp</item>
+        <item name="android:textColor">@color/selector_homepage_top_tabbar</item>
+        <item name="android:button">@null</item>
+    </style>
+
+    <style name="Dialog" parent="android:style/Theme.Dialog">
+        <item name="android:background">#00000000</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+    </style>
+
+    <style name="ActionSheetDialog" parent="android:Theme">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+    <!-- ActionSheetDialog白色按钮 -->
+    <style name="action_sheet_dialog_white_btn" parent="android:Theme">
+        <item name="android:layout_height">@dimen/bottom_dialog_btn_height</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">@drawable/selector_actionsheet_white_btn</item>
+        <item name="android:textSize">14dp</item>
+        <item name="android:textColor">#000000</item>
+        <item name="android:gravity">center</item>
+        <item name="android:clickable">true</item>
+    </style>
+
+    <!-- ActionSheetDialog灰色按钮 禁止点击的按钮 -->
+    <style name="action_sheet_dialog_gray_btn" parent="android:Theme">
+        <item name="android:layout_height">@dimen/bottom_dialog_btn_height</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">@drawable/selector_actionsheet_gray_btn</item>
+        <item name="android:textSize">14dp</item>
+        <item name="android:textColor">#000000</item>
+        <item name="android:gravity">center</item>
+        <item name="android:clickable">false</item>
+    </style>
+
+    <!-- ActionSheetDialog 黄色按钮 新版 -->
+    <style name="action_sheet_dialog_blue_btn" parent="android:Theme">
+        <item name="android:layout_height">38dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:background">@drawable/selector_actionsheet_blue_btn</item>
+        <item name="android:textSize">15dp</item>
+        <item name="android:textColor">#4A4A4A</item>
+        <item name="android:gravity">center</item>
+        <item name="android:clickable">true</item>
+    </style>
+
+    <!-- ActionSheetDialog 灰色按钮 新版 -->
+    <style name="action_sheet_dialog_gray_btn_new" parent="android:Theme">
+        <item name="android:layout_height">45dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:background">@drawable/selector_actionsheet_gray_btn_new</item>
+        <item name="android:textSize">16dp</item>
+        <item name="android:textColor">#4A4A4A</item>
+        <item name="android:gravity">center</item>
+        <item name="android:clickable">true</item>
+    </style>
+
+    <!-- share more dialog 用取消按钮  新版 -->
+    <style name="share_more_dialog_grey_btn_new" parent="android:Theme">
+        <item name="android:layout_height">45dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_marginLeft">26dp</item>
+        <item name="android:layout_marginRight">26dp</item>
+        <item name="android:layout_marginTop">26dp</item>
+        <item name="android:layout_marginBottom">19dp</item>
+        <item name="android:background">@drawable/selector_actionsheet_gray_btn_new</item>
+        <item name="android:textSize">15dp</item>
+        <item name="android:textColor">#4A4A4A</item>
+        <item name="android:gravity">center</item>
+        <item name="android:clickable">true</item>
+    </style>
+
+    <!-- share more dialog 按钮 -->
+    <style name="share_more_dialog_btn_new" parent="android:Theme">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:drawablePadding">8dp</item>
+        <item name="android:background">@null</item>
+        <item name="android:clickable">true</item>
+        <item name="android:textSize">13dp</item>
+        <item name="android:textColor">#4A4A4A</item>
+    </style>
+
+    <!-- 个人中心按钮 -->
+    <style name="user_fragment_btn" parent="android:Theme">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">45dp</item>
+        <item name="android:background">@drawable/selector_userpage_btn_bg</item>
+        <item name="android:paddingRight">27dp</item>
+        <item name="android:clickable">true</item>
+        <item name="android:drawableRight">@drawable/ic_arrow</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:drawablePadding">22dp</item>
+        <item name="android:paddingLeft">27dp</item>
+        <item name="android:textColor">#000000</item>
+        <item name="android:textSize">@dimen/userpage_btn_text</item>
+    </style>
+
+    <!-- 用户注册 按钮 -->
+    <style name="user_set_info_btn" parent="android:Theme">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">60dp</item>
+        <item name="android:background">@drawable/selector_userpage_btn_bg</item>
+        <item name="android:clickable">true</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColor">#737373</item>
+        <item name="android:textSize">15dp</item>
+    </style>
+
+    <!-- 分享对话框 -->
+    <style name="share_dialog_btn" parent="android:Theme">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:clickable">true</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:textColor">#454545</item>
+        <item name="android:textSize">15dp</item>
+    </style>
+
+    <!-- 通知提醒界面相关 -->
+    <style name="setting_notification_btn_tv" parent="android:Theme">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentLeft">true</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:textColor">#737373</item>
+        <item name="android:textSize">14dp</item>
+    </style>
+
+    <style name="setting_notification_btn_toggle" parent="android:Theme">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:background">@drawable/selector_toggle</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:minHeight">0dp</item>
+        <item name="android:textOff">""</item>
+        <item name="android:textOn">""</item>
+    </style>
+
+    <!-- 新版热门详情页上方滚动文字正常样式 -->
+    <style name="hot_photo_detail_scrollview_tv" parent="android:Theme">
+        <item name="android:textSize">13dp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+</resources>

@@ -1,0 +1,49 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:psgod="http://schemas.android.com/apk/res/com.psgod"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/actionbar_bg" >
+
+    <Button
+        android:id="@+id/actionbar_left_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:drawableRight="@drawable/selector_back_btn"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:minHeight="0dp"
+        android:minWidth="0dp"
+        android:background="@null" />
+
+    <TextView
+        android:id="@+id/actionbar_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+		android:layout_centerVertical="true"
+		android:layout_centerHorizontal="true"
+        android:textColor="@color/actionbar_title"
+        android:textSize="16dp" 
+        android:text="创建个人资料" />
+
+    <Button
+        android:id="@+id/actionbar_right_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="16dp"
+        android:minHeight="0dp"
+        android:minWidth="0dp"
+        android:textColor="@color/selector_actionbar_right_btn"
+        android:text="下一步"
+        android:textSize="15dp"
+        android:background="@null" />
+    
+    <View 
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_alignParentBottom="true"
+        android:background="#1A000000" />
+    
+</RelativeLayout>

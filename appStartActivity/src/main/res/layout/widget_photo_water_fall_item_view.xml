@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.psgod.ui.view.PhotoWaterFallItemView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:myxmlns="http://schemas.android.com/apk/res/com.psgod"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/news_item_bg" >
+
+    <RelativeLayout
+        android:id="@+id/user_info_layout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#FFFFFF"
+        android:visibility="gone" >
+
+        <com.psgod.ui.widget.AvatarImageView
+            android:id="@+id/item_avatar_imageview"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8dp" />
+
+        <TextView
+            android:id="@+id/nickname_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="4dp"
+            android:layout_toRightOf="@id/item_avatar_imageview"
+            android:text="不长脸人"
+            android:textColor="#000000"
+            android:textSize="11dp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/nickname_tv_recent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/item_avatar_imageview"
+            android:layout_marginLeft="4dp"
+            android:layout_toRightOf="@id/item_avatar_imageview"
+            android:text="不长脸人"
+            android:textColor="#000000"
+            android:textSize="11dp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/time_tv_recent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/item_avatar_imageview"
+            android:layout_marginLeft="4dp"
+            android:layout_toRightOf="@id/item_avatar_imageview"
+            android:text="1小时前"
+            android:textColor="#7F000000"
+            android:textSize="9dp"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <!-- <com.psgod.ui.view.ScaleImageView -->
+
+    <com.dodowaterfall.widget.ScaleImageView
+        android:id="@+id/inprogress_ask_item_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/user_info_layout"
+        android:src="@null" />
+
+    <RelativeLayout
+        android:id="@+id/like_count_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/inprogress_ask_item_image"
+        android:background="@drawable/shape_background_gradient"
+        android:paddingBottom="8dp"
+        android:visibility="gone" >
+
+        <TextView
+            android:id="@+id/like_count_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:drawableLeft="@drawable/ic_like_white"
+            android:drawablePadding="3dp"
+            android:text="123"
+            android:textColor="#FFFFFF"
+            android:textSize="11dp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/desc_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/inprogress_ask_item_image"
+        android:background="#FFFFFF"
+        android:visibility="gone" >
+
+        <TextView
+            android:id="@+id/ask_desc_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="7dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="7dp"
+            android:maxLines="2"
+            android:paddingBottom="19dp"
+            android:text="这里是求P描述,最多显示两行，最多显示两行，最多显示。。。"
+            android:textColor="#000000"
+            android:textSize="14dp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/reply_layout"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_below="@id/desc_layout"
+        android:background="#FFFFFF"
+        android:visibility="gone" >
+
+        <ImageView
+            android:id="@+id/reply_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/upload_reply_image" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/work_like_layout"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/inprogress_ask_item_image"
+        android:background="#FFFFFF"
+        android:visibility="gone" >
+
+        <TextView
+            android:id="@+id/like_count_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="13dp"
+            android:drawableLeft="@drawable/ic_like_new"
+            android:drawablePadding="4dp"
+            android:gravity="right"
+            android:text="12"
+            android:textColor="#6F000000"
+            android:textSize="11dp" />
+    </RelativeLayout>
+
+</com.psgod.ui.view.PhotoWaterFallItemView>

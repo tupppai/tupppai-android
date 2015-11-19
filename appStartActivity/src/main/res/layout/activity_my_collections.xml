@@ -1,0 +1,60 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:psgod="http://schemas.android.com/apk/res/com.psgod"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#74C3FF" 
+    android:clipToPadding="true"
+	android:fitsSystemWindows="true">
+	
+    <RelativeLayout 
+        android:layout_width="match_parent"
+    	android:layout_height="match_parent"
+    	android:background="@color/color_ededed">
+        
+	    <com.psgod.ui.widget.ActionBar
+	        android:id="@+id/actionbar"
+	        android:layout_width="match_parent"
+	        android:layout_height="@dimen/actionbar_height"
+	        psgod:rightBtnVisibility="gone"
+	        psgod:title="我的收藏" />
+	
+	    <com.handmark.pulltorefresh.library.PullToRefreshListView  
+	        android:id="@+id/activity_my_collection_listview"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:layout_below="@id/actionbar"
+	        android:background="@color/color_ededed"
+	        android:cacheColorHint="@color/white"
+	        android:divider="@color/transparent"
+	        android:dividerHeight="0dip"
+	        android:fadingEdge="none"
+	        android:fastScrollEnabled="false"
+	        android:listSelector="@color/transparent"
+	        />
+	
+	    <LinearLayout
+	        android:id="@+id/activity_my_collection_empty_view"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:gravity="center_horizontal|top"
+	        android:layout_below="@id/actionbar"
+	        android:orientation="vertical"
+	        android:visibility="gone" >
+	
+	        <ImageView
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_marginTop="60dp"
+	            android:background="@drawable/ic_gui" />
+	
+	        <TextView
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_marginTop="35dp"
+	            android:text="这里空空如也！"
+	            android:textColor="#8D8D8D"
+	            android:textSize="15dp" />
+	    </LinearLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

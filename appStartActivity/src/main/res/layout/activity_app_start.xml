@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:psgod="http://schemas.android.com/apk/res/com.psgod"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="true"
+	android:fitsSystemWindows="true"
+	android:background="@drawable/slogan" >
+	
+    <!-- <RelativeLayout 
+        android:layout_width="match_parent"
+    	android:layout_height="match_parent">
+    	
+	    <ImageView
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	         />
+		
+	    <ImageView 
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:background="#00AEEE"
+	        android:layout_alignParentBottom="true"
+	        android:paddingTop="8dp"
+	        android:paddingBottom="14dp"
+	        android:src="@drawable/logo"
+	        />
+    </RelativeLayout> -->
+    
+</RelativeLayout>

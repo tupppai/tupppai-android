@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.psgod.ui.view.PhotoItemView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:myxmlns="http://schemas.android.com/apk/res/com.psgod"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center" >
+
+    <LinearLayout
+        android:id="@+id/photo_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:id="@+id/photo_item_top_panel"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp" >
+
+            <com.psgod.ui.widget.AvatarImageView
+                android:id="@+id/photo_item_avatar_imgview"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentLeft="true"
+
+                android:layout_centerVertical="true"
+                android:src="@drawable/head_portrait" />
+
+            <Button
+                android:id="@+id/photo_item_follow_btn"
+                android:layout_width="58dp"
+                android:layout_height="28dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/btn_follow"
+                android:textSize="11dp"
+                android:visibility="gone" />
+
+            <ImageButton
+                android:id="@+id/single_photo_item_ps_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@null"
+                android:src="@drawable/upload_send_btn"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/photo_item_name_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/photo_item_avatar_imgview"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/photo_item_avatar_imgview"
+                android:textColor="#4A4A4A"
+                android:textSize="13dp" />
+
+            <TextView
+                android:id="@+id/photo_item_time_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/photo_item_name_tv"
+                android:layout_below="@id/photo_item_name_tv"
+                android:layout_marginTop="3dp"
+                android:textColor="#4C000000"
+                android:textSize="10dp" />
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/photo_item_image_area"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+        </RelativeLayout>
+
+        <org.sufficientlysecure.htmltextview.HtmlTextView
+            android:id="@+id/photo_item_desc_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="15dp"
+            android:text="description"
+            android:textColor="#CC000000"
+            android:textSize="14dp" />
+
+        <!-- 操作栏区域 -->
+
+        <RelativeLayout
+            android:id="@+id/photo_item_action_bar"
+            android:layout_width="match_parent"
+            android:layout_height="57dp" >
+
+            <!-- 关注求p 热门求p 类型操作栏 -->
+
+            <RelativeLayout
+                android:id="@+id/focus_ask_photo_item_btns"
+                android:layout_width="wrap_content"
+                android:layout_height="57dp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="5dp"
+                android:visibility="gone" >
+
+                <TextView
+                    android:id="@+id/simple_type_photo_item_share_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:drawableLeft="@drawable/ic_home_share_normal"
+                    android:drawablePadding="5dp"
+                    android:padding="5dp"
+                    android:text="0"
+                    android:textColor="#4A4A4A"
+                    android:textSize="12dp" />
+
+                <TextView
+                    android:id="@+id/simple_type_photo_item_comment_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@id/simple_type_photo_item_share_tv"
+                    android:drawableLeft="@drawable/ic_home_comment_normal"
+                    android:drawablePadding="5dp"
+                    android:padding="5dp"
+                    android:text="22"
+                    android:textColor="#4A4A4A"
+                    android:textSize="12dp" />
+            </RelativeLayout>
+
+            <!-- 关注  热门 作品类型操作栏 -->
+
+            <RelativeLayout
+                android:id="@+id/focus_reply_item_btns"
+                android:layout_width="wrap_content"
+                android:layout_height="57dp"
+                android:layout_marginLeft="10dp"
+                android:visibility="gone" >
+
+                <ImageView
+                    android:id="@+id/photo_item_works_tv"
+                    android:layout_width="54dp"
+                    android:layout_height="24dp"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/btn_zuopin" />
+
+                <TextView
+                    android:id="@+id/photo_item_share_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/photo_item_works_tv"
+                    android:drawableLeft="@drawable/ic_home_share_normal"
+                    android:drawablePadding="5dp"
+                    android:padding="5dp"
+                    android:text="0"
+                    android:textColor="#4A4A4A"
+                    android:textSize="12dp" />
+
+                <TextView
+                    android:id="@+id/photo_item_fav_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="-10dp"
+                    android:layout_toRightOf="@+id/photo_item_fav_img"
+                    android:padding="5dp"
+                    android:text="0"
+                    android:textColor="#4A4A4A"
+                    android:textSize="12dp" />
+
+                <ImageView
+                    android:id="@+id/photo_item_fav_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="4dp"
+                    android:layout_toRightOf="@id/photo_item_share_tv"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_home_fav_normal" />
+
+                <ImageView
+                    android:id="@+id/photo_item_fav_temp_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/photo_item_fav_img"
+                    android:layout_centerVertical="true"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_home_fav_normal"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/photo_item_comment_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@id/photo_item_fav_tv"
+                    android:drawableLeft="@drawable/ic_home_comment_normal"
+                    android:drawablePadding="5dp"
+                    android:padding="5dp"
+                    android:text="0"
+                    android:textColor="#4A4A4A"
+                    android:textSize="12dp" />
+            </RelativeLayout>
+
+            <!-- 最新作品 类型操作栏 -->
+
+            <RelativeLayout
+                android:id="@+id/hot_reply_item_btns"
+                android:layout_width="wrap_content"
+                android:layout_height="57dp"
+                android:layout_marginLeft="10dp"
+                android:visibility="gone" >
+
+                <ImageView
+                    android:id="@+id/hot_reply_item_works_tv"
+                    android:layout_width="54dp"
+                    android:layout_height="24dp"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/btn_zuopin" />
+
+                <TextView
+                    android:id="@+id/hot_reply_item_share_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/hot_reply_item_works_tv"
+                    android:drawableLeft="@drawable/ic_home_share_normal"
+                    android:drawablePadding="5dp"
+                    android:padding="5dp"
+                    android:text="0"
+                    android:textColor="#4A4A4A"
+                    android:textSize="12dp" />
+
+                <TextView
+                    android:id="@+id/hot_reply_item_comment_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@id/hot_reply_item_share_tv"
+                    android:drawableLeft="@drawable/ic_home_comment_normal"
+                    android:drawablePadding="5dp"
+                    android:padding="5dp"
+                    android:text="0"
+                    android:textColor="#4A4A4A"
+                    android:textSize="12dp" />
+            </RelativeLayout>
+
+            <!-- 单条作品类型操作栏 -->
+
+            <RelativeLayout
+                android:id="@+id/single_photoitem_reply"
+                android:layout_width="wrap_content"
+                android:layout_height="57dp"
+                android:layout_marginLeft="10dp"
+                android:visibility="gone" >
+
+                <ImageView
+                    android:id="@+id/single_photoitem_works_tv"
+                    android:layout_width="54dp"
+                    android:layout_height="24dp"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/btn_zuopin" />
+
+                <TextView
+                    android:id="@+id/single_photoitem_comment_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/single_photoitem_works_tv"
+                    android:drawableLeft="@drawable/ic_home_comment_normal"
+                    android:drawablePadding="5dp"
+                    android:padding="5dp"
+                    android:text="0"
+                    android:textColor="#4A4A4A"
+                    android:textSize="12dp" />
+
+                <TextView
+                    android:id="@+id/single_photoitem_share_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@id/single_photoitem_comment_tv"
+                    android:drawableLeft="@drawable/ic_home_share_normal"
+                    android:drawablePadding="5dp"
+                    android:padding="5dp"
+                    android:text="0"
+                    android:textColor="#4A4A4A"
+                    android:textSize="12dp" />
+            </RelativeLayout>
+
+            <!-- 单条求助类型操作栏 -->
+
+            <RelativeLayout
+                android:id="@+id/single_photoitem_ask"
+                android:layout_width="wrap_content"
+                android:layout_height="57dp"
+                android:layout_marginLeft="5dp"
+                android:visibility="gone" >
+
+                <TextView
+                    android:id="@+id/single_photoitem_ask_comment_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:drawableLeft="@drawable/ic_home_comment_normal"
+                    android:drawablePadding="5dp"
+                    android:padding="5dp"
+                    android:text="0"
+                    android:textColor="#4A4A4A"
+                    android:textSize="12dp" />
+
+                <TextView
+                    android:id="@+id/single_photoitem_ask_share_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@id/single_photoitem_ask_comment_tv"
+                    android:drawableLeft="@drawable/ic_home_share_normal"
+                    android:drawablePadding="5dp"
+                    android:padding="5dp"
+                    android:text="0"
+                    android:textColor="#4A4A4A"
+                    android:textSize="12dp" />
+            </RelativeLayout>
+
+            <!-- 右侧操作按钮 -->
+
+            <RelativeLayout
+                android:id="@+id/photo_item_like_area"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp"
+                android:visibility="gone" >
+
+                <TextView
+                    android:id="@+id/photo_item_like_count_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/shape_like_count"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textSize="11dp" />
+
+                <ImageView
+                    android:id="@+id/photo_item_like_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="-13dp"
+                    android:layout_toLeftOf="@id/photo_item_like_count_tv"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_home_like_normal" />
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/photo_item_help_btn"
+                android:layout_width="26dp"
+                android:layout_height="33dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/upload_reply_image"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/photo_item_hot_comments_panel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="0dp"
+            android:visibility="gone" >
+
+            <com.psgod.ui.widget.ChildListView
+                android:id="@+id/photo_item_hot_comments_lv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:divider="@null"
+                android:scrollbars="none" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="#F7F7F7" />
+    </LinearLayout>
+
+</com.psgod.ui.view.PhotoItemView>

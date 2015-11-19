@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFFFFF" >
+    
+   	<com.psgod.ui.view.PullToRefreshStaggeredGridView 
+        android:id="@+id/fragment_inprogress_ask_staggered_gridview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/actionbar"
+        android:fastScrollEnabled="true"
+        android:scrollbars="vertical"
+        android:background="#F7F7F7"
+      	 />
+    
+    <RelativeLayout
+        android:id="@+id/fragment_ask_empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal|top"
+        android:layout_below="@id/actionbar"
+        android:visibility="gone">
+         
+		<ImageView 
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_alignParentRight="true"
+		    android:layout_alignParentTop="true"
+		    android:layout_marginRight="10dp"
+		    android:layout_marginTop="10dp"
+		    android:src="@drawable/point_at"
+		    android:visibility="gone"
+		    />
+        
+        <ImageView
+            android:id="@+id/fragment_ask_nothing_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+			android:layout_centerHorizontal="true"
+            android:layout_marginTop="60dp"
+            android:background="@drawable/ic_gui"/>
+		
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+			android:layout_centerHorizontal="true"
+			android:layout_below="@id/fragment_ask_nothing_icon"
+			android:layout_marginTop="35dp"
+            android:text="点击右上方照相机上传你的求助吧"
+            android:textColor="#8D8D8D"
+            android:textSize="15dp" />
+    </RelativeLayout>
+    
+</LinearLayout>

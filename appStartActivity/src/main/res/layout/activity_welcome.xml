@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:clipToPadding="true"
+	android:fitsSystemWindows="true"
+	android:id="@+id/welcome_parent"
+    android:background="@drawable/shape_welcome_gradient" >
+    
+    <ImageView
+        android:id="@+id/welcome_picture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/logo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="91dp"/>
+    
+    <LinearLayout 
+        android:id="@+id/other_register_login"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="40dp"
+        android:layout_marginLeft="35dp"
+	    android:layout_marginRight="35dp">
+	    
+	    <TextView
+		    android:id="@+id/others_register_btn"
+		    android:layout_width="0dp"
+		    android:layout_height="match_parent"
+		    android:layout_weight="1"
+		    android:background="@drawable/selector_btn_weibo_login"
+		    android:gravity="center"
+		    android:text="其他方式注册"
+		    android:textColor="#50484B"
+		    android:textSize="14dp"
+		    android:layout_alignParentLeft="true"
+		    android:layout_marginRight="5dp" />
+	   	
+	   	<TextView
+	        android:id="@+id/welcome_activity_login_link"
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight="1"
+	        android:layout_toRightOf="@id/others_register_btn"
+	        android:gravity="center"
+	        android:background="@drawable/selector_btn_phone_login"
+	        android:text="已有账号登录"
+	        android:layout_marginLeft="5dp"
+	        android:textColor="#50484B"
+	        android:textSize="14dp" />
+        
+    </LinearLayout>
+    
+    <RelativeLayout 
+        android:id="@+id/weibo_register_layout"
+        android:layout_width="match_parent"
+	    android:layout_height="45dp"  
+	    android:layout_marginLeft="35dp"
+	    android:layout_marginRight="35dp"    
+	    android:layout_marginBottom="7dp"
+	    android:layout_above="@id/other_register_login"
+	    android:gravity="center"
+	    android:background="@drawable/selector_btn_weibo_login"
+	    android:clickable="true" >
+        
+	    <TextView
+	        android:id="@+id/weibo_register_btn"	        
+		    android:layout_width="wrap_content"
+		    android:layout_height="match_parent"  
+		    android:drawableLeft="@drawable/ic_weibo_register"
+		    android:drawablePadding="9dp"
+			android:text="微博登录"
+			android:gravity="center"
+		    android:textColor="#50484B"
+		    android:textSize="14dp" />
+    </RelativeLayout>
+	
+</RelativeLayout>

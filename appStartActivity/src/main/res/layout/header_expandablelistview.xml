@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+    <TextView
+        android:id="@+id/header_expandablelistview_tv"
+        android:background="#F5F5F5"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="16.5dp"
+        android:textColor="#637685"
+        android:textSize="13dp" 
+        android:text="热门评论"
+        />
+
+</RelativeLayout>

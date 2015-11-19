@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:psgod="http://schemas.android.com/apk/res/com.psgod"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF" 
+    android:clipToPadding="true"
+    android:id="@+id/activity_comment_list_parent"
+	android:fitsSystemWindows="true">
+	
+    <RelativeLayout 
+        android:layout_width="match_parent"
+    	android:layout_height="match_parent"
+    	android:background="#FFFFFF">
+    	
+	    <com.psgod.ui.widget.ActionBar
+	        android:id="@+id/actionbar"
+	        android:layout_width="match_parent"
+	        android:layout_height="@dimen/actionbar_height"
+	        psgod:rightBtnVisibility="gone"
+	        psgod:title="全部评论" />
+	
+	    <LinearLayout
+	        android:id="@+id/rl_bottom"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentBottom="true" >
+	
+	        <!-- 聊天输入框 -->
+	
+	        <include
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            layout="@layout/widge_face_relativelayout" />
+	    </LinearLayout>
+	
+	    <com.handmark.pulltorefresh.library.PullToRefreshExpandableListView
+	        android:id="@+id/activity_comment_list_lv"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:layout_above="@id/rl_bottom"
+	        android:layout_below="@id/actionbar"
+	        android:background="#F8F8F8"
+	        android:groupIndicator="@null"
+	        android:listSelector="#00000000"
+	        android:scrollbars="none" />
+	    
+    </RelativeLayout>
+
+</RelativeLayout>

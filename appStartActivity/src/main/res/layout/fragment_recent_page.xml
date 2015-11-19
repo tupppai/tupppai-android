@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/fragment_recentpage_view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/actionbar_height" />
+
+    <RadioGroup
+        android:id="@+id/fragment_recentpage_tab_radio_group"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/actionbar_height"
+        android:background="#FFFFFF"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+
+        <RadioButton
+            android:id="@+id/fragment_recentpage_asks_radio_btn"
+            style="@style/homepage_top_tabbar"
+            android:layout_marginRight="42dp"
+            android:checked="true"
+            android:gravity="center"
+            android:padding="0dp"
+            android:text="求P"
+            android:textColor="#000000" />
+
+        <RadioButton
+            android:id="@+id/fragment_recentpage_works_radio_btn"
+            style="@style/homepage_top_tabbar"
+
+            android:checked="false"
+            android:gravity="center"
+            android:padding="0dp"
+            android:text="作品"
+            android:textColor="#000000" />
+
+        <RadioButton
+            android:id="@+id/fragment_recentpage_act_radio_btn"
+            style="@style/homepage_top_tabbar"
+            android:layout_marginLeft="42dp"
+            android:checked="true"
+            android:gravity="center"
+            android:padding="0dp"
+            android:text="活动"
+            android:textColor="#000000" />
+    </RadioGroup>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@id/fragment_recentpage_tab_radio_group"
+        android:background="#1A000000" />
+
+    <ImageView
+        android:id="@+id/fragment_recentpage_cursor"
+        android:layout_width="match_parent"
+        android:layout_height="4.5dp"
+        android:layout_below="@id/fragment_recentpage_tab_radio_group"
+        android:layout_marginTop="-4.5dp"
+        android:padding="0dp"
+        android:scaleType="matrix"
+        android:src="@drawable/shape_homepage_fragment_cursor" />
+
+</RelativeLayout>

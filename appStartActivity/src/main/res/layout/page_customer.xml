@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#fff5f5f5"
+    android:orientation="vertical" >
+
+    <cn.sharesdk.framework.TitleLayout
+        android:id="@+id/llTitle"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/auth_title_back" />
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@id/llTitle" >
+
+        <LinearLayout
+            android:id="@+id/llList"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="5dp" >
+
+            <LinearLayout
+                android:id="@+id/btnSw"
+                android:layout_width="fill_parent"
+                android:layout_height="44dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/btn_back" >
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/logo_sinaweibo" />
+
+             
+            </LinearLayout>
+            
+            
+            <LinearLayout
+                android:id="@+id/btnTw"
+                android:layout_width="fill_parent"
+                android:layout_height="44dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/btn_back" >
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/logo_twitter" />
+
+                <TextView
+                    android:text="customer_twitter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_marginRight="52dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textColor="#000000"
+                    android:textSize="16dp" />
+            </LinearLayout>
+            
+            <LinearLayout
+                android:id="@+id/btnYd"
+                android:layout_width="fill_parent"
+                android:layout_height="44dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/btn_back" >
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/logo_youdao" />
+
+                <TextView
+                    android:text="youdao"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_marginRight="52dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textColor="@android:color/black"
+                    android:textSize="16dp" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/btnShSSK"
+                android:layout_width="fill_parent"
+                android:layout_height="44dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/btn_back" >
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/logo_sohusuishenkan" />
+
+                <TextView
+                    android:text="suishenkan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_marginRight="52dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textColor="@android:color/black"
+                    android:textSize="16dp" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/btnTumblr"
+                android:layout_width="fill_parent"
+                android:layout_height="44dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/btn_back" >
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/logo_tumblr" />
+
+                <TextView
+                    android:text="customer_tumblr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_marginRight="52dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textColor="@android:color/black"
+                    android:textSize="16dp" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/llTitle"
+        android:background="@drawable/title_shadow" />
+
+</RelativeLayout>

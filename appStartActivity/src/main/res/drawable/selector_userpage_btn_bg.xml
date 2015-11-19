@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 选中时的文本色 -->
+    <item android:state_pressed="true" android:drawable="@color/color_d9d9d9"/>
+    
+    <!-- 默认时的文本色 -->
+    <item android:drawable="@color/white"/>
+
+</selector>

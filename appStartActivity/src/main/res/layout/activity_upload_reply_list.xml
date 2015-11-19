@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:psgod="http://schemas.android.com/apk/res/com.psgod"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:orientation="vertical"
+    android:clipToPadding="true"
+	android:fitsSystemWindows="true" >
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+    	android:layout_height="match_parent"
+    	android:background="#F7F7F7"
+    	android:orientation="vertical">
+        
+	   <com.psgod.ui.widget.ActionBar
+	        android:id="@+id/actionbar"
+	        android:layout_width="match_parent"
+	        android:layout_height="@dimen/actionbar_height"
+	        psgod:rightBtnVisibility="gone"
+	        psgod:title="选择帮P任务" />
+	
+	    <com.handmark.pulltorefresh.library.PullToRefreshListView
+	        android:id="@+id/select_reply_listview"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:divider="@null"
+	        android:scrollbars="none" />
+	
+	    <LinearLayout
+	        android:id="@+id/inprogress_fragment_reply_empty_view"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:layout_below="@id/actionbar"
+	        android:gravity="center_horizontal|top"
+	        android:orientation="vertical"
+	        android:visibility="gone" >
+	
+	        <ImageView
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_marginTop="60dp"
+	            android:background="@drawable/ic_pencil" />
+	        
+	        <TextView
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_marginTop="35dp"
+	            android:text="暂时还没帮P任务，"
+	            android:textColor="#8D8D8D"
+	            android:textSize="15dp" />
+	
+	        <TextView
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_marginTop="5dp"
+	            android:text="请添加BANG后再上传作品哦!"
+	            android:textColor="#8D8D8D"
+	            android:textSize="15dp" />
+	    </LinearLayout>
+	    
+    </LinearLayout>
+
+</LinearLayout>

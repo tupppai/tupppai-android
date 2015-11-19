@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:psgod="http://schemas.android.com/apk/res/com.psgod"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF" 
+    android:clipToPadding="true"
+	android:fitsSystemWindows="true">
+	
+    <LinearLayout 
+        android:layout_width="match_parent"
+    	android:layout_height="match_parent"
+    	android:background="#FFFFFF"
+    	android:orientation="vertical" >
+        
+	   	<com.psgod.ui.widget.ActionBar
+	        android:id="@+id/actionbar"
+	        android:layout_width="match_parent"
+	        android:layout_height="@dimen/actionbar_height"
+	        psgod:rightBtnVisibility="gone"
+	        psgod:title="设置" />
+	
+	    <!-- 消息提醒 -->
+	    <ScrollView
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content" >
+	
+	        <LinearLayout
+	            android:layout_width="match_parent"
+	            android:layout_height="match_parent"
+	            android:orientation="vertical" >
+	            
+	            <TextView
+	                android:id="@+id/activity_setting_account_safe_btn"
+	                style="@style/user_fragment_btn"
+	                android:text="账号与安全" />
+	            
+	            <View
+		            android:layout_width="match_parent"
+		            android:layout_height="0.5dp"
+		            android:layout_marginLeft="27dp"
+		            android:layout_marginRight="27dp"
+		            android:background="#1A000000"
+		            />
+	
+	            <TextView
+	                android:id="@+id/activity_setting_editInfo_btn"
+	                style="@style/user_fragment_btn"
+	                android:text="编辑个人资料" />
+	            
+	            <View
+		            android:layout_width="match_parent"
+		            android:layout_height="9dp"
+		            android:background="#F7F7F7"
+		            />
+				
+	            <TextView 
+	                android:id="@+id/activity_setting_notification_btn"
+	                style="@style/user_fragment_btn"
+	                android:text="消息提醒" />
+	            
+	            <View
+		            android:layout_width="match_parent"
+		            android:layout_height="0.5dp"
+		            android:layout_marginLeft="27dp"
+		            android:layout_marginRight="27dp"
+		            android:background="#1A000000"
+		            />
+	            
+	            <TextView
+	                android:id="@+id/activity_setting_liked_btn"
+	                style="@style/user_fragment_btn"
+	                android:text="我赞过的" />
+	            
+	            <View
+		            android:layout_width="match_parent"
+		            android:layout_height="0.5dp"
+		            android:layout_marginLeft="27dp"
+		            android:layout_marginRight="27dp"
+		            android:background="#1A000000"
+		            />
+	            
+	            <TextView
+	                android:id="@+id/activity_setting_commend_btn"
+	                style="@style/user_fragment_btn"
+	                android:text="我评论过的" />
+	
+	            <View
+		            android:layout_width="match_parent"
+		            android:layout_height="9dp"
+		            android:background="#F7F7F7"
+		            />
+	            
+	            <TextView
+	                android:id="@+id/activity_setting_check_new_version"
+	                style="@style/user_fragment_btn"
+	                android:text="版本更新" />
+	
+	            <View
+		            android:layout_width="match_parent"
+		            android:layout_height="0.5dp"
+		            android:layout_marginLeft="27dp"
+		            android:layout_marginRight="27dp"
+		            android:background="#1A000000"
+		            />
+	            
+	            <TextView
+	                android:id="@+id/activity_setting_clear_cache_btn"
+	                style="@style/user_fragment_btn"
+	                android:text="清理缓存" />
+	
+	            <View
+		            android:layout_width="match_parent"
+		            android:layout_height="0.5dp"
+		            android:layout_marginLeft="27dp"
+		            android:layout_marginRight="27dp"
+		            android:background="#1A000000"
+		            />
+	            
+	            <TextView
+	                android:id="@+id/activity_setting_rating_btn"
+	                style="@style/user_fragment_btn"
+	                android:text="给图派评分" />
+	
+	            <View
+		            android:layout_width="match_parent"
+		            android:layout_height="9dp"
+		            android:background="#F3F3F3"
+		            />
+	            
+	            <TextView
+	                android:id="@+id/activity_setting_feedback_btn"
+	                style="@style/user_fragment_btn"
+	                android:text="意见反馈" />
+			
+	            <View
+		            android:layout_width="match_parent"
+		            android:layout_height="0.5dp"
+		            android:layout_marginLeft="27dp"
+		            android:layout_marginRight="27dp"
+		            android:background="#1A000000"
+		            />
+	                        
+	            <TextView
+	                android:id="@+id/activity_setting_about_us_btn"
+	               	style="@style/user_fragment_btn"
+	                android:text="关于我们" />
+	            
+	            <View
+		            android:layout_width="match_parent"
+		            android:layout_height="0.5dp"
+		            android:layout_marginLeft="27dp"
+		            android:layout_marginRight="27dp"
+		            android:background="#1A000000"
+		            />
+	            
+	            <Button
+	                android:id="@+id/activity_setting_exit_btn"
+	                android:layout_width="match_parent"
+	                android:layout_height="36dp"
+	                android:background="@drawable/selector_exit_background"
+	                android:layout_gravity="bottom"
+	                android:gravity="center"
+	                android:text="退出当前帐号"
+	                android:textColor="#000000"
+	                android:textSize="16dp"
+	                android:layout_marginTop="20dp"
+	                android:layout_marginBottom="20dp"
+	                android:layout_marginLeft="29dp"
+	                android:layout_marginRight="29dp" />
+	        </LinearLayout>
+	    </ScrollView>
+    </LinearLayout>
+
+</RelativeLayout>

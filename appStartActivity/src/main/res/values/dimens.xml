@@ -1,0 +1,45 @@
+<resources>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="normal_margin">16dp</dimen>
+    <dimen name="small_margin">8dp</dimen>
+    <dimen name="actionbar_height">48dp</dimen>
+    <dimen name="actionbar_height_2">14dp</dimen>
+    <dimen name="actionbar_title">18sp</dimen>
+    <dimen name="user_avatar_size">32dp</dimen>
+    <dimen name="user_gender_size">15dp</dimen>
+    <dimen name="homepage_pser_img_size">30dp</dimen>
+    <dimen name="homepage_pser_img_first_margin">10dp</dimen>
+    <dimen name="homepage_pser_img_margin">6dp</dimen>
+    <dimen name="userpage_btn_text">14dp</dimen>
+    <dimen name="bottom_dialog_btn_height">40dp</dimen>
+    <dimen name="activity_setting_btn_height">43dp</dimen>
+    <dimen name="activity_setting_btn_text">14dp</dimen>
+    <dimen name="grid_image_height">116dp</dimen>
+    <dimen name="follow_btn_height">22dp</dimen>
+    <dimen name="follow_btn_width">25dp</dimen>
+    <dimen name="photo_item_replyer_avatar_size">27dp</dimen>
+    <dimen name="msg_list_size">66dp</dimen>
+    <dimen name="divider_height">1dp</dimen>
+    <dimen name="toast_height">45dp</dimen>
+    <dimen name="split_one_pixels">0.5dp</dimen>
+    <!--<dimen name="max_header_height">4310d</dimen>-->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <!--<dimen name="split_one_pixels">1px</dimen>-->
+    <dimen name="split_one_dip">1dp</dimen>
+    <dimen name="max_header_height">260dp</dimen>
+    <dimen name="max_header_height_profile">225dp</dimen>
+    <dimen name="header_offset_dis">220dp</dimen>
+    <dimen name="header_offset_dis_profile">198dp</dimen>
+    <dimen name="indicator_right_padding">10dp</dimen>
+    <dimen name="indicator_corner_radius">12dp</dimen>
+    <dimen name="indicator_internal_padding">4dp</dimen>
+    <dimen name="header_footer_left_right_padding">24dp</dimen>
+    <dimen name="header_footer_top_bottom_padding">12dp</dimen>
+    <dimen name="new_actionbar_margin_top">25dp</dimen>
+    <dimen name="photo_margin">16dp</dimen>
+    <dimen name="multi_image_slect_size">120dp</dimen>
+    <dimen name="multi_image_select_space_size">2dp</dimen>
+
+</resources>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:baselineAligned="false"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/shape_dialog_corner"
+		android:paddingTop="25dp"
+        android:gravity="bottom"
+        android:orientation="vertical"
+        >
+   
+        <Button
+            android:id="@+id/dialog_camera_choose_photo"
+            style="@style/action_sheet_dialog_blue_btn"
+            android:text="求助上传" />
+        
+        <View 
+		    android:layout_width="match_parent"
+		    android:layout_height="12dp"
+		    android:background="#FFFFFF"
+		    />
+
+        <Button
+            android:id="@+id/dialog_camera_upload_photo"
+            style="@style/action_sheet_dialog_blue_btn"
+            android:text="作品上传" />
+        
+        <View 
+		    android:layout_width="match_parent"
+		    android:layout_height="17dp"
+		    android:background="#FFFFFF"
+		    />
+
+        <Button
+            android:id="@+id/dialog_camera_cancel"
+            style="@style/action_sheet_dialog_gray_btn_new"
+            android:text="取消" />
+        
+        <View 
+		    android:layout_width="match_parent"
+		    android:layout_height="22dp"
+		    android:background="#FFFFFF"
+		    />
+    </LinearLayout>
+
+</LinearLayout>

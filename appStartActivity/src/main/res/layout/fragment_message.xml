@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:psgod="http://schemas.android.com/apk/res/com.psgod"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:orientation="vertical" >
+    
+    <com.psgod.ui.widget.ActionBar
+        android:id="@+id/actionbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/actionbar_height"
+        psgod:rightBtnVisibility="gone"
+        psgod:title="消息" />
+    
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/actionbar" >
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+            
+            <!-- 评论 -->
+            <TextView
+                android:id="@+id/fragment_message_comment_btn"
+                style="@style/user_fragment_btn"
+                android:drawableLeft="@drawable/ic_message_comment"
+                android:text="评论" />
+             
+            <View
+	            android:layout_width="match_parent"
+	            android:layout_height="0.5dp"
+	            android:layout_marginLeft="31dp"
+	            android:layout_marginRight="31dp"
+	            android:background="#E5E5E5"
+	            />
+            
+            <!-- 帖子回复 -->
+            <TextView 
+                android:id="@+id/fragment_message_reply_btn"
+                style="@style/user_fragment_btn"
+                android:drawableLeft="@drawable/ic_message_draft"
+                android:text="帖子回复" />
+            
+            <View
+	            android:layout_width="match_parent"
+	            android:layout_height="0.5dp"
+	            android:layout_marginLeft="31dp"
+	            android:layout_marginRight="31dp"
+	            android:background="#E5E5E5"
+	            />
+            
+            <!-- 关注通知 -->
+            <TextView 
+                android:id="@+id/fragment_message_follow_btn"
+                style="@style/user_fragment_btn"
+                android:drawableLeft="@drawable/ic_message_follow"
+                android:text="关注通知" />
+            
+            <View
+	            android:layout_width="match_parent"
+	            android:layout_height="0.5dp"
+	            android:layout_marginLeft="31dp"
+	            android:layout_marginRight="31dp"
+	            android:background="#E5E5E5"
+	            />
+            
+            <!-- 邀请通知 -->
+            <TextView 
+                android:id="@+id/fragment_message_invite_btn"
+                style="@style/user_fragment_btn"
+                android:drawableLeft="@drawable/ic_message_invite"
+                android:text="邀请通知" />
+            
+            <View
+	            android:layout_width="match_parent"
+	            android:layout_height="0.5dp"
+	            android:layout_marginLeft="31dp"
+	            android:layout_marginRight="31dp"
+	            android:background="#E5E5E5"
+	            />
+            
+            <!-- 系统通知 -->
+            <TextView 
+                android:id="@+id/fragment_message_system_btn"
+                style="@style/user_fragment_btn"
+                android:drawableLeft="@drawable/ic_message_setting"
+                android:text="系统通知" />
+            
+            <View
+	            android:layout_width="match_parent"
+	            android:layout_height="0.5dp"
+	            android:layout_marginLeft="31dp"
+	            android:layout_marginRight="31dp"
+	            android:background="#E5E5E5"
+	            />
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

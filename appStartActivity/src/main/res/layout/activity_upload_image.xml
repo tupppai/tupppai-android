@@ -1,0 +1,347 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:psgod="http://schemas.android.com/apk/res/com.psgod"
+    android:id="@+id/upload_image_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF" 
+    android:clipToPadding="true"
+	android:fitsSystemWindows="true">
+
+    <RelativeLayout 
+        android:layout_width="match_parent"
+    	android:layout_height="match_parent"
+   		android:background="#FFFFFF" >
+        
+	    <com.psgod.ui.widget.ActionBar
+	        android:id="@+id/actionbar"
+	        android:layout_width="match_parent"
+	        android:layout_height="@dimen/actionbar_height"
+	        psgod:title="上传照片" />
+	
+	    <View
+	        android:id="@+id/activity_upload_image_line"
+	        android:layout_width="match_parent"
+	        android:layout_height="78dp"
+	        android:layout_alignParentBottom="true"
+	        android:background="#B3B3B3" />
+	
+	    <RelativeLayout
+	        android:id="@+id/activity_upload_image_bottom_crop_image_panel"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:layout_alignTop="@id/activity_upload_image_line"
+	        android:layout_marginTop="1dp"
+	        android:background="#F5F6F8" >
+	
+	        <RadioGroup
+	            android:id="@+id/activity_upload_image_crop_image_ratio_radio_group"
+	            android:layout_width="match_parent"
+	            android:layout_height="104dp"
+	            android:background="#FFFFFF"
+	            android:gravity="center"
+	            android:orientation="horizontal" >
+	
+	            <RadioButton
+	                android:id="@+id/activity_upload_image_3to4"
+	                android:layout_width="30dp"
+	                android:layout_height="40dp"
+	                android:layout_marginRight="48dp"
+	                android:background="@drawable/selector_crop_image_3to4_btn"
+	                android:button="@null"
+	                android:gravity="center"
+	                android:text="3:4"
+	                android:textColor="@color/selector_upload_image_crop_image_radio_btn"
+	                android:textSize="10dp" />
+	
+	            <RadioButton
+	                android:id="@+id/activity_upload_image_1to1"
+	                android:layout_width="30dp"
+	                android:layout_height="30dp"
+	                android:layout_marginRight="24dp"
+	                android:background="@drawable/selector_crop_image_3to4_btn"
+	                android:button="@null"
+	                android:gravity="center"
+	                android:text="1:1"
+	                android:textColor="@color/selector_upload_image_crop_image_radio_btn"
+	                android:textSize="10dp" />
+	
+	            <RadioButton
+	                android:id="@+id/activity_upload_image_4to3"
+	                android:layout_width="40dp"
+	                android:layout_height="30dp"
+	                android:layout_marginLeft="24dp"
+	                android:background="@drawable/selector_crop_image_3to4_btn"
+	                android:button="@null"
+	                android:gravity="center"
+	                android:text="4:3"
+	                android:textColor="@color/selector_upload_image_crop_image_radio_btn"
+	                android:textSize="10dp" />
+	
+	            <RadioButton
+	                android:id="@+id/activity_upload_image_original"
+	                android:layout_width="40dp"
+	                android:layout_height="30dp"
+	                android:layout_marginLeft="48dp"
+	                android:background="@drawable/selector_crop_image_3to4_btn"
+	                android:button="@null"
+	                android:checked="true"
+	                android:gravity="center"
+	                android:text="原图"
+	                android:textColor="@color/selector_upload_image_crop_image_radio_btn"
+	                android:textSize="10dp" />
+	        </RadioGroup>
+	    </RelativeLayout>
+	
+	    <LinearLayout
+	        android:id="@+id/activity_upload_image_bottom_edit_label_panel"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:layout_alignTop="@id/activity_upload_image_line"
+	        android:layout_marginTop="1dp"
+	        android:background="#F5F6F8"
+	        android:orientation="vertical"
+	        android:visibility="invisible" >
+	
+	        <TextView
+	            android:id="@+id/activity_upload_image_click_image_tag"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_centerHorizontal="true"
+	            android:layout_marginTop="10dp"
+	            android:gravity="center"
+	            android:text="点击图片"
+	            android:textColor="#B3B3B3"
+	            android:textSize="16dp" />
+	
+	        <TextView
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_centerHorizontal="true"
+	            android:layout_marginTop="1dp"
+	            android:gravity="center"
+	            android:text="用标签告诉大神你要什么效果"
+	            android:textColor="#B3B3B3"
+	            android:textSize="13dp" />
+	    </LinearLayout>
+	
+	    <LinearLayout
+	        android:id="@+id/activity_upload_image_bottom_share_panel"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:layout_alignTop="@id/activity_upload_image_line"
+	        android:layout_marginTop="1dp"
+	        android:background="#F5F6F8"
+	        android:gravity="center_vertical"
+	        android:orientation="horizontal"
+	        android:paddingLeft="15dp"
+	        android:paddingRight="56dp"
+	        android:visibility="invisible" >
+	
+	        <TextView
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="同步到 :"
+	            android:textColor="#B3B3B3"
+	            android:textSize="16dp" />
+	
+	        <!-- 空白TextView填充空白区域 -->
+	
+	        <TextView
+	            android:layout_width="30dp"
+	            android:layout_height="wrap_content" />
+	
+	        <ToggleButton
+	            android:id="@+id/activity_upload_image_share_wechat"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:background="@drawable/selector_share_weibo"
+	            android:minHeight="0dp"
+	            android:minWidth="0dp"
+	            android:textOff=""
+	            android:textOn="" />
+	
+	        <!-- 空白TextView填充空白区域 -->
+	
+	        <TextView
+	            android:layout_width="30dp"
+	            android:layout_height="wrap_content" />
+	
+	        <ToggleButton
+	            android:id="@+id/activity_upload_image_share_weibo"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:background="@drawable/selector_share_weixing"
+	            android:minHeight="0dp"
+	            android:minWidth="0dp"
+	            android:textOff=""
+	            android:textOn="" />
+	    </LinearLayout>
+	
+	    <com.psgod.ui.view.CropImageView
+	        android:id="@+id/activity_upload_image_imageview"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:layout_above="@id/activity_upload_image_line"
+	        android:layout_below="@+id/actionbar"
+	        android:layout_marginLeft="@dimen/photo_margin"
+	        android:layout_marginRight="@dimen/photo_margin"
+	        android:background="#FFFFFFFF"
+	        android:scaleType="fitCenter" />
+	
+	    <!-- 裁剪页面顶部选择栏 -->
+	
+	    <RelativeLayout
+	        android:id="@+id/upload_image_crop_image_header"
+	        android:layout_width="fill_parent"
+	        android:layout_height="60dp"
+	        android:layout_alignTop="@id/actionbar"
+	        android:background="#FFFFFF"
+	        android:paddingLeft="16dp"
+	        android:paddingRight="16dp"
+	        android:visibility="invisible" >
+	
+	        <ImageButton
+	            android:id="@+id/upload_image_crop_image_header_cancel"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentLeft="true"
+	            android:layout_centerVertical="true"
+	            android:background="@null"
+	            android:src="@drawable/ic_cancel" />
+	
+	        <ImageButton
+	            android:id="@+id/upload_image_crop_image_header_next"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentRight="true"
+	            android:layout_centerVertical="true"
+	            android:background="@null"
+	            android:src="@drawable/ic_next" />
+	    </RelativeLayout>
+	
+	    <RelativeLayout
+	        android:id="@+id/activity_upload_image_label_container"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:layout_alignBottom="@id/activity_upload_image_imageview"
+	        android:layout_alignTop="@id/activity_upload_image_imageview"
+	        android:layout_marginLeft="@dimen/photo_margin"
+	        android:layout_marginRight="@dimen/photo_margin" />
+	
+	    <LinearLayout
+	        android:id="@+id/activity_upload_image_label_btn_panel"
+	        android:layout_width="wrap_content"
+	        android:layout_height="match_parent"
+	        android:layout_alignBottom="@id/activity_upload_image_imageview"
+	        android:layout_alignParentLeft="true"
+	        android:layout_alignTop="@id/activity_upload_image_imageview"
+	        android:gravity="center_vertical"
+	        android:orientation="vertical"
+	        android:paddingLeft="10dp"
+	        android:paddingRight="10dp"
+	        android:visibility="invisible" >
+	
+	        <ImageButton
+	            android:id="@+id/activity_upload_image_label_changeside_btn"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_marginBottom="10dp"
+	            android:background="@null"
+	            android:src="@drawable/selector_btn_label_changeside" />
+	
+	        <ImageButton
+	            android:id="@+id/activity_upload_image_label_delete_btn"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:background="@null"
+	            android:src="@drawable/selector_btn_delete_label" />
+	    </LinearLayout>
+	
+	    <View
+	        android:id="@+id/activity_upload_image_mask"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:layout_below="@id/actionbar"
+	        android:background="#B3FFFFFF"
+	        android:visibility="invisible" />
+	
+	    <FrameLayout
+	        android:id="@+id/activity_upload_image_input_framelayout"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@id/actionbar"
+	        android:background="#FFFFFF"
+	        android:visibility="invisible" >
+	
+	        <RelativeLayout
+	            android:id="@+id/test"
+	            android:layout_width="match_parent"
+	            android:layout_height="match_parent"
+	            android:gravity="center_vertical"
+	            android:paddingBottom="12dp"
+	            android:paddingLeft="16dp"
+	            android:paddingRight="16dp"
+	            android:paddingTop="12dp" >
+	
+	            <TextView
+	                android:id="@+id/upload_image_label_text_num"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text="0/18"
+	                android:textColor="#8ACBFF"
+	                android:textSize="10dp" />
+	
+	            <EditText
+	                android:id="@+id/activity_upload_image_input_panel"
+	                android:layout_width="match_parent"
+	                android:layout_height="wrap_content"
+	                android:layout_below="@id/upload_image_label_text_num"
+	                android:layout_marginRight="65dp"
+	                android:background="@null"
+	                android:hint="在这里输入你要的效果"
+	                android:imeOptions="actionDone"
+	                android:maxLength="18"
+	                android:maxLines="1"
+	                android:paddingBottom="11dp"
+	                android:paddingTop="11dp"
+	                android:textColor="#9C9C9C"
+	                android:textColorHint="#9A9A9A"
+	                android:textSize="13dp" />
+	
+	            <View
+	                android:layout_width="match_parent"
+	                android:layout_height="1dp"
+	                android:layout_below="@id/activity_upload_image_input_panel"
+	                android:layout_gravity="bottom"
+	                android:layout_marginRight="65dp"
+	                android:background="#CCCCCC" />
+	            
+	            <RelativeLayout 
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_alignParentRight="true"
+	                android:layout_centerVertical="true"
+	                android:padding="10dp">
+	                
+		            <TextView
+		                android:id="@+id/upload_image_add_label_btn"
+		                android:layout_width="33dp"
+		                android:layout_height="33dp"
+		                android:background="@drawable/selector_add_label_btn"
+		                android:gravity="center"
+		                android:text="添加"
+		                android:textColor="#FFFFFF"
+		                android:textSize="13dp" />
+		            
+	            </RelativeLayout>
+	        </RelativeLayout>
+	
+	        <View
+	            android:layout_width="match_parent"
+	            android:layout_height="0.5dp"
+	            android:layout_gravity="bottom"
+	            android:background="#C3CBCC" />
+	    </FrameLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -1,0 +1,29 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:psgod="http://schemas.android.com/apk/res/com.psgod"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF" 
+    android:clipToPadding="true"
+	android:fitsSystemWindows="true">
+	
+    <RelativeLayout 
+        android:layout_width="match_parent"
+    	android:layout_height="match_parent"
+    	android:background="#FFFFFF">
+        
+	    <com.psgod.ui.widget.ActionBar
+	        android:id="@+id/actionbar"
+	        android:layout_width="match_parent"
+	        android:layout_height="@dimen/actionbar_height"
+	        psgod:title="头像裁剪" />
+	
+	    <com.psgod.ui.view.CropImageView
+	        android:id="@+id/activity_upload_avatar_imageview"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:layout_below="@id/actionbar"
+	        android:background="#FFFFFFFF"
+	        android:scaleType="fitCenter" />
+    </RelativeLayout>
+
+</RelativeLayout>

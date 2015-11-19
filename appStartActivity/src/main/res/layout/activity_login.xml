@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#FFFFFF"
+    android:orientation="vertical" 
+    android:clipToPadding="true"
+	android:fitsSystemWindows="true">
+
+    <TextView
+        android:id="@+id/actionbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/new_actionbar_margin_top"
+        android:drawableLeft="@drawable/ic_back_gray"
+        android:drawablePadding="16dp"
+        android:paddingLeft="16dp"
+        android:text="已有账号登录"
+        android:textColor="#000000"
+        android:textSize="15dp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="44dp"
+                android:paddingLeft="53dp"
+                android:paddingRight="53dp" >
+
+                <EditText
+                    android:id="@+id/login_number"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:background="@null"
+                    android:hint="@string/phone_register_num_hint"
+                    android:inputType="number"
+                    android:textColor="#000000"
+                    android:textColorHint="#66000000"
+                    android:textSize="17dp"
+                     />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="53dp"
+                android:layout_marginRight="53dp"
+                android:background="#ACB8C1" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="24dp"
+                android:paddingLeft="53dp"
+                android:paddingRight="53dp" >
+
+                <EditText
+                    android:id="@+id/login_pwd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:background="@null"
+                    android:hint="@string/input_pwd"
+                    android:textColor="#000000"
+                    android:textColorHint="#66000000"
+                    android:textSize="17dp"
+                    android:inputType="textPassword" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="53dp"
+                android:layout_marginRight="53dp"
+                android:background="#ACB8C1" />
+            
+            <Button
+                android:id="@+id/reset_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:background="@null"
+                android:layout_gravity="right"
+                android:layout_marginRight="48dp"
+                android:gravity="center"
+                android:text="忘记密码"
+                android:textColor="#9BA6AF"
+                android:textSize="13dp" />
+
+            <Button
+                android:id="@+id/login_confirm_btn"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:layout_marginLeft="53dp"
+                android:layout_marginRight="53dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="28dp"
+                android:background="@drawable/selector_login_confirm_btn"
+                android:text="登录"
+                android:textColor="#000000"
+                android:textSize="14dp" >
+            </Button>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="48dp"
+                android:layout_marginRight="48dp"
+                android:layout_marginTop="88dp"
+                android:background="#B5C0C8" />
+
+            <TextView
+                android:layout_width="85dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="-10dp"
+                android:background="#FFFFFF"
+                android:gravity="center"
+                android:text="社交账号登录"
+                android:textColor="#B5C0C8"
+                android:textSize="13dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="50dp" >
+                
+                <ImageView
+                    android:id="@+id/activity_login_weibo_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/weibo_login" />
+                
+                <ImageView
+                    android:id="@+id/activity_login_qq_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@id/activity_login_weibo_btn"
+                    android:layout_marginRight="36dp"
+                    android:src="@drawable/qq_reqister_btn" />
+
+                <ImageView
+                    android:id="@+id/activity_login_wechat_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/activity_login_weibo_btn"
+                    android:layout_marginLeft="36dp"
+                    android:src="@drawable/wechat_register" />
+
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

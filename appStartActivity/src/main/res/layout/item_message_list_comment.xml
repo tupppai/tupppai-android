@@ -1,0 +1,101 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:descendantFocusability="blocksDescendants"
+    android:background="@drawable/selector_notification_btn_bg"
+    >
+
+    <com.psgod.ui.widget.AvatarImageView
+        android:id="@+id/item_comment_list_avatar"
+        android:layout_width="31dp"
+        android:layout_height="31dp"
+        android:layout_alignParentLeft="true" 
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="13dp"
+        />
+
+    <ImageView
+        android:id="@+id/item_comment_list_iv"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_alignTop="@id/item_comment_list_avatar"
+        android:layout_alignParentRight="true"
+       	android:layout_marginRight="14dp"
+        android:scaleType="center" />
+    
+    <TextView
+        android:id="@+id/item_comment_list_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/item_comment_list_iv"
+        android:layout_marginTop="20dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="14dp"
+        android:text="回复ta"
+        android:textColor="#FF6D3F"
+        android:textSize="12dp" />
+
+    <TextView
+        android:id="@+id/item_comment_list_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/item_comment_list_avatar"
+        android:layout_alignTop="@id/item_comment_list_avatar"
+        android:text="remy"
+        android:textColor="#000000"
+        android:textSize="13dp" 
+        android:includeFontPadding="false"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/item_comment_list_name_tv"
+        android:layout_toRightOf="@id/item_comment_list_name_tv"
+        android:layout_marginLeft="9dp"
+        android:drawableRight="@drawable/ic_comment_message"
+        android:drawablePadding="5dp"
+        android:text="评论了"
+        android:textColor="#7F000000"
+        android:textSize="13dp" 
+        android:includeFontPadding="false"
+        />
+
+    <TextView
+        android:id="@+id/item_comment_list_time_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/item_comment_list_name_tv"
+        android:layout_below="@id/item_comment_list_name_tv"
+        android:layout_marginTop="9dp"
+        android:text="1小时前"
+        android:textColor="#7F000000"
+        android:textSize="10dp" 
+        android:includeFontPadding="false" />
+    
+    <TextView
+        android:id="@+id/item_comment_list_content_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/item_comment_list_name_tv"
+        android:layout_below="@id/item_comment_list_time_tv"
+        android:layout_marginTop="10dp"
+        android:layout_toLeftOf="@id/item_comment_list_iv"
+        android:layout_marginRight="14dp"
+        android:maxLines="1"
+        android:text="给调了位科技发达"
+        android:textColor="#000000"
+        android:textSize="14dp"
+        android:includeFontPadding="false" />
+	
+	<View 
+		android:layout_width="match_parent"
+		android:layout_height="0.5dp"
+		android:layout_marginLeft="55dp"
+		android:layout_marginRight="13dp"
+		android:background="#1A000000"
+		android:layout_below="@id/item_comment_list_text"
+		android:layout_marginTop="15dp" />
+</RelativeLayout>

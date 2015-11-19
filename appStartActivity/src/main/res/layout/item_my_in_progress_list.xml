@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFFFFF"
+    android:paddingTop="14dp" >
+
+    <com.psgod.ui.widget.AvatarImageView
+        android:id="@+id/item_my_in_progress_avatar_imgview"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="14dp"
+        android:layout_marginLeft="11dp"
+        android:src="@drawable/head_portrait"
+        />
+    
+	<TextView
+        android:id="@+id/item_my_in_progress_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="14dp"
+        android:layout_marginTop="5.5dp"
+        android:layout_alignTop="@id/item_my_in_progress_avatar_imgview"
+        android:layout_toRightOf="@id/item_my_in_progress_avatar_imgview"
+        android:textSize="15dp" 
+        android:includeFontPadding="false"
+        android:text="黄石奎" />
+	
+    <LinearLayout
+	    android:id="@+id/item_my_in_progress_upload_area"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentRight="true"
+	    android:paddingLeft="15dp"
+	    android:paddingTop="5dp">
+	    
+	    <ImageView
+	        android:id="@+id/item_my_in_progress_upload_work_btn"
+	        android:layout_width="28dp"
+	        android:layout_height="28dp"
+	        android:layout_alignParentRight="true"
+	        android:layout_marginRight="11dp"
+	        android:src="@drawable/ic_upload"
+	        android:background="@drawable/selector_user_profile_imageview"
+	        android:scaleType="centerInside" />
+	    
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/item_my_in_progress_imageview"
+        android:layout_width="match_parent"
+        android:layout_height="328dp"
+        android:layout_below="@id/item_my_in_progress_avatar_imgview"
+        android:scaleType="centerCrop"
+        android:layout_marginLeft="11dp" 
+        android:layout_marginRight="11dp" />
+    
+    <TextView
+        android:id="@+id/item_my_in_progress_time_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/item_my_in_progress_imageview"
+        android:layout_below="@id/item_my_in_progress_imageview"
+        android:layout_marginTop="20dp"
+        android:drawableLeft="@drawable/icon_clock"
+        android:drawablePadding="9dp"
+        android:textColor="#8D8D8D"
+        android:textSize="15dp" 
+        android:text="3小时前"/>
+
+    <LinearLayout
+	    android:id="@+id/item_my_in_progress_delete_area"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentRight="true"
+	    android:layout_below="@id/item_my_in_progress_imageview"
+	    android:paddingLeft="15dp"
+	    android:paddingTop="5dp">
+	    
+	    <ImageView
+	        android:layout_marginRight="11dp"
+	        android:layout_marginTop="13.5dp"
+		    android:id="@+id/item_my_in_progress_delete_btn"
+		    android:layout_width="28dp"
+		    android:layout_height="28dp"
+		    android:background="@drawable/selector_in_progress_delete"
+		    android:src="@drawable/ic_delete"
+		    android:scaleType="centerInside"/>
+	    
+	</LinearLayout>
+	
+	<View 
+	    android:layout_width="match_parent"
+	    android:layout_height="0.5dp"
+	    android:layout_marginTop="20dp"
+	    android:layout_below="@id/item_my_in_progress_time_tv"
+	    android:background="#E5E5E5"/>
+</RelativeLayout>

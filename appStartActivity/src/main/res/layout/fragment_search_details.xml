@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/search_datail_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#fff" >
+
+    <com.psgod.ui.view.PullToRefreshStaggeredGridView
+        android:id="@+id/page_tab_listview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#F8F8F8"
+        android:fastScrollEnabled="true"
+        android:scrollbars="vertical"
+        android:smoothScrollbar="true"
+        android:visibility="visible" />
+
+    <LinearLayout
+        android:id="@+id/fragment_search_detail_list_empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="120dp"
+            android:background="@drawable/ic_pencil" />
+
+        <TextView
+            android:id="@+id/empty_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:textColor="#8D8D8D"
+            android:textSize="15dp" />
+    </LinearLayout>
+
+</FrameLayout>

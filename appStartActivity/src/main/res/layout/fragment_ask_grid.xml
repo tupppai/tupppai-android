@@ -1,0 +1,56 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:psgod="http://schemas.android.com/apk/res/com.psgod"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF" >
+    
+    <com.handmark.pulltorefresh.library.PullToRefreshListView 
+        android:id="@+id/fragment_ask_grid_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF"
+        android:scrollbars="none"
+        android:divider="@color/transparent"
+        android:dividerHeight="0dip"
+        android:cacheColorHint="#FFFFFF"
+        android:fadingEdge="none"
+        android:listSelector="@color/transparent" />
+
+    <RelativeLayout
+        android:id="@+id/fragment_ask_grid_empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal|top"
+        android:layout_below="@id/actionbar"
+        android:visibility="gone">
+         
+		<ImageView 
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_alignParentRight="true"
+		    android:layout_alignParentTop="true"
+		    android:layout_marginRight="10dp"
+		    android:layout_marginTop="10dp"
+		    android:src="@drawable/point_at"
+		    android:visibility="gone"
+		    />
+        
+        <ImageView
+            android:id="@+id/fragment_ask_nothing_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+			android:layout_centerHorizontal="true"
+            android:layout_marginTop="60dp"
+            android:background="@drawable/ic_gui"/>
+		
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+			android:layout_centerHorizontal="true"
+			android:layout_below="@id/fragment_ask_nothing_icon"
+			android:layout_marginTop="35dp"
+            android:text="点击右上方照相机上传你的求助吧"
+            android:textColor="#8D8D8D"
+            android:textSize="15dp" />
+    </RelativeLayout>
+</RelativeLayout>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">图派</string>
+    <string name="ok">确认</string>
+    <string name="cancel">取消</string>
+    <!-- welcome activity -->
+    <string name="welcome_activity_wechat_register">微信注册</string>
+    <string name="welcome_activity_others_register">其他方式注册</string>
+    <string name="welcome_activity_bottom_text">登录</string>
+    <string name="text_86">+86</string>
+    <string name="text_pwd">密码</string>
+    <string name="phone_register_num_hint">输入手机号</string>
+    <string name="phone_register_pwd_hint">设置你的密码</string>
+    <string name="phone_register_hint">请设置登录求PS大神的手机号码和密码</string>
+    <!-- set info -->
+    <string name="setinfo_actionbar_title">创建个人资料</string>
+    <string name="set_info_nick">昵称  :</string>
+    <string name="set_info_nick_edit">请输入您的昵称</string>
+    <string name="set_info_sex">性别  :</string>
+    <string name="set_info_tip">点击下一步表示同意</string>
+    <string name="set_info_tip2">用户协议</string>
+    <string name="edit_user_img_text">修改头像</string>
+    <string name="set_info_place">所在地  :</string>
+    <string name="set_info_place_edit">单击选择所在城市</string>
+    <!-- verify -->
+    <string name="verify_text">验证码</string>
+    <string name="verify_hint">输入你的验证码</string>
+    <string name="verify_message">未收到请点击重新发送验证码</string>
+    <string name="next_step">下一步</string>
+    <string name="phone_register">手机注册</string>
+    <!-- login activity -->
+    <string name="phone">手机</string>
+    <string name="input_pwd">输入密码</string>
+    <string name="others_login">社交账号快速登录</string>
+    <string name="page_tab1">求P</string>
+    <string name="page_tab2">作品</string>
+    
+    <item type="id" name="inprogress_item"></item>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    
+</resources>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:psgod="http://schemas.android.com/apk/res/com.psgod"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#74C3FF" 
+    android:clipToPadding="true"
+	android:fitsSystemWindows="true">
+	
+    <RelativeLayout 
+        android:layout_width="match_parent"
+    	android:layout_height="match_parent"
+    	android:background="@color/color_ededed" >
+        
+	    <com.psgod.ui.widget.ActionBar
+	        android:id="@+id/actionbar"
+	        android:layout_width="match_parent"
+	        android:layout_height="@dimen/actionbar_height"
+	        psgod:title="账号绑定" />
+	
+	    <TextView
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@id/actionbar"
+	        android:paddingBottom="9dp"
+	        android:paddingLeft="10dp"
+	        android:paddingRight="10dp"
+	        android:paddingTop="9dp"
+	        android:text="你正在使用微信登录"
+	        android:textColor="@color/color_bcbcbc" >
+	    </TextView>
+    </RelativeLayout>
+
+</RelativeLayout>

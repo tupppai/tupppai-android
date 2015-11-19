@@ -1,0 +1,64 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/selector_notification_btn_bg" >
+
+    <com.psgod.ui.widget.AvatarImageView
+        android:id="@+id/item_notification_follow_list_avatar_imgview"
+        android:layout_width="41dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="19dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_alignParentLeft="true" />
+
+    <!-- <com.psgod.ui.view.CircleImageView
+        android:id="@+id/item_notification_follow_list_gender_imgview"
+        android:layout_width="@dimen/user_gender_size"
+        android:layout_height="@dimen/user_gender_size"
+        android:layout_alignBottom="@id/item_notification_follow_list_avatar_imgview"
+        android:layout_alignRight="@id/item_notification_follow_list_avatar_imgview" /> -->
+        
+    <RelativeLayout 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/item_notification_follow_list_avatar_imgview"
+        android:layout_marginTop="19dp"
+        android:layout_marginLeft="16dp">
+	    <TextView
+	        android:id="@+id/item_notification_follow_list_name_tv"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:textColor="#343434"
+	        android:textSize="15dp"
+	        android:includeFontPadding="false" />
+	
+	    <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@id/item_notification_follow_list_name_tv"
+	        android:layout_marginTop="10dp"
+	        android:text="关注了你"
+	        android:textColor="#8d8d8d"
+	        android:textSize="14dp"
+	        android:includeFontPadding="false" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/item_notification_follow_list_time_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="19dp"
+        android:textColor="#b8b8b8"
+        android:textSize="10dp"
+        android:includeFontPadding="false" />
+    
+	<View 
+		android:layout_width="match_parent"
+		android:layout_height="0.5dp"
+		android:background="#E5E5E5"
+		android:layout_below="@id/item_notification_follow_list_avatar_imgview" />
+</RelativeLayout>

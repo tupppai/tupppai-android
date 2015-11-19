@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ask_reply_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#7F000000"
+    android:orientation="vertical" 
+    android:clipToPadding="true"
+	android:fitsSystemWindows="true">
+	
+    <RelativeLayout 
+        android:id="@+id/ask_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="130dp"
+        android:layout_centerHorizontal="true" >
+        
+        <RelativeLayout 
+            android:id="@+id/ask_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/selector_camera_btn">
+            
+            <ImageView 
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:src="@drawable/upload_ask_image"
+	            android:layout_centerInParent="true"/>
+            
+        </RelativeLayout>
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ask_layout"
+            android:layout_marginTop="7dp"
+            android:layout_centerHorizontal="true"
+            android:text="我要求P" 
+            android:textSize="14dp"
+            android:textColor="#FFFFFF" />
+        
+    </RelativeLayout>
+    
+    <RelativeLayout 
+        android:id="@+id/reply_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="74dp"
+        android:layout_below="@id/ask_view"
+        android:layout_centerHorizontal="true" >
+        
+        <RelativeLayout 
+            android:id="@+id/reply_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/selector_camera_btn" >
+            
+            <ImageView 
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:src="@drawable/upload_reply_image_btn"
+	            android:layout_centerInParent="true" />
+            
+        </RelativeLayout>
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/reply_layout"
+            android:layout_marginTop="7dp"
+            android:layout_centerHorizontal="true" 
+            android:text="上传作品"
+            android:textSize="14dp"
+            android:textColor="#FFFFFF" />
+        
+    </RelativeLayout>
+    
+    <ImageView
+        android:id="@+id/btn_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/upload_cancel"
+        android:layout_centerHorizontal="true" 
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="30dp"
+        android:padding="19dp" />
+</RelativeLayout>

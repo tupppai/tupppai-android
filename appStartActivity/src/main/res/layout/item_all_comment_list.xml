@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#fff"
+    android:descendantFocusability="blocksDescendants" >
+
+    <com.psgod.ui.widget.AvatarImageView
+        android:id="@+id/item_comment_list_avatar_imgview"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginTop="14dp"
+        android:src="@drawable/head_portrait" />
+
+    <TextView
+        android:id="@+id/item_comment_list_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/item_comment_list_avatar_imgview"
+        android:layout_marginLeft="17dp"
+        android:layout_toRightOf="@id/item_comment_list_avatar_imgview"
+        android:textColor="#000000"
+        android:textSize="13dp" />
+
+    <TextView
+        android:id="@+id/comment_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="14dp"
+        android:text="1小时前"
+        android:textColor="#66000000"
+        android:textSize="10dp" />
+
+    <TextView
+        android:id="@+id/item_comment_list_comment_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/item_comment_list_name_tv"
+        android:layout_below="@id/item_comment_list_name_tv"
+        android:layout_marginRight="26dp"
+        android:layout_marginTop="7dp"
+        android:textColor="#99000000"
+        android:textSize="14dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@id/item_comment_list_comment_tv"
+        android:layout_marginTop="17dp"
+        android:background="#1A000000" />
+
+</RelativeLayout>

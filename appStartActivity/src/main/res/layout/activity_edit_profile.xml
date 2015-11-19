@@ -1,0 +1,150 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:psgod="http://schemas.android.com/apk/res/com.psgod"
+    android:id="@+id/edit_profile_relative_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF" >
+
+        <com.psgod.ui.widget.ActionBar
+            android:id="@+id/actionbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/actionbar_height"
+            psgod:rightBtnText=""
+            psgod:title="编辑个人资料" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/actionbar" >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+                
+                 <FrameLayout 
+	                android:id="@+id/header_layout"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_marginTop="26dp"
+	                android:layout_centerHorizontal="true" >
+	                
+                    <View
+		                android:layout_width="74dp"
+		                android:layout_height="74dp"
+		                android:background="@drawable/shape_set_info_avatar_background"
+		                android:layout_gravity="center" />
+	                
+		            <com.psgod.ui.view.CircleImageView
+	                    android:id="@+id/edit_profile_avatar"
+	                    android:layout_width="74dp"
+	                    android:layout_height="74dp"
+	                    android:src="@drawable/head_portrait" />
+		            
+		            <ImageView
+		                android:layout_width="wrap_content"
+		                android:layout_height="wrap_content"
+		                android:layout_gravity="center"
+		                android:src="@drawable/set_info_photo" />
+		            
+	            </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/header_layout"
+                    android:layout_marginTop="45dp"
+                    android:orientation="vertical" >
+
+                    <RelativeLayout
+                        android:id="@+id/edit_profile_nick_row"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:layout_marginLeft="40dp"
+                        android:layout_marginRight="40dp" >
+
+                        <TextView
+                            android:id="@+id/edit_profile_txt1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="昵称"
+                            android:textColor="#99000000"
+                            android:textSize="14dp" />
+
+                        <EditText
+                            android:id="@+id/edit_profile_nick_edittext"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBottom="@+id/edit_profile_txt1"
+                            android:layout_alignParentRight="true"
+                            android:background="@null"
+                            android:textColor="#E650484b"
+                            android:textSize="14dp"
+                            android:inputType="textMultiLine" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:layout_below="@+id/edit_profile_nick_edittext"
+                            android:layout_marginTop="6dp"
+                            android:background="#1A000000" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/edit_profile_gender_row"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:layout_marginLeft="40dp"
+                        android:layout_marginRight="40dp" >
+
+                        <TextView
+                            android:id="@+id/edit_profile_txt2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="性别"
+                            android:textColor="#99000000"
+                            android:textSize="14dp" />
+
+                        <TextView
+                            android:id="@+id/edit_profile_gender_textview"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBottom="@+id/edit_profile_txt2"
+                            android:layout_alignParentRight="true"
+                            android:drawablePadding="10dp"
+                            android:drawableRight="@drawable/icon_forward"
+                            android:text="点击选择性别"
+                            android:textColor="#E650484b"
+                            android:textSize="14dp" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:layout_below="@+id/edit_profile_gender_textview"
+                            android:layout_marginTop="6dp"
+                            android:background="#1A000000" />
+                    </RelativeLayout>
+
+                    <Button
+                        android:id="@+id/edit_profile_complete_btn"
+                        android:layout_width="match_parent"
+                        android:layout_height="36dp"
+                        android:layout_marginLeft="40dp"
+                        android:layout_marginRight="40dp"
+                        android:layout_marginTop="42dp"
+                        android:background="@drawable/selector_login_confirm_btn"
+                        android:text="保存"
+                        android:textColor="#000000"
+                        android:textSize="14dp" />
+                </LinearLayout>
+            </RelativeLayout>
+        </ScrollView>
+    </RelativeLayout>
+
+</RelativeLayout>

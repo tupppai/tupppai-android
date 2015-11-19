@@ -1,0 +1,523 @@
+<provinces>
+	<province tag="11" name="北京">
+		<city tag="1" name="东城区"/>
+		<city tag="2" name="西城区"/>
+		<city tag="3" name="崇文区"/>
+		<city tag="4" name="宣武区"/>
+		<city tag="5" name="朝阳区"/>
+		<city tag="6" name="丰台区"/>
+		<city tag="7" name="石景山区"/>
+		<city tag="8" name="海淀区"/>
+		<city tag="9" name="门头沟区"/>
+		<city tag="11" name="房山区"/>
+		<city tag="12" name="通州区"/>
+		<city tag="13" name="顺义区"/>
+		<city tag="14" name="昌平区"/>
+		<city tag="15" name="大兴区"/>
+		<city tag="16" name="怀柔区"/>
+		<city tag="17" name="平谷区"/>
+		<city tag="28" name="密云县"/>
+		<city tag="29" name="延庆县"/>
+	</province>
+	
+	<province tag="12" name="天津">
+		<city tag="1" name="和平区"/>
+		<city tag="2" name="河东区"/>
+		<city tag="3" name="河西区"/>
+		<city tag="4" name="南开区"/>
+		<city tag="5" name="河北区"/>
+		<city tag="6" name="红桥区"/>
+		<city tag="7" name="塘沽区"/>
+		<city tag="8" name="汉沽区"/>
+		<city tag="9" name="大港区"/>
+		<city tag="10" name="东丽区"/>
+		<city tag="11" name="西青区"/>
+		<city tag="12" name="津南区"/>
+		<city tag="13" name="北辰区"/>
+		<city tag="14" name="武清区"/>
+		<city tag="15" name="宝坻区"/>
+		<city tag="21" name="宁河县"/>
+		<city tag="23" name="静海县"/>
+		<city tag="25" name="蓟县"/>
+	</province>
+<province tag="13" name="河北">
+	<city tag="1" name="石家庄"/>
+	<city tag="2" name="唐山"/>
+	<city tag="3" name="秦皇岛"/>
+	<city tag="4" name="邯郸"/>
+	<city tag="5" name="邢台"/>
+	<city tag="6" name="保定"/>
+	<city tag="7" name="张家口"/>
+	<city tag="8" name="承德"/>
+	<city tag="9" name="沧州"/>
+	<city tag="10" name="廊坊"/>
+	<city tag="11" name="衡水"/>
+</province>
+<province tag="14" name="山西">
+	<city tag="1" name="太原"/>
+	<city tag="2" name="大同"/>
+	<city tag="3" name="阳泉"/>
+	<city tag="4" name="长治"/>
+	<city tag="5" name="晋城"/>
+	<city tag="6" name="朔州"/>
+	<city tag="7" name="晋中"/>
+	<city tag="8" name="运城"/>
+	<city tag="9" name="忻州"/>
+	<city tag="10" name="临汾"/>
+	<city tag="23" name="吕梁"/>
+</province>
+<province tag="15" name="内蒙古">
+	<city tag="1" name="呼和浩特"/>
+	<city tag="2" name="包头"/>
+	<city tag="3" name="乌海"/>
+	<city tag="4" name="赤峰"/>
+	<city tag="5" name="通辽"/>
+	<city tag="6" name="鄂尔多斯"/>
+	<city tag="7" name="呼伦贝尔"/>
+	<city tag="22" name="兴安盟"/>
+	<city tag="25" name="锡林郭勒盟"/>
+	<city tag="26" name="乌兰察布盟"/>
+	<city tag="28" name="巴彦淖尔盟"/>
+	<city tag="29" name="阿拉善盟"/>
+</province>
+<province tag="21" name="辽宁">
+	<city tag="1" name="沈阳"/>
+	<city tag="2" name="大连"/>
+	<city tag="3" name="鞍山"/>
+	<city tag="4" name="抚顺"/>
+	<city tag="5" name="本溪"/>
+	<city tag="6" name="丹东"/>
+	<city tag="7" name="锦州"/>
+	<city tag="8" name="营口"/>
+	<city tag="9" name="阜新"/>
+	<city tag="10" name="辽阳"/>
+	<city tag="11" name="盘锦"/>
+	<city tag="12" name="铁岭"/>
+	<city tag="13" name="朝阳"/>
+	<city tag="14" name="葫芦岛"/>
+</province>
+<province tag="22" name="吉林">
+	<city tag="1" name="长春"/>
+	<city tag="2" name="吉林"/>
+	<city tag="3" name="四平"/>
+	<city tag="4" name="辽源"/>
+	<city tag="5" name="通化"/>
+	<city tag="6" name="白山"/>
+	<city tag="7" name="松原"/>
+	<city tag="8" name="白城"/>
+	<city tag="24" name="延边朝鲜族自治州"/>
+</province>
+<province tag="23" name="黑龙江">
+	<city tag="1" name="哈尔滨"/>
+	<city tag="2" name="齐齐哈尔"/>
+	<city tag="3" name="鸡西"/>
+	<city tag="4" name="鹤岗"/>
+	<city tag="5" name="双鸭山"/>
+	<city tag="6" name="大庆"/>
+	<city tag="7" name="伊春"/>
+	<city tag="8" name="佳木斯"/>
+	<city tag="9" name="七台河"/>
+	<city tag="10" name="牡丹江"/>
+	<city tag="11" name="黑河"/>
+	<city tag="12" name="绥化"/>
+	<city tag="27" name="大兴安岭"/>
+</province>
+<province tag="31" name="上海">
+	<city tag="1" name="黄浦区"/>
+	<city tag="3" name="卢湾区"/>
+	<city tag="4" name="徐汇区"/>
+	<city tag="5" name="长宁区"/>
+	<city tag="6" name="静安区"/>
+	<city tag="7" name="普陀区"/>
+	<city tag="8" name="闸北区"/>
+	<city tag="9" name="虹口区"/>
+	<city tag="10" name="杨浦区"/>
+	<city tag="12" name="闵行区"/>
+	<city tag="13" name="宝山区"/>
+	<city tag="14" name="嘉定区"/>
+	<city tag="15" name="浦东新区"/>
+	<city tag="16" name="金山区"/>
+	<city tag="17" name="松江区"/>
+	<city tag="18" name="青浦区"/>
+	<city tag="19" name="南汇区"/>
+	<city tag="20" name="奉贤区"/>
+	<city tag="30" name="崇明县"/>
+</province>
+<province tag="32" name="江苏">
+	<city tag="1" name="南京"/>
+	<city tag="2" name="无锡"/>
+	<city tag="3" name="徐州"/>
+	<city tag="4" name="常州"/>
+	<city tag="5" name="苏州"/>
+	<city tag="6" name="南通"/>
+	<city tag="7" name="连云港"/>
+	<city tag="8" name="淮安"/>
+	<city tag="9" name="盐城"/>
+	<city tag="10" name="扬州"/>
+	<city tag="11" name="镇江"/>
+	<city tag="12" name="泰州"/>
+	<city tag="13" name="宿迁"/>
+</province>
+<province tag="33" name="浙江">
+	<city tag="1" name="杭州"/>
+	<city tag="2" name="宁波"/>
+	<city tag="3" name="温州"/>
+	<city tag="4" name="嘉兴"/>
+	<city tag="5" name="湖州"/>
+	<city tag="6" name="绍兴"/>
+	<city tag="7" name="金华"/>
+	<city tag="8" name="衢州"/>
+	<city tag="9" name="舟山"/>
+	<city tag="10" name="台州"/>
+	<city tag="11" name="丽水"/>
+</province>
+<province tag="34" name="安徽">
+	<city tag="1" name="合肥"/>
+	<city tag="2" name="芜湖"/>
+	<city tag="3" name="蚌埠"/>
+	<city tag="4" name="淮南"/>
+	<city tag="5" name="马鞍山"/>
+	<city tag="6" name="淮北"/>
+	<city tag="7" name="铜陵"/>
+	<city tag="8" name="安庆"/>
+	<city tag="10" name="黄山"/>
+	<city tag="11" name="滁州"/>
+	<city tag="12" name="阜阳"/>
+	<city tag="13" name="宿州"/>
+	<city tag="14" name="巢湖"/>
+	<city tag="15" name="六安"/>
+	<city tag="16" name="亳州"/>
+	<city tag="17" name="池州"/>
+	<city tag="18" name="宣城"/>
+</province>
+<province tag="35" name="福建">
+	<city tag="1" name="福州"/>
+	<city tag="2" name="厦门"/>
+	<city tag="3" name="莆田"/>
+	<city tag="4" name="三明"/>
+	<city tag="5" name="泉州"/>
+	<city tag="6" name="漳州"/>
+	<city tag="7" name="南平"/>
+	<city tag="8" name="龙岩"/>
+	<city tag="9" name="宁德"/>
+</province>
+<province tag="36" name="江西">
+	<city tag="1" name="南昌"/>
+	<city tag="2" name="景德镇"/>
+	<city tag="3" name="萍乡"/>
+	<city tag="4" name="九江"/>
+	<city tag="5" name="新余"/>
+	<city tag="6" name="鹰潭"/>
+	<city tag="7" name="赣州"/>
+	<city tag="8" name="吉安"/>
+	<city tag="9" name="宜春"/>
+	<city tag="10" name="抚州"/>
+	<city tag="11" name="上饶"/>
+</province>
+<province tag="37" name="山东">
+	<city tag="1" name="济南"/>
+	<city tag="2" name="青岛"/>
+	<city tag="3" name="淄博"/>
+	<city tag="4" name="枣庄"/>
+	<city tag="5" name="东营"/>
+	<city tag="6" name="烟台"/>
+	<city tag="7" name="潍坊"/>
+	<city tag="8" name="济宁"/>
+	<city tag="9" name="泰安"/>
+	<city tag="10" name="威海"/>
+	<city tag="11" name="日照"/>
+	<city tag="12" name="莱芜"/>
+	<city tag="13" name="临沂"/>
+	<city tag="14" name="德州"/>
+	<city tag="15" name="聊城"/>
+	<city tag="16" name="滨州"/>
+	<city tag="17" name="菏泽"/>
+</province>
+<province tag="41" name="河南">
+	<city tag="1" name="郑州"/>
+	<city tag="2" name="开封"/>
+	<city tag="3" name="洛阳"/>
+	<city tag="4" name="平顶山"/>
+	<city tag="5" name="安阳"/>
+	<city tag="6" name="鹤壁"/>
+	<city tag="7" name="新乡"/>
+	<city tag="8" name="焦作"/>
+	<city tag="9" name="濮阳"/>
+	<city tag="10" name="许昌"/>
+	<city tag="11" name="漯河"/>
+	<city tag="12" name="三门峡"/>
+	<city tag="13" name="南阳"/>
+	<city tag="14" name="商丘"/>
+	<city tag="15" name="信阳"/>
+	<city tag="16" name="周口"/>
+	<city tag="17" name="驻马店"/>
+</province>
+<province tag="42" name="湖北">
+	<city tag="1" name="武汉"/>
+	<city tag="2" name="黄石"/>
+	<city tag="3" name="十堰"/>
+	<city tag="5" name="宜昌"/>
+	<city tag="6" name="襄樊"/>
+	<city tag="7" name="鄂州"/>
+	<city tag="8" name="荆门"/>
+	<city tag="9" name="孝感"/>
+	<city tag="10" name="荆州"/>
+	<city tag="11" name="黄冈"/>
+	<city tag="12" name="咸宁"/>
+	<city tag="13" name="随州"/>
+	<city tag="28" name="恩施土家族苗族自治州"/>
+</province>
+<province tag="43" name="湖南">
+	<city tag="1" name="长沙"/>
+	<city tag="2" name="株洲"/>
+	<city tag="3" name="湘潭"/>
+	<city tag="4" name="衡阳"/>
+	<city tag="5" name="邵阳"/>
+	<city tag="6" name="岳阳"/>
+	<city tag="7" name="常德"/>
+	<city tag="8" name="张家界"/>
+	<city tag="9" name="益阳"/>
+	<city tag="10" name="郴州"/>
+	<city tag="11" name="永州"/>
+	<city tag="12" name="怀化"/>
+	<city tag="13" name="娄底"/>
+	<city tag="31" name="湘西土家族苗族自治州"/>
+</province>
+<province tag="44" name="广东">
+	<city tag="1" name="广州"/>
+	<city tag="2" name="韶关"/>
+	<city tag="3" name="深圳"/>
+	<city tag="4" name="珠海"/>
+	<city tag="5" name="汕头"/>
+	<city tag="6" name="佛山"/>
+	<city tag="7" name="江门"/>
+	<city tag="8" name="湛江"/>
+	<city tag="9" name="茂名"/>
+	<city tag="12" name="肇庆"/>
+	<city tag="13" name="惠州"/>
+	<city tag="14" name="梅州"/>
+	<city tag="15" name="汕尾"/>
+	<city tag="16" name="河源"/>
+	<city tag="17" name="阳江"/>
+	<city tag="18" name="清远"/>
+	<city tag="19" name="东莞"/>
+	<city tag="20" name="中山"/>
+	<city tag="51" name="潮州"/>
+	<city tag="52" name="揭阳"/>
+	<city tag="53" name="云浮"/>
+</province>
+<province tag="45" name="广西">
+	<city tag="1" name="南宁"/>
+	<city tag="2" name="柳州"/>
+	<city tag="3" name="桂林"/>
+	<city tag="4" name="梧州"/>
+	<city tag="5" name="北海"/>
+	<city tag="6" name="防城港"/>
+	<city tag="7" name="钦州"/>
+	<city tag="8" name="贵港"/>
+	<city tag="9" name="玉林"/>
+	<city tag="10" name="百色"/>
+	<city tag="11" name="贺州"/>
+	<city tag="12" name="河池"/>
+	<city tag="21" name="南宁"/>
+	<city tag="22" name="柳州"/>
+</province>
+<province tag="46" name="海南">
+	<city tag="1" name="海口"/>
+	<city tag="2" name="三亚"/>
+	<city tag="90" name="其他"/>
+</province>
+<province tag="50" name="重庆">
+	<city tag="1" name="万州区"/>
+	<city tag="2" name="涪陵区"/>
+	<city tag="3" name="渝中区"/>
+	<city tag="4" name="大渡口区"/>
+	<city tag="5" name="江北区"/>
+	<city tag="6" name="沙坪坝区"/>
+	<city tag="7" name="九龙坡区"/>
+	<city tag="8" name="南岸区"/>
+	<city tag="9" name="北碚区"/>
+	<city tag="10" name="万盛区"/>
+	<city tag="11" name="双桥区"/>
+	<city tag="12" name="渝北区"/>
+	<city tag="13" name="巴南区"/>
+	<city tag="14" name="黔江区"/>
+	<city tag="15" name="长寿区"/>
+	<city tag="22" name="綦江县"/>
+	<city tag="23" name="潼南县"/>
+	<city tag="24" name="铜梁县"/>
+	<city tag="25" name="大足县"/>
+	<city tag="26" name="荣昌县"/>
+	<city tag="27" name="璧山县"/>
+	<city tag="28" name="梁平县"/>
+	<city tag="29" name="城口县"/>
+	<city tag="30" name="丰都县"/>
+	<city tag="31" name="垫江县"/>
+	<city tag="32" name="武隆县"/>
+	<city tag="33" name="忠县"/>
+	<city tag="34" name="开县"/>
+	<city tag="35" name="云阳县"/>
+	<city tag="36" name="奉节县"/>
+	<city tag="37" name="巫山县"/>
+	<city tag="38" name="巫溪县"/>
+	<city tag="40" name="石柱土家族自治县"/>
+	<city tag="41" name="秀山土家族苗族自治县"/>
+	<city tag="42" name="酉阳土家族苗族自治县"/>
+	<city tag="43" name="彭水苗族土家族自治县"/>
+	<city tag="81" name="江津市"/>
+	<city tag="82" name="合川市"/>
+	<city tag="83" name="永川区"/>
+	<city tag="84" name="南川市"/>
+</province>
+<province tag="51" name="四川">
+	<city tag="1" name="成都"/>
+	<city tag="3" name="自贡"/>
+	<city tag="4" name="攀枝花"/>
+	<city tag="5" name="泸州"/>
+	<city tag="6" name="德阳"/>
+	<city tag="7" name="绵阳"/>
+	<city tag="8" name="广元"/>
+	<city tag="9" name="遂宁"/>
+	<city tag="10" name="内江"/>
+	<city tag="11" name="乐山"/>
+	<city tag="13" name="南充"/>
+	<city tag="14" name="眉山"/>
+	<city tag="15" name="宜宾"/>
+	<city tag="16" name="广安"/>
+	<city tag="17" name="达州"/>
+	<city tag="18" name="雅安"/>
+	<city tag="19" name="巴中"/>
+	<city tag="20" name="资阳"/>
+	<city tag="32" name="阿坝"/>
+	<city tag="33" name="甘孜"/>
+	<city tag="34" name="凉山"/>
+</province>
+<province tag="52" name="贵州">
+	<city tag="1" name="贵阳"/>
+	<city tag="2" name="六盘水"/>
+	<city tag="3" name="遵义"/>
+	<city tag="4" name="安顺"/>
+	<city tag="22" name="铜仁"/>
+	<city tag="23" name="黔西南"/>
+	<city tag="24" name="毕节"/>
+	<city tag="26" name="黔东南"/>
+	<city tag="27" name="黔南"/>
+</province>
+<province tag="53" name="云南">
+	<city tag="1" name="昆明"/>
+	<city tag="3" name="曲靖"/>
+	<city tag="4" name="玉溪"/>
+	<city tag="5" name="保山"/>
+	<city tag="6" name="昭通"/>
+	<city tag="23" name="楚雄"/>
+	<city tag="25" name="红河"/>
+	<city tag="26" name="文山"/>
+	<city tag="27" name="思茅"/>
+	<city tag="28" name="西双版纳"/>
+	<city tag="29" name="大理"/>
+	<city tag="31" name="德宏"/>
+	<city tag="32" name="丽江"/>
+	<city tag="33" name="怒江"/>
+	<city tag="34" name="迪庆"/>
+	<city tag="35" name="临沧"/>
+</province>
+<province tag="54" name="西藏">
+	<city tag="1" name="拉萨"/>
+	<city tag="21" name="昌都"/>
+	<city tag="22" name="山南"/>
+	<city tag="23" name="日喀则"/>
+	<city tag="24" name="那曲"/>
+	<city tag="25" name="阿里"/>
+	<city tag="26" name="林芝"/>
+</province>
+<province tag="61" name="陕西">
+	<city tag="1" name="西安"/>
+	<city tag="2" name="铜川"/>
+	<city tag="3" name="宝鸡"/>
+	<city tag="4" name="咸阳"/>
+	<city tag="5" name="渭南"/>
+	<city tag="6" name="延安"/>
+	<city tag="7" name="汉中"/>
+	<city tag="8" name="榆林"/>
+	<city tag="9" name="安康"/>
+	<city tag="10" name="商洛"/>
+</province>
+<province tag="62" name="甘肃">
+	<city tag="1" name="兰州"/>
+	<city tag="2" name="嘉峪关"/>
+	<city tag="3" name="金昌"/>
+	<city tag="4" name="白银"/>
+	<city tag="5" name="天水"/>
+	<city tag="6" name="武威"/>
+	<city tag="7" name="张掖"/>
+	<city tag="8" name="平凉"/>
+	<city tag="9" name="酒泉"/>
+	<city tag="10" name="庆阳"/>
+	<city tag="24" name="定西"/>
+	<city tag="26" name="陇南"/>
+	<city tag="29" name="临夏"/>
+	<city tag="30" name="甘南"/>
+</province>
+<province tag="63" name="青海">
+	<city tag="1" name="西宁"/>
+	<city tag="21" name="海东"/>
+	<city tag="22" name="海北"/>
+	<city tag="23" name="黄南"/>
+	<city tag="25" name="海南"/>
+	<city tag="26" name="果洛"/>
+	<city tag="27" name="玉树"/>
+	<city tag="28" name="海西"/>
+</province>
+<province tag="64" name="宁夏">
+	<city tag="1" name="银川"/>
+	<city tag="2" name="石嘴山"/>
+	<city tag="3" name="吴忠"/>
+	<city tag="4" name="固原"/>
+</province>
+<province tag="65" name="新疆">
+	<city tag="1" name="乌鲁木齐"/>
+	<city tag="2" name="克拉玛依"/>
+	<city tag="21" name="吐鲁番"/>
+	<city tag="22" name="哈密"/>
+	<city tag="23" name="昌吉"/>
+	<city tag="27" name="博尔塔拉"/>
+	<city tag="28" name="巴音郭楞"/>
+	<city tag="29" name="阿克苏"/>
+	<city tag="30" name="克孜勒苏"/>
+	<city tag="31" name="喀什"/>
+	<city tag="32" name="和田"/>
+	<city tag="40" name="伊犁"/>
+	<city tag="42" name="塔城"/>
+	<city tag="43" name="阿勒泰"/>
+</province>
+<province tag="71" name="台湾">
+	<city tag="1" name="台北"/>
+	<city tag="2" name="高雄"/>
+	<city tag="90" name="其他"/>
+</province>
+<province tag="81" name="香港">
+	<city tag="1" name="香港"/>
+</province>
+<province tag="82" name="澳门">
+	<city tag="1" name="澳门"/>
+</province>
+<province tag="100" name="其他"></province>
+<province tag="400" name="海外">
+	<city tag="1" name="美国"/>
+	<city tag="2" name="英国"/>
+	<city tag="3" name="法国"/>
+	<city tag="4" name="俄罗斯"/>
+	<city tag="5" name="加拿大"/>
+	<city tag="6" name="巴西"/>
+	<city tag="7" name="澳大利亚"/>
+	<city tag="8" name="印尼"/>
+	<city tag="9" name="泰国"/>
+	<city tag="10" name="马来西亚"/>
+	<city tag="11" name="新加坡"/>
+	<city tag="12" name="菲律宾"/>
+	<city tag="13" name="越南"/>
+	<city tag="14" name="印度"/>
+	<city tag="15" name="日本"/>
+	<city tag="16" name="其他"/>
+</province>
+</provinces>

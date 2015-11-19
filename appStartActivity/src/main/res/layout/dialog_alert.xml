@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>  
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"  
+    android:layout_width="fill_parent"  
+    android:layout_height="fill_parent"  
+    android:clickable="true"  
+    android:orientation="vertical"  
+    >  
+    
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/selector_dialog_box"
+        android:orientation="vertical" >
+  
+        <TextView
+            android:id="@+id/dialog_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+	
+			android:paddingTop="18dp"
+            android:layout_centerHorizontal="true"
+            
+            android:textColor="@color/black"
+            android:text="确认手机号吗"
+            android:textSize="14dp"
+            />
+ 		
+        <LinearLayout
+            android:id="@+id/dialog_content"
+            android:layout_below="@+id/dialog_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <TextView  
+	            android:id="@+id/dialog_content_title"
+	            android:layout_width="wrap_content"  
+	            android:layout_height="wrap_content" 
+	           	
+	           	android:gravity="center"
+	            android:paddingTop="10dp"
+	            android:paddingLeft="28dp"
+	            android:paddingRight="28dp"
+				
+				android:textColor="@color/color_373737"
+				android:textSize="14dp"	           
+	            android:text="我们将发验证码到此号码"
+	            /> 
+	           
+	  		<TextView  
+	            android:id="@+id/dialog_content_detail"
+	            android:layout_width="wrap_content"  
+	            android:layout_height="wrap_content" 
+	            android:gravity="center"
+	            
+	            android:paddingTop="11dp"
+	            android:paddingLeft="28dp"
+	            android:paddingRight="28dp"
+	            android:layout_below="@+id/message"  
+	           
+	            android:textColor="@color/color_373737"
+				android:textSize="14dp"	           
+	            android:text="sss"
+	            />
+        </LinearLayout>
+  		
+             
+        <LinearLayout  
+            android:layout_below="@+id/dialog_content"
+            android:layout_width="wrap_content"  
+            android:layout_height="wrap_content"  
+            
+            android:paddingTop="14dp"
+            
+            android:layout_gravity="bottom"  
+            android:gravity="center"  
+            android:orientation="horizontal" >  
+  
+            <Button  
+                android:id="@+id/dialog_positive_button"  
+                android:layout_width="wrap_content"  
+                android:layout_height="36dp"  
+                android:background="@drawable/selector_confirm_btn"  
+                android:gravity="center" 
+                
+                android:layout_weight="1"
+                android:textSize="14dp" 
+                android:textColor="@color/white"
+                android:text="@string/ok" />  
+  
+            <Button  
+                android:id="@+id/dialog_negative_button"  
+                android:layout_width="wrap_content"  
+                android:layout_height="36dp"
+                android:background="@drawable/selector_cancel_btn"  
+                android:gravity="center" 
+                
+                android:layout_weight="1"
+                android:textColor="@color/white"
+                android:textSize="14dp" 
+                android:text="@string/cancel" />  
+        </LinearLayout>  
+    </RelativeLayout>  
+  
+</FrameLayout>

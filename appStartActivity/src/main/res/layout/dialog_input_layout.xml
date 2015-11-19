@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:layout_gravity="center"
+    android:background="@drawable/shape_nick_dialog"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical" 
+        >
+
+        <TextView
+            android:id="@+id/dialog_input_title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:gravity="center_horizontal"
+            android:textColor="#74C3FF"
+            android:textSize="18dp" />
+
+        <EditText
+            android:id="@+id/dialog_input_edittext"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="23dp"
+            android:background="@null"
+            android:gravity="center"
+            android:textColor="#ACB8C1"
+            android:textColorHint="#ACB8C1"
+            android:textSize="18dp" />
+        
+        <View 
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="22dp"
+            android:background="#EEF1F3"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:layout_gravity="bottom"
+            android:gravity="center_vertical">
+
+            <RelativeLayout 
+                android:id="@+id/negativeLayout"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content">
+                
+	            <ImageButton
+	                android:id="@+id/negativeButton"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_marginLeft="46.0dp"
+	                android:background="@drawable/btn_cancle"
+	                android:textColor="#ACB8C1"
+	                android:layout_alignParentLeft="true"
+	                />
+	            
+            </RelativeLayout>
+            
+            <View 
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:background="#EEF1F3"/>
+            
+            <RelativeLayout 
+                android:id="@+id/positiveLayout"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content">
+	            
+	            <ImageButton
+	                android:id="@+id/positiveButton"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:background="@drawable/btn_confirm"
+	                android:textColor="#74C3FF" 
+	                android:layout_marginRight="46dp"
+	                android:layout_alignParentRight="true"/>
+	            
+            </RelativeLayout>
+            
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

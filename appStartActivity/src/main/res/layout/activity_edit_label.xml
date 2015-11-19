@@ -1,0 +1,89 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:psgod="http://schemas.android.com/apk/res/com.psgod"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#74C3FF" 
+    android:clipToPadding="true"
+	android:fitsSystemWindows="true">
+
+    <RelativeLayout 
+        android:layout_width="match_parent"
+    	android:layout_height="match_parent"
+    	android:background="#FFFFFF" >
+        
+	    <com.psgod.ui.widget.ActionBar
+	        android:id="@+id/actionbar"
+	        android:layout_width="match_parent"
+	        android:layout_height="@dimen/actionbar_height"
+	        psgod:title="上传照片" />
+	
+	    <EditText
+	        android:id="@+id/activity_edit_label_input_panel"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@id/actionbar"
+	        android:layout_margin="10dp"
+	        android:imeOptions="actionDone"
+	        android:maxLength="20"
+	        android:maxLines="1"
+	        android:visibility="invisible" />
+	
+	    <View
+	        android:id="@+id/activity_edit_label_bottom_panel"
+	        android:layout_width="match_parent"
+	        android:layout_height="77dp"
+	        android:layout_alignParentBottom="true"
+	        android:background="#F5F6F8" />
+	
+	    <View
+	        android:layout_width="match_parent"
+	        android:layout_height="1dp"
+	        android:layout_alignTop="@id/activity_edit_label_bottom_panel"
+	        android:background="#B3B3B3" />
+	
+	    <TextView
+	        android:id="@+id/activity_edit_label_click_image_tag"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignTop="@id/activity_edit_label_bottom_panel"
+	        android:layout_centerHorizontal="true"
+	        android:layout_marginTop="10dp"
+	        android:text="点击图片"
+	        android:textColor="#B3B3B3"
+	        android:textSize="16dp" />
+	
+	    <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@id/activity_edit_label_click_image_tag"
+	        android:layout_centerHorizontal="true"
+	        android:layout_marginTop="1dp"
+	        android:text="用标签告诉大神你要什么效果\n（长按标签删除，轻按翻转）"
+	        android:textColor="#B3B3B3"
+	        android:textSize="13dp" />
+	
+	    <ImageView
+	        android:id="@+id/activity_edit_label_imageview"
+	        android:layout_width="match_parent"
+	        android:layout_height="260dp"
+	        android:layout_above="@id/activity_edit_label_bottom_panel"
+	        android:layout_below="@id/activity_edit_label_input_panel"
+	        android:background="#FFFFFFFF" />
+	
+	    <RelativeLayout
+	        android:id="@+id/activity_edit_label_label_container"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:layout_alignTop="@id/activity_edit_label_imageview"
+	        android:layout_alignBottom="@id/activity_edit_label_imageview" />
+	
+	    <View
+	        android:id="@+id/activity_edit_label_mask"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:layout_below="@id/activity_edit_label_input_panel"
+	        android:background="#B3FFFFFF"
+	        android:visibility="invisible" />
+    </RelativeLayout>
+    
+</RelativeLayout>
