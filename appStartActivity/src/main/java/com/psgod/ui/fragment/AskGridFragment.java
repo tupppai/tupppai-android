@@ -39,6 +39,9 @@ public class AskGridFragment extends BaseFragment {
 	private static final long DEFAULT_LAST_REFRESH_TIME = -1;
 	private long mLastUpdatedTime;
 
+
+
+
 	private CustomProgressingDialog mProgressDialog;
 	private boolean canLoadMore = true;
 
