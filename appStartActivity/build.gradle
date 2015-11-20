@@ -12,7 +12,6 @@ android {
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
-        manifestPlaceholders = [UMENG_CHANNEL_VALUE: "umeng"]
     }
 
     lintOptions {
@@ -25,31 +24,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
     }
-
-	signingConfigs {
-        debug {
-        }
-
-        release {
-            storeFile file (RELEASE_STORE_FILE)
-            storePassword RELEASE_STORE_PASSWORD
-            keyAlias RELEASE_KEY_ALIAS
-            keyPassword RELEASE_KEY_PASSWORD
-        }
-    }
-
-    productFlavors {
-        umeng {}
-        xiaomi {}
-        _360 {}
-        baidu {}
-        wandoujia {}
-    }  
-
-    productFlavors.all { 
-        flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name] 
-    }
-
 
 
 }
