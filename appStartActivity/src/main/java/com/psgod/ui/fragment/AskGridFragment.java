@@ -34,6 +34,9 @@ public class AskGridFragment extends BaseFragment {
 	private static final int MY_ASK = 0;
 
 	private AskGridViewHolder mViewHolder;
+
+
+
 	private int mPage = 1;
 	private String mSpKey;
 	private static final long DEFAULT_LAST_REFRESH_TIME = -1;
