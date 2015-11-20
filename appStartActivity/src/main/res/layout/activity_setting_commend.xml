@@ -20,7 +20,8 @@
         android:layout_height="match_parent"
         android:layout_below="@id/actionbar"
         android:divider="@null"
-        android:scrollbars="none" />
+        android:scrollbars="none"
+        android:background="#F8F8F8" />
     
     <LinearLayout
         android:id="@+id/activity_commend_emptyview"
