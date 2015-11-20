@@ -35,8 +35,6 @@
     <uses-permission android:name="android.permission.BROADCAST_PACKAGE_INSTALL" />
     <uses-permission android:name="android.permission.BROADCAST_PACKAGE_REPLACED" />
     <uses-permission android:name="android.permission.RESTART_PACKAGES" />
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:name="com.psgod.PSGodApplication"
@@ -261,7 +259,7 @@
         </meta-data>
         <meta-data
             android:name="UMENG_CHANNEL"
-            android:value="${UMENG_CHANNEL_VALUE}" >
+            android:value="psgod" >
         </meta-data>
 
         <service android:name="com.umeng.message.UmengDownloadResourceService" >
