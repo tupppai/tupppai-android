@@ -92,7 +92,7 @@ public class MainActivity extends PSGodBaseActivity implements
 
 
 		// 求p和作品页面
-		int VALUE_RECENTPAGE_ID_ACT = -1;
+		int VALUE_RECENTPAGE_ID_ACT = 2;
 		int VALUE_RECENTPAGE_ID_ASKS =0;
 		int VALUE_RECENTPAGE_ID_WORKS = 1;
 

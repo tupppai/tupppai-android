@@ -25,7 +25,6 @@
             android:layout_marginRight="42dp"
             android:checked="true"
             android:gravity="center"
-            android:padding="0dp"
             android:text="求P"
             android:textColor="#000000" />
 
@@ -35,7 +34,6 @@
 
             android:checked="false"
             android:gravity="center"
-            android:padding="0dp"
             android:text="作品"
             android:textColor="#000000" />
 
@@ -43,9 +41,7 @@
             android:id="@+id/fragment_recentpage_act_radio_btn"
             style="@style/homepage_top_tabbar"
             android:layout_marginLeft="42dp"
-            android:checked="true"
             android:gravity="center"
-            android:padding="0dp"
             android:text="活动"
             android:textColor="#000000" />
     </RadioGroup>

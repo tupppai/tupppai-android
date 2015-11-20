@@ -322,6 +322,7 @@ public class RecentPageFragment extends Fragment {
                         for (int ix = 0; ix < COUNT_OF_FRAGMENTS; ++ix) {
                             if (TAB_RADIO_BUTTONS_ID[ix] == checkedId) {
                                 mViewHolder.viewPager.setCurrentItem(ix);
+                                break;
                             }
                         }
                     }

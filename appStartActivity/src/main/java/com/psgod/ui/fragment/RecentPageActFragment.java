@@ -42,12 +42,9 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class RecentPageActFragment extends Fragment {
+public class RecentPageActFragment extends BaseFragment {
     private static final String TAG = RecentPageActFragment.class
             .getSimpleName();
-
-    public RecentPageActFragment() {
-    }
 
     private PullToRefreshListView mListView;
     private View mHeadView;

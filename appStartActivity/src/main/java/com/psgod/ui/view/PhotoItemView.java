@@ -556,7 +556,7 @@ public class PhotoItemView extends RelativeLayout implements Callback {
             mNameTv.setTextSize(15);
             LayoutParams params = (LayoutParams) mNameTv.getLayoutParams();
             params.addRule(CENTER_VERTICAL);
-            params.removeRule(ALIGN_TOP);
+            params.addRule(ALIGN_TOP,0);
             mNameTv.setLayoutParams(params);
         }
 
