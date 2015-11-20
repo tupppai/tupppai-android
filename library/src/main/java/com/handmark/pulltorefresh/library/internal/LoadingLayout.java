@@ -50,7 +50,6 @@ public abstract class LoadingLayout extends FrameLayout implements ILoadingLayou
 	private FrameLayout mInnerLayout;
 
 	protected final ImageView mHeaderImage;
-	//·Ç¶¯»­ ImageView
 	protected final ProgressBar mHeaderProgress;
 
 	private boolean mUseIntrinsicAnimation;

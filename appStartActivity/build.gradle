@@ -9,8 +9,8 @@ android {
         minSdkVersion 8
         targetSdkVersion 18
         multiDexEnabled true
-        versionCode 1
-        versionName "1.0"
+        versionCode 32
+        versionName "1.0.1"
         multiDexEnabled true
     }
 
@@ -18,13 +18,46 @@ android {
         abortOnError false
     } 
 
-    buildTypes {
+    signingConfigs {
+
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            storeFile file("../keystore")
+            storePassword "psgod1234"
+            keyAlias "psgod"
+            keyPassword "psgod1234"
         }
     }
 
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+            shrinkResources true
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    def outputFile = output.outputFile
+                    if (outputFile != null && outputFile.name.endsWith('.apk')) {
+
+                        def fileName = "图派_v${defaultConfig.versionName}_${variant.productFlavors[0].name}.apk"
+                        output.outputFile = new File(outputFile.parent, fileName)
+                    }
+                }
+            }
+        }
+    }
+
+    productFlavors {
+        xiaomi {}
+        _360 {}
+        baidu {}
+        wandoujia {}
+    }
+
+    productFlavors.all {
+        flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
+    }
 
 }
 

@@ -76,17 +76,17 @@
         <activity
             android:name="com.psgod.ui.activity.LoginActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-        <activity android:name="com.psgod.ui.activity.PhotoDetailActivity" />
+        <!--<activity android:name="com.psgod.ui.activity.PhotoDetailActivity" />-->
         <activity android:name="com.psgod.ui.activity.CarouselPhotoDetailActivity" />
         <activity android:name="com.psgod.ui.activity.NotificationListActivity" />
-        <activity android:name="com.psgod.ui.view.ExtendsScrollView" />
+        <!--<activity android:name="com.psgod.ui.view.ExtendsScrollView" />-->
         <activity
             android:name="com.psgod.ui.activity.EditProfileActivity"
             android:launchMode="singleTop" />
         <activity
             android:name="com.psgod.ui.activity.SettingActivity"
             android:launchMode="singleTop" />
-        <activity android:name="com.psgod.ui.activity.UploadImageActivity" />
+        <!--<activity android:name="com.psgod.ui.activity.UploadImageActivity" />-->
         <activity
             android:name="com.psgod.ui.activity.CommentListActivity"
             android:windowSoftInputMode="adjustResize|stateHidden" />
@@ -259,7 +259,7 @@
         </meta-data>
         <meta-data
             android:name="UMENG_CHANNEL"
-            android:value="psgod" >
+            android:value="${UMENG_CHANNEL_VALUE}" >
         </meta-data>
 
         <service android:name="com.umeng.message.UmengDownloadResourceService" >
