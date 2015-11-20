@@ -72,10 +72,12 @@ public class SettingCommentAdapter extends BaseAdapter {
 		imageLoader.displayImage(photoItem.getImageURL(),
 				mViewHolder.mImageView, mOptions);
 
-		mViewHolder.mNicknaemTv.setText(photoItem.getNickname());
-		mViewHolder.mTimeTv.setText(photoItem.getUpdateTimeStr());
-		mViewHolder.mCommendContent.setText("您评论了ta: " + photoItem.getCommentContent());
+		if (photoItem.getHotCommentList().get(0) != null) {
+			mViewHolder.mNicknaemTv.setText(photoItem.getHotCommentList().get(0).getNickname());
+			mViewHolder.mTimeTv.setText(photoItem.getHotCommentList().get(0).getUpdateTimeStr());
+		}
 
+		mViewHolder.mCommendContent.setText("您评论了ta: " + photoItem.getCommentContent());
 		convertView.setOnClickListener(new OnClickListener() {
 
 			@Override
