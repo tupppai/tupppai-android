@@ -21,10 +21,7 @@ android {
     signingConfigs {
 
         release {
-            storeFile file("../keystore")
-            storePassword "psgod1234"
-            keyAlias "psgod"
-            keyPassword "psgod1234"
+
         }
     }
 
@@ -40,7 +37,7 @@ android {
                     def outputFile = output.outputFile
                     if (outputFile != null && outputFile.name.endsWith('.apk')) {
 
-                        def fileName = "图派_v${defaultConfig.versionName}_${variant.productFlavors[0].name}.apk"
+                        def fileName = "tupppei_v${defaultConfig.versionName}_${variant.productFlavors[0].name}.apk"
                         output.outputFile = new File(outputFile.parent, fileName)
                     }
                 }
