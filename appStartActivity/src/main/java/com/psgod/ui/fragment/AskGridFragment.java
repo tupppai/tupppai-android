@@ -41,6 +41,8 @@ public class AskGridFragment extends BaseFragment {
 	private CustomProgressingDialog mProgressDialog;
 	private boolean canLoadMore = true;
 
+
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
