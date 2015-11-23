@@ -201,8 +201,7 @@ public class InprogressPageAskAdapter extends BaseAdapter implements
 			if (inprogressShareDialog.isShowing()) {
 				inprogressShareDialog.dismiss();
 			} else {
-				inprogressShareDialog
-						.show(InprogressShareMoreDialog.GONETYPE_DELETE);
+				inprogressShareDialog.show();
 			}
 			return false;
 		}

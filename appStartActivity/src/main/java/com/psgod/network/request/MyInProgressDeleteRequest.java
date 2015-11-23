@@ -29,12 +29,23 @@ public class MyInProgressDeleteRequest extends BaseRequest<Boolean> {
 
 	public static class Builder implements IPostRequestBuilder {
 
+		private int type = 0;
+		private final int TYPE_ASK = 0;
+		private final int TYPE_REPLY = 1;
+		private final int TYPE_COMPLETE = 2;
+
+
 		private long id;
 		private Listener<Boolean> mListener;
 		private ErrorListener mErrorListener;
 
 		public Builder setId(long id) {
 			this.id = id;
+			return this;
+		}
+
+		public Builder setType (int type) {
+			this.type = type;
 			return this;
 		}
 
@@ -64,8 +75,15 @@ public class MyInProgressDeleteRequest extends BaseRequest<Boolean> {
 
 		@Override
 		public String createUrl() {
-			StringBuilder sb = new StringBuilder(BaseRequest.PSGOD_BASE_URL)
-					.append("profile/deleteDownloadRecord");
+			StringBuilder sb = new StringBuilder(BaseRequest.PSGOD_BASE_URL);
+			if (type == TYPE_ASK) {
+				sb.append("profile/askdelete");
+			} else if (type == TYPE_REPLY) {
+				sb.append("profile/deleteDownloadRecord");
+			} else {
+				sb.append("profile/replydelete");
+			}
+
 			String url = sb.toString();
 			return url;
 		}

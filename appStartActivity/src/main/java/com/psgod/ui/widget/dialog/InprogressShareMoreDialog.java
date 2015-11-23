@@ -230,9 +230,34 @@ public class InprogressShareMoreDialog extends Dialog {
 			@Override
 			public void onClick(View view) {
 				dismiss();
-				if (type == SHARE_TYPE_REPLY) {
+				if (type == SHARE_TYPE_ASK) {
 					MyInProgressDeleteRequest.Builder builder = new MyInProgressDeleteRequest.Builder()
-							.setId(mPhotoItem.getAskId())
+							.setType(SHARE_TYPE_ASK)
+							.setId(mPhotoItem.getPid())
+							.setListener(deleteListener)
+							.setErrorListener(errorListener);
+
+					MyInProgressDeleteRequest request = builder.build();
+					request.setTag(TAG);
+					RequestQueue requestQueue = PSGodRequestQueue.getInstance(
+							mContext.getApplicationContext()).getRequestQueue();
+					requestQueue.add(request);
+				}else if (type == SHARE_TYPE_REPLY) {
+					MyInProgressDeleteRequest.Builder builder = new MyInProgressDeleteRequest.Builder()
+							.setType(SHARE_TYPE_REPLY)
+							.setId(mPhotoItem.getPid())
+							.setListener(deleteListener)
+							.setErrorListener(errorListener);
+
+					MyInProgressDeleteRequest request = builder.build();
+					request.setTag(TAG);
+					RequestQueue requestQueue = PSGodRequestQueue.getInstance(
+							mContext.getApplicationContext()).getRequestQueue();
+					requestQueue.add(request);
+				} else {
+					MyInProgressDeleteRequest.Builder builder = new MyInProgressDeleteRequest.Builder()
+							.setType(SHARE_TYPE_COMPLETE)
+							.setId(mPhotoItem.getPid())
 							.setListener(deleteListener)
 							.setErrorListener(errorListener);
 
@@ -449,12 +474,12 @@ public class InprogressShareMoreDialog extends Dialog {
 
 	public static final int GONETYPE_DELETE = 0;
 
-	public void show(int goneType) {
-		if (goneType == GONETYPE_DELETE
-				&& mDeleteBtn.getVisibility() != View.INVISIBLE) {
-			mDeleteBtn.setVisibility(View.INVISIBLE);
-		}
-		show();
-	}
+//	public void show(int goneType) {
+//		if (goneType == GONETYPE_DELETE
+//				&& mDeleteBtn.getVisibility() != View.INVISIBLE) {
+//			mDeleteBtn.setVisibility(View.INVISIBLE);
+//		}
+//		show();
+//	}
 
 }

@@ -84,8 +84,7 @@ public class PhotoWaterFallListAdapter extends BaseAdapter {
 							if (inprogressShareDialog.isShowing()) {
 								inprogressShareDialog.dismiss();
 							} else {
-								inprogressShareDialog
-										.show(InprogressShareMoreDialog.GONETYPE_DELETE);
+								inprogressShareDialog.show();
 							}
 							return true;
 						}
