@@ -29,6 +29,7 @@ import com.psgod.Constants;
 import com.psgod.Logger;
 import com.psgod.R;
 import com.psgod.Utils;
+import com.psgod.eventbus.RefreshEvent;
 import com.psgod.ui.activity.MainActivity;
 import com.psgod.ui.activity.SearchActivity;
 import com.psgod.ui.adapter.HomePageAdapter;
@@ -174,20 +175,21 @@ public class HomePageFragment extends Fragment {
 								firClick = (int) System.currentTimeMillis();
 							} else if (count == 2) {
 								secClick = (int) System.currentTimeMillis();
-								if (secClick - firClick < 800) {
+								if (secClick - firClick < 1000) {
 									// 双击事件 下拉刷新首页热门列表
-									Intent intent = new Intent(getActivity(),
-											MainActivity.class);
-									intent.putExtra(
-											MainActivity.IntentParams.KEY_FRAGMENT_ID,
-											MainActivity.IntentParams.VALUE_FRAGMENT_ID_HOMEPAGE);
-									intent.putExtra(
-											MainActivity.IntentParams.KEY_HOMEPAGE_ID,
-											MainActivity.IntentParams.VALUE_HOMEPAGE_ID_HOT);
-									intent.putExtra(
-											MainActivity.IntentParams.KEY_NEED_REFRESH,
-											true);
-									startActivity(intent);
+//									Intent intent = new Intent(getActivity(),
+//											MainActivity.class);
+//									intent.putExtra(
+//											MainActivity.IntentParams.KEY_FRAGMENT_ID,
+//											MainActivity.IntentParams.VALUE_FRAGMENT_ID_HOMEPAGE);
+//									intent.putExtra(
+//											MainActivity.IntentParams.KEY_HOMEPAGE_ID,
+//											MainActivity.IntentParams.VALUE_HOMEPAGE_ID_HOT);
+//									intent.putExtra(
+//											MainActivity.IntentParams.KEY_NEED_REFRESH,
+//											true);
+//									startActivity(intent);
+									EventBus.getDefault().post(new RefreshEvent(HomePageHotFragment.class.getName()));
 								}
 								count = 0;
 								firClick = 0;
@@ -214,20 +216,21 @@ public class HomePageFragment extends Fragment {
 								firClick = (int) System.currentTimeMillis();
 							} else if (count == 2) {
 								secClick = (int) System.currentTimeMillis();
-								if (secClick - firClick < 800) {
+								if (secClick - firClick < 1000) {
 									// 双击事件 下拉刷新首页热门列表
-									Intent intent = new Intent(getActivity(),
-											MainActivity.class);
-									intent.putExtra(
-											MainActivity.IntentParams.KEY_FRAGMENT_ID,
-											MainActivity.IntentParams.VALUE_FRAGMENT_ID_HOMEPAGE);
-									intent.putExtra(
-											MainActivity.IntentParams.KEY_HOMEPAGE_ID,
-											MainActivity.IntentParams.VALUE_HOMEPAGE_ID_FOCUS);
-									intent.putExtra(
-											MainActivity.IntentParams.KEY_NEED_REFRESH,
-											true);
-									startActivity(intent);
+//									Intent intent = new Intent(getActivity(),
+//											MainActivity.class);
+//									intent.putExtra(
+//											MainActivity.IntentParams.KEY_FRAGMENT_ID,
+//											MainActivity.IntentParams.VALUE_FRAGMENT_ID_HOMEPAGE);
+//									intent.putExtra(
+//											MainActivity.IntentParams.KEY_HOMEPAGE_ID,
+//											MainActivity.IntentParams.VALUE_HOMEPAGE_ID_FOCUS);
+//									intent.putExtra(
+//											MainActivity.IntentParams.KEY_NEED_REFRESH,
+//											true);
+//									startActivity(intent);
+									EventBus.getDefault().post(new RefreshEvent(HomePageFocusFragment.class.getName()));
 								}
 								count = 0;
 								firClick = 0;

@@ -87,10 +87,12 @@ public class RecentPageFragment extends Fragment {
         mViewHolder.tabRadioGroup = (RadioGroup) mViewHolder.mView
                 .findViewById(R.id.fragment_recentpage_tab_radio_group);
 
-        mViewHolder.tabRadioButtonLeft = (RadioButton) mViewHolder.mView
+        mViewHolder.tabRadioButtonAsk = (RadioButton) mViewHolder.mView
                 .findViewById(R.id.fragment_recentpage_asks_radio_btn);
-        mViewHolder.tabRadioButtonRight = (RadioButton) mViewHolder.mView
+        mViewHolder.tabRadioButtonWorks = (RadioButton) mViewHolder.mView
                 .findViewById(R.id.fragment_recentpage_works_radio_btn);
+        mViewHolder.tabRadioButtonAct = (RadioButton) mViewHolder.
+                mView.findViewById(R.id.fragment_recentpage_act_radio_btn);
 
         mViewHolder.mCursor = (ImageView) mViewHolder.mView
                 .findViewById(R.id.fragment_recentpage_cursor);
@@ -218,7 +220,34 @@ public class RecentPageFragment extends Fragment {
 
     private void initListeners() {
         // 双击顶部radio button自动回顶部刷新 最近->求p
-        mViewHolder.tabRadioButtonLeft
+        mViewHolder.tabRadioButtonAct.setOnTouchListener(new OnTouchListener() {
+            int count = 0;
+            int firClick = 0;
+            int secClick = 0;
+
+            @Override
+            public boolean onTouch(View view, MotionEvent event) {
+                if (MotionEvent.ACTION_DOWN == event.getAction()) {
+                    count++;
+
+                    if (count == 1) {
+                        firClick = (int) System.currentTimeMillis();
+                    } else if (count == 2) {
+                        secClick = (int) System.currentTimeMillis();
+                        if (secClick - firClick < 1000) {
+                            // 双击事件 下拉刷新首页热门列表
+                            EventBus.getDefault().post(new RefreshEvent(RecentPageActFragment.class.getName()));
+                        }
+                        count = 0;
+                        firClick = 0;
+                        secClick = 0;
+                    }
+                }
+                return false;
+            }
+
+        });
+        mViewHolder.tabRadioButtonAsk
                 .setOnTouchListener(new OnTouchListener() {
                     int count = 0;
                     int firClick = 0;
@@ -228,24 +257,14 @@ public class RecentPageFragment extends Fragment {
                     public boolean onTouch(View view, MotionEvent event) {
                         if (MotionEvent.ACTION_DOWN == event.getAction()) {
                             count++;
+
                             if (count == 1) {
                                 firClick = (int) System.currentTimeMillis();
                             } else if (count == 2) {
                                 secClick = (int) System.currentTimeMillis();
-                                if (secClick - firClick < 800) {
-                                    // 双击事件 下拉刷新最近求p页面
-                                    Intent intent = new Intent(getActivity(),
-                                            MainActivity.class);
-                                    intent.putExtra(
-                                            MainActivity.IntentParams.KEY_FRAGMENT_ID,
-                                            MainActivity.IntentParams.VALUE_FRAGMENT_ID_RECENT);
-                                    intent.putExtra(
-                                            MainActivity.IntentParams.KEY_RECENTPAGE_ID,
-                                            MainActivity.IntentParams.VALUE_RECENTPAGE_ID_ASKS);
-                                    intent.putExtra(
-                                            MainActivity.IntentParams.KEY_NEED_REFRESH,
-                                            true);
-                                    startActivity(intent);
+                                if (secClick - firClick < 1000) {
+                                    // 双击事件 下拉刷新首页热门列表
+                                    EventBus.getDefault().post(new RefreshEvent(RecentPageAsksFragment.class.getName()));
                                 }
                                 count = 0;
                                 firClick = 0;
@@ -257,7 +276,7 @@ public class RecentPageFragment extends Fragment {
                 });
 
         // 双击顶部radio button自动回顶部刷新 求P
-        mViewHolder.tabRadioButtonRight
+        mViewHolder.tabRadioButtonWorks
                 .setOnTouchListener(new OnTouchListener() {
                     int count = 0;
                     int firClick = 0;
@@ -272,20 +291,9 @@ public class RecentPageFragment extends Fragment {
                                 firClick = (int) System.currentTimeMillis();
                             } else if (count == 2) {
                                 secClick = (int) System.currentTimeMillis();
-                                if (secClick - firClick < 800) {
+                                if (secClick - firClick < 1000) {
                                     // 双击事件 下拉刷新首页热门列表
-                                    Intent intent = new Intent(getActivity(),
-                                            MainActivity.class);
-                                    intent.putExtra(
-                                            MainActivity.IntentParams.KEY_FRAGMENT_ID,
-                                            MainActivity.IntentParams.VALUE_FRAGMENT_ID_RECENT);
-                                    intent.putExtra(
-                                            MainActivity.IntentParams.KEY_RECENTPAGE_ID,
-                                            MainActivity.IntentParams.VALUE_RECENTPAGE_ID_WORKS);
-                                    intent.putExtra(
-                                            MainActivity.IntentParams.KEY_NEED_REFRESH,
-                                            true);
-                                    startActivity(intent);
+                                    EventBus.getDefault().post(new RefreshEvent(RecentPageWorksFragment.class.getName()));
                                 }
                                 count = 0;
                                 firClick = 0;
@@ -430,9 +438,9 @@ public class RecentPageFragment extends Fragment {
         Dialog mCameraDialog;
         ViewPager viewPager;
         RadioGroup tabRadioGroup;
-        RadioButton tabRadioButtonLeft;
-        RadioButton tabRadioButtonRight;
-
+        RadioButton tabRadioButtonAsk;
+        RadioButton tabRadioButtonWorks;
+        RadioButton tabRadioButtonAct;
         // RadioGroup下方游标
         ImageView mCursor;
     }

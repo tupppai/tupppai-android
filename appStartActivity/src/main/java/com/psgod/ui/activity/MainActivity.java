@@ -45,6 +45,7 @@ import com.psgod.WeakReferenceHandler;
 import com.psgod.eventbus.InitEvent;
 import com.psgod.eventbus.NetEvent;
 import com.psgod.eventbus.PushEvent;
+import com.psgod.eventbus.RefreshEvent;
 import com.psgod.eventbus.UpdateTabStatusEvent;
 import com.psgod.network.request.BaseRequest;
 import com.psgod.network.request.PSGodErrorListener;
@@ -52,10 +53,15 @@ import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.network.request.ReportDeviceInfo;
 import com.psgod.receiver.NetReceiver;
 import com.psgod.receiver.PushMessageReceiver;
+import com.psgod.ui.fragment.HomePageFocusFragment;
 import com.psgod.ui.fragment.HomePageFragment;
+import com.psgod.ui.fragment.HomePageHotFragment;
 import com.psgod.ui.fragment.InprogressPageFragment;
 import com.psgod.ui.fragment.MyPageFragment;
+import com.psgod.ui.fragment.RecentPageActFragment;
+import com.psgod.ui.fragment.RecentPageAsksFragment;
 import com.psgod.ui.fragment.RecentPageFragment;
+import com.psgod.ui.fragment.RecentPageWorksFragment;
 import com.psgod.ui.widget.dialog.CameraPopupwindow;
 import com.umeng.message.PushAgent;
 import com.umeng.update.UmengUpdateAgent;
@@ -201,7 +207,7 @@ public class MainActivity extends PSGodBaseActivity implements
 	@Override
 	public void onStart() {
 		super.onStart();
-		updateUserFragmentData();
+//		updateUserFragmentData();
 	}
 
 	@Override
@@ -403,24 +409,27 @@ public class MainActivity extends PSGodBaseActivity implements
 							intent.putExtra(
 									MainActivity.IntentParams.KEY_FRAGMENT_ID,
 									MainActivity.IntentParams.VALUE_FRAGMENT_ID_RECENT);
-							if (Constants.CURRENT_RECENTPAGE_TAB == -1) {
-								intent.putExtra(
-										MainActivity.IntentParams.KEY_RECENTPAGE_ID,
-										IntentParams.VALUE_RECENTPAGE_ID_ACT);
+							if (Constants.CURRENT_RECENTPAGE_TAB == 2) {
+//								intent.putExtra(
+//										MainActivity.IntentParams.KEY_RECENTPAGE_ID,
+//										IntentParams.VALUE_RECENTPAGE_ID_ACT);
+								EventBus.getDefault().post(new RefreshEvent(RecentPageActFragment.class.getName()));
 							}else if (Constants.CURRENT_RECENTPAGE_TAB == 0) {
-								intent.putExtra(
-										MainActivity.IntentParams.KEY_RECENTPAGE_ID,
-										MainActivity.IntentParams.VALUE_RECENTPAGE_ID_ASKS);
+//								intent.putExtra(
+//										MainActivity.IntentParams.KEY_RECENTPAGE_ID,
+//										MainActivity.IntentParams.VALUE_RECENTPAGE_ID_ASKS);
+								EventBus.getDefault().post(new RefreshEvent(RecentPageAsksFragment.class.getName()));
 							}else if (Constants.CURRENT_RECENTPAGE_TAB == 1){
-								intent.putExtra(
-										MainActivity.IntentParams.KEY_RECENTPAGE_ID,
-										MainActivity.IntentParams.VALUE_RECENTPAGE_ID_WORKS);
+//								intent.putExtra(
+//										MainActivity.IntentParams.KEY_RECENTPAGE_ID,
+//										MainActivity.IntentParams.VALUE_RECENTPAGE_ID_WORKS);
+								EventBus.getDefault().post(new RefreshEvent(RecentPageWorksFragment.class.getName()));
 							}
 
-							intent.putExtra(
-									MainActivity.IntentParams.KEY_NEED_REFRESH,
-									true);
-							startActivity(intent);
+//							intent.putExtra(
+//									MainActivity.IntentParams.KEY_NEED_REFRESH,
+//									true);
+//							startActivity(intent);
 						}
 						count = 0;
 						firClick = 0;
@@ -447,25 +456,27 @@ public class MainActivity extends PSGodBaseActivity implements
 						secClick = (int) System.currentTimeMillis();
 						if (secClick - firClick < 1200) {
 							// 双击事件 下拉刷新首页热门列表
-							Intent intent = new Intent(MainActivity.this,
-									MainActivity.class);
-							intent.putExtra(
-									MainActivity.IntentParams.KEY_FRAGMENT_ID,
-									MainActivity.IntentParams.VALUE_FRAGMENT_ID_HOMEPAGE);
+//							Intent intent = new Intent(MainActivity.this,
+//									MainActivity.class);
+//							intent.putExtra(
+//									MainActivity.IntentParams.KEY_FRAGMENT_ID,
+//									MainActivity.IntentParams.VALUE_FRAGMENT_ID_HOMEPAGE);
 							if (Constants.CURRENT_HOMEPAGE_TAB == 0) {
-								intent.putExtra(
-										MainActivity.IntentParams.KEY_HOMEPAGE_ID,
-										MainActivity.IntentParams.VALUE_HOMEPAGE_ID_HOT);
+//								intent.putExtra(
+//										MainActivity.IntentParams.KEY_HOMEPAGE_ID,
+//										MainActivity.IntentParams.VALUE_HOMEPAGE_ID_HOT);
+								EventBus.getDefault().post(new RefreshEvent(HomePageHotFragment.class.getName()));
 							}
 							if (Constants.CURRENT_HOMEPAGE_TAB == 1) {
-								intent.putExtra(
-										MainActivity.IntentParams.KEY_HOMEPAGE_ID,
-										MainActivity.IntentParams.VALUE_HOMEPAGE_ID_FOCUS);
+//								intent.putExtra(
+//										MainActivity.IntentParams.KEY_HOMEPAGE_ID,
+//										MainActivity.IntentParams.VALUE_HOMEPAGE_ID_FOCUS);
+								EventBus.getDefault().post(new RefreshEvent(HomePageFocusFragment.class.getName()));
 							}
-							intent.putExtra(
-									MainActivity.IntentParams.KEY_NEED_REFRESH,
-									true);
-							startActivity(intent);
+//							intent.putExtra(
+//									MainActivity.IntentParams.KEY_NEED_REFRESH,
+//									true);
+//							startActivity(intent);
 						}
 						count = 0;
 						firClick = 0;

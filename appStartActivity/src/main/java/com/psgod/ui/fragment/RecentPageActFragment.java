@@ -24,6 +24,7 @@ import com.psgod.R;
 import com.psgod.ThreadManager;
 import com.psgod.Utils;
 import com.psgod.WeakReferenceHandler;
+import com.psgod.eventbus.RefreshEvent;
 import com.psgod.model.Activities;
 import com.psgod.model.ActivitiesAct;
 import com.psgod.model.PhotoItem;
@@ -38,6 +39,8 @@ import com.psgod.ui.widget.dialog.PSDialog;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -66,13 +69,26 @@ public class RecentPageActFragment extends BaseFragment {
     private View mEmptyView;
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_recent_page_act, container, false);
         initView(view);
         initEvent();
         initData();
         return view;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     private void initView(View view) {
@@ -263,5 +279,11 @@ public class RecentPageActFragment extends BaseFragment {
             mFollowListFooter.setVisibility(View.INVISIBLE);
         }
     };
+
+    public void onEventMainThread(RefreshEvent event) {
+        if(event.className.equals(this.getClass().getName())){
+            mListView.setRefreshing(true);
+        }
+    }
 
 }
