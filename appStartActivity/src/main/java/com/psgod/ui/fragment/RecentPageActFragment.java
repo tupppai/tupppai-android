@@ -200,7 +200,7 @@ public class RecentPageActFragment extends BaseFragment {
             }
             mAdapter.notifyDataSetChanged();
             mActs.clear();
-            if (mActs.size() > 0 && mActs.get(0) != null) {
+            if (response.getActs().size() > 0 && response.getActs().get(0) != null) {
                 mActs.addAll(response.getActs());
                 if(mHeadView.getVisibility() == View.GONE){
                     mHeadView.setVisibility(View.VISIBLE);

@@ -144,7 +144,7 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
         } else {
             mContentEdit.setHint("输入你想对观众说的吧");
         }
-
+        UploadCache uploadCache = UploadCache.getInstence();
         String cache = UploadCache.getInstence().getCache(IMAGE_UPLOAD_TYPE,
                 UserPreferences.TokenVerify.getToken());
         if (!cache.equals("")) {
