@@ -130,12 +130,11 @@
         <activity android:name="com.psgod.ui.activity.ResetPasswordActivity" />
         <activity android:name="com.psgod.ui.activity.RecommendFocusActivity" />
         <activity android:name="com.psgod.ui.activity.WebBrowserActivity" />
-        <activity android:name="com.psgod.ui.activity.MultiImageSelectActivity"
-            android:launchMode="singleTask"/>
+        <activity android:name="com.psgod.ui.activity.MultiImageSelectActivity" />
         <activity
             android:name="com.psgod.ui.activity.UploadMultiImageActivity"
             android:windowSoftInputMode="adjustResize|stateHidden"
-            android:launchMode="singleTask"/>
+            android:launchMode="singleTop"/>
         <activity android:name="com.psgod.ui.activity.WorksListActivity" />
         <activity android:name="com.psgod.ui.activity.UploadSelectReplyListActivity" />
         <activity android:name="com.psgod.ui.activity.MessageActivity" />

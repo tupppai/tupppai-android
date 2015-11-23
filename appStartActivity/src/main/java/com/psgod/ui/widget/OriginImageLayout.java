@@ -150,6 +150,8 @@ public class OriginImageLayout extends RelativeLayout {
                     clickNum = 0;
 //					initSingleImage(originImage1);
                     mActionZoomOut();
+                } else {
+                    mActionZoomIn();
                 }
             }
         });
@@ -161,6 +163,8 @@ public class OriginImageLayout extends RelativeLayout {
                     clickNum = 1;
 //					initSingleImage(originImage2);
                     mActionZoomOut();
+                } else {
+                    mActionZoomIn();
                 }
             }
         });
@@ -168,7 +172,27 @@ public class OriginImageLayout extends RelativeLayout {
         initTipView();
     }
 
-    public void initThumb(ImageData originImage){
+    public void initOverlapImage(final ImageData originImage1,
+                                 final ImageData originImage2, boolean isLeft) {
+        initOverlapImage(originImage1, originImage2);
+        if (isLeft) {
+            LayoutParams params = (LayoutParams) mImageViewLeft.getLayoutParams();
+            params.setMargins(0,0,0,0);
+            mImageViewLeft.setLayoutParams(params);
+            LayoutParams rparams = (LayoutParams) mImageViewRight.getLayoutParams();
+            rparams.setMargins(0,0,-baseThumbHeight,0);
+            mImageViewRight.setLayoutParams(rparams);
+        }else{
+            LayoutParams params = (LayoutParams) mImageViewLeft.getLayoutParams();
+            params.setMargins(-baseThumbHeight,0,0,0);
+            mImageViewLeft.setLayoutParams(params);
+            LayoutParams rparams = (LayoutParams) mImageViewRight.getLayoutParams();
+            rparams.setMargins(0,0,0,0);
+            mImageViewRight.setLayoutParams(rparams);
+        }
+    }
+
+    public void initThumb(ImageData originImage) {
         thumbImageWidth = baseThumbHeight;
         thumbImageHeight = baseThumbHeight;
         originImageWidth = Constants.WIDTH_OF_SCREEN;
@@ -235,14 +259,18 @@ public class OriginImageLayout extends RelativeLayout {
         uploadLayout.addView(thumbTipImage);
     }
 
+    boolean animStart = false;
+
     private void mActionZoomIn() {
 
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.setDuration(300);
+        final ImageView scaleImage = images.size() == 2 ? clickNum == 0 ? mImageViewLeft : mImageViewRight : thumbImageView;
+
 
         // 缩略图缩小
         alphaIvAnimator = ObjectAnimator.ofFloat(mBackground, "alpha", 0, 1f);
-        alphaAnimator = ObjectAnimator.ofFloat(thumbImageView, "alpha", 1f,
+        alphaAnimator = ObjectAnimator.ofFloat(scaleImage, "alpha", 1f,
                 0.9f);
 
         zoomWidthAnimator = ValueAnimator.ofInt(Constants.WIDTH_OF_SCREEN,
@@ -269,9 +297,9 @@ public class OriginImageLayout extends RelativeLayout {
                 uploadLayout.setLayoutParams(params);
             }
         });
-        scaleWidthAnimator = ObjectAnimator.ofFloat(thumbImageView, "scaleX",
+        scaleWidthAnimator = ObjectAnimator.ofFloat(scaleImage, "scaleX",
                 imageScaleValue, 1f);
-        scaleHeightAnimator = ObjectAnimator.ofFloat(thumbImageView, "scaleY",
+        scaleHeightAnimator = ObjectAnimator.ofFloat(scaleImage, "scaleY",
                 imageScaleValue, 1f);
 
         animatorSet.addListener(new AnimatorListener() {
@@ -283,16 +311,15 @@ public class OriginImageLayout extends RelativeLayout {
             @Override
             public void onAnimationEnd(Animator arg0) {
                 uploadLayout.setEnabled(true);
-
+                LayoutParams params = (LayoutParams) scaleImage.getLayoutParams();
+                params.height = LayoutParams.MATCH_PARENT;
+                params.width = LayoutParams.MATCH_PARENT;
+                scaleImage.setLayoutParams(params);
                 // 当size为2 的时候，展示两个
                 if (images.size() == 2) {
                     uploadLayout.removeAllViews();
-                    initOverlapImage(images.get(0), images.get(1));
-                }else {
-                    LayoutParams params = (LayoutParams) thumbImageView.getLayoutParams();
-                    params.height = LayoutParams.MATCH_PARENT;
-                    params.width = LayoutParams.MATCH_PARENT;
-                    thumbImageView.setLayoutParams(params);
+                    initOverlapImage(images.get(0), images.get(1),clickNum == 0?true:false);
+                    mActionZoomInIn();
                 }
             }
 
@@ -312,15 +339,67 @@ public class OriginImageLayout extends RelativeLayout {
         animatorSet.start();
     }
 
-    private void mActionZoomInIn(){
+    private void mActionZoomInIn() {
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.setDuration(300);
+        ValueAnimator animator = ValueAnimator.ofInt(0, baseThumbHeight / 2);
 
+        animator.addUpdateListener(new AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                int width = (Integer) valueAnimator.getAnimatedValue();
+                if (clickNum == 0) {
+                    LayoutParams rparams = (LayoutParams) mImageViewRight.getLayoutParams();
+                    rparams.setMargins(0, 0, width - baseThumbHeight, 0);
+                    mImageViewRight.setLayoutParams(rparams);
+                    LayoutParams lparams = (LayoutParams) mImageViewLeft.getLayoutParams();
+                    lparams.setMargins(-width, 0, 0, 0);
+                    mImageViewLeft.setLayoutParams(lparams);
+                } else {
+                    LayoutParams rparams = (LayoutParams) mImageViewRight.getLayoutParams();
+                    rparams.setMargins(0, 0, -width, 0);
+                    mImageViewRight.setLayoutParams(rparams);
+                    LayoutParams lparams = (LayoutParams) mImageViewLeft.getLayoutParams();
+                    lparams.setMargins(width - baseThumbHeight, 0, 0, 0);
+                    mImageViewLeft.setLayoutParams(lparams);
+                }
+            }
+        });
+        animator.addListener(new AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animator) {
+                uploadLayout.removeAllViews();
+                initOverlapImage(images.get(0), images.get(1));
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animator) {
+
+            }
+        });
+        animatorSet.play(animator);
+        animatorSet.start();
     }
 
     private void mActionZoomOut() {
+        if (animStart) {
+            return;
+        }
+        animStart = true;
         if (images.size() == 2) {
             AnimatorSet animatorSet = new AnimatorSet();
             ValueAnimator animator = ValueAnimator.ofInt(baseThumbHeight / 2, 0);
-            animator.setDuration(500);
+            animator.setDuration(300);
             animator.addUpdateListener(new AnimatorUpdateListener() {
                 @Override
                 public void onAnimationUpdate(ValueAnimator valueAnimator) {
@@ -372,7 +451,7 @@ public class OriginImageLayout extends RelativeLayout {
     }
 
     private void mActionZoomOutOut() {
-        AnimatorSet animatorSet = new AnimatorSet();
+        final AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.setDuration(300);
 
         zoomWidthAnimator = ValueAnimator.ofInt(baseThumbHeight,
@@ -400,12 +479,11 @@ public class OriginImageLayout extends RelativeLayout {
             }
         });
 
-        ImageView scaleImage = images.size() == 2?clickNum == 0?mImageViewLeft:mImageViewRight:thumbImageView;
+        ImageView scaleImage = images.size() == 2 ? clickNum == 0 ? mImageViewLeft : mImageViewRight : thumbImageView;
         RelativeLayout.LayoutParams uploadImageParams = new RelativeLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         uploadImageParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
         uploadImageParams.addRule(RelativeLayout.CENTER_VERTICAL);
-
 
         scaleImage.setLayoutParams(uploadImageParams);
         scaleImage.setScaleType(ScaleType.CENTER_INSIDE);
@@ -430,7 +508,7 @@ public class OriginImageLayout extends RelativeLayout {
             public void onAnimationEnd(Animator arg0) {
                 uploadLayout.setEnabled(true);
                 mBackground.setVisibility(INVISIBLE);
-
+                animStart = false;
             }
 
             @Override
@@ -441,18 +519,18 @@ public class OriginImageLayout extends RelativeLayout {
             @Override
             public void onAnimationStart(Animator arg0) {
                 if (images.size() == 2) {
-                    initThumb(clickNum == 0?images.get(0):images.get(1));
-                        if (clickNum == 0) {
-                            LayoutParams params = (LayoutParams) mImageViewLeft.getLayoutParams();
-                            params.height = thumbImageHeight;
-                            params.width = thumbImageWidth;
-                            mImageViewLeft.setLayoutParams(params);
-                        } else {
-                            LayoutParams params = (LayoutParams) mImageViewRight.getLayoutParams();
-                            params.height = thumbImageHeight;
-                            params.width = thumbImageWidth;
-                            mImageViewRight.setLayoutParams(params);
-                        }
+                    initThumb(clickNum == 0 ? images.get(0) : images.get(1));
+                    if (clickNum == 0) {
+                        LayoutParams params = (LayoutParams) mImageViewLeft.getLayoutParams();
+                        params.height = thumbImageHeight;
+                        params.width = thumbImageWidth;
+                        mImageViewLeft.setLayoutParams(params);
+                    } else {
+                        LayoutParams params = (LayoutParams) mImageViewRight.getLayoutParams();
+                        params.height = thumbImageHeight;
+                        params.width = thumbImageWidth;
+                        mImageViewRight.setLayoutParams(params);
+                    }
                 } else {
                     LayoutParams params = (LayoutParams) thumbImageView.getLayoutParams();
                     params.height = thumbImageHeight;
