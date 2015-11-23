@@ -1,6 +1,7 @@
 package com.psgod.ui.activity;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -208,7 +209,10 @@ public class MainActivity extends PSGodBaseActivity implements
 		unregisterReceiver(pushMessageReceiver);
 		unregisterReceiver(mNetReceiver);
 		EventBus.getDefault().unregister(this);
-
+		List<Fragment> list =  getSupportFragmentManager().getFragments();
+		for(Fragment fragment : list) {
+			getSupportFragmentManager().beginTransaction().remove(fragment);
+		}
 		super.onDestroy();
 	}
 
