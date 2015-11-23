@@ -405,6 +405,8 @@ public class OriginImageLayout extends RelativeLayout {
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         uploadImageParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
         uploadImageParams.addRule(RelativeLayout.CENTER_VERTICAL);
+
+
         scaleImage.setLayoutParams(uploadImageParams);
         scaleImage.setScaleType(ScaleType.CENTER_INSIDE);
 
