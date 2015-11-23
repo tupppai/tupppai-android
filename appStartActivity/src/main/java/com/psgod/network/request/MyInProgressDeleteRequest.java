@@ -57,6 +57,8 @@ public class MyInProgressDeleteRequest extends BaseRequest<Boolean> {
 					return createParameters();
 				}
 			};
+			Logger.log(Logger.LOG_LEVEL_DEBUG, Logger.USER_LEVEL_COLOR, TAG,
+					"createUrl: " + url + createParameters());
 			return request;
 		}
 
@@ -65,8 +67,6 @@ public class MyInProgressDeleteRequest extends BaseRequest<Boolean> {
 			StringBuilder sb = new StringBuilder(BaseRequest.PSGOD_BASE_URL)
 					.append("profile/deleteDownloadRecord");
 			String url = sb.toString();
-			Logger.log(Logger.LOG_LEVEL_DEBUG, Logger.USER_LEVEL_COLOR, TAG,
-					"createUrl: " + url);
 			return url;
 		}
 

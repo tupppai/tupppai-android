@@ -11,4 +11,30 @@
         android:background="#F7F7F7"
         android:divider="@color/transparent"
         android:layout_gravity="left|top" />
+
+    <LinearLayout
+        android:id="@+id/recent_fragment_act_empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/actionbar"
+        android:gravity="center_horizontal|top"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:background="@drawable/ic_pencil" />
+
+        <TextView
+            android:id="@+id/empty_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:text="暂时还没有活动呦"
+            android:textColor="#8D8D8D"
+            android:textSize="15dp" />
+    </LinearLayout>
+
 </FrameLayout>
