@@ -125,7 +125,7 @@ public class SetAvatarActivity extends PSGodBaseActivity {
 			mImage = Bitmap.createBitmap(mImage, 0, 0, mImage.getWidth(),
 					mImage.getHeight(), matrix, true);
 		} catch (OutOfMemoryError e) {
-		}
+		} catch (Exception e){}
 	}
 
 	@Override

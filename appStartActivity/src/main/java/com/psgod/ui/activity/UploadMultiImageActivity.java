@@ -534,7 +534,6 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
                 oks.setText(response.getString("desc"));
                 oks.setImageUrl(response.getString("image"));
                 oks.show(mContext);
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }

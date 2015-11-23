@@ -10,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -108,6 +109,7 @@ public class SearchActivity extends PSGodBaseActivity {
 					@Override
 					public boolean onEditorAction(TextView v, int actionId,
 							KeyEvent event) {
+						Log.e("search",String.valueOf(actionId));
 						if (actionId == EditorInfo.IME_ACTION_SEND
 								|| (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
 							if (event.getAction() == KeyEvent.ACTION_UP) {
@@ -139,8 +141,9 @@ public class SearchActivity extends PSGodBaseActivity {
 					mCancelTxt.setText("返回");
 				} else {
 					mCancelTxt.setText("取消");
-					EventBus.getDefault()
-							.post(new SearchEvent(mSearchEdit.getText().toString()));
+					//即时搜索
+//					EventBus.getDefault()
+//							.post(new SearchEvent(mSearchEdit.getText().toString()));
 				}
 
 			}
