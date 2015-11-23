@@ -11,7 +11,7 @@
         android:layout_marginTop="14dp"
         android:text="水英"
         android:textColor="#000000"
-        android:textSize="14sp" />
+        android:textSize="13dp" />
     
     <TextView
         android:id="@+id/setting_commend_time"
@@ -22,7 +22,7 @@
         android:layout_alignLeft="@id/setting_commend_nickname"
         android:text="1小时前"
         android:textColor="#7F000000"
-        android:textSize="13sp" />
+        android:textSize="10dp" />
     
     <TextView
         android:id="@+id/setting_commend_content"
@@ -36,7 +36,7 @@
         android:layout_marginLeft="1dp"
         android:text="您评论了ta:给调了位科技发达给调了位科技发达"
         android:textColor="#000000"
-        android:textSize="17sp" />
+        android:textSize="14dp" />
     
     <ImageView
         android:id="@+id/setting_commend_image"
