@@ -46,10 +46,15 @@ android {
     }
 
     productFlavors {
+        umeng {}
         xiaomi {}
         _360 {}
         baidu {}
         wandoujia {}
+        yingyongbao {}
+        meizu {}
+        huawei {}
+        psgod {}
     }
 
     productFlavors.all {
