@@ -30,7 +30,6 @@ public class SettingCommentActivity extends PSGodBaseActivity {
 	private static final String TAG = SettingCommentActivity.class
 			.getSimpleName();
 	private Context mContext;
-	public static final int MY_INPROGRESS = 2;
 
 	private List<PhotoItem> mPhotoItems = new ArrayList<PhotoItem>();
 	private SettingCommentAdapter mCommendAdapter;
@@ -65,9 +64,6 @@ public class SettingCommentActivity extends PSGodBaseActivity {
 		mListView.setOnRefreshListener(mCommendListener);
 		mListView.setOnLastItemVisibleListener(mCommendListener);
 		mListView.setScrollingWhileRefreshingEnabled(true);
-
-		mEmptyView = findViewById(R.id.activity_commend_emptyview);
-		mListView.setEmptyView(mEmptyView);
 
 		mFootView = LayoutInflater.from(mContext).inflate(
 				R.layout.footer_load_more, null);
@@ -147,6 +143,9 @@ public class SettingCommentActivity extends PSGodBaseActivity {
 			} else {
 				canLoadMore = true;
 			}
+
+			mEmptyView = findViewById(R.id.activity_commend_emptyview);
+			mListView.setEmptyView(mEmptyView);
 
 			// 保存本次刷新时间到sp
 			mLastUpdatedTime = System.currentTimeMillis();

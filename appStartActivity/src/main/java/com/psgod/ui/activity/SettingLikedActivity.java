@@ -70,9 +70,6 @@ public class SettingLikedActivity extends PSGodBaseActivity {
 		adapter.setNumColumns(3);
 		mListView.getRefreshableView().setAdapter(adapter);
 
-		mEmptyView = findViewById(R.id.activity_liked_emptyview);
-		mListView.setEmptyView(mEmptyView);
-
 		mLikedListener = new SettingLikedGridListener(mContext);
 		mListView.setOnLastItemVisibleListener(mLikedListener);
 		mListView.setScrollingWhileRefreshingEnabled(true);
@@ -141,6 +138,9 @@ public class SettingLikedActivity extends PSGodBaseActivity {
 			mPhotoItems.addAll(items);
 			mAdapter.notifyDataSetChanged();
 			mListView.onRefreshComplete();
+
+			mEmptyView = findViewById(R.id.activity_liked_emptyview);
+			mListView.setEmptyView(mEmptyView);
 
 			if (mProgressDialog != null && mProgressDialog.isShowing()) {
 				mProgressDialog.dismiss();
