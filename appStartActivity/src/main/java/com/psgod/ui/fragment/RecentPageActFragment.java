@@ -63,6 +63,7 @@ public class RecentPageActFragment extends BaseFragment {
     // 列表的类型
     private String mSpKey;
     private LoadUtils loadUtils;
+    private View mEmptyView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -79,6 +80,7 @@ public class RecentPageActFragment extends BaseFragment {
         mHeadView = LayoutInflater.from(getActivity()).inflate(R.layout.header_recent_page_act, null);
         mHeadImg = (ImageView) mHeadView.findViewById(R.id.header_recentpage_act_img);
         mHeadTxt = (TextView) mHeadView.findViewById(R.id.header_recentpage_act_txt);
+        mEmptyView = (View) view.findViewById(R.id.recent_fragment_act_empty_view);
         mPhotoItems = new ArrayList<PhotoItem>();
         mActs = new ArrayList<ActivitiesAct>();
         mAdapter = new RecentPageActAdapter(getActivity(), mPhotoItems);
@@ -208,6 +210,7 @@ public class RecentPageActFragment extends BaseFragment {
                 ImageLoader.getInstance().displayImage(mActs.get(0).getImage_url(), mHeadImg, Constants.DISPLAY_IMAGE_OPTIONS);
             }else{
                 mHeadView.setVisibility(View.GONE);
+                mListView.setEmptyView(mEmptyView);
             }
             mListView.onRefreshComplete();
 
