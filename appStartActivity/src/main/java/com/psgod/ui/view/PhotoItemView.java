@@ -560,7 +560,7 @@ public class PhotoItemView extends RelativeLayout implements Callback {
             mNameTv.setLayoutParams(params);
         }
 
-//        mDescTv.setHtmlFromString(mPhotoItem.getDesc(), true);
+        mDescTv.setHtmlFromString(mPhotoItem.getDesc(), true);
 
         mAvatarIv.setUserId(mPhotoItem.getUid());
         imageLoader.displayImage(mPhotoItem.getAvatarURL(), mAvatarIv,

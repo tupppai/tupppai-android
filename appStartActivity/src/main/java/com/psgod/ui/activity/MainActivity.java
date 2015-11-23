@@ -608,6 +608,7 @@ public class MainActivity extends PSGodBaseActivity implements
 			if (mDeviceToken.equals("")) {
 				mDeviceToken = BaseRegistrar
 						.getRegistrationId(MainActivity.this);
+				mHandler.postDelayed(runnable, 1000);
 			} else {
 				reportDeviceToken(mDeviceToken);
 			}
