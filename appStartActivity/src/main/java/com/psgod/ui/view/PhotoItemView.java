@@ -556,11 +556,11 @@ public class PhotoItemView extends RelativeLayout implements Callback {
             mNameTv.setTextSize(15);
             LayoutParams params = (LayoutParams) mNameTv.getLayoutParams();
             params.addRule(CENTER_VERTICAL);
-            params.addRule(ALIGN_TOP,0);
+            params.addRule(ALIGN_TOP, 0);
             mNameTv.setLayoutParams(params);
         }
 
-        mDescTv.setHtmlFromString(mPhotoItem.getDesc(), true);
+//        mDescTv.setHtmlFromString(mPhotoItem.getDesc(), true);
 
         mAvatarIv.setUserId(mPhotoItem.getUid());
         imageLoader.displayImage(mPhotoItem.getAvatarURL(), mAvatarIv,
@@ -649,23 +649,28 @@ public class PhotoItemView extends RelativeLayout implements Callback {
                     mPhotoItem.getUploadImagesList().get(1).mImageUrl,
                     mImageViewRight, mOptions);
 
-            mImageViewLeft.setOnClickListener(imageOnClickListener);
+            mImageViewLeft.setOnClickListener(imageBrowserListener2);
+
+            if (isHomePageFocus || isHomePageHot) {
+                mImageViewLeft.setOnClickListener(imageOnClickListener);
+            }
 
             mImageViewLeft
                     .setTag(mPhotoItem.getUploadImagesList().get(0).mImageUrl);
 
             mImageViewLeft.setOnLongClickListener(imageOnLongClickListener);
 
-            mImageViewLeft.setOnClickListener(imageBrowserListener2);
+            mImageViewRight.setOnClickListener(imageBrowserListener2);
 
-            mImageViewRight.setOnClickListener(imageOnClickListener);
+            if (isHomePageFocus || isHomePageHot) {
+                mImageViewRight.setOnClickListener(imageOnClickListener);
+            }
 
             mImageViewRight
                     .setTag(mPhotoItem.getUploadImagesList().get(1).mImageUrl);
 
             mImageViewRight.setOnLongClickListener(imageOnLongClickListener);
 
-            mImageViewRight.setOnClickListener(imageBrowserListener2);
 
             mImageArea.addView(mImageViewLeft);
             mImageArea.addView(mImageViewRight);

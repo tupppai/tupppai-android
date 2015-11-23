@@ -11,6 +11,7 @@ import java.util.concurrent.Executors;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -167,8 +168,6 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
 		mAdapter = new SinglePhotoDetailAdapter(this, mPhotoItem, mCommentList,
 				mHandler);
 
-		mPhotoItemView = mAdapter.getPhotoItemView();
-
 		mListView = (PullToRefreshExpandableListView) this
 				.findViewById(R.id.activity_photo_detail_expandable_list);
 		mListView.setMode(Mode.PULL_FROM_START);
@@ -187,10 +186,6 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
 		mListView.setScrollingWhileRefreshingEnabled(true);
 
 		mParent = (RelativeLayout) findViewById(R.id.single_photo_detail_parent);
-
-		// 获得头部中评论Tv
-		mCommentBtn = mPhotoItemView.getRecentPhotoDetailCommentBtn(mPhotoItem
-				.getType() );
 
 		// 展开所有分组
 		int groupCount = mAdapter.getGroupCount();
@@ -228,13 +223,6 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
 	}
 
 	public void initEvents() {
-		mCommentBtn.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View arg0) {
-				callInputPanel();
-			}
-		});
-
 		// 发送评论
 		mSendCommentBtn.setOnClickListener(new OnClickListener() {
 			@Override
@@ -355,6 +343,7 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
 		mPage = 1;
 		CommentListRequest.Builder builder = new CommentListRequest.Builder()
 				.setPid(mId).setPage(mPage).setType(mPhotoItem.getType())
+				.setNeedPhotoItem(mNeedOriginPhotoItem)
 				.setListener(refreshListener).setErrorListener(errorListener);
 
 		CommentListRequest request = builder.build();
@@ -377,6 +366,7 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
 		public void onResponse(CommentListWrapper response) {
 			if (mNeedOriginPhotoItem == 1) {
 				mPhotoItem = response.photoItem;
+				mAdapter.setPhotoItem(response.photoItem);
 			}
 			mHotCommentList.clear();
 			mHotCommentList.addAll(response.hotCommentList);
@@ -385,6 +375,18 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
 			mCommentList.addAll(response.recentCommentList);
 			mAdapter.notifyDataSetChanged();
 			mListView.onRefreshComplete();
+
+			mPhotoItemView = mAdapter.getPhotoItemView();
+			// 获得头部中评论Tv
+			mCommentBtn = mPhotoItemView.getRecentPhotoDetailCommentBtn(mPhotoItem
+					.getType() );
+
+			mCommentBtn.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View arg0) {
+					callInputPanel();
+				}
+			});
 
 			if ((mProgressDialog != null) && mProgressDialog.isShowing()) {
 				mProgressDialog.dismiss();

@@ -75,6 +75,10 @@ public class SinglePhotoDetailAdapter extends BaseExpandableListAdapter {
 		mHandler = handler;
 	}
 
+	public void setPhotoItem(PhotoItem photoItem) {
+		this.mPhotoItem = photoItem;
+	}
+
 	@Override
 	public Object getChild(int groupPosition, int childPosition) {
 		int type = getGroupViewType(groupPosition);
@@ -368,13 +372,13 @@ public class SinglePhotoDetailAdapter extends BaseExpandableListAdapter {
 		if (mPhotoItemView == null) {
 			mPhotoItemView = (PhotoItemView) LayoutInflater.from(mContext)
 					.inflate(R.layout.widget_photo_item, null);
-			if (mPhotoItem.getType() == PhotoItem.TYPE_ASK) {
-				mPhotoItemView.initialize(PhotoListType.SINGLE_ASK);
-			} else {
-				mPhotoItemView.initialize(PhotoListType.SINGLE_REPLY);
-			}
-			mPhotoItemView.setPhotoItem(mPhotoItem);
 		}
+		if (mPhotoItem.getType() == PhotoItem.TYPE_ASK) {
+			mPhotoItemView.initialize(PhotoListType.SINGLE_ASK);
+		} else {
+			mPhotoItemView.initialize(PhotoListType.SINGLE_REPLY);
+		}
+		mPhotoItemView.setPhotoItem(mPhotoItem);
 		// DrawableCenterTextView commentView = (DrawableCenterTextView)
 		// mPhotoItemView.findViewById(R.id.photo_item_comment_tv);
 		// commentView.setOnClickListener(new View.OnClickListener() {

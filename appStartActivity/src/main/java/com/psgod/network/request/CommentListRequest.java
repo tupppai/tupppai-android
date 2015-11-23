@@ -49,8 +49,8 @@ public class CommentListRequest extends BaseRequest<CommentListWrapper> {
 
 		CommentListWrapper wrapper = new CommentListWrapper();
 
-		if (data.has("photoitem")) {
-			JSONObject photoItem = data.getJSONObject("photoitem");
+		if (data.has("thread")) {
+			JSONObject photoItem = data.getJSONObject("thread");
 			PhotoItem item = PhotoItem.createPhotoItem(photoItem);
 
 			wrapper.photoItem = item;
@@ -146,7 +146,7 @@ public class CommentListRequest extends BaseRequest<CommentListWrapper> {
 
 			// 是否需要返回图片信息
 			if (needPhotoItem == 1) {
-				sb.append("&need_photoitem").append(needPhotoItem);
+				sb.append("&need_photoitem=").append(needPhotoItem);
 			}
 
 			if (lastUpdated != -1) {
