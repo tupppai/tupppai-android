@@ -65,9 +65,6 @@ public class SettingCommentActivity extends PSGodBaseActivity {
 		mListView.setOnLastItemVisibleListener(mCommendListener);
 		mListView.setScrollingWhileRefreshingEnabled(true);
 
-		mEmptyView = findViewById(R.id.activity_commend_emptyview);
-		mListView.setEmptyView(mEmptyView);
-
 		mFootView = LayoutInflater.from(mContext).inflate(
 				R.layout.footer_load_more, null);
 		mFootView.setVisibility(View.GONE);
@@ -146,6 +143,9 @@ public class SettingCommentActivity extends PSGodBaseActivity {
 			} else {
 				canLoadMore = true;
 			}
+
+			mEmptyView = findViewById(R.id.activity_commend_emptyview);
+			mListView.setEmptyView(mEmptyView);
 
 			// 保存本次刷新时间到sp
 			mLastUpdatedTime = System.currentTimeMillis();
