@@ -101,6 +101,7 @@ public class PhotoItem implements Serializable, Cloneable {
 
 	// 评论内容 用于我评论过的页面
 	private String mCommentContent;
+	private Long mCommentTime;
 
 	public void setType(int type) {
 		this.mType = type;
@@ -155,6 +156,9 @@ public class PhotoItem implements Serializable, Cloneable {
 		}
 		if (jsonObj.has("content")) {
 			item.mCommentContent = jsonObj.getString("content");
+		}
+		if (jsonObj.has("comment_time")) {
+			item.mCommentTime = jsonObj.getLong("comment_time");
 		}
 
 		try {
@@ -517,6 +521,14 @@ public class PhotoItem implements Serializable, Cloneable {
 
 	public void setReplyId(long id) {
 		this.mReplyId = id;
+	}
+
+	public void setCommentTime (long commentTime) {
+		this.mCommentTime = commentTime;
+	}
+
+	public long getCommentTime () {
+		return this.mCommentTime;
 	}
 
 	public void setHotCommentList(List<Comment> hotCommentList) {

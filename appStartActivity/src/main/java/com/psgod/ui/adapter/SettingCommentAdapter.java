@@ -1,9 +1,11 @@
 package com.psgod.ui.adapter;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -72,12 +74,10 @@ public class SettingCommentAdapter extends BaseAdapter {
 		imageLoader.displayImage(photoItem.getImageURL(),
 				mViewHolder.mImageView, mOptions);
 
-		if (photoItem.getHotCommentList().get(0) != null) {
-			mViewHolder.mNicknaemTv.setText(photoItem.getHotCommentList().get(0).getNickname());
-			mViewHolder.mTimeTv.setText(photoItem.getHotCommentList().get(0).getUpdateTimeStr());
-		}
-
+		mViewHolder.mNicknaemTv.setText(photoItem.getNickname());
+		mViewHolder.mTimeTv.setText(getCommentTimeStr(photoItem.getCommentTime()));
 		mViewHolder.mCommendContent.setText("您评论了ta: " + photoItem.getCommentContent());
+
 		convertView.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -94,6 +94,54 @@ public class SettingCommentAdapter extends BaseAdapter {
 		TextView mTimeTv;
 		ImageView mImageView;
 		TextView mCommendContent;
+	}
+
+	private String toLocalTime(String unix) {
+		// Long timestamp = Long.parseLong(unix) * 1000;
+		String date = new SimpleDateFormat("MM月dd日 HH:mm")
+				.format(new java.util.Date(Long.parseLong(unix + "000")));
+		return date;
+	}
+
+	private String getCommentTimeStr(Long mCommentTime) {
+		StringBuffer sb = new StringBuffer();
+		long time = System.currentTimeMillis() - (mCommentTime * 1000);
+		long mill = (long) Math.ceil(time / 1000);// 秒前
+		long minute = (long) Math.ceil(time / 60 / 1000.0f);// 分钟前
+		long hour = (long) Math.ceil(time / 60 / 60 / 1000.0f);// 小时
+		long day = (long) Math.ceil(time / 24 / 60 / 60 / 1000.0f);// 天前
+
+		if (day - 1 > 0) {
+			if (day > 7) {
+				sb.append(toLocalTime(Long.toString(mCommentTime)));
+			} else {
+				sb.append(day + "天");
+			}
+		} else if (hour - 1 > 0) {
+			if (hour >= 24) {
+				sb.append("1天");
+			} else {
+				sb.append(hour + "小时");
+			}
+		} else if (minute - 1 > 0) {
+			if (minute == 60) {
+				sb.append("1小时");
+			} else {
+				sb.append(minute + "分钟");
+			}
+		} else if (mill - 1 > 0) {
+			if (mill == 60) {
+				sb.append("1分钟");
+			} else {
+				sb.append(mill + "秒");
+			}
+		} else {
+			sb.append("刚刚");
+		}
+		if (!sb.toString().equals("刚刚") && (day <= 7)) {
+			sb.append("前");
+		}
+		return sb.toString();
 	}
 
 }

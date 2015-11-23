@@ -30,7 +30,6 @@ public class SettingCommentActivity extends PSGodBaseActivity {
 	private static final String TAG = SettingCommentActivity.class
 			.getSimpleName();
 	private Context mContext;
-	public static final int MY_INPROGRESS = 2;
 
 	private List<PhotoItem> mPhotoItems = new ArrayList<PhotoItem>();
 	private SettingCommentAdapter mCommendAdapter;
