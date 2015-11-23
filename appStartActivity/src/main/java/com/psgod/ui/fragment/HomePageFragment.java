@@ -65,51 +65,6 @@ public class HomePageFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		FrameLayout parentView = new FrameLayout(getActivity());
-		FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
-				LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-		parentView.setLayoutParams(params);
-
-		mViewHolder = new ViewHolder();
-		mViewHolder.mParentView = parentView;
-		mViewHolder.mView = LayoutInflater.from(getActivity()).inflate(
-				R.layout.fragment_home_page, parentView, true);
-		// mViewHolder.mSearchBtn = (ImageButton) mViewHolder.mView
-		// .findViewById(R.id.fragment_homepage_search_btn);
-		mViewHolder.viewPager = (ViewPager) mViewHolder.mView
-				.findViewById(R.id.fragment_homepage_view_pager);
-		mViewHolder.tabRadioGroup = (RadioGroup) mViewHolder.mView
-				.findViewById(R.id.fragment_homepage_tab_radio_group);
-
-		mViewHolder.tabRadioButtonLeft = (RadioButton) mViewHolder.mView
-				.findViewById(R.id.fragment_homepage_hot_radio_btn);
-		mViewHolder.tabRadioButtonRight = (RadioButton) mViewHolder.mView
-				.findViewById(R.id.fragment_homepage_focus_radio_btn);
-
-		mViewHolder.mCursor = (ImageView) mViewHolder.mView
-				.findViewById(R.id.fragment_homepage_cursor);
-
-		mViewHolder.mSearchImg = (ImageView) mViewHolder.mView
-				.findViewById(R.id.fragment_homepage_search_img); 
-
-		initCursor();
-
-		List<Fragment> fragments = new ArrayList<Fragment>();
-		if (mViewHolder.mHomePageHotFragment == null) {
-			mViewHolder.mHomePageHotFragment = new HomePageHotFragment();
-		}
-		if (mViewHolder.mHomePageFocusFragment == null) {
-			mViewHolder.mHomePageFocusFragment = new HomePageFocusFragment();
-		}
-
-		fragments.add(mViewHolder.mHomePageHotFragment);
-		fragments.add(mViewHolder.mHomePageFocusFragment);
-		mPhotoListPagerAdapter = new HomePageAdapter(getActivity()
-				.getSupportFragmentManager(), fragments);
-
-		mViewHolder.viewPager.setAdapter(mPhotoListPagerAdapter);
-		initListeners();
 	}
 
 	public void onNewIntent(Intent intent) {
@@ -149,10 +104,46 @@ public class HomePageFragment extends Fragment {
 		FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
 				LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 		parentView.setLayoutParams(params);
-		mViewHolder.mParentView.removeView(mViewHolder.mView);
-		parentView.addView(mViewHolder.mView);
+
+		mViewHolder = new ViewHolder();
 		mViewHolder.mParentView = parentView;
-		mPhotoListPagerAdapter.notifyDataSetChanged();
+		mViewHolder.mView = LayoutInflater.from(getActivity()).inflate(
+				R.layout.fragment_home_page, parentView, true);
+		// mViewHolder.mSearchBtn = (ImageButton) mViewHolder.mView
+		// .findViewById(R.id.fragment_homepage_search_btn);
+		mViewHolder.viewPager = (ViewPager) mViewHolder.mView
+				.findViewById(R.id.fragment_homepage_view_pager);
+		mViewHolder.tabRadioGroup = (RadioGroup) mViewHolder.mView
+				.findViewById(R.id.fragment_homepage_tab_radio_group);
+
+		mViewHolder.tabRadioButtonLeft = (RadioButton) mViewHolder.mView
+				.findViewById(R.id.fragment_homepage_hot_radio_btn);
+		mViewHolder.tabRadioButtonRight = (RadioButton) mViewHolder.mView
+				.findViewById(R.id.fragment_homepage_focus_radio_btn);
+
+		mViewHolder.mCursor = (ImageView) mViewHolder.mView
+				.findViewById(R.id.fragment_homepage_cursor);
+
+		mViewHolder.mSearchImg = (ImageView) mViewHolder.mView
+				.findViewById(R.id.fragment_homepage_search_img);
+
+		initCursor();
+
+		List<Fragment> fragments = new ArrayList<Fragment>();
+		if (mViewHolder.mHomePageHotFragment == null) {
+			mViewHolder.mHomePageHotFragment = new HomePageHotFragment();
+		}
+		if (mViewHolder.mHomePageFocusFragment == null) {
+			mViewHolder.mHomePageFocusFragment = new HomePageFocusFragment();
+		}
+
+		fragments.add(mViewHolder.mHomePageHotFragment);
+		fragments.add(mViewHolder.mHomePageFocusFragment);
+		mPhotoListPagerAdapter = new HomePageAdapter(getActivity()
+				.getSupportFragmentManager(), fragments);
+
+		mViewHolder.viewPager.setAdapter(mPhotoListPagerAdapter);
+		initListeners();
 		return parentView;
 	}
 

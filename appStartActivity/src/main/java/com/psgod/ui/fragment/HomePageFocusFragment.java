@@ -79,6 +79,11 @@ public class HomePageFocusFragment extends BaseFragment implements Callback {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Logger.logMethod(TAG, "onCreate");
+	}
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
 		EventBus.getDefault().register(this);
 
 		mContext = getActivity();
@@ -129,20 +134,6 @@ public class HomePageFocusFragment extends BaseFragment implements Callback {
 		}
 
 		loadDataAsync();
-	}
-
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		Logger.logMethod(TAG, "onCreateView");
-		FrameLayout parentView = new FrameLayout(getActivity());
-		FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
-				LayoutParams.MATCH_PARENT,
-				LayoutParams.MATCH_PARENT);
-		parentView.setLayoutParams(params);
-		mViewHolder.mParentView.removeView(mViewHolder.mView);
-		parentView.addView(mViewHolder.mView);
-		mViewHolder.mParentView = parentView;
 		return parentView;
 	}
 

@@ -113,6 +113,14 @@ public class HomePageHotFragment extends BaseFragment implements Callback {
 		Logger.logMethod(TAG, "onCreate");
 		EventBus.getDefault().register(this);
 
+
+
+	}
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		Logger.logMethod(TAG, "onCreateView");
 		mContext = getActivity();
 		FrameLayout parentView = new FrameLayout(mContext);
 		FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
@@ -161,7 +169,7 @@ public class HomePageHotFragment extends BaseFragment implements Callback {
 				.setOnGroupClickListener(new OnGroupClickListener() {
 					@Override
 					public boolean onGroupClick(ExpandableListView parent,
-							View v, int groupPosition, long id) {
+												View v, int groupPosition, long id) {
 						return true;
 					}
 				});
@@ -180,20 +188,6 @@ public class HomePageHotFragment extends BaseFragment implements Callback {
 
 		loadDataAsync();
 		loadBannerData(); // 加载banner数据
-
-	}
-
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		Logger.logMethod(TAG, "onCreateView");
-		FrameLayout parentView = new FrameLayout(getActivity());
-		FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
-				LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-		parentView.setLayoutParams(params);
-		mViewHolder.mParentView.removeView(mViewHolder.mView);
-		parentView.addView(mViewHolder.mView);
-		mViewHolder.mParentView = parentView;
 		return parentView;
 	}
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.psgod"
-    
+
     android:versionCode="32"
     android:versionName="1.0.1" >
 
@@ -54,7 +54,8 @@
         <activity
             android:name=".ui.activity.MainActivity"
             android:launchMode="singleTask"
-            android:windowSoftInputMode="adjustResize" >
+            android:windowSoftInputMode="adjustResize"
+            android:configChanges="orientation|keyboardHidden|screenSize">
         </activity>
 
         <!-- 微信分享回调 -->
