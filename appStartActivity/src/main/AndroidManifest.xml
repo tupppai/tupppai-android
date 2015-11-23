@@ -55,7 +55,7 @@
             android:name=".ui.activity.MainActivity"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustResize"
-            android:screenOrientation="landscape"
+            android:screenOrientation="locked"
             android:configChanges="orientation|keyboardHidden|screenSize">
         </activity>
 
