@@ -100,8 +100,7 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
 
     private WeakReferenceHandler handler = new WeakReferenceHandler(this);
 
-    private int sharetype = (IMAGE_UPLOAD_TYPE.equals(TYPE_ASK_UPLOAD) == true) ? 1
-            : 2;
+    private int sharetype;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -119,6 +118,9 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
         } else {
             IMAGE_UPLOAD_TYPE = TYPE_REPLY_UPLOAD;
         }
+
+        sharetype = (IMAGE_UPLOAD_TYPE.equals(TYPE_ASK_UPLOAD) == true) ? 1
+                : 2;
 
         initViews();
         initListener();

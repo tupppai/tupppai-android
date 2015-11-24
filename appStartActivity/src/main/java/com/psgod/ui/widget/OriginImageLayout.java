@@ -177,17 +177,17 @@ public class OriginImageLayout extends RelativeLayout {
         initOverlapImage(originImage1, originImage2);
         if (isLeft) {
             LayoutParams params = (LayoutParams) mImageViewLeft.getLayoutParams();
-            params.setMargins(0,0,0,0);
+            params.setMargins(0, 0, 0, 0);
             mImageViewLeft.setLayoutParams(params);
             LayoutParams rparams = (LayoutParams) mImageViewRight.getLayoutParams();
-            rparams.setMargins(0,0,-baseThumbHeight,0);
+            rparams.setMargins(0, 0, -baseThumbHeight, 0);
             mImageViewRight.setLayoutParams(rparams);
-        }else{
+        } else {
             LayoutParams params = (LayoutParams) mImageViewLeft.getLayoutParams();
-            params.setMargins(-baseThumbHeight,0,0,0);
+            params.setMargins(-baseThumbHeight, 0, 0, 0);
             mImageViewLeft.setLayoutParams(params);
             LayoutParams rparams = (LayoutParams) mImageViewRight.getLayoutParams();
-            rparams.setMargins(0,0,0,0);
+            rparams.setMargins(0, 0, 0, 0);
             mImageViewRight.setLayoutParams(rparams);
         }
     }
@@ -216,8 +216,8 @@ public class OriginImageLayout extends RelativeLayout {
         // image view
         thumbImageView = new ImageView(mContext);
 
-        // uploadImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-
+//         uploadImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        thumbImageView.setScaleType(ScaleType.CENTER_INSIDE);
         imageLoader.displayImage(originImage.mImageUrl, thumbImageView, mOptions, new ImageLoadingListener() {
             @Override
             public void onLoadingStarted(String s, View view) {
@@ -318,7 +318,7 @@ public class OriginImageLayout extends RelativeLayout {
                 // 当size为2 的时候，展示两个
                 if (images.size() == 2) {
                     uploadLayout.removeAllViews();
-                    initOverlapImage(images.get(0), images.get(1),clickNum == 0?true:false);
+                    initOverlapImage(images.get(0), images.get(1), clickNum == 0 ? true : false);
                     mActionZoomInIn();
                 }
             }
