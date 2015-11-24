@@ -63,18 +63,18 @@ public class PhotoDetailFragment extends BaseFragment {
 		int photoHeight = photoItem.getImageHeight();
 		// 不同高宽比进行图片缩放
 		if (photoHeight > photoWidth) {
-			params.height = Utils.dpToPx(getActivity(), 310);
+			params.height = Utils.dpToPx(getActivity(), 310f*Utils.getHeightScale(getActivity()));
 			params.width = params.height * photoWidth / photoHeight;
 		}
 
 		if (photoWidth > photoHeight) {
-			params.width = Utils.dpToPx(getActivity(), 280);
+			params.width = Utils.dpToPx(getActivity(), 280f*Utils.getWidthScale(getActivity()));
 			params.height = params.width * photoHeight / photoWidth;
 		}
 
 		if (photoHeight == photoWidth) {
-			params.width = Utils.dpToPx(getActivity(), 280);
-			params.height = Utils.dpToPx(getActivity(), 280);
+			params.width = Utils.dpToPx(getActivity(), 280f*Utils.getWidthScale(getActivity()));
+			params.height = Utils.dpToPx(getActivity(), 280f*Utils.getWidthScale(getActivity()));
 		}
 
 		imageView.setLayoutParams(params);

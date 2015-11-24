@@ -87,7 +87,7 @@ public class CarouselPhotoDetailActivity extends PSGodBaseActivity implements
 	private TextView mTabNumRight;
 	private TextView mTabTxtLeft;
 	private TextView mTabTxtRight;
-	private FrameLayout mPhotoContainer;
+	private LinearLayout mPhotoContainer;
 	private ViewPager mViewPager;
 	private ImageView mCursor;
 
@@ -203,7 +203,7 @@ public class CarouselPhotoDetailActivity extends PSGodBaseActivity implements
 		mTabTxtLeft = (TextView) findViewById(R.id.hot_photo_detail_tab1_tv);
 		mTabTxtRight = (TextView) findViewById(R.id.hot_photo_detail_tab2_tv);
 
-		mPhotoContainer = (FrameLayout) findViewById(R.id.hot_photo_detail_photo_info);
+		mPhotoContainer = (LinearLayout) findViewById(R.id.hot_photo_detail_photo_info);
 
 		mViewPager = (ViewPager) findViewById(R.id.hot_photo_detail_viewpager);
 		mViewPager.setOffscreenPageLimit(3);
@@ -214,9 +214,9 @@ public class CarouselPhotoDetailActivity extends PSGodBaseActivity implements
 		mPhotoContainer.setOnTouchListener(new View.OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
-				if(event.getAction() == MotionEvent.ACTION_MOVE){
+				if (event.getAction() == MotionEvent.ACTION_MOVE) {
 					isOnScroll = true;
-				}else{
+				} else {
 					isOnScroll = false;
 				}
 				return mViewPager.dispatchTouchEvent(event);
@@ -228,6 +228,7 @@ public class CarouselPhotoDetailActivity extends PSGodBaseActivity implements
 		mUserNickName = (TextView) findViewById(R.id.fragment_hot_detail_user_nickname);
 		mCreated = (TextView) findViewById(R.id.fragment_hot_detail_created);
 		mPhotoDesc = (HtmlTextView) findViewById(R.id.fragment_hot_detail_desc);
+		mPhotoDesc.setTextSize(15*Utils.getWidthScale(this));
 		mBackBtnIv = (ImageView) findViewById(R.id.hot_photo_detail_btn_back);
 		mLikeBtn = (ImageButton) findViewById(R.id.fragment_hot_like_btn);
 		mBangBtn = (ImageButton) findViewById(R.id.fragment_bang_btn);

@@ -17,7 +17,7 @@ public final class BitmapUtils {
 	public static LruCache<String, Bitmap> lruCache;
 	static {
 		int maxMemory = (int) Runtime.getRuntime().maxMemory();
-		int maxSize = maxMemory / 16;
+		int maxSize = maxMemory / 32;
 		lruCache = new LruCache<String, Bitmap>(maxSize) {
 
 			@Override
