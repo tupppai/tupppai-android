@@ -42,6 +42,8 @@ public class AppStartActivity extends PSGodBaseActivity implements
 		Handler.Callback {
 	private static final String TAG = AppStartActivity.class.getSimpleName();
 
+
+
 	private static final int SHOW_TIME_MIN = 2000; // 最短展示时间，thread少于该时间应延时跳转
 
 	private static final int TOKEN_RESULT_OK = 0;
