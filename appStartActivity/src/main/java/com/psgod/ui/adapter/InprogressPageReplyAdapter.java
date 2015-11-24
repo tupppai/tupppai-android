@@ -185,7 +185,7 @@ public class InprogressPageReplyAdapter extends BaseAdapter implements
 				if (inprogressShareDialog.isShowing()) {
 					inprogressShareDialog.dismiss();
 				} else {
-					inprogressShareDialog.show();
+					inprogressShareDialog.show(InprogressShareMoreDialog.GONETYPE_DELETE);
 				}
 				return false;
 			}

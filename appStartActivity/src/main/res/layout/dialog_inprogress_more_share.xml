@@ -74,6 +74,7 @@
                 android:id="@+id/dialog_more_share_delete"
                 style="@style/share_more_dialog_btn_new"
                 android:drawableTop="@drawable/icon_delete"
+                android:visibility="invisible"
                 android:text="删除" />
             
             <Button

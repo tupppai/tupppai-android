@@ -474,12 +474,12 @@ public class InprogressShareMoreDialog extends Dialog {
 
 	public static final int GONETYPE_DELETE = 0;
 
-//	public void show(int goneType) {
-//		if (goneType == GONETYPE_DELETE
-//				&& mDeleteBtn.getVisibility() != View.INVISIBLE) {
-//			mDeleteBtn.setVisibility(View.INVISIBLE);
-//		}
-//		show();
-//	}
+	public void show(int goneType) {
+		if (goneType == GONETYPE_DELETE
+				&& mDeleteBtn.getVisibility() == View.INVISIBLE) {
+			mDeleteBtn.setVisibility(View.VISIBLE);
+		}
+		show();
+	}
 
 }
