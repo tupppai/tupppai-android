@@ -119,6 +119,7 @@ public class MyPageAskFragment extends ScrollTabHolderFragment {
 		// 添加listview header
 		listViewAddHeader();
 
+
 		// 初始化listview
 		adapter = new PhotoWaterFallListAdapter(mContext, mItems,
 				PhotoWaterFallListType.USER_PROFILE_ASK);
