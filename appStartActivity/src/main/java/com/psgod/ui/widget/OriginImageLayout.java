@@ -291,6 +291,13 @@ public class OriginImageLayout extends RelativeLayout {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 int width = (Integer) animation.getAnimatedValue();
+
+                if(width<(baseThumbHeight + (Constants.WIDTH_OF_SCREEN - baseThumbHeight)/11) && isRestore && images.size() == 2){
+                    uploadLayout.removeAllViews();
+                    initOverlapImage(images.get(0), images.get(1), clickNum == 0 ? true : false);
+                    isRestore = false;
+                }
+
                 LayoutParams params = (LayoutParams) uploadLayout
                         .getLayoutParams();
                 params.width = width;
@@ -317,7 +324,7 @@ public class OriginImageLayout extends RelativeLayout {
                 scaleImage.setLayoutParams(params);
                 // 当size为2 的时候，展示两个
                 if (images.size() == 2) {
-                    uploadLayout.removeAllViews();
+//                    uploadLayout.removeAllViews();
 //                    initOverlapImage(images.get(0), images.get(1), clickNum == 0 ? true : false);
                     mActionZoomInIn();
                 }
@@ -338,6 +345,7 @@ public class OriginImageLayout extends RelativeLayout {
                 scaleHeightAnimator);
         animatorSet.start();
     }
+    boolean isRestore = true;
 
     private void mActionZoomInIn() {
         AnimatorSet animatorSet = new AnimatorSet();
@@ -374,8 +382,7 @@ public class OriginImageLayout extends RelativeLayout {
 
             @Override
             public void onAnimationEnd(Animator animator) {
-                uploadLayout.removeAllViews();
-                initOverlapImage(images.get(0), images.get(1));
+                isRestore = true;
             }
 
             @Override
