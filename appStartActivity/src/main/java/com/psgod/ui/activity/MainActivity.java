@@ -151,7 +151,7 @@ public class MainActivity extends PSGodBaseActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
+//
 		mBottomTab = (RadioGroup) findViewById(R.id.psgod_rg_tab);
 
 		if(BaseRequest.PSGOD_BASE_URL.equals(BaseRequest.PSGOD_BASE_TEST_URL)){
@@ -215,11 +215,27 @@ public class MainActivity extends PSGodBaseActivity implements
 		unregisterReceiver(pushMessageReceiver);
 		unregisterReceiver(mNetReceiver);
 		EventBus.getDefault().unregister(this);
-		List<Fragment> list =  getSupportFragmentManager().getFragments();
-		for(Fragment fragment : list) {
-			getSupportFragmentManager().beginTransaction().remove(fragment);
-		}
 		super.onDestroy();
+	}
+
+	private void removeAllFragment(){
+		List<Fragment> list =  getSupportFragmentManager().getFragments();
+		if(list != null) {
+			for (Fragment fragment : list) {
+				if(fragment != null) {
+					FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+					transaction.remove(fragment);
+					transaction.commit();
+				}
+			}
+		}
+	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		removeAllFragment();
+		super.onSaveInstanceState(outState);
+
 	}
 
 	// 检测sp中未读消息的数量 更新下方tab栏的状态

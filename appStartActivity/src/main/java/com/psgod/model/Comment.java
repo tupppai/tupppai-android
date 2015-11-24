@@ -99,13 +99,13 @@ public class Comment implements Serializable {
 	// unix时间戳转化为北京时间
 	public static String toLocalTime(String unix) {
 		Long timestamp = Long.parseLong(unix) * 1000;
-		String date = new SimpleDateFormat("MM月dd HH:mm")
+		String date = new SimpleDateFormat("MM月dd日 HH:mm")
 				.format(new java.util.Date(timestamp));
 		return date;
 	}
 
 	public String getUpdateTimeStr() {
-		SimpleDateFormat formatter = new SimpleDateFormat("MM月dd HH:mm");
+		SimpleDateFormat formatter = new SimpleDateFormat("MM月dd日 HH:mm");
 		if (TextUtils.isEmpty(mUpdateTimeStr)) {
 			StringBuffer sb = new StringBuffer();
 			long time = System.currentTimeMillis() - (mCreatedTime * 1000);

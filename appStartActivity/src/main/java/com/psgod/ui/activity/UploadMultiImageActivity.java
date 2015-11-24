@@ -294,7 +294,6 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
 
             @Override
             public void onClick(View v) {
-
                 contentString = mContentEdit.getText().toString().trim();
                 UploadCache.getInstence().clear();
 
@@ -470,7 +469,6 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
                         EventBus.getDefault().post(new MyPageRefreshEvent(1));
                         startActivity(intent);
                     }
-                    UploadCache.getInstence().clear();
                     UploadMultiImageActivity.this.finish();
                     break;
             }
@@ -524,7 +522,6 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
                                     new MyPageRefreshEvent(1));
                             startActivity(intent);
                         }
-                        UploadCache.getInstence().clear();
                         UploadMultiImageActivity.this.finish();
                     }
                 };
@@ -592,7 +589,6 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
                         EventBus.getDefault().post(new MyPageRefreshEvent(1));
                         startActivity(intent);
                     }
-                    UploadCache.getInstence().clear();
                     UploadMultiImageActivity.this.finish();
                 }
 

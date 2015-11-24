@@ -27,9 +27,12 @@ import android.widget.Toast;
 
 import com.psgod.R;
 import com.psgod.UploadCache;
+import com.psgod.eventbus.MyPageRefreshEvent;
 import com.psgod.model.FileUtils;
 import com.psgod.model.SelectImage;
 import com.psgod.ui.adapter.MultiImageSelectAdapter;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * 上传多图 选择图片
@@ -105,6 +108,9 @@ public class MultiImageSelectActivity extends PSGodBaseActivity {
 	public void onDestroy() {
 		super.onDestroy();
 		UploadCache.getInstence().clear();
+		EventBus.getDefault().post(new MyPageRefreshEvent(MyPageRefreshEvent.ASK));
+		EventBus.getDefault().post(new MyPageRefreshEvent(MyPageRefreshEvent.REPLY));
+
 	}
 
 	public void initViews() {
