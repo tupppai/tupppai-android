@@ -318,7 +318,7 @@ public class OriginImageLayout extends RelativeLayout {
                 // 当size为2 的时候，展示两个
                 if (images.size() == 2) {
                     uploadLayout.removeAllViews();
-                    initOverlapImage(images.get(0), images.get(1), clickNum == 0 ? true : false);
+//                    initOverlapImage(images.get(0), images.get(1), clickNum == 0 ? true : false);
                     mActionZoomInIn();
                 }
             }
@@ -348,6 +348,7 @@ public class OriginImageLayout extends RelativeLayout {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
                 int width = (Integer) valueAnimator.getAnimatedValue();
+
                 if (clickNum == 0) {
                     LayoutParams rparams = (LayoutParams) mImageViewRight.getLayoutParams();
                     rparams.setMargins(0, 0, width - baseThumbHeight, 0);
