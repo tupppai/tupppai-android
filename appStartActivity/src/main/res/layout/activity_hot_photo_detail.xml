@@ -111,7 +111,7 @@
             <RelativeLayout
                 android:id="@+id/hot_photo_detail_photos_container"
                 android:layout_width="match_parent"
-                android:layout_height="360dp"
+                android:layout_height="300dp"
                 android:background="@null"
                 android:clipChildren="false" >
 
@@ -128,7 +128,7 @@
                 android:id="@+id/fragment_hot_detail_photo_info"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="360dp"
+                android:layout_marginTop="300dp"
                 android:background="#66000000" >
 
                 <TextView
@@ -158,19 +158,19 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/fragment_hot_detail_created"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="14dp"
+                    android:layout_marginTop="5dp"
                     android:textColor="#FFFFFF"
                     android:textSize="15dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp" />
 
                 <ImageButton
-                    android:id="@+id/fragment_hot_like_btn" 
+                    android:id="@+id/fragment_hot_like_btn"
                     android:layout_width="42.5dp"
                     android:layout_height="42.5dp"
                     android:layout_below="@id/fragment_hot_detail_desc"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="60dp"
+                    android:layout_marginTop="40dp"
                     android:background="@null"
                     android:scaleType="fitCenter"
                     android:src="@drawable/hot_detail_like_normal" />
@@ -189,13 +189,13 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
+                    android:layout_height="30dp"
                     android:layout_below="@id/fragment_hot_like_btn" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    android:layout_below="@id/fragment_bang_btn" />
+                <!--<View-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="35dp"-->
+                    <!--android:layout_below="@id/fragment_bang_btn" />-->
             </RelativeLayout>
 
             <com.psgod.ui.widget.AvatarImageView
@@ -203,7 +203,7 @@
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="342.5dp"
+                android:layout_marginTop="282.5dp"
                 android:src="@drawable/head_portrait" />
         </FrameLayout>
     </com.psgod.ui.widget.CustomScrollView>
