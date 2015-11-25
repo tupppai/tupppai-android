@@ -197,6 +197,8 @@
                         android:id="@+id/activity_set_info_user_agreement"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:layout_marginLeft="-10dp"
                         android:text="@string/set_info_tip2"
                         android:textColor="#74C3FF"
                         android:textSize="12dp" >
