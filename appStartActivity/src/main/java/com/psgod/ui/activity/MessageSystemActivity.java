@@ -25,11 +25,14 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.OnLastItemVisibleLis
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.psgod.Constants;
 import com.psgod.R;
+import com.psgod.eventbus.RefreshEvent;
 import com.psgod.model.notification.NotificationMessage;
 import com.psgod.network.request.MessageListRequest;
 import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.ui.adapter.MessageListAdapter;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
+
+import de.greenrobot.event.EventBus;
 
 public class MessageSystemActivity extends PSGodBaseActivity {
 
@@ -57,9 +60,16 @@ public class MessageSystemActivity extends PSGodBaseActivity {
 	private int MESSAGE_TYPE = 1;
 
 	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		EventBus.getDefault().unregister(this);
+	}
+
+	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_message_system);
+		EventBus.getDefault().register(this);
 
 		mContext = this;
 
@@ -129,6 +139,16 @@ public class MessageSystemActivity extends PSGodBaseActivity {
 		public void onRefresh(PullToRefreshBase refreshView) {
 			// TODO Auto-generated method stub
 			refresh();
+		}
+	}
+
+	public void onEventMainThread(RefreshEvent event) {
+		if(event.className.equals(this.getClass().getName())){
+			try {
+				refresh();
+			} catch (NullPointerException nu) {
+			} catch (Exception e) {
+			}
 		}
 	}
 

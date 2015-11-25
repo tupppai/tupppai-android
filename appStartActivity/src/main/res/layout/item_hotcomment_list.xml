@@ -29,6 +29,7 @@
             android:layout_marginLeft="7dp"
             android:layout_toRightOf="@+id/item_hotcomment_list_name_tv"
             android:ellipsize="end"
+            android:background="@drawable/selector_press"
             android:includeFontPadding="false"
             android:maxLines="2"
             android:textColor="#99000000"

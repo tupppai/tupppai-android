@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.WindowManager;
 
 import cn.sharesdk.framework.ShareSDK;
+import de.greenrobot.event.EventBus;
 
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
@@ -20,6 +21,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.psgod.emoji.FaceConversionUtil;
+import com.psgod.eventbus.RefreshEvent;
 import com.psgod.model.NotificationBean;
 import com.psgod.model.PhotoItem;
 import com.psgod.model.notification.SystemNotification;
@@ -29,6 +31,7 @@ import com.psgod.ui.activity.CommentListActivity;
 import com.psgod.ui.activity.FollowingListActivity;
 import com.psgod.ui.activity.MessageLikeActivity;
 import com.psgod.ui.activity.MessageSystemActivity;
+import com.psgod.ui.activity.NewMessageActivity;
 import com.umeng.message.PushAgent;
 import com.umeng.message.UmengMessageHandler;
 import com.umeng.message.UmengNotificationClickHandler;
@@ -105,6 +108,7 @@ public class PSGodApplication extends Application {
                             intent.putExtra("type", type);
                             intent.putExtra("count", count);
                             sendBroadcast(intent);
+
 
                             // 更新各类推送本地的数量
                             updatePushData(type, count);
