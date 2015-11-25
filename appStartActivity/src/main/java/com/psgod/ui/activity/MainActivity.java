@@ -233,9 +233,15 @@ public class MainActivity extends PSGodBaseActivity implements
 
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
-		removeAllFragment();
+//
 		super.onSaveInstanceState(outState);
 
+	}
+
+	@Override
+	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+		removeAllFragment();
+		super.onRestoreInstanceState(savedInstanceState);
 	}
 
 	// 检测sp中未读消息的数量 更新下方tab栏的状态
