@@ -213,18 +213,18 @@ public class RecentPageActFragment extends BaseFragment {
         @Override
         public void onResponse(Activities response) {
             mPhotoItems.clear();
-            if(response.getReplies().size() > 0) {
+            if (response.getReplies().size() > 0) {
                 mPhotoItems.addAll(response.getReplies());
             }
             mAdapter.notifyDataSetChanged();
             mActs.clear();
             if (response.getActs().size() > 0 && response.getActs().get(0) != null) {
                 mActs.addAll(response.getActs());
-                if(mHeadView.getVisibility() == View.GONE){
+                if (mHeadView.getVisibility() == View.GONE) {
                     mHeadView.setVisibility(View.VISIBLE);
                 }
                 ImageLoader.getInstance().displayImage(mActs.get(0).getImage_url(), mHeadImg, Constants.DISPLAY_IMAGE_OPTIONS);
-            }else{
+            } else {
                 mHeadView.setVisibility(View.GONE);
                 mListView.setEmptyView(mEmptyView);
             }
@@ -281,8 +281,13 @@ public class RecentPageActFragment extends BaseFragment {
     };
 
     public void onEventMainThread(RefreshEvent event) {
-        if(event.className.equals(this.getClass().getName())){
-            mListView.setRefreshing(true);
+        if (event.className.equals(this.getClass().getName())) {
+            try {
+                mListView.setRefreshing(true);
+            } catch (NullPointerException ne) {
+            } catch (Exception e) {
+            }
+
         }
     }
 

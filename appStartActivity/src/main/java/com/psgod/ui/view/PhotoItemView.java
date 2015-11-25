@@ -26,6 +26,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.os.Handler.Callback;
 import android.os.Message;
 import android.util.AttributeSet;
@@ -377,8 +378,7 @@ public class PhotoItemView extends RelativeLayout implements Callback {
             mSingleReplyAllWorksBtn.setVisibility(GONE);
         } else {
             mAllWorksBtn.setOnClickListener(allWorkListener);
-            mHotReplyAllWorksBtn.setOnClickListener(allWorkListener);
-            mSingleReplyAllWorksBtn.setOnClickListener(allWorkListener);
+
         }
         // bang 按钮点击浮层
         mHelpPSBtn.setOnClickListener(helpPsListener);
@@ -817,12 +817,16 @@ public class PhotoItemView extends RelativeLayout implements Callback {
     public void updateLikeView() {
         if (mPhotoItem.isLiked()) {
             mLikeBtn.setImageResource(R.drawable.ic_home_like_selected);
-            mLikeCountTv.setBackground(mContext.getResources().getDrawable(
-                    R.drawable.shape_like_count));
+            if(Build.VERSION.SDK_INT >= 16) {
+                mLikeCountTv.setBackground(mContext.getResources().getDrawable(
+                        R.drawable.shape_like_count));
+            }
         } else {
             mLikeBtn.setImageResource(R.drawable.ic_home_like_normal);
-            mLikeCountTv.setBackground(mContext.getResources().getDrawable(
-                    R.drawable.shape_unlike_count));
+            if(Build.VERSION.SDK_INT >= 16) {
+                mLikeCountTv.setBackground(mContext.getResources().getDrawable(
+                        R.drawable.shape_unlike_count));
+            }
         }
         String textLikeCount = Utils.getCountDisplayText(mPhotoItem
                 .getLikeCount());
