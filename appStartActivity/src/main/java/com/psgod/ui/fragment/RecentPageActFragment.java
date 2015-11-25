@@ -124,6 +124,7 @@ public class RecentPageActFragment extends BaseFragment {
                     Constants.SharedPreferencesKey.NAME, Context.MODE_PRIVATE);
             mSpKey = Constants.SharedPreferencesKey.RECENT_PHOTO_LIST_LAST_REFRESH_TIME;
 
+
             mLastUpdatedTime = sp.getLong(mSpKey, DEFAULT_LAST_REFRESH_TIME);
         }
 
