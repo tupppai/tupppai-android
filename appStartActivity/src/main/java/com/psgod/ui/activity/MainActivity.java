@@ -233,14 +233,12 @@ public class MainActivity extends PSGodBaseActivity implements
 
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
-//
 		super.onSaveInstanceState(outState);
-
+		outState.remove("android:support:fragments");
 	}
 
 	@Override
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
-		removeAllFragment();
 		super.onRestoreInstanceState(savedInstanceState);
 	}
 
