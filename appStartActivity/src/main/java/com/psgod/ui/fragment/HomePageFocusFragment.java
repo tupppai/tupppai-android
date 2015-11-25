@@ -173,7 +173,11 @@ public class HomePageFocusFragment extends BaseFragment implements Callback {
 
 	public void onEventMainThread(RefreshEvent event) {
 		if(event.className.equals(this.getClass().getName())){
-			setRefreshing();
+			try {
+				setRefreshing();
+			} catch (NullPointerException nu) {
+			} catch (Exception e) {
+			}
 		}
 	}
 

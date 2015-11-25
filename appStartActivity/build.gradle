@@ -6,11 +6,11 @@ android {
 
     defaultConfig {
         applicationId "com.psgod"
-        minSdkVersion 8
+        minSdkVersion 14
         targetSdkVersion 18
         multiDexEnabled true
-        versionCode 32
-        versionName "1.0.1"
+        versionCode 33
+        versionName "1.0.2"
         multiDexEnabled true
     }
 

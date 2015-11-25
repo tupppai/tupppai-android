@@ -115,6 +115,8 @@ public class SetAvatarActivity extends PSGodBaseActivity {
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
+		} catch (Exception e){
+
 		}
 
 		Matrix matrix = new Matrix();

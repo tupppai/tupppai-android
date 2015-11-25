@@ -14,10 +14,7 @@ import java.util.List;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.sufficientlysecure.htmltextview.HtmlLocalImageGetter;
-import org.sufficientlysecure.htmltextview.HtmlRemoteImageGetter;
 import org.sufficientlysecure.htmltextview.HtmlTextView;
-import org.sufficientlysecure.htmltextview.HtmlTextView.ImageGetter;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
@@ -26,20 +23,16 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.os.Handler.Callback;
 import android.os.Message;
 import android.util.AttributeSet;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.Animation.AnimationListener;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
-import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -85,6 +78,7 @@ import com.psgod.ui.widget.AvatarImageView;
 import com.psgod.ui.widget.OriginImageLayout;
 import com.psgod.ui.widget.dialog.PSDialog;
 import com.psgod.ui.widget.dialog.ShareMoreDialog;
+import com.psgod.AnimUtils;
 
 import de.greenrobot.event.EventBus;
 
@@ -377,8 +371,7 @@ public class PhotoItemView extends RelativeLayout implements Callback {
             mSingleReplyAllWorksBtn.setVisibility(GONE);
         } else {
             mAllWorksBtn.setOnClickListener(allWorkListener);
-            mHotReplyAllWorksBtn.setOnClickListener(allWorkListener);
-            mSingleReplyAllWorksBtn.setOnClickListener(allWorkListener);
+
         }
         // bang 按钮点击浮层
         mHelpPSBtn.setOnClickListener(helpPsListener);
@@ -817,12 +810,16 @@ public class PhotoItemView extends RelativeLayout implements Callback {
     public void updateLikeView() {
         if (mPhotoItem.isLiked()) {
             mLikeBtn.setImageResource(R.drawable.ic_home_like_selected);
-            mLikeCountTv.setBackground(mContext.getResources().getDrawable(
-                    R.drawable.shape_like_count));
+            if(Build.VERSION.SDK_INT >= 16) {
+                mLikeCountTv.setBackground(mContext.getResources().getDrawable(
+                        R.drawable.shape_like_count));
+            }
         } else {
             mLikeBtn.setImageResource(R.drawable.ic_home_like_normal);
-            mLikeCountTv.setBackground(mContext.getResources().getDrawable(
-                    R.drawable.shape_unlike_count));
+            if(Build.VERSION.SDK_INT >= 16) {
+                mLikeCountTv.setBackground(mContext.getResources().getDrawable(
+                        R.drawable.shape_unlike_count));
+            }
         }
         String textLikeCount = Utils.getCountDisplayText(mPhotoItem
                 .getLikeCount());
@@ -1218,27 +1215,7 @@ public class PhotoItemView extends RelativeLayout implements Callback {
                 mComplexFavTempImg.setVisibility(VISIBLE);
                 mComplexFavTempImg.setImageDrawable(mComplexFavImg
                         .getDrawable());
-                Animation animation = new AnimationUtils().loadAnimation(
-                        mContext, R.anim.fav_vanish);
-                animation.setAnimationListener(new AnimationListener() {
-
-                    @Override
-                    public void onAnimationStart(Animation arg0) {
-
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animation arg0) {
-
-                    }
-
-                    @Override
-                    public void onAnimationEnd(Animation arg0) {
-                        mComplexFavTempImg.setVisibility(GONE);
-                    }
-                });
-                mComplexFavTempImg.setAnimation(animation);
-                animation.start();
+                AnimUtils.vanishAnimThumb(mContext, mComplexFavTempImg, null);
             }
             int mStatus = mPhotoItem.isCollected() ? STATUS_UNCOLLECTION
                     : STATUS_COLLECTION;
@@ -1263,4 +1240,5 @@ public class PhotoItemView extends RelativeLayout implements Callback {
     public void setIsRecentAct(boolean isRecentAct) {
         this.isRecentAct = isRecentAct;
     }
+
 }

@@ -124,6 +124,7 @@ public class RecentPageActFragment extends BaseFragment {
                     Constants.SharedPreferencesKey.NAME, Context.MODE_PRIVATE);
             mSpKey = Constants.SharedPreferencesKey.RECENT_PHOTO_LIST_LAST_REFRESH_TIME;
 
+
             mLastUpdatedTime = sp.getLong(mSpKey, DEFAULT_LAST_REFRESH_TIME);
         }
 
@@ -282,7 +283,9 @@ public class RecentPageActFragment extends BaseFragment {
 
     public void onEventMainThread(RefreshEvent event) {
         if(event.className.equals(this.getClass().getName())){
-            mListView.setRefreshing(true);
+            try {
+                mListView.setRefreshing(true);
+            }catch (NullPointerException ne){}
         }
     }
 

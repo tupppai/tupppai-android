@@ -532,6 +532,12 @@ public class CommentListActivity extends PSGodBaseActivity implements
 	protected void onPause() {
 		// TODO Auto-generated method stub
 		super.onPause();
-		hideInputPanel();
+		try {
+			hideInputPanel();
+		}catch (NullPointerException ne){
+
+		}catch (Exception e){
+
+		}
 	}
 }
