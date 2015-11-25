@@ -172,6 +172,8 @@ public class PhotoItemView extends RelativeLayout implements Callback {
     private PSDialog mPsDialog;
     private ShareMoreDialog mShareMoreDialog;
 
+    private boolean isRecentAct = false;
+
     private ViewEnabledRunnable mViewEnabledRunnable = new ViewEnabledRunnable(
             this);
 
@@ -368,10 +370,16 @@ public class PhotoItemView extends RelativeLayout implements Callback {
         // }
         // });
         // 其他作品按钮
-        mHotReplyAllWorksBtn.setOnClickListener(allWorkListener);
-        mSingleReplyAllWorksBtn.setOnClickListener(allWorkListener);
-        mAllWorksBtn.setOnClickListener(allWorkListener);
 
+        if (isRecentAct) {
+            mAllWorksBtn.setVisibility(GONE);
+            mHotReplyAllWorksBtn.setVisibility(GONE);
+            mSingleReplyAllWorksBtn.setVisibility(GONE);
+        } else {
+            mAllWorksBtn.setOnClickListener(allWorkListener);
+            mHotReplyAllWorksBtn.setOnClickListener(allWorkListener);
+            mSingleReplyAllWorksBtn.setOnClickListener(allWorkListener);
+        }
         // bang 按钮点击浮层
         mHelpPSBtn.setOnClickListener(helpPsListener);
 
@@ -1252,4 +1260,7 @@ public class PhotoItemView extends RelativeLayout implements Callback {
         return mPhotoItem;
     }
 
+    public void setIsRecentAct(boolean isRecentAct) {
+        this.isRecentAct = isRecentAct;
+    }
 }

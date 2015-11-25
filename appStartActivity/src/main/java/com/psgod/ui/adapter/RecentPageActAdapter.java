@@ -31,7 +31,7 @@ public class RecentPageActAdapter extends MyBaseAdapter<PhotoItem> {
         } else {
             photoItemView = (PhotoItemView) convertView;
         }
-
+        photoItemView.setIsRecentAct(true);
         photoItemView.initialize(PhotoItemView.PhotoListType.RECENT_REPLY);
 
         photoItemView.setShowOrigin(false);
