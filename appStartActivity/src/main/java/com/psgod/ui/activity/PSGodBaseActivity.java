@@ -114,6 +114,12 @@ public abstract class PSGodBaseActivity extends FragmentActivity implements
 		// }
 	}
 
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.remove("android:support:fragments");
+	}
+
 	protected void showToast(PSGodToast toast) {
 		if (mToastView == null) {
 			Resources res = getResources();

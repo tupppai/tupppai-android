@@ -38,6 +38,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.psgod.Constants;
+import com.psgod.PSGodApplication;
 import com.psgod.R;
 import com.psgod.UserPreferences;
 import com.psgod.Utils;
@@ -64,6 +65,7 @@ import com.psgod.ui.fragment.RecentPageFragment;
 import com.psgod.ui.fragment.RecentPageWorksFragment;
 import com.psgod.ui.widget.dialog.CameraPopupwindow;
 import com.umeng.message.PushAgent;
+import com.umeng.message.entity.UMessage;
 import com.umeng.update.UmengUpdateAgent;
 
 import de.greenrobot.event.EventBus;
@@ -151,7 +153,6 @@ public class MainActivity extends PSGodBaseActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-//
 		mBottomTab = (RadioGroup) findViewById(R.id.psgod_rg_tab);
 
 		if(BaseRequest.PSGOD_BASE_URL.equals(BaseRequest.PSGOD_BASE_TEST_URL)){
@@ -234,7 +235,7 @@ public class MainActivity extends PSGodBaseActivity implements
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		outState.remove("android:support:fragments");
+
 	}
 
 	@Override

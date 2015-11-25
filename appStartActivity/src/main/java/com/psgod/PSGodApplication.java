@@ -40,6 +40,7 @@ public class PSGodApplication extends Application {
 	private PushAgent mPushAgent;
 
 	public static NotificationBean mBean;
+	public static UMessage umsg;
 
 	public static PSGodApplication getInstance() {
 		if (instance == null) {
@@ -108,6 +109,7 @@ public class PSGodApplication extends Application {
 			}
 		};
 		mPushAgent.setMessageHandler(messageHandler);
+
 
 		/**
 		 * 该Handler是在BroadcastReceiver中被调用，故

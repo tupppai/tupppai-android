@@ -35,7 +35,7 @@
         android:layout_alignTop="@id/item_like_list_nametv"
         android:layout_toRightOf="@id/item_like_list_nametv"
         android:layout_marginLeft="9dp"
-        android:text="赞了"
+        android:text="赞了你"
         android:textColor="#7F000000"
         android:textSize="13dp" 
         android:includeFontPadding="false"
