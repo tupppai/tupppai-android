@@ -87,6 +87,17 @@
             android:textSize="11dp" />
     </RelativeLayout>
 
+    <ImageView
+        android:id="@+id/recent_multi_image_sign"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/inprogress_ask_item_image"
+        android:layout_marginBottom="6dp"
+        android:layout_alignRight="@id/inprogress_ask_item_image"
+        android:layout_marginRight="6dp"
+        android:src="@mipmap/recent_ask_multi_sign"
+        android:visibility="gone" />
+
     <RelativeLayout
         android:id="@+id/desc_layout"
         android:layout_width="match_parent"

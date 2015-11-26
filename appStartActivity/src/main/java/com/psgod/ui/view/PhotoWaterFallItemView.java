@@ -59,6 +59,7 @@ public class PhotoWaterFallItemView extends RelativeLayout {
 	private ImageView replyImage;
 	private TextView likeTextView;
 	private TextView workLikeTextView;
+	private ImageView mRecentAskMultiSignImage;
 
 	private RelativeLayout mUserInfoLayout;
 	private RelativeLayout mDescLayout;
@@ -124,10 +125,11 @@ public class PhotoWaterFallItemView extends RelativeLayout {
 		mLikeLayout = (RelativeLayout) this.findViewById(R.id.work_like_layout);
 		mLikeWhitelayout = (RelativeLayout) this
 				.findViewById(R.id.like_count_layout);
+		mRecentAskMultiSignImage = (ImageView) this.findViewById(R.id.recent_multi_image_sign);
 	}
 
 	// 配置图片显示细节,更新数据
-	public void setPhotoItem(PhotoItem photoItem) {
+	public void setPhotoItem(PhotoItem photoItem, PhotoWaterFallListType type) {
 		mPhotoItem = photoItem;
 		mAvatarIv.setUserId(mPhotoItem.getUid());
 
@@ -146,6 +148,14 @@ public class PhotoWaterFallItemView extends RelativeLayout {
 		askDescTv.setText(photoItem.getDesc());
 		likeTextView.setText(Integer.toString(mPhotoItem.getLikeCount()));
 		workLikeTextView.setText(Integer.toString(mPhotoItem.getLikeCount()));
+
+		if ((type == PhotoWaterFallListType.RECENT_ASK) || (type == PhotoWaterFallListType.USER_PROFILE_ASK)) {
+			if (mPhotoItem.getUploadImagesList().size() == 2) {
+				mRecentAskMultiSignImage.setVisibility(View.VISIBLE);
+			} else {
+				mRecentAskMultiSignImage.setVisibility(View.GONE);
+			}
+		}
 	}
 
 	/**

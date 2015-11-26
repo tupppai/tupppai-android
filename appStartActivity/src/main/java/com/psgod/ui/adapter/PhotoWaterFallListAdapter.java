@@ -65,7 +65,7 @@ public class PhotoWaterFallListAdapter extends BaseAdapter {
 			photoWaterFallItemView.setType(type);
 			photoWaterFallItemView.initPhotoWaterFallListType(mPhotoType);
 		}
-		photoWaterFallItemView.setPhotoItem(photoItem);
+		photoWaterFallItemView.setPhotoItem(photoItem, mPhotoType);
 
 		if (mPhotoType == PhotoWaterFallListType.INPROGRESS_COMPLETE) {
 			photoWaterFallItemView
