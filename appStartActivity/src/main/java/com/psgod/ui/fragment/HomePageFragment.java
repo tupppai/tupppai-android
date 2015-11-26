@@ -274,7 +274,7 @@ public class HomePageFragment extends Fragment {
 
 		mViewHolder.viewPager
 				.setOnPageChangeListener(new OnPageChangeListener() {
-					int mCursorMoving = Utils.dpToPx(getActivity(), 110);
+					int mCursorMoving = Utils.dpToPx(getActivity(), 108);
 
 					@Override
 					public void onPageScrollStateChanged(int index) {
