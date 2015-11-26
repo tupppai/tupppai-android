@@ -42,31 +42,35 @@ public final class UserPhotoRequest extends BaseRequest<List<PhotoItem>> {
 		int length = data.length();
 		List<PhotoItem> items = new ArrayList<PhotoItem>();
 		for (int ix = 0; ix < length; ++ix) {
-			if (this.request_type == MY_PAGE_ASK) {
-				JSONObject jsonObject = data.getJSONObject(ix);
-				if (jsonObject.has("ask_uploads")) {
-					JSONArray uploadArray = jsonObject
-							.getJSONArray("ask_uploads");
-					int uploadSize = uploadArray.length();
-					if (uploadSize == 1) {
-						items.add(PhotoItem.createPhotoItem(data
-								.getJSONObject(ix)));
-					} else if (uploadSize == 2) {
-						PhotoItem photoItem = PhotoItem.createPhotoItem(data
-								.getJSONObject(ix));
-						PhotoItem cloneItem = new PhotoItem();
-						cloneItem = photoItem.clone();
-						items.add(photoItem);
-						JSONObject uploadImage = uploadArray.getJSONObject(1);
-						cloneItem.setImageURL(uploadImage
-								.getString("image_url"));
-						items.add(cloneItem);
-					}
-				}
-			} else {
-				items.add(PhotoItem.createPhotoItem(data.getJSONObject(ix)));
-			}
+			items.add(PhotoItem.createPhotoItem(data.getJSONObject(ix)));
 		}
+
+//		for (int ix = 0; ix < length; ++ix) {
+//			if (this.request_type == MY_PAGE_ASK) {
+//				JSONObject jsonObject = data.getJSONObject(ix);
+//				if (jsonObject.has("ask_uploads")) {
+//					JSONArray uploadArray = jsonObject
+//							.getJSONArray("ask_uploads");
+//					int uploadSize = uploadArray.length();
+//					if (uploadSize == 1) {
+//						items.add(PhotoItem.createPhotoItem(data
+//								.getJSONObject(ix)));
+//					} else if (uploadSize == 2) {
+//						PhotoItem photoItem = PhotoItem.createPhotoItem(data
+//								.getJSONObject(ix));
+//						PhotoItem cloneItem = new PhotoItem();
+//						cloneItem = photoItem.clone();
+//						items.add(photoItem);
+//						JSONObject uploadImage = uploadArray.getJSONObject(1);
+//						cloneItem.setImageURL(uploadImage
+//								.getString("image_url"));
+//						items.add(cloneItem);
+//					}
+//				}
+//			} else {
+//				items.add(PhotoItem.createPhotoItem(data.getJSONObject(ix)));
+//			}
+//		}
 		return items;
 	}
 
