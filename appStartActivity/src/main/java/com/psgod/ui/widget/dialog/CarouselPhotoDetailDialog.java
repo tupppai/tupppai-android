@@ -20,11 +20,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.nineoldandroids.view.ViewHelper;
 import com.psgod.Constants;
 import com.psgod.R;
 import com.psgod.Utils;
 import com.psgod.eventbus.NetEvent;
-import com.psgod.ui.activity.BlankActivity;
 import com.psgod.ui.adapter.CarouselPhotoAdapter;
 import com.psgod.ui.adapter.ViewPagerAdapter;
 import com.psgod.ui.fragment.CarouselPhotoDetailFragment;
@@ -106,17 +106,22 @@ public class CarouselPhotoDetailDialog extends Dialog {
 
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                if (!isFlows) {
+//                if (!isFlows) {
                     float moveY = 0;
                     switch (motionEvent.getAction()) {
                         case MotionEvent.ACTION_DOWN:
                             DownX = motionEvent.getX();//float DownX
-                            DownY = motionEvent.getY();//float DownY
+                            DownY = motionEvent.getRawY();//float DownY
                             Y = view.getY();
                             break;
                         case MotionEvent.ACTION_MOVE:
-                            moveY = motionEvent.getY() - DownY;//y轴距离
-                            view.layout(view.getLeft(),(int)moveY,view.getRight(),view.getBottom());
+                            i++;
+                            if(i == 2) {
+                                moveY = motionEvent.getRawY() - DownY;//y轴距离
+                                ViewHelper.setTranslationY(view, moveY);
+                                Log.e("Y", String.valueOf(moveY));
+                                i = 0;
+                            }
                             break;
                         case MotionEvent.ACTION_UP:
                             view.setY(oY);
@@ -127,8 +132,8 @@ public class CarouselPhotoDetailDialog extends Dialog {
                         view.setY(oY);
                         viewPagerBlow();
                     }
-                }
-                return false;
+//                }
+                return true;
             }
         });
         ImageView view2 = new ImageView(mContext);
