@@ -300,7 +300,6 @@ public class InprogressPageAskAdapter extends BaseAdapter implements
 		public void onResponse(Boolean response) {
 			if (response) {
 				Toast.makeText(mContext, "修改成功", Toast.LENGTH_SHORT).show();
-				InprogressPageAskAdapter.this.notifyDataSetChanged();
 
 			}
 		}

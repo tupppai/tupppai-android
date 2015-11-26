@@ -11,9 +11,17 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.psgod.R;
 import com.psgod.Utils;
 import com.psgod.WeakReferenceHandler;
+import com.psgod.network.request.CheckVerifyCodeRequest;
+import com.psgod.network.request.PSGodErrorListener;
+import com.psgod.network.request.PSGodRequestQueue;
+import com.psgod.network.request.ResetPasswordRequest;
+import com.psgod.ui.widget.dialog.CustomProgressingDialog;
 
 /**
  * 重置密码输入验证码
@@ -35,12 +43,12 @@ public class ResetPasswordCaptchaActivity extends PSGodBaseActivity {
 	private TextView mBackTextView;
 
 	private String mPhoneNumber;
-	private String mVerifyCode;
 	private int mLeftTime = RESEND_TIME_IN_SEC;
 
 	private String mVerifyInput;
 
 	private WeakReferenceHandler mHandler = new WeakReferenceHandler(this);
+	private CustomProgressingDialog mProgressDialog;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -53,7 +61,6 @@ public class ResetPasswordCaptchaActivity extends PSGodBaseActivity {
 
 		Intent intent = getIntent();
 		mPhoneNumber = intent.getStringExtra("mPhoneNumber");
-		mVerifyCode = intent.getStringExtra("mVerifyCode");
 	}
 
 	private void initViews() {
@@ -96,24 +103,56 @@ public class ResetPasswordCaptchaActivity extends PSGodBaseActivity {
 				finish();
 			}
 		});
+
 		// 点击下一步
 		mNextButton.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
+				mVerifyInput = mCaptchaEditText.getText().toString().trim();
 
-				if (validate()) {
-					Intent intent = new Intent(
-							ResetPasswordCaptchaActivity.this,
-							ResetPasswordActivity.class);
-					intent.putExtra("mPhoneNumber", mPhoneNumber);
-					intent.putExtra("mVerifyCode", mVerifyCode);
-					startActivity(intent);
+				if (mProgressDialog == null) {
+					mProgressDialog = new CustomProgressingDialog(ResetPasswordCaptchaActivity.this);
 				}
+				if (!mProgressDialog.isShowing()) {
+					mProgressDialog.show();
+				}
+				CheckVerifyCodeRequest.Builder builder = new CheckVerifyCodeRequest.Builder()
+						.setVerifyCode(mVerifyInput).setListener(new Response.Listener<Boolean>() {
+							@Override
+							public void onResponse(Boolean response) {
+
+								if ((mProgressDialog != null) && mProgressDialog.isShowing()) {
+									mProgressDialog.dismiss();
+								}
+
+								Intent intent = new Intent(
+										ResetPasswordCaptchaActivity.this,
+										ResetPasswordActivity.class);
+								intent.putExtra("mPhoneNumber", mPhoneNumber);
+								intent.putExtra("mVerifyCode", mVerifyInput);
+								startActivity(intent);
+							}
+						}).setErrorListener(errorListener);
+				CheckVerifyCodeRequest request = builder.build();
+				RequestQueue requestQueue = PSGodRequestQueue
+						.getInstance(
+								ResetPasswordCaptchaActivity.this)
+						.getRequestQueue();
+				requestQueue.add(request);
 			}
 		});
 	}
+
+	private PSGodErrorListener errorListener = new PSGodErrorListener(
+			ResetPasswordRequest.class.getSimpleName()) {
+		@Override
+		public void handleError(VolleyError error) {
+			if ((mProgressDialog != null) && mProgressDialog.isShowing()) {
+				mProgressDialog.dismiss();
+			}
+		}
+	};
 
 	@Override
 	public boolean handleMessage(Message msg) {
@@ -134,15 +173,14 @@ public class ResetPasswordCaptchaActivity extends PSGodBaseActivity {
 		return true;
 	}
 
-	private Boolean validate() {
-		mVerifyInput = mCaptchaEditText.getText().toString().trim();
-		if (mVerifyCode.equals(mVerifyInput)) {
-			return true;
-		} else {
-			Toast.makeText(ResetPasswordCaptchaActivity.this, "验证码错误,请重新填写",
-					Toast.LENGTH_SHORT).show();
-			return false;
-		}
+	/**
+	 * 暂停所有的下载
+	 */
+	@Override
+	public void onStop() {
+		super.onStop();
+		RequestQueue requestQueue = PSGodRequestQueue.getInstance(this)
+				.getRequestQueue();
+		requestQueue.cancelAll(TAG);
 	}
-
 }

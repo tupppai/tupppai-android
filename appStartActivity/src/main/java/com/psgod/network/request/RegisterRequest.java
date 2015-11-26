@@ -58,6 +58,8 @@ public class RegisterRequest extends BaseRequest<JSONObject> {
 					return createParameters();
 				}
 			};
+			Logger.log(Logger.LOG_LEVEL_DEBUG, Logger.USER_LEVEL_COLOR, TAG,
+					"createUrl: " + url + createParameters());
 			return request;
 		}
 
@@ -66,8 +68,6 @@ public class RegisterRequest extends BaseRequest<JSONObject> {
 			StringBuilder sb = new StringBuilder(BaseRequest.PSGOD_BASE_URL)
 					.append("account/register");
 			String url = sb.toString();
-			Logger.log(Logger.LOG_LEVEL_DEBUG, Logger.USER_LEVEL_COLOR, TAG,
-					"createUrl: " + url);
 			return url;
 		}
 
@@ -83,6 +83,7 @@ public class RegisterRequest extends BaseRequest<JSONObject> {
 			params.put("nickname", registerData.getNickname());
 			params.put("province", String.valueOf(registerData.getProvinceId()));
 			params.put("city", String.valueOf(registerData.getCityId()));
+			params.put("code", registerData.getVerifyCode());
 
 			if (!TextUtils.isEmpty(registerData.getOpenId())) {
 				params.put("openid", registerData.getOpenId());
@@ -92,7 +93,6 @@ public class RegisterRequest extends BaseRequest<JSONObject> {
 				params.put("avatar_url", registerData.getThirdAvatar());
 			}
 
-			Log.v("test", params.toString());
 			return params;
 		}
 	}

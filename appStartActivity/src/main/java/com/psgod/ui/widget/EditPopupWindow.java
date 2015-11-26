@@ -199,7 +199,7 @@ public class EditPopupWindow implements Callback {
 		@Override
 		public void onEmojiHideListener(View emoji) {
 			commentWindow.dismiss();
-			commentWindow.showAsDropDown(parent, 0, Utils.dpToPx(mContext, -2),
+			commentWindow.showAsDropDown(parent, 0, Utils.dpToPx(mContext, 0),
 					Gravity.BOTTOM);
 			fixedThreadPool.execute(new Runnable() {
 

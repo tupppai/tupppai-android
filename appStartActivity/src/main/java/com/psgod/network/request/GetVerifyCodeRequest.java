@@ -13,27 +13,25 @@ import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.psgod.Logger;
 
-public class GetVerifyCodeRequest extends BaseRequest<String> {
+public class GetVerifyCodeRequest extends BaseRequest<Boolean> {
 	private static final String TAG = ActionCollectionRequest.class
 			.getSimpleName();
 
 	public GetVerifyCodeRequest(int method, String url,
-			Listener<String> listener, ErrorListener errorListener) {
+			Listener<Boolean> listener, ErrorListener errorListener) {
 		super(method, url, listener, errorListener);
 	}
 
 	@Override
-	protected String doParseNetworkResponse(JSONObject reponse)
+	protected Boolean doParseNetworkResponse(JSONObject reponse)
 			throws UnsupportedEncodingException, JSONException {
-		JSONObject data = reponse.getJSONObject("data");
-		String code = data.getString("code");
 
-		return code;
+		return true;
 	}
 
 	public static class Builder implements IGetRequestBuilder {
 		private String phoneNum;
-		private Listener<String> listener;
+		private Listener<Boolean> listener;
 		private ErrorListener errorListener;
 
 		public Builder setPhone(String num) {
@@ -41,7 +39,7 @@ public class GetVerifyCodeRequest extends BaseRequest<String> {
 			return this;
 		}
 
-		public Builder setListener(Listener<String> listener) {
+		public Builder setListener(Listener<Boolean> listener) {
 			this.listener = listener;
 			return this;
 		}
