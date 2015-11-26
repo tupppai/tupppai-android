@@ -119,28 +119,19 @@ public class RegisterPhoneActivity extends PSGodBaseActivity implements
 	}
 
 	// 获取到验证码之后的跳转 跳转到验证码验证页面
-	private Listener<String> getVerifyCodeListener = new Listener<String>() {
+	private Listener<Boolean> getVerifyCodeListener = new Listener<Boolean>() {
 		@Override
-		public void onResponse(String response) {
-			if (response != null) {
-				String verifyCode = response;
-				String phonePwd = phone_register_pwd.getText().toString()
-						.trim();
+		public void onResponse(Boolean response) {
+			String phonePwd = phone_register_pwd.getText().toString()
+					.trim();
+			mRegisterData.setPhoneNumber(mPhoneNumber);
+			mRegisterData.setPassword(phonePwd);
 
-				if ((mProgressDialog != null) && mProgressDialog.isShowing()) {
-					mProgressDialog.dismiss();
-				}
-
-				mRegisterData.setPhoneNumber(mPhoneNumber);
-				mRegisterData.setPassword(phonePwd);
-				mRegisterData.setVerifyCode(verifyCode);
-
-				Intent intent = new Intent(RegisterPhoneActivity.this,
-						RegisterVerifyActivity.class);
-				intent.putExtra(Constants.IntentKey.REGISTER_DATA,
-						mRegisterData);
-				startActivity(intent);
-			}
+			Intent intent = new Intent(RegisterPhoneActivity.this,
+					RegisterVerifyActivity.class);
+			intent.putExtra(Constants.IntentKey.REGISTER_DATA,
+					mRegisterData);
+			startActivity(intent);
 		}
 	};
 
@@ -230,6 +221,7 @@ public class RegisterPhoneActivity extends PSGodBaseActivity implements
 									@Override
 									public void onClick(DialogInterface arg0,
 											int arg1) {
+
 										// 显示等待对话框
 										if (mProgressDialog == null) {
 											mProgressDialog = new CustomProgressingDialog(

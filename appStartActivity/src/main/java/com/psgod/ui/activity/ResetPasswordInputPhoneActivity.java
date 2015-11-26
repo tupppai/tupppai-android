@@ -216,23 +216,18 @@ public class ResetPasswordInputPhoneActivity extends PSGodBaseActivity {
 	};
 
 	// 获取到验证码之后的跳转 跳转到验证码验证页面
-	private Listener<String> getVerifyCodeListener = new Listener<String>() {
+	private Listener<Boolean> getVerifyCodeListener = new Listener<Boolean>() {
 		@Override
-		public void onResponse(String response) {
-			if (response != null) {
-				String verifyCode = response;
-
-				if ((mProgressDialog != null) && mProgressDialog.isShowing()) {
-					mProgressDialog.dismiss();
-				}
-
-				Intent intent = new Intent(
-						ResetPasswordInputPhoneActivity.this,
-						ResetPasswordCaptchaActivity.class);
-				intent.putExtra("mPhoneNumber", mPhoneNumber);
-				intent.putExtra("mVerifyCode", verifyCode);
-				startActivity(intent);
+		public void onResponse(Boolean response) {
+			if ((mProgressDialog != null) && mProgressDialog.isShowing()) {
+				mProgressDialog.dismiss();
 			}
+
+			Intent intent = new Intent(
+					ResetPasswordInputPhoneActivity.this,
+					ResetPasswordCaptchaActivity.class);
+			intent.putExtra("mPhoneNumber", mPhoneNumber);
+			startActivity(intent);
 		}
 	};
 

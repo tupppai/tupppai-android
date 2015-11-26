@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -111,43 +110,60 @@ public class RegisterVerifyActivity extends PSGodBaseActivity implements
 		mSendCodeBtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				if (validate()) {
-					// 显示等待对话框
-					if (mProgressDialog == null) {
-						mProgressDialog = new CustomProgressingDialog(
-								RegisterVerifyActivity.this);
-					}
-					if (!mProgressDialog.isShowing()) {
-						mProgressDialog.show();
-					}
 
-					String inputCode = mPhoneVerifyCode.getText().toString();
-
-					if (inputCode.equals(mRegisterData.getVerifyCode())) {
-						RegisterRequest.Builder builder = new RegisterRequest.Builder()
-								.setRegisterData(mRegisterData)
-								.setErrorListener(errorListener)
-								.setListener(registerListener);
-						RegisterRequest request = builder.build();
-						request.setTag(TAG);
-						RequestQueue requestQueue = PSGodRequestQueue
-								.getInstance(RegisterVerifyActivity.this)
-								.getRequestQueue();
-						requestQueue.add(request);
-					} else {
-						if ((mProgressDialog != null)
-								&& mProgressDialog.isShowing()) {
-							mProgressDialog.dismiss();
-						}
-						Toast.makeText(RegisterVerifyActivity.this,
-								"验证码错误，请重新填写", Toast.LENGTH_SHORT).show();
-						mPhoneVerifyCode.setText("");
-						mPhoneVerifyCode.requestFocus();
-					}
+				// 显示等待对话框
+				if (mProgressDialog == null) {
+					mProgressDialog = new CustomProgressingDialog(
+							RegisterVerifyActivity.this);
 				}
+				if (!mProgressDialog.isShowing()) {
+					mProgressDialog.show();
+				}
+				String inputCode = mPhoneVerifyCode.getText().toString();
+				mRegisterData.setVerifyCode(inputCode);
+				RegisterRequest.Builder builder = new RegisterRequest.Builder()
+						.setRegisterData(mRegisterData)
+						.setErrorListener(errorListener)
+						.setListener(registerListener);
+				RegisterRequest request = builder.build();
+				request.setTag(TAG);
+				RequestQueue requestQueue = PSGodRequestQueue
+						.getInstance(RegisterVerifyActivity.this)
+						.getRequestQueue();
+				requestQueue.add(request);
 			}
 		});
 	}
+
+	private Listener<Boolean> mCheckCodeListener = new Listener<Boolean>() {
+		@Override
+		public void onResponse(Boolean response) {
+			if (response) {
+				// 显示等待对话框
+				if (mProgressDialog == null) {
+					mProgressDialog = new CustomProgressingDialog(
+							RegisterVerifyActivity.this);
+				}
+				if (!mProgressDialog.isShowing()) {
+					mProgressDialog.show();
+				}
+				RegisterRequest.Builder builder = new RegisterRequest.Builder()
+						.setRegisterData(mRegisterData)
+						.setErrorListener(errorListener)
+						.setListener(registerListener);
+				RegisterRequest request = builder.build();
+				request.setTag(TAG);
+				RequestQueue requestQueue = PSGodRequestQueue
+						.getInstance(RegisterVerifyActivity.this)
+						.getRequestQueue();
+				requestQueue.add(request);
+			} else {
+				Toast.makeText(RegisterVerifyActivity.this,"验证码错误，请重新输入",Toast.LENGTH_SHORT).show();
+				mPhoneVerifyCode.setText("");
+				mPhoneVerifyCode.requestFocus();
+			}
+		}
+	};
 
 	/**
 	 * 暂停所有的下载
@@ -158,17 +174,6 @@ public class RegisterVerifyActivity extends PSGodBaseActivity implements
 		RequestQueue requestQueue = PSGodRequestQueue.getInstance(this)
 				.getRequestQueue();
 		requestQueue.cancelAll(TAG);
-	}
-
-	// 验证码校验
-	public boolean validate() {
-		if (TextUtils.isEmpty(mPhoneVerifyCode.getText().toString())) {
-			Toast.makeText(RegisterVerifyActivity.this, "请填写验证码",
-					Toast.LENGTH_SHORT).show();
-			mPhoneVerifyCode.requestFocus();
-			return false;
-		}
-		return true;
 	}
 
 	@Override
