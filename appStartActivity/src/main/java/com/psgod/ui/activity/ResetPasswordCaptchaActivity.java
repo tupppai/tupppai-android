@@ -103,6 +103,7 @@ public class ResetPasswordCaptchaActivity extends PSGodBaseActivity {
 				finish();
 			}
 		});
+
 		// 点击下一步
 		mNextButton.setOnClickListener(new OnClickListener() {
 
@@ -172,4 +173,14 @@ public class ResetPasswordCaptchaActivity extends PSGodBaseActivity {
 		return true;
 	}
 
+	/**
+	 * 暂停所有的下载
+	 */
+	@Override
+	public void onStop() {
+		super.onStop();
+		RequestQueue requestQueue = PSGodRequestQueue.getInstance(this)
+				.getRequestQueue();
+		requestQueue.cancelAll(TAG);
+	}
 }

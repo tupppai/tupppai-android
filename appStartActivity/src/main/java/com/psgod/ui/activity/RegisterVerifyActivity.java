@@ -135,36 +135,6 @@ public class RegisterVerifyActivity extends PSGodBaseActivity implements
 		});
 	}
 
-	private Listener<Boolean> mCheckCodeListener = new Listener<Boolean>() {
-		@Override
-		public void onResponse(Boolean response) {
-			if (response) {
-				// 显示等待对话框
-				if (mProgressDialog == null) {
-					mProgressDialog = new CustomProgressingDialog(
-							RegisterVerifyActivity.this);
-				}
-				if (!mProgressDialog.isShowing()) {
-					mProgressDialog.show();
-				}
-				RegisterRequest.Builder builder = new RegisterRequest.Builder()
-						.setRegisterData(mRegisterData)
-						.setErrorListener(errorListener)
-						.setListener(registerListener);
-				RegisterRequest request = builder.build();
-				request.setTag(TAG);
-				RequestQueue requestQueue = PSGodRequestQueue
-						.getInstance(RegisterVerifyActivity.this)
-						.getRequestQueue();
-				requestQueue.add(request);
-			} else {
-				Toast.makeText(RegisterVerifyActivity.this,"验证码错误，请重新输入",Toast.LENGTH_SHORT).show();
-				mPhoneVerifyCode.setText("");
-				mPhoneVerifyCode.requestFocus();
-			}
-		}
-	};
-
 	/**
 	 * 暂停所有的下载
 	 */

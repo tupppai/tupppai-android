@@ -46,7 +46,6 @@ public class ResetPasswordInputPhoneActivity extends PSGodBaseActivity {
 	private TextView mBackTextView;
 
 	private String mPhoneNumber;
-	private String verifyCode;
 
 	private CustomProgressingDialog mProgressDialog;
 
@@ -72,7 +71,6 @@ public class ResetPasswordInputPhoneActivity extends PSGodBaseActivity {
 
 			@Override
 			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
 				finish();
 			}
 		});
@@ -82,10 +80,6 @@ public class ResetPasswordInputPhoneActivity extends PSGodBaseActivity {
 
 			@Override
 			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				// Intent intent = new
-				// Intent(ResetPasswordInputPhoneActivity.this,ResetPasswordCaptchaActivity.class);
-				// startActivity(intent);
 				if (validate()) {
 					mPhoneNumber = mEditPhone.getText().toString().trim();
 					ResetPasswordCheckPhoneNumRequest.Builder builder = new ResetPasswordCheckPhoneNumRequest.Builder()

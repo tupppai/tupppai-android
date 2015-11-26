@@ -122,6 +122,10 @@ public class RegisterPhoneActivity extends PSGodBaseActivity implements
 	private Listener<Boolean> getVerifyCodeListener = new Listener<Boolean>() {
 		@Override
 		public void onResponse(Boolean response) {
+			if ((mProgressDialog != null) && mProgressDialog.isShowing()) {
+				mProgressDialog.dismiss();
+			}
+
 			String phonePwd = phone_register_pwd.getText().toString()
 					.trim();
 			mRegisterData.setPhoneNumber(mPhoneNumber);
