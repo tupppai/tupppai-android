@@ -76,6 +76,7 @@ import com.psgod.ui.activity.WorksListActivity;
 import com.psgod.ui.adapter.HotCommentListAdapter;
 import com.psgod.ui.widget.AvatarImageView;
 import com.psgod.ui.widget.OriginImageLayout;
+import com.psgod.ui.widget.dialog.CarouselPhotoDetailDialog;
 import com.psgod.ui.widget.dialog.PSDialog;
 import com.psgod.ui.widget.dialog.ShareMoreDialog;
 import com.psgod.AnimUtils;
@@ -1151,6 +1152,8 @@ public class PhotoItemView extends RelativeLayout implements Callback {
                 setEnabled(false);
                 mHandler.postDelayed(mViewEnabledRunnable, 1000);
             }
+
+//            new CarouselPhotoDetailDialog(mContext).show();
         }
     };
 

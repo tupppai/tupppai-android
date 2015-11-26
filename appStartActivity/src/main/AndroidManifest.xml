@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.psgod"
-
     android:versionCode="32"
     android:versionName="1.0.1" >
 
@@ -36,14 +35,16 @@
     <uses-permission android:name="android.permission.BROADCAST_PACKAGE_REPLACED" />
     <uses-permission android:name="android.permission.RESTART_PACKAGES" />
 
+    <android:uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
-        android:name="com.psgod.PSGodApplication"
+        android:name=".PSGodApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_logo"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.psgod.ui.activity.AppStartActivity"
+            android:name=".ui.activity.AppStartActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -54,9 +55,8 @@
         <activity
             android:name=".ui.activity.MainActivity"
             android:launchMode="singleTask"
-            android:windowSoftInputMode="adjustResize"
             android:screenOrientation="locked"
-            >
+            android:windowSoftInputMode="adjustResize" >
         </activity>
 
         <!-- 微信分享回调 -->
@@ -68,84 +68,84 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
-            android:name="com.psgod.ui.activity.WelcomeActivity"
+            android:name=".ui.activity.WelcomeActivity"
             android:launchMode="singleTask" />
-        <activity android:name="com.psgod.ui.activity.WelcomeScrollActivity" />
-        <activity android:name="com.psgod.ui.activity.UserAgreementActivity" />
-        <activity android:name="com.psgod.ui.activity.SetInfoActivity" />
-        <activity android:name="com.psgod.ui.activity.RegisterPhoneActivity" />
-        <activity android:name="com.psgod.ui.activity.RegisterVerifyActivity" />
+        <activity android:name=".ui.activity.WelcomeScrollActivity" />
+        <activity android:name=".ui.activity.UserAgreementActivity" />
+        <activity android:name=".ui.activity.SetInfoActivity" />
+        <activity android:name=".ui.activity.RegisterPhoneActivity" />
+        <activity android:name=".ui.activity.RegisterVerifyActivity" />
         <activity
-            android:name="com.psgod.ui.activity.LoginActivity"
+            android:name=".ui.activity.LoginActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-        <!--<activity android:name="com.psgod.ui.activity.PhotoDetailActivity" />-->
-        <activity android:name="com.psgod.ui.activity.CarouselPhotoDetailActivity" />
-        <activity android:name="com.psgod.ui.activity.NotificationListActivity" />
-        <!--<activity android:name="com.psgod.ui.view.ExtendsScrollView" />-->
+        <!-- <activity android:name="com.psgod.ui.activity.PhotoDetailActivity" /> -->
+        <activity android:name=".ui.activity.CarouselPhotoDetailActivity" />
+        <activity android:name=".ui.activity.NotificationListActivity" />
+        <!-- <activity android:name="com.psgod.ui.view.ExtendsScrollView" /> -->
         <activity
-            android:name="com.psgod.ui.activity.EditProfileActivity"
+            android:name=".ui.activity.EditProfileActivity"
             android:launchMode="singleTop" />
         <activity
-            android:name="com.psgod.ui.activity.SettingActivity"
+            android:name=".ui.activity.SettingActivity"
             android:launchMode="singleTop" />
-        <!--<activity android:name="com.psgod.ui.activity.UploadImageActivity" />-->
+        <!-- <activity android:name="com.psgod.ui.activity.UploadImageActivity" /> -->
         <activity
-            android:name="com.psgod.ui.activity.CommentListActivity"
+            android:name=".ui.activity.CommentListActivity"
             android:windowSoftInputMode="adjustResize|stateHidden" />
-        <activity android:name="com.psgod.ui.activity.NewMessageActivity" >
+        <activity android:name=".ui.activity.NewMessageActivity" >
         </activity>
-        <activity android:name="com.psgod.ui.activity.FollowerListActivity" />
-        <activity android:name="com.psgod.ui.activity.FollowingListActivity" />
-        <activity android:name="com.psgod.ui.activity.OthersFollowerListActivity" />
+        <activity android:name=".ui.activity.FollowerListActivity" />
+        <activity android:name=".ui.activity.FollowingListActivity" />
+        <activity android:name=".ui.activity.OthersFollowerListActivity" />
         <activity
-            android:name="com.psgod.ui.activity.MyAskActivity"
+            android:name=".ui.activity.MyAskActivity"
             android:launchMode="singleTop" />
         <activity
-            android:name="com.psgod.ui.activity.MyWorksActivity"
+            android:name=".ui.activity.MyWorksActivity"
             android:launchMode="singleTop" />
         <activity
-            android:name="com.psgod.ui.activity.MyInProgressActivity"
+            android:name=".ui.activity.MyInProgressActivity"
             android:launchMode="singleTop" />
         <activity
-            android:name="com.psgod.ui.activity.MyCollectionsActivity"
+            android:name=".ui.activity.MyCollectionsActivity"
             android:launchMode="singleTop" />
         <activity
-            android:name="com.psgod.ui.activity.UserProfileActivity"
+            android:name=".ui.activity.UserProfileActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
-            android:name="com.psgod.ui.activity.SettingNotificationActivity"
+            android:name=".ui.activity.SettingNotificationActivity"
             android:launchMode="singleTop" />
-        <activity android:name="com.psgod.ui.activity.TestActivity" />
-        <activity android:name="com.psgod.ui.activity.SetAvatarActivity" />
-        <activity android:name="com.psgod.ui.activity.SettingPasswordActivity" />
+        <activity android:name=".ui.activity.TestActivity" />
+        <activity android:name=".ui.activity.SetAvatarActivity" />
+        <activity android:name=".ui.activity.SettingPasswordActivity" />
         <activity
-            android:name="com.psgod.ui.activity.SinglePhotoDetail"
+            android:name=".ui.activity.SinglePhotoDetail"
             android:windowSoftInputMode="adjustResize|stateHidden" />
-        <activity android:name="com.psgod.ui.activity.ChoosePhotoActivity" />
-        <activity android:name="com.psgod.ui.activity.FeedBackActivity" />
-        <activity android:name="com.psgod.ui.activity.InvitationListActivity" />
-        <activity android:name="com.psgod.ui.activity.PhotoBrowserActivity" />
-        <activity android:name="com.psgod.ui.activity.AccountBindingActivity" />
-        <activity android:name="com.psgod.ui.activity.ResetPasswordInputPhoneActivity" />
-        <activity android:name="com.psgod.ui.activity.ResetPasswordCaptchaActivity" />
-        <activity android:name="com.psgod.ui.activity.ResetPasswordActivity" />
-        <activity android:name="com.psgod.ui.activity.RecommendFocusActivity" />
-        <activity android:name="com.psgod.ui.activity.WebBrowserActivity" />
-        <activity android:name="com.psgod.ui.activity.MultiImageSelectActivity" />
+        <activity android:name=".ui.activity.ChoosePhotoActivity" />
+        <activity android:name=".ui.activity.FeedBackActivity" />
+        <activity android:name=".ui.activity.InvitationListActivity" />
+        <activity android:name=".ui.activity.PhotoBrowserActivity" />
+        <activity android:name=".ui.activity.AccountBindingActivity" />
+        <activity android:name=".ui.activity.ResetPasswordInputPhoneActivity" />
+        <activity android:name=".ui.activity.ResetPasswordCaptchaActivity" />
+        <activity android:name=".ui.activity.ResetPasswordActivity" />
+        <activity android:name=".ui.activity.RecommendFocusActivity" />
+        <activity android:name=".ui.activity.WebBrowserActivity" />
+        <activity android:name=".ui.activity.MultiImageSelectActivity" />
         <activity
-            android:name="com.psgod.ui.activity.UploadMultiImageActivity"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            android:launchMode="singleTop"/>
-        <activity android:name="com.psgod.ui.activity.WorksListActivity" />
-        <activity android:name="com.psgod.ui.activity.UploadSelectReplyListActivity" />
-        <activity android:name="com.psgod.ui.activity.MessageActivity" />
-        <activity android:name="com.psgod.ui.activity.SettingLikedActivity" />
-        <activity android:name="com.psgod.ui.activity.SettingCommentActivity" />
-        <activity android:name="com.psgod.ui.activity.SettingAccountSafeActivity" />
-        <activity android:name="com.psgod.ui.activity.MessageLikeActivity" />
-        <activity android:name="com.psgod.ui.activity.MessageSystemActivity" />
-        <activity android:name="com.psgod.ui.activity.SearchActivity" >
+            android:name=".ui.activity.UploadMultiImageActivity"
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity android:name=".ui.activity.WorksListActivity" />
+        <activity android:name=".ui.activity.UploadSelectReplyListActivity" />
+        <activity android:name=".ui.activity.MessageActivity" />
+        <activity android:name=".ui.activity.SettingLikedActivity" />
+        <activity android:name=".ui.activity.SettingCommentActivity" />
+        <activity android:name=".ui.activity.SettingAccountSafeActivity" />
+        <activity android:name=".ui.activity.MessageLikeActivity" />
+        <activity android:name=".ui.activity.MessageSystemActivity" />
+        <activity android:name=".ui.activity.SearchActivity" >
         </activity>
 
         <!-- sharesdk -->
@@ -215,7 +215,7 @@
             </intent-filter>
         </receiver>
 
-        <service android:name="com.psgod.service.UploadCrashService" >
+        <service android:name=".service.UploadCrashService" >
             <intent-filter>
                 <action android:name="com.psgod.service.UploadCrashServiceT" />
             </intent-filter>
@@ -277,6 +277,10 @@
         <activity
             android:name="com.umeng.update.UpdateDialogActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+        </activity>
+        <activity
+            android:name=".ui.activity.BlankActivity"
+            android:label="@string/title_activity_blank" >
         </activity>
     </application>
 

@@ -63,6 +63,10 @@ public final class Utils {
         final float scale = context.getResources().getDisplayMetrics().density;
         return pxValue / scale + 0.5f;
     }
+    public static int pxToDp(Context context, float pxValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int)(pxValue / scale + 0.5f);
+    }
 
     public static float pxToDpOrigin(Context context, float dpValue) {
 //        final float scale = context.getResources().getDisplayMetrics().density;
