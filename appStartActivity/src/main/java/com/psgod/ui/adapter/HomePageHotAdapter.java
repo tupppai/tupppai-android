@@ -16,6 +16,8 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
+
 import cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -185,6 +187,14 @@ public class HomePageHotAdapter extends BaseExpandableListAdapter {
 			if (mBannerViewPager != null) {
 				mBannerViewPager.setOnPageChangeListener(null);
 			}
+			if (mEmptyView == null) {
+				mEmptyView = new RelativeLayout(mContext);
+			}
+			if ((mBannerItems == null)) {
+				return mEmptyView;
+			} else if (mBannerItems.size() == 0) {
+				return mEmptyView;
+			}
 			return getBannerView();
 		}
 	}
@@ -218,7 +228,7 @@ public class HomePageHotAdapter extends BaseExpandableListAdapter {
 
 		initAdapter();
 		mBannerViewPager.setOnPageChangeListener(bannerListener);
-//		mBannerViewPager.setInterval(3000);  // 设置自动滚动的间隔时间，单位为毫秒
+		mBannerViewPager.setInterval(3000);  // 设置自动滚动的间隔时间，单位为毫秒
 		mBannerViewPager.startAutoScroll();  // 启动自动滚动
 
 		return bannerView;
