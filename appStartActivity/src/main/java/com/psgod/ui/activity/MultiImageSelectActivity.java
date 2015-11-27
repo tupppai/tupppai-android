@@ -251,6 +251,7 @@ public class MultiImageSelectActivity extends PSGodBaseActivity {
 				bundle.putStringArrayList(
 						UploadMultiImageActivity.MULTIIMAGESELECTRESULT,
 						resultList);
+				bundle.putLong("AskId", mAskId);
 				intent.putExtras(bundle);
 				startActivity(intent);
 

@@ -6,6 +6,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Dialog;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.view.Gravity;
 import android.view.View;
@@ -64,6 +65,7 @@ public class InprogressShareMoreDialog extends Dialog {
 	private Button mShareQzone;
 
 	// private Button mInviteBtn;
+	private Button mShareLink;
 	private Button mDeleteBtn;
 	private Button mCancelBtn;
 	// 0求P 1已完成 2帮P
@@ -92,6 +94,7 @@ public class InprogressShareMoreDialog extends Dialog {
 		mShareQzone = (Button) findViewById(R.id.dialog_more_share_qzone);
 
 		// mInviteBtn = (Button) findViewById(R.id.dialog_more_share_invite);
+		mShareLink = (Button) findViewById(R.id.dialog_more_share_link);
 		mDeleteBtn = (Button) findViewById(R.id.dialog_more_share_delete);
 		mCancelBtn = (Button) findViewById(R.id.dialog_more_share_cancel);
 
@@ -119,6 +122,26 @@ public class InprogressShareMoreDialog extends Dialog {
 		// mContext.startActivity(intent);
 		// }
 		// });
+
+		// 复制链接
+		mShareLink.setOnClickListener(new android.view.View.OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				ActionShareRequest.Builder builder = new ActionShareRequest.Builder()
+						.setShareType("copy").setType(mPhotoItem.getType())
+						.setId(mPhotoItem.getPid()).setListener(copyListener)
+						.setErrorListener(errorListener);
+
+				ActionShareRequest request = builder.build();
+				request.setTag(TAG);
+				RequestQueue requestQueue = PSGodRequestQueue.getInstance(
+						PSGodApplication.getAppContext()).getRequestQueue();
+				requestQueue.add(request);
+
+				dismiss();
+			}
+		});
 
 		// 分享到新浪微博
 		mShareWeibo.setOnClickListener(new android.view.View.OnClickListener() {
@@ -278,6 +301,21 @@ public class InprogressShareMoreDialog extends Dialog {
 			}
 		});
 	}
+
+	private Listener<JSONObject> copyListener = new Listener<JSONObject>() {
+		@Override
+		public void onResponse(JSONObject response) {
+			ClipboardManager clip = (ClipboardManager) mContext
+					.getSystemService(Context.CLIPBOARD_SERVICE);
+			try {
+				clip.setText(response.getString("url"));
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} // 复制
+			Toast.makeText(mContext, "复制成功", Toast.LENGTH_SHORT).show();
+		}
+	};
 
 	// 删除接口回调
 	private Listener<Boolean> deleteListener = new Listener<Boolean>() {

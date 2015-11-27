@@ -15,7 +15,7 @@
             android:id="@+id/item_hotcomment_list_name_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
+            android:paddingTop="7dp"
             android:background="@drawable/selector_press"
             android:includeFontPadding="false"
             android:textColor="#99000000"
@@ -33,12 +33,14 @@
             android:includeFontPadding="false"
             android:maxLines="2"
             android:textColor="#99000000"
-            android:textSize="13dp" />
+            android:textSize="13dp"
+            android:paddingTop="7dp"
+            android:paddingBottom="7dp" />
     </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="10dp"
+        android:layout_height="3dp"
         android:background="#FFFFFF" />
 
 </LinearLayout>
