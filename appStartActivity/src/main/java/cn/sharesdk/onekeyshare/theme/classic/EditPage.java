@@ -159,7 +159,7 @@ public class EditPage extends EditPageFakeActivity implements OnClickListener,
 			@Override
 			public void run() {
 				try {
-					Thread.sleep(500);
+					Thread.sleep(1500);
 					handler.sendEmptyMessage(0);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
