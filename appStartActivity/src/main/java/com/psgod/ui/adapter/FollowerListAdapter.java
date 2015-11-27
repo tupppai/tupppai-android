@@ -16,6 +16,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.psgod.Constants;
 import com.psgod.R;
+import com.psgod.model.LoginUser;
 import com.psgod.model.User;
 import com.psgod.ui.activity.UserProfileActivity;
 import com.psgod.ui.widget.AvatarImageView;
@@ -99,6 +100,13 @@ public class FollowerListAdapter extends BaseAdapter {
 
 		// 设置followBtn对应的User
 		viewHolder.followBtn.setUser((User) getItem(position));
+
+		// 如果是自己，不显示关系按钮
+		if (LoginUser.getInstance().getUid() == ((User) getItem(position)).getUid()) {
+			viewHolder.followBtn.setVisibility(View.GONE);
+		} else {
+			viewHolder.followBtn.setVisibility(View.VISIBLE);
+		}
 
 		ImageLoader imageLoader = ImageLoader.getInstance();
 		imageLoader.displayImage(
