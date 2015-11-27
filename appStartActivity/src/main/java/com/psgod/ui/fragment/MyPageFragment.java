@@ -39,6 +39,7 @@ import com.psgod.R;
 import com.psgod.UserPreferences;
 import com.psgod.Utils;
 import com.psgod.eventbus.InitEvent;
+import com.psgod.eventbus.MyInfoRefreshEvent;
 import com.psgod.eventbus.MyPageRefreshEvent;
 import com.psgod.eventbus.PushEvent;
 import com.psgod.eventbus.UpdateTabStatusEvent;
@@ -78,14 +79,14 @@ public class MyPageFragment extends Fragment implements
 
 	private View mMessageTipView;
 
-	// @Override
-	// public void onHiddenChanged(boolean hidden) {
-	// super.onHiddenChanged(hidden);
-	//
-	// if(!hidden){
-	// initMyFragmentData();
-	// }
-	// }
+//	 @Override
+//	 public void onHiddenChanged(boolean hidden) {
+//	 super.onHiddenChanged(hidden);
+//
+//	 if(!hidden){
+//	 initMyFragmentData();
+//	 }
+//	 }
 
 	@Override
 	public void onHiddenChanged(boolean hidden) {
@@ -108,6 +109,9 @@ public class MyPageFragment extends Fragment implements
 		setupPager();
 		setupTabs();
 
+		if ((dialog != null) || (!dialog.isShowing()) ) {
+			dialog.show();
+		}
 		initMyFragmentData();
 	}
 
@@ -139,6 +143,11 @@ public class MyPageFragment extends Fragment implements
 					break;
 			}
 		}
+	}
+
+	// EventBus 点击我的tab 刷新
+	public void onEventMainThread (MyInfoRefreshEvent event) {
+		initMyFragmentData();
 	}
 
 	public void showTipView() {
@@ -192,15 +201,16 @@ public class MyPageFragment extends Fragment implements
 		mMessageTipView = mViewHolder.mView
 				.findViewById(R.id.fragment_my_page_message_tip);
 
-		dialog = new CustomProgressingDialog(getActivity());
+		if (dialog == null) {
+			dialog = new CustomProgressingDialog(getActivity());
+		}
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
-		if (Constants.HAS_CHANGE_PHOTO == true) {
-			initMyFragmentData();
-		}
+
+		initMyFragmentData();
 
 		int mMessageCount = UserPreferences.PushMessage
 				.getPushMessageCount(UserPreferences.PushMessage.PUSH_COMMENT)
@@ -239,9 +249,6 @@ public class MyPageFragment extends Fragment implements
 
 	// 初始化用户个人数据
 	public void initMyFragmentData() {
-		if (dialog != null) {
-			dialog.show();
-		}
 		if (mViewHolder.mAvatarIv == null) {
 			initViews();
 		}
@@ -297,7 +304,6 @@ public class MyPageFragment extends Fragment implements
 						.getLikedCount()));
 				mViewHolder.mNickNameText.setText(user.getNickname());
 
-				Constants.HAS_CHANGE_PHOTO = false;
 				if (dialog != null && dialog.isShowing()) {
 					dialog.dismiss();
 				}

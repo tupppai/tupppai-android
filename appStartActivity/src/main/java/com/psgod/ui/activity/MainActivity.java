@@ -44,6 +44,7 @@ import com.psgod.UserPreferences;
 import com.psgod.Utils;
 import com.psgod.WeakReferenceHandler;
 import com.psgod.eventbus.InitEvent;
+import com.psgod.eventbus.MyInfoRefreshEvent;
 import com.psgod.eventbus.NetEvent;
 import com.psgod.eventbus.PushEvent;
 import com.psgod.eventbus.RefreshEvent;
@@ -634,6 +635,7 @@ public class MainActivity extends PSGodBaseActivity implements
 			// }
 		} else if (checkedId == R.id.activity_main_tab_user) {
 			mTabTipsMessage.setVisibility(View.INVISIBLE);
+			EventBus.getDefault().post(new MyInfoRefreshEvent(MyPageFragment.class.getSimpleName()));
 		}
 	}
 

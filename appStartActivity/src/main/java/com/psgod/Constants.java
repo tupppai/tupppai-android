@@ -29,7 +29,6 @@ public class Constants {
 
 	public static final boolean IS_COLOR_USER = true; // 是否染色用户
 	public static final boolean LOG_TO_FILE = true; // 全局开关，是否把日志写到文件
-	public static boolean HAS_CHANGE_PHOTO = false;  // 是否修改头像
 
 	// 六种消息类型
 	public static final int PUSH_MESSAGE_SYSTEM = 0;
