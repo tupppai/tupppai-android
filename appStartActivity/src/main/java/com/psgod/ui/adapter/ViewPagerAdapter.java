@@ -37,6 +37,12 @@ public class ViewPagerAdapter extends PagerAdapter {
 
 	@Override
 	public int getItemPosition(Object object) {
+		int length = pageViews.size();
+		for(int i= 0; i < length;i++){
+			if(object.equals(pageViews.get(i))){
+				return i;
+			}
+		}
 		return super.getItemPosition(object);
 	}
 
