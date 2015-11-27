@@ -303,10 +303,12 @@ public class MyPageCollectionFragment extends ScrollTabHolderFragment {
 		for (int i = 0; i < adapter.getCount(); i++) {
 			View mView = adapter.getView(i, null, mViewHolder.listView);
 			if(mView != null) {
-				mView.measure(
-						MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED),
-						MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
-				totalHeight += mView.getMeasuredHeight();
+				try {
+					mView.measure(
+							MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED),
+							MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
+					totalHeight += mView.getMeasuredHeight();
+				}catch (Exception e){}
 			}
 		}
 		return totalHeight;

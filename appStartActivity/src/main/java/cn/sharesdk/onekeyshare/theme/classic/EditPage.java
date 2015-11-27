@@ -721,6 +721,12 @@ public class EditPage extends EditPageFakeActivity implements OnClickListener,
 					rlPage.setBackgroundDrawable(background);
 				}
 			}, 1000);
+
+
+
+
+
+
 		}
 	}
 

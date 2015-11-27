@@ -6,6 +6,7 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -53,7 +54,7 @@ public class CarouselPhotoDetailView extends RelativeLayout {
 
     private void init() {
         mContext = getContext();
-        View view = LayoutInflater.from(mContext).inflate(R.layout.view_carousel_photo_detail,null);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.view_carousel_photo_detail, null);
         addView(view);
         initView(view);
         initListener(view);
@@ -82,6 +83,7 @@ public class CarouselPhotoDetailView extends RelativeLayout {
 
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
+
                 float moveY = 0;
                 switch (motionEvent.getAction()) {
                     case MotionEvent.ACTION_DOWN:
@@ -91,11 +93,13 @@ public class CarouselPhotoDetailView extends RelativeLayout {
                         break;
                     case MotionEvent.ACTION_MOVE:
                         moveY = motionEvent.getRawY() - DownY;//y轴距离
-                        if (isBlow && moveY < 0) {
+                        if (isBlow || isStore && moveY < 0) {
 
                         } else {
                             ViewHelper.setTranslationY(view, moveY);
                         }
+//                        Log.e("Y",String.valueOf(Utils.pxToDp(mContext, motionEvent.getRawY())));
+
                         break;
                     case MotionEvent.ACTION_UP:
                         view.setY(oY);
@@ -104,18 +108,25 @@ public class CarouselPhotoDetailView extends RelativeLayout {
                         } else {
                             isDown = false;
                         }
+//                        if (Utils.pxToDp(mContext, motionEvent.getY()) > 300) {
+//                            if (onEndListener != null) {
+//                                onEndListener.onEnd();
+//                            }
+//                        }
                         break;
                 }
-                if (Utils.pxToDp(mContext, view.getY()) < -70 && moveY < 0) {
-                    view.setY(oY);
-                    viewPagerBlow();
-                } else if (Utils.pxToDp(mContext, view.getY()) > -75 && moveY > 0 && isBlow) {
+//                if (Utils.pxToDp(mContext, view.getY()) < -70 && moveY < 0) {
+//                    view.setY(oY);
+//                    viewPagerBlow();
+//                } else
+                if (Utils.pxToDp(mContext, view.getY()) > -75 && moveY > 0 && isBlow) {
                     viewPagerRestore();
-                } else if (Utils.pxToDp(mContext,view.getY()) > 200 && !isBlow){
-                    if(onEndListener !=null){
-                        onEndListener.onEnd();
-                    }
                 }
+//                else if (Utils.pxToDp(mContext, view.getY()) > 200 && !isBlow) {
+//                    if (onEndListener != null) {
+//                        onEndListener.onEnd();
+//                    }
+//                }
                 return true;
             }
         });
@@ -124,7 +135,7 @@ public class CarouselPhotoDetailView extends RelativeLayout {
     private void viewPagerBlow() {
         isDown = false;
         mScroll.setCanScroll(true);
-        if (isFlows && vp != null) {
+        if (isBlow && vp != null) {
             isFlows = false;
             isBlow = true;
             final AnimatorSet anim = new AnimatorSet();
@@ -147,12 +158,12 @@ public class CarouselPhotoDetailView extends RelativeLayout {
     }
 
     private void viewPagerRestore() {
-        if(vp == null){
+        if (vp == null) {
             return;
         }
         isDown = true;
-        isBlow = false;
         isFlows = true;
+        isStore = true;
         final AnimatorSet anim = new AnimatorSet();
         anim.setDuration(300);
         ValueAnimator xAnim = ValueAnimator.ofInt(-1, 20);
@@ -162,7 +173,7 @@ public class CarouselPhotoDetailView extends RelativeLayout {
                 Integer value = (Integer) valueAnimator.getAnimatedValue();
                 RelativeLayout.LayoutParams vParams = (RelativeLayout.LayoutParams) vp.getLayoutParams();
                 vParams.setMargins(Utils.dpToPx(mContext, value),
-                        Utils.dpToPx(mContext, 84f / 20f * (float)value), Utils.dpToPx(mContext, (float)value), 0);
+                        Utils.dpToPx(mContext, 84f / 20f * (float) value), Utils.dpToPx(mContext, (float) value), 0);
                 vp.setLayoutParams(vParams);
             }
         });
@@ -174,12 +185,12 @@ public class CarouselPhotoDetailView extends RelativeLayout {
     ViewPagerAdapter adapter;
     ViewPagerAdapter thumbAdatper;
 
-    Animator.AnimatorListener blowAnimListener =  new Animator.AnimatorListener() {
+    Animator.AnimatorListener blowAnimListener = new Animator.AnimatorListener() {
         @Override
         public void onAnimationStart(Animator animator) {
             vp.setOffscreenPageLimit(0);
             vp.setClipChildren(true);
-            if(vp instanceof StopViewPager){
+            if (vp instanceof StopViewPager) {
                 ((StopViewPager) vp).setCanScroll(false);
             }
             thumbAdatper = (ViewPagerAdapter) vp.getAdapter();
@@ -187,10 +198,12 @@ public class CarouselPhotoDetailView extends RelativeLayout {
             list.add(CarouselPhotoDetailView.this);
             adapter = new ViewPagerAdapter(list);
             vp.setAdapter(adapter);
+
         }
 
         @Override
         public void onAnimationEnd(Animator animator) {
+            isBlow = false;
         }
 
         @Override
@@ -204,7 +217,7 @@ public class CarouselPhotoDetailView extends RelativeLayout {
         }
     };
 
-    Animator.AnimatorListener restoreAnimListener =  new Animator.AnimatorListener() {
+    Animator.AnimatorListener restoreAnimListener = new Animator.AnimatorListener() {
         @Override
         public void onAnimationStart(Animator animator) {
             vp.setOffscreenPageLimit(0);
@@ -215,12 +228,13 @@ public class CarouselPhotoDetailView extends RelativeLayout {
         public void onAnimationEnd(Animator animator) {
             vp.setOffscreenPageLimit(3);
             vp.setClipChildren(false);
-            if(vp instanceof StopViewPager){
+            if (vp instanceof StopViewPager) {
                 ((StopViewPager) vp).setCanScroll(true);
             }
             vp.setAdapter(thumbAdatper);
             int position = thumbAdatper.getItemPosition(CarouselPhotoDetailView.this);
-            vp.setCurrentItem(position == -1?0:position);
+            vp.setCurrentItem(position == -1 ? 0 : position);
+            isStore = false;
         }
 
         @Override
@@ -234,7 +248,7 @@ public class CarouselPhotoDetailView extends RelativeLayout {
         }
     };
 
-    public interface OnEndListener{
+    public interface OnEndListener {
         void onEnd();
     }
 
@@ -246,6 +260,7 @@ public class CarouselPhotoDetailView extends RelativeLayout {
 
     private boolean isFlows = true;
     private boolean isBlow = false;
+    private boolean isStore = false;
     private boolean isDown = false;
 
 }

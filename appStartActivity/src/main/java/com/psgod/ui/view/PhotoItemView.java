@@ -370,6 +370,21 @@ public class PhotoItemView extends RelativeLayout implements Callback {
             mAllWorksBtn.setVisibility(GONE);
             mHotReplyAllWorksBtn.setVisibility(GONE);
             mSingleReplyAllWorksBtn.setVisibility(GONE);
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mSingleAskShareBtn.getLayoutParams();
+            params.setMargins(0, 0, 0, 0);
+            mSingleAskShareBtn.setLayoutParams(params);
+            params = (RelativeLayout.LayoutParams) mSingleReplyShareTv.getLayoutParams();
+            params.setMargins(0,0,0,0);
+            mSingleReplyShareTv.setLayoutParams(params);
+            params = (RelativeLayout.LayoutParams) mHotReplyShareTv.getLayoutParams();
+            params.setMargins(0,0,0,0);
+            mHotReplyShareTv.setLayoutParams(params);
+            params = (RelativeLayout.LayoutParams) mFocusAskShareTv.getLayoutParams();
+            params.setMargins(0,0,0,0);
+            mFocusAskShareTv.setLayoutParams(params);
+            params = (RelativeLayout.LayoutParams) mComplexShareBtn.getLayoutParams();
+            params.setMargins(0,0,0,0);
+            mComplexShareBtn.setLayoutParams(params);
         } else {
             mAllWorksBtn.setOnClickListener(allWorkListener);
 
