@@ -145,7 +145,7 @@ public class InprogressPageAskAdapter extends BaseAdapter implements
 		ArrayList<PhotoItem> mReplyItems = (ArrayList<PhotoItem>) photoItem
 				.getReplyItems();
 		int mSize = mReplyItems.size();
-		viewHolder.replyCount.setText("已有" + Integer.toString(mSize) + "个作品");
+		viewHolder.replyCount.setText("已有" + photoItem.getReplyCount() + "个作品");
 		if (mSize > 0) {
 			for (int i = 0; i < mSize; i++) {
 				final PhotoItem replyPhotoItem = mReplyItems.get(i);

@@ -8,6 +8,16 @@
 
 package cn.sharesdk.onekeyshare.theme.classic;
 
+import static cn.sharesdk.framework.utils.BitmapHelper.blur;
+import static cn.sharesdk.framework.utils.BitmapHelper.captureView;
+import static cn.sharesdk.framework.utils.R.dipToPx;
+import static cn.sharesdk.framework.utils.R.getBitmapRes;
+import static cn.sharesdk.framework.utils.R.getScreenWidth;
+import static cn.sharesdk.framework.utils.R.getStringRes;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
@@ -18,7 +28,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
-import android.os.Handler;
 import android.os.Handler.Callback;
 import android.os.Message;
 import android.text.Editable;
@@ -41,13 +50,6 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.psgod.R;
-import com.psgod.WeakReferenceHandler;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import cn.sharesdk.framework.CustomPlatform;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.ShareSDK;
@@ -56,13 +58,6 @@ import cn.sharesdk.framework.utils.UIHandler;
 import cn.sharesdk.onekeyshare.EditPageFakeActivity;
 import cn.sharesdk.onekeyshare.PicViewer;
 import cn.sharesdk.onekeyshare.ShareCore;
-
-import static cn.sharesdk.framework.utils.BitmapHelper.blur;
-import static cn.sharesdk.framework.utils.BitmapHelper.captureView;
-import static cn.sharesdk.framework.utils.R.dipToPx;
-import static cn.sharesdk.framework.utils.R.getBitmapRes;
-import static cn.sharesdk.framework.utils.R.getScreenWidth;
-import static cn.sharesdk.framework.utils.R.getStringRes;
 
 /**
  * Photo-text Sharing will be handling in this page
@@ -105,7 +100,7 @@ public class EditPage extends EditPageFakeActivity implements OnClickListener,
 			win.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN
 					| WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 		} else {
-			win.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN
+			win.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE
 					| WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 		}
 	}
@@ -154,50 +149,10 @@ public class EditPage extends EditPageFakeActivity implements OnClickListener,
 				});
 			}
 		}.start();
-
-//		new Thread(new Runnable() {
-//			@Override
-//			public void run() {
-//				try {
-//					Thread.sleep(500);
-//					handler.sendEmptyMessage(0);
-//				} catch (InterruptedException e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		}).start();
-
 	}
-
-//	Handler handler = new WeakReferenceHandler(new Callback() {
-//		@Override
-//		public boolean handleMessage(Message message) {
-//			String text = String.valueOf(shareParamMap.get("text"));
-//			shareParamMap.put("text", text);
-//
-//			platforms.clear();
-//			for (int i = 0; i < views.length; i++) {
-//				if (views[i].getVisibility() != View.VISIBLE) {
-//					platforms.add(platformList[i]);
-//				}
-//			}
-//
-//			if (platforms.size() > 0) {
-//				setResultAndFinish();
-//			} else {
-//				int resId = getStringRes(activity, "select_one_plat_at_least");
-//				if (resId > 0) {
-//					Toast.makeText(getContext(), resId, Toast.LENGTH_SHORT)
-//							.show();
-//				}
-//			}
-//			return true;
-//		}
-//	});
 
 	private RelativeLayout getPageView() {
 		rlPage = new RelativeLayout(getContext());
-		rlPage.setBackground(getContext().getResources().getDrawable(R.color.transparent));
 		rlPage.setBackgroundDrawable(background);
 		if (dialogMode) {
 			RelativeLayout rlDialog = new RelativeLayout(getContext());
@@ -220,12 +175,6 @@ public class EditPage extends EditPageFakeActivity implements OnClickListener,
 			rlPage.addView(getPageBody());
 			rlPage.addView(getImagePin());
 		}
-		getPageTitle();
-		getPageBody();
-		getImagePin();
-		hideSoftInput();
-////		rlPage.removeAllViews();
-//		rlPage.addView(new View(getContext()));
 		return rlPage;
 	}
 
@@ -312,8 +261,6 @@ public class EditPage extends EditPageFakeActivity implements OnClickListener,
 				android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
 		lpEt.weight = 1;
 		etContent.setLayoutParams(lpEt);
-//		etContent.setEnabled(false);
-//		etContent.setFocusableInTouchMode(false);
 		llContent.addView(etContent);
 
 		llContent.addView(getThumbView());
@@ -705,7 +652,7 @@ public class EditPage extends EditPageFakeActivity implements OnClickListener,
 
 	@Override
 	public void beforeTextChanged(CharSequence s, int start, int count,
-			int after) {
+								  int after) {
 
 	}
 
@@ -751,7 +698,7 @@ public class EditPage extends EditPageFakeActivity implements OnClickListener,
 		if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
 			hideSoftInput();
 			Window win = activity.getWindow();
-			win.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE
+			win.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN
 					| WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 			rlPage.setBackgroundColor(DIM_COLOR);
 			rlPage.postDelayed(new Runnable() {
