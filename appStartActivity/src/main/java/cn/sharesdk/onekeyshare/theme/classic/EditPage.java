@@ -155,77 +155,77 @@ public class EditPage extends EditPageFakeActivity implements OnClickListener,
 			}
 		}.start();
 
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					Thread.sleep(1500);
-					handler.sendEmptyMessage(0);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-		}).start();
+//		new Thread(new Runnable() {
+//			@Override
+//			public void run() {
+//				try {
+//					Thread.sleep(500);
+//					handler.sendEmptyMessage(0);
+//				} catch (InterruptedException e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		}).start();
 
 	}
 
-	Handler handler = new WeakReferenceHandler(new Callback() {
-		@Override
-		public boolean handleMessage(Message message) {
-			String text = String.valueOf(shareParamMap.get("text"));
-			shareParamMap.put("text", text);
-
-			platforms.clear();
-			for (int i = 0; i < views.length; i++) {
-				if (views[i].getVisibility() != View.VISIBLE) {
-					platforms.add(platformList[i]);
-				}
-			}
-
-			if (platforms.size() > 0) {
-				setResultAndFinish();
-			} else {
-				int resId = getStringRes(activity, "select_one_plat_at_least");
-				if (resId > 0) {
-					Toast.makeText(getContext(), resId, Toast.LENGTH_SHORT)
-							.show();
-				}
-			}
-			return true;
-		}
-	});
+//	Handler handler = new WeakReferenceHandler(new Callback() {
+//		@Override
+//		public boolean handleMessage(Message message) {
+//			String text = String.valueOf(shareParamMap.get("text"));
+//			shareParamMap.put("text", text);
+//
+//			platforms.clear();
+//			for (int i = 0; i < views.length; i++) {
+//				if (views[i].getVisibility() != View.VISIBLE) {
+//					platforms.add(platformList[i]);
+//				}
+//			}
+//
+//			if (platforms.size() > 0) {
+//				setResultAndFinish();
+//			} else {
+//				int resId = getStringRes(activity, "select_one_plat_at_least");
+//				if (resId > 0) {
+//					Toast.makeText(getContext(), resId, Toast.LENGTH_SHORT)
+//							.show();
+//				}
+//			}
+//			return true;
+//		}
+//	});
 
 	private RelativeLayout getPageView() {
 		rlPage = new RelativeLayout(getContext());
 		rlPage.setBackground(getContext().getResources().getDrawable(R.color.transparent));
-//		rlPage.setBackgroundDrawable(background);
-//		if (dialogMode) {
-//			RelativeLayout rlDialog = new RelativeLayout(getContext());
-//			rlDialog.setBackgroundColor(0xc0323232);
-//			int dp_8 = dipToPx(getContext(), 8);
-//			int width = getScreenWidth(getContext()) - dp_8 * 2;
-//			RelativeLayout.LayoutParams lpDialog = new RelativeLayout.LayoutParams(
-//					width, android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
-//			lpDialog.topMargin = dp_8;
-//			lpDialog.bottomMargin = dp_8;
-//			lpDialog.addRule(RelativeLayout.CENTER_IN_PARENT);
-//			rlDialog.setLayoutParams(lpDialog);
-//			rlPage.addView(rlDialog);
-//
-//			rlDialog.addView(getPageTitle());
-//			rlDialog.addView(getPageBody());
-//			rlDialog.addView(getImagePin());
-//		} else {
-//			rlPage.addView(getPageTitle());
-//			rlPage.addView(getPageBody());
-//			rlPage.addView(getImagePin());
-//		}
+		rlPage.setBackgroundDrawable(background);
+		if (dialogMode) {
+			RelativeLayout rlDialog = new RelativeLayout(getContext());
+			rlDialog.setBackgroundColor(0xc0323232);
+			int dp_8 = dipToPx(getContext(), 8);
+			int width = getScreenWidth(getContext()) - dp_8 * 2;
+			RelativeLayout.LayoutParams lpDialog = new RelativeLayout.LayoutParams(
+					width, android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
+			lpDialog.topMargin = dp_8;
+			lpDialog.bottomMargin = dp_8;
+			lpDialog.addRule(RelativeLayout.CENTER_IN_PARENT);
+			rlDialog.setLayoutParams(lpDialog);
+			rlPage.addView(rlDialog);
+
+			rlDialog.addView(getPageTitle());
+			rlDialog.addView(getPageBody());
+			rlDialog.addView(getImagePin());
+		} else {
+			rlPage.addView(getPageTitle());
+			rlPage.addView(getPageBody());
+			rlPage.addView(getImagePin());
+		}
 		getPageTitle();
 		getPageBody();
 		getImagePin();
 		hideSoftInput();
-//		rlPage.removeAllViews();
-		rlPage.addView(new View(getContext()));
+////		rlPage.removeAllViews();
+//		rlPage.addView(new View(getContext()));
 		return rlPage;
 	}
 
@@ -751,7 +751,7 @@ public class EditPage extends EditPageFakeActivity implements OnClickListener,
 		if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
 			hideSoftInput();
 			Window win = activity.getWindow();
-			win.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN
+			win.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE
 					| WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 			rlPage.setBackgroundColor(DIM_COLOR);
 			rlPage.postDelayed(new Runnable() {
