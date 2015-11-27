@@ -302,6 +302,8 @@ public class MainActivity extends PSGodBaseActivity implements
 		}
 	}
 
+
+
 	// EventBus 更新下方Tab栏状态 (暂时保留 点击消息页面分类时调用)
 	public void onEventMainThread(UpdateTabStatusEvent event) {
 		// 判断消息页面sp中未读数量 若为零 则更新状态栏的小红点状态
@@ -336,70 +338,57 @@ public class MainActivity extends PSGodBaseActivity implements
 	}
 
 	// 更新各类推送本地的数量
+	// 更新各类推送本地的数量
 	public void updatePushData(int type, int count) {
-		// 设置是否点击 我的 消息按钮
-		Constants.IS_MESSAGE_NEW_PUSH_CLICK = false;
-
 		if (type != -1) {
 			switch (type) {
-			case Constants.PUSH_MESSAGE_COMMENT:
-				int commentCount = UserPreferences.PushMessage
-						.getPushMessageCount(UserPreferences.PushMessage.PUSH_COMMENT);
-				commentCount = count + commentCount;
+				case Constants.PUSH_MESSAGE_COMMENT:
+					int commentCount = UserPreferences.PushMessage
+							.getPushMessageCount(UserPreferences.PushMessage.PUSH_COMMENT);
+					commentCount = count + commentCount;
 
-				// 更新页面内红点的数量
-				updatePageState(type, commentCount);
-				break;
+					UserPreferences.PushMessage.setPushMessageCount(
+							UserPreferences.PushMessage.PUSH_COMMENT, commentCount);
+					break;
 
-			case Constants.PUSH_MESSAGE_REPLY:
-				int replyCount = UserPreferences.PushMessage
-						.getPushMessageCount(UserPreferences.PushMessage.PUSH_REPLY);
-				replyCount = count + replyCount;
+				case Constants.PUSH_MESSAGE_REPLY:
+					int replyCount = UserPreferences.PushMessage
+							.getPushMessageCount(UserPreferences.PushMessage.PUSH_REPLY);
+					replyCount = count + replyCount;
 
-				// 更新页面内红点的数量
-				updatePageState(type, replyCount);
-				break;
+					UserPreferences.PushMessage.setPushMessageCount(
+							UserPreferences.PushMessage.PUSH_REPLY, replyCount);
+					break;
 
-			case Constants.PUSH_MESSAGE_FOLLOW:
-				int followCount = UserPreferences.PushMessage
-						.getPushMessageCount(UserPreferences.PushMessage.PUSH_FOLLOW);
-				followCount = count + followCount;
+				case Constants.PUSH_MESSAGE_FOLLOW:
+					int followCount = UserPreferences.PushMessage
+							.getPushMessageCount(UserPreferences.PushMessage.PUSH_FOLLOW);
+					followCount = count + followCount;
 
-				// 更新页面内红点的数量
-				updatePageState(type, followCount);
-				break;
+					UserPreferences.PushMessage.setPushMessageCount(
+							UserPreferences.PushMessage.PUSH_FOLLOW, followCount);
+					break;
 
-			// case Constants.PUSH_MESSAGE_INVITE:
-			// int inviteCount = UserPreferences.PushMessage
-			// .getPushMessageCount(UserPreferences.PushMessage.PUSH_INVITE);
-			// inviteCount = count + inviteCount;
-			//
-			// UserPreferences.PushMessage.setPushMessageCount(
-			// UserPreferences.PushMessage.PUSH_INVITE, inviteCount);
-			// // 更新页面内红点的数量
-			// updatePageState(type, inviteCount);
-			// break;
+				case Constants.PUSH_MESSAGE_LIKE:
+					int likeCount = UserPreferences.PushMessage
+							.getPushMessageCount(UserPreferences.PushMessage.PUSH_LIKE);
+					likeCount = likeCount + count;
 
-			case Constants.PUSH_MESSAGE_LIKE:
-				int likeCount = UserPreferences.PushMessage
-						.getPushMessageCount(UserPreferences.PushMessage.PUSH_LIKE);
-				likeCount = likeCount + count;
+					UserPreferences.PushMessage.setPushMessageCount(
+							UserPreferences.PushMessage.PUSH_LIKE, likeCount);
+					break;
 
-				// 更新页面内红点的数量
-				updatePageState(type, likeCount);
-				break;
+				case Constants.PUSH_MESSAGE_SYSTEM:
+					int systemCount = UserPreferences.PushMessage
+							.getPushMessageCount(UserPreferences.PushMessage.PUSH_SYSTEM);
+					systemCount = count + systemCount;
 
-			case Constants.PUSH_MESSAGE_SYSTEM:
-				int systemCount = UserPreferences.PushMessage
-						.getPushMessageCount(UserPreferences.PushMessage.PUSH_SYSTEM);
-				systemCount = count + systemCount;
+					UserPreferences.PushMessage.setPushMessageCount(
+							UserPreferences.PushMessage.PUSH_SYSTEM, systemCount);
+					break;
 
-				// 更新页面内红点的数量
-				updatePageState(type, systemCount);
-				break;
-
-			default:
-				break;
+				default:
+					break;
 			}
 		}
 	}

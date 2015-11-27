@@ -109,7 +109,6 @@ public class PSGodApplication extends Application {
                             intent.putExtra("count", count);
                             sendBroadcast(intent);
 
-
                             // 更新各类推送本地的数量
                             updatePushData(type, count);
                         } catch (JSONException e) {

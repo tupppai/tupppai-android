@@ -79,14 +79,14 @@ public class MyPageFragment extends Fragment implements
 
 	private View mMessageTipView;
 
-//	 @Override
-//	 public void onHiddenChanged(boolean hidden) {
-//	 super.onHiddenChanged(hidden);
-//
-//	 if(!hidden){
-//	 initMyFragmentData();
-//	 }
-//	 }
+	// @Override
+	// public void onHiddenChanged(boolean hidden) {
+	// super.onHiddenChanged(hidden);
+	//
+	// if(!hidden){
+	// initMyFragmentData();
+	// }
+	// }
 
 	@Override
 	public void onHiddenChanged(boolean hidden) {
@@ -202,14 +202,18 @@ public class MyPageFragment extends Fragment implements
 				.findViewById(R.id.fragment_my_page_message_tip);
 
 		if (dialog == null) {
-			dialog = new CustomProgressingDialog(getActivity());
+			dialog = new CustomProgressingDialog(
+					getActivity());
 		}
+		dialog = new CustomProgressingDialog(getActivity());
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
-
+//		if (Constants.HAS_CHANGE_PHOTO == true) {
+//			initMyFragmentData();
+//		}
 		initMyFragmentData();
 
 		int mMessageCount = UserPreferences.PushMessage
