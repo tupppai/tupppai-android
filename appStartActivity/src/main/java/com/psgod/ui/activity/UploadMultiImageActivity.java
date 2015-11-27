@@ -318,7 +318,7 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
                         int imageWidth = mImageBitmap.getWidth();
                         if (imageHeight < 320 || imageWidth < 320) {
                             CustomToast.showError(UploadMultiImageActivity.this, "上传图片尺寸应大于320*320", Toast.LENGTH_LONG);
-                            if(mProgressDialog.isShowing()){
+                            if (mProgressDialog.isShowing()) {
                                 mProgressDialog.dismiss();
                             }
                             break;
@@ -443,35 +443,35 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
                     qzonerequestQueue.add(qzonerequest);
                     break;
             }
-                    if (IMAGE_UPLOAD_TYPE == TYPE_ASK_UPLOAD) {
-                        // 新建求P成功后跳转最新求p 页面
-                        Intent intent = new Intent(UploadMultiImageActivity.this,
-                                MainActivity.class);
-                        intent.putExtra(MainActivity.IntentParams.KEY_FRAGMENT_ID,
-                                MainActivity.IntentParams.VALUE_FRAGMENT_ID_RECENT);
-                        intent.putExtra(
-                                MainActivity.IntentParams.KEY_RECENTPAGE_ID,
-                                MainActivity.IntentParams.VALUE_RECENTPAGE_ID_ASKS);
-                        intent.putExtra(MainActivity.IntentParams.KEY_NEED_REFRESH,
-                                true);
-                        EventBus.getDefault().post(new MyPageRefreshEvent(0));
-                        startActivity(intent);
-                    } else {
-                        // 新建作品成功后跳转最新作品 页面
-                        Intent intent = new Intent(UploadMultiImageActivity.this,
-                                MainActivity.class);
-                        intent.putExtra(MainActivity.IntentParams.KEY_FRAGMENT_ID,
-                                MainActivity.IntentParams.VALUE_FRAGMENT_ID_RECENT);
-                        intent.putExtra(
-                                MainActivity.IntentParams.KEY_RECENTPAGE_ID,
-                                MainActivity.IntentParams.VALUE_RECENTPAGE_ID_WORKS);
-                        intent.putExtra(MainActivity.IntentParams.KEY_NEED_REFRESH,
-                                true);
-                        EventBus.getDefault().post(new MyPageRefreshEvent(1));
-                        startActivity(intent);
-                    }
-                    UploadMultiImageActivity.this.finish();
+            if (IMAGE_UPLOAD_TYPE == TYPE_ASK_UPLOAD) {
+                // 新建求P成功后跳转最新求p 页面
+                Intent intent = new Intent(UploadMultiImageActivity.this,
+                        MainActivity.class);
+                intent.putExtra(MainActivity.IntentParams.KEY_FRAGMENT_ID,
+                        MainActivity.IntentParams.VALUE_FRAGMENT_ID_RECENT);
+                intent.putExtra(
+                        MainActivity.IntentParams.KEY_RECENTPAGE_ID,
+                        MainActivity.IntentParams.VALUE_RECENTPAGE_ID_ASKS);
+                intent.putExtra(MainActivity.IntentParams.KEY_NEED_REFRESH,
+                        true);
+                EventBus.getDefault().post(new MyPageRefreshEvent(MyPageRefreshEvent.ASK));
+                startActivity(intent);
+            } else {
+                // 新建作品成功后跳转最新作品 页面
+                Intent intent = new Intent(UploadMultiImageActivity.this,
+                        MainActivity.class);
+                intent.putExtra(MainActivity.IntentParams.KEY_FRAGMENT_ID,
+                        MainActivity.IntentParams.VALUE_FRAGMENT_ID_RECENT);
+                intent.putExtra(
+                        MainActivity.IntentParams.KEY_RECENTPAGE_ID,
+                        MainActivity.IntentParams.VALUE_RECENTPAGE_ID_WORKS);
+                intent.putExtra(MainActivity.IntentParams.KEY_NEED_REFRESH,
+                        true);
+                EventBus.getDefault().post(new MyPageRefreshEvent(MyPageRefreshEvent.WORK));
+                startActivity(intent);
             }
+            UploadMultiImageActivity.this.finish();
+        }
     };
 
     // 微博分享接口请求回调 新浪微博只支持图文／文字
@@ -559,7 +559,7 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
 
                 @Override
                 public void onCancel(Platform arg0, int arg1) {
-                    onComplete(arg0,arg1,null);
+                    onComplete(arg0, arg1, null);
                 }
             });
 
@@ -603,7 +603,7 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
                     @Override
                     public void onCancel(Platform platform, int action) {
                         super.onCancel(platform, action);
-                        onComplete(platform,action,null);
+                        onComplete(platform, action, null);
                     }
 
                     @Override
