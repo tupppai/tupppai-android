@@ -13,6 +13,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
@@ -441,7 +442,7 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
                             PSGodApplication.getAppContext()).getRequestQueue();
                     qzonerequestQueue.add(qzonerequest);
                     break;
-                default:
+            }
                     if (IMAGE_UPLOAD_TYPE == TYPE_ASK_UPLOAD) {
                         // 新建求P成功后跳转最新求p 页面
                         Intent intent = new Intent(UploadMultiImageActivity.this,
@@ -470,9 +471,7 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
                         startActivity(intent);
                     }
                     UploadMultiImageActivity.this.finish();
-                    break;
             }
-        }
     };
 
     // 微博分享接口请求回调 新浪微博只支持图文／文字
@@ -488,42 +487,7 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
                     @Override
                     public void onComplete(Platform platform, int action,
                                            HashMap<String, Object> res) {
-                        if (IMAGE_UPLOAD_TYPE == TYPE_ASK_UPLOAD) {
-                            // 新建求P成功后跳转最新求p 页面
-                            Intent intent = new Intent(
-                                    UploadMultiImageActivity.this,
-                                    MainActivity.class);
-                            intent.putExtra(
-                                    MainActivity.IntentParams.KEY_FRAGMENT_ID,
-                                    MainActivity.IntentParams.VALUE_FRAGMENT_ID_RECENT);
-                            intent.putExtra(
-                                    MainActivity.IntentParams.KEY_RECENTPAGE_ID,
-                                    MainActivity.IntentParams.VALUE_RECENTPAGE_ID_ASKS);
-                            intent.putExtra(
-                                    MainActivity.IntentParams.KEY_NEED_REFRESH,
-                                    true);
-                            EventBus.getDefault().post(
-                                    new MyPageRefreshEvent(0));
-                            startActivity(intent);
-                        } else {
-                            // 新建作品成功后跳转最新作品 页面
-                            Intent intent = new Intent(
-                                    UploadMultiImageActivity.this,
-                                    MainActivity.class);
-                            intent.putExtra(
-                                    MainActivity.IntentParams.KEY_FRAGMENT_ID,
-                                    MainActivity.IntentParams.VALUE_FRAGMENT_ID_RECENT);
-                            intent.putExtra(
-                                    MainActivity.IntentParams.KEY_RECENTPAGE_ID,
-                                    MainActivity.IntentParams.VALUE_RECENTPAGE_ID_WORKS);
-                            intent.putExtra(
-                                    MainActivity.IntentParams.KEY_NEED_REFRESH,
-                                    true);
-                            EventBus.getDefault().post(
-                                    new MyPageRefreshEvent(1));
-                            startActivity(intent);
-                        }
-                        UploadMultiImageActivity.this.finish();
+
                     }
                 };
 
@@ -557,40 +521,40 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
                 @Override
                 public void onComplete(Platform arg0, int arg1,
                                        HashMap<String, Object> arg2) {
-                    if (IMAGE_UPLOAD_TYPE == TYPE_ASK_UPLOAD) {
-                        // 新建求P成功后跳转最新求p 页面
-                        Intent intent = new Intent(
-                                UploadMultiImageActivity.this,
-                                MainActivity.class);
-                        intent.putExtra(
-                                MainActivity.IntentParams.KEY_FRAGMENT_ID,
-                                MainActivity.IntentParams.VALUE_FRAGMENT_ID_RECENT);
-                        intent.putExtra(
-                                MainActivity.IntentParams.KEY_RECENTPAGE_ID,
-                                MainActivity.IntentParams.VALUE_RECENTPAGE_ID_ASKS);
-                        intent.putExtra(
-                                MainActivity.IntentParams.KEY_NEED_REFRESH,
-                                true);
-                        EventBus.getDefault().post(new MyPageRefreshEvent(0));
-                        startActivity(intent);
-                    } else {
-                        // 新建作品成功后跳转最新作品 页面
-                        Intent intent = new Intent(
-                                UploadMultiImageActivity.this,
-                                MainActivity.class);
-                        intent.putExtra(
-                                MainActivity.IntentParams.KEY_FRAGMENT_ID,
-                                MainActivity.IntentParams.VALUE_FRAGMENT_ID_RECENT);
-                        intent.putExtra(
-                                MainActivity.IntentParams.KEY_RECENTPAGE_ID,
-                                MainActivity.IntentParams.VALUE_RECENTPAGE_ID_WORKS);
-                        intent.putExtra(
-                                MainActivity.IntentParams.KEY_NEED_REFRESH,
-                                true);
-                        EventBus.getDefault().post(new MyPageRefreshEvent(1));
-                        startActivity(intent);
-                    }
-                    UploadMultiImageActivity.this.finish();
+//                    if (IMAGE_UPLOAD_TYPE == TYPE_ASK_UPLOAD) {
+//                        // 新建求P成功后跳转最新求p 页面
+//                        Intent intent = new Intent(
+//                                UploadMultiImageActivity.this,
+//                                MainActivity.class);
+//                        intent.putExtra(
+//                                MainActivity.IntentParams.KEY_FRAGMENT_ID,
+//                                MainActivity.IntentParams.VALUE_FRAGMENT_ID_RECENT);
+//                        intent.putExtra(
+//                                MainActivity.IntentParams.KEY_RECENTPAGE_ID,
+//                                MainActivity.IntentParams.VALUE_RECENTPAGE_ID_ASKS);
+//                        intent.putExtra(
+//                                MainActivity.IntentParams.KEY_NEED_REFRESH,
+//                                true);
+//                        EventBus.getDefault().post(new MyPageRefreshEvent(0));
+//                        startActivity(intent);
+//                    } else {
+//                        // 新建作品成功后跳转最新作品 页面
+//                        Intent intent = new Intent(
+//                                UploadMultiImageActivity.this,
+//                                MainActivity.class);
+//                        intent.putExtra(
+//                                MainActivity.IntentParams.KEY_FRAGMENT_ID,
+//                                MainActivity.IntentParams.VALUE_FRAGMENT_ID_RECENT);
+//                        intent.putExtra(
+//                                MainActivity.IntentParams.KEY_RECENTPAGE_ID,
+//                                MainActivity.IntentParams.VALUE_RECENTPAGE_ID_WORKS);
+//                        intent.putExtra(
+//                                MainActivity.IntentParams.KEY_NEED_REFRESH,
+//                                true);
+//                        EventBus.getDefault().post(new MyPageRefreshEvent(1));
+//                        startActivity(intent);
+//                    }
+//                    UploadMultiImageActivity.this.finish();
                 }
 
                 @Override
@@ -645,43 +609,43 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
                     @Override
                     public void onComplete(Platform platform, int action,
                                            HashMap<String, Object> res) {
-                        if (IMAGE_UPLOAD_TYPE == TYPE_ASK_UPLOAD) {
-                            // 新建求P成功后跳转最新求p 页面
-                            Intent intent = new Intent(
-                                    UploadMultiImageActivity.this,
-                                    MainActivity.class);
-                            intent.putExtra(
-                                    MainActivity.IntentParams.KEY_FRAGMENT_ID,
-                                    MainActivity.IntentParams.VALUE_FRAGMENT_ID_RECENT);
-                            intent.putExtra(
-                                    MainActivity.IntentParams.KEY_RECENTPAGE_ID,
-                                    MainActivity.IntentParams.VALUE_RECENTPAGE_ID_ASKS);
-                            intent.putExtra(
-                                    MainActivity.IntentParams.KEY_NEED_REFRESH,
-                                    true);
-                            EventBus.getDefault().post(
-                                    new MyPageRefreshEvent(0));
-                            startActivity(intent);
-                        } else {
-                            // 新建作品成功后跳转最新作品 页面
-                            Intent intent = new Intent(
-                                    UploadMultiImageActivity.this,
-                                    MainActivity.class);
-                            intent.putExtra(
-                                    MainActivity.IntentParams.KEY_FRAGMENT_ID,
-                                    MainActivity.IntentParams.VALUE_FRAGMENT_ID_RECENT);
-                            intent.putExtra(
-                                    MainActivity.IntentParams.KEY_RECENTPAGE_ID,
-                                    MainActivity.IntentParams.VALUE_RECENTPAGE_ID_WORKS);
-                            intent.putExtra(
-                                    MainActivity.IntentParams.KEY_NEED_REFRESH,
-                                    true);
-                            EventBus.getDefault().post(
-                                    new MyPageRefreshEvent(1));
-                            startActivity(intent);
-                        }
-                        UploadCache.getInstence().clear();
-                        UploadMultiImageActivity.this.finish();
+//                        if (IMAGE_UPLOAD_TYPE == TYPE_ASK_UPLOAD) {
+//                            // 新建求P成功后跳转最新求p 页面
+//                            Intent intent = new Intent(
+//                                    UploadMultiImageActivity.this,
+//                                    MainActivity.class);
+//                            intent.putExtra(
+//                                    MainActivity.IntentParams.KEY_FRAGMENT_ID,
+//                                    MainActivity.IntentParams.VALUE_FRAGMENT_ID_RECENT);
+//                            intent.putExtra(
+//                                    MainActivity.IntentParams.KEY_RECENTPAGE_ID,
+//                                    MainActivity.IntentParams.VALUE_RECENTPAGE_ID_ASKS);
+//                            intent.putExtra(
+//                                    MainActivity.IntentParams.KEY_NEED_REFRESH,
+//                                    true);
+//                            EventBus.getDefault().post(
+//                                    new MyPageRefreshEvent(0));
+//                            startActivity(intent);
+//                        } else {
+//                            // 新建作品成功后跳转最新作品 页面
+//                            Intent intent = new Intent(
+//                                    UploadMultiImageActivity.this,
+//                                    MainActivity.class);
+//                            intent.putExtra(
+//                                    MainActivity.IntentParams.KEY_FRAGMENT_ID,
+//                                    MainActivity.IntentParams.VALUE_FRAGMENT_ID_RECENT);
+//                            intent.putExtra(
+//                                    MainActivity.IntentParams.KEY_RECENTPAGE_ID,
+//                                    MainActivity.IntentParams.VALUE_RECENTPAGE_ID_WORKS);
+//                            intent.putExtra(
+//                                    MainActivity.IntentParams.KEY_NEED_REFRESH,
+//                                    true);
+//                            EventBus.getDefault().post(
+//                                    new MyPageRefreshEvent(1));
+//                            startActivity(intent);
+//                        }
+//                        UploadCache.getInstence().clear();
+//                        UploadMultiImageActivity.this.finish();
                     }
                 };
                 oks.setPlatform(QZone.NAME);
