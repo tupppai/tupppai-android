@@ -27,15 +27,15 @@ public class PushMessageReceiver extends BroadcastReceiver {
 
 			EventBus.getDefault().post(
 					new PushEvent(mType, mCount, PushEvent.TYPE_ACT_MAIN));
-			switch (mType){
-				case 0:
-					EventBus.getDefault().post(new RefreshEvent(MessageSystemActivity.class.getName()));
-					break;
-				case 5:
-					EventBus.getDefault().post(new RefreshEvent(MessageLikeActivity.class.getName()));
-					break;
-			}
-			EventBus.getDefault().post(new RefreshEvent(NewMessageActivity.class.getName()));
+//			switch (mType){
+//				case 0:
+//					EventBus.getDefault().post(new RefreshEvent(MessageSystemActivity.class.getName()));
+//					break;
+//				case 5:
+//					EventBus.getDefault().post(new RefreshEvent(MessageLikeActivity.class.getName()));
+//					break;
+//			}
+//			EventBus.getDefault().post(new RefreshEvent(NewMessageActivity.class.getName()));
 		}
 	}
 }

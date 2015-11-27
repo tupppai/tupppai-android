@@ -484,6 +484,7 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
             ShareSDK.initSDK(mContext);
             try {
                 OnekeyShare oks = new OnekeyShare() {
+
                     @Override
                     public void onComplete(Platform platform, int action,
                                            HashMap<String, Object> res) {
@@ -594,6 +595,7 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
 
                 @Override
                 public void onCancel(Platform arg0, int arg1) {
+                    onComplete(arg0,arg1,null);
                 }
             });
 
@@ -634,6 +636,12 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
             ShareSDK.initSDK(mContext);
             try {
                 OnekeyShare oks = new OnekeyShare() {
+                    @Override
+                    public void onCancel(Platform platform, int action) {
+                        super.onCancel(platform, action);
+                        onComplete(platform,action,null);
+                    }
+
                     @Override
                     public void onComplete(Platform platform, int action,
                                            HashMap<String, Object> res) {
