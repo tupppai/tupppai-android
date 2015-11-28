@@ -29,7 +29,6 @@ import java.util.List;
  */
 public class CarouselPhotoDetailView extends RelativeLayout {
 
-
     private Context mContext;
     private View mParent;
 
@@ -76,57 +75,45 @@ public class CarouselPhotoDetailView extends RelativeLayout {
 
     private void initListener(final View view) {
         view.setOnTouchListener(new View.OnTouchListener() {
-            float DownX;
             float DownY;
             float Y;
             float oY = view.getY();
-
+            float moveY = 0;
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
 
-                float moveY = 0;
                 switch (motionEvent.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                        DownX = motionEvent.getX();//float DownX
-                        DownY = motionEvent.getRawY();//float DownY
+                        DownY = motionEvent.getRawY();
                         Y = view.getY();
                         break;
                     case MotionEvent.ACTION_MOVE:
-                        moveY = motionEvent.getRawY() - DownY;//y轴距离
-                        if (isBlow || isStore && moveY < 0) {
+                        moveY = motionEvent.getRawY() - DownY;
+                        if (isBlow && moveY < 0) {
 
                         } else {
                             ViewHelper.setTranslationY(view, moveY);
                         }
-//                        Log.e("Y",String.valueOf(Utils.pxToDp(mContext, motionEvent.getRawY())));
-
                         break;
                     case MotionEvent.ACTION_UP:
                         view.setY(oY);
-                        if (!isDown) {
+                        if (!isDown && moveY <= 0) {
                             viewPagerBlow();
                         } else {
                             isDown = false;
                         }
-//                        if (Utils.pxToDp(mContext, motionEvent.getY()) > 300) {
-//                            if (onEndListener != null) {
-//                                onEndListener.onEnd();
-//                            }
-//                        }
                         break;
                 }
-//                if (Utils.pxToDp(mContext, view.getY()) < -70 && moveY < 0) {
-//                    view.setY(oY);
-//                    viewPagerBlow();
-//                } else
-                if (Utils.pxToDp(mContext, view.getY()) > -75 && moveY > 0 && isBlow) {
+                if (Utils.pxToDp(mContext, view.getY()) < -70 && moveY < 0) {
+                    view.setY(oY);
+                    viewPagerBlow();
+                } else if (Utils.pxToDp(mContext, view.getY()) > -75 && moveY > 0 && isBlow) {
                     viewPagerRestore();
+                } else if (Utils.pxToDp(mContext, view.getY()) > 150 && isAnimEnd) {
+                    if (onEndListener != null) {
+                        onEndListener.onEnd();
+                    }
                 }
-//                else if (Utils.pxToDp(mContext, view.getY()) > 200 && !isBlow) {
-//                    if (onEndListener != null) {
-//                        onEndListener.onEnd();
-//                    }
-//                }
                 return true;
             }
         });
@@ -135,8 +122,7 @@ public class CarouselPhotoDetailView extends RelativeLayout {
     private void viewPagerBlow() {
         isDown = false;
         mScroll.setCanScroll(true);
-        if (isBlow && vp != null) {
-            isFlows = false;
+        if (!isBlow && vp != null) {
             isBlow = true;
             final AnimatorSet anim = new AnimatorSet();
             anim.setDuration(300);
@@ -162,8 +148,7 @@ public class CarouselPhotoDetailView extends RelativeLayout {
             return;
         }
         isDown = true;
-        isFlows = true;
-        isStore = true;
+        isBlow = false;
         final AnimatorSet anim = new AnimatorSet();
         anim.setDuration(300);
         ValueAnimator xAnim = ValueAnimator.ofInt(-1, 20);
@@ -198,12 +183,12 @@ public class CarouselPhotoDetailView extends RelativeLayout {
             list.add(CarouselPhotoDetailView.this);
             adapter = new ViewPagerAdapter(list);
             vp.setAdapter(adapter);
-
+            isAnimEnd = false;
         }
 
         @Override
         public void onAnimationEnd(Animator animator) {
-            isBlow = false;
+            isAnimEnd = true;
         }
 
         @Override
@@ -221,7 +206,7 @@ public class CarouselPhotoDetailView extends RelativeLayout {
         @Override
         public void onAnimationStart(Animator animator) {
             vp.setOffscreenPageLimit(0);
-
+            isAnimEnd = false;
         }
 
         @Override
@@ -234,7 +219,7 @@ public class CarouselPhotoDetailView extends RelativeLayout {
             vp.setAdapter(thumbAdatper);
             int position = thumbAdatper.getItemPosition(CarouselPhotoDetailView.this);
             vp.setCurrentItem(position == -1 ? 0 : position);
-            isStore = false;
+            isAnimEnd = true;
         }
 
         @Override
@@ -258,9 +243,12 @@ public class CarouselPhotoDetailView extends RelativeLayout {
         this.onEndListener = onEndListener;
     }
 
-    private boolean isFlows = true;
+    //是否是放大的状态
     private boolean isBlow = false;
-    private boolean isStore = false;
+
+    //防止放大和缩小动画冲突
     private boolean isDown = false;
 
+    //当前是否有动画
+    private boolean isAnimEnd = true;
 }
