@@ -1168,7 +1168,7 @@ public class PhotoItemView extends RelativeLayout implements Callback {
 //                mHandler.postDelayed(mViewEnabledRunnable, 1000);
 //            }
 
-            new CarouselPhotoDetailDialog(mContext).show();
+            new CarouselPhotoDetailDialog(mContext,mPhotoItem.getAskId(),mPhotoItem.getPid()).show();
         }
     };
 

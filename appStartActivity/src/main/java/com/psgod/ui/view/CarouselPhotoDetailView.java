@@ -29,7 +29,6 @@ import java.util.List;
 public class CarouselPhotoDetailView extends RelativeLayout {
 
     private Context mContext;
-    private View mParent;
 
     public CarouselPhotoDetailView(Context context) {
         super(context);
@@ -48,11 +47,8 @@ public class CarouselPhotoDetailView extends RelativeLayout {
 
     public CarouselPhotoDetailView(Context context,PhotoItem photoItem) {
         super(context);
+        mPhotoItem = photoItem;
         init();
-    }
-
-    public void setParent(View mParent) {
-        this.mParent = mParent;
     }
 
     private void init() {
@@ -69,6 +65,7 @@ public class CarouselPhotoDetailView extends RelativeLayout {
                 findViewById(R.id.view_carp_photo_detail_insidescroll);
         mCover = (RelativeLayout) view.
                 findViewById(R.id.view_carp_photo_detail_coverview);
+        mScroll.addView(new SinglePhotoView(getContext(),mPhotoItem));
     }
 
     private ViewPager vp;
@@ -178,7 +175,7 @@ public class CarouselPhotoDetailView extends RelativeLayout {
         ObjectAnimator scrollAnim = ObjectAnimator.ofFloat(mScroll, "alpha", 1f, 0);
         ObjectAnimator coverAnim = ObjectAnimator.ofFloat(mCover, "alpha", 0, 1f);
         xAnim.addListener(restoreAnimListener);
-        anim.playTogether(xAnim,scrollAnim,coverAnim);
+        anim.playTogether(xAnim, scrollAnim, coverAnim);
         anim.start();
     }
 
@@ -274,4 +271,7 @@ public class CarouselPhotoDetailView extends RelativeLayout {
 
     //判断是否为表层观看页
     private boolean isCover = true;
+
+
+
 }
