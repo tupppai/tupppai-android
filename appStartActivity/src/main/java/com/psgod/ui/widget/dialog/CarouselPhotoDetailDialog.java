@@ -3,6 +3,7 @@ package com.psgod.ui.widget.dialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.ViewPager;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,7 +29,7 @@ public class CarouselPhotoDetailDialog extends Dialog {
     private Context mContext;
     private int mTheme;
     private int marginTop = 84;
-    private StopViewPager vp;
+    private ViewPager vp;
 
     public CarouselPhotoDetailDialog(Context context) {
         super(context, R.style.ActionSheetDialog);
@@ -52,7 +53,7 @@ public class CarouselPhotoDetailDialog extends Dialog {
     private void initView() {
         parentView = LayoutInflater.from(mContext).inflate(R.layout.dialog_carousel_photo, null);
         setContentView(parentView);
-        vp = (StopViewPager) findViewById(R.id.dialog_carousel_photo_vp);
+        vp = (ViewPager) findViewById(R.id.dialog_carousel_photo_vp);
 
         vp.setOffscreenPageLimit(3);
         vp.setPageMargin(Utils.dpToPx(mContext, 10));
@@ -67,7 +68,6 @@ public class CarouselPhotoDetailDialog extends Dialog {
                     CarouselPhotoDetailDialog.this.dismiss();
                 }
             });
-            ((TextView)view.findViewById(R.id.cpd_txt)).setText(String.valueOf(i));
             views.add(view);
         }
         ViewPagerAdapter adapter = new ViewPagerAdapter(views);

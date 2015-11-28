@@ -2,15 +2,14 @@ package com.psgod.ui.view;
 
 import android.animation.Animator;
 import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.nineoldandroids.view.ViewHelper;
@@ -47,6 +46,11 @@ public class CarouselPhotoDetailView extends RelativeLayout {
         init();
     }
 
+    public CarouselPhotoDetailView(Context context,PhotoItem photoItem) {
+        super(context);
+        init();
+    }
+
     public void setParent(View mParent) {
         this.mParent = mParent;
     }
@@ -61,13 +65,17 @@ public class CarouselPhotoDetailView extends RelativeLayout {
 
 
     private void initView(View view) {
-        mScroll = (StopScrollView) view.findViewById(R.id.view_carp_photo_detail_scroll);
+        mScroll = (StopScrollView) view.
+                findViewById(R.id.view_carp_photo_detail_insidescroll);
+        mCover = (RelativeLayout) view.
+                findViewById(R.id.view_carp_photo_detail_coverview);
     }
 
     private ViewPager vp;
     private PhotoItem mPhotoItem;
 
     private StopScrollView mScroll;
+    private RelativeLayout mCover;
 
     public void setVp(ViewPager vp) {
         this.vp = vp;
@@ -79,6 +87,7 @@ public class CarouselPhotoDetailView extends RelativeLayout {
             float Y;
             float oY = view.getY();
             float moveY = 0;
+
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
 
@@ -137,8 +146,11 @@ public class CarouselPhotoDetailView extends RelativeLayout {
                     vp.setLayoutParams(vParams);
                 }
             });
+            mScroll.setVisibility(VISIBLE);
+            ObjectAnimator scrollAnim = ObjectAnimator.ofFloat(mScroll, "alpha", 0, 1f);
+            ObjectAnimator coverAnim = ObjectAnimator.ofFloat(mCover,"alpha",1f,0);
             xAnim.addListener(blowAnimListener);
-            anim.play(xAnim);
+            anim.playTogether(xAnim, scrollAnim, coverAnim);
             anim.start();
         }
     }
@@ -162,8 +174,11 @@ public class CarouselPhotoDetailView extends RelativeLayout {
                 vp.setLayoutParams(vParams);
             }
         });
+        mCover.setVisibility(VISIBLE);
+        ObjectAnimator scrollAnim = ObjectAnimator.ofFloat(mScroll, "alpha", 1f, 0);
+        ObjectAnimator coverAnim = ObjectAnimator.ofFloat(mCover, "alpha", 0, 1f);
         xAnim.addListener(restoreAnimListener);
-        anim.play(xAnim);
+        anim.playTogether(xAnim,scrollAnim,coverAnim);
         anim.start();
     }
 
@@ -184,11 +199,13 @@ public class CarouselPhotoDetailView extends RelativeLayout {
             adapter = new ViewPagerAdapter(list);
             vp.setAdapter(adapter);
             isAnimEnd = false;
+            isCover = false;
         }
 
         @Override
         public void onAnimationEnd(Animator animator) {
             isAnimEnd = true;
+            mCover.setVisibility(GONE);
         }
 
         @Override
@@ -207,6 +224,7 @@ public class CarouselPhotoDetailView extends RelativeLayout {
         public void onAnimationStart(Animator animator) {
             vp.setOffscreenPageLimit(0);
             isAnimEnd = false;
+            isCover = false;
         }
 
         @Override
@@ -220,6 +238,8 @@ public class CarouselPhotoDetailView extends RelativeLayout {
             int position = thumbAdatper.getItemPosition(CarouselPhotoDetailView.this);
             vp.setCurrentItem(position == -1 ? 0 : position);
             isAnimEnd = true;
+            isCover = true;
+            mScroll.setVisibility(GONE);
         }
 
         @Override
@@ -251,4 +271,7 @@ public class CarouselPhotoDetailView extends RelativeLayout {
 
     //当前是否有动画
     private boolean isAnimEnd = true;
+
+    //判断是否为表层观看页
+    private boolean isCover = true;
 }
