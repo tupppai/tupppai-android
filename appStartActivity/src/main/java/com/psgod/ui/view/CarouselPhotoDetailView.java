@@ -10,15 +10,20 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.nineoldandroids.view.ViewHelper;
 import com.psgod.R;
 import com.psgod.Utils;
 import com.psgod.model.PhotoItem;
 import com.psgod.ui.adapter.ViewPagerAdapter;
-import com.psgod.ui.widget.StopScrollView;
+import com.psgod.ui.widget.AvatarImageView;
 import com.psgod.ui.widget.StopViewPager;
+
+import org.sufficientlysecure.htmltextview.HtmlTextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +50,7 @@ public class CarouselPhotoDetailView extends RelativeLayout {
         init();
     }
 
-    public CarouselPhotoDetailView(Context context,PhotoItem photoItem) {
+    public CarouselPhotoDetailView(Context context, PhotoItem photoItem) {
         super(context);
         mPhotoItem = photoItem;
         init();
@@ -59,23 +64,58 @@ public class CarouselPhotoDetailView extends RelativeLayout {
         initListener(view);
     }
 
-
-    private void initView(View view) {
-        mScroll = (StopScrollView) view.
-                findViewById(R.id.view_carp_photo_detail_insidescroll);
-        mCover = (RelativeLayout) view.
-                findViewById(R.id.view_carp_photo_detail_coverview);
-        mScroll.addView(new SinglePhotoView(getContext(),mPhotoItem));
-    }
-
     private ViewPager vp;
     private PhotoItem mPhotoItem;
 
-    private StopScrollView mScroll;
+    private RelativeLayout mScroll;
     private RelativeLayout mCover;
 
     public void setVp(ViewPager vp) {
         this.vp = vp;
+    }
+
+    private void initView(View view) {
+        mScroll = (RelativeLayout) view.
+                findViewById(R.id.view_carp_photo_detail_insidescroll);
+        mCover = (RelativeLayout) view.
+                findViewById(R.id.view_carp_photo_detail_coverview);
+        initCover(view);
+        SinglePhotoView singlePhotoView = new SinglePhotoView(getContext(), mPhotoItem);
+        singlePhotoView.setOnEndListener(new SinglePhotoView.OnEndListener() {
+            @Override
+            public void onEndListener(SinglePhotoView view) {
+                if (onEndListener != null) {
+                    onEndListener.onEnd();
+                }
+            }
+        });
+        mScroll.addView(singlePhotoView);
+    }
+
+    private ImageView coverTag;
+    private TextView coverName;
+    private TextView coverTime;
+    private AvatarImageView coverAvatar;
+    private ImageView coverCover;
+    private ImageView coverBack;
+    private HtmlTextView coverDesc;
+    private TextView coverLike;
+    private TextView coverShare;
+    private ListView coverList;
+
+    private void initCover(View view) {
+        coverTag = (ImageView) view.findViewById(R.id.view_carp_photo_detail_cover_tag);
+        coverName = (TextView) view.findViewById(R.id.view_carp_photo_detail_cover_name);
+        coverTime = (TextView) view.findViewById(R.id.view_carp_photo_detail_cover_time);
+        coverAvatar = (AvatarImageView) view.findViewById(R.id.view_carp_photo_detail_cover_avatar);
+        coverCover = (ImageView) view.findViewById(R.id.view_carp_photo_detail_cover_coverimg);
+        coverBack = (ImageView) view.findViewById(R.id.view_carp_photo_detail_cover_backimg);
+        coverDesc = (HtmlTextView) view.findViewById(R.id.view_carp_photo_detail_cover_desc);
+        coverLike = (TextView) view.findViewById(R.id.view_carp_photo_detail_cover_like);
+        coverShare = (TextView) view.findViewById(R.id.view_carp_photo_detail_cover_share);
+        coverList = (ListView) view.findViewById(R.id.view_carp_photo_detail_cover_comment);
+
+//        coverTa
     }
 
     private void initListener(final View view) {
@@ -127,7 +167,7 @@ public class CarouselPhotoDetailView extends RelativeLayout {
 
     private void viewPagerBlow() {
         isDown = false;
-        mScroll.setCanScroll(true);
+//        mScroll.setCanScroll(true);
         if (!isBlow && vp != null) {
             isBlow = true;
             final AnimatorSet anim = new AnimatorSet();
@@ -145,7 +185,7 @@ public class CarouselPhotoDetailView extends RelativeLayout {
             });
             mScroll.setVisibility(VISIBLE);
             ObjectAnimator scrollAnim = ObjectAnimator.ofFloat(mScroll, "alpha", 0, 1f);
-            ObjectAnimator coverAnim = ObjectAnimator.ofFloat(mCover,"alpha",1f,0);
+            ObjectAnimator coverAnim = ObjectAnimator.ofFloat(mCover, "alpha", 1f, 0);
             xAnim.addListener(blowAnimListener);
             anim.playTogether(xAnim, scrollAnim, coverAnim);
             anim.start();
@@ -271,7 +311,6 @@ public class CarouselPhotoDetailView extends RelativeLayout {
 
     //判断是否为表层观看页
     private boolean isCover = true;
-
 
 
 }

@@ -33,6 +33,7 @@ import com.psgod.network.request.PSGodErrorListener;
 import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.network.request.PostCommentRequest;
 import com.psgod.ui.adapter.SinglePhotoDetailAdapter;
+import com.psgod.ui.widget.ActionBar;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
 
 import java.util.ArrayList;
@@ -77,6 +78,7 @@ public class SinglePhotoView extends RelativeLayout implements
     private CommentListListener mListViewListener;
     private TextView mSendCommentBtn;
     private EditText mCommentEditText;
+    private ActionBar actionBar;
 
     private RelativeLayout mParent;
 
@@ -143,6 +145,15 @@ public class SinglePhotoView extends RelativeLayout implements
         mListView.getRefreshableView().setOnChildClickListener(
                 mListViewListener);
         mListView.setScrollingWhileRefreshingEnabled(true);
+        actionBar = (ActionBar) view.findViewById(R.id.single_photo_detail_parent_actionbar);
+        actionBar.setLeftBtnOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(onEndListener != null){
+                    onEndListener.onEndListener(SinglePhotoView.this);
+                }
+            }
+        });
 
         mParent = (RelativeLayout) view.findViewById(R.id.single_photo_detail_parent);
 
@@ -507,5 +518,13 @@ public class SinglePhotoView extends RelativeLayout implements
 
     }
 
+    public interface OnEndListener {
+        void onEndListener(SinglePhotoView view);
+    }
 
+    private OnEndListener onEndListener;
+
+    public void setOnEndListener(OnEndListener onEndListener) {
+        this.onEndListener = onEndListener;
+    }
 }

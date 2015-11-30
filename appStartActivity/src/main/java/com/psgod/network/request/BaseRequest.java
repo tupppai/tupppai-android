@@ -29,7 +29,7 @@ public abstract class BaseRequest<T> extends Request<T> {
 
 	public static final String PSGOD_BASE_RELEASE_URL = "http://api.qiupsdashen.com/"; // 正式环境
 
-	public static String PSGOD_BASE_URL = PSGOD_BASE_RELEASE_URL;
+	public static String PSGOD_BASE_URL = PSGOD_BASE_TEST_URL;
 
 	protected static final String PROTOCOL_CHARSET = "utf-8";
 

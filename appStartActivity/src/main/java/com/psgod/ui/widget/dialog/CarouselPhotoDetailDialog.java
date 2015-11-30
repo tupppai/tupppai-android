@@ -5,12 +5,14 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,21 +52,28 @@ public class CarouselPhotoDetailDialog extends Dialog {
     private long replyId;
     ViewPagerAdapter adapter;
 
-    public CarouselPhotoDetailDialog(Context context,long askId,long replyId) {
+    public CarouselPhotoDetailDialog(Context context, long askId, long replyId) {
         super(context, R.style.ActionSheetDialog);
         mContext = context;
         this.askId = askId;
         this.replyId = replyId;
-        initView();
     }
 
     public CarouselPhotoDetailDialog(Context context, int theme) {
         super(context, theme);
         mContext = context;
-        initView();
     }
 
     View parentView;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getWindow().setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE |
+                        WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        initView();
+    }
 
     private void initView() {
         parentView = LayoutInflater.from(mContext).inflate(R.layout.dialog_carousel_photo, null);
@@ -95,8 +104,8 @@ public class CarouselPhotoDetailDialog extends Dialog {
     @Override
     public void show() {
         super.show();
-        getWindow().getAttributes().width = Constants.WIDTH_OF_SCREEN;
-        getWindow().getAttributes().height = Constants.HEIGHT_OF_SCREEN;
+        getWindow().getAttributes().width = -1;
+        getWindow().getAttributes().height = -1;
         getWindow().setGravity(Gravity.BOTTOM);
         getWindow().setWindowAnimations(R.style.popwindow_anim_style);
 
@@ -105,11 +114,11 @@ public class CarouselPhotoDetailDialog extends Dialog {
     Response.Listener<List<PhotoItem>> initDataListener = new Response.Listener<List<PhotoItem>>() {
         @Override
         public void onResponse(List<PhotoItem> items) {
-            if(views.size() > 0){
+            if (views.size() > 0) {
                 views.clear();
             }
-            for(PhotoItem item : items){
-                CarouselPhotoDetailView view = new CarouselPhotoDetailView(getContext(),item);
+            for (PhotoItem item : items) {
+                CarouselPhotoDetailView view = new CarouselPhotoDetailView(getContext(), item);
                 view.setVp(vp);
                 view.setOnEndListener(new CarouselPhotoDetailView.OnEndListener() {
                     @Override
