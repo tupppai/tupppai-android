@@ -56,6 +56,7 @@
                 android:layout_toLeftOf="@+id/view_carp_photo_detail_cover_avatar"
                 android:layout_toStartOf="@+id/view_carp_photo_detail_cover_avatar"
                 android:text="咩咩"
+                android:textColor="@color/black"
                 android:textSize="13dp" />
 
             <TextView
@@ -72,7 +73,7 @@
         </RelativeLayout>
 
         <FrameLayout
-            android:id="@+id/frameLayout"
+            android:id="@+id/view_carp_photo_detail_cover_imgarea"
             android:layout_width="match_parent"
             android:layout_height="335dp"
             android:layout_alignParentLeft="true"
@@ -84,13 +85,9 @@
                 android:id="@+id/view_carp_photo_detail_cover_backimg"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="center" />
+                android:layout_gravity="center"
+                android:scaleType="centerCrop" />
 
-            <ImageView
-                android:id="@+id/view_carp_photo_detail_cover_coverimg"
-                android:layout_width="243dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="center" />
         </FrameLayout>
 
         <RelativeLayout
@@ -99,7 +96,7 @@
             android:layout_height="98dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/frameLayout">
+            android:layout_below="@+id/view_carp_photo_detail_cover_imgarea">
 
             <org.sufficientlysecure.htmltextview.HtmlTextView
                 android:id="@+id/view_carp_photo_detail_cover_desc"
@@ -111,6 +108,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="15dp"
                 android:text="好久没法作品了"
+                android:textColor="@color/black"
                 android:textSize="15dp" />
 
             <ImageView
@@ -133,31 +131,33 @@
                 android:layout_toEndOf="@+id/cover_share_img"
                 android:layout_toRightOf="@+id/cover_share_img"
                 android:text="13"
+                android:textColor="@color/black"
                 android:textSize="15dp" />
 
             <ImageView
                 android:id="@+id/cover_comment_img"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/view_carp_photo_detail_cover_like"
+                android:layout_alignBottom="@+id/view_carp_photo_detail_cover_share"
                 android:layout_marginLeft="20dp"
                 android:layout_toEndOf="@+id/view_carp_photo_detail_cover_share"
                 android:layout_toRightOf="@+id/view_carp_photo_detail_cover_share"
-                android:src="@drawable/ic_home_comment_normal" />
+                android:src="@mipmap/ic_comment" />
 
             <TextView
-                android:id="@+id/view_carp_photo_detail_cover_like"
+                android:id="@+id/view_carp_photo_detail_cover_comment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/view_carp_photo_detail_cover_share"
+                android:layout_alignBottom="@+id/cover_comment_img"
                 android:layout_marginLeft="6dp"
                 android:layout_toEndOf="@+id/cover_comment_img"
                 android:layout_toRightOf="@+id/cover_comment_img"
                 android:text="10"
+                android:textColor="@color/black"
                 android:textSize="15dp" />
 
             <ImageView
-                android:id="@+id/view_carp_photo_detail_cover_like"
+                android:id="@+id/view_carp_photo_detail_cover_comment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -168,14 +168,6 @@
                 android:layout_marginTop="45dp"
                 android:src="@mipmap/btn_bang" />
         </RelativeLayout>
-
-        <com.psgod.ui.widget.ChildListView
-            android:id="@+id/view_carp_photo_detail_cover_comment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/cover_desc_layout" />
 
     </RelativeLayout>
 </RelativeLayout>

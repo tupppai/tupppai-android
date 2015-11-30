@@ -5,17 +5,26 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nineoldandroids.view.ViewHelper;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.psgod.BitmapUtils;
+import com.psgod.Constants;
 import com.psgod.R;
 import com.psgod.Utils;
 import com.psgod.model.PhotoItem;
@@ -70,6 +79,9 @@ public class CarouselPhotoDetailView extends RelativeLayout {
     private RelativeLayout mScroll;
     private RelativeLayout mCover;
 
+    private DisplayImageOptions mOptions = Constants.DISPLAY_IMAGE_OPTIONS;
+    private DisplayImageOptions mAvatarOptions = Constants.DISPLAY_IMAGE_OPTIONS_AVATAR;
+
     public void setVp(ViewPager vp) {
         this.vp = vp;
     }
@@ -99,24 +111,72 @@ public class CarouselPhotoDetailView extends RelativeLayout {
     private ImageView coverCover;
     private ImageView coverBack;
     private HtmlTextView coverDesc;
-    private TextView coverLike;
+    private TextView coverComment;
     private TextView coverShare;
-    private ListView coverList;
+    private FrameLayout coverImgArea;
 
     private void initCover(View view) {
         coverTag = (ImageView) view.findViewById(R.id.view_carp_photo_detail_cover_tag);
         coverName = (TextView) view.findViewById(R.id.view_carp_photo_detail_cover_name);
         coverTime = (TextView) view.findViewById(R.id.view_carp_photo_detail_cover_time);
         coverAvatar = (AvatarImageView) view.findViewById(R.id.view_carp_photo_detail_cover_avatar);
-        coverCover = (ImageView) view.findViewById(R.id.view_carp_photo_detail_cover_coverimg);
         coverBack = (ImageView) view.findViewById(R.id.view_carp_photo_detail_cover_backimg);
         coverDesc = (HtmlTextView) view.findViewById(R.id.view_carp_photo_detail_cover_desc);
-        coverLike = (TextView) view.findViewById(R.id.view_carp_photo_detail_cover_like);
+        coverComment = (TextView) view.findViewById(R.id.view_carp_photo_detail_cover_comment);
         coverShare = (TextView) view.findViewById(R.id.view_carp_photo_detail_cover_share);
-        coverList = (ListView) view.findViewById(R.id.view_carp_photo_detail_cover_comment);
+        coverImgArea = (FrameLayout) view.findViewById(R.id.view_carp_photo_detail_cover_imgarea);
 
-//        coverTa
+        if (mPhotoItem.getType() == 1) {
+            coverTag.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.tag));
+        } else {
+            coverTag.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.tag_zuopin));
+        }
+
+        coverName.setText(mPhotoItem.getNickname());
+        coverTime.setText(mPhotoItem.getUpdateTimeStr());
+        ImageLoader.getInstance().displayImage(mPhotoItem.getAvatarURL(), coverAvatar, mAvatarOptions);
+
+        coverCover = new ImageView(mContext);
+        coverCover.setLayoutParams
+                (new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.MATCH_PARENT));
+        ImageLoader.getInstance().displayImage(mPhotoItem.getImageURL(), coverCover, mOptions, new ImageLoadingListener() {
+            @Override
+            public void onLoadingStarted(String s, View view) {
+
+            }
+
+            @Override
+            public void onLoadingFailed(String s, View view, FailReason failReason) {
+
+            }
+
+            @Override
+            public void onLoadingComplete(String s, View view, Bitmap bitmap) {
+                coverBack.setImageBitmap(BitmapUtils.getBlurBitmap(bitmap));
+//                if(bitmap.getHeight()>bitmap.getWidth()){
+//                }else{
+//                    ViewGroup.LayoutParams params = view.getLayoutParams();
+//                    params.width = ViewGroup.LayoutParams.MATCH_PARENT;
+//                    params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+//                    view.setLayoutParams(params);
+//                }
+            }
+
+            @Override
+            public void onLoadingCancelled(String s, View view) {
+
+            }
+        });
+        coverImgArea.addView(coverCover);
+
+        coverDesc.setHtmlFromString(mPhotoItem.getDesc(), true);
+        coverComment.setText(String.valueOf(mPhotoItem.getCommentCount()));
+        coverShare.setText(String.valueOf(mPhotoItem.getShareCount()));
+
+
     }
+
 
     private void initListener(final View view) {
         view.setOnTouchListener(new View.OnTouchListener() {
