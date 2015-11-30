@@ -60,21 +60,32 @@
             android:layout_marginRight="14dp"
             android:layout_marginTop="13dp" />
 
-        <EditText
-            android:id="@+id/upload_text"
+        <RelativeLayout
+            android:id="@+id/upload_text_layout"
             android:layout_width="match_parent"
-            android:layout_height="53dp"
+            android:layout_height="131dp"
             android:layout_below="@id/image_layout"
             android:layout_marginLeft="14dp"
             android:layout_marginRight="14dp"
             android:layout_marginTop="15dp"
-            android:background="@null"
-            android:focusable="true"
-            android:gravity="top"
-            android:hint="写下你要说的图片修改需求吧"
-            android:inputType="textMultiLine"
-            android:textColor="#000000"
-            android:textSize="15dp" />
+            android:background="@drawable/shape_ask_desc_background" >
+
+            <EditText
+                android:id="@+id/upload_text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@null"
+                android:focusable="true"
+                android:gravity="top"
+                android:hint="写下你要说的图片修改需求吧"
+                android:inputType="textMultiLine"
+                android:textColor="#000000"
+                android:textSize="15dp" />
+
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/text_count"
