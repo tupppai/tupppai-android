@@ -6,8 +6,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Message;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -165,6 +167,23 @@ public class InprogressPageAskAdapter extends BaseAdapter implements
 				viewHolder.imagePanel.addView(mReplyIv);
 
 			}
+			if (photoItem.getReplyCount() > mSize) {
+				final PhotoItem replyPhotoItem = mReplyItems.get(mSize-1);
+
+				LinearLayout.LayoutParams mTipParams = new LinearLayout.LayoutParams(
+						Utils.dpToPx(mContext, 84), Utils.dpToPx(mContext, 84));
+				mTipParams.setMargins(Utils.dpToPx(mContext, 10), 0, 0, 0);
+				TextView mTipMoreText = new TextView (mContext);
+				mTipMoreText.setText("查看更多");
+				mTipMoreText.setTextColor(Color.parseColor("#7F4A4A4A"));
+				mTipMoreText.setTextSize(11);
+				mTipMoreText.setLayoutParams(mTipParams);
+				mTipMoreText.setGravity(Gravity.CENTER);
+				mTipMoreText.setTag(replyPhotoItem);
+				mTipMoreText.setOnClickListener(replyClick);
+				viewHolder.imagePanel.addView(mTipMoreText);
+
+			}
 			convertView.setOnClickListener(carouselSkipClick);
 		} else {
 			convertView.setOnClickListener(singleSkipClick);
@@ -266,7 +285,7 @@ public class InprogressPageAskAdapter extends BaseAdapter implements
 		public void onClick(View v) {
 			PhotoItem replyPhotoItem = (PhotoItem) v.getTag();
 			CarouselPhotoDetailActivity.startActivity(mContext,
-					replyPhotoItem.getAskId(), replyPhotoItem.getReplyId());
+					replyPhotoItem.getAskId(), replyPhotoItem.getPid());
 		}
 	};
 
