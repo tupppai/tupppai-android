@@ -48,6 +48,30 @@
             android:textColor="#99000000"
             android:text="hello world"
             android:textSize="13dp" />
+
+        <TextView
+            android:id="@+id/item_comment_list_re_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#66000000"
+            android:text="回复"
+            android:layout_marginLeft="3dp"
+            android:textSize="13dp"
+            android:layout_alignTop="@+id/item_comment_list_name_tv"
+            android:layout_toRightOf="@+id/item_comment_list_name_tv"
+            android:layout_toEndOf="@+id/item_comment_list_name_tv" />
+
+        <TextView
+            android:id="@+id/item_comment_list_rename_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:text="呵呵"
+            android:layout_marginLeft="3dp"
+            android:textSize="13dp"
+            android:layout_alignTop="@+id/item_comment_list_re_tv"
+            android:layout_toRightOf="@+id/item_comment_list_re_tv"
+            android:layout_toEndOf="@+id/item_comment_list_re_tv" />
     </RelativeLayout>
 
     <RelativeLayout

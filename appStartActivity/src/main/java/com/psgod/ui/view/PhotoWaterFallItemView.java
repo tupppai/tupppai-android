@@ -32,6 +32,7 @@ import com.psgod.model.PhotoItem;
 import com.psgod.ui.activity.CarouselPhotoDetailActivity;
 import com.psgod.ui.activity.SinglePhotoDetail;
 import com.psgod.ui.widget.AvatarImageView;
+import com.psgod.ui.widget.dialog.CarouselPhotoDetailDialog;
 import com.psgod.ui.widget.dialog.PSDialog;
 
 public class PhotoWaterFallItemView extends RelativeLayout {
@@ -192,17 +193,18 @@ public class PhotoWaterFallItemView extends RelativeLayout {
 				@Override
 				public void onClick(View v) {
 					// 拥有回复作品
-					boolean havingReplies = (mPhotoItem != null && mPhotoItem
-							.getReplyCount() > 0);
-
-					if (havingReplies) {
-						CarouselPhotoDetailActivity.startActivity(mContext,
-								mPhotoItem);
-					}
-
-					if (!havingReplies) {
-						SinglePhotoDetail.startActivity(mContext, mPhotoItem);
-					}
+//					boolean havingReplies = (mPhotoItem != null && mPhotoItem
+//							.getReplyCount() > 0);
+//
+//					if (havingReplies) {
+//						CarouselPhotoDetailActivity.startActivity(mContext,
+//								mPhotoItem);
+//					}
+//
+//					if (!havingReplies) {
+//						SinglePhotoDetail.startActivity(mContext, mPhotoItem);
+//					}
+					new CarouselPhotoDetailDialog(mContext,mPhotoItem.getAskId(),mPhotoItem.getPid()).show();
 				}
 			});
 
@@ -227,10 +229,11 @@ public class PhotoWaterFallItemView extends RelativeLayout {
 				@Override
 				public void onClick(View v) {
 					// 拥有回复作品
-					boolean havingReplies = (mPhotoItem != null && mPhotoItem
-							.getReplyCount() > 0);
-
-					SinglePhotoDetail.startActivity(mContext, mPhotoItem);
+//					boolean havingReplies = (mPhotoItem != null && mPhotoItem
+//							.getReplyCount() > 0);
+//
+//					SinglePhotoDetail.startActivity(mContext, mPhotoItem);
+					new CarouselPhotoDetailDialog(mContext,mPhotoItem.getAskId(),mPhotoItem.getPid()).show();
 				}
 			});
 

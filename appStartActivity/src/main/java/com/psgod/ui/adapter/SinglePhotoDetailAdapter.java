@@ -1,7 +1,5 @@
 package com.psgod.ui.adapter;
 
-import java.util.List;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -43,6 +41,8 @@ import com.psgod.ui.activity.SinglePhotoDetail;
 import com.psgod.ui.view.PhotoItemView;
 import com.psgod.ui.view.PhotoItemView.PhotoListType;
 import com.psgod.ui.widget.AvatarImageView;
+
+import java.util.List;
 
 public class SinglePhotoDetailAdapter extends BaseExpandableListAdapter {
 	private static final String TAG = SinglePhotoDetailAdapter.class
@@ -140,6 +140,10 @@ public class SinglePhotoDetailAdapter extends BaseExpandableListAdapter {
 					.findViewById(R.id.item_comment_list_comment_tv);
 			viewHolder.mCommentTimeTv = (TextView) convertView
 					.findViewById(R.id.comment_time);
+			viewHolder.mReTv = (TextView) convertView.
+					findViewById(R.id.item_comment_list_re_tv);
+			viewHolder.mRenameTv = (TextView) convertView.
+					findViewById(R.id.item_comment_list_rename_tv);
 			convertView.setTag(viewHolder);
 		} else {
 			viewHolder = (ViewHolder) convertView.getTag();
@@ -165,40 +169,45 @@ public class SinglePhotoDetailAdapter extends BaseExpandableListAdapter {
 
 		// 若有嵌套评论情况
 		if (comment.getReplyComments().size() > 0) {
-			SpannableStringBuilder sb = new SpannableStringBuilder();
-
-			String mComment = comment.getContent();
-			SpannableString ss = FaceConversionUtil.getInstace()
-					.getExpressionString(mContext, mComment);
-			sb.append(ss);
-
-			List<ReplyComment> mReplyComments = comment.getReplyComments();
-			for (int i = 0; i < mReplyComments.size(); i++) {
-				SpannableString spannableStr = new SpannableString("//");
-				SpannableString spannableString = new SpannableString("@"
-						+ mReplyComments.get(i).mNick + ":");
-				// spannableString.setSpan(new
-				// ForegroundColorSpan(Color.parseColor("#74C3FF")),
-				// 0, spannableString.length(),
-				// Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-				SpannableString spannableContent = FaceConversionUtil
-						.getInstace().getExpressionString(mContext,
-								String.valueOf(mReplyComments.get(i).mContent));
-
-				sb.append(spannableStr);
-				sb.append(spannableString);
-				sb.append(spannableContent);
-			}
-
-			viewHolder.mCommentTv.setText(sb);
+//			SpannableStringBuilder sb = new SpannableStringBuilder();
+//
+//			String mComment = comment.getContent();
+//			SpannableString ss = FaceConversionUtil.getInstace()
+//					.getExpressionString(mContext, mComment);
+//			sb.append(ss);
+//
+//			List<ReplyComment> mReplyComments = comment.getReplyComments();
+//			for (int i = 0; i < mReplyComments.size(); i++) {
+//				SpannableString spannableStr = new SpannableString("//");
+//				SpannableString spannableString = new SpannableString("@"
+//						+ mReplyComments.get(i).mNick + ":");
+//				// spannableString.setSpan(new
+//				// ForegroundColorSpan(Color.parseColor("#74C3FF")),
+//				// 0, spannableString.length(),
+//				// Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+//
+//				SpannableString spannableContent = FaceConversionUtil
+//						.getInstace().getExpressionString(mContext,
+//								String.valueOf(mReplyComments.get(i).mContent));
+//
+//				sb.append(spannableStr);
+//				sb.append(spannableString);
+//				sb.append(spannableContent);
+//			}
+//
+//			viewHolder.mCommentTv.setText(sb);
+			viewHolder.mReTv.setVisibility(View.VISIBLE);
+			viewHolder.mRenameTv.setVisibility(View.VISIBLE);
+			viewHolder.mRenameTv.setText(comment.getReplyComments().get(0).mNick);
 		} else {
 			// 将emoji表情转化为icon显示 TODO
-			SpannableString spannableString = FaceConversionUtil.getInstace()
-					.getExpressionString(mContext,
-							String.valueOf(comment.getContent()));
-			viewHolder.mCommentTv.setText(spannableString);
+			viewHolder.mReTv.setVisibility(View.GONE);
+			viewHolder.mRenameTv.setVisibility(View.GONE);
 		}
+		SpannableString spannableString = FaceConversionUtil.getInstace()
+				.getExpressionString(mContext,
+						String.valueOf(comment.getContent()));
+		viewHolder.mCommentTv.setText(spannableString);
 
 		// 评论点赞
 		viewHolder.mLikeArea.setOnClickListener(new OnClickListener() {
@@ -444,6 +453,8 @@ public class SinglePhotoDetailAdapter extends BaseExpandableListAdapter {
 	private static class ViewHolder {
 		AvatarImageView mAvatarIv;
 		TextView mNameTv;
+		TextView mReTv;
+		TextView mRenameTv;
 		ImageButton mLikeBtn;
 		TextView mLikeCountTv;
 		// 点赞区域

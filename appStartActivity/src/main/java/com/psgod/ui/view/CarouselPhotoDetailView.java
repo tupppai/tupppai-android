@@ -219,6 +219,10 @@ public class CarouselPhotoDetailView extends RelativeLayout {
                     if (onEndListener != null) {
                         onEndListener.onEnd();
                     }
+                } else if(Utils.pxToDp(mContext,view.getY()) > 250){
+                    if (onEndListener != null) {
+                        onEndListener.onEnd();
+                    }
                 }
                 return true;
             }

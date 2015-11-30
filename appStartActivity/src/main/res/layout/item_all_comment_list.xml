@@ -20,7 +20,8 @@
         android:layout_alignTop="@id/item_comment_list_avatar_imgview"
         android:layout_marginLeft="17dp"
         android:layout_toRightOf="@id/item_comment_list_avatar_imgview"
-        android:textColor="#000000"
+        android:textColor="#aa000000"
+        android:text="null"
         android:textSize="13dp" />
 
     <TextView
@@ -42,7 +43,8 @@
         android:layout_below="@id/item_comment_list_name_tv"
         android:layout_marginRight="26dp"
         android:layout_marginTop="7dp"
-        android:textColor="#99000000"
+        android:text="dsadasdada"
+        android:textColor="#dd000000"
         android:textSize="14dp" />
 
     <View
@@ -51,5 +53,29 @@
         android:layout_below="@id/item_comment_list_comment_tv"
         android:layout_marginTop="17dp"
         android:background="#1A000000" />
+
+    <TextView
+        android:id="@+id/item_comment_list_re_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#66000000"
+        android:text="回复"
+        android:textSize="13dp"
+        android:layout_marginLeft="3dp"
+        android:layout_above="@+id/item_comment_list_comment_tv"
+        android:layout_toRightOf="@+id/item_comment_list_name_tv"
+        android:layout_toEndOf="@+id/item_comment_list_name_tv" />
+
+    <TextView
+        android:id="@+id/item_comment_list_rename_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#aa000000"
+        android:text="null:"
+        android:layout_marginLeft="3dp"
+        android:textSize="13dp"
+        android:layout_alignBottom="@+id/item_comment_list_re_tv"
+        android:layout_toRightOf="@+id/item_comment_list_re_tv"
+        android:layout_toEndOf="@+id/item_comment_list_re_tv" />
 
 </RelativeLayout>

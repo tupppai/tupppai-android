@@ -29,6 +29,7 @@ import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.ui.activity.CarouselPhotoDetailActivity;
 import com.psgod.ui.activity.UserProfileActivity;
 import com.psgod.ui.widget.AvatarImageView;
+import com.psgod.ui.widget.dialog.CarouselPhotoDetailDialog;
 
 public class SearchUserAdapter extends MyBaseAdapter<SearchUserData> {
 
@@ -221,7 +222,8 @@ public class SearchUserAdapter extends MyBaseAdapter<SearchUserData> {
 				String[] tags = view.getTag().toString().split("tupai");
 				Long aid = Long.parseLong(tags[0].toString());
 				Long id = Long.parseLong(tags[1].toString());
-				CarouselPhotoDetailActivity.startActivity(context, aid, id);
+//				CarouselPhotoDetailActivity.startActivity(context, aid, id);
+				new CarouselPhotoDetailDialog(context,aid,id).show();
 			}
 		};
 
