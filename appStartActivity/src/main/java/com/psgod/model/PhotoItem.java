@@ -247,7 +247,7 @@ public class PhotoItem implements Serializable, Cloneable {
 
 	/**
 	 * 获取热门评论列表
-	 * 
+	 *
 	 * @return
 	 */
 	public List<Comment> getHotCommentList() {
@@ -392,7 +392,7 @@ public class PhotoItem implements Serializable, Cloneable {
 
 	/**
 	 * 获取用户的性别 0: 女 1: 男
-	 * 
+	 *
 	 * @return
 	 */
 	public int getGender() {
@@ -537,7 +537,7 @@ public class PhotoItem implements Serializable, Cloneable {
 
 	/**
 	 * TODO 临时放在这里
-	 * 
+	 *
 	 * @param context
 	 * @param photoItemDao
 	 * @param items
@@ -591,5 +591,5 @@ public class PhotoItem implements Serializable, Cloneable {
 	public void setPid(long mPid) {
 		this.mPid = mPid;
 	}
-	
+
 }
