@@ -2,6 +2,7 @@ package com.psgod.ui.activity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -10,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -23,7 +25,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -51,14 +52,19 @@ import com.psgod.UserPreferences;
 import com.psgod.Utils;
 import com.psgod.WeakReferenceHandler;
 import com.psgod.eventbus.MyPageRefreshEvent;
+import com.psgod.model.Label;
 import com.psgod.network.request.ActionShareRequest;
+import com.psgod.network.request.GetLabelListRequest;
 import com.psgod.network.request.PSGodErrorListener;
 import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.network.request.UploadImageRequest;
 import com.psgod.network.request.UploadImageRequest.ImageUploadResult;
 import com.psgod.network.request.UploadMultiRequest;
 import com.psgod.network.request.UploadMultiRequest.MultiUploadResult;
+import com.psgod.ui.view.XCFlowLayout;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
+import android.view.ViewGroup.LayoutParams;
+import android.view.ViewGroup.MarginLayoutParams;
 
 import de.greenrobot.event.EventBus;
 
@@ -73,6 +79,8 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
     private final static String TAG = UploadMultiImageActivity.class
             .getSimpleName();
     public final static String MULTIIMAGESELECTRESULT = "MultiImageSelectResult";
+    public final static String TYPE_ASK_SELECT = "TypeAskSelect";
+    public final static String TYPE_REPLY_SELECT = "TypeReplySelect";
 
     private Context mContext;
     private ArrayList<String> pathList = new ArrayList<String>();
@@ -80,10 +88,15 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
     private Button mFinishBtn;
     private EditText mContentEdit;
     private ImageButton mBackBtn;
-    private TextView mInputCountTv;
     private ToggleButton[] mShareBtns;
     private int mCheckedShareBtnId;
     private CustomProgressingDialog mProgressDialog;
+
+    private LinearLayout mLabelView;
+    private XCFlowLayout mLabelLayout;
+    private MarginLayoutParams LabelButtonLp;
+    private ArrayList<Integer> mSelectLabelIds = new ArrayList<Integer>();     // 选中的标签id
+    private List<Label> mLabels = new ArrayList<Label>();       // 服务器返回的标签list
 
     public final static String TYPE_ASK_UPLOAD = "TypeAskUpload";
     public final static String TYPE_REPLY_UPLOAD = "TypeReplyUpload";
@@ -111,10 +124,10 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
 
         Bundle bundle = getIntent().getExtras();
         pathList = bundle
-                .getStringArrayList(UploadMultiImageActivity.MULTIIMAGESELECTRESULT);
+                .getStringArrayList(MULTIIMAGESELECTRESULT);
         type = bundle.getString("SelectType");
         mAskId = bundle.getLong("AskId", mAskId);
-        if (type.equals(MultiImageSelectActivity.TYPE_ASK_SELECT)) {
+        if (type.equals(TYPE_ASK_SELECT)) {
             IMAGE_UPLOAD_TYPE = TYPE_ASK_UPLOAD;
         } else {
             IMAGE_UPLOAD_TYPE = TYPE_REPLY_UPLOAD;
@@ -123,8 +136,8 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
         sharetype = (IMAGE_UPLOAD_TYPE.equals(TYPE_ASK_UPLOAD) == true) ? 1
                 : 2;
 
-        initViews();
-        initListener();
+        // 获取标签后再渲染view和设置监听
+        initLabelinfo();
 
         // 延时300毫秒 弹出输入法
         handler.postDelayed(new Runnable() {
@@ -137,15 +150,55 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
 
     }
 
+    private void initLabelinfo() {
+        GetLabelListRequest.Builder builder = new GetLabelListRequest.Builder()
+                .setListener(new Listener<List<Label>>() {
+                    @Override
+                    public void onResponse(List<Label> response) {
+                        mLabels.clear();
+                        mLabels.addAll(response);
+                        initViews();
+                        initListener();
+                    }
+                })
+                .setErrorListener(getLabelErrorListener);
+        GetLabelListRequest getLabelRequest = builder.build();
+        RequestQueue requestQueue = PSGodRequestQueue.getInstance(
+                getApplicationContext()).getRequestQueue();
+        requestQueue.add(getLabelRequest);
+    }
+
     public void initViews() {
         mBackBtn = (ImageButton) findViewById(R.id.btn_back);
         mFinishBtn = (Button) findViewById(R.id.btn_complete);
         mContentEdit = (EditText) findViewById(R.id.upload_text);
+        mLabelView = (LinearLayout) findViewById(R.id.label_layout);
+        mLabelLayout = (XCFlowLayout) findViewById(R.id.label_flow_layout);
+        LabelButtonLp = new MarginLayoutParams(
+                LayoutParams.WRAP_CONTENT,Utils.dpToPx(mContext,31));
+        LabelButtonLp.setMargins(Utils.dpToPx(mContext,3),Utils.dpToPx(mContext,3),
+                Utils.dpToPx(mContext,3),Utils.dpToPx(mContext,3));
 
-        if (type.equals(MultiImageSelectActivity.TYPE_ASK_SELECT)) {
+        for (int i = 0; i < mLabels.size(); i++) {
+            Label label = mLabels.get(i);
+            ToggleButton view = new ToggleButton(this);
+            view.setTextSize(13);
+            view.setTextColor(Color.parseColor("#000000"));
+            view.setText(label.getName());
+            view.setTextOff(label.getName());
+            view.setTextOn(label.getName());
+            view.setId(label.getId());
+            view.setOnCheckedChangeListener(mCheckListener);
+            view.setBackgroundDrawable(getResources().getDrawable(R.drawable.selector_upload_label_background));
+            mLabelLayout.addView(view, LabelButtonLp);
+        }
+
+        if (type.equals(TYPE_ASK_SELECT)) {
             mContentEdit.setHint("写下你的图片需求吧");
+            mLabelView.setVisibility(View.VISIBLE);
         } else {
             mContentEdit.setHint("输入你想对观众说的吧");
+            mLabelView.setVisibility(View.GONE);
         }
         UploadCache uploadCache = UploadCache.getInstence();
         String cache = UploadCache.getInstence().getCache(IMAGE_UPLOAD_TYPE,
@@ -155,7 +208,6 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
         }
         mContentEdit.setFocusableInTouchMode(true);
         mContentEdit.requestFocus();
-        mInputCountTv = (TextView) findViewById(R.id.text_count);
         mImageLayout = (LinearLayout) findViewById(R.id.image_layout);
         mShareBtns = new ToggleButton[3];
         mShareBtns[0] = (ToggleButton) findViewById(R.id.activity_upload_image_share_weibo);
@@ -231,6 +283,23 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
 
     }
 
+    // 监听标签的选择状态
+    CompoundButton.OnCheckedChangeListener mCheckListener = new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView,
+                                     boolean isChecked) {
+            if (isChecked) {
+                if (!mSelectLabelIds.contains(buttonView.getId())) {
+                    mSelectLabelIds.add(buttonView.getId());
+                }
+            } else {
+                if (mSelectLabelIds.contains(buttonView.getId())) {
+                    mSelectLabelIds.remove(mSelectLabelIds.indexOf(buttonView.getId()));
+                }
+            }
+        }
+    };
+
     // 监听标签字数
     private TextWatcher mTextWatcher = new TextWatcher() {
         private CharSequence temp;
@@ -253,7 +322,6 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
             editStart = mContentEdit.getSelectionStart();
             editEnd = mContentEdit.getSelectionEnd();
 
-            mInputCountTv.setText(temp.length() + "/18");
             if (temp.length() > 140) {
                 showToast(new PSGodToast("！最多输入140个字"));
 
@@ -300,6 +368,9 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
 
                 if (contentString.equals("")) {
                     Toast.makeText(mContext, "请输入描述", Toast.LENGTH_SHORT)
+                            .show();
+                } else if (type.equals(TYPE_ASK_SELECT) && (mSelectLabelIds.size()==0)) {
+                    Toast.makeText(mContext, "请至少选择一个标签", Toast.LENGTH_SHORT)
                             .show();
                 } else {
                     // 显示等待对话框
@@ -380,6 +451,7 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
                     .setUploadType(IMAGE_UPLOAD_TYPE).setContent(contentString)
                     .setUploadIdList(mUploadIdList)
                     .setRatioList(mImageRatioList).setAskId(mAskId)
+                    .setLabelIdList(mSelectLabelIds)
                     .setScaleList(mImageScaleList).setListener(uploadListener)
                     .setErrorListener(errorListener);
 
@@ -671,6 +743,14 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
         public void handleError(VolleyError error) {
             Utils.hideProgressDialog();
             mProgressDialog.dismiss();
+        }
+    };
+
+    private PSGodErrorListener getLabelErrorListener = new PSGodErrorListener(
+            UploadMultiRequest.class.getSimpleName()) {
+        @Override
+        public void handleError(VolleyError error) {
+            Toast.makeText(mContext,"获取标签失败",Toast.LENGTH_SHORT).show();
         }
     };
 

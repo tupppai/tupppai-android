@@ -24,6 +24,8 @@ import com.psgod.ui.activity.UploadMultiImageActivity;
 public class UploadMultiRequest extends BaseRequest<MultiUploadResult> {
 
 	private static final String TAG = UploadMultiRequest.class.getSimpleName();
+	public final static String TYPE_ASK_UPLOAD = "TypeAskUpload";
+	public final static String TYPE_REPLY_UPLOAD = "TypeReplyUpload";
 
 	public UploadMultiRequest(int method, String url,
 			Listener<MultiUploadResult> listener, ErrorListener errorListener) {
@@ -47,11 +49,17 @@ public class UploadMultiRequest extends BaseRequest<MultiUploadResult> {
 		private ArrayList<Long> uploadIdList;
 		private ArrayList<Float> scaleList;
 		private ArrayList<Float> ratioList;
+		private ArrayList<Integer> labelIdList;
 		private Listener<MultiUploadResult> listener;
 		private ErrorListener errorListener;
 		private String content;
 		private String upload_type;
 		private Long askId = 0l;
+
+		public Builder setLabelIdList(ArrayList<Integer> labelIdList) {
+			this.labelIdList = labelIdList;
+			return this;
+		}
 
 		public Builder setAskId(Long askId) {
 			this.askId = askId;
@@ -110,10 +118,10 @@ public class UploadMultiRequest extends BaseRequest<MultiUploadResult> {
 		@Override
 		public String createUrl() {
 			StringBuilder sb = new StringBuilder(BaseRequest.PSGOD_BASE_URL);
-			if (upload_type.equals(UploadMultiImageActivity.TYPE_ASK_UPLOAD)) {
+			if (upload_type.equals(TYPE_ASK_UPLOAD)) {
 				sb.append("ask/multi");
 			} else if (upload_type
-					.equals(UploadMultiImageActivity.TYPE_REPLY_UPLOAD)) {
+					.equals(TYPE_REPLY_UPLOAD)) {
 				sb.append("reply/multi");
 			}
 			String url = sb.toString();
@@ -130,6 +138,9 @@ public class UploadMultiRequest extends BaseRequest<MultiUploadResult> {
 			params.put("scales", scaleList.toString());
 			params.put("ratios", ratioList.toString());
 			params.put("desc", content);
+			if (upload_type.equals(TYPE_ASK_UPLOAD)) {
+				params.put("tag_ids", labelIdList.toString());
+			}
 			return params;
 		}
 
