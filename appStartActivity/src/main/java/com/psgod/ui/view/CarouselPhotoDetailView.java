@@ -97,16 +97,24 @@ public class CarouselPhotoDetailView extends RelativeLayout {
         mCover = (RelativeLayout) view.
                 findViewById(R.id.view_carp_photo_detail_coverview);
         initCover(view);
-        SinglePhotoView singlePhotoView = new SinglePhotoView(getContext(), mPhotoItem);
-        singlePhotoView.setOnEndListener(new SinglePhotoView.OnEndListener() {
-            @Override
-            public void onEndListener(SinglePhotoView view) {
-                if (onEndListener != null) {
-                    onEndListener.onEnd();
+    }
+
+    boolean backInited = false;
+
+    private void initBack() {
+        if (!backInited) {
+            backInited = true;
+            SinglePhotoView singlePhotoView = new SinglePhotoView(getContext(), mPhotoItem);
+            singlePhotoView.setOnEndListener(new SinglePhotoView.OnEndListener() {
+                @Override
+                public void onEndListener(SinglePhotoView view) {
+                    if (onEndListener != null) {
+                        onEndListener.onEnd();
+                    }
                 }
-            }
-        });
-        mScroll.addView(singlePhotoView);
+            });
+            mScroll.addView(singlePhotoView);
+        }
     }
 
     private ImageView coverTag;
@@ -282,6 +290,7 @@ public class CarouselPhotoDetailView extends RelativeLayout {
         isDown = false;
 //        mScroll.setCanScroll(true);
         if (!isBlow && vp != null) {
+            initBack();
             isBlow = true;
             final AnimatorSet anim = new AnimatorSet();
             anim.setDuration(250);

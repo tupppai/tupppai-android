@@ -53,9 +53,10 @@ public class CarouselPhotoDetailDialog extends Dialog {
     private long askId;
     private long replyId;
     ViewPagerAdapter adapter;
+    private CustomProgressingDialog progressingDialog;
 
     public CarouselPhotoDetailDialog(Context context, long askId, long replyId) {
-        super(context, R.style.ActionSheetDialog);
+        super(context, R.style.CaroPhotoDialog);
         mContext = context;
         this.askId = askId;
         this.replyId = replyId;
@@ -78,6 +79,8 @@ public class CarouselPhotoDetailDialog extends Dialog {
     }
 
     private void initView() {
+        progressingDialog = new CustomProgressingDialog(mContext);
+        progressingDialog.show();
         parentView = LayoutInflater.from(mContext).inflate(R.layout.dialog_carousel_photo, null);
         setContentView(parentView);
         vp = (ViewPager) findViewById(R.id.dialog_carousel_photo_vp);
@@ -131,6 +134,9 @@ public class CarouselPhotoDetailDialog extends Dialog {
                 views.add(view);
             }
             adapter.notifyDataSetChanged();
+            if (progressingDialog != null && progressingDialog.isShowing()) {
+                progressingDialog.dismiss();
+            }
         }
     };
 
