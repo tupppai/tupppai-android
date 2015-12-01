@@ -48,6 +48,7 @@ import com.psgod.ui.activity.CarouselPhotoDetailActivity;
 import com.psgod.ui.activity.MultiImageSelectActivity;
 import com.psgod.ui.activity.SinglePhotoDetail;
 import com.psgod.ui.widget.AvatarImageView;
+import com.psgod.ui.widget.dialog.CarouselPhotoDetailDialog;
 import com.psgod.ui.widget.dialog.CustomDialog;
 import com.psgod.ui.widget.dialog.InprogressShareMoreDialog;
 
@@ -160,15 +161,16 @@ public class InprogressPageReplyAdapter extends BaseAdapter implements
 		convertView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				// 我的帮p主体均为ask
-				if (photoItem.getType() == PhotoItem.TYPE_ASK) {
-					if (photoItem.getReplyCount() == 0) {
-						SinglePhotoDetail.startActivity(mContext, photoItem);
-					} else {
-						CarouselPhotoDetailActivity.startActivity(mContext,
-								photoItem);
-					}
-				}
+//				// 我的帮p主体均为ask
+//				if (photoItem.getType() == PhotoItem.TYPE_ASK) {
+//					if (photoItem.getReplyCount() == 0) {
+//						SinglePhotoDetail.startActivity(mContext, photoItem);
+//					} else {
+//						CarouselPhotoDetailActivity.startActivity(mContext,
+//								photoItem);
+//					}
+//				}
+				new CarouselPhotoDetailDialog(mContext,photoItem.getAskId(),photoItem.getPid()).show();
 			}
 		});
 

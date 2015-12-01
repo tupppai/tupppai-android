@@ -40,6 +40,7 @@ import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.ui.activity.CarouselPhotoDetailActivity;
 import com.psgod.ui.activity.SinglePhotoDetail;
 import com.psgod.ui.fragment.InprogressPageAskFragment;
+import com.psgod.ui.widget.dialog.CarouselPhotoDetailDialog;
 import com.psgod.ui.widget.dialog.InprogressShareMoreDialog;
 
 public class InprogressPageAskAdapter extends BaseAdapter implements
@@ -267,7 +268,9 @@ public class InprogressPageAskAdapter extends BaseAdapter implements
 		@Override
 		public void onClick(View view) {
 			PhotoItem photoItem = (PhotoItem) view.getTag(R.id.inprogress_item);
-			SinglePhotoDetail.startActivity(mContext, photoItem);
+//			SinglePhotoDetail.startActivity(mContext, photoItem);
+			new CarouselPhotoDetailDialog(mContext,photoItem.getAskId(),photoItem.getPid()).show();
+
 		}
 	};
 
@@ -276,7 +279,8 @@ public class InprogressPageAskAdapter extends BaseAdapter implements
 		@Override
 		public void onClick(View view) {
 			PhotoItem photoItem = (PhotoItem) view.getTag(R.id.inprogress_item);
-			CarouselPhotoDetailActivity.startActivity(mContext, photoItem);
+//			CarouselPhotoDetailActivity.startActivity(mContext, photoItem);
+			new CarouselPhotoDetailDialog(mContext,photoItem.getAskId(),photoItem.getPid()).show();
 		}
 	};
 
