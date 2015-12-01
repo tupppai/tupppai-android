@@ -94,7 +94,7 @@ public class SinglePhotoView extends RelativeLayout implements
     private List<Comment> mHotCommentList;
     private List<Comment> mCommentList;
 
-    private CustomProgressingDialog mProgressDialog;
+//    private CustomProgressingDialog mProgressDialog;
     private int mPage = 1;
 
     private long replyToCid;
@@ -177,14 +177,14 @@ public class SinglePhotoView extends RelativeLayout implements
                     }
                 });
 
-        // 显示等待对话框
-        if (mProgressDialog == null) {
-            mProgressDialog = new CustomProgressingDialog(
-                    getContext());
-        }
-        if (!mProgressDialog.isShowing()) {
-            mProgressDialog.show();
-        }
+//        // 显示等待对话框
+//        if (mProgressDialog == null) {
+//            mProgressDialog = new CustomProgressingDialog(
+//                    getContext());
+//        }
+//        if (!mProgressDialog.isShowing()) {
+//            mProgressDialog.show();
+//        }
 
         // 初始化评论的数据
         refresh();
@@ -359,9 +359,9 @@ public class SinglePhotoView extends RelativeLayout implements
                 }
             });
 
-            if ((mProgressDialog != null) && mProgressDialog.isShowing()) {
-                mProgressDialog.dismiss();
-            }
+//            if ((mProgressDialog != null) && mProgressDialog.isShowing()) {
+//                mProgressDialog.dismiss();
+//            }
 
             // 展开所有分组
             int groupCount = mAdapter.getGroupCount();

@@ -5,6 +5,7 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
@@ -14,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -28,9 +28,12 @@ import com.psgod.Constants;
 import com.psgod.R;
 import com.psgod.Utils;
 import com.psgod.model.PhotoItem;
+import com.psgod.ui.activity.CommentListActivity;
 import com.psgod.ui.adapter.ViewPagerAdapter;
 import com.psgod.ui.widget.AvatarImageView;
 import com.psgod.ui.widget.StopViewPager;
+import com.psgod.ui.widget.dialog.PSDialog;
+import com.psgod.ui.widget.dialog.ShareMoreDialog;
 
 import org.sufficientlysecure.htmltextview.HtmlTextView;
 
@@ -67,12 +70,14 @@ public class CarouselPhotoDetailView extends RelativeLayout {
 
     private void init() {
         mContext = getContext();
-        View view = LayoutInflater.from(mContext).inflate(R.layout.view_carousel_photo_detail, null);
-        addView(view);
-        initView(view);
-        initListener(view);
+        parent = LayoutInflater.from(mContext).inflate(R.layout.view_carousel_photo_detail, null);
+        addView(parent);
+        initView(parent);
+        initListener(parent);
+//        setBackground(mContext.getResources().getDrawable(R.drawable.shape_dialog_corner));
     }
 
+    private View parent;
     private ViewPager vp;
     private PhotoItem mPhotoItem;
 
@@ -110,10 +115,13 @@ public class CarouselPhotoDetailView extends RelativeLayout {
     private AvatarImageView coverAvatar;
     private ImageView coverCover;
     private ImageView coverBack;
+    private ImageView coverCommentImg;
+    private ImageView coverShareImg;
     private HtmlTextView coverDesc;
     private TextView coverComment;
     private TextView coverShare;
     private FrameLayout coverImgArea;
+    private ImageView coverBang;
 
     private void initCover(View view) {
         coverTag = (ImageView) view.findViewById(R.id.view_carp_photo_detail_cover_tag);
@@ -123,8 +131,11 @@ public class CarouselPhotoDetailView extends RelativeLayout {
         coverBack = (ImageView) view.findViewById(R.id.view_carp_photo_detail_cover_backimg);
         coverDesc = (HtmlTextView) view.findViewById(R.id.view_carp_photo_detail_cover_desc);
         coverComment = (TextView) view.findViewById(R.id.view_carp_photo_detail_cover_comment);
+        coverCommentImg = (ImageView) view.findViewById(R.id.cover_comment_img);
         coverShare = (TextView) view.findViewById(R.id.view_carp_photo_detail_cover_share);
+        coverShareImg = (ImageView) view.findViewById(R.id.cover_share_img);
         coverImgArea = (FrameLayout) view.findViewById(R.id.view_carp_photo_detail_cover_imgarea);
+        coverBang = (ImageView) view.findViewById(R.id.view_carp_photo_detail_cover_bang);
 
         if (mPhotoItem.getType() == 1) {
             coverTag.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.tag));
@@ -135,6 +146,7 @@ public class CarouselPhotoDetailView extends RelativeLayout {
         coverName.setText(mPhotoItem.getNickname());
         coverTime.setText(mPhotoItem.getUpdateTimeStr());
         ImageLoader.getInstance().displayImage(mPhotoItem.getAvatarURL(), coverAvatar, mAvatarOptions);
+        coverAvatar.setUserId(mPhotoItem.getUid());
 
         coverCover = new ImageView(mContext);
         coverCover.setLayoutParams
@@ -177,34 +189,70 @@ public class CarouselPhotoDetailView extends RelativeLayout {
 
     }
 
+    private OnClickListener commentClick = new OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(mContext, CommentListActivity.class);
+            intent.putExtra(Constants.IntentKey.PHOTO_ITEM, mPhotoItem);
+            mContext.startActivity(intent);
+        }
+    };
+
+    private OnClickListener shareClick = new OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            ShareMoreDialog shareMoreDialog = new ShareMoreDialog(mContext);
+            shareMoreDialog.setPhotoItem(mPhotoItem);
+            shareMoreDialog.show();
+        }
+    };
 
     private void initListener(final View view) {
+        coverShare.setOnClickListener(shareClick);
+        coverShareImg.setOnClickListener(shareClick);
+        coverComment.setOnClickListener(commentClick);
+        coverCommentImg.setOnClickListener(commentClick);
+
+        coverBang.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PSDialog psDialog = new PSDialog(mContext);
+                psDialog.setPhotoItem(mPhotoItem);
+                psDialog.show();
+            }
+        });
+
         view.setOnTouchListener(new View.OnTouchListener() {
-            float DownY;
+            float downY;
+            float leftX;
             float Y;
             float oY = view.getY();
             float moveY = 0;
+            float moveX = 0;
 
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
 
                 switch (motionEvent.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                        DownY = motionEvent.getRawY();
+                        downY = motionEvent.getRawY();
+                        leftX = motionEvent.getRawX();
                         Y = view.getY();
                         break;
                     case MotionEvent.ACTION_MOVE:
-                        moveY = motionEvent.getRawY() - DownY;
-                        if (isBlow && moveY < 0) {
+                        moveY = motionEvent.getRawY() - downY;
+                        moveX = motionEvent.getRawX() - leftX;
+                        if ((isBlow && moveY < 0) || (Math.abs(moveY) < 30 && Math.abs(moveX) > 5)
+                                || (!isAnimEnd && moveY > 100) || (!isDown && !isAnimEnd)) {
 
                         } else {
                             ViewHelper.setTranslationY(view, moveY);
                         }
                         break;
                     case MotionEvent.ACTION_UP:
-                        view.setY(oY);
+                        view.setY(0);
                         if (!isDown && moveY <= 0) {
-                            viewPagerBlow();
+                            viewPagerBlow(84);
                         } else {
                             isDown = false;
                         }
@@ -212,30 +260,31 @@ public class CarouselPhotoDetailView extends RelativeLayout {
                 }
                 if (Utils.pxToDp(mContext, view.getY()) < -70 && moveY < 0) {
                     view.setY(oY);
-                    viewPagerBlow();
+                    viewPagerBlow(40);
                 } else if (Utils.pxToDp(mContext, view.getY()) > -75 && moveY > 0 && isBlow) {
                     viewPagerRestore();
                 } else if (Utils.pxToDp(mContext, view.getY()) > 150 && isAnimEnd) {
                     if (onEndListener != null) {
                         onEndListener.onEnd();
                     }
-                } else if(Utils.pxToDp(mContext,view.getY()) > 250){
-                    if (onEndListener != null) {
-                        onEndListener.onEnd();
-                    }
                 }
+//                else if (Utils.pxToDp(mContext, view.getY()) > 250 && isAnimEnd) {
+//                    if (onEndListener != null) {
+//                        onEndListener.onEnd();
+//                    }
+//                }
                 return true;
             }
         });
     }
 
-    private void viewPagerBlow() {
+    private void viewPagerBlow(final int top) {
         isDown = false;
 //        mScroll.setCanScroll(true);
         if (!isBlow && vp != null) {
             isBlow = true;
             final AnimatorSet anim = new AnimatorSet();
-            anim.setDuration(300);
+            anim.setDuration(250);
             ValueAnimator xAnim = ValueAnimator.ofInt(20, -1);
             xAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 @Override
@@ -243,16 +292,42 @@ public class CarouselPhotoDetailView extends RelativeLayout {
                     Integer value = (Integer) valueAnimator.getAnimatedValue();
                     RelativeLayout.LayoutParams vParams = (RelativeLayout.LayoutParams) vp.getLayoutParams();
                     vParams.setMargins(Utils.dpToPx(mContext, value),
-                            Utils.dpToPx(mContext, 84 / 20f * value), Utils.dpToPx(mContext, value), 0);
+                            Utils.dpToPx(mContext, top / 20f * value), Utils.dpToPx(mContext, value), 0);
                     vp.setLayoutParams(vParams);
                 }
             });
-            mScroll.setVisibility(VISIBLE);
             ObjectAnimator scrollAnim = ObjectAnimator.ofFloat(mScroll, "alpha", 0, 1f);
-            ObjectAnimator coverAnim = ObjectAnimator.ofFloat(mCover, "alpha", 1f, 0);
+            scrollAnim.addListener(new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animator) {
+                    mScroll.setVisibility(VISIBLE);
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animator) {
+                    isAnimEnd = true;
+                    mCover.setVisibility(GONE);
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animator) {
+
+                }
+
+                @Override
+                public void onAnimationRepeat(Animator animator) {
+
+                }
+            });
+            ObjectAnimator coverAnim = ObjectAnimator.ofFloat(mCover, "alpha", 0.8f, 0);
             xAnim.addListener(blowAnimListener);
-            anim.playTogether(xAnim, scrollAnim, coverAnim);
+            anim.playTogether(xAnim, coverAnim);
             anim.start();
+            AnimatorSet anim2 = new AnimatorSet();
+            anim2.setStartDelay(250);
+            anim2.setDuration(250);
+            anim2.play(scrollAnim);
+            anim2.start();
         }
     }
 
@@ -263,7 +338,7 @@ public class CarouselPhotoDetailView extends RelativeLayout {
         isDown = true;
         isBlow = false;
         final AnimatorSet anim = new AnimatorSet();
-        anim.setDuration(300);
+        anim.setDuration(250);
         ValueAnimator xAnim = ValueAnimator.ofInt(-1, 20);
         xAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
@@ -275,12 +350,48 @@ public class CarouselPhotoDetailView extends RelativeLayout {
                 vp.setLayoutParams(vParams);
             }
         });
-        mCover.setVisibility(VISIBLE);
         ObjectAnimator scrollAnim = ObjectAnimator.ofFloat(mScroll, "alpha", 1f, 0);
-        ObjectAnimator coverAnim = ObjectAnimator.ofFloat(mCover, "alpha", 0, 1f);
         xAnim.addListener(restoreAnimListener);
-        anim.playTogether(xAnim, scrollAnim, coverAnim);
+        anim.playTogether(xAnim, scrollAnim);
         anim.start();
+
+        ObjectAnimator coverAnim = ObjectAnimator.ofFloat(mCover, "alpha", 0.2f, 1f);
+        coverAnim.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animator) {
+                mCover.setVisibility(VISIBLE);
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animator) {
+                vp.setOffscreenPageLimit(3);
+                vp.setClipChildren(false);
+                if (vp instanceof StopViewPager) {
+                    ((StopViewPager) vp).setCanScroll(true);
+                }
+                vp.setAdapter(thumbAdatper);
+                int position = thumbAdatper.getItemPosition(CarouselPhotoDetailView.this);
+                vp.setCurrentItem(position == -1 ? 0 : position);
+                isAnimEnd = true;
+                isCover = true;
+                mScroll.setVisibility(GONE);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animator) {
+
+            }
+        });
+        AnimatorSet anim2 = new AnimatorSet();
+        anim2.setStartDelay(250);
+        anim2.setDuration(250);
+        anim2.play(coverAnim);
+        anim2.start();
     }
 
     ViewPagerAdapter adapter;
@@ -305,8 +416,6 @@ public class CarouselPhotoDetailView extends RelativeLayout {
 
         @Override
         public void onAnimationEnd(Animator animator) {
-            isAnimEnd = true;
-            mCover.setVisibility(GONE);
         }
 
         @Override
@@ -330,17 +439,7 @@ public class CarouselPhotoDetailView extends RelativeLayout {
 
         @Override
         public void onAnimationEnd(Animator animator) {
-            vp.setOffscreenPageLimit(3);
-            vp.setClipChildren(false);
-            if (vp instanceof StopViewPager) {
-                ((StopViewPager) vp).setCanScroll(true);
-            }
-            vp.setAdapter(thumbAdatper);
-            int position = thumbAdatper.getItemPosition(CarouselPhotoDetailView.this);
-            vp.setCurrentItem(position == -1 ? 0 : position);
-            isAnimEnd = true;
-            isCover = true;
-            mScroll.setVisibility(GONE);
+            parent.setY(0);
         }
 
         @Override
