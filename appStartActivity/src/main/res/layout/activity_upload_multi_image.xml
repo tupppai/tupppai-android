@@ -51,55 +51,8 @@
                 android:textSize="12dp" />
         </RelativeLayout>
 
-        <LinearLayout
-            android:id="@+id/image_layout"
-            android:layout_width="match_parent"
-            android:layout_height="82dp"
-            android:layout_below="@id/actionbar"
-            android:layout_marginLeft="14dp"
-            android:layout_marginRight="14dp"
-            android:layout_marginTop="13dp" />
-
         <RelativeLayout
-            android:id="@+id/upload_text_layout"
-            android:layout_width="match_parent"
-            android:layout_height="131dp"
-            android:layout_below="@id/image_layout"
-            android:layout_marginLeft="14dp"
-            android:layout_marginRight="14dp"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/shape_ask_desc_background" >
-
-            <EditText
-                android:id="@+id/upload_text"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp"
-                android:background="@null"
-                android:focusable="true"
-                android:gravity="top"
-                android:hint="写下你要说的图片修改需求吧"
-                android:inputType="textMultiLine"
-                android:textColor="#000000"
-                android:textSize="15dp" />
-
-        </RelativeLayout>
-
-        <TextView
-            android:id="@+id/text_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_below="@id/upload_text"
-            android:layout_marginRight="14dp"
-            android:text="0/18"
-            android:textColor="#7F000000"
-            android:textSize="10dp"
-            android:visibility="gone" />
-
-        <RelativeLayout
+            android:id="@+id/share_type_layout"
             android:layout_width="match_parent"
             android:layout_height="57dp"
             android:layout_alignParentBottom="true"
@@ -155,6 +108,81 @@
                 android:textOff=""
                 android:textOn="" />
         </RelativeLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/actionbar"
+            android:layout_above="@id/share_type_layout">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/image_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="82dp"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginRight="14dp"
+                    android:layout_marginTop="13dp" />
+
+                <RelativeLayout
+                    android:id="@+id/upload_text_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="131dp"
+                    android:layout_below="@id/image_layout"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginRight="14dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/shape_ask_desc_background" >
+
+                    <EditText
+                        android:id="@+id/upload_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@null"
+                        android:focusable="true"
+                        android:gravity="top"
+                        android:hint="写下你要说的图片修改需求吧"
+                        android:inputType="textMultiLine"
+                        android:textColor="#000000"
+                        android:textSize="15dp" />
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/label_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/label_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="14dp"
+                        android:text="请选择一个标签"
+                        android:textSize="14dp"
+                        android:textColor="#000000" />
+
+                    <com.psgod.ui.view.XCFlowLayout
+                        android:id="@+id/label_flow_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </ScrollView>
     </RelativeLayout>
 
 </RelativeLayout>
