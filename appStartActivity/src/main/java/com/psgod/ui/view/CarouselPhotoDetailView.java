@@ -130,6 +130,7 @@ public class CarouselPhotoDetailView extends RelativeLayout {
     private TextView coverShare;
     private FrameLayout coverImgArea;
     private ImageView coverBang;
+    private LikeView coverLike;
 
     private void initCover(View view) {
         coverTag = (ImageView) view.findViewById(R.id.view_carp_photo_detail_cover_tag);
@@ -144,6 +145,7 @@ public class CarouselPhotoDetailView extends RelativeLayout {
         coverShareImg = (ImageView) view.findViewById(R.id.cover_share_img);
         coverImgArea = (FrameLayout) view.findViewById(R.id.view_carp_photo_detail_cover_imgarea);
         coverBang = (ImageView) view.findViewById(R.id.view_carp_photo_detail_cover_bang);
+        coverLike = (LikeView) view.findViewById(R.id.view_carp_photo_detail_cover_like);
 
         if (mPhotoItem.getType() == 1) {
             coverTag.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.tag));
@@ -188,12 +190,23 @@ public class CarouselPhotoDetailView extends RelativeLayout {
 
             }
         });
+//        LayoutParams areaParams = (LayoutParams) coverImgArea.getLayoutParams();
+//        areaParams.height = (int)((float)areaParams.height * Utils.getHeightScale(mContext));
+//        coverImgArea.setLayoutParams(areaParams);
         coverImgArea.addView(coverCover);
 
         coverDesc.setHtmlFromString(mPhotoItem.getDesc(), true);
         coverComment.setText(String.valueOf(mPhotoItem.getCommentCount()));
         coverShare.setText(String.valueOf(mPhotoItem.getShareCount()));
-
+        coverLike.setmPhotoItem(mPhotoItem);
+        coverLike.updateLikeView();
+        if(mPhotoItem.getType() == 1){
+            coverLike.setVisibility(GONE);
+            coverBang.setVisibility(VISIBLE);
+        }else{
+            coverLike.setVisibility(VISIBLE);
+            coverBang.setVisibility(GONE);
+        }
 
     }
 
@@ -295,23 +308,25 @@ public class CarouselPhotoDetailView extends RelativeLayout {
                         break;
                     case MotionEvent.ACTION_UP:
 //
-                        if (!isDown && moveY <= 0) {
-                            viewPagerBlow(84);
-                        } else {
-                            isDown = false;
-                        }
+//                        if (!isDown && moveY <= 0) {
+//                            viewPagerBlow(84);
+//                        } else {
+//                            isDown = false;
+//                        }
                         if (Utils.pxToDp(mContext, view.getY()) < -70 && moveY < 0) {
                             view.setY(oY);
                             viewPagerBlow(40);
                         } else if (Utils.pxToDp(mContext, view.getY()) > -75  && moveY > 0 && isBlow) {
-                            viewPagerRestore();
+                            viewPagerRestore(84);
                         }
                         if (Utils.pxToDp(mContext, view.getY()) > 150 && isAnimEnd && !isBlow) {
                             if (onEndListener != null) {
                                 onEndListener.onEnd();
                             }
                         }
-                        view.setY(0);
+                        if(isAnimEnd) {
+                            view.setY(0);
+                        }
                         break;
                 }
                 return true;
@@ -319,7 +334,7 @@ public class CarouselPhotoDetailView extends RelativeLayout {
         });
     }
 
-    private void viewPagerBlow(final int top) {
+    private void viewPagerBlow(final float top) {
         isDown = false;
 //        mScroll.setCanScroll(true);
         if (!isBlow && vp != null) {
@@ -373,7 +388,7 @@ public class CarouselPhotoDetailView extends RelativeLayout {
         }
     }
 
-    private void viewPagerRestore() {
+    private void viewPagerRestore(final float top) {
         if (vp == null) {
             return;
         }
@@ -388,7 +403,7 @@ public class CarouselPhotoDetailView extends RelativeLayout {
                 Integer value = (Integer) valueAnimator.getAnimatedValue();
                 RelativeLayout.LayoutParams vParams = (RelativeLayout.LayoutParams) vp.getLayoutParams();
                 vParams.setMargins(Utils.dpToPx(mContext, value),
-                        Utils.dpToPx(mContext, 84f / 20f * (float) value), Utils.dpToPx(mContext, (float) value), 0);
+                        Utils.dpToPx(mContext, top / 20f * (float) value), Utils.dpToPx(mContext, (float) value), 0);
                 vp.setLayoutParams(vParams);
             }
         });

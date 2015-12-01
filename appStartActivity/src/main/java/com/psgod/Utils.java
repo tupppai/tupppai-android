@@ -258,7 +258,7 @@ public final class Utils {
         DisplayMetrics outMetrics = new DisplayMetrics();
         ((WindowManager) context
                 .getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getMetrics(outMetrics);
-        result = pxToDpFloat(context, outMetrics.heightPixels) / pxToDpOrigin(context, 1920f);
+        result = pxToDpFloat(context, outMetrics.heightPixels) / pxToDpOrigin(context, 1776f);
         return result;
     }
 }

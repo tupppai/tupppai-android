@@ -130,9 +130,9 @@
                 android:layout_marginLeft="-4dp"
                 android:layout_toEndOf="@+id/cover_share_img"
                 android:layout_toRightOf="@+id/cover_share_img"
-                android:text="13"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
+                android:text="13"
                 android:textColor="@color/black"
                 android:textSize="15dp" />
 
@@ -154,9 +154,9 @@
                 android:layout_marginLeft="-4dp"
                 android:layout_toEndOf="@+id/cover_comment_img"
                 android:layout_toRightOf="@+id/cover_comment_img"
-                android:text="10"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
+                android:text="10"
                 android:textColor="@color/black"
                 android:textSize="15dp" />
 
@@ -167,10 +167,21 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
-
                 android:layout_marginRight="15dp"
                 android:layout_marginTop="45dp"
-                android:src="@mipmap/btn_bang" />
+                android:src="@mipmap/btn_bang"
+                android:visibility="gone" />
+
+            <com.psgod.ui.view.LikeView
+                android:id="@+id/view_carp_photo_detail_cover_like"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:gravity="center"
+                android:layout_marginTop="35dp">
+            </com.psgod.ui.view.LikeView>
         </RelativeLayout>
 
     </RelativeLayout>

@@ -81,6 +81,13 @@ public class CarouselPhotoDetailDialog extends Dialog {
     private void initView() {
         parentView = LayoutInflater.from(mContext).inflate(R.layout.dialog_carousel_photo, null);
         setContentView(parentView);
+        parentView.
+                setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dismiss();
+                    }
+                });
         vp = (ViewPager) findViewById(R.id.dialog_carousel_photo_vp);
 
         vp.setOffscreenPageLimit(3);
@@ -133,7 +140,7 @@ public class CarouselPhotoDetailDialog extends Dialog {
                 views.add(view);
             }
             adapter.notifyDataSetChanged();
-            if(items.size()>1){
+            if (items.size() > 1) {
                 vp.setCurrentItem(1);
             }
             if (progressingDialog != null && progressingDialog.isShowing()) {
