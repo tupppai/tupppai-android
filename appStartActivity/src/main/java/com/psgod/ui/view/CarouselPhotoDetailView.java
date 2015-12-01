@@ -241,6 +241,42 @@ public class CarouselPhotoDetailView extends RelativeLayout {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
 
+//                switch (motionEvent.getAction()) {
+//                    case MotionEvent.ACTION_DOWN:
+//                        downY = motionEvent.getRawY();
+//                        leftX = motionEvent.getRawX();
+//                        Y = view.getY();
+//                        break;
+//                    case MotionEvent.ACTION_MOVE:
+//                        moveY = motionEvent.getRawY() - downY;
+//                        moveX = motionEvent.getRawX() - leftX;
+//                        if ((isBlow && moveY < 0) || (Math.abs(moveY) < 30 && Math.abs(moveX) > 5)
+//                                || (!isAnimEnd && moveY > 100) || (!isDown && !isAnimEnd)) {
+//
+//                        } else {
+//                            ViewHelper.setTranslationY(view, moveY);
+//                        }
+//                        break;
+//                    case MotionEvent.ACTION_UP:
+//                        view.setY(0);
+//                        if (!isDown && moveY <= 0) {
+//                            viewPagerBlow(84);
+//                        } else {
+//                            isDown = false;
+//                        }
+//                        break;
+//                }
+//                if (Utils.pxToDp(mContext, view.getY()) < -70 && moveY < 0) {
+//                    view.setY(oY);
+//                    viewPagerBlow(40);
+//                } else if (Utils.pxToDp(mContext, view.getY()) > -75 && moveY > 0 && isBlow) {
+//                    viewPagerRestore();
+//                } else if (Utils.pxToDp(mContext, view.getY()) > 150 && isAnimEnd) {
+//                    if (onEndListener != null) {
+//                        onEndListener.onEnd();
+//                    }
+//                }
+
                 switch (motionEvent.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         downY = motionEvent.getRawY();
@@ -258,29 +294,26 @@ public class CarouselPhotoDetailView extends RelativeLayout {
                         }
                         break;
                     case MotionEvent.ACTION_UP:
-                        view.setY(0);
+//
                         if (!isDown && moveY <= 0) {
                             viewPagerBlow(84);
                         } else {
                             isDown = false;
                         }
+                        if (Utils.pxToDp(mContext, view.getY()) < -70 && moveY < 0) {
+                            view.setY(oY);
+                            viewPagerBlow(40);
+                        } else if (Utils.pxToDp(mContext, view.getY()) > -75  && moveY > 0 && isBlow) {
+                            viewPagerRestore();
+                        }
+                        if (Utils.pxToDp(mContext, view.getY()) > 150 && isAnimEnd && !isBlow) {
+                            if (onEndListener != null) {
+                                onEndListener.onEnd();
+                            }
+                        }
+                        view.setY(0);
                         break;
                 }
-                if (Utils.pxToDp(mContext, view.getY()) < -70 && moveY < 0) {
-                    view.setY(oY);
-                    viewPagerBlow(40);
-                } else if (Utils.pxToDp(mContext, view.getY()) > -75 && moveY > 0 && isBlow) {
-                    viewPagerRestore();
-                } else if (Utils.pxToDp(mContext, view.getY()) > 150 && isAnimEnd) {
-                    if (onEndListener != null) {
-                        onEndListener.onEnd();
-                    }
-                }
-//                else if (Utils.pxToDp(mContext, view.getY()) > 250 && isAnimEnd) {
-//                    if (onEndListener != null) {
-//                        onEndListener.onEnd();
-//                    }
-//                }
                 return true;
             }
         });

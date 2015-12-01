@@ -79,8 +79,6 @@ public class CarouselPhotoDetailDialog extends Dialog {
     }
 
     private void initView() {
-        progressingDialog = new CustomProgressingDialog(mContext);
-        progressingDialog.show();
         parentView = LayoutInflater.from(mContext).inflate(R.layout.dialog_carousel_photo, null);
         setContentView(parentView);
         vp = (ViewPager) findViewById(R.id.dialog_carousel_photo_vp);
@@ -113,7 +111,8 @@ public class CarouselPhotoDetailDialog extends Dialog {
         getWindow().getAttributes().height = -1;
         getWindow().setGravity(Gravity.BOTTOM);
         getWindow().setWindowAnimations(R.style.popwindow_anim_style);
-
+        progressingDialog = new CustomProgressingDialog(mContext);
+        progressingDialog.show();
     }
 
     Response.Listener<List<PhotoItem>> initDataListener = new Response.Listener<List<PhotoItem>>() {
