@@ -117,6 +117,9 @@ public class CarouselPhotoDetailView extends RelativeLayout {
         }
     }
 
+    private RelativeLayout headLayout;
+    private RelativeLayout descLayout;
+
     private ImageView coverTag;
     private TextView coverName;
     private TextView coverTime;
@@ -133,6 +136,8 @@ public class CarouselPhotoDetailView extends RelativeLayout {
     private LikeView coverLike;
 
     private void initCover(View view) {
+        headLayout = (RelativeLayout) view.findViewById(R.id.detail_cover_head);
+        descLayout = (RelativeLayout) view.findViewById(R.id.cover_desc_layout);
         coverTag = (ImageView) view.findViewById(R.id.view_carp_photo_detail_cover_tag);
         coverName = (TextView) view.findViewById(R.id.view_carp_photo_detail_cover_name);
         coverTime = (TextView) view.findViewById(R.id.view_carp_photo_detail_cover_time);
@@ -146,6 +151,18 @@ public class CarouselPhotoDetailView extends RelativeLayout {
         coverImgArea = (FrameLayout) view.findViewById(R.id.view_carp_photo_detail_cover_imgarea);
         coverBang = (ImageView) view.findViewById(R.id.view_carp_photo_detail_cover_bang);
         coverLike = (LikeView) view.findViewById(R.id.view_carp_photo_detail_cover_like);
+
+        LayoutParams headParams = (LayoutParams) headLayout.getLayoutParams();
+        headParams.height = (int) (headParams.height*Utils.getHeightScale(getContext()));
+        headLayout.setLayoutParams(headParams);
+
+        LayoutParams backParams = (LayoutParams) coverImgArea.getLayoutParams();
+        backParams.height = (int) (backParams.height*Utils.getHeightScale(getContext()));
+        coverImgArea.setLayoutParams(backParams);
+
+        LayoutParams descParams = (LayoutParams) descLayout.getLayoutParams();
+        descParams.height = (int) (descParams.height*Utils.getHeightScale(getContext()));
+        descLayout.setLayoutParams(descParams);
 
         if (mPhotoItem.getType() == 1) {
             coverTag.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.tag));
@@ -313,10 +330,10 @@ public class CarouselPhotoDetailView extends RelativeLayout {
 //                        } else {
 //                            isDown = false;
 //                        }
-                            if (Utils.pxToDp(mContext, view.getY()) < -70 && moveY < 0) {
+                            if (Utils.pxToDp(mContext, view.getY()) < -55 && moveY < 0) {
                                 view.setY(oY);
                                 viewPagerBlow(40);
-                            } else if (Utils.pxToDp(mContext, view.getY()) > -75 && moveY > 0 && isBlow) {
+                            } else if (Utils.pxToDp(mContext, view.getY()) > -50 && moveY > 0 && isBlow) {
                                 viewPagerRestore(84);
                             }
                             if (Utils.pxToDp(mContext, view.getY()) > 150 && isAnimEnd && !isBlow) {

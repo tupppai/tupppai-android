@@ -103,7 +103,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="95dp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/single_photo_detail_img_single"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
@@ -117,6 +117,7 @@
             android:textColor="#cc000000"
             android:layout_marginTop="15dp"
             android:layout_marginLeft="11dp"
+            android:layout_marginRight="60dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
@@ -128,6 +129,7 @@
             android:layout_marginTop="23dp"
             android:src="@mipmap/ic_share"
             android:layout_below="@+id/single_photo_detail_desc"
+            android:layout_marginBottom="100dp"
             android:layout_alignLeft="@+id/single_photo_detail_desc"
             android:layout_alignStart="@+id/single_photo_detail_desc" />
 
@@ -190,6 +192,15 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
+
+        <ImageView
+            android:layout_width="1dp"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:paddingBottom="35dp"
+            android:layout_alignTop="@+id/single_photo_detail_comment_txt"
+            android:layout_toRightOf="@+id/single_photo_detail_comment_txt"
+            android:layout_toEndOf="@+id/single_photo_detail_comment_txt" />
     </RelativeLayout>
 
 </RelativeLayout>

@@ -20,15 +20,11 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.psgod.BitmapUtils;
 import com.psgod.Constants;
 import com.psgod.R;
-import com.psgod.Utils;
 import com.psgod.model.PhotoItem;
 import com.psgod.ui.activity.PhotoBrowserActivity;
-import com.psgod.ui.activity.SinglePhotoDetail;
 import com.psgod.ui.widget.AvatarImageView;
 import com.psgod.ui.widget.dialog.PSDialog;
 import com.psgod.ui.widget.dialog.ShareMoreDialog;
-
-import org.w3c.dom.Text;
 
 /**
  * Created by Administrator on 2015/12/2 0002.
