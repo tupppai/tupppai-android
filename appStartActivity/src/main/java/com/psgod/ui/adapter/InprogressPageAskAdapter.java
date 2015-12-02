@@ -268,8 +268,7 @@ public class InprogressPageAskAdapter extends BaseAdapter implements
 		@Override
 		public void onClick(View view) {
 			PhotoItem photoItem = (PhotoItem) view.getTag(R.id.inprogress_item);
-//			SinglePhotoDetail.startActivity(mContext, photoItem);
-			new CarouselPhotoDetailDialog(mContext,photoItem.getAskId(),photoItem.getPid()).show();
+			SinglePhotoDetail.startActivity(mContext, photoItem);
 
 		}
 	};

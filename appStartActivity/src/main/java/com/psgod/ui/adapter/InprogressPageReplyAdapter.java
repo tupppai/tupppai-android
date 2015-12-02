@@ -161,16 +161,15 @@ public class InprogressPageReplyAdapter extends BaseAdapter implements
 		convertView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-//				// 我的帮p主体均为ask
-//				if (photoItem.getType() == PhotoItem.TYPE_ASK) {
-//					if (photoItem.getReplyCount() == 0) {
-//						SinglePhotoDetail.startActivity(mContext, photoItem);
-//					} else {
-//						CarouselPhotoDetailActivity.startActivity(mContext,
-//								photoItem);
-//					}
-//				}
-				new CarouselPhotoDetailDialog(mContext,photoItem.getAskId(),photoItem.getPid()).show();
+				// 我的帮p主体均为ask
+				if (photoItem.getType() == PhotoItem.TYPE_ASK) {
+					if (photoItem.getReplyCount() == 0) {
+						SinglePhotoDetail.startActivity(mContext, photoItem);
+					} else {
+						new CarouselPhotoDetailDialog(mContext,photoItem.getAskId(),photoItem.getPid()).show();
+					}
+				}
+
 			}
 		});
 

@@ -94,15 +94,13 @@ public class SearchWaterFallItemView extends RelativeLayout {
 
             @Override
             public void onClick(View arg0) {
-//				if (mData.getType() == 1) {
-//					SinglePhotoDetail.startActivity(mContext,
-//							Utils.dataToPhoto(mData));
-//				} else {
-//					CarouselPhotoDetailActivity.startActivity(mContext,
-//							Long.parseLong(mData.getAsk_id()),
-//							Long.parseLong(mData.getId()));
-//				}
-                new CarouselPhotoDetailDialog(mContext, Long.parseLong(mData.getAsk_id()),Long.parseLong(mData.getId())).show();
+				if (mData.getType() == 1) {
+					SinglePhotoDetail.startActivity(mContext,
+							Utils.dataToPhoto(mData));
+				} else {
+                    new CarouselPhotoDetailDialog(mContext, Long.parseLong(mData.getAsk_id()),Long.parseLong(mData.getId())).show();
+				}
+
             }
         });
     }

@@ -193,18 +193,17 @@ public class PhotoWaterFallItemView extends RelativeLayout {
 				@Override
 				public void onClick(View v) {
 					// 拥有回复作品
-//					boolean havingReplies = (mPhotoItem != null && mPhotoItem
-//							.getReplyCount() > 0);
-//
-//					if (havingReplies) {
-//						CarouselPhotoDetailActivity.startActivity(mContext,
-//								mPhotoItem);
-//					}
-//
-//					if (!havingReplies) {
-//						SinglePhotoDetail.startActivity(mContext, mPhotoItem);
-//					}
-					new CarouselPhotoDetailDialog(mContext,mPhotoItem.getAskId(),mPhotoItem.getPid()).show();
+					boolean havingReplies = (mPhotoItem != null && mPhotoItem
+							.getReplyCount() > 0);
+
+					if (havingReplies) {
+						new CarouselPhotoDetailDialog(mContext,mPhotoItem.getAskId(),mPhotoItem.getPid()).show();
+					}
+
+					if (!havingReplies) {
+						SinglePhotoDetail.startActivity(mContext, mPhotoItem);
+					}
+
 				}
 			});
 
@@ -229,11 +228,11 @@ public class PhotoWaterFallItemView extends RelativeLayout {
 				@Override
 				public void onClick(View v) {
 					// 拥有回复作品
-//					boolean havingReplies = (mPhotoItem != null && mPhotoItem
-//							.getReplyCount() > 0);
-//
-//					SinglePhotoDetail.startActivity(mContext, mPhotoItem);
-					new CarouselPhotoDetailDialog(mContext,mPhotoItem.getAskId(),mPhotoItem.getPid()).show();
+					boolean havingReplies = (mPhotoItem != null && mPhotoItem
+							.getReplyCount() > 0);
+
+					SinglePhotoDetail.startActivity(mContext, mPhotoItem);
+//					new CarouselPhotoDetailDialog(mContext,mPhotoItem.getAskId(),mPhotoItem.getPid()).show();
 				}
 			});
 

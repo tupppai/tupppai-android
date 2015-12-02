@@ -1150,25 +1150,21 @@ public class PhotoItemView extends RelativeLayout implements Callback {
         @Override
         public void onClick(View v) {
             // 拥有回复作品
-//            boolean havingReplies = (mPhotoItem != null && mPhotoItem
-//                    .getReplyCount() > 0);
-//            // 是否位于作品详情页面
-//            boolean isPhotoDetail = (mType == PhotoListType.SINGLE_ASK)
-//                    || (mType == PhotoListType.SINGLE_REPLY);
-//
-//            if (havingReplies && !isPhotoDetail) {
-//                CarouselPhotoDetailActivity.startActivity(mContext, mPhotoItem);
-//                setEnabled(false);
-//                mHandler.postDelayed(mViewEnabledRunnable, 1000);
-//            }
-//
-//            if (!havingReplies && !isPhotoDetail) {
-//                SinglePhotoDetail.startActivity(mContext, mPhotoItem);
-//                setEnabled(false);
-//                mHandler.postDelayed(mViewEnabledRunnable, 1000);
-//            }
+            boolean havingReplies = (mPhotoItem != null && mPhotoItem
+                    .getReplyCount() > 0);
+            // 是否位于作品详情页面
+            boolean isPhotoDetail = (mType == PhotoListType.SINGLE_ASK)
+                    || (mType == PhotoListType.SINGLE_REPLY);
 
-            new CarouselPhotoDetailDialog(mContext,mPhotoItem.getAskId(),mPhotoItem.getPid()).show();
+            if (havingReplies && !isPhotoDetail) {
+                new CarouselPhotoDetailDialog(mContext,mPhotoItem.getAskId(),mPhotoItem.getPid()).show();
+            }
+
+            if (!havingReplies && !isPhotoDetail) {
+                SinglePhotoDetail.startActivity(mContext, mPhotoItem);
+                setEnabled(false);
+                mHandler.postDelayed(mViewEnabledRunnable, 1000);
+            }
         }
     };
 

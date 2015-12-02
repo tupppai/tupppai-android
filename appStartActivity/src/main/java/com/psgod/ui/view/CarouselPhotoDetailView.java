@@ -200,10 +200,10 @@ public class CarouselPhotoDetailView extends RelativeLayout {
         coverShare.setText(String.valueOf(mPhotoItem.getShareCount()));
         coverLike.setmPhotoItem(mPhotoItem);
         coverLike.updateLikeView();
-        if(mPhotoItem.getType() == 1){
+        if (mPhotoItem.getType() == 1) {
             coverLike.setVisibility(GONE);
             coverBang.setVisibility(VISIBLE);
-        }else{
+        } else {
             coverLike.setVisibility(VISIBLE);
             coverBang.setVisibility(GONE);
         }
@@ -299,7 +299,7 @@ public class CarouselPhotoDetailView extends RelativeLayout {
                     case MotionEvent.ACTION_MOVE:
                         moveY = motionEvent.getRawY() - downY;
                         moveX = motionEvent.getRawX() - leftX;
-                        if ((isBlow && moveY < 0) || (Math.abs(moveY) < 30 && Math.abs(moveX) > 5)
+                        if ((isBlow && moveY < 0) || (Math.abs(moveY) < 30) || (Math.abs(moveX) > 20 && Math.abs(moveY) < 40)
                                 || (!isAnimEnd && moveY > 100) || (!isDown && !isAnimEnd)) {
 
                         } else {
@@ -316,7 +316,7 @@ public class CarouselPhotoDetailView extends RelativeLayout {
                         if (Utils.pxToDp(mContext, view.getY()) < -70 && moveY < 0) {
                             view.setY(oY);
                             viewPagerBlow(40);
-                        } else if (Utils.pxToDp(mContext, view.getY()) > -75  && moveY > 0 && isBlow) {
+                        } else if (Utils.pxToDp(mContext, view.getY()) > -75 && moveY > 0 && isBlow) {
                             viewPagerRestore(84);
                         }
                         if (Utils.pxToDp(mContext, view.getY()) > 150 && isAnimEnd && !isBlow) {
@@ -324,7 +324,7 @@ public class CarouselPhotoDetailView extends RelativeLayout {
                                 onEndListener.onEnd();
                             }
                         }
-                        if(isAnimEnd) {
+                        if (isAnimEnd) {
                             view.setY(0);
                         }
                         break;

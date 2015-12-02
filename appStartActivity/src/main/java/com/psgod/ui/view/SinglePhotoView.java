@@ -70,7 +70,7 @@ public class SinglePhotoView extends RelativeLayout implements
     public static final int ITEM_SHOW = 495;
 
     private TextView mCommentBtn;
-    private PhotoItemView mPhotoItemView;
+    private SinglePhotoDatailView mPhotoItemView;
 
     private PullToRefreshExpandableListView mListView;
     private SinglePhotoDetailAdapter mAdapter;
@@ -349,8 +349,7 @@ public class SinglePhotoView extends RelativeLayout implements
 
             mPhotoItemView = mAdapter.getPhotoItemView();
             // 获得头部中评论Tv
-            mCommentBtn = mPhotoItemView.getRecentPhotoDetailCommentBtn(mPhotoItem
-                    .getType());
+            mCommentBtn = mPhotoItemView.getRecentPhotoDetailCommentBtn();
 
             mCommentBtn.setOnClickListener(new OnClickListener() {
                 @Override

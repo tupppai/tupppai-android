@@ -16,6 +16,8 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
@@ -38,9 +40,12 @@ import com.psgod.network.request.PSGodErrorListener;
 import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.ui.activity.CommentListActivity;
 import com.psgod.ui.activity.SinglePhotoDetail;
+import com.psgod.ui.view.FollowView;
 import com.psgod.ui.view.PhotoItemView;
 import com.psgod.ui.view.PhotoItemView.PhotoListType;
+import com.psgod.ui.view.SinglePhotoDatailView;
 import com.psgod.ui.widget.AvatarImageView;
+import com.psgod.ui.widget.FollowButton;
 
 import java.util.List;
 
@@ -61,7 +66,7 @@ public class SinglePhotoDetailAdapter extends BaseExpandableListAdapter {
 
 	private String mCreateTimeStr = null;
 
-	private PhotoItemView mPhotoItemView;
+//	private PhotoItemView mPhotoItemView;
 	private View mHotCommentView;
 	private View mCommentView;
 	private View mEmptyView;
@@ -377,39 +382,13 @@ public class SinglePhotoDetailAdapter extends BaseExpandableListAdapter {
 		}
 	};
 
-	public PhotoItemView getPhotoItemView() {
-		if (mPhotoItemView == null) {
-			mPhotoItemView = (PhotoItemView) LayoutInflater.from(mContext)
-					.inflate(R.layout.widget_photo_item, null);
-		}
-		if (mPhotoItem.getType() == PhotoItem.TYPE_ASK) {
-			mPhotoItemView.initialize(PhotoListType.SINGLE_ASK);
-		} else {
-			mPhotoItemView.initialize(PhotoListType.SINGLE_REPLY);
-		}
-		mPhotoItemView.setPhotoItem(mPhotoItem);
-		// DrawableCenterTextView commentView = (DrawableCenterTextView)
-		// mPhotoItemView.findViewById(R.id.photo_item_comment_tv);
-		// commentView.setOnClickListener(new View.OnClickListener() {
-		//
-		// @Override
-		// public void onClick(View v) {
-		// Message msg = mHandler.obtainMessage();
-		// msg.what = SinglePhotoDetail.MSG_HIDE;
-		// msg.sendToTarget();
-		// }
-		// });
+	private SinglePhotoDatailView singlePhoto;
 
-		mPhotoItemView.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				Message msg = mHandler.obtainMessage();
-				msg.what = SinglePhotoDetail.MSG_HIDE;
-				msg.sendToTarget();
-			}
-		});
-		return mPhotoItemView;
+	public SinglePhotoDatailView getPhotoItemView() {
+		if(singlePhoto == null){
+			singlePhoto = new SinglePhotoDatailView(mContext,mPhotoItem);
+		}
+		return singlePhoto;
 	}
 
 	@Override
