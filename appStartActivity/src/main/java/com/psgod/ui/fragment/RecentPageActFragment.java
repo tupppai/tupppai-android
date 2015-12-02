@@ -2,6 +2,7 @@ package com.psgod.ui.fragment;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -34,7 +35,9 @@ import com.psgod.network.request.PhotoListRequest;
 import com.psgod.network.request.PhotoRequest;
 import com.psgod.ui.activity.CarouselPhotoDetailActivity;
 import com.psgod.ui.activity.SinglePhotoDetail;
+import com.psgod.ui.activity.WebBrowserActivity;
 import com.psgod.ui.adapter.RecentPageActAdapter;
+import com.psgod.ui.widget.dialog.CarouselPhotoDetailDialog;
 import com.psgod.ui.widget.dialog.PSDialog;
 
 import java.util.ArrayList;
@@ -176,20 +179,16 @@ public class RecentPageActFragment extends BaseFragment {
         mHeadImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mActs.size() > 0) {
-                    if (mActs.get(0).getReply_count() <= 0) {
-                        SinglePhotoDetail.startActivity(getActivity(), Utils.dataToPhoto(mActs.get(0)));
-                    } else {
-                        CarouselPhotoDetailActivity.startActivity(getActivity(), Utils.dataToPhoto(mActs.get(0)));
-                    }
-                }
+                Intent intent = new Intent(getActivity(), WebBrowserActivity.class);
+                intent.putExtra(WebBrowserActivity.KEY_DESC,mActs.get(0).getDisplay_name());
+//                intent.putExtra(WebBrowserActivity.KEY_URL,mActs.get(0).get)
             }
         });
         mHeadTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (mActs.size() > 0) {
-                    loadUtils.upLoad(mActs.get(0).getType(), Long.parseLong(mActs.get(0).getAsk_id()));
+//                    loadUtils.upLoad(mActs.get(0).getType(), Long.parseLong(mActs.get(0).getAsk_id()));
                 }
             }
         });
@@ -224,7 +223,7 @@ public class RecentPageActFragment extends BaseFragment {
                 if(mHeadView.getVisibility() == View.GONE){
                     mHeadView.setVisibility(View.VISIBLE);
                 }
-                ImageLoader.getInstance().displayImage(mActs.get(0).getImage_url(), mHeadImg, Constants.DISPLAY_IMAGE_OPTIONS);
+                ImageLoader.getInstance().displayImage(mActs.get(0).getApp_pic(), mHeadImg, Constants.DISPLAY_IMAGE_OPTIONS);
             }else{
                 mHeadView.setVisibility(View.GONE);
                 mListView.setEmptyView(mEmptyView);

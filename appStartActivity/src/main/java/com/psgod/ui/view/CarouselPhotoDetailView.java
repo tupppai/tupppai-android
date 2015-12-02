@@ -289,49 +289,89 @@ public class CarouselPhotoDetailView extends RelativeLayout {
 //                        onEndListener.onEnd();
 //                    }
 //                }
+                if (isOrigin) {
+                    switch (motionEvent.getAction()) {
+                        case MotionEvent.ACTION_DOWN:
+                            downY = motionEvent.getRawY();
+                            leftX = motionEvent.getRawX();
+                            Y = view.getY();
+                            break;
+                        case MotionEvent.ACTION_MOVE:
+                            moveY = motionEvent.getRawY() - downY;
+                            moveX = motionEvent.getRawX() - leftX;
+                            if ((isBlow && moveY < 0) || (Math.abs(moveY) < 35) || (Math.abs(moveX) > 20 && Math.abs(moveY) < 40)
+                                    || (!isAnimEnd && moveY > 100) || (!isDown && !isAnimEnd)) {
 
-                switch (motionEvent.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        downY = motionEvent.getRawY();
-                        leftX = motionEvent.getRawX();
-                        Y = view.getY();
-                        break;
-                    case MotionEvent.ACTION_MOVE:
-                        moveY = motionEvent.getRawY() - downY;
-                        moveX = motionEvent.getRawX() - leftX;
-                        if ((isBlow && moveY < 0) || (Math.abs(moveY) < 30) || (Math.abs(moveX) > 20 && Math.abs(moveY) < 40)
-                                || (!isAnimEnd && moveY > 100) || (!isDown && !isAnimEnd)) {
-
-                        } else {
-                            ViewHelper.setTranslationY(view, moveY);
-                        }
-                        break;
-                    case MotionEvent.ACTION_UP:
+                            } else {
+                                ViewHelper.setTranslationY(view, moveY);
+                            }
+                            break;
+                        case MotionEvent.ACTION_UP:
 //
 //                        if (!isDown && moveY <= 0) {
 //                            viewPagerBlow(84);
 //                        } else {
 //                            isDown = false;
 //                        }
-                        if (Utils.pxToDp(mContext, view.getY()) < -70 && moveY < 0) {
-                            view.setY(oY);
-                            viewPagerBlow(40);
-                        } else if (Utils.pxToDp(mContext, view.getY()) > -75 && moveY > 0 && isBlow) {
-                            viewPagerRestore(84);
-                        }
-                        if (Utils.pxToDp(mContext, view.getY()) > 150 && isAnimEnd && !isBlow) {
-                            if (onEndListener != null) {
-                                onEndListener.onEnd();
+                            if (Utils.pxToDp(mContext, view.getY()) < -70 && moveY < 0) {
+                                view.setY(oY);
+                                viewPagerBlow(40);
+                            } else if (Utils.pxToDp(mContext, view.getY()) > -75 && moveY > 0 && isBlow) {
+                                viewPagerRestore(84);
                             }
-                        }
-                        if (isAnimEnd) {
-                            view.setY(0);
-                        }
-                        break;
+                            if (Utils.pxToDp(mContext, view.getY()) > 150 && isAnimEnd && !isBlow) {
+                                if (onEndListener != null) {
+                                    onEndListener.onEnd();
+                                }
+                            }
+                            if (isAnimEnd) {
+                                goOrigin(view.getY());
+                            }
+                            break;
+                    }
                 }
                 return true;
             }
         });
+    }
+
+    private void goOrigin(final float top) {
+        isAnimEnd = false;
+        isOrigin = false;
+        final AnimatorSet anim = new AnimatorSet();
+        anim.setDuration(250);
+        ValueAnimator yAnim = ValueAnimator.ofFloat(top, 0);
+        yAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                Float value = (Float) valueAnimator.getAnimatedValue();
+                parent.setY(value);
+            }
+        });
+        yAnim.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animator) {
+                isAnimEnd = true;
+                isOrigin = true;
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animator) {
+
+            }
+        });
+        anim.playTogether(yAnim);
+        anim.start();
     }
 
     private void viewPagerBlow(final float top) {
@@ -532,5 +572,7 @@ public class CarouselPhotoDetailView extends RelativeLayout {
     //判断是否为表层观看页
     private boolean isCover = true;
 
+    //判断回弹动画是否结束
+    private boolean isOrigin = true;
 
 }
