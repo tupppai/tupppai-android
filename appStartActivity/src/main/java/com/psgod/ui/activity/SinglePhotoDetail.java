@@ -13,17 +13,14 @@ import java.util.concurrent.Executors;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnLayoutChangeListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
@@ -43,7 +40,6 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.PullToRefreshExpandableListView;
 import com.psgod.Constants;
 import com.psgod.R;
-import com.psgod.ThreadManager;
 import com.psgod.WeakReferenceHandler;
 import com.psgod.model.Comment;
 import com.psgod.model.Comment.ReplyComment;
@@ -56,8 +52,7 @@ import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.network.request.PostCommentRequest;
 import com.psgod.ui.adapter.SinglePhotoDetailAdapter;
 import com.psgod.ui.view.FaceRelativeLayout;
-import com.psgod.ui.view.PhotoItemView;
-import com.psgod.ui.view.SinglePhotoDatailView;
+import com.psgod.ui.view.SinglePhotoDetailView;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
 
 public class SinglePhotoDetail extends PSGodBaseActivity implements
@@ -69,7 +64,7 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
     public static final int ITEM_SHOW = 495;
 
     private TextView mCommentBtn;
-    private SinglePhotoDatailView mPhotoItemView;
+    private SinglePhotoDetailView mPhotoItemView;
 
     private PullToRefreshExpandableListView mListView;
     private SinglePhotoDetailAdapter mAdapter;

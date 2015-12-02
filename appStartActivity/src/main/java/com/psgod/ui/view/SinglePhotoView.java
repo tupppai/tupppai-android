@@ -1,7 +1,6 @@
 package com.psgod.ui.view;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -22,7 +21,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshExpandableListView;
-import com.psgod.Constants;
 import com.psgod.R;
 import com.psgod.WeakReferenceHandler;
 import com.psgod.model.Comment;
@@ -34,7 +32,6 @@ import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.network.request.PostCommentRequest;
 import com.psgod.ui.adapter.SinglePhotoDetailAdapter;
 import com.psgod.ui.widget.ActionBar;
-import com.psgod.ui.widget.dialog.CustomProgressingDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,7 +67,7 @@ public class SinglePhotoView extends RelativeLayout implements
     public static final int ITEM_SHOW = 495;
 
     private TextView mCommentBtn;
-    private SinglePhotoDatailView mPhotoItemView;
+    private SinglePhotoDetailView mPhotoItemView;
 
     private PullToRefreshExpandableListView mListView;
     private SinglePhotoDetailAdapter mAdapter;

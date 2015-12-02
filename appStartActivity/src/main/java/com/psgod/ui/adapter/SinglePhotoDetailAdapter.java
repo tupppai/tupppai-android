@@ -5,9 +5,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Handler;
-import android.os.Message;
 import android.text.SpannableString;
-import android.text.SpannableStringBuilder;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -16,8 +14,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
@@ -33,19 +29,13 @@ import com.psgod.R;
 import com.psgod.Utils;
 import com.psgod.emoji.FaceConversionUtil;
 import com.psgod.model.Comment;
-import com.psgod.model.Comment.ReplyComment;
 import com.psgod.model.PhotoItem;
 import com.psgod.network.request.ActionCommentLikeRequest;
 import com.psgod.network.request.PSGodErrorListener;
 import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.ui.activity.CommentListActivity;
-import com.psgod.ui.activity.SinglePhotoDetail;
-import com.psgod.ui.view.FollowView;
-import com.psgod.ui.view.PhotoItemView;
-import com.psgod.ui.view.PhotoItemView.PhotoListType;
-import com.psgod.ui.view.SinglePhotoDatailView;
+import com.psgod.ui.view.SinglePhotoDetailView;
 import com.psgod.ui.widget.AvatarImageView;
-import com.psgod.ui.widget.FollowButton;
 
 import java.util.List;
 
@@ -382,11 +372,11 @@ public class SinglePhotoDetailAdapter extends BaseExpandableListAdapter {
 		}
 	};
 
-	private SinglePhotoDatailView singlePhoto;
+	private SinglePhotoDetailView singlePhoto;
 
-	public SinglePhotoDatailView getPhotoItemView() {
+	public SinglePhotoDetailView getPhotoItemView() {
 		if(singlePhoto == null){
-			singlePhoto = new SinglePhotoDatailView(mContext,mPhotoItem);
+			singlePhoto = new SinglePhotoDetailView(mContext,mPhotoItem);
 		}
 		return singlePhoto;
 	}
