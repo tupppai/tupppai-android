@@ -103,9 +103,9 @@ public class WelcomeActivity extends PSGodBaseActivity implements
 		welcomeImg = (ImageView) findViewById(R.id.welcome_picture);
 		mParent = (RelativeLayout) findViewById(R.id.welcome_parent);
 		if(BaseRequest.PSGOD_BASE_URL.equals(BaseRequest.PSGOD_BASE_TEST_URL)){
-			mParent.setBackground(getResources().getDrawable(R.color.color_9fc25b));
+			mParent.setBackgroundResource(R.color.color_9fc25b);
 		}else{
-			mParent.setBackground(getResources().getDrawable(R.drawable.shape_welcome_gradient));
+			mParent.setBackgroundResource(R.drawable.shape_welcome_gradient);
 		}
 	}
 
