@@ -181,7 +181,8 @@ public class RecentPageActFragment extends BaseFragment {
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), WebBrowserActivity.class);
                 intent.putExtra(WebBrowserActivity.KEY_DESC,mActs.get(0).getDisplay_name());
-//                intent.putExtra(WebBrowserActivity.KEY_URL,mActs.get(0).get)
+                intent.putExtra(WebBrowserActivity.KEY_URL,mActs.get(0).getUrl());
+                getActivity().startActivity(intent);
             }
         });
         mHeadTxt.setOnClickListener(new View.OnClickListener() {
