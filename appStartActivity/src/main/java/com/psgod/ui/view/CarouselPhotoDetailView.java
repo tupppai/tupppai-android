@@ -413,7 +413,6 @@ public class CarouselPhotoDetailView extends RelativeLayout {
         isDown = false;
 //        mScroll.setCanScroll(true);
         if (!isBlow && vp != null) {
-            setY(0);
             initBack();
             isBlow = true;
             final AnimatorSet anim = new AnimatorSet();
@@ -590,7 +589,7 @@ public class CarouselPhotoDetailView extends RelativeLayout {
         @Override
         public void onAnimationEnd(Animator animator) {
             parent.setY(0);
-            setY(Utils.dpToPx(mContext,-10));
+            setY(Utils.dpToPx(mContext,0));
         }
 
         @Override

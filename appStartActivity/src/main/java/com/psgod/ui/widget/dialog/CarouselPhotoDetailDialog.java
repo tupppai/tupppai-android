@@ -103,9 +103,9 @@ public class CarouselPhotoDetailDialog extends Dialog {
                 int length = views.size();
                 for (int i = 0; i < length; i++) {
                     if (i == position) {
-                        views.get(i).setY(Utils.dpToPx(mContext, -10));
-                    } else {
                         views.get(i).setY(0);
+                    } else {
+                        views.get(i).setY(Utils.dpToPx(mContext, 10));
                     }
                 }
             }
