@@ -9,6 +9,15 @@ public class ActivitiesAct {
     private String display_name;
     private String pc_pic;
     private String app_pic;
+    private String url;
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
     public void setId(String id) {
         this.id = id;
