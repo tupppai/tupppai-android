@@ -164,6 +164,10 @@ public class CarouselPhotoDetailView extends RelativeLayout {
         descParams.height = (int) (descParams.height*Utils.getHeightScale(getContext()));
         descLayout.setLayoutParams(descParams);
 
+//        LayoutParams likeParams = (LayoutParams) coverLike.getLayoutParams();
+//        likeParams.height = (int) (likeParams.height*Utils.getHeightScale(getContext()));
+//        coverLike.setLayoutParams(likeParams);
+
         if (mPhotoItem.getType() == 1) {
             coverTag.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.tag));
         } else {

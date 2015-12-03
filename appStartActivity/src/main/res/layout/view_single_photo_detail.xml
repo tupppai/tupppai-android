@@ -126,10 +126,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/single_photo_detail_share_img"
-            android:layout_marginTop="23dp"
+            android:layout_marginTop="30dp"
             android:src="@mipmap/ic_share"
             android:layout_below="@+id/single_photo_detail_desc"
-            android:layout_marginBottom="100dp"
+            android:layout_marginBottom="20dp"
             android:layout_alignLeft="@+id/single_photo_detail_desc"
             android:layout_alignStart="@+id/single_photo_detail_desc" />
 
@@ -175,21 +175,20 @@
             android:layout_height="wrap_content"
             android:id="@+id/single_photo_detail_bang"
             android:src="@mipmap/btn_bang"
-            android:layout_marginTop="36dp"
             android:layout_marginRight="15dp"
-            android:layout_alignParentTop="true"
             android:visibility="gone"
+            android:layout_alignBottom="@+id/single_photo_detail_share_img"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+             />
 
         <com.psgod.ui.view.LikeView
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:gravity="center"
-            android:id="@+id/single_photo_detail_like"
-            android:layout_marginTop="30dp"
+            android:visibility="visible"
             android:layout_marginRight="5dp"
-            android:layout_alignParentTop="true"
+            android:id="@+id/single_photo_detail_like"
+            android:layout_alignBottom="@+id/imageView4"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
 
@@ -200,7 +199,8 @@
             android:paddingBottom="35dp"
             android:layout_alignTop="@+id/single_photo_detail_comment_txt"
             android:layout_toRightOf="@+id/single_photo_detail_comment_txt"
-            android:layout_toEndOf="@+id/single_photo_detail_comment_txt" />
+            android:layout_toEndOf="@+id/single_photo_detail_comment_txt"
+            android:id="@+id/imageView4" />
     </RelativeLayout>
 
 </RelativeLayout>
