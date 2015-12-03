@@ -20,7 +20,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="12dp"
+            android:layout_marginRight="11dp"
             android:layout_marginLeft="6dp"
             android:src="@drawable/shape_set_info_avatar_background" />
 
@@ -64,7 +64,7 @@
     <LinearLayout
         android:id="@+id/single_photo_detail_img_mult"
         android:layout_width="match_parent"
-        android:layout_height="375dp"
+        android:layout_height="335dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/single_photo_detail_head"
@@ -91,12 +91,12 @@
     <FrameLayout
         android:id="@+id/single_photo_detail_img_single"
         android:layout_width="match_parent"
-        android:layout_height="375dp"
+        android:layout_height="335dp"
         android:layout_below="@+id/single_photo_detail_head">
         <ImageView
             android:id="@+id/single_photo_detail_img_back"
             android:layout_width="match_parent"
-            android:layout_height="375dp"
+            android:layout_height="335dp"
             android:scaleType="centerCrop"
             />
     </FrameLayout>
