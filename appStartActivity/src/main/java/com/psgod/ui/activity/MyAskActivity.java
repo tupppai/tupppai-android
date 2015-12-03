@@ -23,6 +23,9 @@ public class MyAskActivity extends PSGodBaseActivity {
 	private ImageButton mImageButton;
 	Dialog mAskDialog;
 
+
+
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
