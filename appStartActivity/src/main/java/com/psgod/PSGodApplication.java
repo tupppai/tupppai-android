@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Handler;
+import android.util.Log;
 import android.view.WindowManager;
 
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
@@ -19,6 +20,7 @@ import com.psgod.model.PhotoItem;
 import com.psgod.ui.activity.AppStartActivity;
 import com.psgod.ui.activity.CommentListActivity;
 import com.psgod.ui.activity.FollowingListActivity;
+import com.psgod.ui.activity.MainActivity;
 import com.psgod.ui.activity.MessageLikeActivity;
 import com.psgod.ui.activity.MessageSystemActivity;
 import com.umeng.message.PushAgent;
@@ -126,13 +128,19 @@ public class PSGodApplication extends Application {
 
                 JSONObject jsonObject = null;
                 try {
+                    Log.e("msg",msg.custom
+                            .toString());
                     jsonObject = new JSONObject(msg.custom
                             .toString());
                     int type = jsonObject.getInt("type");
-//                    int count = jsonObject.getInt("count");
-                    Long targetId = jsonObject.getLong("target_id");
-                    Long targetAskId = jsonObject.getLong("target_ask_id");
-                    int targetType = jsonObject.getInt("target_type");
+                    int count = jsonObject.getInt("count");
+//                    Long targetId = jsonObject.getLong("target_id");
+//                    Long targetAskId = jsonObject.getLong("target_ask_id");
+//                    int targetType = jsonObject.getInt("target_type");
+//                    Log.e("target_id",String.valueOf(targetId));
+//                    Log.e("target_ask_id",String.valueOf(targetAskId));
+//                    Log.e("target_type",String.valueOf(targetType));
+
                     Intent intent = new Intent();
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
@@ -141,13 +149,14 @@ public class PSGodApplication extends Application {
                             intent.setClass(getApplicationContext(), MessageSystemActivity.class);
                             break;
                         case 1:
-                            intent.setClass(getApplicationContext(), CommentListActivity.class);
-                            PhotoItem item = new PhotoItem();
-                            item.setPid(targetId);
-                            item.setType(targetType);
-                            intent.putExtra("Constants.IntentKey.PHOTO_ITEM",item);
-                            break;
+                            intent.setClass(getApplicationContext(), MainActivity.class);
+//                            PhotoItem item = new PhotoItem();
+////                            item.setPid(targetId);
+////                            item.setType(targetType);
+//                            intent.putExtra("Constants.IntentKey.PHOTO_ITEM",item);
+//                            break;
                         case 2:
+                            intent.setClass(getApplicationContext(), MainActivity.class);
 //                            CarouselPhotoDetailActivity.startActivity(getApplicationContext(),targetAskId,targetId);
                             return;
                         case 3:

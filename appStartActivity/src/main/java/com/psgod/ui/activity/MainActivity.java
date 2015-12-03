@@ -151,6 +151,11 @@ public class MainActivity extends PSGodBaseActivity implements
 	}
 
 	@Override
+	protected void onPause() {
+		super.onPause();
+	}
+
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
