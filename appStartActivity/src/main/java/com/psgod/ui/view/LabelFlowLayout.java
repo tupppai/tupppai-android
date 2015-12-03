@@ -13,22 +13,22 @@ import android.view.ViewGroup;
  * @author ZouMengyuan
  *
  */
-public class XCFlowLayout extends ViewGroup{
+public class LabelFlowLayout extends ViewGroup{
 
     //存储所有子View
     private List<List<View>> mAllChildViews = new ArrayList<List<View>>();
     //每一行的高度
     private List<Integer> mLineHeight = new ArrayList<Integer>();
 
-    public XCFlowLayout(Context context) {
+    public LabelFlowLayout(Context context) {
         this(context, null);
         // TODO Auto-generated constructor stub
     }
-    public XCFlowLayout(Context context, AttributeSet attrs) {
+    public LabelFlowLayout(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
         // TODO Auto-generated constructor stub
     }
-    public XCFlowLayout(Context context, AttributeSet attrs, int defStyle) {
+    public LabelFlowLayout(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         // TODO Auto-generated constructor stub
     }

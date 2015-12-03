@@ -15,7 +15,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
@@ -61,7 +60,7 @@ import com.psgod.network.request.UploadImageRequest;
 import com.psgod.network.request.UploadImageRequest.ImageUploadResult;
 import com.psgod.network.request.UploadMultiRequest;
 import com.psgod.network.request.UploadMultiRequest.MultiUploadResult;
-import com.psgod.ui.view.XCFlowLayout;
+import com.psgod.ui.view.LabelFlowLayout;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
 import android.view.ViewGroup.LayoutParams;
 import android.view.ViewGroup.MarginLayoutParams;
@@ -93,7 +92,7 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
     private CustomProgressingDialog mProgressDialog;
 
     private LinearLayout mLabelView;
-    private XCFlowLayout mLabelLayout;
+    private LabelFlowLayout mLabelLayout;
     private MarginLayoutParams LabelButtonLp;
     private ArrayList<Integer> mSelectLabelIds = new ArrayList<Integer>();     // 选中的标签id
     private List<Label> mLabels = new ArrayList<Label>();       // 服务器返回的标签list
@@ -173,7 +172,7 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
         mFinishBtn = (Button) findViewById(R.id.btn_complete);
         mContentEdit = (EditText) findViewById(R.id.upload_text);
         mLabelView = (LinearLayout) findViewById(R.id.label_layout);
-        mLabelLayout = (XCFlowLayout) findViewById(R.id.label_flow_layout);
+        mLabelLayout = (LabelFlowLayout) findViewById(R.id.label_flow_layout);
         LabelButtonLp = new MarginLayoutParams(
                 LayoutParams.WRAP_CONTENT,Utils.dpToPx(mContext,31));
         LabelButtonLp.setMargins(Utils.dpToPx(mContext,3),Utils.dpToPx(mContext,3),
@@ -194,7 +193,7 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
         }
 
         if (type.equals(TYPE_ASK_SELECT)) {
-            mContentEdit.setHint("写下你的图片需求吧");
+            mContentEdit.setHint("写下你要说的图片修改需求吧");
             mLabelView.setVisibility(View.VISIBLE);
         } else {
             mContentEdit.setHint("输入你想对观众说的吧");

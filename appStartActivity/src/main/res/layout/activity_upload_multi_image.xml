@@ -56,7 +56,8 @@
             android:layout_width="match_parent"
             android:layout_height="57dp"
             android:layout_alignParentBottom="true"
-            android:background="#f7f7f7" >
+            android:background="#f7f7f7"
+            android:visibility="gone" >
 
             <TextView
                 android:id="@+id/text_synchronous"
@@ -149,7 +150,6 @@
                         android:background="@color/white"
                         android:focusable="true"
                         android:gravity="top"
-                        android:hint="写下你要说的图片修改需求吧"
                         android:inputType="textMultiLine"
                         android:textColor="#000000"
                         android:textSize="15dp" />
@@ -173,7 +173,7 @@
                         android:textSize="14dp"
                         android:textColor="#000000" />
 
-                    <com.psgod.ui.view.XCFlowLayout
+                    <com.psgod.ui.view.LabelFlowLayout
                         android:id="@+id/label_flow_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
