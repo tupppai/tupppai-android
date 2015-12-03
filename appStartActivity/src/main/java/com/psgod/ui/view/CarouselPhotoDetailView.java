@@ -100,11 +100,11 @@ public class CarouselPhotoDetailView extends RelativeLayout {
     }
 
     boolean backInited = false;
+    SinglePhotoView singlePhotoView;
 
     private void initBack() {
         if (!backInited) {
-            backInited = true;
-            SinglePhotoView singlePhotoView = new SinglePhotoView(getContext(), mPhotoItem);
+            singlePhotoView = new SinglePhotoView(getContext(), mPhotoItem);
             singlePhotoView.setOnEndListener(new SinglePhotoView.OnEndListener() {
                 @Override
                 public void onEndListener(SinglePhotoView view) {
@@ -163,6 +163,10 @@ public class CarouselPhotoDetailView extends RelativeLayout {
         LayoutParams descParams = (LayoutParams) descLayout.getLayoutParams();
         descParams.height = (int) (descParams.height*Utils.getHeightScale(getContext()));
         descLayout.setLayoutParams(descParams);
+
+//        LayoutParams likeParams = (LayoutParams) coverLike.getLayoutParams();
+//        likeParams.height = (int) (likeParams.height*Utils.getHeightScale(getContext()));
+//        coverLike.setLayoutParams(likeParams);
 
         if (mPhotoItem.getType() == 1) {
             coverTag.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.tag));
@@ -395,31 +399,37 @@ public class CarouselPhotoDetailView extends RelativeLayout {
         isDown = false;
 //        mScroll.setCanScroll(true);
         if (!isBlow && vp != null) {
+            setY(0);
             initBack();
             isBlow = true;
             final AnimatorSet anim = new AnimatorSet();
-            anim.setDuration(250);
-            ValueAnimator xAnim = ValueAnimator.ofInt(20, -1);
+            anim.setDuration(200);
+            ValueAnimator xAnim = ValueAnimator.ofInt(20, 0);
             xAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 @Override
                 public void onAnimationUpdate(ValueAnimator valueAnimator) {
                     Integer value = (Integer) valueAnimator.getAnimatedValue();
                     RelativeLayout.LayoutParams vParams = (RelativeLayout.LayoutParams) vp.getLayoutParams();
                     vParams.setMargins(Utils.dpToPx(mContext, value),
-                            Utils.dpToPx(mContext, top / 20f * value), Utils.dpToPx(mContext, value), 0);
+                            Utils.dpToPx(mContext, top / 20f * value + 48), Utils.dpToPx(mContext, value), 0);
                     vp.setLayoutParams(vParams);
                 }
             });
-            ObjectAnimator scrollAnim = ObjectAnimator.ofFloat(mScroll, "alpha", 0, 1f);
+            ObjectAnimator scrollAnim = ObjectAnimator.ofFloat(mScroll, "alpha", 0.1f, 1f);
             scrollAnim.addListener(new Animator.AnimatorListener() {
                 @Override
-                public void onAnimationStart(Animator animator) {
+                public void onAnimationStart(Animator animator)
+                {
                     mScroll.setVisibility(VISIBLE);
                 }
 
                 @Override
                 public void onAnimationEnd(Animator animator) {
                     isAnimEnd = true;
+                    RelativeLayout.LayoutParams cParams = (RelativeLayout.LayoutParams) mCover.getLayoutParams();
+                    cParams.setMargins(0,
+                            0, 0, 0);
+                    mCover.setLayoutParams(cParams);
                     mCover.setVisibility(GONE);
                 }
 
@@ -433,9 +443,9 @@ public class CarouselPhotoDetailView extends RelativeLayout {
 
                 }
             });
-            ObjectAnimator coverAnim = ObjectAnimator.ofFloat(mCover, "alpha", 0.8f, 0);
+            ObjectAnimator coverAnim = ObjectAnimator.ofFloat(mCover, "alpha", 1f, 0f);
             xAnim.addListener(blowAnimListener);
-            anim.playTogether(xAnim, coverAnim);
+            anim.playTogether(xAnim,coverAnim);
             anim.start();
             AnimatorSet anim2 = new AnimatorSet();
             anim2.setStartDelay(250);
@@ -452,27 +462,31 @@ public class CarouselPhotoDetailView extends RelativeLayout {
         isDown = true;
         isBlow = false;
         final AnimatorSet anim = new AnimatorSet();
-        anim.setDuration(250);
-        ValueAnimator xAnim = ValueAnimator.ofInt(-1, 20);
+        anim.setDuration(200);
+        ValueAnimator xAnim = ValueAnimator.ofInt(0, 20);
         xAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
                 Integer value = (Integer) valueAnimator.getAnimatedValue();
                 RelativeLayout.LayoutParams vParams = (RelativeLayout.LayoutParams) vp.getLayoutParams();
                 vParams.setMargins(Utils.dpToPx(mContext, value),
-                        Utils.dpToPx(mContext, top / 20f * (float) value), Utils.dpToPx(mContext, (float) value), 0);
+                        Utils.dpToPx(mContext, top / 20f * (float) value - 48), Utils.dpToPx(mContext, (float) value), 0);
                 vp.setLayoutParams(vParams);
             }
         });
-        ObjectAnimator scrollAnim = ObjectAnimator.ofFloat(mScroll, "alpha", 1f, 0);
+        ObjectAnimator scrollAnim = ObjectAnimator.ofFloat(mScroll, "alpha", 1f, 0.0f);
         xAnim.addListener(restoreAnimListener);
         anim.playTogether(xAnim, scrollAnim);
         anim.start();
 
-        ObjectAnimator coverAnim = ObjectAnimator.ofFloat(mCover, "alpha", 0.2f, 1f);
+        ObjectAnimator coverAnim = ObjectAnimator.ofFloat(mCover, "alpha", 0.1f, 1f);
         coverAnim.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animator) {
+                RelativeLayout.LayoutParams vParams = (RelativeLayout.LayoutParams) vp.getLayoutParams();
+                vParams.setMargins(Utils.dpToPx(mContext,20),
+                        Utils.dpToPx(mContext,84), Utils.dpToPx(mContext,20), 0);
+                vp.setLayoutParams(vParams);
                 mCover.setVisibility(VISIBLE);
             }
 
@@ -530,6 +544,14 @@ public class CarouselPhotoDetailView extends RelativeLayout {
 
         @Override
         public void onAnimationEnd(Animator animator) {
+            RelativeLayout.LayoutParams vParams = (RelativeLayout.LayoutParams) vp.getLayoutParams();
+            vParams.setMargins(0,
+                    0, 0, 0);
+            vp.setLayoutParams(vParams);
+            RelativeLayout.LayoutParams cParams = (RelativeLayout.LayoutParams) mCover.getLayoutParams();
+            cParams.setMargins(0,
+                    Utils.dpToPx(mContext,48), 0, 0);
+            mCover.setLayoutParams(cParams);
         }
 
         @Override
@@ -554,6 +576,7 @@ public class CarouselPhotoDetailView extends RelativeLayout {
         @Override
         public void onAnimationEnd(Animator animator) {
             parent.setY(0);
+            setY(Utils.dpToPx(mContext,-10));
         }
 
         @Override

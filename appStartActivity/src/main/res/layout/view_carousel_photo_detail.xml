@@ -1,6 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/shape_dialog_caro">
 
     <RelativeLayout
 
@@ -167,20 +168,20 @@
                 android:id="@+id/view_carp_photo_detail_cover_bang"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="20dp"
                 android:layout_marginRight="15dp"
                 android:src="@mipmap/btn_bang"
-                android:visibility="visible" />
+                android:visibility="gone"
+                android:layout_alignBottom="@+id/view_carp_photo_detail_cover_comment"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="24dp" />
 
             <com.psgod.ui.view.LikeView
                 android:id="@+id/view_carp_photo_detail_cover_like"
                 android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_height="55dp"
                 android:gravity="center"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true">

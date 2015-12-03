@@ -95,6 +95,29 @@ public class CarouselPhotoDetailDialog extends Dialog {
         views = new ArrayList<View>();
         adapter = new ViewPagerAdapter(views);
         vp.setAdapter(adapter);
+        vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                int length = views.size();
+                for(int i = 0; i < length; i++){
+                    if(i == position){
+                        views.get(i).setY(Utils.dpToPx(mContext , -10));
+                    }else{
+                        views.get(i).setY(0);
+                    }
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         initData();
 
     }

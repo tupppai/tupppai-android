@@ -101,6 +101,7 @@ public class SinglePhotoDetailView extends RelativeLayout {
 
         follow.setPhotoItem(mPhotoItem);
         follow.updateFollowView();
+        avatar.setUserId(mPhotoItem.getUid());
         ImageLoader.getInstance().displayImage(mPhotoItem.getAvatarURL(), avatar, mAvatarOptions);
         name.setText(mPhotoItem.getNickname());
         time.setText(mPhotoItem.getUpdateTimeStr());
