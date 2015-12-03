@@ -190,7 +190,6 @@ public class RecentPageActFragment extends BaseFragment {
             public void onClick(View view) {
                 if (mActs.size() > 0) {
 //                    loadUtils.upLoad(mActs.get(0).getType(), Long.parseLong(mActs.get(0).getAsk_id()));
-
                 }
             }
         });
