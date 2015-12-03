@@ -89,7 +89,9 @@ public class CommentListActivity extends PSGodBaseActivity implements
 	// 评论内容
 	String commentContent = "";
 	// @的信息 若有
-	StringBuilder atComments = new StringBuilder();
+	String atComments ;
+	// @的用户名
+	String atNickName = "";
 
 	private Listener<CommentListWrapper> refreshListener = new Listener<CommentListWrapper>() {
 		@Override
@@ -301,7 +303,10 @@ public class CommentListActivity extends PSGodBaseActivity implements
 					// 用户无法回复自己 comment id暂为0
 					comment.setCid(0);
 					comment.setUid(user.getUid());
-					comment.setContent(commentContent + atComments.toString());
+					comment.setContent(commentContent);
+					if (!TextUtils.isEmpty(atNickName)) {
+						comment.mReplyComments.add(new ReplyComment(0, 0, atComments, atNickName));
+					}
 					comment.setPid(mPhotoItem.getPid());
 					comment.setAvatarURL(user.getAvatarImageUrl());
 					comment.setCreatedTime(System.currentTimeMillis());
@@ -370,6 +375,7 @@ public class CommentListActivity extends PSGodBaseActivity implements
 			if (response != null) {
 				mRecentComments.get(0).setCid(response);
 
+				atNickName = "";
 				// 清空输入框
 				mCommentEditText.setText("");
 				mCommentEditText.setHint("添加评论");
@@ -464,8 +470,6 @@ public class CommentListActivity extends PSGodBaseActivity implements
 			Comment comment = (Comment) mAdapter.getChild(groupPosition,
 					childPosition);
 
-			atComments.delete(0, atComments.length());
-
 			String authorName = comment.getNickname();
 			// 评论人id
 			Long authorId = comment.getUid();
@@ -478,15 +482,10 @@ public class CommentListActivity extends PSGodBaseActivity implements
 				mCommentEditText.setHint("回复@" + authorName + ":");
 				replyToCid = cid;
 
-				atComments.append("//@" + comment.getNickname() + ":"
-						+ comment.getContent());
-				List<ReplyComment> mReplyComments = comment.getReplyComments();
-				for (int i = 0; i < mReplyComments.size(); i++) {
-					atComments
-							.append("//@" + mReplyComments.get(i).mNick + ":");
-					atComments.append(mReplyComments.get(i).mContent);
-				}
+				atComments = comment.getContent();
+				atNickName = comment.getNickname();
 			} else {
+				atNickName = "";
 				mCommentEditText.setHint("添加评论");
 				replyToCid = 0;
 			}

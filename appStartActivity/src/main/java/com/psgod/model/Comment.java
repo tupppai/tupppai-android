@@ -59,7 +59,7 @@ public class Comment implements Serializable {
 	@DatabaseField(canBeNull = true, foreign = true, columnName = "pid")
 	protected PhotoItem mPhotoItem;
 
-	private List<ReplyComment> mReplyComments = new ArrayList<ReplyComment>();
+	public List<ReplyComment> mReplyComments = new ArrayList<ReplyComment>();
 
 	// TODO 增加Photoitem 参数 构造函数
 	public static Comment createComment(JSONObject jsonObj)
