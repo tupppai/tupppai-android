@@ -6,12 +6,6 @@ package com.psgod.ui.view;
  * @author ZouMengyuan
  */
 
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-
-import org.sufficientlysecure.htmltextview.HtmlTextView;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.AttributeSet;
@@ -29,10 +23,13 @@ import com.psgod.Constants;
 import com.psgod.R;
 import com.psgod.Utils;
 import com.psgod.model.SearchWork;
-import com.psgod.ui.activity.CarouselPhotoDetailActivity;
 import com.psgod.ui.activity.SinglePhotoDetail;
 import com.psgod.ui.widget.AvatarImageView;
 import com.psgod.ui.widget.dialog.CarouselPhotoDetailDialog;
+
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
 public class SearchWaterFallItemView extends RelativeLayout {
     private static final String TAG = SearchWaterFallItemView.class

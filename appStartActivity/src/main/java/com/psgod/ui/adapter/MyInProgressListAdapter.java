@@ -1,7 +1,5 @@
 package com.psgod.ui.adapter;
 
-import java.util.List;
-
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -26,10 +24,12 @@ import com.psgod.model.PhotoItem;
 import com.psgod.network.request.MyInProgressDeleteRequest;
 import com.psgod.network.request.PSGodErrorListener;
 import com.psgod.network.request.PSGodRequestQueue;
-import com.psgod.ui.activity.CarouselPhotoDetailActivity;
 import com.psgod.ui.activity.SinglePhotoDetail;
 import com.psgod.ui.widget.AvatarImageView;
+import com.psgod.ui.widget.dialog.CarouselPhotoDetailDialog;
 import com.psgod.ui.widget.dialog.CustomDialog;
+
+import java.util.List;
 
 /**
  * 
@@ -232,8 +232,8 @@ public class MyInProgressListAdapter extends BaseAdapter {
 				if (photoItem.getReplyCount() == 0) {
 					SinglePhotoDetail.startActivity(mContext, photoItem);
 				} else {
-					CarouselPhotoDetailActivity.startActivity(mContext,
-							photoItem);
+					new CarouselPhotoDetailDialog(mContext,
+							photoItem.getAskId(),photoItem.getPid()).show();
 				}
 			}
 		});

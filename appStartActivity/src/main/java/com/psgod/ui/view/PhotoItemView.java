@@ -6,16 +6,6 @@ package com.psgod.ui.view;
  * @author brandwang
  */
 
-import java.lang.ref.WeakReference;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.sufficientlysecure.htmltextview.HtmlTextView;
-
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
@@ -39,12 +29,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import cn.sharesdk.framework.Platform;
-import cn.sharesdk.framework.Platform.ShareParams;
-import cn.sharesdk.framework.PlatformActionListener;
-import cn.sharesdk.framework.ShareSDK;
-import cn.sharesdk.wechat.moments.WechatMoments;
-
 import com.android.volley.RequestQueue;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
@@ -54,6 +38,7 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+import com.psgod.AnimUtils;
 import com.psgod.BitmapUtils;
 import com.psgod.Constants;
 import com.psgod.CustomToast;
@@ -68,7 +53,6 @@ import com.psgod.network.request.ActionFollowRequest;
 import com.psgod.network.request.ActionLikeRequest;
 import com.psgod.network.request.PSGodErrorListener;
 import com.psgod.network.request.PSGodRequestQueue;
-import com.psgod.ui.activity.CarouselPhotoDetailActivity;
 import com.psgod.ui.activity.CommentListActivity;
 import com.psgod.ui.activity.PhotoBrowserActivity;
 import com.psgod.ui.activity.SinglePhotoDetail;
@@ -79,8 +63,22 @@ import com.psgod.ui.widget.OriginImageLayout;
 import com.psgod.ui.widget.dialog.CarouselPhotoDetailDialog;
 import com.psgod.ui.widget.dialog.PSDialog;
 import com.psgod.ui.widget.dialog.ShareMoreDialog;
-import com.psgod.AnimUtils;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.sufficientlysecure.htmltextview.HtmlTextView;
+
+import java.lang.ref.WeakReference;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.Platform.ShareParams;
+import cn.sharesdk.framework.PlatformActionListener;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.wechat.moments.WechatMoments;
 import de.greenrobot.event.EventBus;
 
 public class PhotoItemView extends RelativeLayout implements Callback {

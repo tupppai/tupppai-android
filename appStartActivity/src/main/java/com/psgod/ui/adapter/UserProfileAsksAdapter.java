@@ -1,10 +1,5 @@
 package com.psgod.ui.adapter;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.sufficientlysecure.htmltextview.HtmlTextView;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +19,12 @@ import com.psgod.Utils;
 import com.psgod.model.PhotoItem;
 import com.psgod.ui.activity.CarouselPhotoDetailActivity;
 import com.psgod.ui.activity.SinglePhotoDetail;
+import com.psgod.ui.widget.dialog.CarouselPhotoDetailDialog;
+
+import org.sufficientlysecure.htmltextview.HtmlTextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserProfileAsksAdapter extends BaseAdapter {
 
@@ -138,9 +139,9 @@ public class UserProfileAsksAdapter extends BaseAdapter {
 				mReplyIv.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						CarouselPhotoDetailActivity.startActivity(mContext,
+						new CarouselPhotoDetailDialog(mContext,
 								replyPhotoItem.getAskId(),
-								replyPhotoItem.getReplyId());
+								replyPhotoItem.getReplyId()).show();
 					}
 				});
 
@@ -152,8 +153,8 @@ public class UserProfileAsksAdapter extends BaseAdapter {
 			convertView.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					CarouselPhotoDetailActivity.startActivity(mContext,
-							photoItem);
+					new CarouselPhotoDetailDialog(mContext,
+							photoItem.getAskId(),photoItem.getPid()).show();
 				}
 			});
 		} else {

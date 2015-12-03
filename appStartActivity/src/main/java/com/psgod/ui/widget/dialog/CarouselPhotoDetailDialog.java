@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -72,10 +73,6 @@ public class CarouselPhotoDetailDialog extends Dialog {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setSoftInputMode(
-                WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE |
-                        WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-        initView();
     }
 
     private void initView() {
@@ -104,10 +101,10 @@ public class CarouselPhotoDetailDialog extends Dialog {
             @Override
             public void onPageSelected(int position) {
                 int length = views.size();
-                for(int i = 0; i < length; i++){
-                    if(i == position){
-                        views.get(i).setY(Utils.dpToPx(mContext , -10));
-                    }else{
+                for (int i = 0; i < length; i++) {
+                    if (i == position) {
+                        views.get(i).setY(Utils.dpToPx(mContext, -10));
+                    } else {
                         views.get(i).setY(0);
                     }
                 }
@@ -118,7 +115,7 @@ public class CarouselPhotoDetailDialog extends Dialog {
 
             }
         });
-        initData();
+
 
     }
 
@@ -136,12 +133,16 @@ public class CarouselPhotoDetailDialog extends Dialog {
 
     @Override
     public void show() {
-        super.show();
+        initView();
+        initData();
         getWindow().getAttributes().width = -1;
         getWindow().getAttributes().height = -1;
         getWindow().setGravity(Gravity.BOTTOM);
         getWindow().setWindowAnimations(R.style.popwindow_anim_style);
         progressingDialog = new CustomProgressingDialog(mContext);
+        getWindow().setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE |
+                        WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         progressingDialog.show();
     }
 
@@ -169,6 +170,7 @@ public class CarouselPhotoDetailDialog extends Dialog {
             if (progressingDialog != null && progressingDialog.isShowing()) {
                 progressingDialog.dismiss();
             }
+            CarouselPhotoDetailDialog.super.show();
         }
     };
 

@@ -1,7 +1,5 @@
 package com.psgod.ui.adapter;
 
-import java.util.List;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,9 +14,11 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.psgod.Constants;
 import com.psgod.R;
 import com.psgod.model.PhotoItem;
-import com.psgod.ui.activity.CarouselPhotoDetailActivity;
 import com.psgod.ui.activity.SinglePhotoDetail;
 import com.psgod.ui.view.CircleImageView;
+import com.psgod.ui.widget.dialog.CarouselPhotoDetailDialog;
+
+import java.util.List;
 
 /**
  * 
@@ -104,8 +104,8 @@ public class MyCollectionsGridAdapter extends BaseAdapter {
 					if (photoItem.getReplyCount() == 0) {
 						SinglePhotoDetail.startActivity(mContext, photoItem);
 					} else {
-						CarouselPhotoDetailActivity.startActivity(mContext,
-								photoItem);
+						new CarouselPhotoDetailDialog(mContext,
+								photoItem.getAskId(),photoItem.getPid()).show();
 					}
 				} else if (photoItem.getType() == TYPE_REPLY) {
 					// PhotoDetailActivity.startActivity(mContext,

@@ -18,6 +18,7 @@ import com.psgod.R;
 import com.psgod.model.PhotoItem;
 import com.psgod.ui.activity.CarouselPhotoDetailActivity;
 import com.psgod.ui.activity.SinglePhotoDetail;
+import com.psgod.ui.widget.dialog.CarouselPhotoDetailDialog;
 
 /**
  * 
@@ -98,17 +99,10 @@ public class AskGridAdapter extends BaseAdapter {
 					if (photoItem.getReplyCount() == 0) {
 						SinglePhotoDetail.startActivity(mContext, photoItem);
 					} else {
-						CarouselPhotoDetailActivity.startActivity(mContext,
-								photoItem);
+						new CarouselPhotoDetailDialog(mContext,photoItem.getAskId(), photoItem.getPid()).show();
 					}
 				} else if (photoItem.getType() == PhotoItem.TYPE_REPLY) {
-					if(photoItem.getReplyId() == 0) {
-						CarouselPhotoDetailActivity.startActivity(mContext,
-								photoItem.getAskId(), photoItem.getPid());
-					}else{
-						CarouselPhotoDetailActivity.startActivity(mContext,
-								photoItem.getAskId(), photoItem.getReplyId());
-					}
+					new CarouselPhotoDetailDialog(mContext,photoItem.getAskId(), photoItem.getPid()).show();
 				}
 			}
 		});

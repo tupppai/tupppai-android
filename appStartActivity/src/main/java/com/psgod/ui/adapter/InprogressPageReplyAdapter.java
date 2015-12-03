@@ -1,16 +1,7 @@
 package com.psgod.ui.adapter;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.sufficientlysecure.htmltextview.HtmlLocalImageGetter;
-import org.sufficientlysecure.htmltextview.HtmlTextView;
-import org.sufficientlysecure.htmltextview.HtmlTextView.ImageGetter;
-
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -27,9 +18,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.Response.Listener;
-import com.android.volley.VolleyError;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.psgod.Constants;
@@ -37,20 +25,20 @@ import com.psgod.ImageIOManager;
 import com.psgod.R;
 import com.psgod.ThreadManager;
 import com.psgod.WeakReferenceHandler;
-import com.psgod.eventbus.ImgRefreshEvent;
 import com.psgod.model.PhotoItem;
-import com.psgod.network.request.MyInProgressDeleteRequest;
-import com.psgod.network.request.PSGodErrorListener;
-import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.network.request.PhotoRequest;
 import com.psgod.network.request.PhotoRequest.ImageInfo;
-import com.psgod.ui.activity.CarouselPhotoDetailActivity;
 import com.psgod.ui.activity.MultiImageSelectActivity;
 import com.psgod.ui.activity.SinglePhotoDetail;
 import com.psgod.ui.widget.AvatarImageView;
 import com.psgod.ui.widget.dialog.CarouselPhotoDetailDialog;
-import com.psgod.ui.widget.dialog.CustomDialog;
 import com.psgod.ui.widget.dialog.InprogressShareMoreDialog;
+
+import org.sufficientlysecure.htmltextview.HtmlTextView;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class InprogressPageReplyAdapter extends BaseAdapter implements
 		Handler.Callback {

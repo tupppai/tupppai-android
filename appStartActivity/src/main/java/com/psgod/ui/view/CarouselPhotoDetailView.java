@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -263,7 +264,12 @@ public class CarouselPhotoDetailView extends RelativeLayout {
                 psDialog.show();
             }
         });
-
+//        view.setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                viewPagerBlow(40);
+//            }
+//        });
         view.setOnTouchListener(new View.OnTouchListener() {
             float downY;
             float leftX;
@@ -315,6 +321,8 @@ public class CarouselPhotoDetailView extends RelativeLayout {
                         case MotionEvent.ACTION_DOWN:
                             downY = motionEvent.getRawY();
                             leftX = motionEvent.getRawX();
+                            moveY = 0;
+                            moveX = 0;
                             Y = view.getY();
                             break;
                         case MotionEvent.ACTION_MOVE:
@@ -334,6 +342,9 @@ public class CarouselPhotoDetailView extends RelativeLayout {
 //                        } else {
 //                            isDown = false;
 //                        }
+                            if(Math.abs(moveY) < 10 && !isBlow){
+                                viewPagerBlow(40);
+                            }
                             if (Utils.pxToDp(mContext, view.getY()) < -55 && moveY < 0) {
                                 view.setY(oY);
                                 viewPagerBlow(40);
@@ -348,8 +359,11 @@ public class CarouselPhotoDetailView extends RelativeLayout {
                             if (isAnimEnd) {
                                 goOrigin(view.getY());
                             }
+
                             break;
+
                     }
+
                 }
                 return true;
             }
@@ -415,7 +429,7 @@ public class CarouselPhotoDetailView extends RelativeLayout {
                     vp.setLayoutParams(vParams);
                 }
             });
-            ObjectAnimator scrollAnim = ObjectAnimator.ofFloat(mScroll, "alpha", 0.1f, 1f);
+            ObjectAnimator scrollAnim = ObjectAnimator.ofFloat(mScroll, "alpha", 0.1f,0.2f, 1f);
             scrollAnim.addListener(new Animator.AnimatorListener() {
                 @Override
                 public void onAnimationStart(Animator animator)

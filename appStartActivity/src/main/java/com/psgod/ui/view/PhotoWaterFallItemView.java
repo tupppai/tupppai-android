@@ -7,12 +7,6 @@ package com.psgod.ui.view;
  *
  */
 
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-
-import org.sufficientlysecure.htmltextview.HtmlTextView;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.AttributeSet;
@@ -29,11 +23,14 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
 import com.psgod.Constants;
 import com.psgod.R;
 import com.psgod.model.PhotoItem;
-import com.psgod.ui.activity.CarouselPhotoDetailActivity;
 import com.psgod.ui.activity.SinglePhotoDetail;
 import com.psgod.ui.widget.AvatarImageView;
 import com.psgod.ui.widget.dialog.CarouselPhotoDetailDialog;
 import com.psgod.ui.widget.dialog.PSDialog;
+
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
 public class PhotoWaterFallItemView extends RelativeLayout {
 	private static final String TAG = PhotoWaterFallItemView.class

@@ -1,10 +1,5 @@
 package com.psgod.ui.adapter;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.sufficientlysecure.htmltextview.HtmlTextView;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +17,12 @@ import com.psgod.model.PhotoItem;
 import com.psgod.ui.activity.CarouselPhotoDetailActivity;
 import com.psgod.ui.activity.SinglePhotoDetail;
 import com.psgod.ui.widget.AvatarImageView;
+import com.psgod.ui.widget.dialog.CarouselPhotoDetailDialog;
+
+import org.sufficientlysecure.htmltextview.HtmlTextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MyPageCollectionAdapter extends BaseAdapter {
 	private static final String TAG = MyPageCollectionAdapter.class
@@ -107,12 +108,12 @@ public class MyPageCollectionAdapter extends BaseAdapter {
 			@Override
 			public void onClick(View v) {
 				if (photoItem.getType() == PhotoItem.TYPE_REPLY) {
-					CarouselPhotoDetailActivity.startActivity(mContext,
-							photoItem.getAskId(), photoItem.getReplyId());
+					new CarouselPhotoDetailDialog(mContext,
+							photoItem.getAskId(), photoItem.getReplyId()).show();
 				} else {
 					if (photoItem.getReplyCount() > 0) {
-						CarouselPhotoDetailActivity.startActivity(mContext,
-								photoItem);
+						new CarouselPhotoDetailDialog(mContext,
+								photoItem.getAskId(),photoItem.getPid()).show();
 					} else {
 						SinglePhotoDetail.startActivity(mContext, photoItem);
 					}

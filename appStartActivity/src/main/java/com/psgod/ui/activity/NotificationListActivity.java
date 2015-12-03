@@ -40,6 +40,7 @@ import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.ui.adapter.NotificationListAdapter;
 import com.psgod.ui.view.PullToRefreshSwipeMenuListView;
 import com.psgod.ui.widget.ActionBar;
+import com.psgod.ui.widget.dialog.CarouselPhotoDetailDialog;
 import com.psgod.ui.widget.dialog.CustomDialog;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
 
@@ -330,10 +331,13 @@ public class NotificationListActivity extends PSGodBaseActivity {
 				if (mType == TYPE_REPLY_NOTIFICATION) {
 					if (mNotificationList.get(position)
 							.getNotificationPhotoItem() != null) {
-						CarouselPhotoDetailActivity.startActivity(
-								NotificationListActivity.this,
-								mNotificationList.get(position)
-										.getNotificationPhotoItem());
+//						CarouselPhotoDetailActivity.startActivity(
+//								NotificationListActivity.this,
+//								mNotificationList.get(position)
+//										.getNotificationPhotoItem());
+						new CarouselPhotoDetailDialog(NotificationListActivity.this,mNotificationList.get(position)
+								.getNotificationPhotoItem().getAskId(),mNotificationList.get(position)
+								.getNotificationPhotoItem().getPid()).show();
 					}
 				}
 				if (mType == TYPE_SYSTEM_NOTIFICATION) {

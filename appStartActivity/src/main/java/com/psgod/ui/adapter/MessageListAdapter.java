@@ -1,7 +1,5 @@
 package com.psgod.ui.adapter;
 
-import java.util.List;
-
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -18,14 +16,13 @@ import com.psgod.Constants;
 import com.psgod.R;
 import com.psgod.model.PhotoItem;
 import com.psgod.model.notification.NotificationMessage;
-import com.psgod.ui.activity.CarouselPhotoDetailActivity;
 import com.psgod.ui.activity.CommentListActivity;
-import com.psgod.ui.activity.MessageSystemActivity;
-import com.psgod.ui.activity.SinglePhotoDetail;
 import com.psgod.ui.activity.UserProfileActivity;
 import com.psgod.ui.activity.WebBrowserActivity;
 import com.psgod.ui.widget.AvatarImageView;
-import com.psgod.ui.widget.EditPopupWindow;
+import com.psgod.ui.widget.dialog.CarouselPhotoDetailDialog;
+
+import java.util.List;
 
 public class MessageListAdapter extends BaseAdapter {
     private Context mContext;
@@ -160,8 +157,8 @@ public class MessageListAdapter extends BaseAdapter {
 
                     @Override
                     public void onClick(View v) {
-                        CarouselPhotoDetailActivity.startActivity(mContext,
-                                message.getTargetAskId(), message.getTargetId());
+                       new CarouselPhotoDetailDialog(mContext,
+                                message.getTargetAskId(), message.getTargetId()).show();
                     }
                 });
                 break;
@@ -185,8 +182,8 @@ public class MessageListAdapter extends BaseAdapter {
                 convertView.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        CarouselPhotoDetailActivity.startActivity(mContext,
-                                message.getAskId(), message.getReplyId());
+                        new CarouselPhotoDetailDialog(mContext,
+                                message.getAskId(), message.getReplyId()).show();
                     }
                 });
                 break;

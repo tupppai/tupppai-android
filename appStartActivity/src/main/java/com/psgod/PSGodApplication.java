@@ -1,19 +1,12 @@
 package com.psgod;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Handler;
-import android.util.Log;
 import android.view.WindowManager;
-
-import cn.sharesdk.framework.ShareSDK;
-import de.greenrobot.event.EventBus;
 
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
@@ -21,21 +14,22 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.psgod.emoji.FaceConversionUtil;
-import com.psgod.eventbus.RefreshEvent;
 import com.psgod.model.NotificationBean;
 import com.psgod.model.PhotoItem;
-import com.psgod.model.notification.SystemNotification;
 import com.psgod.ui.activity.AppStartActivity;
-import com.psgod.ui.activity.CarouselPhotoDetailActivity;
 import com.psgod.ui.activity.CommentListActivity;
 import com.psgod.ui.activity.FollowingListActivity;
 import com.psgod.ui.activity.MessageLikeActivity;
 import com.psgod.ui.activity.MessageSystemActivity;
-import com.psgod.ui.activity.NewMessageActivity;
 import com.umeng.message.PushAgent;
 import com.umeng.message.UmengMessageHandler;
 import com.umeng.message.UmengNotificationClickHandler;
 import com.umeng.message.entity.UMessage;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import cn.sharesdk.framework.ShareSDK;
 
 /**
  * 整个应用的入口 负责初始化必要的数据和类
@@ -154,7 +148,7 @@ public class PSGodApplication extends Application {
                             intent.putExtra("Constants.IntentKey.PHOTO_ITEM",item);
                             break;
                         case 2:
-                            CarouselPhotoDetailActivity.startActivity(getApplicationContext(),targetAskId,targetId);
+//                            CarouselPhotoDetailActivity.startActivity(getApplicationContext(),targetAskId,targetId);
                             return;
                         case 3:
                             intent.setClass(getApplicationContext(), FollowingListActivity.class);
