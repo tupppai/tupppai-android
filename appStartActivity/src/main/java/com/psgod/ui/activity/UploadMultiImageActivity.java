@@ -62,6 +62,7 @@ import com.psgod.network.request.UploadMultiRequest;
 import com.psgod.network.request.UploadMultiRequest.MultiUploadResult;
 import com.psgod.ui.view.LabelFlowLayout;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
+
 import android.view.ViewGroup.LayoutParams;
 import android.view.ViewGroup.MarginLayoutParams;
 
@@ -137,6 +138,8 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
 
         // 获取标签后再渲染view和设置监听
         initLabelinfo();
+        initViews();
+        initListener();
 
 //        // 延时300毫秒 弹出输入法
 //        handler.postDelayed(new Runnable() {
@@ -156,8 +159,19 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
                     public void onResponse(List<Label> response) {
                         mLabels.clear();
                         mLabels.addAll(response);
-                        initViews();
-                        initListener();
+                        for (int i = 0; i < mLabels.size(); i++) {
+                            Label label = mLabels.get(i);
+                            ToggleButton view = new ToggleButton(UploadMultiImageActivity.this);
+                            view.setTextSize(13);
+                            view.setText(label.getName());
+                            view.setTextOff(label.getName());
+                            view.setTextOn(label.getName());
+                            view.setId(label.getId());
+                            view.setOnCheckedChangeListener(mCheckListener);
+                            view.setBackgroundDrawable(getResources().getDrawable(R.drawable.selector_upload_label_background));
+                            view.setTextColor(Color.parseColor("#66000000"));
+                            mLabelLayout.addView(view, LabelButtonLp);
+                        }
                     }
                 })
                 .setErrorListener(getLabelErrorListener);
@@ -174,23 +188,9 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
         mLabelView = (LinearLayout) findViewById(R.id.label_layout);
         mLabelLayout = (LabelFlowLayout) findViewById(R.id.label_flow_layout);
         LabelButtonLp = new MarginLayoutParams(
-                LayoutParams.WRAP_CONTENT,Utils.dpToPx(mContext,31));
-        LabelButtonLp.setMargins(Utils.dpToPx(mContext,3),Utils.dpToPx(mContext,3),
-                Utils.dpToPx(mContext,3),Utils.dpToPx(mContext,3));
-
-        for (int i = 0; i < mLabels.size(); i++) {
-            Label label = mLabels.get(i);
-            ToggleButton view = new ToggleButton(this);
-            view.setTextSize(13);
-            view.setTextColor(Color.parseColor("#000000"));
-            view.setText(label.getName());
-            view.setTextOff(label.getName());
-            view.setTextOn(label.getName());
-            view.setId(label.getId());
-            view.setOnCheckedChangeListener(mCheckListener);
-            view.setBackgroundDrawable(getResources().getDrawable(R.drawable.selector_upload_label_background));
-            mLabelLayout.addView(view, LabelButtonLp);
-        }
+                LayoutParams.WRAP_CONTENT, Utils.dpToPx(mContext, 31));
+        LabelButtonLp.setMargins(Utils.dpToPx(mContext, 3), Utils.dpToPx(mContext, 3),
+                Utils.dpToPx(mContext, 3), Utils.dpToPx(mContext, 3));
 
         if (type.equals(TYPE_ASK_SELECT)) {
             mContentEdit.setHint("写下你要说的图片修改需求吧");
@@ -290,10 +290,12 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
             if (isChecked) {
                 if (!mSelectLabelIds.contains(buttonView.getId())) {
                     mSelectLabelIds.add(buttonView.getId());
+                    buttonView.setTextColor(Color.parseColor("#000000"));
                 }
             } else {
                 if (mSelectLabelIds.contains(buttonView.getId())) {
                     mSelectLabelIds.remove(mSelectLabelIds.indexOf(buttonView.getId()));
+                    buttonView.setTextColor(Color.parseColor("#66000000"));
                 }
             }
         }
@@ -368,7 +370,7 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
                 if (contentString.equals("")) {
                     Toast.makeText(mContext, "请输入描述", Toast.LENGTH_SHORT)
                             .show();
-                } else if (type.equals(TYPE_ASK_SELECT) && (mSelectLabelIds.size()==0)) {
+                } else if (type.equals(TYPE_ASK_SELECT) && (mSelectLabelIds.size() == 0)) {
                     Toast.makeText(mContext, "请至少选择一个标签", Toast.LENGTH_SHORT)
                             .show();
                 } else {
@@ -749,7 +751,7 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
             UploadMultiRequest.class.getSimpleName()) {
         @Override
         public void handleError(VolleyError error) {
-            Toast.makeText(mContext,"获取标签失败",Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, "获取标签失败", Toast.LENGTH_SHORT).show();
         }
     };
 
@@ -762,8 +764,12 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        UploadCache.getInstence().setCache(IMAGE_UPLOAD_TYPE,
-                mContentEdit.getText().toString());
+        try {
+            UploadCache.getInstence().setCache(IMAGE_UPLOAD_TYPE,
+                    mContentEdit.getText().toString());
+        } catch (Exception e) {
+
+        }
     }
 
 }
