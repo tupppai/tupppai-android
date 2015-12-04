@@ -342,8 +342,8 @@ public class FaceRelativeLayout extends RelativeLayout implements
 			String text = et_sendmessage.getText().toString();
 			if (selection > 0) {
 				String text2 = text.substring(selection - 1);
-				if ("]".equals(text2)) {
-					int start = text.lastIndexOf("[");
+				if (":".equals(text2)) {
+					int start = text.indexOf(":");
 					int end = selection;
 					et_sendmessage.getText().delete(start, end);
 					return;
