@@ -146,6 +146,7 @@ public class PSGodApplication extends Application {
 
                     switch (type) {
                         case 0:
+                            intent.putExtra("isSingle",true);
                             intent.setClass(getApplicationContext(), MessageSystemActivity.class);
                             break;
                         case 1:
@@ -160,12 +161,14 @@ public class PSGodApplication extends Application {
 //                            CarouselPhotoDetailActivity.startActivity(getApplicationContext(),targetAskId,targetId);
                             return;
                         case 3:
+                            intent.putExtra("isSingle",true);
                             intent.setClass(getApplicationContext(), FollowingListActivity.class);
                             break;
 //                        case 4:
 //                            intent.setClass(getApplicationContext(), MessageSystemActivity.class);
 //                            break;
                         case 5:
+                            intent.putExtra("isSingle",true);
                             intent.setClass(getApplicationContext(), MessageLikeActivity.class);
                             break;
                         default:

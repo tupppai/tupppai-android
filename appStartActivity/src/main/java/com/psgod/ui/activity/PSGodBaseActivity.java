@@ -33,9 +33,9 @@ import com.umeng.analytics.MobclickAgent;
 
 /**
  * 应用的基础Activity，实现一些公共的逻辑 所有的Activity都必须继承PSGodBaseActivity
- * 
+ *
  * @author rayalyuan
- * 
+ *
  */
 public abstract class PSGodBaseActivity extends FragmentActivity implements
 		Handler.Callback {
@@ -83,18 +83,18 @@ public abstract class PSGodBaseActivity extends FragmentActivity implements
 	}
 
 	//开启友盟统计
-	@Override 
+	@Override
 	protected void onResume() {
 		super.onResume();
 		MobclickAgent.onResume(this);
 	};
-	
+
 	@Override
 	protected void onPause() {
 		super.onPause();
 		MobclickAgent.onPause(this);
 	}
-	
+
 	@Override
 	public void onStop() {
 		super.onStop();
@@ -105,8 +105,23 @@ public abstract class PSGodBaseActivity extends FragmentActivity implements
 		}
 	}
 
+	private boolean isJump = false;
+	@Override
+	public void finish() {
+		if (getIntent().getBooleanExtra("isSingle",false)){
+			Intent intent = new Intent(this,MainActivity.class);
+			startActivity(intent);
+			isJump = true;
+		}
+		super.finish();
+	}
+
 	@Override
 	public void onDestroy() {
+		if (getIntent().getBooleanExtra("isSingle",false) && !isJump){
+			Intent intent = new Intent(this,MainActivity.class);
+			startActivity(intent);
+		}
 		super.onDestroy();
 		// --countOfActivity;
 		// if (countOfActivity == 0) {
