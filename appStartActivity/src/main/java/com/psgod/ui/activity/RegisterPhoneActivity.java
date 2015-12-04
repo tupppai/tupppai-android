@@ -197,6 +197,7 @@ public class RegisterPhoneActivity extends PSGodBaseActivity implements
 										public void onClick(
 												DialogInterface arg0, int arg1) {
 											phone_register_number.setText("");
+											phone_register_pwd.setText("");
 											phone_register_number
 													.requestFocus();
 										}
