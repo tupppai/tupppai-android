@@ -138,14 +138,14 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
         // 获取标签后再渲染view和设置监听
         initLabelinfo();
 
-        // 延时300毫秒 弹出输入法
-        handler.postDelayed(new Runnable() {
-
-            @Override
-            public void run() {
-                callInputPanel();
-            }
-        }, 300);
+//        // 延时300毫秒 弹出输入法
+//        handler.postDelayed(new Runnable() {
+//
+//            @Override
+//            public void run() {
+//                callInputPanel();
+//            }
+//        }, 300);
 
     }
 
