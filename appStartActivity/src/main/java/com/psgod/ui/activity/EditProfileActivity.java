@@ -43,6 +43,7 @@ import com.psgod.Logger;
 import com.psgod.PSGodApplication;
 import com.psgod.R;
 import com.psgod.WeakReferenceHandler;
+import com.psgod.eventbus.AvatarEvent;
 import com.psgod.model.LoginUser;
 import com.psgod.model.LoginUser.SPKey;
 import com.psgod.network.request.ModifyUserData;
@@ -52,6 +53,8 @@ import com.psgod.ui.view.CircleImageView;
 import com.psgod.ui.widget.ActionBar;
 import com.psgod.ui.widget.GenderSelector;
 import com.psgod.ui.widget.dialog.InPutDialog;
+
+import de.greenrobot.event.EventBus;
 
 public class EditProfileActivity extends PSGodBaseActivity implements
 		Handler.Callback {
@@ -179,6 +182,7 @@ public class EditProfileActivity extends PSGodBaseActivity implements
 				editor.commit();
 			}
 			user.refreshData();
+			EventBus.getDefault().post(new AvatarEvent());
 			EditProfileActivity.this.finish();
 		}
 	};

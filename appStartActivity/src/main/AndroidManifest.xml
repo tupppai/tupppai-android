@@ -133,8 +133,8 @@
         <activity android:name=".ui.activity.RecommendFocusActivity" />
         <activity android:name=".ui.activity.WebBrowserActivity" />
         <activity android:name=".ui.activity.MultiImageSelectActivity" />
-        <activity android:name=".ui.activity.RecentAsksActivity"/>
-        <activity android:name=".ui.activity.RecentWorkActivity"/>
+        <activity android:name=".ui.activity.RecentAsksActivity" />
+        <activity android:name=".ui.activity.RecentWorkActivity" />
         <activity
             android:name=".ui.activity.UploadMultiImageActivity"
             android:launchMode="singleTop"
@@ -283,6 +283,10 @@
         <activity
             android:name=".ui.activity.BlankActivity"
             android:label="@string/title_activity_blank" >
+        </activity>
+        <activity
+            android:name=".ui.activity.ChannelActivity"
+            android:label="@string/title_activity_channel" >
         </activity>
     </application>
 
