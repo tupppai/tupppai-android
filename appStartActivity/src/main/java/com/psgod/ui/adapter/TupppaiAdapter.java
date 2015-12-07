@@ -1,6 +1,7 @@
 package com.psgod.ui.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.LinearLayout;
 
 import com.psgod.R;
 import com.psgod.Utils;
+import com.psgod.ui.activity.ChannelActivity;
 
 import java.util.List;
 
@@ -52,9 +54,19 @@ public class TupppaiAdapter extends MyBaseAdapter<Object> {
             view.setImageDrawable(context.getResources().getDrawable(R.mipmap.tupppai_ask));
             holder.linear.addView(view);
         }
-
+        convertView.setTag(R.id.tupppai_view_id,position);
+        convertView.setOnClickListener(viewClick);
         return convertView;
     }
+
+    View.OnClickListener viewClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Integer position = (Integer) view.getTag(R.id.tupppai_view_id);
+            Intent intent = new Intent(context, ChannelActivity.class);
+            context.startActivity(intent);
+        }
+    };
 
     private class ViewHolder {
         ImageView headImg;

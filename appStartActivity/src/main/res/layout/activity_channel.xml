@@ -1,37 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
 
     <RelativeLayout
+        android:id="@+id/activity_channal_title_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/actionbar_height"
-        android:background="@color/white"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/activity_channal_title_layout"
-        >
+        android:layout_alignParentTop="true"
+        android:background="@color/white">
 
         <TextView
             android:id="@+id/activity_channal_title_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="用PS搞创意"
-            android:textSize="18dp"
+            android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true" />
+            android:text="用PS搞创意"
+            android:textSize="18dp" />
 
         <ImageView
+            android:id="@+id/activity_channal_title_finish"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/activity_channal_title_finish"
-            android:src="@drawable/selector_back_btn"
             android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:layout_alignParentStart="true" />
+            android:paddingLeft="11dp"
+            android:paddingRight="11dp"
+            android:src="@drawable/selector_back_btn" />
     </RelativeLayout>
+
+
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
+        android:id="@+id/activity_channal_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/activity_channal_title_layout"
+        android:background="#F7F7F7" />
 
 </RelativeLayout>

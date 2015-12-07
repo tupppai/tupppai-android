@@ -29,8 +29,8 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
+            android:paddingLeft="11dp"
+            android:paddingRight="11dp"
             android:src="@drawable/selector_back_btn" />
     </RelativeLayout>
 

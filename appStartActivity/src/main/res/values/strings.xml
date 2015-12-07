@@ -36,6 +36,7 @@
     <string name="page_tab2">作品</string>
     
     <item type="id" name="inprogress_item"></item>
+    <item type="id" name="tupppai_view_id" />
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

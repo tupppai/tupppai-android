@@ -7,12 +7,15 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.psgod.R;
 import com.psgod.ui.activity.RecentAsksActivity;
 import com.psgod.ui.activity.RecentWorkActivity;
+import com.psgod.ui.adapter.MyBaseAdapter;
 import com.psgod.ui.adapter.TupppaiAdapter;
 
 import java.util.ArrayList;
@@ -75,6 +78,8 @@ public class TupppaiFragment extends BaseFragment {
                 startActivity(intent);
             }
         });
+
     }
+
 
 }
