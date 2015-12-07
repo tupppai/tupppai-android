@@ -28,6 +28,7 @@ import com.psgod.model.ActivitiesAct;
 import com.psgod.model.PhotoItem;
 import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.network.request.PhotoActRequest;
+import com.psgod.ui.activity.MultiImageSelectActivity;
 import com.psgod.ui.activity.WebBrowserActivity;
 import com.psgod.ui.adapter.RecentPageActAdapter;
 
@@ -171,7 +172,7 @@ public class RecentPageActFragment extends BaseFragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), WebBrowserActivity.class);
-                intent.putExtra(WebBrowserActivity.KEY_DESC,mActs.get(0).getDisplay_name());
+                intent.putExtra(WebBrowserActivity.KEY_DESC, mActs.get(0).getName());
                 intent.putExtra(WebBrowserActivity.KEY_URL,mActs.get(0).getUrl());
                 getActivity().startActivity(intent);
             }
@@ -181,7 +182,10 @@ public class RecentPageActFragment extends BaseFragment {
             public void onClick(View view) {
                 if (mActs.size() > 0) {
 //                    loadUtils.upLoad(mActs.get(0).getType(), Long.parseLong(mActs.get(0).getAsk_id()));
-
+                    Intent intent = new Intent(getActivity(),MultiImageSelectActivity.class);
+                    intent.putExtra("AskId",Long.parseLong(mActs.get(0).getAsk_id()));
+                    intent.putExtra("SelectType","TypeReplySelect");
+                    startActivity(intent);
                 }
             }
         });
@@ -216,7 +220,7 @@ public class RecentPageActFragment extends BaseFragment {
                 if(mHeadView.getVisibility() == View.GONE){
                     mHeadView.setVisibility(View.VISIBLE);
                 }
-                ImageLoader.getInstance().displayImage(mActs.get(0).getApp_pic(), mHeadImg, Constants.DISPLAY_IMAGE_OPTIONS);
+                ImageLoader.getInstance().displayImage(mActs.get(0).getImage_url(), mHeadImg, Constants.DISPLAY_IMAGE_OPTIONS);
             }else{
                 mHeadView.setVisibility(View.GONE);
                 mListView.setEmptyView(mEmptyView);

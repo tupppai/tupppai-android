@@ -8,8 +8,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.psgod.Constants;
 import com.psgod.R;
 import com.psgod.Utils;
+import com.psgod.model.Tupppai;
 import com.psgod.ui.activity.ChannelActivity;
 
 import java.util.List;
@@ -17,15 +21,17 @@ import java.util.List;
 /**
  * Created by Administrator on 2015/12/4 0004.
  */
-public class TupppaiAdapter extends MyBaseAdapter<Object> {
+public class TupppaiAdapter extends MyBaseAdapter<Tupppai> {
 
-    public TupppaiAdapter(Context context, List<Object> list) {
+    private DisplayImageOptions mOptions = Constants.DISPLAY_IMAGE_OPTIONS;
+
+    public TupppaiAdapter(Context context, List<Tupppai> list) {
         super(context, list);
     }
 
     @Override
     public int getCount() {
-        return 5;
+        return list.size();
     }
 
     private static ViewHolder holder;
@@ -41,20 +47,21 @@ public class TupppaiAdapter extends MyBaseAdapter<Object> {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        holder.headImg.setImageDrawable(context.getResources().getDrawable(R.mipmap.tupppai_banner));
+        ImageLoader.getInstance().displayImage(list.get(position).getApp_pic(),holder.headImg,mOptions);
         holder.linear.removeAllViews();
-        for (int i = 0; i < 5; i++) {
+        int length = list.get(position).getThreads().size();
+        for (int i = 0; i < length; i++) {
             ImageView view = new ImageView(context);
             LinearLayout.LayoutParams params = new LinearLayout.
-                    LayoutParams(Utils.dpToPx(context,60), Utils.dpToPx(context,60));
+                    LayoutParams(Utils.dpToPx(context, 60), Utils.dpToPx(context, 60));
             params.weight = 1;
-                params.setMargins(Utils.dpToPx(context, 9), 0, 0, 0);
+            params.setMargins(Utils.dpToPx(context, 9), 0, 0, 0);
             view.setLayoutParams(params);
             view.setScaleType(ImageView.ScaleType.CENTER_CROP);
             view.setImageDrawable(context.getResources().getDrawable(R.mipmap.tupppai_ask));
             holder.linear.addView(view);
         }
-        convertView.setTag(R.id.tupppai_view_id,position);
+        convertView.setTag(R.id.tupppai_view_id, position);
         convertView.setOnClickListener(viewClick);
         return convertView;
     }
@@ -64,6 +71,7 @@ public class TupppaiAdapter extends MyBaseAdapter<Object> {
         public void onClick(View view) {
             Integer position = (Integer) view.getTag(R.id.tupppai_view_id);
             Intent intent = new Intent(context, ChannelActivity.class);
+            intent.putExtra("id",list.get(position).getId());
             context.startActivity(intent);
         }
     };

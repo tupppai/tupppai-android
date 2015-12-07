@@ -49,7 +49,7 @@ public class ChannelActivity extends PSGodBaseActivity {
         mHeadList = (RecyclerView) head.findViewById(R.id.activity_channal_head_list);
         mHeadMore = (TextView) head.findViewById(R.id.activity_channal_head_more);
 
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,true);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
         mHeadList.setLayoutManager(layoutManager);
         objects = new ArrayList<Object>();
         headAdapter = new ChannelHeadAdapter(this,objects);

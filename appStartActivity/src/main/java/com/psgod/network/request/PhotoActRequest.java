@@ -144,7 +144,7 @@ public final class PhotoActRequest extends BaseRequest<Activities> {
         @Override
         public String createUrl() {
             StringBuilder sb = new StringBuilder(BaseRequest.PSGOD_BASE_URL);
-            sb.append("thread/get_activities");
+            sb.append("/thread/activities");
             sb.append("?width=").append(width);
             sb.append("&page=").append(page);
             // 拉取某个求P的全部作品
