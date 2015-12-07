@@ -165,7 +165,11 @@ public class CarouselPhotoDetailDialog extends Dialog {
             }
             adapter.notifyDataSetChanged();
             if (items.size() > 1) {
-                vp.setCurrentItem(1);
+                if(askId == replyId){
+                    vp.setCurrentItem(0);
+                }else {
+                    vp.setCurrentItem(1);
+                }
             }
             if (progressingDialog != null && progressingDialog.isShowing()) {
                 progressingDialog.dismiss();

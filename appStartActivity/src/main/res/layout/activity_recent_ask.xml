@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    android:background="#FFFFFF">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/actionbar_height"
+        android:background="@color/white"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/activity_recent_ask_title"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="求P区"
+            android:textSize="18dp"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/activity_ask_finish"
+            android:src="@drawable/selector_back_btn"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:layout_alignParentStart="true" />
+    </RelativeLayout>
+
+    <com.psgod.ui.view.PullToRefreshStaggeredGridView
+        android:id="@+id/activity_inprogress_ask_staggered_gridview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/actionbar"
+        android:fastScrollEnabled="true"
+        android:scrollbars="vertical"
+        android:background="#F7F7F7"
+      	 />
+    
+    <RelativeLayout
+        android:id="@+id/activity_ask_empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal|top"
+        android:layout_below="@id/actionbar"
+        android:visibility="gone">
+         
+		<ImageView 
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_alignParentRight="true"
+		    android:layout_alignParentTop="true"
+		    android:layout_marginRight="10dp"
+		    android:layout_marginTop="10dp"
+		    android:src="@drawable/point_at"
+		    android:visibility="gone"
+		    />
+        
+        <ImageView
+            android:id="@+id/activity_ask_nothing_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+			android:layout_centerHorizontal="true"
+            android:layout_marginTop="60dp"
+            android:background="@drawable/ic_gui"/>
+		
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+			android:layout_centerHorizontal="true"
+			android:layout_below="@id/activity_ask_nothing_icon"
+			android:layout_marginTop="35dp"
+            android:text="点击右上方照相机上传你的求助吧"
+            android:textColor="#8D8D8D"
+            android:textSize="15dp" />
+    </RelativeLayout>
+    
+</LinearLayout>

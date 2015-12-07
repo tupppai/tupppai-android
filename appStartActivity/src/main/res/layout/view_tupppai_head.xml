@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F8F8F8"
+    android:orientation="horizontal"
+    android:paddingBottom="6dp"
+    android:paddingLeft="9dp"
+    android:paddingRight="9dp">
+
+    <ImageView
+        android:id="@+id/view_tupppai_head_ask"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_weight="1"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/tupppai_ask" />
+
+    <ImageView
+        android:id="@+id/view_tupppai_head_work"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginLeft="7dp"
+        android:layout_weight="1"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/tupppai_work" />
+</LinearLayout>

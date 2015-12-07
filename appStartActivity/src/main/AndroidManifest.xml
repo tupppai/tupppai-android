@@ -133,6 +133,8 @@
         <activity android:name=".ui.activity.RecommendFocusActivity" />
         <activity android:name=".ui.activity.WebBrowserActivity" />
         <activity android:name=".ui.activity.MultiImageSelectActivity" />
+        <activity android:name=".ui.activity.RecentAsksActivity"/>
+        <activity android:name=".ui.activity.RecentWorkActivity"/>
         <activity
             android:name=".ui.activity.UploadMultiImageActivity"
             android:launchMode="singleTop"

@@ -1,13 +1,5 @@
 package com.psgod.ui.activity;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import org.android.agoo.client.BaseRegistrar;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -38,7 +30,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.psgod.Constants;
-import com.psgod.PSGodApplication;
 import com.psgod.R;
 import com.psgod.UserPreferences;
 import com.psgod.Utils;
@@ -60,14 +51,18 @@ import com.psgod.ui.fragment.HomePageFragment;
 import com.psgod.ui.fragment.HomePageHotFragment;
 import com.psgod.ui.fragment.InprogressPageFragment;
 import com.psgod.ui.fragment.MyPageFragment;
-import com.psgod.ui.fragment.RecentPageActFragment;
-import com.psgod.ui.fragment.RecentPageAsksFragment;
-import com.psgod.ui.fragment.RecentPageFragment;
-import com.psgod.ui.fragment.RecentPageWorksFragment;
+import com.psgod.ui.fragment.TupppaiFragment;
 import com.psgod.ui.widget.dialog.CameraPopupwindow;
 import com.umeng.message.PushAgent;
-import com.umeng.message.entity.UMessage;
 import com.umeng.update.UmengUpdateAgent;
+
+import org.android.agoo.client.BaseRegistrar;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import de.greenrobot.event.EventBus;
 
@@ -405,56 +400,56 @@ public class MainActivity extends PSGodBaseActivity implements
 	private void initEvents() {
 
 		// 双击最近tab自动刷新
-		mRecentBtn.setOnTouchListener(new OnTouchListener() {
-			int count = 0;
-			int firClick = 0;
-			int secClick = 0;
-
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				if (MotionEvent.ACTION_DOWN == event.getAction()) {
-					count++;
-					if (count == 1) {
-						firClick = (int) System.currentTimeMillis();
-					} else if (count == 2) {
-						secClick = (int) System.currentTimeMillis();
-						if (secClick - firClick < 1200) {
-							// 双击事件 下拉刷新首页热门列表
-							Intent intent = new Intent(MainActivity.this,
-									MainActivity.class);
-							intent.putExtra(
-									MainActivity.IntentParams.KEY_FRAGMENT_ID,
-									MainActivity.IntentParams.VALUE_FRAGMENT_ID_RECENT);
-							if (Constants.CURRENT_RECENTPAGE_TAB == 2) {
-//								intent.putExtra(
-//										MainActivity.IntentParams.KEY_RECENTPAGE_ID,
-//										IntentParams.VALUE_RECENTPAGE_ID_ACT);
-								EventBus.getDefault().post(new RefreshEvent(RecentPageActFragment.class.getName()));
-							}else if (Constants.CURRENT_RECENTPAGE_TAB == 0) {
-//								intent.putExtra(
-//										MainActivity.IntentParams.KEY_RECENTPAGE_ID,
-//										MainActivity.IntentParams.VALUE_RECENTPAGE_ID_ASKS);
-								EventBus.getDefault().post(new RefreshEvent(RecentPageAsksFragment.class.getName()));
-							}else if (Constants.CURRENT_RECENTPAGE_TAB == 1){
-//								intent.putExtra(
-//										MainActivity.IntentParams.KEY_RECENTPAGE_ID,
-//										MainActivity.IntentParams.VALUE_RECENTPAGE_ID_WORKS);
-								EventBus.getDefault().post(new RefreshEvent(RecentPageWorksFragment.class.getName()));
-							}
-
+//		mRecentBtn.setOnTouchListener(new OnTouchListener() {
+//			int count = 0;
+//			int firClick = 0;
+//			int secClick = 0;
+//
+//			@Override
+//			public boolean onTouch(View v, MotionEvent event) {
+//				if (MotionEvent.ACTION_DOWN == event.getAction()) {
+//					count++;
+//					if (count == 1) {
+//						firClick = (int) System.currentTimeMillis();
+//					} else if (count == 2) {
+//						secClick = (int) System.currentTimeMillis();
+//						if (secClick - firClick < 1200) {
+//							// 双击事件 下拉刷新首页热门列表
+//							Intent intent = new Intent(MainActivity.this,
+//									MainActivity.class);
 //							intent.putExtra(
-//									MainActivity.IntentParams.KEY_NEED_REFRESH,
-//									true);
-//							startActivity(intent);
-						}
-						count = 0;
-						firClick = 0;
-						secClick = 0;
-					}
-				}
-				return false;
-			}
-		});
+//									MainActivity.IntentParams.KEY_FRAGMENT_ID,
+//									MainActivity.IntentParams.VALUE_FRAGMENT_ID_RECENT);
+//							if (Constants.CURRENT_RECENTPAGE_TAB == 2) {
+////								intent.putExtra(
+////										MainActivity.IntentParams.KEY_RECENTPAGE_ID,
+////										IntentParams.VALUE_RECENTPAGE_ID_ACT);
+//								EventBus.getDefault().post(new RefreshEvent(RecentPageActFragment.class.getName()));
+//							}else if (Constants.CURRENT_RECENTPAGE_TAB == 0) {
+////								intent.putExtra(
+////										MainActivity.IntentParams.KEY_RECENTPAGE_ID,
+////										MainActivity.IntentParams.VALUE_RECENTPAGE_ID_ASKS);
+//								EventBus.getDefault().post(new RefreshEvent(RecentPageAsksFragment.class.getName()));
+//							}else if (Constants.CURRENT_RECENTPAGE_TAB == 1){
+////								intent.putExtra(
+////										MainActivity.IntentParams.KEY_RECENTPAGE_ID,
+////										MainActivity.IntentParams.VALUE_RECENTPAGE_ID_WORKS);
+//								EventBus.getDefault().post(new RefreshEvent(RecentPageWorksFragment.class.getName()));
+//							}
+//
+////							intent.putExtra(
+////									MainActivity.IntentParams.KEY_NEED_REFRESH,
+////									true);
+////							startActivity(intent);
+//						}
+//						count = 0;
+//						firClick = 0;
+//						secClick = 0;
+//					}
+//				}
+//				return false;
+//			}
+//		});
 
 		// 双击首页tab刷新
 		mHomeBtn.setOnTouchListener(new OnTouchListener() {
@@ -587,8 +582,9 @@ public class MainActivity extends PSGodBaseActivity implements
 				fragment.onNewIntent(mIntent);
 			}
 			if (fragmentId == R.id.activity_main_tab_recent) {
-				RecentPageFragment recentFragment = (RecentPageFragment) getFragment(R.id.activity_main_tab_recent);
-				recentFragment.onNewIntent(mIntent);
+//				RecentPageFragment recentFragment = (RecentPageFragment) getFragment(R.id.activity_main_tab_recent);
+//				recentFragment.onNewIntent(mIntent);
+				TupppaiFragment recentFragment = (TupppaiFragment) getFragment(R.id.activity_main_tab_recent);
 			}
 			if (fragmentId == R.id.activity_main_tab_inprogressing) {
 				InprogressPageFragment inprogressFragment = (InprogressPageFragment) getFragment(fragmentId);
@@ -734,7 +730,8 @@ public class MainActivity extends PSGodBaseActivity implements
 				fragment = new HomePageFragment();
 				break;
 			case R.id.activity_main_tab_recent:
-				fragment = new RecentPageFragment();
+//				fragment = new RecentPageFragment();
+				fragment = new TupppaiFragment();
 				break;
 			case R.id.activity_main_tab_inprogressing:
 				fragment = new InprogressPageFragment();
