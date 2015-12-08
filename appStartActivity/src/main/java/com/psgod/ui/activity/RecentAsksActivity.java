@@ -1,6 +1,7 @@
 package com.psgod.ui.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler.Callback;
@@ -61,9 +62,13 @@ public class RecentAsksActivity extends PSGodBaseActivity implements Callback {
 	private static final long DEFAULT_LAST_REFRESH_TIME = -1;
 	private long mLastUpdatedTime;
 
+	private String mChannelId;
+
 	private int mPage = 1;
 	// 控制是否可以加载下一页
 	private boolean canLoadMore = true;
+
+	private CustomProgressingDialog progressingDialog;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -71,7 +76,8 @@ public class RecentAsksActivity extends PSGodBaseActivity implements Callback {
 //		EventBus.getDefault().register(this);
 		setContentView(R.layout.activity_recent_ask);
 		mContext = this;
-
+		progressingDialog = new CustomProgressingDialog(this);
+		progressingDialog.show();
 		mViewHolder = new ViewHolder();
 		mViewHolder.mGridView = (PullToRefreshStaggeredGridView)findViewById(R.id.activity_inprogress_ask_staggered_gridview);
 		mViewHolder.mGridView.setMode(Mode.PULL_FROM_START);
@@ -85,6 +91,9 @@ public class RecentAsksActivity extends PSGodBaseActivity implements Callback {
 		mViewHolder.mGridView.getRefreshableView().addFooterView(
 				mViewHolder.mFooterView);
 		mViewHolder.mFooterView.setVisibility(View.GONE);
+
+		Intent intent = getIntent();
+		mChannelId = intent.getStringExtra("channel_id");
 
 		// 初始化listener
 		mRecentPageAsksListener = new RecentPageAsksListener();
@@ -161,6 +170,10 @@ public class RecentAsksActivity extends PSGodBaseActivity implements Callback {
 						.setListener(loadMoreListener)
 						.setErrorListener(errorListener);
 
+				if(mChannelId != null && !mChannelId.equals("")){
+					builder.setChannelId(mChannelId);
+				}
+
 				PhotoListRequest request = builder.build();
 				request.setTag(TAG);
 				RequestQueue requestQueue = PSGodRequestQueue.getInstance(
@@ -192,7 +205,9 @@ public class RecentAsksActivity extends PSGodBaseActivity implements Callback {
 				.setPage(mPage).setLastUpdated(mLastUpdatedTime)
 				.setType(PhotoItem.TYPE_RECENT_ASK)
 				.setListener(refreshListener).setErrorListener(errorListener);
-
+		if(mChannelId != null && !mChannelId.equals("")){
+			builder.setChannelId(mChannelId);
+		}
 		PhotoListRequest request = builder.build();
 		request.setTag(TAG);
 		RequestQueue requestQueue = PSGodRequestQueue.getInstance(mContext)
@@ -237,6 +252,10 @@ public class RecentAsksActivity extends PSGodBaseActivity implements Callback {
 			if (dialog != null && dialog.isShowing()) {
 				dialog.dismiss();
 			}
+
+			if(progressingDialog.isShowing()){
+				progressingDialog.dismiss();
+			}
 		}
 	};
 
@@ -256,6 +275,10 @@ public class RecentAsksActivity extends PSGodBaseActivity implements Callback {
 			} else {
 				canLoadMore = true;
 			}
+
+			if(progressingDialog.isShowing()){
+				progressingDialog.dismiss();
+			}
 		}
 	};
 
@@ -266,6 +289,10 @@ public class RecentAsksActivity extends PSGodBaseActivity implements Callback {
 			mViewHolder.mGridView.onRefreshComplete();
 			if (dialog != null && dialog.isShowing()) {
 				dialog.dismiss();
+			}
+
+			if(progressingDialog.isShowing()){
+				progressingDialog.dismiss();
 			}
 		}
 	};

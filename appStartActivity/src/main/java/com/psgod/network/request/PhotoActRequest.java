@@ -68,18 +68,18 @@ public final class PhotoActRequest extends BaseRequest<Activities> {
         public static final int ORDER_DESC = 0;
         public static final int ORDER_ASC = 1;
 
-        private int width = Constants.WIDTH_OF_SCREEN;
         private long lastUpdated = -1;
         private int sort;
         private int order = ORDER_DESC;
         private int page = 1;
         private int size = 15;
         private long askId = 0l;
+        private String id;
         private Listener<Activities> listener;
         private ErrorListener errorListener;
 
-        public Builder setWidth(int width) {
-            this.width = width;
+        public Builder setId(String id) {
+            this.id = id;
             return this;
         }
 
@@ -87,6 +87,8 @@ public final class PhotoActRequest extends BaseRequest<Activities> {
          * @param type TYPE_HOT: 热门 TYPE_RECENT: 最近
          * @return
          */
+
+
 
         public Builder setLastUpdated(long lastUpdated) {
             this.lastUpdated = lastUpdated;
@@ -145,15 +147,8 @@ public final class PhotoActRequest extends BaseRequest<Activities> {
         public String createUrl() {
             StringBuilder sb = new StringBuilder(BaseRequest.PSGOD_BASE_URL);
             sb.append("/thread/activities");
-            sb.append("?width=").append(width);
-            sb.append("&page=").append(page);
-            // 拉取某个求P的全部作品
-            if (askId != 0l) {
-                sb.append("&ask_id=").append(askId);
-            }
-            if (lastUpdated != -1) {
-                sb.append("&last_updated=").append(lastUpdated);
-            }
+            sb.append("?page=").append(page);
+            sb.append("&activity_id=").append(id);
             // sb.append("size=").append(size); 用服务器的默认值
             // private int sort;
             // private int order = ORDER_DESC;

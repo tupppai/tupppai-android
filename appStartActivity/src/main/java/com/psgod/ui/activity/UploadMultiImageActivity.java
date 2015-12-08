@@ -106,6 +106,7 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
     private String type;
     private String contentString;
     private Long mAskId = 0l;
+    private String mActivityId;
 
     private Bitmap mImageBitmap; // 压缩后的图片
     private ArrayList<Long> mUploadIdList = new ArrayList<Long>(); // 上传多图返回的id
@@ -127,6 +128,7 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
                 .getStringArrayList(MULTIIMAGESELECTRESULT);
         type = bundle.getString("SelectType");
         mAskId = bundle.getLong("AskId", mAskId);
+        mActivityId = bundle.getString("ActivityId");
         if (type.equals(TYPE_ASK_SELECT)) {
             IMAGE_UPLOAD_TYPE = TYPE_ASK_UPLOAD;
         } else {
@@ -451,7 +453,7 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
             UploadMultiRequest.Builder builder = new UploadMultiRequest.Builder()
                     .setUploadType(IMAGE_UPLOAD_TYPE).setContent(contentString)
                     .setUploadIdList(mUploadIdList)
-                    .setRatioList(mImageRatioList).setAskId(mAskId)
+                    .setRatioList(mImageRatioList).setAskId(mAskId).setActivityId(mActivityId)
                     .setLabelIdList(mSelectLabelIds)
                     .setScaleList(mImageScaleList).setListener(uploadListener)
                     .setErrorListener(errorListener);

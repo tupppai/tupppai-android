@@ -18,7 +18,7 @@ public class Tupppai implements Serializable {
     private String post_btn;
     private String description;
     private String category_type;
-    private List<?> threads;
+    private List<PhotoItem> threads;
 
     public void setId(String id) {
         this.id = id;
@@ -60,7 +60,7 @@ public class Tupppai implements Serializable {
         this.category_type = category_type;
     }
 
-    public void setThreads(List<?> threads) {
+    public void setThreads(List<PhotoItem> threads) {
         this.threads = threads;
     }
 
@@ -104,7 +104,7 @@ public class Tupppai implements Serializable {
         return category_type;
     }
 
-    public List<?> getThreads() {
+    public List<PhotoItem> getThreads() {
         return threads;
     }
 }

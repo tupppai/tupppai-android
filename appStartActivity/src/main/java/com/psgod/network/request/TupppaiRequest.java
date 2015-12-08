@@ -1,44 +1,43 @@
 package com.psgod.network.request;
 
+import com.alibaba.fastjson.JSONArray;
 import com.android.volley.Response;
 import com.psgod.Logger;
-import com.psgod.model.Channel;
 import com.psgod.model.PhotoItem;
+import com.psgod.model.Tupppai;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 /**
  * Created by Administrator on 2015/12/7 0007.
  */
-public class ChannelRequest extends BaseRequest<Channel> {
-    private final static String TAG = ChannelRequest.class.getSimpleName();
+public class TupppaiRequest extends BaseRequest<List<Tupppai>> {
+    private final static String TAG = TupppaiRequest.class.getSimpleName();
 
-    public ChannelRequest(int method, String url, Response.Listener<Channel> listener, Response.ErrorListener errorListener) {
+    public TupppaiRequest(int method, String url, Response.Listener<List<Tupppai>> listener, Response.ErrorListener errorListener) {
         super(method, url, listener, errorListener);
     }
 
     @Override
-    protected Channel doParseNetworkResponse(JSONObject reponse) throws
+    protected List<Tupppai> doParseNetworkResponse(JSONObject reponse) throws
             UnsupportedEncodingException, JSONException {
-        Channel channel = new Channel();
-        JSONObject data = reponse.getJSONObject("data");
-        JSONArray ask = data.getJSONArray("ask");
-        JSONArray replies = data.getJSONArray("replies");
-        int length = ask.length();
-        for (int i = 0; i < length; i++) {
-            PhotoItem item = PhotoItem.createPhotoItem(ask.getJSONObject(i));
-            channel.getAsk().add(item);
+        List<Tupppai> tupppais = JSONArray.parseArray(reponse.getJSONObject("data").
+                getJSONArray("categories").toString(), Tupppai.class);
+        int length = tupppais.size();
+        for(int i = 0; i < length; i++){
+            tupppais.get(i).getThreads().clear();
+            for(Object jsonObject : JSONArray.parseArray(reponse.
+                    getJSONObject("data").getJSONArray("categories").getJSONObject(i).
+                    getJSONArray("threads").toString())){
+                PhotoItem photoItem = PhotoItem.createPhotoItem(new JSONObject(jsonObject.toString()));
+                tupppais.get(i).getThreads().add(photoItem);
+            }
         }
-        length = replies.length();
-        for (int i = 0; i < length; i++) {
-            PhotoItem item = PhotoItem.createPhotoItem(replies.getJSONObject(i));
-            channel.getReplies().add(item);
-        }
-        return channel;
+        return tupppais;
     }
 
     public static class Builder implements IGetRequestBuilder {
@@ -52,20 +51,8 @@ public class ChannelRequest extends BaseRequest<Channel> {
 
         private int page = 1;
         private int size = 10;
-        private long lastUpdated = -1;
-        private String id;
-        private Response.Listener<Channel> listener;
+        private Response.Listener<List<Tupppai>> listener;
         private Response.ErrorListener errorListener;
-
-        public Builder setId(String id) {
-            this.id = id;
-            return this;
-        }
-
-        public Builder setLastUpdated(long lastUpdated) {
-            this.lastUpdated = lastUpdated;
-            return this;
-        }
 
         public Builder setPage(int page) {
             this.page = page;
@@ -77,7 +64,7 @@ public class ChannelRequest extends BaseRequest<Channel> {
             return this;
         }
 
-        public Builder setListener(Response.Listener<Channel> listener) {
+        public Builder setListener(Response.Listener<List<Tupppai>> listener) {
             this.listener = listener;
             return this;
         }
@@ -87,9 +74,9 @@ public class ChannelRequest extends BaseRequest<Channel> {
             return this;
         }
 
-        public ChannelRequest build() {
+        public TupppaiRequest build() {
             String url = createUrl();
-            ChannelRequest request = new ChannelRequest(METHOD, url,
+            TupppaiRequest request = new TupppaiRequest(METHOD, url,
                     listener, errorListener);
             return request;
         }
@@ -97,10 +84,8 @@ public class ChannelRequest extends BaseRequest<Channel> {
         @Override
         public String createUrl() {
             StringBuilder sb = new StringBuilder(BaseRequest.PSGOD_BASE_URL);
-            sb.append("/thread/get_threads_by_channel");
+            sb.append("thread/home");
             sb.append("?page=").append(page);
-            sb.append("&last_updated=").append(lastUpdated);
-            sb.append("&channel_id=").append(id);
 
             String url = sb.toString();
             Logger.log(Logger.LOG_LEVEL_DEBUG, Logger.USER_LEVEL_COLOR, TAG,

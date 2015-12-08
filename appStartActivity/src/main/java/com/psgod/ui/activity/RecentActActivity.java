@@ -1,16 +1,16 @@
-package com.psgod.ui.fragment;
-
+package com.psgod.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
@@ -28,30 +28,29 @@ import com.psgod.model.ActivitiesAct;
 import com.psgod.model.PhotoItem;
 import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.network.request.PhotoActRequest;
-import com.psgod.ui.activity.MultiImageSelectActivity;
-import com.psgod.ui.activity.WebBrowserActivity;
 import com.psgod.ui.adapter.RecentPageActAdapter;
+import com.psgod.ui.widget.FloatScrollView;
+import com.psgod.ui.widget.dialog.CustomProgressingDialog;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import de.greenrobot.event.EventBus;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class RecentPageActFragment extends BaseFragment {
-    private static final String TAG = RecentPageActFragment.class
+public class RecentActActivity extends PSGodBaseActivity {
+    private static final String TAG = RecentActActivity.class
             .getSimpleName();
 
     private PullToRefreshListView mListView;
     private View mHeadView;
     private ImageView mHeadImg;
-    private TextView mHeadTxt;
+    private RelativeLayout mHeadTxtArea;
     private RecentPageActAdapter mAdapter;
     private List<PhotoItem> mPhotoItems;
     private List<ActivitiesAct> mActs;
     private View mFollowListFooter;
+    private TextView mTitle;
+    private ImageView mFinish;
 
     private int mPage = 1;
     private boolean canLoadMore = false;
@@ -63,21 +62,22 @@ public class RecentPageActFragment extends BaseFragment {
     private LoadUtils loadUtils;
     private View mEmptyView;
 
+    private String id;
+
+    private CustomProgressingDialog progressingDialog;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EventBus.getDefault().register(this);
-    }
+        setContentView(R.layout.activity_recent_act);
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+        Intent intent = getIntent();
+        id = intent.getStringExtra("id");
 
-        View view = inflater.inflate(R.layout.fragment_recent_page_act, container, false);
-        initView(view);
+        initView();
         initEvent();
         initData();
-        return view;
     }
 
     @Override
@@ -86,26 +86,30 @@ public class RecentPageActFragment extends BaseFragment {
         EventBus.getDefault().unregister(this);
     }
 
-    private void initView(View view) {
-        mListView = (PullToRefreshListView) view.findViewById(R.id.fragment_recentpage_act_list);
-        mHeadView = LayoutInflater.from(getActivity()).inflate(R.layout.header_recent_page_act, null);
+    private void initView() {
+        mListView = (PullToRefreshListView) findViewById(R.id.fragment_recentpage_act_list);
+        mTitle = (TextView) findViewById(R.id.activity_act_title_name);
+        mHeadView = LayoutInflater.from(RecentActActivity.this).inflate(R.layout.header_recent_page_act, null);
         mHeadImg = (ImageView) mHeadView.findViewById(R.id.header_recentpage_act_img);
-        mHeadTxt = (TextView) mHeadView.findViewById(R.id.header_recentpage_act_txt);
-        mEmptyView = (View) view.findViewById(R.id.recent_fragment_act_empty_view);
+        mHeadTxtArea = (RelativeLayout) mHeadView.findViewById(R.id.header_recentpage_act_area);
+        mHeadTxtArea.setVisibility(View.GONE);
+        mEmptyView = findViewById(R.id.recent_fragment_act_empty_view);
         mPhotoItems = new ArrayList<PhotoItem>();
         mActs = new ArrayList<ActivitiesAct>();
-        mAdapter = new RecentPageActAdapter(getActivity(), mPhotoItems);
+        mAdapter = new RecentPageActAdapter(RecentActActivity.this, mPhotoItems);
         mListView.setAdapter(mAdapter);
-        mFollowListFooter = LayoutInflater.from(getActivity()).inflate(
+        mFollowListFooter = LayoutInflater.from(RecentActActivity.this).inflate(
                 R.layout.footer_load_more, null);
         mFollowListFooter.setVisibility(View.INVISIBLE);
 
         mListView.getRefreshableView().addHeaderView(mHeadView);
         mListView.getRefreshableView().addFooterView(mFollowListFooter);
 
-        listListener = new PhotoListListener(getActivity());
+        listListener = new PhotoListListener(RecentActActivity.this);
 
-        loadUtils = new LoadUtils(getActivity());
+        loadUtils = new LoadUtils(RecentActActivity.this);
+        progressingDialog = new CustomProgressingDialog(this);
+        progressingDialog.show();
     }
 
     private class PhotoListListener implements PullToRefreshBase.OnLastItemVisibleListener,
@@ -130,7 +134,7 @@ public class RecentPageActFragment extends BaseFragment {
                 mFollowListFooter.setVisibility(View.VISIBLE);
 
                 PhotoActRequest.Builder builder = new PhotoActRequest.Builder()
-                        .setPage(mPage).setLastUpdated(mLastUpdatedTime)
+                        .setPage(mPage).setId(id)
                         .setListener(loadMoreListener)
                         .setErrorListener(errorListener);
 
@@ -151,7 +155,7 @@ public class RecentPageActFragment extends BaseFragment {
             }
 
             PhotoActRequest.Builder builder = new PhotoActRequest.Builder()
-                    .setPage(mPage).setLastUpdated(mLastUpdatedTime)
+                    .setPage(mPage).setId(id)
                     .setListener(refreshListener)
                     .setErrorListener(errorListener);
 
@@ -171,25 +175,27 @@ public class RecentPageActFragment extends BaseFragment {
         mHeadImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), WebBrowserActivity.class);
-                intent.putExtra(WebBrowserActivity.KEY_DESC, mActs.get(0).getName());
-                intent.putExtra(WebBrowserActivity.KEY_URL,mActs.get(0).getUrl());
-                getActivity().startActivity(intent);
-            }
-        });
-        mHeadTxt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mActs.size() > 0) {
-//                    loadUtils.upLoad(mActs.get(0).getType(), Long.parseLong(mActs.get(0).getAsk_id()));
-                    Intent intent = new Intent(getActivity(),MultiImageSelectActivity.class);
-                    intent.putExtra("AskId",Long.parseLong(mActs.get(0).getAsk_id()));
-                    intent.putExtra("activity_id",mActs.get(0).getId());
-                    intent.putExtra("SelectType","TypeReplySelect");
-                    startActivity(intent);
+                if(!mActs.get(0).getUrl().equals("")) {
+                    Intent intent = new Intent(RecentActActivity.this, WebBrowserActivity.class);
+                    intent.putExtra(WebBrowserActivity.KEY_DESC, mActs.get(0).getName());
+                    intent.putExtra(WebBrowserActivity.KEY_URL, mActs.get(0).getUrl());
+                    RecentActActivity.this.startActivity(intent);
                 }
             }
         });
+//        mHeadTxt.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (mActs.size() > 0) {
+////                    loadUtils.upLoad(mActs.get(0).getType(), Long.parseLong(mActs.get(0).getAsk_id()));
+//                    Intent intent = new Intent(RecentActActivity.this,MultiImageSelectActivity.class);
+//                    intent.putExtra("AskId",Long.parseLong(mActs.get(0).getAsk_id()));
+//                    intent.putExtra("ActivityId",mActs.get(0).getId());
+//                    intent.putExtra("SelectType","TypeReplySelect");
+//                    startActivity(intent);
+//                }
+//            }
+//        });
     }
 
     /**
@@ -198,7 +204,7 @@ public class RecentPageActFragment extends BaseFragment {
     @Override
     public void onStop() {
         super.onStop();
-        RequestQueue requestQueue = PSGodRequestQueue.getInstance(getActivity())
+        RequestQueue requestQueue = PSGodRequestQueue.getInstance(RecentActActivity.this)
                 .getRequestQueue();
         requestQueue.cancelAll(TAG);
     }
@@ -221,7 +227,10 @@ public class RecentPageActFragment extends BaseFragment {
                 if(mHeadView.getVisibility() == View.GONE){
                     mHeadView.setVisibility(View.VISIBLE);
                 }
-                ImageLoader.getInstance().displayImage(mActs.get(0).getImage_url(), mHeadImg, Constants.DISPLAY_IMAGE_OPTIONS);
+                mTitle.setText(mActs.get(0).getName());
+                ImageLoader.getInstance().
+                        displayImage(mActs.get(0).getImage_url(),
+                                mHeadImg, Constants.DISPLAY_IMAGE_OPTIONS);
             }else{
                 mHeadView.setVisibility(View.GONE);
                 mListView.setEmptyView(mEmptyView);
@@ -236,17 +245,20 @@ public class RecentPageActFragment extends BaseFragment {
             // 保存本次刷新时间到sp
             mLastUpdatedTime = System.currentTimeMillis();
             if (android.os.Build.VERSION.SDK_INT >= 9) {
-                getActivity()
+                RecentActActivity.this
                         .getSharedPreferences(
                                 Constants.SharedPreferencesKey.NAME,
                                 Context.MODE_PRIVATE).edit()
                         .putLong(mSpKey, mLastUpdatedTime).apply();
             } else {
-                getActivity()
+                RecentActActivity.this
                         .getSharedPreferences(
                                 Constants.SharedPreferencesKey.NAME,
                                 Context.MODE_PRIVATE).edit()
                         .putLong(mSpKey, mLastUpdatedTime).commit();
+            }
+            if(progressingDialog.isShowing()){
+                progressingDialog.dismiss();
             }
         }
     };
@@ -266,6 +278,10 @@ public class RecentPageActFragment extends BaseFragment {
             } else {
                 canLoadMore = true;
             }
+
+            if(progressingDialog.isShowing()){
+                progressingDialog.dismiss();
+            }
         }
     };
 
@@ -275,6 +291,10 @@ public class RecentPageActFragment extends BaseFragment {
         public void onErrorResponse(VolleyError error) {
             mListView.onRefreshComplete();
             mFollowListFooter.setVisibility(View.INVISIBLE);
+
+            if(progressingDialog.isShowing()){
+                progressingDialog.dismiss();
+            }
         }
     };
 

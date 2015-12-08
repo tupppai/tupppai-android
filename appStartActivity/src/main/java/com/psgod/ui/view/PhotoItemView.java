@@ -372,16 +372,16 @@ public class PhotoItemView extends RelativeLayout implements Callback {
             params.setMargins(0, 0, 0, 0);
             mSingleAskShareBtn.setLayoutParams(params);
             params = (RelativeLayout.LayoutParams) mSingleReplyShareTv.getLayoutParams();
-            params.setMargins(0,0,0,0);
+            params.setMargins(0, 0, 0, 0);
             mSingleReplyShareTv.setLayoutParams(params);
             params = (RelativeLayout.LayoutParams) mHotReplyShareTv.getLayoutParams();
-            params.setMargins(0,0,0,0);
+            params.setMargins(0, 0, 0, 0);
             mHotReplyShareTv.setLayoutParams(params);
             params = (RelativeLayout.LayoutParams) mFocusAskShareTv.getLayoutParams();
-            params.setMargins(0,0,0,0);
+            params.setMargins(0, 0, 0, 0);
             mFocusAskShareTv.setLayoutParams(params);
             params = (RelativeLayout.LayoutParams) mComplexShareBtn.getLayoutParams();
-            params.setMargins(0,0,0,0);
+            params.setMargins(0, 0, 0, 0);
             mComplexShareBtn.setLayoutParams(params);
         } else {
             mAllWorksBtn.setOnClickListener(allWorkListener);
@@ -824,13 +824,13 @@ public class PhotoItemView extends RelativeLayout implements Callback {
     public void updateLikeView() {
         if (mPhotoItem.isLiked()) {
             mLikeBtn.setImageResource(R.drawable.ic_home_like_selected);
-            if(Build.VERSION.SDK_INT >= 16) {
+            if (Build.VERSION.SDK_INT >= 16) {
                 mLikeCountTv.setBackground(mContext.getResources().getDrawable(
                         R.drawable.shape_like_count));
             }
         } else {
             mLikeBtn.setImageResource(R.drawable.ic_home_like_normal);
-            if(Build.VERSION.SDK_INT >= 16) {
+            if (Build.VERSION.SDK_INT >= 16) {
                 mLikeCountTv.setBackground(mContext.getResources().getDrawable(
                         R.drawable.shape_unlike_count));
             }
@@ -1147,21 +1147,19 @@ public class PhotoItemView extends RelativeLayout implements Callback {
     private OnClickListener imageOnClickListener = new OnClickListener() {
         @Override
         public void onClick(View v) {
-            // 拥有回复作品
-            boolean havingReplies = (mPhotoItem != null && mPhotoItem
-                    .getReplyCount() > 0);
-            // 是否位于作品详情页面
-            boolean isPhotoDetail = (mType == PhotoListType.SINGLE_ASK)
-                    || (mType == PhotoListType.SINGLE_REPLY);
+//            // 拥有回复作品
+//            boolean havingReplies = (mPhotoItem != null && mPhotoItem
+//                    .getReplyCount() > 0);
+//            // 是否位于作品详情页面
+//            boolean isPhotoDetail = (mType == PhotoListType.SINGLE_ASK)
+//                    || (mType == PhotoListType.SINGLE_REPLY);
 
-            if (havingReplies && !isPhotoDetail) {
-                new CarouselPhotoDetailDialog(mContext,mPhotoItem.getAskId(),mPhotoItem.getPid()).show();
-            }
-
-            if (!havingReplies && !isPhotoDetail) {
+            if (mPhotoItem.getType() == 1 && mPhotoItem.getReplyCount() == 0) {
                 SinglePhotoDetail.startActivity(mContext, mPhotoItem);
                 setEnabled(false);
                 mHandler.postDelayed(mViewEnabledRunnable, 1000);
+            } else {
+                new CarouselPhotoDetailDialog(mContext, mPhotoItem.getAskId(), mPhotoItem.getPid()).show();
             }
         }
     };

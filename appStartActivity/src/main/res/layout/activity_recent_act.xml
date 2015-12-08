@@ -1,60 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F8F8F8"
-    tools:context="com.psgod.ui.fragment.TupppaiFragment">
-
+    android:fitsSystemWindows="true"
+    tools:context="com.psgod.ui.activity.RecentActActivity">
 
     <RelativeLayout
-        android:id="@+id/fragment_tupppai_title"
+        android:id="@+id/activity_act_title_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/actionbar_height"
         android:layout_alignParentLeft="true"
-        android:background="@color/white"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true">
+        android:layout_alignParentTop="true"
+        android:background="@color/white">
 
         <TextView
+            android:id="@+id/activity_act_title_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="图派"
+            android:text="用PS搞创意"
             android:textSize="18dp" />
+
+        <com.psgod.ui.widget.FinishView
+            android:id="@+id/activity_act_title_finish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:paddingLeft="11dp"
+            android:paddingRight="11dp"
+            android:src="@drawable/selector_back_btn" />
     </RelativeLayout>
 
+
     <com.handmark.pulltorefresh.library.PullToRefreshListView
-        android:id="@+id/fragment_tupppai_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/fragment_tupppai_title"
-        android:divider="@null" />
+        android:id="@+id/fragment_recentpage_act_list"
+        android:background="#F7F7F7"
+        android:divider="@color/transparent"
+        android:layout_gravity="left|top"
+        android:layout_below="@+id/activity_act_title_layout" />
 
     <LinearLayout
-        android:id="@+id/fragment_tupppai_empty_view"
+        android:id="@+id/recent_fragment_act_empty_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center_horizontal"
+        android:layout_below="@id/actionbar"
+        android:gravity="center_horizontal|top"
         android:orientation="vertical"
-        android:visibility="gone"
-        android:layout_alignTop="@+id/fragment_tupppai_list">
+        android:visibility="gone" >
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="120dp"
+            android:layout_marginTop="60dp"
             android:background="@drawable/ic_pencil" />
 
         <TextView
-            android:id="@+id/fragment_tupppai_empty_text"
+            android:id="@+id/empty_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="35dp"
+            android:text="暂时还没有活动呦"
             android:textColor="#8D8D8D"
             android:textSize="15dp" />
     </LinearLayout>
+
 
 </RelativeLayout>

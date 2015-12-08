@@ -288,6 +288,10 @@
             android:name=".ui.activity.ChannelActivity"
             android:label="@string/title_activity_channel" >
         </activity>
+        <activity
+            android:name=".ui.activity.RecentActActivity"
+            android:label="@string/title_activity_recent_act" >
+        </activity>
     </application>
 
 </manifest>

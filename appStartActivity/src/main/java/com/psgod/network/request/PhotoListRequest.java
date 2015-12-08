@@ -1,19 +1,17 @@
 package com.psgod.network.request;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import android.util.Log;
-
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.psgod.Constants;
 import com.psgod.Logger;
 import com.psgod.model.PhotoItem;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 【首页网络请求】
@@ -70,6 +68,12 @@ public final class PhotoListRequest extends BaseRequest<List<PhotoItem>> {
         private long askId = 0l;
         private Listener<List<PhotoItem>> listener;
         private ErrorListener errorListener;
+        private String channelId;
+
+        public Builder setChannelId(String channelId) {
+            this.channelId = channelId;
+            return this;
+        }
 
         public Builder setWidth(int width) {
             this.width = width;
@@ -159,6 +163,9 @@ public final class PhotoListRequest extends BaseRequest<List<PhotoItem>> {
             }
             sb.append("?width=").append(width);
             sb.append("&page=").append(page);
+            if(channelId != null && !channelId.equals("")){
+                sb.append("&channel_id=").append(channelId);
+            }
             // 拉取某个求P的全部作品
             if (askId != 0l) {
                 sb.append("&ask_id=").append(askId);

@@ -33,6 +33,7 @@ import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.network.request.PhotoListRequest;
 import com.psgod.ui.adapter.PhotoListAdapter;
 import com.psgod.ui.view.PhotoItemView;
+import com.psgod.ui.widget.dialog.CustomProgressingDialog;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -68,6 +69,8 @@ public class RecentWorkActivity extends PSGodBaseActivity implements Handler.Cal
 
     // 控制是否可以加载下一页
     private boolean canLoadMore = true;
+
+    private CustomProgressingDialog progressingDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -120,7 +123,8 @@ public class RecentWorkActivity extends PSGodBaseActivity implements Handler.Cal
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        progressingDialog = new CustomProgressingDialog(this);
+        progressingDialog.show();
         loadDataAsync();
     }
 
@@ -268,6 +272,10 @@ public class RecentWorkActivity extends PSGodBaseActivity implements Handler.Cal
             // TODO Auto-generated method stub
             mViewHolder.mPhotoListView.onRefreshComplete();
             mFollowListFooter.setVisibility(View.INVISIBLE);
+
+            if(progressingDialog.isShowing()){
+                progressingDialog.dismiss();
+            }
         }
     };
 
@@ -282,6 +290,10 @@ public class RecentWorkActivity extends PSGodBaseActivity implements Handler.Cal
                 canLoadMore = false;
             } else {
                 canLoadMore = true;
+            }
+
+            if(progressingDialog.isShowing()){
+                progressingDialog.dismiss();
             }
         }
     };
@@ -318,6 +330,10 @@ public class RecentWorkActivity extends PSGodBaseActivity implements Handler.Cal
                         Constants.SharedPreferencesKey.NAME,
                         Context.MODE_PRIVATE).edit()
                         .putLong(mSpKey, mLastUpdatedTime).commit();
+            }
+
+            if(progressingDialog.isShowing()){
+                progressingDialog.dismiss();
             }
         }
     };

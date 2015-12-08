@@ -43,5 +43,6 @@
     <string name="title_activity_blank">BlankActivity</string>
     <string name="title_activity_tupppai">TupppaiActivity</string>
     <string name="title_activity_channel">ChannelActivity</string>
+    <string name="title_activity_recent_act">RecentActActivity</string>
 
 </resources>

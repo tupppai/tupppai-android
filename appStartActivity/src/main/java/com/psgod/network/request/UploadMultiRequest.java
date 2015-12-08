@@ -55,6 +55,12 @@ public class UploadMultiRequest extends BaseRequest<MultiUploadResult> {
 		private String content;
 		private String upload_type;
 		private Long askId = 0l;
+		private String activityId;
+
+		public Builder setActivityId(String activityId) {
+			this.activityId = activityId;
+			return this;
+		}
 
 		public Builder setLabelIdList(ArrayList<Integer> labelIdList) {
 			this.labelIdList = labelIdList;
@@ -134,6 +140,11 @@ public class UploadMultiRequest extends BaseRequest<MultiUploadResult> {
 			if (askId != 0l) {
 				params.put("ask_id", Long.toString(askId));
 			}
+
+			if(activityId != null && !activityId.equals("")){
+				params.put("activity_id",activityId);
+			}
+
 			params.put("upload_ids", uploadIdList.toString());
 			params.put("scales", scaleList.toString());
 			params.put("ratios", ratioList.toString());

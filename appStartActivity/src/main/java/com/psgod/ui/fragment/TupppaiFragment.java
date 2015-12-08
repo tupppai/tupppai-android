@@ -4,14 +4,13 @@ package com.psgod.ui.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -19,13 +18,12 @@ import com.android.volley.VolleyError;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.psgod.R;
-import com.psgod.model.Channel;
 import com.psgod.model.Tupppai;
-import com.psgod.network.request.ChannelRequest;
+import com.psgod.network.request.TupppaiRequest;
+import com.psgod.network.request.PSGodErrorListener;
 import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.ui.activity.RecentAsksActivity;
 import com.psgod.ui.activity.RecentWorkActivity;
-import com.psgod.ui.adapter.MyBaseAdapter;
 import com.psgod.ui.adapter.TupppaiAdapter;
 
 import java.util.ArrayList;
@@ -45,6 +43,11 @@ public class TupppaiFragment extends BaseFragment {
     private List<Tupppai> tupppais;
     private ImageView askImg;
     private ImageView workImg;
+    private LinearLayout mEmptyView;
+    private TextView mEmptyTxt;
+    private int page = 1;
+
+    private Boolean canLoadMore = true;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -59,21 +62,9 @@ public class TupppaiFragment extends BaseFragment {
     }
 
     private void refresh() {
-        ChannelRequest request = new ChannelRequest.Builder().setListener(new Response.Listener<List<Tupppai>>() {
-            @Override
-            public void onResponse(List<Tupppai> response) {
-
-                mListView.onRefreshComplete();
-
-
-            }
-        }).setErrorListener(new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-                mListView.onRefreshComplete();
-            }
-        }).setPage(1).build();
+        page = 1;
+        TupppaiRequest request = new TupppaiRequest.Builder().setListener(refreshListener).
+                setErrorListener(errorListener).setPage(page).build();
 
         RequestQueue requestQueue = PSGodRequestQueue.getInstance(
                 getActivity()).getRequestQueue();
@@ -89,7 +80,19 @@ public class TupppaiFragment extends BaseFragment {
         tupppais = new ArrayList<Tupppai>();
         mAdapter = new TupppaiAdapter(getActivity(),tupppais);
         mListView.setAdapter(mAdapter);
+        mListView.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
+        mEmptyTxt = (TextView) view.findViewById(R.id.fragment_tupppai_empty_text);
+        mEmptyView = (LinearLayout) view.findViewById(R.id.fragment_tupppai_empty_view);
 
+    }
+
+    private void initEmpty(int length){
+        if(length == 0){
+            mEmptyView.setVisibility(View.VISIBLE);
+            mEmptyTxt.setText("我们的频道很快出版喽，敬请期待");
+        }else{
+            mEmptyView.setVisibility(View.GONE);
+        }
     }
 
     private void initListener() {
@@ -119,7 +122,64 @@ public class TupppaiFragment extends BaseFragment {
 
             }
         });
+
+        mListView.setOnLastItemVisibleListener(new PullToRefreshBase.OnLastItemVisibleListener() {
+            @Override
+            public void onLastItemVisible() {
+                if(canLoadMore){
+                    page++;
+                    TupppaiRequest request = new TupppaiRequest.Builder().setListener(moreListener).
+                            setErrorListener(errorListener).setPage(page).build();
+
+                    RequestQueue requestQueue = PSGodRequestQueue.getInstance(
+                            getActivity()).getRequestQueue();
+                    requestQueue.add(request);
+                }
+            }
+        });
     }
 
+
+
+    PSGodErrorListener errorListener = new PSGodErrorListener() {
+        @Override
+        public void handleError(VolleyError error) {
+            mListView.onRefreshComplete();
+        }
+    };
+
+    Response.Listener<List<Tupppai>> refreshListener = new Response.Listener<List<Tupppai>>() {
+        @Override
+        public void onResponse(List<Tupppai> response) {
+            mListView.onRefreshComplete();
+            if(tupppais.size() > 0){
+                tupppais.clear();
+            }
+            if(response.size() < 10){
+                canLoadMore = false;
+            }else{
+                canLoadMore = true;
+            }
+            tupppais.addAll(response);
+            mAdapter.notifyDataSetChanged();
+
+
+            initEmpty(tupppais.size());
+        }
+    };
+
+    Response.Listener<List<Tupppai>> moreListener = new Response.Listener<List<Tupppai>>() {
+        @Override
+        public void onResponse(List<Tupppai> response) {
+            if(response.size() < 10){
+                canLoadMore = false;
+            }else{
+                canLoadMore = true;
+            }
+            tupppais.addAll(response);
+            mAdapter.notifyDataSetChanged();
+            initEmpty(tupppais.size());
+        }
+    };
 
 }
