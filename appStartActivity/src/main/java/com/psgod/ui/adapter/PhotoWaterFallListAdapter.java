@@ -53,44 +53,46 @@ public class PhotoWaterFallListAdapter extends BaseAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		PhotoWaterFallItemView photoWaterFallItemView;
-		final PhotoItem photoItem = mPhotoItems.get(position);
-		if (convertView == null) {
-			convertView = LayoutInflater.from(mContext).inflate(
-					R.layout.widget_photo_water_fall_item_view, null);
-			photoWaterFallItemView = (PhotoWaterFallItemView) convertView;
-			photoWaterFallItemView.setType(type);
-			photoWaterFallItemView.initPhotoWaterFallListType(mPhotoType);
-		} else {
-			photoWaterFallItemView = (PhotoWaterFallItemView) convertView;
-			photoWaterFallItemView.setType(type);
-			photoWaterFallItemView.initPhotoWaterFallListType(mPhotoType);
-		}
-		photoWaterFallItemView.setPhotoItem(photoItem, mPhotoType);
+		try {
+			final PhotoItem photoItem = mPhotoItems.get(position);
+			if (convertView == null) {
+				convertView = LayoutInflater.from(mContext).inflate(
+						R.layout.widget_photo_water_fall_item_view, null);
+				photoWaterFallItemView = (PhotoWaterFallItemView) convertView;
+				photoWaterFallItemView.setType(type);
+				photoWaterFallItemView.initPhotoWaterFallListType(mPhotoType);
+			} else {
+				photoWaterFallItemView = (PhotoWaterFallItemView) convertView;
+				photoWaterFallItemView.setType(type);
+				photoWaterFallItemView.initPhotoWaterFallListType(mPhotoType);
+			}
+			photoWaterFallItemView.setPhotoItem(photoItem, mPhotoType);
 
-		if (mPhotoType == PhotoWaterFallListType.INPROGRESS_COMPLETE) {
-			photoWaterFallItemView
-					.setOnLongClickListener(new OnLongClickListener() {
+			if (mPhotoType == PhotoWaterFallListType.INPROGRESS_COMPLETE) {
+				photoWaterFallItemView
+						.setOnLongClickListener(new OnLongClickListener() {
 
-						@Override
-						public boolean onLongClick(View arg0) {
-							if (inprogressShareDialog == null) {
-								inprogressShareDialog = new InprogressShareMoreDialog(
-										mContext);
+							@Override
+							public boolean onLongClick(View arg0) {
+								if (inprogressShareDialog == null) {
+									inprogressShareDialog = new InprogressShareMoreDialog(
+											mContext);
+								}
+								inprogressShareDialog
+										.setPhotoItem(
+												photoItem,
+												InprogressShareMoreDialog.SHARE_TYPE_COMPLETE);
+								if (inprogressShareDialog.isShowing()) {
+									inprogressShareDialog.dismiss();
+								} else {
+									inprogressShareDialog.show();
+								}
+								return true;
 							}
-							inprogressShareDialog
-									.setPhotoItem(
-											photoItem,
-											InprogressShareMoreDialog.SHARE_TYPE_COMPLETE);
-							if (inprogressShareDialog.isShowing()) {
-								inprogressShareDialog.dismiss();
-							} else {
-								inprogressShareDialog.show();
-							}
-							return true;
-						}
-					});
-		}
+						});
+			}
 
+		}catch (Exception e){}
 		return convertView;
 	}
 

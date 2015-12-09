@@ -627,16 +627,16 @@ public class CarouselPhotoDetailActivity extends PSGodBaseActivity implements
 					AnimatorSet animatorZoomSet = new AnimatorSet();
 					animatorZoomSet.setDuration(800);
 
-					ObjectAnimator zoomX = ObjectAnimator.ofFloat(mLikeBtn,
+					ObjectAnimator zoomX = ObjectAnimator.ofFloat(view,
 							"scaleX", 1f, 1.5f, 1f);
-					ObjectAnimator zoomY = ObjectAnimator.ofFloat(mLikeBtn,
+					ObjectAnimator zoomY = ObjectAnimator.ofFloat(view,
 							"scaleY", 1f, 1.5f, 1f);
 					animatorZoomSet.playTogether(zoomX, zoomY);
 					animatorZoomSet.start();
 				}
 
 				// 点赞网络请求
-				mLikeBtn.setClickable(false);
+				view.setClickable(false);
 
 				int mStatus = mCurrentPhotoitem.isLiked() ? 0 : 1;
 				ActionLikeRequest.Builder builder = new ActionLikeRequest.Builder()

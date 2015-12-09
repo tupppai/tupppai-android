@@ -95,7 +95,8 @@ public class ChannelActivity extends PSGodBaseActivity {
         mEmptyView = (LinearLayout) findViewById(R.id.activity_channal_empty_view);
         Intent intent = getIntent();
         id = intent.getStringExtra("id");
-
+        mTitleName.setText(intent.getStringExtra("title") == null ? ""
+                : intent.getStringExtra("title"));
         mUpload = new ImageView(this);
         mUpload.setScaleType(ImageView.ScaleType.CENTER_CROP);
         mUpload.setImageDrawable(getResources().getDrawable(R.mipmap.floating_btn));

@@ -95,6 +95,7 @@ public class TupppaiAdapter extends MyBaseAdapter<Tupppai> {
             Integer position = (Integer) view.getTag(R.id.tupppai_view_id);
             Intent intent = new Intent();
             intent.putExtra("id", list.get(position).getId());
+            intent.putExtra("title",list.get(position).getDisplay_name());
             if (list.get(position).getCategory_type().equals("activity")) {
                 intent.setClass(context, RecentActActivity.class);
             } else {

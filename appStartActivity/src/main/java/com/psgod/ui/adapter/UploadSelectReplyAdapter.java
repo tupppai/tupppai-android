@@ -40,6 +40,11 @@ public class UploadSelectReplyAdapter extends BaseAdapter {
 
 	private Context mContext;
 	private List<PhotoItem> mPhotoItems = new ArrayList<PhotoItem>();
+	private String mChannelId;
+
+	public void setmChannelId(String mChannelId) {
+		this.mChannelId = mChannelId;
+	}
 
 	// UIL配置
 	private DisplayImageOptions mOptions = Constants.DISPLAY_IMAGE_OPTIONS_SMALL;
@@ -117,6 +122,7 @@ public class UploadSelectReplyAdapter extends BaseAdapter {
 				bundle.putString("SelectType",
 						MultiImageSelectActivity.TYPE_REPLY_SELECT);
 				bundle.putLong("AskId", photoItem.getAskId());
+				bundle.putString("channel_id",mChannelId);
 				intent.putExtras(bundle);
 				mContext.startActivity(intent);
 			}

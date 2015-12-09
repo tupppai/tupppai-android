@@ -61,6 +61,7 @@ public class UploadSelectReplyListActivity extends PSGodBaseActivity {
 
 		Intent intent = getIntent();
 		mChannelid = intent.getStringExtra("channel_id");
+		mReplyAdapter.setmChannelId(mChannelid);
 		refresh();
 	}
 

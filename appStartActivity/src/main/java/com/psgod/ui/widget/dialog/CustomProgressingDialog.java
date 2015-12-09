@@ -54,10 +54,10 @@ public class CustomProgressingDialog extends ProgressDialog {
 		mImageView = (ImageView) findViewById(R.id.loadingIv);
 	}
 
-	@Override
-	public void dismiss() {
-		if(this.isShowing()) {
-			super.dismiss();
-		}
-	}
+//	@Override
+//	public void dismiss() {
+////		if(this.isShowing()) {
+//			super.dismiss();
+////		}
+//	}
 }
