@@ -1,6 +1,7 @@
 package com.psgod.ui.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -30,6 +31,7 @@ public class UploadSelectReplyListActivity extends PSGodBaseActivity {
 	public static final int MY_INPROGRESS = 2;
 	private int mPage = 1;
 	private View mEmptyView;
+	private String mChannelid;
 
 	private static final String TAG = UploadSelectReplyListActivity.class
 			.getSimpleName();
@@ -57,6 +59,8 @@ public class UploadSelectReplyListActivity extends PSGodBaseActivity {
 		
 		mEmptyView = (View) findViewById(R.id.inprogress_fragment_reply_empty_view);
 
+		Intent intent = getIntent();
+		mChannelid = intent.getStringExtra("channel_id");
 		refresh();
 	}
 
@@ -77,6 +81,11 @@ public class UploadSelectReplyListActivity extends PSGodBaseActivity {
 					.setType(MY_INPROGRESS).setPage(mPage)
 					.setListener(loadMoreListener)
 					.setErrorListener(errorListener);
+
+			if(mChannelid!=null && !mChannelid.equals("")){
+				builder.setChannelId(mChannelid);
+			}
+
 			UserPhotoRequest request = builder.build();
 			request.setTag(TAG);
 			RequestQueue requestQueue = PSGodRequestQueue.getInstance(mContext)
@@ -97,6 +106,10 @@ public class UploadSelectReplyListActivity extends PSGodBaseActivity {
 		UserPhotoRequest.Builder builder = new UserPhotoRequest.Builder()
 				.setType(MY_INPROGRESS).setPage(mPage)
 				.setListener(refreshListener).setErrorListener(errorListener);
+
+		if(mChannelid!=null && !mChannelid.equals("")){
+			builder.setChannelId(mChannelid);
+		}
 
 		UserPhotoRequest request = builder.build();
 		request.setTag(TAG);

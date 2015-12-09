@@ -89,8 +89,14 @@ public final class UserPhotoRequest extends BaseRequest<List<PhotoItem>> {
 		private long lastUpdated = -1;
 		private int page = 1;
 		private int size = 15;
+		private String channelId;
 		private Listener<List<PhotoItem>> listener;
 		private ErrorListener errorListener;
+
+		public Builder setChannelId(String channelId) {
+			this.channelId = channelId;
+			return this;
+		}
 
 		public Builder setWidth(int width) {
 			this.width = width;
@@ -171,6 +177,11 @@ public final class UserPhotoRequest extends BaseRequest<List<PhotoItem>> {
 			sb.append("?width=").append(width);
 			sb.append("&page=").append(page);
 			sb.append("&size=").append(size);
+
+			if(channelId != null && !channelId.equals("")){
+				sb.append("&channel_id=").append(channelId);
+			}
+
 			if (lastUpdated != -1) {
 				sb.append("&last_updated=").append(lastUpdated);
 			}

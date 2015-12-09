@@ -27,6 +27,7 @@ import com.psgod.model.PhotoItem;
 import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.network.request.PhotoActRequest;
 import com.psgod.ui.adapter.RecentPageActAdapter;
+import com.psgod.ui.widget.FloatScrollHelper;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
 
 import java.util.ArrayList;
@@ -48,6 +49,8 @@ public class RecentActActivity extends PSGodBaseActivity {
     private View mFollowListFooter;
     private TextView mTitle;
     private ImageView mFinish;
+    private RelativeLayout mParent;
+    private ImageView mUpLoad;
 
     private int mPage = 1;
     private boolean canLoadMore = false;
@@ -84,6 +87,7 @@ public class RecentActActivity extends PSGodBaseActivity {
     }
 
     private void initView() {
+        mParent = (RelativeLayout) findViewById(R.id.activity_act_parent);
         mListView = (PullToRefreshListView) findViewById(R.id.fragment_recentpage_act_list);
         mTitle = (TextView) findViewById(R.id.activity_act_title_name);
         mHeadView = LayoutInflater.from(RecentActActivity.this).inflate(R.layout.header_recent_page_act, null);
@@ -107,6 +111,14 @@ public class RecentActActivity extends PSGodBaseActivity {
         loadUtils = new LoadUtils(RecentActActivity.this);
         progressingDialog = new CustomProgressingDialog(this);
         progressingDialog.show();
+
+        mUpLoad = new ImageView(this);
+        mUpLoad.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        mUpLoad.setImageDrawable(getResources().getDrawable(R.mipmap.floating_btn));
+        FloatScrollHelper helper = new FloatScrollHelper(mListView.getRefreshableView(),mParent,mUpLoad,this);
+        helper.setViewHeight(80);
+        helper.setViewMargins(12);
+        helper.init();
     }
 
     private class PhotoListListener implements PullToRefreshBase.OnLastItemVisibleListener,
@@ -180,19 +192,19 @@ public class RecentActActivity extends PSGodBaseActivity {
                 }
             }
         });
-//        mHeadTxt.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if (mActs.size() > 0) {
-////                    loadUtils.upLoad(mActs.get(0).getType(), Long.parseLong(mActs.get(0).getAsk_id()));
-//                    Intent intent = new Intent(RecentActActivity.this,MultiImageSelectActivity.class);
-//                    intent.putExtra("AskId",Long.parseLong(mActs.get(0).getAsk_id()));
-//                    intent.putExtra("ActivityId",mActs.get(0).getId());
-//                    intent.putExtra("SelectType","TypeReplySelect");
-//                    startActivity(intent);
-//                }
-//            }
-//        });
+        mUpLoad.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mActs.size() > 0) {
+//                    loadUtils.upLoad(mActs.get(0).getType(), Long.parseLong(mActs.get(0).getAsk_id()));
+                    Intent intent = new Intent(RecentActActivity.this,MultiImageSelectActivity.class);
+                    intent.putExtra("AskId",Long.parseLong(mActs.get(0).getAsk_id()));
+                    intent.putExtra("ActivityId",mActs.get(0).getId());
+                    intent.putExtra("SelectType","TypeReplySelect");
+                    startActivity(intent);
+                }
+            }
+        });
     }
 
     /**

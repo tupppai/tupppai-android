@@ -69,6 +69,7 @@ public class ChannelActivity extends PSGodBaseActivity {
     private LinearLayout mEmptyView;
     private TextView mEmptyTxt;
     private RelativeLayout mParent;
+    private ImageView mUpload;
 
     private void initView() {
         mParent = (RelativeLayout) findViewById(R.id.activity_channal_parent);
@@ -94,17 +95,13 @@ public class ChannelActivity extends PSGodBaseActivity {
         Intent intent = getIntent();
         id = intent.getStringExtra("id");
 
-        ImageView view = new ImageView(this);
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                CustomToast.show(ChannelActivity.this,"123", Toast.LENGTH_LONG);
-            }
-        });
-        view.setImageDrawable(getResources().getDrawable(R.drawable.user_photo));
-
-        new FloatScrollHelper(mList.getRefreshableView(),mParent,view,this).init();
-
+        mUpload = new ImageView(this);
+        mUpload.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        mUpload.setImageDrawable(getResources().getDrawable(R.mipmap.btn_home_follow));
+        FloatScrollHelper helper = new FloatScrollHelper(mList.getRefreshableView(),mParent,mUpload,this);
+        helper.setViewMargins(17);
+        helper.setViewHeight(48);
+        helper.init();
     }
 
     private void refresh() {
@@ -206,8 +203,18 @@ public class ChannelActivity extends PSGodBaseActivity {
         mHeadMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ChannelActivity.this,RecentAsksActivity.class);
-                intent.putExtra("channel_id",id);
+                Intent intent = new Intent(ChannelActivity.this, RecentAsksActivity.class);
+                intent.putExtra("channel_id", id);
+                startActivity(intent);
+            }
+        });
+
+        mUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ChannelActivity.this,
+                        UploadSelectReplyListActivity.class);
+                intent.putExtra("channel_id" , id);
                 startActivity(intent);
             }
         });

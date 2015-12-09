@@ -55,7 +55,8 @@ public class TupppaiAdapter extends MyBaseAdapter<Tupppai> {
         }
         ImageLoader.getInstance().displayImage(list.get(position).getApp_pic(), holder.headImg, mOptions);
         holder.linear.removeAllViews();
-        for (PhotoItem photoItem : list.get(position).getThreads()) {
+        List<PhotoItem> photoItems = list.get(position).getThreads();
+        for (int i = 0; i < 5; i++) {
             ImageView view = new ImageView(context);
             LinearLayout.LayoutParams params = new LinearLayout.
                     LayoutParams(Utils.dpToPx(context, 60), Utils.dpToPx(context, 60));
@@ -63,10 +64,12 @@ public class TupppaiAdapter extends MyBaseAdapter<Tupppai> {
             params.setMargins(Utils.dpToPx(context, 9), 0, 0, 0);
             view.setLayoutParams(params);
             view.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            ImageLoader.getInstance().displayImage(photoItem.getImageURL(), view, mSmallOptions);
+            if (i < photoItems.size()) {
+                ImageLoader.getInstance().displayImage(photoItems.get(position).getImageURL(), view, mSmallOptions);
+            }
             holder.linear.addView(view);
         }
-        if(list.get(position).getThreads().size() == 0){
+        if (list.get(position).getThreads().size() == 0) {
             for (int i = 0; i < 5; i++) {
                 TextView view = new TextView(context);
                 LinearLayout.LayoutParams params = new LinearLayout.
@@ -92,9 +95,9 @@ public class TupppaiAdapter extends MyBaseAdapter<Tupppai> {
             Intent intent = new Intent();
             intent.putExtra("id", list.get(position).getId());
             if (list.get(position).getCategory_type().equals("activity")) {
-                intent.setClass(context,RecentActActivity.class);
-            }else{
-                intent.setClass(context,ChannelActivity.class);
+                intent.setClass(context, RecentActActivity.class);
+            } else {
+                intent.setClass(context, ChannelActivity.class);
 
             }
             context.startActivity(intent);
