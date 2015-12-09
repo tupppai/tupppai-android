@@ -17,12 +17,12 @@ import com.psgod.Utils;
  */
 public class FloatScrollHelper {
 
-    private ListView listView;
+    private AbsListView listView;
     private Context context;
     private View floatView;
     private ViewGroup parentView;
 
-    public FloatScrollHelper(ListView listView, RelativeLayout parentView, View floatView, Context context) {
+    public FloatScrollHelper(AbsListView listView, RelativeLayout parentView, View floatView, Context context) {
         this.listView = listView;
         this.context = context;
         this.floatView = floatView;

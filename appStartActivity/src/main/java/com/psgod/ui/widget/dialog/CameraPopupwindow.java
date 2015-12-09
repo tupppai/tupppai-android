@@ -5,6 +5,7 @@ import android.animation.Animator.AnimatorListener;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -40,6 +41,7 @@ public class CameraPopupwindow extends PopupWindow implements OnClickListener {
 
 	private Activity mActivity;
 	private int statusBarHeight;
+	private String mChannelId;
 
 	// 屏幕截图
 	private Bitmap mScreenShotBitmap = null;
@@ -49,6 +51,16 @@ public class CameraPopupwindow extends PopupWindow implements OnClickListener {
 	private RelativeLayout mBgLayout = null;
 
 	private WeakReferenceHandler mHandler;
+
+	private int mode = 0;
+
+	public static final int MODE_ALL = 0;
+	public static final int MODE_ASK = 1;
+	public static final int MODE_REPLY = 2;
+
+	public void setMode(int mode) {
+		this.mode = mode;
+	}
 
 	public CameraPopupwindow(Activity activity) {
 		mActivity = activity;
@@ -65,6 +77,11 @@ public class CameraPopupwindow extends PopupWindow implements OnClickListener {
 		setHeight(LayoutParams.MATCH_PARENT);
 		setWidth(LayoutParams.MATCH_PARENT);
 
+	}
+
+	public CameraPopupwindow(Activity activity,String channelId) {
+		this(activity);
+		this.mChannelId = channelId;
 	}
 
 	// 截屏并获得毛玻璃化的图片
@@ -84,6 +101,20 @@ public class CameraPopupwindow extends PopupWindow implements OnClickListener {
 	public void showCameraPopupwindow(View anchor) {
 		final RelativeLayout layout = (RelativeLayout) LayoutInflater.from(
 				mActivity).inflate(R.layout.popupwindow_select_ask_reply, null);
+//		int length = layout.getChildCount();
+//		for(int i= 0; i < length ; i++){
+//			if(mode == MODE_ASK){
+//				if(layout.getChildAt(i).getId() == R.id.ask_view){
+//					layout.removeViewAt(i);
+//					continue;
+//				}
+//			}else if(mode == MODE_REPLY){
+//				if(layout.getChildAt(i).getId() == R.id.reply_view){
+//					layout.removeViewAt(i);
+//					continue;
+//				}
+//			}
+//		}
 		setContentView(layout);
 
 		showAnimation(layout);
@@ -143,7 +174,9 @@ public class CameraPopupwindow extends PopupWindow implements OnClickListener {
 			if (child.getId() == R.id.btn_cancel) {
 				continue;
 			}
+
 			child.setOnClickListener(this);
+
 
 			mHandler.postDelayed(new Runnable() {
 				@Override
@@ -202,6 +235,7 @@ public class CameraPopupwindow extends PopupWindow implements OnClickListener {
 			Bundle bundleM = new Bundle();
 			bundleM.putString("SelectType",
 					MultiImageSelectActivity.TYPE_ASK_SELECT);
+			bundleM.putString("channel_id",mChannelId);
 			intentM.putExtras(bundleM);
 			mActivity.startActivity(intentM);
 
@@ -217,7 +251,7 @@ public class CameraPopupwindow extends PopupWindow implements OnClickListener {
 			// 选择点击跳转
 			Intent intent = new Intent(mActivity,
 					UploadSelectReplyListActivity.class);
-			Bundle bundle = new Bundle();
+			intent.putExtra("channel_id" , mChannelId);
 			// bundle.putString("SelectType",
 			// MultiImageSelectActivity.TYPE_REPLY_SELECT);
 			// intent.putExtras(bundle);

@@ -29,6 +29,7 @@ import com.psgod.ui.adapter.ChannelHeadAdapter;
 import com.psgod.ui.adapter.PhotoListAdapter;
 import com.psgod.ui.view.PhotoItemView;
 import com.psgod.ui.widget.FloatScrollHelper;
+import com.psgod.ui.widget.dialog.CameraPopupwindow;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -97,10 +98,10 @@ public class ChannelActivity extends PSGodBaseActivity {
 
         mUpload = new ImageView(this);
         mUpload.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        mUpload.setImageDrawable(getResources().getDrawable(R.mipmap.btn_home_follow));
-        FloatScrollHelper helper = new FloatScrollHelper(mList.getRefreshableView(),mParent,mUpload,this);
-        helper.setViewMargins(17);
-        helper.setViewHeight(48);
+        mUpload.setImageDrawable(getResources().getDrawable(R.mipmap.floating_btn));
+        FloatScrollHelper helper = new FloatScrollHelper(mList.getRefreshableView(), mParent, mUpload, this);
+        helper.setViewHeight(80);
+        helper.setViewMargins(12);
         helper.init();
     }
 
@@ -127,6 +128,7 @@ public class ChannelActivity extends PSGodBaseActivity {
             if (photoItems.size() > 0) {
                 photoItems.clear();
             }
+
             heads.addAll(response.getAsk());
             headAdapter.notifyDataSetChanged();
             photoItems.addAll(response.getReplies());
@@ -212,10 +214,12 @@ public class ChannelActivity extends PSGodBaseActivity {
         mUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ChannelActivity.this,
-                        UploadSelectReplyListActivity.class);
-                intent.putExtra("channel_id" , id);
-                startActivity(intent);
+                CameraPopupwindow popupwindow = new CameraPopupwindow(ChannelActivity.this, id);
+                popupwindow.showCameraPopupwindow(mParent);
+//                Intent intent = new Intent(ChannelActivity.this,
+//                        UploadSelectReplyListActivity.class);
+//                intent.putExtra("channel_id" , id);
+//                startActivity(intent);
             }
         });
     }

@@ -1,6 +1,7 @@
 package com.psgod.ui.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -31,6 +33,8 @@ import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.network.request.PhotoListRequest;
 import com.psgod.ui.adapter.PhotoListAdapter;
 import com.psgod.ui.view.PhotoItemView;
+import com.psgod.ui.widget.FloatScrollHelper;
+import com.psgod.ui.widget.dialog.CameraPopupwindow;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
 
 import java.sql.SQLException;
@@ -51,6 +55,8 @@ public class RecentWorkActivity extends PSGodBaseActivity implements Handler.Cal
     private Dao<PhotoItem, Long> mPhotoItemDao;
     private WeakReferenceHandler mHandler = new WeakReferenceHandler(this);
     private ImageView finishImg;
+    private ImageView mUpload;
+    private RelativeLayout mParent;
 
     // 带评论
     private PhotoListAdapter mAdapter;
@@ -77,7 +83,7 @@ public class RecentWorkActivity extends PSGodBaseActivity implements Handler.Cal
         EventBus.getDefault().register(this);
 
         setContentView(R.layout.activity_recent_work);
-
+        mParent = (RelativeLayout) findViewById(R.id.activity_work_parent);
         mViewHolder = new ViewHolder();
         mViewHolder.mPhotoListView = (PullToRefreshListView) this
                 .findViewById(R.id.activity_recent_work_lv);
@@ -113,6 +119,15 @@ public class RecentWorkActivity extends PSGodBaseActivity implements Handler.Cal
 
         mViewHolder.mPhotoListView.setScrollingWhileRefreshingEnabled(true);
 
+        mUpload = new ImageView(this);
+        mUpload.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        mUpload.setImageDrawable(getResources().getDrawable(R.mipmap.floating_btn));
+        FloatScrollHelper helper = new FloatScrollHelper(
+                mViewHolder.mPhotoListView.getRefreshableView(), mParent, mUpload, this);
+        helper.setViewHeight(80);
+        helper.setViewMargins(12);
+        helper.init();
+
         // TODO 检测耗时
         try {
             mDatabaseHelper = OpenHelperManager.getHelper(this,
@@ -123,7 +138,22 @@ public class RecentWorkActivity extends PSGodBaseActivity implements Handler.Cal
         }
         progressingDialog = new CustomProgressingDialog(this);
         progressingDialog.show();
+        initListener();
         loadDataAsync();
+    }
+
+    private void initListener() {
+        mUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(RecentWorkActivity.this,
+                        UploadSelectReplyListActivity.class);
+                // bundle.putString("SelectType",
+                // MultiImageSelectActivity.TYPE_REPLY_SELECT);
+                // intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
     }
 
     /**
@@ -271,7 +301,7 @@ public class RecentWorkActivity extends PSGodBaseActivity implements Handler.Cal
             mViewHolder.mPhotoListView.onRefreshComplete();
             mFollowListFooter.setVisibility(View.INVISIBLE);
 
-            if(progressingDialog.isShowing()){
+            if (progressingDialog.isShowing()) {
                 progressingDialog.dismiss();
             }
         }
@@ -290,7 +320,7 @@ public class RecentWorkActivity extends PSGodBaseActivity implements Handler.Cal
                 canLoadMore = true;
             }
 
-            if(progressingDialog.isShowing()){
+            if (progressingDialog.isShowing()) {
                 progressingDialog.dismiss();
             }
         }
@@ -330,7 +360,7 @@ public class RecentWorkActivity extends PSGodBaseActivity implements Handler.Cal
                         .putLong(mSpKey, mLastUpdatedTime).commit();
             }
 
-            if(progressingDialog.isShowing()){
+            if (progressingDialog.isShowing()) {
                 progressingDialog.dismiss();
             }
         }

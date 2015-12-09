@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
+    android:id="@+id/activity_ask_parent"
     android:background="#FFFFFF">
     <RelativeLayout
         android:layout_width="match_parent"
@@ -39,19 +40,18 @@
         android:id="@+id/activity_inprogress_ask_staggered_gridview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/actionbar"
         android:fastScrollEnabled="true"
         android:scrollbars="vertical"
         android:background="#F7F7F7"
-      	 />
+        android:layout_below="@+id/activity_recent_ask_title" />
     
     <RelativeLayout
         android:id="@+id/activity_ask_empty_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_horizontal|top"
-        android:layout_below="@id/actionbar"
-        android:visibility="gone">
+        android:visibility="visible"
+        android:layout_below="@+id/activity_recent_ask_title">
          
 		<ImageView 
 		    android:layout_width="wrap_content"
@@ -83,4 +83,4 @@
             android:textSize="15dp" />
     </RelativeLayout>
     
-</LinearLayout>
+</RelativeLayout>

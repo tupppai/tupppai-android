@@ -133,12 +133,12 @@ public class InprogressPageFragment extends Fragment implements
 	private void initCursor() {
 		mCursorWidth = Utils.dpToPx(getActivity(), 55);
 		// 游标左侧偏移量
-		mCurSorOffset = (Constants.WIDTH_OF_SCREEN / 2- mCursorWidth) / 2;
-		mCursorone = mCurSorOffset * 2 + mCursorWidth;
+		mCurSorOffset = (Constants.WIDTH_OF_SCREEN / 2- mCursorWidth) / 2 + Utils.dpToPx(getActivity(),25);
+		mCursorone = mCurSorOffset * 2 + mCursorWidth - Utils.dpToPx(getActivity(),98);
 		mCursortwo = mCursorone * 2;
-		Matrix matrix = new Matrix();
-		matrix.setTranslate(mCurSorOffset, 0);
-		mViewHolder.mCursor.setImageMatrix(matrix);
+//		Matrix matrix = new Matrix();
+//		matrix.setTranslate(mCurSorOffset, 0);
+		mViewHolder.mCursor.setX(mCurSorOffset);
 	}
 
 	public void onNewIntent(Intent intent) {
@@ -253,7 +253,7 @@ public class InprogressPageFragment extends Fragment implements
 						case 1:
 							if (Constants.CURRENT_INPROGRESS_TAB == 0) {
 								animation = new TranslateAnimation(
-										mCurSorOffset, mCursorone, 0, 0);
+										0, mCursorone, 0, 0);
 								animation.setFillAfter(true);
 								animation.setDuration(300);
 								mViewHolder.mCursor.setAnimation(animation);

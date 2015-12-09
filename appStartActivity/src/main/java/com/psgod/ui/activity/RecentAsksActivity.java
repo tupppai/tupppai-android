@@ -9,6 +9,7 @@ import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response.Listener;
@@ -33,6 +34,8 @@ import com.psgod.network.request.PhotoListRequest;
 import com.psgod.ui.adapter.PhotoWaterFallListAdapter;
 import com.psgod.ui.view.PhotoWaterFallItemView.PhotoWaterFallListType;
 import com.psgod.ui.view.PullToRefreshStaggeredGridView;
+import com.psgod.ui.widget.FloatScrollHelper;
+import com.psgod.ui.widget.dialog.CameraPopupwindow;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
 
 import java.sql.SQLException;
@@ -51,6 +54,8 @@ public class RecentAsksActivity extends PSGodBaseActivity implements Callback {
 	private DatabaseHelper mDatabaseHelper = null;
 	private Dao<PhotoItem, Long> mPhotoItemDao;
 	private ImageView finishImg;
+	private ImageView mUpload;
+	private RelativeLayout mParent;
 	private WeakReferenceHandler mHandler = new WeakReferenceHandler(this);
 
 	private String mSpKey;
@@ -71,6 +76,7 @@ public class RecentAsksActivity extends PSGodBaseActivity implements Callback {
 //		EventBus.getDefault().register(this);
 		setContentView(R.layout.activity_recent_ask);
 		mContext = this;
+		mParent = (RelativeLayout) findViewById(R.id.activity_ask_parent);
 		progressingDialog = new CustomProgressingDialog(this);
 		progressingDialog.show();
 		mViewHolder = new ViewHolder();
@@ -104,6 +110,15 @@ public class RecentAsksActivity extends PSGodBaseActivity implements Callback {
 			}
 		});
 
+		mUpload = new ImageView(this);
+		mUpload.setScaleType(ImageView.ScaleType.CENTER_CROP);
+		mUpload.setImageDrawable(getResources().getDrawable(R.mipmap.floating_btn));
+		FloatScrollHelper helper = new FloatScrollHelper(
+				mViewHolder.mGridView.getRefreshableView(), mParent, mUpload, this);
+		helper.setViewHeight(80);
+		helper.setViewMargins(12);
+		helper.init();
+
 		if (NetworkUtil.getNetworkType() != NetworkUtil.NetworkType.NONE) {
 			mViewHolder.mGridView.setRefreshing(true);
 		}
@@ -123,6 +138,24 @@ public class RecentAsksActivity extends PSGodBaseActivity implements Callback {
 
 		refresh(1);
 
+		initListener();
+
+	}
+
+	private void initListener() {
+		mUpload.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				Intent intentM = new Intent(RecentAsksActivity.this,
+						MultiImageSelectActivity.class);
+				Bundle bundleM = new Bundle();
+				bundleM.putString("SelectType",
+						MultiImageSelectActivity.TYPE_ASK_SELECT);
+				bundleM.putString("channel_id",mChannelId);
+				intentM.putExtras(bundleM);
+				startActivity(intentM);
+			}
+		});
 	}
 
 	// 触发下拉自动刷新

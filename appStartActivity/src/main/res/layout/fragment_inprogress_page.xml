@@ -24,7 +24,7 @@
             style="@style/homepage_inprogress_top_tabbar"
             android:checked="true"
             android:gravity="center"
-            android:padding="0dp"
+            android:paddingLeft="50dp"
             android:textColor="#000000"
             android:text="我的求P" />
         
@@ -33,7 +33,7 @@
             style="@style/homepage_inprogress_top_tabbar"
             android:checked="true"
             android:gravity="center"
-            android:padding="0dp"
+            android:paddingRight="50dp"
             android:textColor="#99000000"
             android:text="我的帮P" />
         

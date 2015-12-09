@@ -55,6 +55,12 @@ public class UploadMultiRequest extends BaseRequest<MultiUploadResult> {
 		private String upload_type;
 		private Long askId = 0l;
 		private String activityId;
+		private String channelId;
+
+		public Builder setChannelId(String channelId) {
+			this.channelId = channelId;
+			return  this;
+		}
 
 		public Builder setActivityId(String activityId) {
 			this.activityId = activityId;
@@ -142,6 +148,10 @@ public class UploadMultiRequest extends BaseRequest<MultiUploadResult> {
 
 			if(activityId != null && !activityId.equals("")){
 				params.put("activity_id",activityId);
+			}
+
+			if(channelId != null && !channelId.equals("")){
+				params.put("activity_id",channelId);
 			}
 
 			params.put("upload_ids", uploadIdList.toString());
