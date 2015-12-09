@@ -24,7 +24,6 @@ import android.widget.RelativeLayout;
 
 import com.psgod.BitmapUtils;
 import com.psgod.CameraBackAnimator;
-import com.psgod.Constants;
 import com.psgod.R;
 import com.psgod.WeakReferenceHandler;
 import com.psgod.ui.activity.MultiImageSelectActivity;

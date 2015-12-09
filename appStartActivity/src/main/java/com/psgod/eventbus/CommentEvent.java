@@ -2,7 +2,6 @@ package com.psgod.eventbus;
 
 import com.psgod.model.Comment;
 import com.psgod.model.PhotoItem;
-import com.psgod.ui.view.PhotoItemView;
 
 public class CommentEvent {
 

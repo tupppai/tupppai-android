@@ -1,9 +1,6 @@
 package com.psgod.ui.widget.dialog;
 
-import java.io.File;
-
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -27,6 +24,8 @@ import com.psgod.eventbus.MyPageRefreshEvent;
 import com.psgod.model.PhotoItem;
 import com.psgod.network.request.PhotoRequest;
 import com.psgod.network.request.PhotoRequest.ImageInfo;
+
+import java.io.File;
 
 import de.greenrobot.event.EventBus;
 

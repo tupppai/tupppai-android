@@ -1,13 +1,13 @@
 package com.psgod.model;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.psgod.Constants;
 import com.psgod.PSGodApplication;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * 当前登录用户

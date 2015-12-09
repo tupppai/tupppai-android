@@ -16,8 +16,6 @@
 
 package com.etsy.android.grid;
 
-import java.util.Arrays;
-
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
@@ -30,6 +28,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.psgod.R;
+
+import java.util.Arrays;
 
 /**
  * A staggered grid view which supports multiple columns with rows of varying

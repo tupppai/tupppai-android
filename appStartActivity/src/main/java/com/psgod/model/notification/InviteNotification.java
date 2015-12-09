@@ -4,8 +4,6 @@ package com.psgod.model.notification;
  * 邀请消息类s
  @author brandwang
  */
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -22,6 +20,9 @@ import com.psgod.Utils;
 import com.psgod.model.PhotoItem;
 import com.psgod.ui.view.ViewUtils;
 import com.psgod.ui.widget.AvatarImageView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class InviteNotification implements INotification {
 	private NotificationMessage mNotificationMessage;

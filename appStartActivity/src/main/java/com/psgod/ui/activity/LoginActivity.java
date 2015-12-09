@@ -1,10 +1,5 @@
 package com.psgod.ui.activity;
 
-import java.util.HashMap;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,12 +12,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import cn.sharesdk.framework.Platform;
-import cn.sharesdk.framework.PlatformActionListener;
-import cn.sharesdk.framework.ShareSDK;
-import cn.sharesdk.sina.weibo.SinaWeibo;
-import cn.sharesdk.tencent.qq.QQ;
-import cn.sharesdk.wechat.friends.Wechat;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response.Listener;
@@ -35,14 +24,26 @@ import com.psgod.model.LoginUser;
 import com.psgod.network.request.PSGodErrorListener;
 import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.network.request.QQLoginRequest;
+import com.psgod.network.request.QQLoginRequest.QQLoginWrapper;
 import com.psgod.network.request.UserLoginRequest;
 import com.psgod.network.request.WechatUserInfoRequest;
-import com.psgod.network.request.QQLoginRequest.QQLoginWrapper;
 import com.psgod.network.request.WechatUserInfoRequest.WechatUserWrapper;
 import com.psgod.network.request.WeiboLoginRequest;
 import com.psgod.network.request.WeiboLoginRequest.WeiboLoginWrapper;
 import com.psgod.ui.widget.dialog.CustomDialog;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.sina.weibo.SinaWeibo;
+import cn.sharesdk.tencent.qq.QQ;
+import cn.sharesdk.wechat.friends.Wechat;
 
 public class LoginActivity extends PSGodBaseActivity implements
 		Handler.Callback {

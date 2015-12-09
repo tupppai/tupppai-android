@@ -1,7 +1,5 @@
 package com.psgod.ui.adapter;
 
-import java.util.List;
-
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -20,6 +18,8 @@ import com.psgod.ui.activity.RecommendFocusActivity;
 import com.psgod.ui.activity.UserProfileActivity;
 import com.psgod.ui.widget.AvatarImageView;
 import com.psgod.ui.widget.FollowButton;
+
+import java.util.List;
 
 public class FollowingExpandableListAdapter extends BaseExpandableListAdapter {
 	private static final String TAG = FollowingExpandableListAdapter.class

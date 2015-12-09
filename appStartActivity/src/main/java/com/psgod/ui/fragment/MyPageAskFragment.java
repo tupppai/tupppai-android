@@ -1,8 +1,5 @@
 package com.psgod.ui.fragment;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -21,22 +18,20 @@ import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnLastItemVisibleListener;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
-import com.handmark.pulltorefresh.library.PullToRefreshListView.OnHeaderScrollListener;
 import com.psgod.Constants;
 import com.psgod.R;
-import com.psgod.Utils;
 import com.psgod.eventbus.MyPageRefreshEvent;
 import com.psgod.model.PhotoItem;
 import com.psgod.network.request.PSGodErrorListener;
 import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.network.request.UserPhotoRequest;
-import com.psgod.ui.adapter.AskGridAdapter;
-import com.psgod.ui.adapter.GridAdapter;
 import com.psgod.ui.adapter.PageAdapterMyTab;
 import com.psgod.ui.adapter.PhotoWaterFallListAdapter;
-import com.psgod.ui.view.PullToRefreshStaggeredGridView;
 import com.psgod.ui.view.PhotoWaterFallItemView.PhotoWaterFallListType;
+import com.psgod.ui.view.PullToRefreshStaggeredGridView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import de.greenrobot.event.EventBus;
 

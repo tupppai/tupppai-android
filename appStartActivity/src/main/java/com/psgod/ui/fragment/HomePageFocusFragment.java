@@ -5,9 +5,6 @@ package com.psgod.ui.fragment;
  * Fragment
  * @author brandwang
  */
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -45,6 +42,10 @@ import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.network.request.PhotoListRequest;
 import com.psgod.ui.adapter.PhotoListAdapter;
 import com.psgod.ui.view.PhotoItemView;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import de.greenrobot.event.EventBus;
 

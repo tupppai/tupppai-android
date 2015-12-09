@@ -1,10 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:descendantFocusability="blocksDescendants"
-    android:background="@drawable/selector_notification_btn_bg"
-    >
+    android:background="@drawable/selector_notification_btn_bg">
 
     <com.psgod.ui.widget.AvatarImageView
         android:id="@+id/item_comment_list_avatar"

@@ -1,13 +1,13 @@
 package com.psgod;
 
+import android.graphics.Bitmap;
+import android.os.Environment;
+
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-
-import android.graphics.Bitmap;
-import android.os.Environment;
 
 public final class ImageIOManager {
 	private static final String TAG = ImageIOManager.class.getSimpleName();

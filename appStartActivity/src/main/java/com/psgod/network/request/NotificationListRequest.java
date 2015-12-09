@@ -1,13 +1,5 @@
 package com.psgod.network.request;
 
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.res.Resources;
 
 import com.android.volley.Response.ErrorListener;
@@ -22,6 +14,14 @@ import com.psgod.model.notification.INotification;
 import com.psgod.model.notification.InviteNotification;
 import com.psgod.model.notification.ReplyNotification;
 import com.psgod.model.notification.SystemNotification;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 消息列表网络请求

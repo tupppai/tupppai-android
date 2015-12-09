@@ -4,15 +4,16 @@ package com.psgod.network.request;
  * 上报客户端信息 包括umeng device_token
  * @author brandwang
  */
-import java.util.HashMap;
-import java.util.Map;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.psgod.Logger;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ReportDeviceInfo extends BaseRequest<Boolean> {
 	private static final String TAG = ReportDeviceInfo.class.getSimpleName();

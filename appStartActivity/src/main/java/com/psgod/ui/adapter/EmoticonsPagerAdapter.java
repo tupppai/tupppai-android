@@ -1,7 +1,5 @@
 package com.psgod.ui.adapter;
 
-import java.util.ArrayList;
-
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -10,6 +8,8 @@ import android.widget.GridView;
 
 import com.psgod.R;
 import com.psgod.ui.adapter.EmoticonsGridAdapter.KeyClickListener;
+
+import java.util.ArrayList;
 
 public class EmoticonsPagerAdapter extends PagerAdapter {
 

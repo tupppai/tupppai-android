@@ -1,10 +1,10 @@
 package com.psgod;
 
-import java.lang.ref.WeakReference;
-
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+
+import java.lang.ref.WeakReference;
 
 /**
  * 使用匿名内部类Handler有可能会导致内存泄漏， 凡是使用匿名内部类Handler的地方， 都尽量使用WeakReferenceHandler

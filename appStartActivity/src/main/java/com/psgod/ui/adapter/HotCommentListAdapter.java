@@ -1,22 +1,13 @@
 package com.psgod.ui.adapter;
 
-import java.util.List;
-
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
-import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.psgod.Constants;
 import com.psgod.R;
@@ -24,11 +15,9 @@ import com.psgod.emoji.FaceConversionUtil;
 import com.psgod.eventbus.CommentEvent;
 import com.psgod.model.Comment;
 import com.psgod.model.PhotoItem;
-import com.psgod.ui.activity.CommentListActivity;
-import com.psgod.ui.activity.MainActivity;
 import com.psgod.ui.activity.UserProfileActivity;
-import com.psgod.ui.view.FaceRelativeLayout;
-import com.psgod.ui.view.PhotoItemView;
+
+import java.util.List;
 
 import de.greenrobot.event.EventBus;
 

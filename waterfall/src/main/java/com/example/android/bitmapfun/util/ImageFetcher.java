@@ -23,6 +23,7 @@ import android.net.NetworkInfo;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.huewu.pla.sample.BuildConfig;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -32,8 +33,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
-import com.huewu.pla.sample.BuildConfig;
 
 /**
  * A simple subclass of {@link ImageResizer} that fetches and resizes images fetched from a URL.

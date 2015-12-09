@@ -4,11 +4,6 @@ package com.psgod.ui.activity;
  * 启动页面 
  * @author brandwang
  */
-import java.util.HashMap;
-import java.util.Map;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import android.content.Context;
 import android.content.Intent;
@@ -21,9 +16,6 @@ import android.widget.Toast;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
-import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.psgod.Constants;
 import com.psgod.Logger;
 import com.psgod.PSGodApplication;
@@ -37,6 +29,12 @@ import com.psgod.network.request.PSGodErrorListener;
 import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.network.request.PhotoListRequest;
 import com.psgod.network.request.Request;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class AppStartActivity extends PSGodBaseActivity implements
 		Handler.Callback {

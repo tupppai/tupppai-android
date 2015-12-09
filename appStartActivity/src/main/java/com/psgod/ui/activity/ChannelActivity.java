@@ -1,14 +1,11 @@
 package com.psgod.ui.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -21,20 +18,17 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
-import com.psgod.Constants;
 import com.psgod.CustomToast;
 import com.psgod.R;
 import com.psgod.model.Channel;
 import com.psgod.model.PhotoItem;
-import com.psgod.model.Tupppai;
 import com.psgod.network.request.ChannelRequest;
 import com.psgod.network.request.PSGodErrorListener;
 import com.psgod.network.request.PSGodRequestQueue;
-import com.psgod.network.request.TupppaiRequest;
 import com.psgod.ui.adapter.ChannelHeadAdapter;
 import com.psgod.ui.adapter.PhotoListAdapter;
 import com.psgod.ui.view.PhotoItemView;
-import com.psgod.ui.widget.FloatScrollView;
+import com.psgod.ui.widget.FloatScrollHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -109,7 +103,7 @@ public class ChannelActivity extends PSGodBaseActivity {
         });
         view.setImageDrawable(getResources().getDrawable(R.drawable.user_photo));
 
-        new FloatScrollView(mList.getRefreshableView(),mParent,view,this).init();
+        new FloatScrollHelper(mList.getRefreshableView(),mParent,view,this).init();
 
     }
 

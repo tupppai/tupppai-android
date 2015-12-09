@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:psgod="http://schemas.android.com/apk/res/com.psgod"
     android:id="@+id/fragment_homepage_hot_parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F8F8F8" >
+    android:background="#F8F8F8">
 
     <com.handmark.pulltorefresh.library.PullToRefreshExpandableListView
         android:id="@+id/fragment_homepage_hot_lv"

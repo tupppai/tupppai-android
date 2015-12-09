@@ -4,10 +4,10 @@ package com.psgod.receiver;
  * 接受来自UMENG消息推送的广播
  * @author brandwang
  */
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.widget.Toast;
 
 import com.psgod.eventbus.PushEvent;
 import com.psgod.eventbus.RefreshEvent;

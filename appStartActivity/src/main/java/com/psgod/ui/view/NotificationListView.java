@@ -1,7 +1,5 @@
 package com.psgod.ui.view;
 
-import java.util.List;
-
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
@@ -23,6 +21,8 @@ import com.psgod.network.request.PSGodErrorListener;
 import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.ui.adapter.BaseNotificationAdapter;
 import com.psgod.ui.widget.dialog.CustomDialog;
+
+import java.util.List;
 
 public class NotificationListView extends SwipeMenuListView {
 	private static final String TAG = NotificationListView.class

@@ -1,8 +1,5 @@
 package com.psgod.ui.fragment;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -30,6 +27,9 @@ import com.psgod.Utils;
 import com.psgod.WeakReferenceHandler;
 import com.psgod.ui.activity.MainActivity;
 import com.psgod.ui.adapter.InprogressPageAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 进行中tab v2.0

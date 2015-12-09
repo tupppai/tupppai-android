@@ -1,17 +1,17 @@
 package com.psgod.network.request;
 
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.List;
+import com.android.volley.Response.ErrorListener;
+import com.android.volley.Response.Listener;
+import com.psgod.Logger;
+import com.psgod.model.BannerData;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.android.volley.Response.ErrorListener;
-import com.android.volley.Response.Listener;
-import com.psgod.Logger;
-import com.psgod.model.BannerData;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class HomePageGetBannerRequest extends BaseRequest<List<BannerData>> {
 	

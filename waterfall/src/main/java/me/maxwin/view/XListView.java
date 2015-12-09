@@ -8,11 +8,6 @@
  */
 package me.maxwin.view;
 
-import com.huewu.pla.lib.MultiColumnListView;
-import com.huewu.pla.lib.internal.PLA_AbsListView;
-import com.huewu.pla.lib.internal.PLA_AbsListView.OnScrollListener;
-import com.huewu.pla.sample.R;
-
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -23,6 +18,11 @@ import android.widget.ListAdapter;
 import android.widget.RelativeLayout;
 import android.widget.Scroller;
 import android.widget.TextView;
+
+import com.huewu.pla.lib.MultiColumnListView;
+import com.huewu.pla.lib.internal.PLA_AbsListView;
+import com.huewu.pla.lib.internal.PLA_AbsListView.OnScrollListener;
+import com.huewu.pla.sample.R;
 
 public class XListView extends MultiColumnListView implements OnScrollListener {
 

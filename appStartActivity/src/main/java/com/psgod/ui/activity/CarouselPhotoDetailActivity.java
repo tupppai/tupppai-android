@@ -6,13 +6,6 @@ package com.psgod.ui.activity;
  * @author brandwang
  */
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
-import org.sufficientlysecure.htmltextview.HtmlTextView;
-
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
@@ -23,8 +16,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
-import android.os.Handler.Callback;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.MotionEvent;
@@ -32,7 +23,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -55,8 +45,6 @@ import com.psgod.R;
 import com.psgod.Utils;
 import com.psgod.WeakReferenceHandler;
 import com.psgod.eventbus.ImgRefreshEvent;
-import com.psgod.eventbus.MyPageRefreshEvent;
-import com.psgod.eventbus.NetEvent;
 import com.psgod.model.ImageData;
 import com.psgod.model.PhotoItem;
 import com.psgod.network.request.ActionLikeRequest;
@@ -69,6 +57,13 @@ import com.psgod.ui.view.BackGroundImage;
 import com.psgod.ui.widget.AvatarImageView;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
 import com.psgod.ui.widget.dialog.PSDialog;
+
+import org.sufficientlysecure.htmltextview.HtmlTextView;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import de.greenrobot.event.EventBus;
 

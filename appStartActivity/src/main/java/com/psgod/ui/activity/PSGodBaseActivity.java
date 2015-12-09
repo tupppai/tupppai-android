@@ -1,8 +1,5 @@
 package com.psgod.ui.activity;
 
-import java.util.Set;
-import java.util.TreeSet;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -30,6 +27,9 @@ import com.psgod.Utils;
 import com.psgod.WeakReferenceHandler;
 import com.psgod.network.NetworkUtil;
 import com.umeng.analytics.MobclickAgent;
+
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * 应用的基础Activity，实现一些公共的逻辑 所有的Activity都必须继承PSGodBaseActivity

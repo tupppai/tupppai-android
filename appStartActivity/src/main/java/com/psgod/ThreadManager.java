@@ -1,5 +1,12 @@
 package com.psgod;
 
+import android.annotation.TargetApi;
+import android.os.AsyncTask;
+import android.os.Build;
+import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.Looper;
+
 import java.lang.reflect.Field;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -10,13 +17,6 @@ import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.ThreadPoolExecutor.AbortPolicy;
 import java.util.concurrent.TimeUnit;
-
-import android.annotation.TargetApi;
-import android.os.AsyncTask;
-import android.os.Build;
-import android.os.Handler;
-import android.os.HandlerThread;
-import android.os.Looper;
 
 public final class ThreadManager {
 	// public static final boolean DEBUG_THREAD = false &&

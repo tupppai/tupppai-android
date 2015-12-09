@@ -1,7 +1,5 @@
 package com.psgod.ui.fragment;
 
-import org.json.JSONObject;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -26,6 +24,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.android.volley.RequestQueue;
 import com.android.volley.Response.Listener;
 import com.nineoldandroids.view.ViewHelper;
@@ -40,7 +39,6 @@ import com.psgod.UserPreferences;
 import com.psgod.Utils;
 import com.psgod.eventbus.InitEvent;
 import com.psgod.eventbus.MyInfoRefreshEvent;
-import com.psgod.eventbus.MyPageRefreshEvent;
 import com.psgod.eventbus.PushEvent;
 import com.psgod.eventbus.UpdateTabStatusEvent;
 import com.psgod.model.LoginUser;
@@ -55,6 +53,8 @@ import com.psgod.ui.view.PagerSlidingTabStrip;
 import com.psgod.ui.widget.AvatarImageView;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
 import com.psgod.ui.widget.dialog.ImageDialog;
+
+import org.json.JSONObject;
 
 import de.greenrobot.event.EventBus;
 

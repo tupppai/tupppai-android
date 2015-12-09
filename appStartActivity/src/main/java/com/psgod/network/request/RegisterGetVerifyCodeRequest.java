@@ -1,14 +1,14 @@
 package com.psgod.network.request;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.android.volley.Response.ErrorListener;
+import com.android.volley.Response.Listener;
+import com.psgod.Logger;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.android.volley.Response.ErrorListener;
-import com.android.volley.Response.Listener;
-import com.psgod.Logger;
+import java.util.HashMap;
+import java.util.Map;
 
 public class RegisterGetVerifyCodeRequest extends BaseRequest<Long> {
 	private static final String TAG = RegisterGetVerifyCodeRequest.class

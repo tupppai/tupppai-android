@@ -1,14 +1,6 @@
 package com.psgod.network.request;
 
-import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
-import java.util.Map;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.Intent;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
@@ -23,6 +15,13 @@ import com.psgod.Constants;
 import com.psgod.PSGodApplication;
 import com.psgod.UserPreferences;
 import com.psgod.ui.activity.WelcomeActivity;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 
 public abstract class BaseRequest<T> extends Request<T> {
 	public static final String PSGOD_BASE_TEST_URL = "http://api.loiter.us/"; // 测试环境

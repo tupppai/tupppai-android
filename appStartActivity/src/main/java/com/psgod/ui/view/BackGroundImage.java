@@ -1,17 +1,14 @@
 package com.psgod.ui.view;
 
-import com.psgod.CrashHandler;
-import com.psgod.eventbus.ImgRefreshEvent;
-import com.psgod.eventbus.MyPageRefreshEvent;
-import com.psgod.service.UploadCrashService.CrashBinder;
-
-import de.greenrobot.event.EventBus;
-
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
+
+import com.psgod.eventbus.ImgRefreshEvent;
+
+import de.greenrobot.event.EventBus;
 
 public class BackGroundImage extends View {
 	private int mPosition;

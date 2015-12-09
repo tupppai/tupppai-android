@@ -1,7 +1,5 @@
 package com.psgod.ui.widget;
 
-import java.util.List;
-
 import android.animation.Animator;
 import android.animation.Animator.AnimatorListener;
 import android.animation.AnimatorSet;
@@ -26,6 +24,8 @@ import com.psgod.Constants;
 import com.psgod.R;
 import com.psgod.Utils;
 import com.psgod.model.ImageData;
+
+import java.util.List;
 
 public class OriginImageLayout extends RelativeLayout {
     private Context mContext;

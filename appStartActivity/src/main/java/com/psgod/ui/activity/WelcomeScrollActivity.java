@@ -1,7 +1,5 @@
 package com.psgod.ui.activity;
 
-import java.util.ArrayList;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
@@ -14,7 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.psgod.R;
-import com.psgod.WeakReferenceHandler;
+
+import java.util.ArrayList;
 
 /**
  * 第一次启动滚动页面

@@ -5,13 +5,6 @@ package com.psgod.network.request;
  * @author brandwang
  */
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.res.Resources;
 
 import com.android.volley.Response.ErrorListener;
@@ -21,6 +14,13 @@ import com.psgod.Logger;
 import com.psgod.PSGodApplication;
 import com.psgod.R;
 import com.psgod.model.PhotoItem;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public final class UserPhotoRequest extends BaseRequest<List<PhotoItem>> {
 	private final static String TAG = UserPhotoRequest.class.getSimpleName();

@@ -8,15 +8,6 @@
 
 package cn.sharesdk.onekeyshare.theme.skyblue;
 
-import static cn.sharesdk.framework.utils.R.getBitmapRes;
-import static cn.sharesdk.framework.utils.R.getIdRes;
-import static cn.sharesdk.framework.utils.R.getLayoutRes;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -26,9 +17,19 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.onekeyshare.CustomerLogo;
 import cn.sharesdk.onekeyshare.ShareCore;
+
+import static cn.sharesdk.framework.utils.R.getBitmapRes;
+import static cn.sharesdk.framework.utils.R.getIdRes;
+import static cn.sharesdk.framework.utils.R.getLayoutRes;
 
 public class PlatformGridViewAdapter extends BaseAdapter implements
 		View.OnClickListener {

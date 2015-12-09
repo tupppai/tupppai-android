@@ -1,8 +1,5 @@
 package com.psgod.ui.fragment;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Intent;
 import android.graphics.Matrix;
 import android.os.Bundle;
@@ -20,7 +17,6 @@ import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
@@ -33,8 +29,10 @@ import com.psgod.eventbus.RefreshEvent;
 import com.psgod.ui.activity.MainActivity;
 import com.psgod.ui.activity.SearchActivity;
 import com.psgod.ui.adapter.HomePageAdapter;
-import com.psgod.ui.view.FaceRelativeLayout;
 import com.psgod.ui.widget.dialog.CameraPopupwindow;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import de.greenrobot.event.EventBus;
 

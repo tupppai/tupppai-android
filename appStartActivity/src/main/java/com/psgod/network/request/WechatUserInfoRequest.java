@@ -1,15 +1,15 @@
 package com.psgod.network.request;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.psgod.Logger;
 import com.psgod.network.request.WechatUserInfoRequest.WechatUserWrapper;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class WechatUserInfoRequest extends BaseRequest<WechatUserWrapper> {
 	private static final String TAG = WechatUserInfoRequest.class

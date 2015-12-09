@@ -4,15 +4,16 @@ package com.psgod.network.request;
  * 获取推荐APP列表请求
  * @author brandwang
  */
-import java.io.UnsupportedEncodingException;
+
+import com.android.volley.Response.ErrorListener;
+import com.android.volley.Response.Listener;
+import com.psgod.Logger;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.android.volley.Response.ErrorListener;
-import com.android.volley.Response.Listener;
-import com.psgod.Logger;
+import java.io.UnsupportedEncodingException;
 
 public class RecommendAppRequest extends BaseRequest<JSONArray> {
 	private static final String TAG = RecommendAppRequest.class.getSimpleName();

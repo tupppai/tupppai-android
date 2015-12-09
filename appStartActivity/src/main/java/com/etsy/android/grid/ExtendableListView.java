@@ -17,8 +17,6 @@
 
 package com.etsy.android.grid;
 
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.database.DataSetObserver;
 import android.graphics.Rect;
@@ -41,6 +39,8 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.Scroller;
+
+import java.util.ArrayList;
 
 /**
  * An extendable implementation of the Android {@link android.widget.ListView}

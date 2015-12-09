@@ -1,19 +1,15 @@
 package com.psgod.ui.fragment;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Message;
 import android.os.Handler.Callback;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+
 import com.android.volley.RequestQueue;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
@@ -35,11 +31,14 @@ import com.psgod.network.NetworkUtil;
 import com.psgod.network.request.PSGodErrorListener;
 import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.network.request.PhotoListRequest;
-import com.psgod.ui.activity.CommentListActivity;
 import com.psgod.ui.adapter.PhotoWaterFallListAdapter;
 import com.psgod.ui.view.PhotoWaterFallItemView.PhotoWaterFallListType;
 import com.psgod.ui.view.PullToRefreshStaggeredGridView;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import de.greenrobot.event.EventBus;
 

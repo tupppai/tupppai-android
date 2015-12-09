@@ -1,9 +1,5 @@
 package com.psgod.ui.adapter;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +12,10 @@ import android.widget.ImageView;
 import com.psgod.R;
 import com.psgod.model.SelectImage;
 import com.squareup.picasso.Picasso;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MultiImageSelectAdapter extends BaseAdapter {
 	private final static String TAG = MultiImageSelectAdapter.class

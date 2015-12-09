@@ -3,10 +3,6 @@ package com.psgod.model.notification;
 /**
  * @author Rayal
  */
-import java.io.Serializable;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -23,6 +19,11 @@ import com.psgod.R;
 import com.psgod.Utils;
 import com.psgod.model.PhotoItem;
 import com.psgod.ui.widget.AvatarImageView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.Serializable;
 
 //TODO 做本地存储?
 public class CommentNotification implements Serializable, INotification {

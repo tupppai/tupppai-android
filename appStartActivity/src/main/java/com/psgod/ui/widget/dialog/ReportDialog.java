@@ -1,8 +1,5 @@
 package com.psgod.ui.widget.dialog;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import android.app.Dialog;
 import android.content.Context;
 import android.view.Gravity;
@@ -19,6 +16,9 @@ import com.psgod.model.PhotoItem;
 import com.psgod.network.request.PSGodErrorListener;
 import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.network.request.ReportRequest;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 举报dialog

@@ -8,16 +8,6 @@
 
 package cn.sharesdk.onekeyshare.theme.classic;
 
-import static cn.sharesdk.framework.utils.BitmapHelper.blur;
-import static cn.sharesdk.framework.utils.BitmapHelper.captureView;
-import static cn.sharesdk.framework.utils.R.dipToPx;
-import static cn.sharesdk.framework.utils.R.getBitmapRes;
-import static cn.sharesdk.framework.utils.R.getScreenWidth;
-import static cn.sharesdk.framework.utils.R.getStringRes;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
@@ -50,6 +40,10 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import cn.sharesdk.framework.CustomPlatform;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.ShareSDK;
@@ -58,6 +52,13 @@ import cn.sharesdk.framework.utils.UIHandler;
 import cn.sharesdk.onekeyshare.EditPageFakeActivity;
 import cn.sharesdk.onekeyshare.PicViewer;
 import cn.sharesdk.onekeyshare.ShareCore;
+
+import static cn.sharesdk.framework.utils.BitmapHelper.blur;
+import static cn.sharesdk.framework.utils.BitmapHelper.captureView;
+import static cn.sharesdk.framework.utils.R.dipToPx;
+import static cn.sharesdk.framework.utils.R.getBitmapRes;
+import static cn.sharesdk.framework.utils.R.getScreenWidth;
+import static cn.sharesdk.framework.utils.R.getStringRes;
 
 /**
  * Photo-text Sharing will be handling in this page

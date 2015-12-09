@@ -1,12 +1,5 @@
 package com.psgod.network.request;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.util.Map;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.graphics.Bitmap;
 
 import com.android.volley.AuthFailureError;
@@ -15,6 +8,13 @@ import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.psgod.Logger;
 import com.psgod.network.request.UploadImageRequest.ImageUploadResult;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.Map;
 
 public class UploadImageRequest extends BaseRequest<ImageUploadResult> {
 	private static final String TAG = UploadImageRequest.class.getSimpleName();

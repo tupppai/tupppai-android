@@ -7,8 +7,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
-import com.psgod.R;
-
 /**
  * Created by Administrator on 2015/11/25 0025.
  */

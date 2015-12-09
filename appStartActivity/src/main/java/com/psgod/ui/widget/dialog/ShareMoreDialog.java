@@ -4,10 +4,6 @@ package com.psgod.ui.widget.dialog;
  * 点击三点按钮时 出现更多分享选择按钮
  * @author brandwang
  */
-import java.util.HashMap;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import android.app.Dialog;
 import android.content.ClipboardManager;
@@ -18,16 +14,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-import cn.sharesdk.framework.Platform;
-import cn.sharesdk.framework.Platform.ShareParams;
-import cn.sharesdk.framework.PlatformActionListener;
-import cn.sharesdk.framework.ShareSDK;
-import cn.sharesdk.onekeyshare.OnekeyShare;
-import cn.sharesdk.sina.weibo.SinaWeibo;
-import cn.sharesdk.tencent.qq.QQ;
-import cn.sharesdk.tencent.qzone.QZone;
-import cn.sharesdk.wechat.friends.Wechat;
-import cn.sharesdk.wechat.moments.WechatMoments;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response.ErrorListener;
@@ -43,6 +29,21 @@ import com.psgod.network.request.ActionCollectionRequest;
 import com.psgod.network.request.ActionShareRequest;
 import com.psgod.network.request.PSGodRequestQueue;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.Platform.ShareParams;
+import cn.sharesdk.framework.PlatformActionListener;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.onekeyshare.OnekeyShare;
+import cn.sharesdk.sina.weibo.SinaWeibo;
+import cn.sharesdk.tencent.qq.QQ;
+import cn.sharesdk.tencent.qzone.QZone;
+import cn.sharesdk.wechat.friends.Wechat;
+import cn.sharesdk.wechat.moments.WechatMoments;
 import de.greenrobot.event.EventBus;
 
 public class ShareMoreDialog extends Dialog {

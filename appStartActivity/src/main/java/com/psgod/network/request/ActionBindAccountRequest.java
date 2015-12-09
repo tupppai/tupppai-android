@@ -4,16 +4,17 @@ package com.psgod.network.request;
  * 绑定/解绑第三方账号 请求
  * @author brandwang
  */
-import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
-import java.util.Map;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.psgod.Logger;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ActionBindAccountRequest extends BaseRequest<Boolean> {
 	private static final String TAG = ActionBindAccountRequest.class

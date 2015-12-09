@@ -1,28 +1,21 @@
 package com.psgod.ui.activity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
-import com.android.volley.VolleyError;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
+import com.android.volley.VolleyError;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnLastItemVisibleListener;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.psgod.Constants;
 import com.psgod.R;
 import com.psgod.eventbus.RefreshEvent;
@@ -31,6 +24,9 @@ import com.psgod.network.request.MessageListRequest;
 import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.ui.adapter.MessageListAdapter;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import de.greenrobot.event.EventBus;
 

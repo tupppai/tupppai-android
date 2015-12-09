@@ -1,9 +1,5 @@
 package com.psgod.ui.activity;
 
-import java.util.HashMap;
-
-import org.json.JSONObject;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,10 +10,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import cn.sharesdk.framework.Platform;
-import cn.sharesdk.framework.PlatformActionListener;
-import cn.sharesdk.framework.ShareSDK;
-import cn.sharesdk.sina.weibo.SinaWeibo;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response.Listener;
@@ -32,6 +24,15 @@ import com.psgod.network.request.WeiboLoginRequest;
 import com.psgod.network.request.WeiboLoginRequest.WeiboLoginWrapper;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
 import com.psgod.ui.widget.dialog.OtherRegisterDialog;
+
+import org.json.JSONObject;
+
+import java.util.HashMap;
+
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.sina.weibo.SinaWeibo;
 
 /**
  * 欢迎界面

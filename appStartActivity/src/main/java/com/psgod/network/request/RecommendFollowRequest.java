@@ -3,18 +3,19 @@ package com.psgod.network.request;
 /**
  * 推荐关注大神 请求
  */
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.psgod.Logger;
 import com.psgod.model.User;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RecommendFollowRequest extends BaseRequest<List<User>> {
 	private static final String TAG = RecommendFollowRequest.class

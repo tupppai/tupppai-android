@@ -1,8 +1,5 @@
 package com.psgod.ui.activity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
@@ -21,6 +18,9 @@ import com.psgod.network.request.PSGodErrorListener;
 import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.network.request.UserPhotoRequest;
 import com.psgod.ui.adapter.UploadSelectReplyAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class UploadSelectReplyListActivity extends PSGodBaseActivity {
 	private Context mContext;

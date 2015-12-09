@@ -1,8 +1,5 @@
 package com.psgod.ui.activity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -23,6 +20,9 @@ import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.network.request.UserPhotoRequest;
 import com.psgod.ui.adapter.MyInProgressListAdapter;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 进行中界面

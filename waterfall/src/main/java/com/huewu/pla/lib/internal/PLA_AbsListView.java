@@ -16,11 +16,6 @@
 
 package com.huewu.pla.lib.internal;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.huewu.pla.sample.R;
-
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -43,6 +38,11 @@ import android.view.ViewTreeObserver;
 import android.widget.Adapter;
 import android.widget.ListAdapter;
 import android.widget.Scroller;
+
+import com.huewu.pla.sample.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Base class that can be used to implement virtualized lists of items. A list

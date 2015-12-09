@@ -4,10 +4,6 @@
  */
 package kankan.wheel.widget;
 
-import java.util.LinkedList;
-import java.util.List;
-
-import kankan.wheel.widget.adapters.WheelViewAdapter;
 import android.content.Context;
 import android.database.DataSetObserver;
 import android.graphics.Canvas;
@@ -23,6 +19,11 @@ import android.view.animation.Interpolator;
 import android.widget.LinearLayout;
 
 import com.psgod.R;
+
+import java.util.LinkedList;
+import java.util.List;
+
+import kankan.wheel.widget.adapters.WheelViewAdapter;
 
 public class WheelView extends View {
 	/** Top and bottom shadows colors */

@@ -1,12 +1,12 @@
 package com.psgod.ui.adapter;
 
-import java.util.List;
-
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.psgod.model.notification.INotification;
+
+import java.util.List;
 
 /**
  * 消息类公用Adapter

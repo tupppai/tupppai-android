@@ -5,7 +5,6 @@ package com.psgod.ui.view;
  * onTouch事件时图片变暗，touchCancel时图片恢复
  * @author brandwang
  */
-import java.util.Calendar;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -16,6 +15,8 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import java.util.Calendar;
 
 public class DisplayImageView extends ImageView {
 	// 触发long click的最短时间

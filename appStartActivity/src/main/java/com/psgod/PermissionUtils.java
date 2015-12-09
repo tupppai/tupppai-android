@@ -1,10 +1,10 @@
 package com.psgod;
 
-import java.lang.reflect.Method;
-
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.os.Build;
+
+import java.lang.reflect.Method;
 
 /**
  * 权限辅助类

@@ -1,13 +1,13 @@
 package com.psgod.network.request;
 
-import java.io.UnsupportedEncodingException;
+import com.android.volley.Response.ErrorListener;
+import com.android.volley.Response.Listener;
+import com.psgod.Logger;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.android.volley.Response.ErrorListener;
-import com.android.volley.Response.Listener;
-import com.psgod.Logger;
+import java.io.UnsupportedEncodingException;
 
 public class ActionCollectionRequest extends BaseRequest<Boolean> {
 	private static final String TAG = ActionCollectionRequest.class

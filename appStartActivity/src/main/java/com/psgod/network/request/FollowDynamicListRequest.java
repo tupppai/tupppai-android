@@ -1,12 +1,5 @@
 package com.psgod.network.request;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.res.Resources;
 
 import com.android.volley.Response.ErrorListener;
@@ -15,6 +8,13 @@ import com.psgod.Constants;
 import com.psgod.Logger;
 import com.psgod.PSGodApplication;
 import com.psgod.model.PhotoItem;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 【关注动态请求】

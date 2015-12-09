@@ -6,38 +6,20 @@ package com.psgod.ui.fragment;
  * @author brandwang
  */
 
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
-import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
-import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler.Callback;
 import android.os.Message;
-import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnGroupClickListener;
 import android.widget.FrameLayout;
-import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response.ErrorListener;
@@ -53,29 +35,29 @@ import com.psgod.Constants;
 import com.psgod.Logger;
 import com.psgod.R;
 import com.psgod.ThreadManager;
-import com.psgod.Utils;
 import com.psgod.WeakReferenceHandler;
 import com.psgod.db.DatabaseHelper;
 import com.psgod.eventbus.CommentEvent;
 import com.psgod.eventbus.RefreshEvent;
 import com.psgod.model.BannerData;
 import com.psgod.model.Comment;
-import com.psgod.model.Comment.ReplyComment;
-import com.psgod.model.LoginUser;
 import com.psgod.model.PhotoItem;
 import com.psgod.network.NetworkUtil;
 import com.psgod.network.request.HomePageGetBannerRequest;
 import com.psgod.network.request.PSGodErrorListener;
 import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.network.request.PhotoListRequest;
-import com.psgod.network.request.PostCommentRequest;
 import com.psgod.ui.activity.CommentListActivity;
 import com.psgod.ui.adapter.HomePageHotAdapter;
-import com.psgod.ui.view.FaceRelativeLayout;
-import com.psgod.ui.view.FaceRelativeLayout.OnEmojiClickListener;
 import com.psgod.ui.view.PhotoItemView;
 import com.psgod.ui.widget.EditPopupWindow;
 import com.psgod.ui.widget.EditPopupWindow.OnResponseListener;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import de.greenrobot.event.EventBus;
 

@@ -4,7 +4,6 @@ package com.psgod.ui.activity;
  * 编辑用户资料
  * @author brandwang
  */
-import java.io.UnsupportedEncodingException;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -25,7 +24,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.PopupWindow;
@@ -52,7 +50,8 @@ import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.ui.view.CircleImageView;
 import com.psgod.ui.widget.ActionBar;
 import com.psgod.ui.widget.GenderSelector;
-import com.psgod.ui.widget.dialog.InPutDialog;
+
+import java.io.UnsupportedEncodingException;
 
 import de.greenrobot.event.EventBus;
 

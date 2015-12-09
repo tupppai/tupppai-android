@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/search_datail_parent"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#fff" >
+    android:background="#fff">
 
     <com.psgod.ui.view.PullToRefreshStaggeredGridView
         android:id="@+id/page_tab_listview"

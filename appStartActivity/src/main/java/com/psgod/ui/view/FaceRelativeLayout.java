@@ -3,8 +3,6 @@ package com.psgod.ui.view;
 /**
  * 表情框使用
  */
-import java.util.ArrayList;
-import java.util.List;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -32,6 +30,9 @@ import com.psgod.emoji.FaceConversionUtil;
 import com.psgod.model.ChatEmoji;
 import com.psgod.ui.adapter.FaceAdapter;
 import com.psgod.ui.adapter.ViewPagerAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class FaceRelativeLayout extends RelativeLayout implements
 		OnItemClickListener, OnClickListener {

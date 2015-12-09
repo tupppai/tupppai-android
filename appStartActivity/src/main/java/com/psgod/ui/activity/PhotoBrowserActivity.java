@@ -1,7 +1,5 @@
 package com.psgod.ui.activity;
 
-import uk.co.senab.photoview.PhotoViewAttacher;
-import uk.co.senab.photoview.PhotoViewAttacher.OnPhotoTapListener;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -17,6 +15,9 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.psgod.Constants;
 import com.psgod.R;
 import com.psgod.ui.widget.dialog.PSDialog;
+
+import uk.co.senab.photoview.PhotoViewAttacher;
+import uk.co.senab.photoview.PhotoViewAttacher.OnPhotoTapListener;
 
 public class PhotoBrowserActivity extends PSGodBaseActivity {
 	private static final String TAG = PhotoBrowserActivity.class

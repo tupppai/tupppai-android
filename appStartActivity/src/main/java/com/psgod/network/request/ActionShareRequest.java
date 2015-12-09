@@ -4,14 +4,15 @@ package com.psgod.network.request;
  * 发起分享的请求
  * @author brandwang
  */
-import java.io.UnsupportedEncodingException;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.psgod.Logger;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
 
 public class ActionShareRequest extends BaseRequest<JSONObject> {
 	private final static String TAG = MyFollowersListRequest.class

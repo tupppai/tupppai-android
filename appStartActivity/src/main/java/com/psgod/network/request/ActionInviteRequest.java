@@ -4,14 +4,15 @@ package com.psgod.network.request;
  * 邀请操作
  * @author brandwang
  */
-import java.io.UnsupportedEncodingException;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.psgod.Logger;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
 
 public class ActionInviteRequest extends BaseRequest<Boolean> {
 	private static final String TAG = ActionCollectionRequest.class

@@ -1,9 +1,5 @@
 package com.psgod.ui.fragment;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +22,10 @@ import com.psgod.network.request.SearchWorkRequest;
 import com.psgod.ui.adapter.SearchWaterFallListAdapter;
 import com.psgod.ui.view.PullToRefreshStaggeredGridView;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import de.greenrobot.event.EventBus;
 

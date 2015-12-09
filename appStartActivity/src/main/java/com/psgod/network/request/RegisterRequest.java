@@ -1,18 +1,17 @@
 package com.psgod.network.request;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.psgod.Logger;
 import com.psgod.model.RegisterData;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class RegisterRequest extends BaseRequest<JSONObject> {
 	private static final String TAG = RegisterRequest.class.getSimpleName();

@@ -4,14 +4,15 @@ package com.psgod.network.request;
  * 获取用户信息请求
  * @author brandwang
  */
-import java.io.UnsupportedEncodingException;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.psgod.Logger;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
 
 public class GetUserInfoRequest extends BaseRequest<JSONObject> {
 	private static final String TAG = GetUserInfoRequest.class.getSimpleName();

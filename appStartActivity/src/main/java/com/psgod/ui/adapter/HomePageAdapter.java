@@ -5,13 +5,13 @@ package com.psgod.ui.adapter;
  * @author brandwang
  */
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class HomePageAdapter extends FragmentPagerAdapter {
 	private static final String TAG = HomePageAdapter.class.getSimpleName();

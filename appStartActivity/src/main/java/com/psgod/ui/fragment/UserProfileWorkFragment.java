@@ -1,8 +1,5 @@
 package com.psgod.ui.fragment;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -30,6 +27,9 @@ import com.psgod.ui.adapter.PageAdapterTab;
 import com.psgod.ui.adapter.PhotoWaterFallListAdapter;
 import com.psgod.ui.view.PhotoWaterFallItemView.PhotoWaterFallListType;
 import com.psgod.ui.view.PullToRefreshStaggeredGridView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserProfileWorkFragment extends ScrollTabHolderFragment {
 	private static final String TAG = UserProfileWorkFragment.class

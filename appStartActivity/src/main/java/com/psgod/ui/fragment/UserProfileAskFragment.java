@@ -1,8 +1,5 @@
 package com.psgod.ui.fragment;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -30,6 +27,9 @@ import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.network.request.UserDetailAskRequest;
 import com.psgod.ui.adapter.PageAdapterTab;
 import com.psgod.ui.adapter.UserProfileAsksAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserProfileAskFragment extends ScrollTabHolderFragment {
 	private static final String TAG = UserProfileAskFragment.class

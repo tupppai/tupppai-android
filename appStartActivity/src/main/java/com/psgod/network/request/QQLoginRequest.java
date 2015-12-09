@@ -4,16 +4,17 @@ package com.psgod.network.request;
  * qq登录请求接口
  * @author brandwang
  */
-import java.util.HashMap;
-import java.util.Map;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.psgod.Logger;
 import com.psgod.network.request.QQLoginRequest.QQLoginWrapper;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class QQLoginRequest extends BaseRequest<QQLoginWrapper> {
 	private static final String TAG = QQLoginRequest.class.getSimpleName();

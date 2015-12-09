@@ -1,11 +1,5 @@
 package com.psgod.network.request;
 
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.net.URL;
-
-import org.json.JSONObject;
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -13,6 +7,12 @@ import android.graphics.drawable.BitmapDrawable;
 import com.psgod.Logger;
 import com.psgod.PSGodApplication;
 import com.psgod.R;
+
+import org.json.JSONObject;
+
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.net.URL;
 
 public class PhotoRequest {
 	private static final String TAG = PhotoRequest.class.getSimpleName();

@@ -3,16 +3,17 @@ package com.psgod.network.request;
 /**
  * 举报接口请求
  */
-import java.util.HashMap;
-import java.util.Map;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.psgod.Logger;
 import com.psgod.model.PhotoItem;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ReportRequest extends BaseRequest<Boolean> {
 	private static final String TAG = ReportRequest.class.getSimpleName();

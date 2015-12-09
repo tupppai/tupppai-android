@@ -3,7 +3,9 @@ package com.psgod.wxapi;
 /**
  * 微信客户端回调activity
  */
+
 import android.content.Intent;
+
 import cn.sharesdk.wechat.utils.WXAppExtendObject;
 import cn.sharesdk.wechat.utils.WXMediaMessage;
 import cn.sharesdk.wechat.utils.WechatHandlerActivity;

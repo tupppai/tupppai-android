@@ -1,8 +1,5 @@
 package com.psgod.ui.activity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -25,6 +22,9 @@ import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.network.request.SettingCommentRequest;
 import com.psgod.network.request.UserPhotoRequest;
 import com.psgod.ui.adapter.SettingCommentAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SettingCommentActivity extends PSGodBaseActivity {
 	private static final String TAG = SettingCommentActivity.class

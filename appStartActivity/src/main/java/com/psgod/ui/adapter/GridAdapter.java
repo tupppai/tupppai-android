@@ -3,7 +3,6 @@ package com.psgod.ui.adapter;
 /**
  * 改造listview 变成gridview
  */
-import java.util.concurrent.atomic.AtomicInteger;
 
 import android.content.Context;
 import android.database.DataSetObserver;
@@ -15,6 +14,8 @@ import android.view.WindowManager;
 import android.widget.AbsListView.LayoutParams;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class GridAdapter<T extends BaseAdapter> extends BaseAdapter implements
 		OnClickListener {

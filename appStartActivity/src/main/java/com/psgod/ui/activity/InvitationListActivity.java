@@ -1,8 +1,5 @@
 package com.psgod.ui.activity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -31,6 +28,9 @@ import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.ui.adapter.InvitationExpandableListAdapter;
 import com.psgod.ui.widget.ActionBar;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class InvitationListActivity extends PSGodBaseActivity {
 	private final static String TAG = InvitationListActivity.class

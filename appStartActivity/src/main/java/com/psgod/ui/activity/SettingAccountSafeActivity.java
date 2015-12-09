@@ -3,7 +3,6 @@ package com.psgod.ui.activity;
 /**
  * 账号安全设置页面
  */
-import java.util.HashMap;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -18,12 +17,6 @@ import android.view.View.OnClickListener;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
-import cn.sharesdk.framework.Platform;
-import cn.sharesdk.framework.PlatformActionListener;
-import cn.sharesdk.framework.ShareSDK;
-import cn.sharesdk.sina.weibo.SinaWeibo;
-import cn.sharesdk.tencent.qzone.QZone;
-import cn.sharesdk.wechat.friends.Wechat;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response.Listener;
@@ -38,6 +31,15 @@ import com.psgod.network.request.ActionBindAccountRequest;
 import com.psgod.network.request.PSGodErrorListener;
 import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.ui.widget.dialog.CustomDialog;
+
+import java.util.HashMap;
+
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.sina.weibo.SinaWeibo;
+import cn.sharesdk.tencent.qzone.QZone;
+import cn.sharesdk.wechat.friends.Wechat;
 
 public class SettingAccountSafeActivity extends PSGodBaseActivity implements
 		Handler.Callback {

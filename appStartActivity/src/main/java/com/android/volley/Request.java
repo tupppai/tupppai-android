@@ -16,11 +16,6 @@
 
 package com.android.volley;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.util.Collections;
-import java.util.Map;
-
 import android.net.TrafficStats;
 import android.net.Uri;
 import android.os.Handler;
@@ -29,6 +24,11 @@ import android.os.SystemClock;
 import android.text.TextUtils;
 
 import com.android.volley.VolleyLog.MarkerLog;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.Collections;
+import java.util.Map;
 
 /**
  * Base class for all network requests.

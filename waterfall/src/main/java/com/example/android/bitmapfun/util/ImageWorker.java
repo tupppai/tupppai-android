@@ -28,9 +28,9 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ImageView;
 
-import java.lang.ref.WeakReference;
-
 import com.huewu.pla.sample.BuildConfig;
+
+import java.lang.ref.WeakReference;
 
 /**
  * This class wraps up completing some arbitrary long running work when loading

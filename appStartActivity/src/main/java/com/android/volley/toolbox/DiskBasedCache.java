@@ -16,6 +16,11 @@
 
 package com.android.volley.toolbox;
 
+import android.os.SystemClock;
+
+import com.android.volley.Cache;
+import com.android.volley.VolleyLog;
+
 import java.io.BufferedInputStream;
 import java.io.EOFException;
 import java.io.File;
@@ -30,11 +35,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
-
-import android.os.SystemClock;
-
-import com.android.volley.Cache;
-import com.android.volley.VolleyLog;
 
 /**
  * Cache implementation that caches files directly onto the hard disk in the

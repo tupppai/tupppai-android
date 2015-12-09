@@ -1,10 +1,6 @@
 package com.psgod.ui.activity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -28,6 +24,9 @@ import com.psgod.network.request.MessageListRequest;
 import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.ui.adapter.MessageListAdapter;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import de.greenrobot.event.EventBus;
 

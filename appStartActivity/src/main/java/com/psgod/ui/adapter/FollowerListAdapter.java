@@ -1,7 +1,5 @@
 package com.psgod.ui.adapter;
 
-import java.util.List;
-
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -21,6 +19,8 @@ import com.psgod.model.User;
 import com.psgod.ui.activity.UserProfileActivity;
 import com.psgod.ui.widget.AvatarImageView;
 import com.psgod.ui.widget.FollowButton;
+
+import java.util.List;
 
 public class FollowerListAdapter extends BaseAdapter {
 	private Context mContext;

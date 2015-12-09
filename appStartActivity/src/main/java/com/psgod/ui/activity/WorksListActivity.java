@@ -1,8 +1,5 @@
 package com.psgod.ui.activity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -30,6 +27,9 @@ import com.psgod.ui.adapter.PhotoWaterFallListAdapter;
 import com.psgod.ui.view.PhotoWaterFallItemView.PhotoWaterFallListType;
 import com.psgod.ui.view.PullToRefreshStaggeredGridView;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 全部作品页面

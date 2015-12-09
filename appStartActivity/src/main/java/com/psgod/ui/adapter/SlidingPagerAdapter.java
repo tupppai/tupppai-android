@@ -3,7 +3,6 @@ package com.psgod.ui.adapter;
 /**
  * viewpager adapter
  */
-import java.util.List;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
@@ -14,6 +13,8 @@ import android.support.v4.view.ViewPager;
 
 import com.psgod.ui.fragment.ScrollTabHolder;
 import com.psgod.ui.fragment.ScrollTabHolderFragment;
+
+import java.util.List;
 
 public class SlidingPagerAdapter extends FragmentPagerAdapter {
 

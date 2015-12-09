@@ -1,8 +1,5 @@
 package com.psgod.ui.adapter;
 
-import java.io.InputStream;
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
@@ -15,6 +12,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import com.psgod.R;
+
+import java.io.InputStream;
+import java.util.ArrayList;
 
 public class EmoticonsGridAdapter extends BaseAdapter {
 

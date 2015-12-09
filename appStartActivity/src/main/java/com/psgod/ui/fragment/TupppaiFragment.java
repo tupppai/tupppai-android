@@ -1,9 +1,9 @@
 package com.psgod.ui.fragment;
 
 
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,9 +19,9 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.psgod.R;
 import com.psgod.model.Tupppai;
-import com.psgod.network.request.TupppaiRequest;
 import com.psgod.network.request.PSGodErrorListener;
 import com.psgod.network.request.PSGodRequestQueue;
+import com.psgod.network.request.TupppaiRequest;
 import com.psgod.ui.activity.RecentAsksActivity;
 import com.psgod.ui.activity.RecentWorkActivity;
 import com.psgod.ui.adapter.TupppaiAdapter;

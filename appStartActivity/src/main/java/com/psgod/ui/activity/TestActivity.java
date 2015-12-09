@@ -1,7 +1,5 @@
 package com.psgod.ui.activity;
 
-import java.util.List;
-
 import android.content.pm.ApplicationInfo;
 import android.os.Bundle;
 import android.util.TypedValue;
@@ -17,6 +15,8 @@ import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.baoyz.swipemenulistview.SwipeMenuListView.OnMenuItemClickListener;
 import com.psgod.R;
+
+import java.util.List;
 
 public class TestActivity extends PSGodBaseActivity {
 	private List<ApplicationInfo> mAppList;

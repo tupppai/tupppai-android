@@ -1,7 +1,5 @@
 package com.psgod.ui.activity;
 
-import java.io.UnsupportedEncodingException;
-
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -42,6 +40,8 @@ import com.psgod.ui.adapter.CityInfo;
 import com.psgod.ui.view.CircleImageView;
 import com.psgod.ui.widget.CitySelector;
 import com.psgod.ui.widget.dialog.InPutDialog;
+
+import java.io.UnsupportedEncodingException;
 
 public class SetInfoActivity extends PSGodBaseActivity implements
 		OnCheckedChangeListener, Handler.Callback {

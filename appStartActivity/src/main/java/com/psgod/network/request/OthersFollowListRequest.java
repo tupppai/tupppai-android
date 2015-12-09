@@ -4,18 +4,19 @@ package com.psgod.network.request;
  * 其他用户的 粉丝、关注请求
  * @author brandwang
  */
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.psgod.Logger;
 import com.psgod.model.User;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class OthersFollowListRequest extends BaseRequest<List<User>> {
 	private final static String TAG = OthersFollowListRequest.class

@@ -5,10 +5,6 @@ package com.psgod.ui.widget;
  * @author brandwang
  */
 
-import kankan.wheel.widget.OnWheelChangedListener;
-import kankan.wheel.widget.OnWheelScrollListener;
-import kankan.wheel.widget.WheelView;
-import kankan.wheel.widget.adapters.ArrayWheelAdapter;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -25,6 +21,11 @@ import com.psgod.Constants;
 import com.psgod.R;
 import com.psgod.ui.adapter.CityInfo;
 import com.psgod.ui.adapter.CountryAdapter;
+
+import kankan.wheel.widget.OnWheelChangedListener;
+import kankan.wheel.widget.OnWheelScrollListener;
+import kankan.wheel.widget.WheelView;
+import kankan.wheel.widget.adapters.ArrayWheelAdapter;
 
 public class CitySelector {
 	private static Context cx;

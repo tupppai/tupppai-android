@@ -1,13 +1,5 @@
 package com.psgod.network.request;
 
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.res.Resources;
 
 import com.android.volley.Response.ErrorListener;
@@ -15,6 +7,14 @@ import com.android.volley.Response.Listener;
 import com.psgod.Logger;
 import com.psgod.PSGodApplication;
 import com.psgod.model.PhotoItem;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SettingLikedRequest extends BaseRequest<List<PhotoItem>> {
 	private static final String TAG = SettingLikedRequest.class.getSimpleName();

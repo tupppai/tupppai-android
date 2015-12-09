@@ -1,14 +1,14 @@
 package com.handmark.pulltorefresh.library.internal;
 
-import com.handmark.pulltorefresh.library.R;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.Orientation;
-
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.view.View;
+
+import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.Orientation;
+import com.handmark.pulltorefresh.library.R;
 
 public class TweenAnimLoadingLayout extends LoadingLayout {
 

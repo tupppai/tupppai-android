@@ -1,9 +1,9 @@
 package com.psgod.model;
 
+import com.psgod.PSGodApplication;
+
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-
-import com.psgod.PSGodApplication;
 
 /**
  * 观察者模式 维护消息通知页面 数量变化

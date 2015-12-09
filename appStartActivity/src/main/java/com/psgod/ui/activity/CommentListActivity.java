@@ -1,22 +1,15 @@
 package com.psgod.ui.activity;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.Handler.Callback;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
@@ -37,9 +30,9 @@ import com.psgod.Constants;
 import com.psgod.R;
 import com.psgod.WeakReferenceHandler;
 import com.psgod.model.Comment;
+import com.psgod.model.Comment.ReplyComment;
 import com.psgod.model.LoginUser;
 import com.psgod.model.PhotoItem;
-import com.psgod.model.Comment.ReplyComment;
 import com.psgod.network.request.CommentListRequest;
 import com.psgod.network.request.CommentListRequest.CommentListWrapper;
 import com.psgod.network.request.PSGodErrorListener;
@@ -48,6 +41,11 @@ import com.psgod.network.request.PostCommentRequest;
 import com.psgod.ui.adapter.CommentExpandableListAdapter;
 import com.psgod.ui.view.FaceRelativeLayout;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * 评论列表界面

@@ -3,9 +3,6 @@ package com.psgod.ui.fragment;
 /**
  * 关注Tab
  */
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 import android.content.Context;
 import android.content.Intent;
@@ -46,6 +43,10 @@ import com.psgod.ui.activity.MainActivity;
 import com.psgod.ui.activity.RecommendFocusActivity;
 import com.psgod.ui.adapter.PhotoExpandableListAdapter;
 import com.psgod.ui.view.PhotoItemView;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FocusFragment extends BaseFragment implements Callback {
 	private static final String TAG = FocusFragment.class.getSimpleName();

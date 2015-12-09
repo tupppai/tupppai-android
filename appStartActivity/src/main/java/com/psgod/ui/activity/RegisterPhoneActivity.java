@@ -4,8 +4,6 @@ package com.psgod.ui.activity;
  * 手机注册
  * @author brandwang
  */
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -32,6 +30,9 @@ import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.network.request.RegisterCheckPhoneNumRequest;
 import com.psgod.ui.widget.dialog.CustomDialog;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class RegisterPhoneActivity extends PSGodBaseActivity implements
 		Handler.Callback {

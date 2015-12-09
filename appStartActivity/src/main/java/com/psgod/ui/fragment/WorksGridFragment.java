@@ -1,8 +1,5 @@
 package com.psgod.ui.fragment;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -28,6 +25,9 @@ import com.psgod.network.request.UserPhotoRequest;
 import com.psgod.ui.adapter.GridAdapter;
 import com.psgod.ui.adapter.WorksGridAdapter;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class WorksGridFragment extends BaseFragment {
 	private static final String TAG = WorksGridFragment.class.getSimpleName();

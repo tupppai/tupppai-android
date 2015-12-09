@@ -1,13 +1,5 @@
 package com.psgod.network.request;
 
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.res.Resources;
 
 import com.android.volley.Response.ErrorListener;
@@ -18,6 +10,14 @@ import com.psgod.PSGodApplication;
 import com.psgod.model.PhotoItem;
 import com.psgod.model.User;
 import com.psgod.network.request.UserDetailRequest.UserDetailResult;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserDetailRequest extends BaseRequest<UserDetailResult> {
 	private static final String TAG = UserDetailRequest.class.getSimpleName();

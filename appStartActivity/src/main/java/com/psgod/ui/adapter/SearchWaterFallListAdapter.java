@@ -1,7 +1,5 @@
 package com.psgod.ui.adapter;
 
-import java.util.List;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +8,8 @@ import android.view.ViewGroup;
 import com.psgod.R;
 import com.psgod.model.SearchWork;
 import com.psgod.ui.view.SearchWaterFallItemView;
+
+import java.util.List;
 
 public class SearchWaterFallListAdapter extends MyBaseAdapter<SearchWork.Data> {
 

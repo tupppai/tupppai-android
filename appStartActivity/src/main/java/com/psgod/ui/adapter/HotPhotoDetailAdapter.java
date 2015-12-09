@@ -1,7 +1,5 @@
 package com.psgod.ui.adapter;
 
-import java.util.ArrayList;
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -9,6 +7,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.ViewGroup;
 
 import com.psgod.ui.fragment.PhotoDetailFragment;
+
+import java.util.ArrayList;
 
 public class HotPhotoDetailAdapter extends FragmentPagerAdapter {
 	private ArrayList<PhotoDetailFragment> mFragments;

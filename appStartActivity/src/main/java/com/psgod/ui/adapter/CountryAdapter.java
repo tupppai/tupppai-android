@@ -5,12 +5,13 @@ package com.psgod.ui.adapter;
  * @author brandwang
  */
 
-import kankan.wheel.widget.adapters.AbstractWheelTextAdapter;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.psgod.R;
+
+import kankan.wheel.widget.adapters.AbstractWheelTextAdapter;
 
 public class CountryAdapter extends AbstractWheelTextAdapter {
 	private Context mContext;

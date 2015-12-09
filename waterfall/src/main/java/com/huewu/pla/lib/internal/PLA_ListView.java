@@ -16,17 +16,10 @@
 
 package com.huewu.pla.lib.internal;
 
-import java.util.ArrayList;
-
-import com.huewu.pla.sample.R;
-
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.PixelFormat;
 import android.graphics.Rect;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -38,6 +31,10 @@ import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityEvent;
 import android.widget.ListAdapter;
 import android.widget.WrapperListAdapter;
+
+import com.huewu.pla.sample.R;
+
+import java.util.ArrayList;
 
 /*
  * Implementation Notes:

@@ -23,6 +23,8 @@ import android.graphics.BitmapFactory;
 import android.os.Environment;
 import android.util.Log;
 
+import com.huewu.pla.sample.BuildConfig;
+
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -36,8 +38,6 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import com.huewu.pla.sample.BuildConfig;
 
 /**
  * A simple disk LRU bitmap cache to illustrate how a disk cache would be used

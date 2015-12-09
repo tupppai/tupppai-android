@@ -16,13 +16,13 @@
 
 package com.example.android.bitmapfun.util;
 
-import com.huewu.pla.sample.BuildConfig;
-
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
+
+import com.huewu.pla.sample.BuildConfig;
 
 /**
  * A simple subclass of {@link ImageWorker} that resizes images from resources

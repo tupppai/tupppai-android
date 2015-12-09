@@ -1,14 +1,5 @@
 package com.psgod;
 
-import java.lang.reflect.Field;
-import java.text.SimpleDateFormat;
-import java.util.LinkedList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -23,8 +14,16 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.psgod.model.PhotoItem;
-import com.psgod.model.SearchWork;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.lang.reflect.Field;
+import java.text.SimpleDateFormat;
+import java.util.LinkedList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 辅助类

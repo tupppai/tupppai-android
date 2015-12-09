@@ -1,8 +1,5 @@
 package com.psgod.ui.adapter;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +12,9 @@ import com.psgod.model.PhotoItem;
 import com.psgod.ui.view.PhotoWaterFallItemView;
 import com.psgod.ui.view.PhotoWaterFallItemView.PhotoWaterFallListType;
 import com.psgod.ui.widget.dialog.InprogressShareMoreDialog;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PhotoWaterFallListAdapter extends BaseAdapter {
 	private Context mContext;

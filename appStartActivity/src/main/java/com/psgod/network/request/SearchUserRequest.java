@@ -1,14 +1,7 @@
 package com.psgod.network.request;
 
-import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.res.Resources;
+
 import com.alibaba.fastjson.JSON;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -18,6 +11,14 @@ import com.psgod.Logger;
 import com.psgod.PSGodApplication;
 import com.psgod.model.SearchUser;
 import com.psgod.model.SearchUserData;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class SearchUserRequest extends BaseRequest<List<SearchUserData>> {
 	private static final String TAG = UserDetailRequest.class.getSimpleName();

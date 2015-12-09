@@ -5,9 +5,6 @@ package com.psgod.ui.widget;
  * @author brandwang
  */
 
-import kankan.wheel.widget.OnWheelChangedListener;
-import kankan.wheel.widget.OnWheelScrollListener;
-import kankan.wheel.widget.WheelView;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -23,6 +20,10 @@ import android.widget.TextView;
 import com.psgod.Constants;
 import com.psgod.R;
 import com.psgod.ui.adapter.GenderAdapter;
+
+import kankan.wheel.widget.OnWheelChangedListener;
+import kankan.wheel.widget.OnWheelScrollListener;
+import kankan.wheel.widget.WheelView;
 
 public class GenderSelector {
 	private static Context context;

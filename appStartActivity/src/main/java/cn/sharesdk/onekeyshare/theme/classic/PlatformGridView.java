@@ -8,16 +8,6 @@
 
 package cn.sharesdk.onekeyshare.theme.classic;
 
-import static cn.sharesdk.framework.utils.R.getBitmapRes;
-
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-
-import m.framework.ui.widget.viewpager.ViewPagerAdapter;
-import m.framework.ui.widget.viewpager.ViewPagerClassic;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -34,10 +24,21 @@ import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.framework.utils.UIHandler;
 import cn.sharesdk.onekeyshare.CustomerLogo;
+import m.framework.ui.widget.viewpager.ViewPagerAdapter;
+import m.framework.ui.widget.viewpager.ViewPagerClassic;
+
+import static cn.sharesdk.framework.utils.R.getBitmapRes;
 
 /** platform logo list gridview */
 public class PlatformGridView extends LinearLayout implements OnClickListener,

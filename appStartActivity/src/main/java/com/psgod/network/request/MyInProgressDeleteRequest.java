@@ -1,15 +1,15 @@
 package com.psgod.network.request;
 
-import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
-import java.util.Map;
+import com.android.volley.Response.ErrorListener;
+import com.android.volley.Response.Listener;
+import com.psgod.Logger;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.android.volley.Response.ErrorListener;
-import com.android.volley.Response.Listener;
-import com.psgod.Logger;
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MyInProgressDeleteRequest extends BaseRequest<Boolean> {
 	private static final String TAG = MyInProgressDeleteRequest.class

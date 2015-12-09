@@ -1,14 +1,17 @@
 package com.psgod.ui.widget.dialog;
-import com.android.volley.Response.ErrorListener;
-import com.android.volley.VolleyError;
-import com.psgod.Constants;
-import com.psgod.R;
+
 import android.app.Dialog;
 import android.content.Context;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import com.android.volley.Response.ErrorListener;
+import com.android.volley.VolleyError;
+import com.psgod.Constants;
+import com.psgod.R;
+
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.Platform.ShareParams;
 import cn.sharesdk.framework.ShareSDK;

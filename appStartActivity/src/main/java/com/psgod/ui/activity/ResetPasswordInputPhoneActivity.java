@@ -1,11 +1,5 @@
 package com.psgod.ui.activity;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -28,6 +22,12 @@ import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.network.request.ResetPasswordCheckPhoneNumRequest;
 import com.psgod.ui.widget.dialog.CustomDialog;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 重置密码输入手机号

@@ -1,12 +1,8 @@
 package com.psgod.ui.widget;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
@@ -18,11 +14,13 @@ import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.psgod.Constants;
 import com.psgod.R;
-import com.psgod.Utils;
 import com.psgod.model.User;
 import com.psgod.network.request.ActionFollowRequest;
 import com.psgod.network.request.PSGodErrorListener;
 import com.psgod.network.request.PSGodRequestQueue;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 关注和取消关注按钮

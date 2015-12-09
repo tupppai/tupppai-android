@@ -3,10 +3,11 @@ package com.psgod.model.notification;
 /**
  * 基础消息通知类 （仅消息）
  */
-import java.io.Serializable;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.Serializable;
 
 public class NotificationMessage implements Serializable {
 

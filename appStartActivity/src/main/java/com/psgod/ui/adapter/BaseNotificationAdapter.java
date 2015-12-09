@@ -1,10 +1,10 @@
 package com.psgod.ui.adapter;
 
-import java.util.List;
-
 import android.widget.BaseAdapter;
 
 import com.psgod.model.notification.INotification;
+
+import java.util.List;
 
 /**
  * 使用NotificationListView时必须继承BaseNotificationAdapter

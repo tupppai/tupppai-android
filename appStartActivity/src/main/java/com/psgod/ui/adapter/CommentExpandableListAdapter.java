@@ -1,22 +1,13 @@
 package com.psgod.ui.adapter;
 
-import java.util.List;
-
 import android.content.Context;
-import android.graphics.Color;
-import android.text.Spannable;
 import android.text.SpannableString;
-import android.text.SpannableStringBuilder;
-import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import cn.sharesdk.framework.m;
 
 import com.android.volley.VolleyError;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -25,9 +16,10 @@ import com.psgod.Constants;
 import com.psgod.R;
 import com.psgod.emoji.FaceConversionUtil;
 import com.psgod.model.Comment;
-import com.psgod.model.Comment.ReplyComment;
 import com.psgod.network.request.PSGodErrorListener;
 import com.psgod.ui.widget.AvatarImageView;
+
+import java.util.List;
 
 public class CommentExpandableListAdapter extends BaseExpandableListAdapter {
     private static final String TAG = CommentExpandableListAdapter.class

@@ -3,8 +3,6 @@ package com.psgod.ui.activity;
 /**
  * 推荐关注大神
  */
-import java.util.ArrayList;
-import java.util.List;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -29,6 +27,9 @@ import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.network.request.RecommendFollowRequest;
 import com.psgod.ui.adapter.FollowerListAdapter;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RecommendFocusActivity extends PSGodBaseActivity {
 	private static final String TAG = RecommendFocusActivity.class

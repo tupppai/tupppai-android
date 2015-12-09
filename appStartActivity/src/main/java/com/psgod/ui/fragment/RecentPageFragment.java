@@ -1,8 +1,5 @@
 package com.psgod.ui.fragment;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Matrix;
@@ -35,6 +32,9 @@ import com.psgod.eventbus.RefreshEvent;
 import com.psgod.ui.activity.MainActivity;
 import com.psgod.ui.adapter.RecentPageAdapter;
 import com.psgod.ui.widget.dialog.CameraPopupwindow;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import de.greenrobot.event.EventBus;
 

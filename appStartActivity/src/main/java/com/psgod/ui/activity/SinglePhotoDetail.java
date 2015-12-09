@@ -6,11 +6,6 @@ package com.psgod.ui.activity;
  * @author brandwang
  */
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -54,6 +49,11 @@ import com.psgod.ui.adapter.SinglePhotoDetailAdapter;
 import com.psgod.ui.view.FaceRelativeLayout;
 import com.psgod.ui.view.SinglePhotoDetailView;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class SinglePhotoDetail extends PSGodBaseActivity implements
         Handler.Callback {

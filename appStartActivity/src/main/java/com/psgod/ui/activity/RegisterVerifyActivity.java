@@ -1,7 +1,5 @@
 package com.psgod.ui.activity;
 
-import org.json.JSONObject;
-
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -27,6 +25,8 @@ import com.psgod.network.request.PSGodErrorListener;
 import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.network.request.RegisterRequest;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
+
+import org.json.JSONObject;
 
 /**
  * 手机验证

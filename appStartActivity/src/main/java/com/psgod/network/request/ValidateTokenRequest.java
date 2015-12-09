@@ -5,15 +5,15 @@ package com.psgod.network.request;
  * @author brandwang
  */
 
-import java.util.HashMap;
-import java.util.Map;
+import com.android.volley.Response.ErrorListener;
+import com.android.volley.Response.Listener;
+import com.psgod.Logger;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.android.volley.Response.ErrorListener;
-import com.android.volley.Response.Listener;
-import com.psgod.Logger;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ValidateTokenRequest extends BaseRequest<Void> {
 	private final static String TAG = ValidateTokenRequest.class

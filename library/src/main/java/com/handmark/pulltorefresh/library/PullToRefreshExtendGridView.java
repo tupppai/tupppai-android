@@ -3,13 +3,13 @@ package com.handmark.pulltorefresh.library;
  * 改造gridview 可addHeaderView
  * @author brandwang
  */
+
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.GridView;
 
 import com.handmark.pulltorefresh.library.internal.EmptyViewMethodAccessor;
 

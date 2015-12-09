@@ -1,7 +1,5 @@
 package com.psgod.ui.view;
 
-import java.util.Locale;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -27,6 +25,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.psgod.R;
+
+import java.util.Locale;
 
 public class PagerSlidingTabStrip extends HorizontalScrollView implements
 		OnPageChangeListener {

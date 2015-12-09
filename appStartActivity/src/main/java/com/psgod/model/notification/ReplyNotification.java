@@ -1,8 +1,5 @@
 package com.psgod.model.notification;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +15,9 @@ import com.psgod.Utils;
 import com.psgod.model.PhotoItem;
 import com.psgod.ui.view.ViewUtils;
 import com.psgod.ui.widget.AvatarImageView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class ReplyNotification implements INotification {
 	private NotificationMessage mNotificationMessage;

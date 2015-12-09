@@ -4,17 +4,18 @@ package com.psgod.network.request;
  * 编辑用户资料请求
  * @author brandwang
  */
-import java.util.HashMap;
-import java.util.Map;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import android.text.TextUtils;
 
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.psgod.Logger;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ModifyUserData extends BaseRequest<Boolean> {
 	private static final String TAG = ModifyPassWordRequest.class

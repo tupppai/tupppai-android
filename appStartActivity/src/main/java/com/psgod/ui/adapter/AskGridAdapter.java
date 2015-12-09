@@ -1,7 +1,5 @@
 package com.psgod.ui.adapter;
 
-import java.util.List;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,9 +14,10 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.psgod.Constants;
 import com.psgod.R;
 import com.psgod.model.PhotoItem;
-import com.psgod.ui.activity.CarouselPhotoDetailActivity;
 import com.psgod.ui.activity.SinglePhotoDetail;
 import com.psgod.ui.widget.dialog.CarouselPhotoDetailDialog;
+
+import java.util.List;
 
 /**
  * 

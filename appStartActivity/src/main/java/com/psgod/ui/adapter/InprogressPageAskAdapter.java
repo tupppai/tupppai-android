@@ -1,14 +1,8 @@
 package com.psgod.ui.adapter;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Message;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,11 +31,15 @@ import com.psgod.model.PhotoItem;
 import com.psgod.network.request.EditAskDescRequest;
 import com.psgod.network.request.PSGodErrorListener;
 import com.psgod.network.request.PSGodRequestQueue;
-import com.psgod.ui.activity.CarouselPhotoDetailActivity;
 import com.psgod.ui.activity.SinglePhotoDetail;
 import com.psgod.ui.fragment.InprogressPageAskFragment;
 import com.psgod.ui.widget.dialog.CarouselPhotoDetailDialog;
 import com.psgod.ui.widget.dialog.InprogressShareMoreDialog;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class InprogressPageAskAdapter extends BaseAdapter implements
 		android.os.Handler.Callback {

@@ -1,18 +1,7 @@
 package com.psgod.model;
 
-import java.io.Serializable;
-import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.Context;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.field.DatabaseField;
@@ -20,6 +9,16 @@ import com.j256.ormlite.table.DatabaseTable;
 import com.psgod.Logger;
 import com.psgod.ThreadManager;
 import com.psgod.db.CommentDao;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.Serializable;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 @DatabaseTable(tableName = "photo_item")
 public class PhotoItem implements Serializable, Cloneable {

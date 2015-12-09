@@ -4,13 +4,14 @@ package com.psgod.db;
  * Comment Dao
  * @author brandwang
  */
-import java.util.List;
 
 import android.content.Context;
 
 import com.j256.ormlite.dao.Dao;
 import com.psgod.model.Comment;
 import com.psgod.model.PhotoItem;
+
+import java.util.List;
 
 public class CommentDao {
 	private Dao<Comment, Long> commentDao;

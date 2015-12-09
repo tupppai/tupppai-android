@@ -3,7 +3,6 @@ package com.psgod.ui.adapter;
 /**
  * emoji表情adapter
  */
-import java.util.List;
 
 import android.content.Context;
 import android.text.TextUtils;
@@ -15,6 +14,8 @@ import android.widget.ImageView;
 
 import com.psgod.R;
 import com.psgod.model.ChatEmoji;
+
+import java.util.List;
 
 public class FaceAdapter extends BaseAdapter {
 

@@ -4,8 +4,6 @@ package com.psgod.ui.activity;
  * 消息列表界面
  * @author Rayal
  */
-import java.util.ArrayList;
-import java.util.List;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -43,6 +41,9 @@ import com.psgod.ui.widget.ActionBar;
 import com.psgod.ui.widget.dialog.CarouselPhotoDetailDialog;
 import com.psgod.ui.widget.dialog.CustomDialog;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class NotificationListActivity extends PSGodBaseActivity {
 	private final static String TAG = NotificationListActivity.class

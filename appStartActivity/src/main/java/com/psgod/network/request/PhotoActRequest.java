@@ -2,7 +2,6 @@ package com.psgod.network.request;
 
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
-import com.psgod.Constants;
 import com.psgod.Logger;
 import com.psgod.model.Activities;
 import com.psgod.model.ActivitiesAct;

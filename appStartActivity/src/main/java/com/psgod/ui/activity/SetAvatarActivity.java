@@ -1,7 +1,5 @@
 package com.psgod.ui.activity;
 
-import java.io.IOException;
-
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
@@ -26,6 +24,8 @@ import com.psgod.network.request.UploadImageRequest.ImageUploadResult;
 import com.psgod.ui.view.CropImageView;
 import com.psgod.ui.widget.ActionBar;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
+
+import java.io.IOException;
 
 /*
  * 用户头像选择页面

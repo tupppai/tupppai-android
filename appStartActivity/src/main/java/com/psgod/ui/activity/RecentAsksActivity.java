@@ -8,8 +8,6 @@ import android.os.Handler.Callback;
 import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.android.volley.RequestQueue;
@@ -27,7 +25,6 @@ import com.psgod.R;
 import com.psgod.ThreadManager;
 import com.psgod.WeakReferenceHandler;
 import com.psgod.db.DatabaseHelper;
-import com.psgod.eventbus.RefreshEvent;
 import com.psgod.model.PhotoItem;
 import com.psgod.network.NetworkUtil;
 import com.psgod.network.request.PSGodErrorListener;
@@ -41,8 +38,6 @@ import com.psgod.ui.widget.dialog.CustomProgressingDialog;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import de.greenrobot.event.EventBus;
 
 public class RecentAsksActivity extends PSGodBaseActivity implements Callback {
 	private static final String TAG = RecentAsksActivity.class

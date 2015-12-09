@@ -1,9 +1,5 @@
 package com.psgod.ui.activity;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
@@ -31,6 +27,10 @@ import com.psgod.eventbus.MyPageRefreshEvent;
 import com.psgod.model.FileUtils;
 import com.psgod.model.SelectImage;
 import com.psgod.ui.adapter.MultiImageSelectAdapter;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import de.greenrobot.event.EventBus;
 

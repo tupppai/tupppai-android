@@ -1,7 +1,5 @@
 package com.psgod.ui.fragment;
 
-import org.json.JSONObject;
-
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
@@ -33,6 +31,8 @@ import com.psgod.ui.activity.MyWorksActivity;
 import com.psgod.ui.activity.SettingActivity;
 import com.psgod.ui.view.CircleImageView;
 import com.psgod.ui.widget.ActionBar;
+
+import org.json.JSONObject;
 
 public class UserFragment extends BaseFragment {
 	private static final String TAG = UserFragment.class.getSimpleName();

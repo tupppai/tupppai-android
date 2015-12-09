@@ -1,10 +1,8 @@
 package com.psgod.ui.widget;
 
-import android.app.ListActivity;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
-import android.widget.GridView;
 import android.widget.ListView;
 
 public class ChildListView extends ListView {

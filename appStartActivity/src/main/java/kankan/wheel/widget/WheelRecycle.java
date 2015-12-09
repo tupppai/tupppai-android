@@ -19,11 +19,11 @@
 
 package kankan.wheel.widget;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import android.view.View;
 import android.widget.LinearLayout;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Recycle stores wheel items to reuse.

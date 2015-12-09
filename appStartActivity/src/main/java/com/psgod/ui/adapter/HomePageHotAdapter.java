@@ -1,9 +1,5 @@
 package com.psgod.ui.adapter;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import m.framework.utils.Utils;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.view.PagerAdapter;
@@ -16,9 +12,6 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
-
-import cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -29,6 +22,12 @@ import com.psgod.model.PhotoItem;
 import com.psgod.ui.activity.WebBrowserActivity;
 import com.psgod.ui.view.PhotoItemView;
 import com.psgod.ui.view.PhotoItemView.PhotoListType;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager;
+import m.framework.utils.Utils;
 
 /**
  * 首页－热门 带banner

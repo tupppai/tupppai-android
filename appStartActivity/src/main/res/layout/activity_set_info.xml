@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:psgod="http://schemas.android.com/apk/res/com.psgod"
     android:id="@+id/layout_activity_set_info"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
     android:clipToPadding="true"
-    android:fitsSystemWindows="true" >
+    android:fitsSystemWindows="true">
 
     <TextView
         android:id="@+id/actionbar"

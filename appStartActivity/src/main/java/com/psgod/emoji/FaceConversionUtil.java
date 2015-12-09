@@ -3,11 +3,6 @@ package com.psgod.emoji;
 /**
  * 表情转换工具
  */
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -23,6 +18,12 @@ import android.util.Log;
 import com.psgod.R;
 import com.psgod.Utils;
 import com.psgod.model.ChatEmoji;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class FaceConversionUtil {
 

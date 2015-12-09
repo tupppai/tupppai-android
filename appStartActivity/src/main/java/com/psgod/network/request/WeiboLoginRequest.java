@@ -4,16 +4,17 @@ package com.psgod.network.request;
  * 微博登录请求接口
  * @author brandwang
  */
-import java.util.HashMap;
-import java.util.Map;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.psgod.Logger;
 import com.psgod.network.request.WeiboLoginRequest.WeiboLoginWrapper;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class WeiboLoginRequest extends BaseRequest<WeiboLoginWrapper> {
 	private static final String TAG = UploadReplyRequest.class.getSimpleName();

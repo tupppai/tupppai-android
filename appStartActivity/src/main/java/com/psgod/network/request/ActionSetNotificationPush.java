@@ -4,16 +4,17 @@ package com.psgod.network.request;
  * 设置接收消息推送 请求
  * @author brandwang
  */
-import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
-import java.util.Map;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.psgod.Logger;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ActionSetNotificationPush extends BaseRequest<Boolean> {
 	private static final String TAG = ActionSetNotificationPush.class

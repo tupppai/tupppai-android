@@ -1,10 +1,5 @@
 package com.psgod.ui.adapter;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.sufficientlysecure.htmltextview.HtmlTextView;
-
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -33,6 +28,11 @@ import com.psgod.ui.activity.MainActivity;
 import com.psgod.ui.activity.MultiImageSelectActivity;
 import com.psgod.ui.widget.AvatarImageView;
 import com.psgod.ui.widget.dialog.CustomDialog;
+
+import org.sufficientlysecure.htmltextview.HtmlTextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class UploadSelectReplyAdapter extends BaseAdapter {
 	private final static String TAG = UploadSelectReplyAdapter.class

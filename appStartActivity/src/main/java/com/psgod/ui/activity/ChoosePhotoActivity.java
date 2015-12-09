@@ -1,7 +1,5 @@
 package com.psgod.ui.activity;
 
-import java.io.File;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -16,6 +14,8 @@ import android.widget.Toast;
 import com.psgod.Constants;
 import com.psgod.ImageIOManager;
 import com.psgod.Logger;
+
+import java.io.File;
 
 /**
  * 负责控制选择照片的跳转逻辑，不负责界面显示

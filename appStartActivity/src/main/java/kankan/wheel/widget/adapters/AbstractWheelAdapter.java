@@ -16,12 +16,12 @@
 
 package kankan.wheel.widget.adapters;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import android.database.DataSetObserver;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Abstract Wheel adapter.

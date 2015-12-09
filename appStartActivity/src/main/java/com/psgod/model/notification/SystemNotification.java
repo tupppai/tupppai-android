@@ -3,8 +3,6 @@ package com.psgod.model.notification;
 /**
  * 系统通知
  */
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import android.content.Context;
 import android.text.TextUtils;
@@ -22,6 +20,9 @@ import com.psgod.Utils;
 import com.psgod.model.PhotoItem;
 import com.psgod.ui.view.ViewUtils;
 import com.psgod.ui.widget.AvatarImageView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class SystemNotification implements INotification {
 	private NotificationMessage mNotificationMessage;

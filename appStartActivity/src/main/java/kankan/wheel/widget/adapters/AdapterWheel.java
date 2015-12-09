@@ -16,8 +16,9 @@
 
 package kankan.wheel.widget.adapters;
 
-import kankan.wheel.widget.WheelAdapter;
 import android.content.Context;
+
+import kankan.wheel.widget.WheelAdapter;
 
 /**
  * Adapter class for old wheel adapter (deprecated WheelAdapter class).

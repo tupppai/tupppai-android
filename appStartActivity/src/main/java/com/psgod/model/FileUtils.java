@@ -1,12 +1,12 @@
 package com.psgod.model;
 
+import android.content.Context;
+import android.os.Environment;
+
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-
-import android.content.Context;
-import android.os.Environment;
 
 /**
  * 文件操作类 调用系统相机保存拍照后的图片

@@ -1,13 +1,5 @@
 package com.psgod.network.request;
 
-import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.res.Resources;
 
 import com.alibaba.fastjson.JSON;
@@ -18,6 +10,14 @@ import com.android.volley.Response.Listener;
 import com.psgod.Logger;
 import com.psgod.PSGodApplication;
 import com.psgod.model.SearchWork;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class SearchWorkRequest extends BaseRequest<List<SearchWork.Data>> {
 	private static final String TAG = UserDetailRequest.class.getSimpleName();

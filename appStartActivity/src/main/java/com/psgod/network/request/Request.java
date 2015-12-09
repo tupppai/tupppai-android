@@ -1,10 +1,8 @@
 package com.psgod.network.request;
 
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import com.psgod.Logger;
+import com.psgod.UserPreferences;
+import com.psgod.Utils;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -20,9 +18,11 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.psgod.Logger;
-import com.psgod.UserPreferences;
-import com.psgod.Utils;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * 实现HTTP的get和post请求

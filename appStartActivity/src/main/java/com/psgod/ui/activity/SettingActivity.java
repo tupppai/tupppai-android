@@ -1,8 +1,5 @@
 package com.psgod.ui.activity;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -25,6 +22,9 @@ import com.umeng.update.UmengUpdateAgent;
 import com.umeng.update.UmengUpdateListener;
 import com.umeng.update.UpdateResponse;
 import com.umeng.update.UpdateStatus;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * 帐号设置界面

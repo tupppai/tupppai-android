@@ -1,33 +1,8 @@
 package com.psgod.ui.widget;
 
-import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
-import com.android.volley.RequestQueue;
-import com.android.volley.VolleyError;
-import com.android.volley.Response.ErrorListener;
-import com.android.volley.Response.Listener;
-import com.psgod.Constants;
-import com.psgod.R;
-import com.psgod.Utils;
-import com.psgod.WeakReferenceHandler;
-import com.psgod.eventbus.CommentEvent;
-import com.psgod.model.Comment;
-import com.psgod.model.LoginUser;
-import com.psgod.model.PhotoItem;
-import com.psgod.model.Comment.ReplyComment;
-import com.psgod.network.NetworkUtil;
-import com.psgod.network.request.PSGodRequestQueue;
-import com.psgod.network.request.PostCommentRequest;
-import com.psgod.ui.activity.CommentListActivity;
-import com.psgod.ui.view.FaceRelativeLayout;
-import com.psgod.ui.view.FaceRelativeLayout.OnEmojiClickListener;
-
 import android.content.Context;
-import android.content.Intent;
-import android.os.Message;
 import android.os.Handler.Callback;
+import android.os.Message;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -40,6 +15,26 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+
+import com.android.volley.RequestQueue;
+import com.android.volley.Response.ErrorListener;
+import com.android.volley.Response.Listener;
+import com.android.volley.VolleyError;
+import com.psgod.R;
+import com.psgod.Utils;
+import com.psgod.WeakReferenceHandler;
+import com.psgod.model.Comment;
+import com.psgod.model.Comment.ReplyComment;
+import com.psgod.model.LoginUser;
+import com.psgod.model.PhotoItem;
+import com.psgod.network.request.PSGodRequestQueue;
+import com.psgod.network.request.PostCommentRequest;
+import com.psgod.ui.view.FaceRelativeLayout;
+import com.psgod.ui.view.FaceRelativeLayout.OnEmojiClickListener;
+
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class EditPopupWindow implements Callback {
 

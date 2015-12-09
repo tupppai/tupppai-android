@@ -1,9 +1,5 @@
 package com.psgod.ui.widget.dialog;
 
-import java.util.HashMap;
-
-import org.json.JSONObject;
-
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -13,11 +9,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import cn.sharesdk.framework.Platform;
-import cn.sharesdk.framework.PlatformActionListener;
-import cn.sharesdk.framework.ShareSDK;
-import cn.sharesdk.tencent.qzone.QZone;
-import cn.sharesdk.wechat.friends.Wechat;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response.Listener;
@@ -35,6 +26,16 @@ import com.psgod.network.request.WechatUserInfoRequest.WechatUserWrapper;
 import com.psgod.ui.activity.LoginActivity;
 import com.psgod.ui.activity.MainActivity;
 import com.psgod.ui.activity.SetInfoActivity;
+
+import org.json.JSONObject;
+
+import java.util.HashMap;
+
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.tencent.qzone.QZone;
+import cn.sharesdk.wechat.friends.Wechat;
 
 public class OtherRegisterDialog extends Dialog {
 

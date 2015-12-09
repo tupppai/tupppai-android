@@ -5,9 +5,6 @@ package com.psgod.ui.activity;
  * @author brandwang
  */
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -35,6 +32,9 @@ import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.ui.adapter.FollowerListAdapter;
 import com.psgod.ui.widget.ActionBar;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class OthersFollowerListActivity extends PSGodBaseActivity {
 	private static final String TAG = OthersFollowerListActivity.class

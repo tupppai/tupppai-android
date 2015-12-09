@@ -1,7 +1,5 @@
 package com.psgod;
 
-import java.util.List;
-
 import android.app.Activity;
 import android.graphics.Bitmap.Config;
 
@@ -9,6 +7,8 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
+
+import java.util.List;
 
 public class Constants {
 	/**

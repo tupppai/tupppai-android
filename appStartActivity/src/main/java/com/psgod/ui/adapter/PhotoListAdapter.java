@@ -1,7 +1,5 @@
 package com.psgod.ui.adapter;
 
-import java.util.List;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +10,8 @@ import com.psgod.R;
 import com.psgod.model.PhotoItem;
 import com.psgod.ui.view.PhotoItemView;
 import com.psgod.ui.view.PhotoItemView.PhotoListType;
+
+import java.util.List;
 
 /**
  * 不带评论的PhotoListAdapter 主要用于首页（热门和最近）和关注页

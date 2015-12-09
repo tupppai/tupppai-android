@@ -23,10 +23,9 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.util.LruCache;
 import android.util.Log;
 
+import com.huewu.pla.sample.BuildConfig;
 
 import java.io.File;
-
-import com.huewu.pla.sample.BuildConfig;
 
 /**
  * This class holds our bitmap caches (memory and disk).
