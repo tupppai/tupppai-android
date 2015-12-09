@@ -115,7 +115,7 @@ public class RecentActActivity extends PSGodBaseActivity {
         mUpLoad = new ImageView(this);
         mUpLoad.setScaleType(ImageView.ScaleType.CENTER_CROP);
         mUpLoad.setImageDrawable(getResources().getDrawable(R.mipmap.btn_home_follow));
-        FloatScrollHelper helper = new FloatScrollHelper(mListView.getRefreshableView(),mParent,mUpLoad,this);
+        FloatScrollHelper helper = new FloatScrollHelper(mListView,mParent,mUpLoad,this);
         helper.setViewMargins(17);
         helper.setViewHeight(48);
         helper.init();

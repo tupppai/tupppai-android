@@ -10,6 +10,7 @@ import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
+import com.handmark.pulltorefresh.library.PullToRefreshAdapterViewBase;
 import com.psgod.Utils;
 
 /**
@@ -17,12 +18,13 @@ import com.psgod.Utils;
  */
 public class FloatScrollHelper {
 
-    private AbsListView listView;
+    private PullToRefreshAdapterViewBase listView;
     private Context context;
     private View floatView;
     private ViewGroup parentView;
 
-    public FloatScrollHelper(AbsListView listView, RelativeLayout parentView, View floatView, Context context) {
+    public FloatScrollHelper(PullToRefreshAdapterViewBase listView,
+                             RelativeLayout parentView, View floatView, Context context) {
         this.listView = listView;
         this.context = context;
         this.floatView = floatView;
@@ -201,7 +203,7 @@ public class FloatScrollHelper {
 //
 //    }
 
-    public void setListView(ListView listView) {
+    public void setListView(PullToRefreshAdapterViewBase listView) {
         this.listView = listView;
     }
 }

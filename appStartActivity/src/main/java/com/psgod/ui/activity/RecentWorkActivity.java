@@ -123,7 +123,7 @@ public class RecentWorkActivity extends PSGodBaseActivity implements Handler.Cal
         mUpload.setScaleType(ImageView.ScaleType.CENTER_CROP);
         mUpload.setImageDrawable(getResources().getDrawable(R.mipmap.floating_btn));
         FloatScrollHelper helper = new FloatScrollHelper(
-                mViewHolder.mPhotoListView.getRefreshableView(), mParent, mUpload, this);
+                mViewHolder.mPhotoListView, mParent, mUpload, this);
         helper.setViewHeight(80);
         helper.setViewMargins(12);
         helper.init();

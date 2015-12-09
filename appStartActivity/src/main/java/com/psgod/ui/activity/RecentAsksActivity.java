@@ -114,7 +114,7 @@ public class RecentAsksActivity extends PSGodBaseActivity implements Callback {
 		mUpload.setScaleType(ImageView.ScaleType.CENTER_CROP);
 		mUpload.setImageDrawable(getResources().getDrawable(R.mipmap.floating_btn));
 		FloatScrollHelper helper = new FloatScrollHelper(
-				mViewHolder.mGridView.getRefreshableView(), mParent, mUpload, this);
+				mViewHolder.mGridView, mParent, mUpload, this);
 		helper.setViewHeight(80);
 		helper.setViewMargins(12);
 		helper.init();

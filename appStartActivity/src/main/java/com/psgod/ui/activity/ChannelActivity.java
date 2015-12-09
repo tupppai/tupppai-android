@@ -100,7 +100,7 @@ public class ChannelActivity extends PSGodBaseActivity {
         mUpload = new ImageView(this);
         mUpload.setScaleType(ImageView.ScaleType.CENTER_CROP);
         mUpload.setImageDrawable(getResources().getDrawable(R.mipmap.floating_btn));
-        FloatScrollHelper helper = new FloatScrollHelper(mList.getRefreshableView(), mParent, mUpload, this);
+        FloatScrollHelper helper = new FloatScrollHelper(mList, mParent, mUpload, this);
         helper.setViewHeight(80);
         helper.setViewMargins(12);
         helper.init();
