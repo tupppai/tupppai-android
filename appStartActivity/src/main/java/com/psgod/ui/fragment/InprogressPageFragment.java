@@ -47,11 +47,11 @@ public class InprogressPageFragment extends Fragment implements
 	private ViewHolder mViewHolder;
 	private InprogressPageAdapter mPageInprogressAdapter;
 
-	private final int COUNT_OF_FRAGMENTS = 3;
+	private final int COUNT_OF_FRAGMENTS = 2;
 	private final int[] TAB_RADIO_BUTTONS_ID = {
 			R.id.fragment_inprogress_ask_radio_btn,
-			R.id.fragment_inprogress_reply_radio_btn,
-			R.id.fragment_inprogress_complete_radio_btn };
+			R.id.fragment_inprogress_reply_radio_btn,};
+//			R.id.fragment_inprogress_complete_radio_btn };
 
 	// 游标偏移距离
 	private int mCurSorOffset;
@@ -84,8 +84,8 @@ public class InprogressPageFragment extends Fragment implements
 				.findViewById(R.id.fragment_inprogress_ask_radio_btn);
 		mViewHolder.replyRadioButton = (RadioButton) mViewHolder.mView
 				.findViewById(R.id.fragment_inprogress_reply_radio_btn);
-		mViewHolder.completeRadioButton = (RadioButton) mViewHolder.mView
-				.findViewById(R.id.fragment_inprogress_complete_radio_btn);
+//		mViewHolder.completeRadioButton = (RadioButton) mViewHolder.mView
+//				.findViewById(R.id.fragment_inprogress_complete_radio_btn);
 		mViewHolder.mCursor = (ImageView) mViewHolder.mView
 				.findViewById(R.id.fragment_inprogress_cursor);
 
@@ -98,12 +98,12 @@ public class InprogressPageFragment extends Fragment implements
 		if (mViewHolder.homePageInprogressReplyFragment == null) {
 			mViewHolder.homePageInprogressReplyFragment = new InprogressPageReplyFragment();
 		}
-		if (mViewHolder.homePageInprogressCompleteFragment == null) {
-			mViewHolder.homePageInprogressCompleteFragment = new InprogressPageCompleteFragment();
-		}
+//		if (mViewHolder.homePageInprogressCompleteFragment == null) {
+//			mViewHolder.homePageInprogressCompleteFragment = new InprogressPageCompleteFragment();
+//		}
 		fragments.add(mViewHolder.homePageInprogressAskFragment);
 		fragments.add(mViewHolder.homePageInprogressReplyFragment);
-		fragments.add(mViewHolder.homePageInprogressCompleteFragment);
+//		fragments.add(mViewHolder.homePageInprogressCompleteFragment);
 
 		mPageInprogressAdapter = new InprogressPageAdapter(getActivity()
 				.getSupportFragmentManager(), fragments);
@@ -133,7 +133,7 @@ public class InprogressPageFragment extends Fragment implements
 	private void initCursor() {
 		mCursorWidth = Utils.dpToPx(getActivity(), 55);
 		// 游标左侧偏移量
-		mCurSorOffset = (Constants.WIDTH_OF_SCREEN / 3 - mCursorWidth) / 2;
+		mCurSorOffset = (Constants.WIDTH_OF_SCREEN / 2- mCursorWidth) / 2;
 		mCursorone = mCurSorOffset * 2 + mCursorWidth;
 		mCursortwo = mCursorone * 2;
 		Matrix matrix = new Matrix();
@@ -164,9 +164,10 @@ public class InprogressPageFragment extends Fragment implements
 				mViewHolder.viewPager.setCurrentItem(1);
 			}
 
-		} else if (id == MainActivity.IntentParams.VALUE_INPROGRESS_ID_COMPLETE) {
-			mViewHolder.viewPager.setCurrentItem(2);
 		}
+//		else if (id == MainActivity.IntentParams.VALUE_INPROGRESS_ID_COMPLETE) {
+//			mViewHolder.viewPager.setCurrentItem(2);
+//		}
 
 		// 触发自动下拉刷新
 		switch (id) {
@@ -178,9 +179,9 @@ public class InprogressPageFragment extends Fragment implements
 			mViewHolder.homePageInprogressReplyFragment.setRefreshing();
 			break;
 
-		case MainActivity.IntentParams.VALUE_INPROGRESS_ID_COMPLETE:
-			mViewHolder.homePageInprogressCompleteFragment.setRefreshing();
-			break;
+//		case MainActivity.IntentParams.VALUE_INPROGRESS_ID_COMPLETE:
+//			mViewHolder.homePageInprogressCompleteFragment.setRefreshing();
+//			break;
 
 		default:
 			break;
@@ -294,11 +295,11 @@ public class InprogressPageFragment extends Fragment implements
 		ViewPager viewPager;
 		InprogressPageAskFragment homePageInprogressAskFragment;
 		InprogressPageReplyFragment homePageInprogressReplyFragment;
-		InprogressPageCompleteFragment homePageInprogressCompleteFragment;
+//		InprogressPageCompleteFragment homePageInprogressCompleteFragment;
 		RadioGroup tabRadioGroup;
 		RadioButton askRadioButton;
 		RadioButton replyRadioButton;
-		RadioButton completeRadioButton;
+//		RadioButton completeRadioButton;
 		ImageView mCursor;
 	}
 
