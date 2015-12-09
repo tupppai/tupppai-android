@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -382,12 +383,14 @@ public class LoginActivity extends PSGodBaseActivity implements
 				weixin.setPlatformActionListener(new PlatformActionListener() {
 					@Override
 					public void onError(Platform arg0, int arg1, Throwable arg2) {
+						Looper.prepare();
 						if (mProgressDialog != null
 								&& mProgressDialog.isShowing()) {
 							mProgressDialog.dismiss();
 						}
 						CustomToast.show(LoginActivity.this, "微信登录异常",
 								Toast.LENGTH_LONG);
+						Looper.loop();
 					}
 
 					@Override
