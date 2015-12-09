@@ -65,24 +65,24 @@ public class TupppaiAdapter extends MyBaseAdapter<Tupppai> {
             view.setLayoutParams(params);
             view.setScaleType(ImageView.ScaleType.CENTER_CROP);
             if (i < photoItems.size()) {
-                ImageLoader.getInstance().displayImage(photoItems.get(position).getImageURL(), view, mSmallOptions);
+                ImageLoader.getInstance().displayImage(photoItems.get(i).getImageURL(), view, mSmallOptions);
             }
             holder.linear.addView(view);
         }
-        if (list.get(position).getThreads().size() == 0) {
-            for (int i = 0; i < 5; i++) {
-                TextView view = new TextView(context);
-                LinearLayout.LayoutParams params = new LinearLayout.
-                        LayoutParams(Utils.dpToPx(context, 60), Utils.dpToPx(context, 60));
-                params.weight = 1;
-                params.setMargins(Utils.dpToPx(context, 9), 0, 0, 0);
-                view.setLayoutParams(params);
-                view.setText("+");
-                view.setGravity(Gravity.CENTER);
-                view.setBackgroundColor(Color.parseColor("#cacaca"));
-                holder.linear.addView(view);
-            }
-        }
+//        if (list.get(position).getThreads().size() == 0) {
+//            for (int i = 0; i < 5; i++) {
+//                TextView view = new TextView(context);
+//                LinearLayout.LayoutParams params = new LinearLayout.
+//                        LayoutParams(Utils.dpToPx(context, 60), Utils.dpToPx(context, 60));
+//                params.weight = 1;
+//                params.setMargins(Utils.dpToPx(context, 9), 0, 0, 0);
+//                view.setLayoutParams(params);
+//                view.setText("+");
+//                view.setGravity(Gravity.CENTER);
+//                view.setBackgroundColor(Color.parseColor("#cacaca"));
+//                holder.linear.addView(view);
+//            }
+//        }
         convertView.setTag(R.id.tupppai_view_id, position);
         convertView.setOnClickListener(viewClick);
         return convertView;
