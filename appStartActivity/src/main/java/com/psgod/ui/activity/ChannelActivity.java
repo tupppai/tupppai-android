@@ -67,8 +67,8 @@ public class ChannelActivity extends PSGodBaseActivity {
     private boolean canLoadMore = true;
     private int page = 1;
 
-    private LinearLayout mEmptyView;
-    private TextView mEmptyTxt;
+//    private LinearLayout mEmptyView;
+//    private TextView mEmptyTxt;
     private RelativeLayout mParent;
     private ImageView mUpload;
 
@@ -91,8 +91,8 @@ public class ChannelActivity extends PSGodBaseActivity {
         headAdapter = new ChannelHeadAdapter(this, heads);
         mHeadList.setAdapter(headAdapter);
 
-        mEmptyTxt = (TextView) findViewById(R.id.activity_channal_empty_text);
-        mEmptyView = (LinearLayout) findViewById(R.id.activity_channal_empty_view);
+//        mEmptyTxt = (TextView) findViewById(R.id.activity_channal_empty_text);
+//        mEmptyView = (LinearLayout) findViewById(R.id.activity_channal_empty_view);
         Intent intent = getIntent();
         id = intent.getStringExtra("id");
         mTitleName.setText(intent.getStringExtra("title") == null ? ""
@@ -139,7 +139,7 @@ public class ChannelActivity extends PSGodBaseActivity {
             } else {
                 canLoadMore = true;
             }
-            initEmpty(photoItems.size());
+//            initEmpty(photoItems.size());
         }
     };
 
@@ -160,18 +160,18 @@ public class ChannelActivity extends PSGodBaseActivity {
             }
             photoItems.addAll(response.getReplies());
             mAdapter.notifyDataSetChanged();
-            initEmpty(photoItems.size());
+//            initEmpty(photoItems.size());
         }
     };
 
-    private void initEmpty(int length) {
-        if (length == 0) {
-            mEmptyView.setVisibility(View.VISIBLE);
-            mEmptyTxt.setText("敬请期待");
-        } else {
-            mEmptyView.setVisibility(View.GONE);
-        }
-    }
+//    private void initEmpty(int length) {
+//        if (length == 0) {
+//            mEmptyView.setVisibility(View.VISIBLE);
+//            mEmptyTxt.setText("敬请期待");
+//        } else {
+//            mEmptyView.setVisibility(View.GONE);
+//        }
+//    }
 
 
     private void initListener() {

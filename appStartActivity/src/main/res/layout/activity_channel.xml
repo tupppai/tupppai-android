@@ -43,29 +43,6 @@
         android:layout_below="@+id/activity_channal_title_layout"
         android:background="#F7F7F7" />
 
-    <LinearLayout
-        android:id="@+id/activity_channal_empty_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:visibility="gone"
-        android:layout_below="@+id/activity_channal_title_layout">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="180dp"
-            android:background="@drawable/ic_pencil" />
-
-        <TextView
-            android:id="@+id/activity_channal_empty_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:textColor="#8D8D8D"
-            android:textSize="15dp" />
-    </LinearLayout>
 
 
 </RelativeLayout>
