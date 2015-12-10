@@ -6,15 +6,15 @@ import java.util.List;
  * Created by remilia on 2015/11/18.
  */
 public class Activities {
-    private List<ActivitiesAct> acts;
+    private ActivitiesAct activity;
     private List<PhotoItem> replies;
 
-    public List<ActivitiesAct> getActs() {
-        return acts;
+    public ActivitiesAct getActs() {
+        return activity;
     }
 
-    public void setActs(List<ActivitiesAct> acts) {
-        this.acts = acts;
+    public void setActs(ActivitiesAct activity) {
+        this.activity = activity;
     }
 
     public List<PhotoItem> getReplies() {

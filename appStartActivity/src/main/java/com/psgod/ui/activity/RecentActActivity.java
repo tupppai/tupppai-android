@@ -46,7 +46,7 @@ public class RecentActActivity extends PSGodBaseActivity {
     private RelativeLayout mHeadTxtArea;
     private RecentPageActAdapter mAdapter;
     private List<PhotoItem> mPhotoItems;
-    private List<ActivitiesAct> mActs;
+    private ActivitiesAct mAct;
     private View mFollowListFooter;
     private TextView mTitle;
     private ImageView mFinish;
@@ -97,7 +97,7 @@ public class RecentActActivity extends PSGodBaseActivity {
         mHeadTxtArea.setVisibility(View.GONE);
         mEmptyView = findViewById(R.id.recent_fragment_act_empty_view);
         mPhotoItems = new ArrayList<PhotoItem>();
-        mActs = new ArrayList<ActivitiesAct>();
+        mAct = new ActivitiesAct();
         mAdapter = new RecentPageActAdapter(RecentActActivity.this, mPhotoItems);
         mListView.setAdapter(mAdapter);
         mFollowListFooter = LayoutInflater.from(RecentActActivity.this).inflate(
@@ -189,10 +189,10 @@ public class RecentActActivity extends PSGodBaseActivity {
         mHeadImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!mActs.get(0).getUrl().equals("")) {
+                if(!mAct.getUrl().equals("")) {
                     Intent intent = new Intent(RecentActActivity.this, WebBrowserActivity.class);
-                    intent.putExtra(WebBrowserActivity.KEY_DESC, mActs.get(0).getName());
-                    intent.putExtra(WebBrowserActivity.KEY_URL, mActs.get(0).getUrl());
+                    intent.putExtra(WebBrowserActivity.KEY_DESC, mAct.getName());
+                    intent.putExtra(WebBrowserActivity.KEY_URL, mAct.getUrl());
                     RecentActActivity.this.startActivity(intent);
                 }
             }
@@ -200,11 +200,11 @@ public class RecentActActivity extends PSGodBaseActivity {
         mUpLoad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mActs.size() > 0) {
+                if (mAct != null) {
 //                    loadUtils.upLoad(mActs.get(0).getType(), Long.parseLong(mActs.get(0).getAsk_id()));
                     Intent intent = new Intent(RecentActActivity.this,MultiImageSelectActivity.class);
-                    intent.putExtra("AskId",Long.parseLong(mActs.get(0).getAsk_id()));
-                    intent.putExtra("ActivityId",mActs.get(0).getId());
+                    intent.putExtra("AskId",Long.parseLong(mAct.getAsk_id()));
+                    intent.putExtra("ActivityId",mAct.getId());
                     intent.putExtra("SelectType","TypeReplySelect");
                     startActivity(intent);
                 }
@@ -235,15 +235,14 @@ public class RecentActActivity extends PSGodBaseActivity {
                 mPhotoItems.addAll(response.getReplies());
             }
             mAdapter.notifyDataSetChanged();
-            mActs.clear();
-            if (response.getActs().size() > 0 && response.getActs().get(0) != null) {
-                mActs.addAll(response.getActs());
+            if (response.getActs() != null ) {
+                mAct = response.getActs();
                 if(mHeadView.getVisibility() == View.GONE){
                     mHeadView.setVisibility(View.VISIBLE);
                 }
-                mTitle.setText(mActs.get(0).getName());
+                mTitle.setText(mAct.getName());
                 ImageLoader.getInstance().
-                        displayImage(mActs.get(0).getBanner_pic(),
+                        displayImage(mAct.getBanner_pic(),
                                 mHeadImg, Constants.DISPLAY_IMAGE_OPTIONS);
             }else{
                 mHeadView.setVisibility(View.GONE);

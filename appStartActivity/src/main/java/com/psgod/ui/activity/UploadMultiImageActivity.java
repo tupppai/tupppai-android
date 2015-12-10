@@ -37,6 +37,7 @@ import com.psgod.UserPreferences;
 import com.psgod.Utils;
 import com.psgod.WeakReferenceHandler;
 import com.psgod.eventbus.MyPageRefreshEvent;
+import com.psgod.eventbus.RefreshEvent;
 import com.psgod.model.Channel;
 import com.psgod.model.Label;
 import com.psgod.network.request.ActionShareRequest;
@@ -47,6 +48,7 @@ import com.psgod.network.request.UploadImageRequest;
 import com.psgod.network.request.UploadImageRequest.ImageUploadResult;
 import com.psgod.network.request.UploadMultiRequest;
 import com.psgod.network.request.UploadMultiRequest.MultiUploadResult;
+import com.psgod.ui.fragment.TupppaiFragment;
 import com.psgod.ui.view.LabelFlowLayout;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
 
@@ -570,6 +572,7 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
                 }
                 startActivity(intent);
             }
+            EventBus.getDefault().post(new RefreshEvent(TupppaiFragment.class.getName()));
             UploadMultiImageActivity.this.finish();
         }
     };

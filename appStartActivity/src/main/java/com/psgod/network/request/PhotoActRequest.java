@@ -38,7 +38,7 @@ public final class PhotoActRequest extends BaseRequest<Activities> {
     @Override
     protected Activities doParseNetworkResponse(JSONObject response)
             throws JSONException {
-        JSONArray headObject = response.getJSONObject("data").getJSONArray("activities");
+        JSONObject headObject = response.getJSONObject("data").getJSONObject("activity");
         JSONArray data = response.getJSONObject("data").getJSONArray("replies");
         int length = data.length();
         Activities activities = new Activities();
@@ -48,9 +48,9 @@ public final class PhotoActRequest extends BaseRequest<Activities> {
         }
         activities.setReplies(items);
         if (headObject.length() > 0) {
-            activities.setActs(com.alibaba.fastjson.JSONArray.parseArray(headObject.toString(), ActivitiesAct.class));
+            activities.setActs(com.alibaba.fastjson.JSONArray.parseObject(headObject.toString(), ActivitiesAct.class));
         }else{
-            activities.setActs(new ArrayList<ActivitiesAct>());
+            activities.setActs(new ActivitiesAct());
         }
         return activities;
     }
@@ -145,7 +145,7 @@ public final class PhotoActRequest extends BaseRequest<Activities> {
         @Override
         public String createUrl() {
             StringBuilder sb = new StringBuilder(BaseRequest.PSGOD_BASE_URL);
-            sb.append("/thread/activities");
+            sb.append("/thread/get_activity_threads");
             sb.append("?page=").append(page);
             sb.append("&activity_id=").append(id);
             // sb.append("size=").append(size); 用服务器的默认值
