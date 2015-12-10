@@ -26,6 +26,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.psgod.R;
+import com.psgod.Utils;
 import com.psgod.emoji.FaceConversionUtil;
 import com.psgod.model.ChatEmoji;
 import com.psgod.ui.adapter.FaceAdapter;
