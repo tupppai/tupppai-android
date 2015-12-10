@@ -158,7 +158,7 @@ public class SinglePhotoDetailView extends RelativeLayout {
     };
 
     private void initImg() {
-        if (mPhotoItem.getUploadImagesList().size() == 1) {
+        if (mPhotoItem.getUploadImagesList().size() == 1 || mPhotoItem.getType() == PhotoItem.TYPE_REPLY) {
             imgMutl.setVisibility(INVISIBLE);
             imgSingle.setVisibility(VISIBLE);
             imgBack.setTag(mPhotoItem.getImageURL());

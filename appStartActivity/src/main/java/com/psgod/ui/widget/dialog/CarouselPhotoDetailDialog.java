@@ -126,6 +126,8 @@ public class CarouselPhotoDetailDialog extends Dialog {
         progressingDialog.show();
     }
 
+//        AttentionComponentView
+
     Response.Listener<List<PhotoItem>> initDataListener = new Response.Listener<List<PhotoItem>>() {
         @Override
         public void onResponse(List<PhotoItem> items) {
@@ -133,6 +135,21 @@ public class CarouselPhotoDetailDialog extends Dialog {
                 views.clear();
             }
             for (PhotoItem item : items) {
+                if(item.getUploadImagesList().size() == 2 && item.getType() == PhotoItem.TYPE_ASK){
+                    for (int i = 0; i < 2; i++) {
+                        item.setImageURL(item.getUploadImagesList().get(i).mImageUrl);
+                        CarouselPhotoDetailView view = new CarouselPhotoDetailView(getContext(), item);
+                        view.setVp(vp);
+                        view.setOnEndListener( new CarouselPhotoDetailView.OnEndListener() {
+                            @Override
+                            public void onEnd() {
+                                CarouselPhotoDetailDialog.this.dismiss();
+                            }
+                        });
+                        views.add(view);
+                    }
+                    continue;
+                }
                 CarouselPhotoDetailView view = new CarouselPhotoDetailView(getContext(), item);
                 view.setVp(vp);
                 view.setOnEndListener(new CarouselPhotoDetailView.OnEndListener() {
@@ -148,7 +165,11 @@ public class CarouselPhotoDetailDialog extends Dialog {
                 if(askId == replyId){
                     vp.setCurrentItem(0);
                 }else {
-                    vp.setCurrentItem(1);
+                    if(items.get(0).getUploadImagesList().size() == 1) {
+                        vp.setCurrentItem(1);
+                    }else{
+                        vp.setCurrentItem(2);
+                    }
                 }
             }
             if (progressingDialog != null && progressingDialog.isShowing()) {
