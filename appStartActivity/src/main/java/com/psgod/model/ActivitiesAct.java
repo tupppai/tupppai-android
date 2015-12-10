@@ -1,19 +1,30 @@
 package com.psgod.model;
 
+import java.io.Serializable;
+
 /**
  * Created by remilia on 2015/11/18.
  */
-public class ActivitiesAct {
+public class ActivitiesAct implements Serializable{
 
     private String id;
 //    private String display_name;
 //    private String pc_pic;
 //    private String app_pic;
     private String image_url;
+    private String banner_pic;
     private String url;
     private String ask_id;
     private String name;
     private int type;
+
+    public String getBanner_pic() {
+        return banner_pic;
+    }
+
+    public void setBanner_pic(String banner_pic) {
+        this.banner_pic = banner_pic;
+    }
 
     public String getName() {
         return name;

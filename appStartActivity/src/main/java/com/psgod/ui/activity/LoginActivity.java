@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.CheckedTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -303,6 +304,7 @@ public class LoginActivity extends PSGodBaseActivity implements
 				}
 
 				Platform weibo = ShareSDK.getPlatform(SinaWeibo.NAME);
+
 				weibo.SSOSetting(false);
 				weibo.setPlatformActionListener(weiboLoginListener);
 				if (weibo.isValid()) {

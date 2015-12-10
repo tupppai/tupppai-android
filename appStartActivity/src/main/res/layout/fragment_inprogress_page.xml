@@ -16,6 +16,8 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/actionbar_height"
         android:background="#FFFFFF"
+        android:layout_marginRight="40dp"
+        android:layout_marginLeft="40dp"
         android:gravity="center"
         android:orientation="horizontal">
         
@@ -24,7 +26,6 @@
             style="@style/homepage_inprogress_top_tabbar"
             android:checked="true"
             android:gravity="center"
-            android:paddingLeft="50dp"
             android:textColor="#000000"
             android:text="我的求P" />
         
@@ -33,7 +34,6 @@
             style="@style/homepage_inprogress_top_tabbar"
             android:checked="true"
             android:gravity="center"
-            android:paddingRight="50dp"
             android:textColor="#99000000"
             android:text="我的帮P" />
         

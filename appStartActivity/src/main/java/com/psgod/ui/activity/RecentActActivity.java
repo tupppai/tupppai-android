@@ -243,7 +243,7 @@ public class RecentActActivity extends PSGodBaseActivity {
                 }
                 mTitle.setText(mActs.get(0).getName());
                 ImageLoader.getInstance().
-                        displayImage(mActs.get(0).getImage_url(),
+                        displayImage(mActs.get(0).getBanner_pic(),
                                 mHeadImg, Constants.DISPLAY_IMAGE_OPTIONS);
             }else{
                 mHeadView.setVisibility(View.GONE);
