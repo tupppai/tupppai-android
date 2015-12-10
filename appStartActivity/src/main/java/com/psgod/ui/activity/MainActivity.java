@@ -474,56 +474,31 @@ public class MainActivity extends PSGodBaseActivity implements
         mMyLayout.setOnClickListener(myClick);
         mAvatarImg.setOnClickListener(myClick);
         // 双击最近tab自动刷新
-//		mRecentBtn.setOnTouchListener(new OnTouchListener() {
-//			int count = 0;
-//			int firClick = 0;
-//			int secClick = 0;
-//
-//			@Override
-//			public boolean onTouch(View v, MotionEvent event) {
-//				if (MotionEvent.ACTION_DOWN == event.getAction()) {
-//					count++;
-//					if (count == 1) {
-//						firClick = (int) System.currentTimeMillis();
-//					} else if (count == 2) {
-//						secClick = (int) System.currentTimeMillis();
-//						if (secClick - firClick < 1200) {
-//							// 双击事件 下拉刷新首页热门列表
-//							Intent intent = new Intent(MainActivity.this,
-//									MainActivity.class);
-//							intent.putExtra(
-//									MainActivity.IntentParams.KEY_FRAGMENT_ID,
-//									MainActivity.IntentParams.VALUE_FRAGMENT_ID_RECENT);
-//							if (Constants.CURRENT_RECENTPAGE_TAB == 2) {
-////								intent.putExtra(
-////										MainActivity.IntentParams.KEY_RECENTPAGE_ID,
-////										IntentParams.VALUE_RECENTPAGE_ID_ACT);
-//								EventBus.getDefault().post(new RefreshEvent(RecentPageActFragment.class.getName()));
-//							}else if (Constants.CURRENT_RECENTPAGE_TAB == 0) {
-////								intent.putExtra(
-////										MainActivity.IntentParams.KEY_RECENTPAGE_ID,
-////										MainActivity.IntentParams.VALUE_RECENTPAGE_ID_ASKS);
-//								EventBus.getDefault().post(new RefreshEvent(RecentPageAsksFragment.class.getName()));
-//							}else if (Constants.CURRENT_RECENTPAGE_TAB == 1){
-////								intent.putExtra(
-////										MainActivity.IntentParams.KEY_RECENTPAGE_ID,
-////										MainActivity.IntentParams.VALUE_RECENTPAGE_ID_WORKS);
-//								EventBus.getDefault().post(new RefreshEvent(RecentPageWorksFragment.class.getName()));
-//							}
-//
-////							intent.putExtra(
-////									MainActivity.IntentParams.KEY_NEED_REFRESH,
-////									true);
-////							startActivity(intent);
-//						}
-//						count = 0;
-//						firClick = 0;
-//						secClick = 0;
-//					}
-//				}
-//				return false;
-//			}
-//		});
+		mRecentBtn.setOnTouchListener(new OnTouchListener() {
+			int count = 0;
+			int firClick = 0;
+			int secClick = 0;
+
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				if (MotionEvent.ACTION_DOWN == event.getAction()) {
+					count++;
+					if (count == 1) {
+						firClick = (int) System.currentTimeMillis();
+					} else if (count == 2) {
+						secClick = (int) System.currentTimeMillis();
+						if (secClick - firClick < 1200) {
+							// 双击事件 下拉刷新首页热门列表
+							EventBus.getDefault().post(new RefreshEvent(TupppaiFragment.class.getName()));
+						}
+						count = 0;
+						firClick = 0;
+						secClick = 0;
+					}
+				}
+				return false;
+			}
+		});
 
         // 双击首页tab刷新
         mHomeBtn.setOnTouchListener(new OnTouchListener() {
