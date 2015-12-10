@@ -62,6 +62,7 @@ public class MultiImageSelectActivity extends PSGodBaseActivity {
 	private Long mAskId = 0l;
 	private String mActivityId;
 	private String mChannelId;
+	private boolean isAsk;
 
 	private File mTmpFile;
 	private static final int REQUEST_CAMERA = 0x225;
@@ -85,6 +86,7 @@ public class MultiImageSelectActivity extends PSGodBaseActivity {
 		mAskId = bundle.getLong("AskId", 0l);
 		mActivityId = bundle.getString("ActivityId");
 		mChannelId = bundle.getString("channel_id");
+		isAsk = bundle.getBoolean("isAsk",false);
 
 		if (IMAGE_SELECT_TYPE.equals(TYPE_ASK_SELECT)) {
 			MaxImageSelectCount = MaxImageTwo;
@@ -200,6 +202,7 @@ public class MultiImageSelectActivity extends PSGodBaseActivity {
 				bundle.putLong("AskId", mAskId);
 				bundle.putString("ActivityId", mActivityId);
 				bundle.putString("channel_id",mChannelId);
+				bundle.putBoolean("isAsk",isAsk);
 				intent.putExtras(bundle);
 				startActivity(intent);
 			}

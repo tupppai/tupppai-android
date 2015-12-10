@@ -25,7 +25,7 @@ public abstract class PSGodErrorListener implements ErrorListener {
 		if ((msg != null) && (!msg.equals("")) && (msg.startsWith("java.net.UnknownHostException"))) {
 			msg = "网络连接不可用，请稍后再试";
 		} else {
-			msg = TextUtils.isEmpty(msg) ? "系统出错，请稍后再试" : msg ;
+			msg = TextUtils.isEmpty(msg) ? "网络不稳定，请稍后再试" : msg ;
 		}
 //		msg = TextUtils.isEmpty(msg) ? " Empty message" : "网络连接不可用，请稍后再试";
 //		msg = TextUtils.isEmpty(msg) ? " Empty message" : msg;

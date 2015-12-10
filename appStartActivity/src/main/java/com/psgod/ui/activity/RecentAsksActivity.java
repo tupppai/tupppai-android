@@ -3,6 +3,7 @@ package com.psgod.ui.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler.Callback;
 import android.os.Message;
@@ -116,7 +117,11 @@ public class RecentAsksActivity extends PSGodBaseActivity implements Callback {
 		FloatScrollHelper helper = new FloatScrollHelper(
 				mViewHolder.mGridView, mParent, mUpload, this);
 		helper.setViewHeight(80);
-		helper.setViewMargins(12);
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+			helper.setViewMargins(32);
+		}else {
+			helper.setViewMargins(12);
+		}
 		helper.init();
 
 		if (NetworkUtil.getNetworkType() != NetworkUtil.NetworkType.NONE) {
@@ -152,6 +157,7 @@ public class RecentAsksActivity extends PSGodBaseActivity implements Callback {
 				bundleM.putString("SelectType",
 						MultiImageSelectActivity.TYPE_ASK_SELECT);
 				bundleM.putString("channel_id",mChannelId);
+				bundleM.putBoolean("isAsk",true);
 				intentM.putExtras(bundleM);
 				startActivity(intentM);
 			}
@@ -387,5 +393,14 @@ public class RecentAsksActivity extends PSGodBaseActivity implements Callback {
 			}
 		}
 		return true;
+	}
+
+	@Override
+	protected void onNewIntent(Intent intent) {
+		super.onNewIntent(intent);
+		mChannelId = intent.getStringExtra("id");
+		if(intent.getBooleanExtra("isRefresh", false)){
+			setRefreshing();
+		}
 	}
 }

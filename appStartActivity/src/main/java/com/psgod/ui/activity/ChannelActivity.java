@@ -1,11 +1,13 @@
 package com.psgod.ui.activity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -102,7 +104,11 @@ public class ChannelActivity extends PSGodBaseActivity {
         mUpload.setImageDrawable(getResources().getDrawable(R.mipmap.floating_btn));
         FloatScrollHelper helper = new FloatScrollHelper(mList, mParent, mUpload, this);
         helper.setViewHeight(80);
-        helper.setViewMargins(12);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            helper.setViewMargins(32);
+        }else {
+            helper.setViewMargins(12);
+        }
         helper.init();
     }
 
@@ -231,6 +237,14 @@ public class ChannelActivity extends PSGodBaseActivity {
         RequestQueue requestQueue = PSGodRequestQueue.getInstance(this)
                 .getRequestQueue();
         requestQueue.cancelAll(TAG);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if(intent.getBooleanExtra("isRefresh",false)){
+            refresh();
+        }
     }
 
 }

@@ -3,6 +3,7 @@ package com.psgod.ui.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -116,7 +117,11 @@ public class RecentActActivity extends PSGodBaseActivity {
         mUpLoad.setScaleType(ImageView.ScaleType.CENTER_CROP);
         mUpLoad.setImageDrawable(getResources().getDrawable(R.mipmap.btn_home_follow));
         FloatScrollHelper helper = new FloatScrollHelper(mListView,mParent,mUpLoad,this);
-        helper.setViewMargins(17);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            helper.setViewMargins(37);
+        }else {
+            helper.setViewMargins(17);
+        }
         helper.setViewHeight(48);
         helper.init();
     }
@@ -219,7 +224,7 @@ public class RecentActActivity extends PSGodBaseActivity {
     }
 
     private void initData() {
-        mListView.setRefreshing();
+        mListView.setRefreshing(true);
     }
 
     private Response.Listener<Activities> refreshListener = new Response.Listener<Activities>() {
@@ -312,6 +317,15 @@ public class RecentActActivity extends PSGodBaseActivity {
             try {
                 mListView.setRefreshing(true);
             }catch (NullPointerException ne){}
+        }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+
+        if(intent.getBooleanExtra("isRefresh", false)){
+            listListener.onRefresh(mListView);
         }
     }
 

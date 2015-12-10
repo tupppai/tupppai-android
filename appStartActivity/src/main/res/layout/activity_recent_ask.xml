@@ -63,24 +63,7 @@
 		    android:src="@drawable/point_at"
 		    android:visibility="gone"
 		    />
-        
-        <ImageView
-            android:id="@+id/activity_ask_nothing_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-			android:layout_centerHorizontal="true"
-            android:layout_marginTop="60dp"
-            android:background="@drawable/ic_gui"/>
-		
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-			android:layout_centerHorizontal="true"
-			android:layout_below="@id/activity_ask_nothing_icon"
-			android:layout_marginTop="35dp"
-            android:text="点击右上方照相机上传你的求助吧"
-            android:textColor="#8D8D8D"
-            android:textSize="15dp" />
+
     </RelativeLayout>
     
 </RelativeLayout>

@@ -133,7 +133,7 @@ public class InprogressPageFragment extends Fragment implements
 	private void initCursor() {
 		mCursorWidth = Utils.dpToPx(getActivity(), 55);
 		// 游标左侧偏移量
-		mCurSorOffset = (Constants.WIDTH_OF_SCREEN / 2- mCursorWidth) / 2 + Utils.dpToPx(getActivity(),25);
+		mCurSorOffset = (Constants.WIDTH_OF_SCREEN / 2- mCursorWidth) / 2 + Utils.dpToPx(getActivity(),24);
 		mCursorone = mCurSorOffset * 2 + mCursorWidth - Utils.dpToPx(getActivity(),98);
 		mCursortwo = mCursorone * 2;
 //		Matrix matrix = new Matrix();

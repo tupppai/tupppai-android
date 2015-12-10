@@ -3,6 +3,7 @@ package com.psgod.ui.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -125,7 +126,11 @@ public class RecentWorkActivity extends PSGodBaseActivity implements Handler.Cal
         FloatScrollHelper helper = new FloatScrollHelper(
                 mViewHolder.mPhotoListView, mParent, mUpload, this);
         helper.setViewHeight(80);
-        helper.setViewMargins(12);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            helper.setViewMargins(32);
+        }else {
+            helper.setViewMargins(12);
+        }
         helper.init();
 
         // TODO 检测耗时
@@ -372,5 +377,13 @@ public class RecentWorkActivity extends PSGodBaseActivity implements Handler.Cal
     private static class ViewHolder {
         View mView;
         PullToRefreshListView mPhotoListView;
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if(intent.getBooleanExtra("isRefresh", false)){
+           setRefreshing();
+        }
     }
 }

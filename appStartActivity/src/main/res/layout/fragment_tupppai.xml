@@ -33,28 +33,4 @@
         android:layout_below="@+id/fragment_tupppai_title"
         android:divider="@null" />
 
-    <LinearLayout
-        android:id="@+id/fragment_tupppai_empty_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:visibility="gone"
-        android:layout_alignTop="@+id/fragment_tupppai_list">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="120dp"
-            android:background="@drawable/ic_pencil" />
-
-        <TextView
-            android:id="@+id/fragment_tupppai_empty_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="35dp"
-            android:textColor="#8D8D8D"
-            android:textSize="15dp" />
-    </LinearLayout>
-
 </RelativeLayout>

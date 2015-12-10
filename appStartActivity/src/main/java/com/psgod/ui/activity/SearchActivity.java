@@ -24,6 +24,7 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.psgod.Constants;
 import com.psgod.R;
 import com.psgod.Utils;
 import com.psgod.eventbus.SearchEvent;
@@ -87,7 +88,17 @@ public class SearchActivity extends PSGodBaseActivity {
 
 		mSearchEdit.setFocusableInTouchMode(true);
 
+		mCursorWidth = Utils.dpToPx(SearchActivity.this,38);
+		mCurSorOffset = (Constants.WIDTH_OF_SCREEN / 2 - mCursorWidth) / 2;
+		mCursorone = mCurSorOffset * 2 + mCursorWidth;
+		mCursor.setX(mCurSorOffset);
+
+
 	}
+
+	int mCursorWidth;
+	int mCurSorOffset;
+	int mCursorone;
 
 	private void initListener() {
 
@@ -170,9 +181,10 @@ public class SearchActivity extends PSGodBaseActivity {
 				}
 			}
 		});
-
 		mViewPager.setOnPageChangeListener(new OnPageChangeListener() {
-			int mCursorMoving = Utils.dpToPx(SearchActivity.this, 180);
+//			int mCursorMoving = Utils.dpToPx(SearchActivity.this, 180);
+
+
 
 			@Override
 			public void onPageSelected(int index) {
@@ -183,7 +195,7 @@ public class SearchActivity extends PSGodBaseActivity {
 				switch (index) {
 				case 0:
 					// if (pageNum == 1) {
-					animation = new TranslateAnimation(mCursorMoving, 0, 0, 0);
+					animation = new TranslateAnimation(mCursorone, 0, 0, 0);
 					animation.setFillAfter(true);
 					animation.setDuration(300);
 					mCursor.setAnimation(animation);
@@ -192,7 +204,7 @@ public class SearchActivity extends PSGodBaseActivity {
 
 				case 1:
 					// if (pageNum == 0) {
-					animation = new TranslateAnimation(0, mCursorMoving, 0, 0);
+					animation = new TranslateAnimation(0, mCursorone, 0, 0);
 					animation.setFillAfter(true);
 					animation.setDuration(300);
 					mCursor.setAnimation(animation);

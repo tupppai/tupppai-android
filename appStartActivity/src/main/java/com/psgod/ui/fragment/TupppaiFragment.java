@@ -43,8 +43,6 @@ public class TupppaiFragment extends BaseFragment {
     private List<Tupppai> tupppais;
     private ImageView askImg;
     private ImageView workImg;
-    private LinearLayout mEmptyView;
-    private TextView mEmptyTxt;
     private int page = 1;
 
     private Boolean canLoadMore = true;
@@ -81,18 +79,6 @@ public class TupppaiFragment extends BaseFragment {
         mAdapter = new TupppaiAdapter(getActivity(),tupppais);
         mListView.setAdapter(mAdapter);
         mListView.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
-        mEmptyTxt = (TextView) view.findViewById(R.id.fragment_tupppai_empty_text);
-        mEmptyView = (LinearLayout) view.findViewById(R.id.fragment_tupppai_empty_view);
-
-    }
-
-    private void initEmpty(int length){
-        if(length == 0){
-            mEmptyView.setVisibility(View.VISIBLE);
-            mEmptyTxt.setText("我们的频道很快出版喽，敬请期待");
-        }else{
-            mEmptyView.setVisibility(View.GONE);
-        }
     }
 
     private void initListener() {
@@ -164,7 +150,6 @@ public class TupppaiFragment extends BaseFragment {
             mAdapter.notifyDataSetChanged();
 
 
-            initEmpty(tupppais.size());
         }
     };
 
@@ -178,7 +163,6 @@ public class TupppaiFragment extends BaseFragment {
             }
             tupppais.addAll(response);
             mAdapter.notifyDataSetChanged();
-            initEmpty(tupppais.size());
         }
     };
 

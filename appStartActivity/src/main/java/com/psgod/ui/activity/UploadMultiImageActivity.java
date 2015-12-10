@@ -37,6 +37,7 @@ import com.psgod.UserPreferences;
 import com.psgod.Utils;
 import com.psgod.WeakReferenceHandler;
 import com.psgod.eventbus.MyPageRefreshEvent;
+import com.psgod.model.Channel;
 import com.psgod.model.Label;
 import com.psgod.network.request.ActionShareRequest;
 import com.psgod.network.request.GetLabelListRequest;
@@ -106,6 +107,7 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
     private Long mAskId = 0l;
     private String mActivityId;
     private String mChannelId;
+    private boolean isAsk;
 
     private Bitmap mImageBitmap; // 压缩后的图片
     private ArrayList<Long> mUploadIdList = new ArrayList<Long>(); // 上传多图返回的id
@@ -129,6 +131,7 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
         mAskId = bundle.getLong("AskId", mAskId);
         mActivityId = bundle.getString("ActivityId");
         mChannelId = bundle.getString("channel_id");
+        isAsk = bundle.getBoolean("isAsk",false);
         if (type.equals(TYPE_ASK_SELECT)) {
             IMAGE_UPLOAD_TYPE = TYPE_ASK_UPLOAD;
         } else {
@@ -521,29 +524,50 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
             }
             if (IMAGE_UPLOAD_TYPE == TYPE_ASK_UPLOAD) {
                 // 新建求P成功后跳转最新求p 页面
-                Intent intent = new Intent(UploadMultiImageActivity.this,
-                        MainActivity.class);
-                intent.putExtra(MainActivity.IntentParams.KEY_FRAGMENT_ID,
-                        MainActivity.IntentParams.VALUE_FRAGMENT_ID_RECENT);
-                intent.putExtra(
-                        MainActivity.IntentParams.KEY_RECENTPAGE_ID,
-                        MainActivity.IntentParams.VALUE_RECENTPAGE_ID_ASKS);
-                intent.putExtra(MainActivity.IntentParams.KEY_NEED_REFRESH,
-                        true);
-                EventBus.getDefault().post(new MyPageRefreshEvent(MyPageRefreshEvent.ASK));
+//                Intent intent = new Intent(UploadMultiImageActivity.this,
+//                        MainActivity.class);
+//                intent.putExtra(MainActivity.IntentParams.KEY_FRAGMENT_ID,
+//                        MainActivity.IntentParams.VALUE_FRAGMENT_ID_RECENT);
+//                intent.putExtra(
+//                        MainActivity.IntentParams.KEY_RECENTPAGE_ID,
+//                        MainActivity.IntentParams.VALUE_RECENTPAGE_ID_ASKS);
+//                intent.putExtra(MainActivity.IntentParams.KEY_NEED_REFRESH,
+//                        true);
+//                EventBus.getDefault().post(new MyPageRefreshEvent(MyPageRefreshEvent.ASK));
+                Intent intent = new Intent();
+                intent.putExtra("isRefresh",true);
+                if(isAsk) {
+                    intent.setClass(UploadMultiImageActivity.this, RecentAsksActivity.class);
+                }else{
+                    intent.setClass(UploadMultiImageActivity.this,ChannelActivity.class);
+                }
+                if(mChannelId != null && !mChannelId.equals("")){
+                    intent.putExtra("id",mChannelId);
+                }
                 startActivity(intent);
             } else {
                 // 新建作品成功后跳转最新作品 页面
-                Intent intent = new Intent(UploadMultiImageActivity.this,
-                        MainActivity.class);
-                intent.putExtra(MainActivity.IntentParams.KEY_FRAGMENT_ID,
-                        MainActivity.IntentParams.VALUE_FRAGMENT_ID_RECENT);
-                intent.putExtra(
-                        MainActivity.IntentParams.KEY_RECENTPAGE_ID,
-                        MainActivity.IntentParams.VALUE_RECENTPAGE_ID_WORKS);
-                intent.putExtra(MainActivity.IntentParams.KEY_NEED_REFRESH,
-                        true);
-                EventBus.getDefault().post(new MyPageRefreshEvent(MyPageRefreshEvent.WORK));
+//                Intent intent = new Intent(UploadMultiImageActivity.this,
+//                        MainActivity.class);
+//                intent.putExtra(MainActivity.IntentParams.KEY_FRAGMENT_ID,
+//                        MainActivity.IntentParams.VALUE_FRAGMENT_ID_RECENT);
+//                intent.putExtra(
+//                        MainActivity.IntentParams.KEY_RECENTPAGE_ID,
+//                        MainActivity.IntentParams.VALUE_RECENTPAGE_ID_WORKS);
+//                intent.putExtra(MainActivity.IntentParams.KEY_NEED_REFRESH,
+//                        true);
+//                EventBus.getDefault().post(new MyPageRefreshEvent(MyPageRefreshEvent.WORK));
+                Intent intent = new Intent();
+                intent.putExtra("isRefresh",true);
+                if(mActivityId != null && !mActivityId.equals("")){
+                    intent.setClass(UploadMultiImageActivity.this,RecentActActivity.class);
+                    intent.putExtra("id",mActivityId);
+                }else if(mChannelId != null && !mChannelId.equals("")){
+                    intent.setClass(UploadMultiImageActivity.this, ChannelActivity.class);
+                    intent.putExtra("id",mChannelId);
+                }else{
+                    intent.setClass(UploadMultiImageActivity.this,RecentWorkActivity.class);
+                }
                 startActivity(intent);
             }
             UploadMultiImageActivity.this.finish();

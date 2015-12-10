@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -44,6 +45,7 @@ public class TupppaiAdapter extends MyBaseAdapter<Tupppai> {
 
     @Override
     View initView(int position, View convertView, ViewGroup parent) {
+
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.item_tuppai, parent, false);
             holder = new ViewHolder();
@@ -95,7 +97,7 @@ public class TupppaiAdapter extends MyBaseAdapter<Tupppai> {
             Integer position = (Integer) view.getTag(R.id.tupppai_view_id);
             Intent intent = new Intent();
             intent.putExtra("id", list.get(position).getId());
-            intent.putExtra("title",list.get(position).getDisplay_name());
+            intent.putExtra("title", list.get(position).getDisplay_name());
             if (list.get(position).getCategory_type().equals("activity")) {
                 intent.setClass(context, RecentActActivity.class);
             } else {
