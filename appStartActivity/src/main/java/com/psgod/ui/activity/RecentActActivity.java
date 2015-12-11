@@ -124,7 +124,7 @@ public class RecentActActivity extends PSGodBaseActivity {
         }
         helper.setViewHeight(48);
         helper.setViewParams((int) (120 * Utils.getWidthScale(this)),
-                (int) (32 * Utils.getHeightScale(this)));
+                (int) (32 * Utils.getWidthScale(this)));
         helper.init();
     }
 
