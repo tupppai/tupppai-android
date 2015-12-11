@@ -9,6 +9,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.psgod.R;
+import com.psgod.model.LoginUser;
 import com.psgod.model.PhotoItem;
 import com.psgod.network.request.ActionCollectionRequest;
 import com.psgod.network.request.ActionFollowRequest;
@@ -40,6 +41,11 @@ public class FollowView extends TextView {
 
     public void setPhotoItem(PhotoItem photoItem) {
         this.mPhotoItem = photoItem;
+        if (LoginUser.getInstance().getUid() == mPhotoItem.getUid()){
+            setVisibility(INVISIBLE);
+        }else{
+            setVisibility(VISIBLE);
+        }
     }
 
     private void init() {

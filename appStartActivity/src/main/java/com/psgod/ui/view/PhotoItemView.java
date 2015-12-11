@@ -17,6 +17,8 @@ import android.os.Build;
 import android.os.Handler.Callback;
 import android.os.Message;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -32,6 +34,7 @@ import android.widget.Toast;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
+import com.nineoldandroids.view.ViewHelper;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -54,6 +57,8 @@ import com.psgod.network.request.ActionLikeRequest;
 import com.psgod.network.request.PSGodErrorListener;
 import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.ui.activity.CommentListActivity;
+import com.psgod.ui.activity.MainActivity;
+import com.psgod.ui.activity.PSGodBaseActivity;
 import com.psgod.ui.activity.PhotoBrowserActivity;
 import com.psgod.ui.activity.SinglePhotoDetail;
 import com.psgod.ui.activity.WorksListActivity;
@@ -481,6 +486,8 @@ public class PhotoItemView extends RelativeLayout implements Callback {
         // }
         // });
         // }
+
+
     }
 
     private PSGodErrorListener errorListener = new PSGodErrorListener(
@@ -612,6 +619,11 @@ public class PhotoItemView extends RelativeLayout implements Callback {
             } else {
                 mImageIv.setOnClickListener(imageOnClickListener);
             }
+//            mImageIv.setOnTouchListener(
+//                    new OnTouchListener() {
+//
+//
+//            );
         }
 
         // 求助情况 展示asks_uploads数组中图片

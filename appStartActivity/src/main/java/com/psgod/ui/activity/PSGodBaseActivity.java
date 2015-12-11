@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.FragmentActivity;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -273,4 +274,28 @@ public abstract class PSGodBaseActivity extends FragmentActivity implements
 			}
 		}
 	}
+
+//	private float leftX;
+//	private float moveX;
+//	@Override
+//	public boolean dispatchTouchEvent(MotionEvent ev) {
+//		if (!(this instanceof MainActivity)) {
+//			switch (ev.getAction()) {
+//				case MotionEvent.ACTION_DOWN:
+//					leftX = ev.getRawX();
+//					moveX = 0;
+//					break;
+//				case MotionEvent.ACTION_MOVE:
+//					moveX = ev.getRawX() - leftX;
+//					break;
+//				case MotionEvent.ACTION_UP:
+//					if (Utils.pxToDp(this, moveX) > 250) {
+//						this.finish();
+//						return true;
+//					}
+//					break;
+//			}
+//		}
+//		return super.dispatchTouchEvent(ev);
+//	}
 }

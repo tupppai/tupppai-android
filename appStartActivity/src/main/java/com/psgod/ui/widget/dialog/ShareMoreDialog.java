@@ -138,7 +138,7 @@ public class ShareMoreDialog extends Dialog {
 	private ErrorListener errorListener = new ErrorListener() {
 		@Override
 		public void onErrorResponse(VolleyError error) {
-			Toast.makeText(mContext, error.getMessage(), Toast.LENGTH_LONG)
+			Toast.makeText(mContext, "收藏失败", Toast.LENGTH_LONG)
 					.show();
 		}
 	};
