@@ -198,7 +198,7 @@ public class LoginUser {
 			}else{
 				mCityId = obj.getInt("city");
 			}
-			mProvinceId = obj.getInt("province");
+			mProvinceId = Integer.parseInt(obj.getString("province"));
 			mIsBoundWechat = (obj.getInt("is_bound_weixin") != 0);
 			mIsBoundQQ = (obj.getInt("is_bound_qq") != 0);
 			mIsBoundWeibo = (obj.getInt("is_bound_weibo") != 0);
