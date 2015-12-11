@@ -488,7 +488,7 @@ public class OriginImageLayout extends RelativeLayout {
         });
 
         ImageView scaleImage = images.size() == 2 ? clickNum == 0 ? mImageViewLeft : mImageViewRight : thumbImageView;
-        RelativeLayout.LayoutParams uploadImageParams = new RelativeLayout.LayoutParams(
+        final RelativeLayout.LayoutParams uploadImageParams = new RelativeLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         uploadImageParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
         uploadImageParams.addRule(RelativeLayout.CENTER_VERTICAL);
@@ -514,6 +514,26 @@ public class OriginImageLayout extends RelativeLayout {
 
             @Override
             public void onAnimationEnd(Animator arg0) {
+//                uploadLayout.removeAllViews();
+//                if (images.size() == 2) {
+//                    initThumb(clickNum == 0 ? images.get(0) : images.get(1));
+//                    if (clickNum == 0) {
+//                        LayoutParams params = (LayoutParams) mImageViewLeft.getLayoutParams();
+//                        params.height = thumbImageHeight;
+//                        params.width = thumbImageWidth;
+//                        mImageViewLeft.setLayoutParams(params);
+//                    } else {
+//                        LayoutParams params = (LayoutParams) mImageViewRight.getLayoutParams();
+//                        params.height = thumbImageHeight;
+//                        params.width = thumbImageWidth;
+//                        mImageViewRight.setLayoutParams(params);
+//                    }
+//                } else {
+//                    LayoutParams params = (LayoutParams) thumbImageView.getLayoutParams();
+//                    params.height = thumbImageHeight;
+//                    params.width = thumbImageWidth;
+//                    thumbImageView.setLayoutParams(params);
+//                }
                 uploadLayout.setEnabled(true);
                 mBackground.setVisibility(INVISIBLE);
                 animStart = false;
