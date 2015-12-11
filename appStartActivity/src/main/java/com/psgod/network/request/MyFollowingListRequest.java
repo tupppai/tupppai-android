@@ -112,10 +112,14 @@ public class MyFollowingListRequest extends BaseRequest<FollowingListWrapper> {
 		@Override
 		public String createUrl() {
 			StringBuilder sb = new StringBuilder(BaseRequest.PSGOD_BASE_URL);
+            boolean boo = false;
 			if (type == TYPE_FELLOWS) {
 				sb.append("profile/follows");
 				if (lastUpdated != -1) {
 					sb.append("?last_updated=").append(lastUpdated);
+				}else{
+                    sb.append("?page=").append(page);
+                    boo = true;
 				}
 			}
 			if (type == TYPE_INVITATION) {
@@ -125,7 +129,9 @@ public class MyFollowingListRequest extends BaseRequest<FollowingListWrapper> {
 					sb.append("&last_updated=").append(lastUpdated);
 				}
 			}
-			sb.append("&page=").append(page);
+            if(!boo) {
+                sb.append("&page=").append(page);
+            }
 			sb.append("&size=").append(size);
 
 			String url = sb.toString();
