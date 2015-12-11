@@ -198,7 +198,13 @@ public class LoginUser {
 			}else{
 				mCityId = obj.getInt("city");
 			}
-			mProvinceId = Integer.parseInt(obj.getString("province"));
+			if ((obj.get("province")) instanceof String) {
+				String s = obj.getString("province");
+				mProvinceId = Integer.parseInt( s == null ||s.equals("")? "0" : s);
+			}else{
+				mProvinceId = obj.getInt("province");
+			}
+			// mProvinceId = Integer.parseInt(obj.getString("province"));
 			mIsBoundWechat = (obj.getInt("is_bound_weixin") != 0);
 			mIsBoundQQ = (obj.getInt("is_bound_qq") != 0);
 			mIsBoundWeibo = (obj.getInt("is_bound_weibo") != 0);
