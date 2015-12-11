@@ -140,6 +140,7 @@ public class ShareMoreDialog extends Dialog {
 		public void onErrorResponse(VolleyError error) {
 			Toast.makeText(mContext, "收藏失败", Toast.LENGTH_LONG)
 					.show();
+			mCollectionBtn.setClickable(true);
 		}
 	};
 

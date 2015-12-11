@@ -106,6 +106,7 @@ public class InprogressShareMoreDialog extends Dialog {
 		public void onErrorResponse(VolleyError error) {
 			Toast.makeText(mContext, error.getMessage(), Toast.LENGTH_LONG)
 					.show();
+
 		}
 	};
 
