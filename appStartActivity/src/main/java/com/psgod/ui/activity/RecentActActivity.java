@@ -41,6 +41,8 @@ public class RecentActActivity extends PSGodBaseActivity {
     private static final String TAG = RecentActActivity.class
             .getSimpleName();
 
+    public static final String INTENT_ID = "id";
+
     private PullToRefreshListView mListView;
     private View mHeadView;
     private ImageView mHeadImg;
@@ -75,7 +77,7 @@ public class RecentActActivity extends PSGodBaseActivity {
         setContentView(R.layout.activity_recent_act);
 
         Intent intent = getIntent();
-        id = intent.getStringExtra("id");
+        id = intent.getStringExtra(INTENT_ID);
 
         initView();
         initEvent();

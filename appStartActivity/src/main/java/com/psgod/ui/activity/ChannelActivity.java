@@ -42,6 +42,9 @@ public class ChannelActivity extends PSGodBaseActivity {
     private static final String TAG = ChannelActivity.class
             .getSimpleName();
 
+    public static final String INTENT_ID ="id";
+    public static final String INTENT_TITLE = "title";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,9 +104,9 @@ public class ChannelActivity extends PSGodBaseActivity {
 //        mEmptyTxt = (TextView) findViewById(R.id.activity_channal_empty_text);
 //        mEmptyView = (LinearLayout) findViewById(R.id.activity_channal_empty_view);
         Intent intent = getIntent();
-        id = intent.getStringExtra("id");
-        mTitleName.setText(intent.getStringExtra("title") == null ? ""
-                : intent.getStringExtra("title"));
+        id = intent.getStringExtra(INTENT_ID);
+        mTitleName.setText(intent.getStringExtra(INTENT_TITLE) == null ? ""
+                : intent.getStringExtra(INTENT_TITLE));
         mUpload = new ImageView(this);
         mUpload.setScaleType(ImageView.ScaleType.CENTER_CROP);
         mUpload.setImageDrawable(getResources().getDrawable(R.mipmap.floating_btn));
