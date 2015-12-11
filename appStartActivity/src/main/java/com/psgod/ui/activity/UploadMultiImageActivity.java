@@ -535,7 +535,7 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
 //                        MainActivity.IntentParams.VALUE_RECENTPAGE_ID_ASKS);
 //                intent.putExtra(MainActivity.IntentParams.KEY_NEED_REFRESH,
 //                        true);
-//                EventBus.getDefault().post(new MyPageRefreshEvent(MyPageRefreshEvent.ASK));
+                EventBus.getDefault().post(new MyPageRefreshEvent(MyPageRefreshEvent.ASK));
                 Intent intent = new Intent();
                 intent.putExtra("isRefresh",true);
                 if(isAsk) {
@@ -558,7 +558,7 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
 //                        MainActivity.IntentParams.VALUE_RECENTPAGE_ID_WORKS);
 //                intent.putExtra(MainActivity.IntentParams.KEY_NEED_REFRESH,
 //                        true);
-//                EventBus.getDefault().post(new MyPageRefreshEvent(MyPageRefreshEvent.WORK));
+                EventBus.getDefault().post(new MyPageRefreshEvent(MyPageRefreshEvent.WORK));
                 Intent intent = new Intent();
                 intent.putExtra("isRefresh",true);
                 if(mActivityId != null && !mActivityId.equals("")){
@@ -573,6 +573,7 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
                 startActivity(intent);
             }
             EventBus.getDefault().post(new RefreshEvent(TupppaiFragment.class.getName()));
+            EventBus.getDefault().post(new RefreshEvent(MultiImageSelectActivity.class.getName()));
             UploadMultiImageActivity.this.finish();
         }
     };

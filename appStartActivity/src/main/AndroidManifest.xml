@@ -132,7 +132,8 @@
         <activity android:name=".ui.activity.ResetPasswordActivity" />
         <activity android:name=".ui.activity.RecommendFocusActivity" />
         <activity android:name=".ui.activity.WebBrowserActivity" />
-        <activity android:name=".ui.activity.MultiImageSelectActivity" />
+        <activity android:name=".ui.activity.MultiImageSelectActivity"
+            android:launchMode="singleTask"/>
         <activity android:name=".ui.activity.RecentAsksActivity"
             android:launchMode="singleTask"/>
         <activity android:name=".ui.activity.RecentWorkActivity"
@@ -140,7 +141,7 @@
             />
         <activity
             android:name=".ui.activity.UploadMultiImageActivity"
-            android:launchMode="singleTop"
+            android:launchMode="singleTask"
             android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity android:name=".ui.activity.WorksListActivity" />
         <activity android:name=".ui.activity.UploadSelectReplyListActivity" />

@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.psgod.R;
 import com.psgod.UploadCache;
 import com.psgod.eventbus.MyPageRefreshEvent;
+import com.psgod.eventbus.RefreshEvent;
 import com.psgod.model.FileUtils;
 import com.psgod.model.SelectImage;
 import com.psgod.ui.adapter.MultiImageSelectAdapter;
@@ -69,13 +70,30 @@ public class MultiImageSelectActivity extends PSGodBaseActivity {
 
 	// 结果数据
 	private ArrayList<String> resultList = new ArrayList<String>();
+	private boolean isFinish = false;
+
+	public void onEventMainThread(RefreshEvent event) {
+		if(event.className.equals(this.getClass().getName())){
+//			finish();
+			isFinish = true;
+		}
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		if(isFinish){
+			finish();
+		}
+	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
 		mContext = this;
 		setContentView(R.layout.activity_multi_image_select);
-
+		EventBus.getDefault().register(this);
 		initViews();
 		initListeners();
 
@@ -116,7 +134,7 @@ public class MultiImageSelectActivity extends PSGodBaseActivity {
 		UploadCache.getInstence().clear();
 		EventBus.getDefault().post(new MyPageRefreshEvent(MyPageRefreshEvent.ASK));
 		EventBus.getDefault().post(new MyPageRefreshEvent(MyPageRefreshEvent.REPLY));
-
+		EventBus.getDefault().unregister(this);
 	}
 
 	public void initViews() {
