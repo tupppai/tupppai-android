@@ -13,7 +13,6 @@
     <TextView
         android:layout_width="85dp"
         android:layout_height="wrap_content"
-        android:text="呵呵"
         android:textSize="11dp"
         android:textColor="@color/color_aa000000"
         android:id="@+id/item_channel_head_txt"
@@ -22,4 +21,5 @@
         android:layout_below="@+id/item_channel_head_img"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
 </RelativeLayout>

@@ -45,7 +45,6 @@
             android:layout_alignTop="@+id/single_photo_detail_avatar"
             android:layout_toLeftOf="@+id/single_photo_detail_avatar"
             android:layout_toStartOf="@+id/single_photo_detail_avatar"
-            android:text="咩咩"
             android:textColor="@color/black"
             android:textSize="13dp" />
 
@@ -56,7 +55,6 @@
             android:layout_alignBottom="@+id/single_photo_detail_avatar"
             android:layout_toLeftOf="@+id/single_photo_detail_avatar"
             android:layout_toStartOf="@+id/single_photo_detail_avatar"
-            android:text="一小时前"
             android:textColor="@color/color_7f000000"
             android:textSize="10dp" />
     </RelativeLayout>
@@ -111,7 +109,6 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="给本宫我达瓦达瓦大"
             android:id="@+id/single_photo_detail_desc"
             android:textSize="15dp"
             android:textColor="#cc000000"
@@ -136,7 +133,6 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="13"
             android:paddingLeft="20dp"
             android:textSize="12dp"
             android:textColor="#4a4a4a"
@@ -161,7 +157,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/single_photo_detail_comment_txt"
-            android:text="13"
             android:textSize="12dp"
             android:paddingLeft="20dp"
             android:textColor="#4a4a4a"

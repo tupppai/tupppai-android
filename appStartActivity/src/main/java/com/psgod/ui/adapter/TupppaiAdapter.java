@@ -66,7 +66,7 @@ public class TupppaiAdapter extends MyBaseAdapter<Tupppai> {
             params.setMargins(Utils.dpToPx(context, 9), 0, 0, 0);
             view.setLayoutParams(params);
             view.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            view.setImageDrawable(context.getResources().getDrawable(R.color.color_cacaca));
+            view.setImageDrawable(context.getResources().getDrawable(R.color.transparent));
             if (i < photoItems.size()) {
                 ImageLoader.getInstance().displayImage(photoItems.get(i).getImageURL(), view, mSmallOptions);
             }

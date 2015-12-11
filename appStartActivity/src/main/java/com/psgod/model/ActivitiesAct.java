@@ -16,7 +16,16 @@ public class ActivitiesAct implements Serializable{
     private String url;
     private String ask_id;
     private String name;
+    private String post_btn;
     private int type;
+
+    public String getPost_btn() {
+        return post_btn;
+    }
+
+    public void setPost_btn(String post_btn) {
+        this.post_btn = post_btn;
+    }
 
     public String getBanner_pic() {
         return banner_pic;

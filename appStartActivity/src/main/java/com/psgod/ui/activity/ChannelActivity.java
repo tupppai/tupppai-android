@@ -32,6 +32,7 @@ import com.psgod.ui.adapter.PhotoListAdapter;
 import com.psgod.ui.view.PhotoItemView;
 import com.psgod.ui.widget.FloatScrollHelper;
 import com.psgod.ui.widget.dialog.CameraPopupwindow;
+import com.psgod.ui.widget.dialog.CustomProgressingDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,12 +70,16 @@ public class ChannelActivity extends PSGodBaseActivity {
     private boolean canLoadMore = true;
     private int page = 1;
 
-//    private LinearLayout mEmptyView;
+    private CustomProgressingDialog progressingDialog;
+
+    //    private LinearLayout mEmptyView;
 //    private TextView mEmptyTxt;
     private RelativeLayout mParent;
     private ImageView mUpload;
 
     private void initView() {
+        progressingDialog = new CustomProgressingDialog(this);
+        progressingDialog.show();
         mParent = (RelativeLayout) findViewById(R.id.activity_channal_parent);
         mTitleName = (TextView) findViewById(R.id.activity_channal_title_name);
         mTitleFinish = (ImageView) findViewById(R.id.activity_channal_title_finish);
@@ -106,7 +111,7 @@ public class ChannelActivity extends PSGodBaseActivity {
         helper.setViewHeight(80);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             helper.setViewMargins(32);
-        }else {
+        } else {
             helper.setViewMargins(12);
         }
         helper.init();
@@ -146,6 +151,9 @@ public class ChannelActivity extends PSGodBaseActivity {
                 canLoadMore = true;
             }
 //            initEmpty(photoItems.size());
+            if (progressingDialog != null && progressingDialog.isShowing()) {
+                progressingDialog.dismiss();
+            }
         }
     };
 
@@ -153,12 +161,16 @@ public class ChannelActivity extends PSGodBaseActivity {
         @Override
         public void handleError(VolleyError error) {
             mList.onRefreshComplete();
+            if (progressingDialog != null && progressingDialog.isShowing()) {
+                progressingDialog.dismiss();
+            }
         }
     };
 
     Response.Listener<Channel> loadMoreListener = new Response.Listener<Channel>() {
         @Override
         public void onResponse(Channel response) {
+
             if (response.getReplies().size() < 10) {
                 canLoadMore = false;
             } else {
@@ -242,7 +254,7 @@ public class ChannelActivity extends PSGodBaseActivity {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        if(intent.getBooleanExtra("isRefresh",false)){
+        if (intent.getBooleanExtra("isRefresh", false)) {
             refresh();
         }
     }

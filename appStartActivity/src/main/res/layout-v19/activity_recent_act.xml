@@ -29,7 +29,6 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="用PS搞创意"
             android:textSize="18dp" />
 
         <com.psgod.ui.widget.FinishView
@@ -50,6 +49,7 @@
         android:layout_height="match_parent"
         android:id="@+id/fragment_recentpage_act_list"
         android:background="#F7F7F7"
+        android:layout_marginTop="1dp"
         android:divider="@color/transparent"
         android:layout_gravity="left|top"
         android:layout_below="@+id/activity_act_title_layout" />

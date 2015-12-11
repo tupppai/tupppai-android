@@ -26,6 +26,7 @@ import com.psgod.network.request.TupppaiRequest;
 import com.psgod.ui.activity.RecentAsksActivity;
 import com.psgod.ui.activity.RecentWorkActivity;
 import com.psgod.ui.adapter.TupppaiAdapter;
+import com.psgod.ui.widget.dialog.CustomProgressingDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +48,8 @@ public class TupppaiFragment extends BaseFragment {
     private ImageView askImg;
     private ImageView workImg;
     private int page = 1;
+
+    private CustomProgressingDialog progressingDialog;
 
     private Boolean canLoadMore = true;
 
@@ -93,6 +96,8 @@ public class TupppaiFragment extends BaseFragment {
     }
 
     private void initView(View view) {
+        progressingDialog = new CustomProgressingDialog(getActivity());
+        progressingDialog.show();
         View head = LayoutInflater.from(getActivity()).inflate(R.layout.view_tupppai_head, null);
         askImg = (ImageView) head.findViewById(R.id.view_tupppai_head_ask);
         workImg = (ImageView) head.findViewById(R.id.view_tupppai_head_work);
@@ -154,6 +159,9 @@ public class TupppaiFragment extends BaseFragment {
         @Override
         public void handleError(VolleyError error) {
             mListView.onRefreshComplete();
+            if(progressingDialog != null && progressingDialog.isShowing()){
+                progressingDialog.dismiss();
+            }
         }
     };
 
@@ -172,7 +180,9 @@ public class TupppaiFragment extends BaseFragment {
             tupppais.addAll(response);
             mAdapter.notifyDataSetChanged();
 
-
+            if(progressingDialog != null && progressingDialog.isShowing()){
+                progressingDialog.dismiss();
+            }
         }
     };
 

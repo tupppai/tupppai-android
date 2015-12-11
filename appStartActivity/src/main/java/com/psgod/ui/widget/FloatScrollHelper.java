@@ -32,14 +32,33 @@ public class FloatScrollHelper {
     }
 
     public void init() {
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT);
+        RelativeLayout.LayoutParams params;
+        if (floatView.getLayoutParams() == null) {
+            params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT);
+        } else {
+            params = (RelativeLayout.LayoutParams) floatView.getLayoutParams();
+        }
         params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
         params.addRule(RelativeLayout.CENTER_HORIZONTAL);
         params.setMargins(0, 0, 0, Utils.dpToPx(context, viewMargins));
         floatView.setLayoutParams(params);
         parentView.addView(floatView);
         initListener();
+    }
+
+    public void setViewParams(int widthDp, int heightDp) {
+        RelativeLayout.LayoutParams params;
+        if (floatView.getLayoutParams() == null) {
+            params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT);
+        } else {
+            params = (RelativeLayout.LayoutParams) floatView.getLayoutParams();
+
+        }
+        params.width = Utils.dpToPx(context,widthDp);
+        params.height = Utils.dpToPx(context,heightDp);
+        floatView.setLayoutParams(params);
     }
 
     private void initListener() {
@@ -80,8 +99,13 @@ public class FloatScrollHelper {
         margin = viewMargins;
     }
 
+    public void setViewMarginsV19(int viewMarginsDp) {
+        this.viewMargins = viewMarginsDp + 20;
+        margin = viewMargins;
+    }
+
     public void setViewHeight(int viewMarginsDp) {
-        this.viewHeight = viewMarginsDp + 10 ;
+        this.viewHeight = viewMarginsDp + 10;
     }
 
     private void upAnim() {
@@ -130,7 +154,7 @@ public class FloatScrollHelper {
         if (!isDownAnim) {
             isDownAnim = true;
             upAnimSet.cancel();
-            ValueAnimator downAnimator = ValueAnimator.ofInt(margin, -1*viewHeight);
+            ValueAnimator downAnimator = ValueAnimator.ofInt(margin, -1 * viewHeight);
             downAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 @Override
                 public void onAnimationUpdate(ValueAnimator valueAnimator) {
