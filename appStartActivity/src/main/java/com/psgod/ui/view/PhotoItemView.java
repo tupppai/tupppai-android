@@ -385,7 +385,8 @@ public class PhotoItemView extends RelativeLayout implements Callback {
             mComplexShareBtn.setLayoutParams(params);
         } else {
             mAllWorksBtn.setOnClickListener(allWorkListener);
-
+            mHotReplyAllWorksBtn.setOnClickListener(allWorkListener);
+            mSingleReplyAllWorksBtn.setOnClickListener(allWorkListener);
         }
         // bang 按钮点击浮层
         mHelpPSBtn.setOnClickListener(helpPsListener);

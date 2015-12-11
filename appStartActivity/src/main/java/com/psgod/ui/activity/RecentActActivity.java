@@ -117,13 +117,14 @@ public class RecentActActivity extends PSGodBaseActivity {
         progressingDialog.show();
 
         mUpLoad = new ImageView(this);
+        mUpLoad.setImageDrawable(getResources().getDrawable(R.mipmap.btn_home_follow));
         mUpLoad.setScaleType(ImageView.ScaleType.FIT_XY);
         FloatScrollHelper helper = new FloatScrollHelper(mListView, mParent, mUpLoad, this);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            helper.setViewMarginsV19(17);
-        } else {
-            helper.setViewMargins(17);
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//            helper.setViewMarginsV19(17);
+//        } else {
+        helper.setViewMargins(17);
+//        }
         helper.setViewHeight(48);
         helper.setViewParams((int) (120 * Utils.getWidthScale(this)),
                 (int) (32 * Utils.getWidthScale(this)));
@@ -234,8 +235,10 @@ public class RecentActActivity extends PSGodBaseActivity {
     private Response.Listener<Activities> refreshListener = new Response.Listener<Activities>() {
         @Override
         public void onResponse(Activities response) {
-            ImageLoader.getInstance().displayImage(response.getActs().getPost_btn(),
-                    mUpLoad, Constants.DISPLAY_IMAGE_OPTIONS_SMALL);
+            if (response.getActs().getPost_btn() != null && !response.getActs().getPost_btn().equals("")) {
+                ImageLoader.getInstance().displayImage(response.getActs().getPost_btn(),
+                        mUpLoad, Constants.DISPLAY_IMAGE_OPTIONS_SMALL);
+            }
             mPhotoItems.clear();
             if (response.getReplies().size() > 0) {
                 mPhotoItems.addAll(response.getReplies());

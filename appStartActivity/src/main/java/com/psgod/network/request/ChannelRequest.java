@@ -21,19 +21,27 @@ public class ChannelRequest extends BaseRequest<Channel> {
         super(method, url, listener, errorListener);
     }
 
+    private boolean isRefresh = false;
+
+    public void setIsRefresh(boolean isRefresh) {
+        this.isRefresh = isRefresh;
+    }
+
     @Override
     protected Channel doParseNetworkResponse(JSONObject reponse) throws
             UnsupportedEncodingException, JSONException {
         Channel channel = new Channel();
         JSONObject data = reponse.getJSONObject("data");
-        JSONArray ask = data.getJSONArray("ask");
         JSONArray replies = data.getJSONArray("replies");
-        int length = ask.length();
-        for (int i = 0; i < length; i++) {
-            PhotoItem item = PhotoItem.createPhotoItem(ask.getJSONObject(i));
-            channel.getAsk().add(item);
+        if(isRefresh) {
+            JSONArray ask = data.getJSONArray("ask");
+            int length = ask.length();
+            for (int i = 0; i < length; i++) {
+                PhotoItem item = PhotoItem.createPhotoItem(ask.getJSONObject(i));
+                channel.getAsk().add(item);
+            }
         }
-        length = replies.length();
+        int length = replies.length();
         for (int i = 0; i < length; i++) {
             PhotoItem item = PhotoItem.createPhotoItem(replies.getJSONObject(i));
             channel.getReplies().add(item);
@@ -56,6 +64,7 @@ public class ChannelRequest extends BaseRequest<Channel> {
         private String id;
         private Response.Listener<Channel> listener;
         private Response.ErrorListener errorListener;
+        private boolean isRefresh = false;
 
         public Builder setId(String id) {
             this.id = id;
@@ -82,6 +91,11 @@ public class ChannelRequest extends BaseRequest<Channel> {
             return this;
         }
 
+        public Builder setIsRefresh(boolean isRefresh) {
+            this.isRefresh = isRefresh;
+            return this;
+        }
+
         public Builder setErrorListener(Response.ErrorListener errorListener) {
             this.errorListener = errorListener;
             return this;
@@ -91,6 +105,7 @@ public class ChannelRequest extends BaseRequest<Channel> {
             String url = createUrl();
             ChannelRequest request = new ChannelRequest(METHOD, url,
                     listener, errorListener);
+            request.setIsRefresh(isRefresh);
             return request;
         }
 
@@ -108,4 +123,6 @@ public class ChannelRequest extends BaseRequest<Channel> {
             return url;
         }
     }
+
+
 }

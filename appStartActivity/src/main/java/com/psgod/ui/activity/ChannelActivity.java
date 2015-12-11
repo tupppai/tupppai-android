@@ -42,7 +42,7 @@ public class ChannelActivity extends PSGodBaseActivity {
     private static final String TAG = ChannelActivity.class
             .getSimpleName();
 
-    public static final String INTENT_ID ="id";
+    public static final String INTENT_ID = "id";
     public static final String INTENT_TITLE = "title";
 
     @Override
@@ -112,11 +112,11 @@ public class ChannelActivity extends PSGodBaseActivity {
         mUpload.setImageDrawable(getResources().getDrawable(R.mipmap.floating_btn));
         FloatScrollHelper helper = new FloatScrollHelper(mList, mParent, mUpload, this);
         helper.setViewHeight(80);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            helper.setViewMargins(32);
-        } else {
-            helper.setViewMargins(12);
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//            helper.setViewMarginsV19(12);
+//        } else {
+        helper.setViewMargins(12);
+//        }
         helper.init();
     }
 
@@ -124,7 +124,7 @@ public class ChannelActivity extends PSGodBaseActivity {
         mLastUpdatedTime = System.currentTimeMillis();
         page = 1;
         ChannelRequest request = new ChannelRequest.Builder().setListener(refreshListener).
-                setErrorListener(errorListener).setPage(page).setId(id).build();
+                setErrorListener(errorListener).setPage(page).setId(id).setIsRefresh(true).build();
 
         RequestQueue requestQueue = PSGodRequestQueue.getInstance(
                 this).getRequestQueue();

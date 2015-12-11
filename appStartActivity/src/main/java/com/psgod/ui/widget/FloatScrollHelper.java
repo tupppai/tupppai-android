@@ -100,7 +100,7 @@ public class FloatScrollHelper {
     }
 
     public void setViewMarginsV19(int viewMarginsDp) {
-        this.viewMargins = viewMarginsDp + 20;
+        this.viewMargins = viewMarginsDp + 33;
         margin = viewMargins;
     }
 
