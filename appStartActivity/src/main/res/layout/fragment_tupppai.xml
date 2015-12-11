@@ -28,6 +28,7 @@
         android:id="@+id/fragment_tupppai_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="6dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/fragment_tupppai_title"
