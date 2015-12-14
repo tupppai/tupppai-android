@@ -17,7 +17,6 @@ import android.widget.ImageView.ScaleType;
 import android.widget.RelativeLayout;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.psgod.PsGodImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.psgod.Constants;
@@ -33,10 +32,11 @@ public class OriginImageLayout extends RelativeLayout {
     private ImageView mBackground;
 
     private PsGodImageLoader imageLoader = PsGodImageLoader.getInstance();
-    private DisplayImageOptions mOptions = Constants.DISPLAY_IMAGE_OPTIONS_SMALL;
+    private DisplayImageOptions mSmallSmallOptions = Constants.DISPLAY_IMAGE_OPTIONS_SMALL_SMALL;
+    private DisplayImageOptions mOptions = Constants.DISPLAY_IMAGE_OPTIONS;
 
-    private ObjectAnimator scaleWidthAnimator = null;
-    private ObjectAnimator scaleHeightAnimator = null;
+//    private ObjectAnimator scaleWidthAnimator = null;
+//    private ObjectAnimator scaleHeightAnimator = null;
     private ObjectAnimator alphaAnimator = null;
     private ObjectAnimator alphaIvAnimator = null;
     private ValueAnimator zoomWidthAnimator = null;
@@ -136,8 +136,8 @@ public class OriginImageLayout extends RelativeLayout {
         mImageViewRight.setScaleType(ScaleType.CENTER_CROP);
         mImageViewRight.setLayoutParams(rightParams);
 
-        imageLoader.displayImage(originImage1.mImageUrl, mImageViewLeft, mOptions);
-        imageLoader.displayImage(originImage2.mImageUrl, mImageViewRight, mOptions);
+        imageLoader.displayImage(originImage1.mImageUrl, mImageViewLeft, mSmallSmallOptions);
+        imageLoader.displayImage(originImage2.mImageUrl, mImageViewRight, mSmallSmallOptions);
 
         uploadLayout.addView(mImageViewLeft);
         uploadLayout.addView(mImageViewRight);
@@ -216,10 +216,13 @@ public class OriginImageLayout extends RelativeLayout {
         initThumb(originImage);
         // image view
         thumbImageView = new ImageView(mContext);
-
 //         uploadImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        thumbImageView.setScaleType(ScaleType.CENTER_INSIDE);
-        imageLoader.displayImage(originImage.mImageUrl, thumbImageView, mOptions, new ImageLoadingListener() {
+        RelativeLayout.LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT);
+        params.addRule(CENTER_IN_PARENT);
+        thumbImageView.setLayoutParams(params);
+        thumbImageView.setScaleType(ScaleType.FIT_CENTER);
+        imageLoader.displayImage(originImage.mImageUrl, thumbImageView, mSmallSmallOptions, new ImageLoadingListener() {
             @Override
             public void onLoadingStarted(String s, View view) {
 
@@ -247,7 +250,8 @@ public class OriginImageLayout extends RelativeLayout {
 
     Bitmap thumbBitmap;
 
-    private void initTipView() {
+    private void
+    initTipView() {
         // 左上角 原图标示
         thumbTipImage = new ImageView(mContext);
         RelativeLayout.LayoutParams originTipParams = new RelativeLayout.LayoutParams(
@@ -293,7 +297,7 @@ public class OriginImageLayout extends RelativeLayout {
             public void onAnimationUpdate(ValueAnimator animation) {
                 int width = (Integer) animation.getAnimatedValue();
 
-                if(width<(baseThumbHeight + (Constants.WIDTH_OF_SCREEN - baseThumbHeight)/11) && isRestore && images.size() == 2){
+                if (width < (baseThumbHeight + (Constants.WIDTH_OF_SCREEN - baseThumbHeight) / 11) && isRestore && images.size() == 2) {
                     uploadLayout.removeAllViews();
                     initOverlapImage(images.get(0), images.get(1), clickNum == 0 ? true : false);
                     isRestore = false;
@@ -305,10 +309,10 @@ public class OriginImageLayout extends RelativeLayout {
                 uploadLayout.setLayoutParams(params);
             }
         });
-        scaleWidthAnimator = ObjectAnimator.ofFloat(scaleImage, "scaleX",
-                imageScaleValue, 1f);
-        scaleHeightAnimator = ObjectAnimator.ofFloat(scaleImage, "scaleY",
-                imageScaleValue, 1f);
+//        scaleWidthAnimator = ObjectAnimator.ofFloat(scaleImage, "scaleX",
+//                imageScaleValue, 1f);
+//        scaleHeightAnimator = ObjectAnimator.ofFloat(scaleImage, "scaleY",
+//                imageScaleValue, 1f);
 
         animatorSet.addListener(new AnimatorListener() {
             @Override
@@ -342,10 +346,12 @@ public class OriginImageLayout extends RelativeLayout {
             }
         });
         animatorSet.playTogether(zoomWidthAnimator, zoomHeightAnimator,
-                alphaAnimator, alphaIvAnimator, scaleWidthAnimator,
-                scaleHeightAnimator);
+                alphaAnimator, alphaIvAnimator);
+//                , scaleWidthAnimator,
+//                scaleHeightAnimator);
         animatorSet.start();
     }
+
     boolean isRestore = true;
 
     private void mActionZoomInIn() {
@@ -491,16 +497,15 @@ public class OriginImageLayout extends RelativeLayout {
         ImageView scaleImage = images.size() == 2 ? clickNum == 0 ? mImageViewLeft : mImageViewRight : thumbImageView;
         final RelativeLayout.LayoutParams uploadImageParams = new RelativeLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        uploadImageParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        uploadImageParams.addRule(RelativeLayout.CENTER_VERTICAL);
+        uploadImageParams.addRule(RelativeLayout.CENTER_IN_PARENT);
 
         scaleImage.setLayoutParams(uploadImageParams);
-        scaleImage.setScaleType(ScaleType.CENTER_INSIDE);
+        scaleImage.setScaleType(ScaleType.FIT_CENTER);
 
-        scaleWidthAnimator = ObjectAnimator.ofFloat(scaleImage, "scaleX",
-                1f, imageScaleValue);
-        scaleHeightAnimator = ObjectAnimator.ofFloat(scaleImage, "scaleY",
-                1f, imageScaleValue);
+//        scaleWidthAnimator = ObjectAnimator.ofFloat(scaleImage, "scaleX",
+//                1f, imageScaleValue);
+//        scaleHeightAnimator = ObjectAnimator.ofFloat(scaleImage, "scaleY",
+//                1f, imageScaleValue);
 
         // 缩略图放大
         alphaIvAnimator = ObjectAnimator.ofFloat(mBackground, "alpha", 1f, 0);
@@ -515,7 +520,28 @@ public class OriginImageLayout extends RelativeLayout {
 
             @Override
             public void onAnimationEnd(Animator arg0) {
-//                uploadLayout.removeAllViews();
+                if (images.size() == 2) {
+                    initThumb(clickNum == 0 ? images.get(0) : images.get(1));
+                    if (clickNum == 0) {
+                        imageLoader.displayImage(images.get(0).mImageUrl, mImageViewLeft, mOptions);
+                    } else {
+                        imageLoader.displayImage(images.get(1).mImageUrl, mImageViewRight, mOptions);
+                    }
+                } else {
+                    imageLoader.displayImage(images.get(0).mImageUrl, thumbImageView, mOptions);
+                }
+                uploadLayout.setEnabled(true);
+                mBackground.setVisibility(INVISIBLE);
+                animStart = false;
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator arg0) {
+
+            }
+
+            @Override
+            public void onAnimationStart(Animator arg0) {
 //                if (images.size() == 2) {
 //                    initThumb(clickNum == 0 ? images.get(0) : images.get(1));
 //                    if (clickNum == 0) {
@@ -535,42 +561,13 @@ public class OriginImageLayout extends RelativeLayout {
 //                    params.width = thumbImageWidth;
 //                    thumbImageView.setLayoutParams(params);
 //                }
-                uploadLayout.setEnabled(true);
-                mBackground.setVisibility(INVISIBLE);
-                animStart = false;
-            }
 
-            @Override
-            public void onAnimationRepeat(Animator arg0) {
-
-            }
-
-            @Override
-            public void onAnimationStart(Animator arg0) {
-                if (images.size() == 2) {
-                    initThumb(clickNum == 0 ? images.get(0) : images.get(1));
-                    if (clickNum == 0) {
-                        LayoutParams params = (LayoutParams) mImageViewLeft.getLayoutParams();
-                        params.height = thumbImageHeight;
-                        params.width = thumbImageWidth;
-                        mImageViewLeft.setLayoutParams(params);
-                    } else {
-                        LayoutParams params = (LayoutParams) mImageViewRight.getLayoutParams();
-                        params.height = thumbImageHeight;
-                        params.width = thumbImageWidth;
-                        mImageViewRight.setLayoutParams(params);
-                    }
-                } else {
-                    LayoutParams params = (LayoutParams) thumbImageView.getLayoutParams();
-                    params.height = thumbImageHeight;
-                    params.width = thumbImageWidth;
-                    thumbImageView.setLayoutParams(params);
-                }
             }
         });
         animatorSet.playTogether(zoomWidthAnimator, zoomHeightAnimator,
-                alphaAnimator, alphaIvAnimator, scaleWidthAnimator,
-                scaleHeightAnimator);
+                alphaAnimator, alphaIvAnimator);
+//                , scaleWidthAnimator,
+//                scaleHeightAnimator);
         animatorSet.start();
     }
 }

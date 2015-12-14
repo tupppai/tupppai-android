@@ -90,6 +90,17 @@ public class Constants {
 			.displayer(new FadeInBitmapDisplayer(100))
 			.displayer(new SimpleBitmapDisplayer()).build();
 
+	// UIL 图片加载默认配置 （超小）
+	public static final DisplayImageOptions DISPLAY_IMAGE_OPTIONS_SMALL_SMALL = new DisplayImageOptions.Builder()
+			.showImageForEmptyUri(R.drawable.ic_zhanwei_small)
+			.showImageOnFail(R.drawable.ic_zhanwei_small)
+			.showImageOnLoading(R.drawable.ic_zhanwei_small)
+			.cacheInMemory(true).cacheOnDisk(true).considerExifParams(true)
+			.bitmapConfig(Config.RGB_565)
+			.imageScaleType(ImageScaleType.IN_SAMPLE_INT)
+			.displayer(new FadeInBitmapDisplayer(100))
+			.displayer(new SimpleBitmapDisplayer()).build();
+
 	// UIL头像默认配置
 	public static final DisplayImageOptions DISPLAY_IMAGE_OPTIONS_AVATAR = new DisplayImageOptions.Builder()
 			.showImageForEmptyUri(R.drawable.head_portrait)
