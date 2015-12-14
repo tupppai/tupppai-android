@@ -17,6 +17,7 @@ import com.psgod.model.PhotoItem;
 import com.psgod.model.Tupppai;
 import com.psgod.ui.activity.ChannelActivity;
 import com.psgod.ui.activity.RecentActActivity;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.List;
 
@@ -27,10 +28,13 @@ public class TupppaiAdapter extends MyBaseAdapter<Tupppai> {
 
     public TupppaiAdapter(Context context, List<Tupppai> list) {
         super(context, list);
+        mContext = context;
     }
 
     private DisplayImageOptions mSmallSmallOptions = Constants.DISPLAY_IMAGE_OPTIONS_SMALL_SMALL;
     private DisplayImageOptions mOptions = Constants.DISPLAY_IMAGE_OPTIONS;
+
+    private Context mContext;
 
     @Override
     public int getCount() {
@@ -91,6 +95,8 @@ public class TupppaiAdapter extends MyBaseAdapter<Tupppai> {
         @Override
         public void onClick(View view) {
             Integer position = (Integer) view.getTag(R.id.tupppai_view_id);
+            MobclickAgent.onEvent(mContext, "Tupppai_Channel_Click" + position);        //统计频道的点击次数
+
             Intent intent = new Intent();
             intent.putExtra("id", list.get(position).getId());
             intent.putExtra("title", list.get(position).getDisplay_name());
