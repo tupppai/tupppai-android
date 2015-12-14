@@ -4,50 +4,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    android:clipToPadding="true"
-    android:fitsSystemWindows="true" >
+    android:fitsSystemWindows="true"
+    android:clipToPadding="true">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#FFFFFF" >
-
-        <com.psgod.ui.widget.ActionBar
-            android:id="@+id/actionbar"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/actionbar_height"
-            psgod:rightBtnVisibility="gone"
-            psgod:title="" />
+        android:background="#FFFFFF">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/actionbar"
-            android:background="#FFFFFF" >
+            android:background="#FFFFFF">
 
             <android.support.v4.view.ViewPager
                 android:id="@+id/user_profile_view_pager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/user_profile_header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:id="@+id/user_profile_header_out"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical" >
+                    android:orientation="vertical"
+                    android:paddingTop="48dp">
 
                     <RelativeLayout
                         android:id="@+id/avatar_parent"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp" >
+                        android:layout_marginTop="20dp">
 
                         <LinearLayout
                             android:id="@+id/avatar_layout"
@@ -55,7 +48,7 @@
                             android:layout_height="82dp"
                             android:layout_centerInParent="true"
                             android:background="@drawable/shape_user_profile_circle_imageview"
-                            android:gravity="center" >
+                            android:gravity="center">
 
                             <com.psgod.ui.widget.AvatarImageView
                                 android:id="@+id/user_profile_avatar"
@@ -82,18 +75,18 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="17dp"
                         android:background="@drawable/shape_background_gradient"
-                        android:orientation="vertical" >
+                        android:orientation="vertical">
 
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="17dp" >
+                            android:layout_marginTop="17dp">
 
                             <RelativeLayout
                                 android:id="@+id/layout_followers_profile"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_centerHorizontal="true" >
+                                android:layout_centerHorizontal="true">
 
                                 <TextView
                                     android:id="@+id/user_profile_user_followers"
@@ -130,7 +123,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="9dp"
-                                android:layout_toLeftOf="@id/left_point" >
+                                android:layout_toLeftOf="@id/left_point">
 
                                 <TextView
                                     android:id="@+id/user_profile_user_following"
@@ -167,7 +160,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="9dp"
-                                android:layout_toRightOf="@id/right_point" >
+                                android:layout_toRightOf="@id/right_point">
 
                                 <TextView
                                     android:id="@+id/user_profile_user_like"
@@ -202,10 +195,46 @@
                     android:id="@+id/user_profile_tabs"
                     android:layout_width="match_parent"
                     android:layout_height="47dp"
+                    android:layout_below="@+id/user_profile_header_out"
                     android:background="@color/white"
                     psgod:pstsTextAllCaps="false" />
-            </LinearLayout>
+            </RelativeLayout>
         </RelativeLayout>
     </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/transparent"
+        >
+
+        <com.psgod.ui.widget.FinishView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingLeft="16dp"
+            android:src="@drawable/selector_back_btn"
+            android:paddingRight="16dp"
+            />
+
+        <TextView
+            android:id="@+id/user_profile_title_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/white"
+            android:textSize="16dp"
+            android:text="" />
+    </RelativeLayout>
+    <!--<com.psgod.ui.widget.ActionBar-->
+    <!--android:id="@+id/actionbar"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="@dimen/actionbar_height"-->
+    <!--android:background="@color/transparent"-->
+    <!--psgod:rightBtnVisibility="gone"-->
+    <!--psgod:title=""-->
+    <!--psgod:titleTextColor="@color/white" />-->
+
 
 </RelativeLayout>
