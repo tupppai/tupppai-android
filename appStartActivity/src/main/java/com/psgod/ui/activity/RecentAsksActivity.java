@@ -44,131 +44,131 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RecentAsksActivity extends PSGodBaseActivity implements Callback {
-	private static final String TAG = RecentAsksActivity.class
-			.getSimpleName();
+    private static final String TAG = RecentAsksActivity.class
+            .getSimpleName();
 
-	private Context mContext;
-	private ViewHolder mViewHolder;
-	private PhotoWaterFallListAdapter mAskAdapter;
-	private List<PhotoItem> mPhotoItems = new ArrayList<PhotoItem>();
-	private RecentPageAsksListener mRecentPageAsksListener;
-	private DatabaseHelper mDatabaseHelper = null;
-	private Dao<PhotoItem, Long> mPhotoItemDao;
-	private ImageView finishImg;
-	private ImageView mUpload;
-	private RelativeLayout mParent;
-	private WeakReferenceHandler mHandler = new WeakReferenceHandler(this);
+    private Context mContext;
+    private ViewHolder mViewHolder;
+    private PhotoWaterFallListAdapter mAskAdapter;
+    private List<PhotoItem> mPhotoItems = new ArrayList<PhotoItem>();
+    private RecentPageAsksListener mRecentPageAsksListener;
+    private DatabaseHelper mDatabaseHelper = null;
+    private Dao<PhotoItem, Long> mPhotoItemDao;
+    private ImageView finishImg;
+    private ImageView mUpload;
+    private RelativeLayout mParent;
+    private WeakReferenceHandler mHandler = new WeakReferenceHandler(this);
 
-	private String mSpKey;
-	private static final long DEFAULT_LAST_REFRESH_TIME = -1;
-	private long mLastUpdatedTime;
+    private String mSpKey;
+    private static final long DEFAULT_LAST_REFRESH_TIME = -1;
+    private long mLastUpdatedTime;
 
-	private String mChannelId;
+    private String mChannelId;
 
-	private int mPage = 1;
-	// 控制是否可以加载下一页
-	private boolean canLoadMore = true;
+    private int mPage = 1;
+    // 控制是否可以加载下一页
+    private boolean canLoadMore = true;
 
-	private CustomProgressingDialog progressingDialog;
+    private CustomProgressingDialog progressingDialog;
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 //		EventBus.getDefault().register(this);
-		setContentView(R.layout.activity_recent_ask);
-		mContext = this;
-		mParent = (RelativeLayout) findViewById(R.id.activity_ask_parent);
-		progressingDialog = new CustomProgressingDialog(this);
-		progressingDialog.show();
-		mViewHolder = new ViewHolder();
-		mViewHolder.mGridView = (PullToRefreshStaggeredGridView)findViewById(R.id.activity_inprogress_ask_staggered_gridview);
-		mViewHolder.mGridView.setMode(Mode.PULL_FROM_START);
+        setContentView(R.layout.activity_recent_ask);
+        mContext = this;
+        mParent = (RelativeLayout) findViewById(R.id.activity_ask_parent);
+        progressingDialog = new CustomProgressingDialog(this);
+        progressingDialog.show();
+        mViewHolder = new ViewHolder();
+        mViewHolder.mGridView = (PullToRefreshStaggeredGridView) findViewById(R.id.activity_inprogress_ask_staggered_gridview);
+        mViewHolder.mGridView.setMode(Mode.PULL_FROM_START);
 
-		mAskAdapter = new PhotoWaterFallListAdapter(mContext, mPhotoItems,
-				PhotoWaterFallListType.RECENT_ASK);
-		mViewHolder.mGridView.setAdapter(mAskAdapter);
+        mAskAdapter = new PhotoWaterFallListAdapter(mContext, mPhotoItems,
+                PhotoWaterFallListType.RECENT_ASK);
+        mViewHolder.mGridView.setAdapter(mAskAdapter);
 
-		mViewHolder.mFooterView = LayoutInflater.from(mContext).inflate(
-				R.layout.footer_load_more, null);
-		mViewHolder.mGridView.getRefreshableView().addFooterView(
-				mViewHolder.mFooterView);
-		mViewHolder.mFooterView.setVisibility(View.GONE);
+        mViewHolder.mFooterView = LayoutInflater.from(mContext).inflate(
+                R.layout.footer_load_more, null);
+        mViewHolder.mGridView.getRefreshableView().addFooterView(
+                mViewHolder.mFooterView);
+        mViewHolder.mFooterView.setVisibility(View.GONE);
 
-		Intent intent = getIntent();
-		mChannelId = intent.getStringExtra("channel_id");
+        Intent intent = getIntent();
+        mChannelId = intent.getStringExtra("channel_id");
 
-		// 初始化listener
-		mRecentPageAsksListener = new RecentPageAsksListener();
-		mViewHolder.mGridView.setOnRefreshListener(mRecentPageAsksListener);
-		mViewHolder.mGridView
-				.setOnLastItemVisibleListener(mRecentPageAsksListener);
-		mViewHolder.mGridView.setScrollingWhileRefreshingEnabled(true);
-		finishImg = (ImageView) findViewById(R.id.activity_ask_finish);
-		finishImg.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				finish();
-			}
-		});
+        // 初始化listener
+        mRecentPageAsksListener = new RecentPageAsksListener();
+        mViewHolder.mGridView.setOnRefreshListener(mRecentPageAsksListener);
+        mViewHolder.mGridView
+                .setOnLastItemVisibleListener(mRecentPageAsksListener);
+        mViewHolder.mGridView.setScrollingWhileRefreshingEnabled(true);
+        finishImg = (ImageView) findViewById(R.id.activity_ask_finish);
+        finishImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
-		mUpload = new ImageView(this);
-		mUpload.setScaleType(ImageView.ScaleType.CENTER_CROP);
-		mUpload.setImageDrawable(getResources().getDrawable(R.mipmap.floating_btn));
-		FloatScrollHelper helper = new FloatScrollHelper(
-				mViewHolder.mGridView, mParent, mUpload, this);
-		helper.setViewHeight(80);
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-			helper.setViewMargins(32);
-		}else {
-			helper.setViewMargins(12);
-		}
-		helper.init();
+        mUpload = new ImageView(this);
+        mUpload.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        mUpload.setImageDrawable(getResources().getDrawable(R.mipmap.floating_btn));
+        FloatScrollHelper helper = new FloatScrollHelper(
+                mViewHolder.mGridView, mParent, mUpload, this);
+        helper.setViewHeight(80);
+//		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//			helper.setViewMargins(32);
+//		}else {
+        helper.setViewMargins(12);
+//		}
+        helper.init();
 
-		if (NetworkUtil.getNetworkType() != NetworkUtil.NetworkType.NONE) {
-			mViewHolder.mGridView.setRefreshing(true);
-		}
+        if (NetworkUtil.getNetworkType() != NetworkUtil.NetworkType.NONE) {
+            mViewHolder.mGridView.setRefreshing(true);
+        }
 
-		// TODO 检测耗时
-		try {
-			mDatabaseHelper = OpenHelperManager.getHelper(mContext,
-					DatabaseHelper.class);
-			mPhotoItemDao = mDatabaseHelper.getDao(PhotoItem.class);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+        // TODO 检测耗时
+        try {
+            mDatabaseHelper = OpenHelperManager.getHelper(mContext,
+                    DatabaseHelper.class);
+            mPhotoItemDao = mDatabaseHelper.getDao(PhotoItem.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-		dialog = new CustomProgressingDialog(this);
+        dialog = new CustomProgressingDialog(this);
 
-		loadDataAsync();
+        loadDataAsync();
 
-		refresh(1);
+        refresh(1);
 
-		initListener();
+        initListener();
 
-	}
+    }
 
-	private void initListener() {
-		mUpload.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				Intent intentM = new Intent(RecentAsksActivity.this,
-						MultiImageSelectActivity.class);
-				Bundle bundleM = new Bundle();
-				bundleM.putString("SelectType",
-						MultiImageSelectActivity.TYPE_ASK_SELECT);
-				bundleM.putString("channel_id",mChannelId);
-				bundleM.putBoolean("isAsk",true);
-				intentM.putExtras(bundleM);
-				startActivity(intentM);
-			}
-		});
-	}
+    private void initListener() {
+        mUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intentM = new Intent(RecentAsksActivity.this,
+                        MultiImageSelectActivity.class);
+                Bundle bundleM = new Bundle();
+                bundleM.putString("SelectType",
+                        MultiImageSelectActivity.TYPE_ASK_SELECT);
+                bundleM.putString("channel_id", mChannelId);
+                bundleM.putBoolean("isAsk", true);
+                intentM.putExtras(bundleM);
+                startActivity(intentM);
+            }
+        });
+    }
 
-	// 触发下拉自动刷新
-	private void setRefreshing() {
+    // 触发下拉自动刷新
+    private void setRefreshing() {
 //		mViewHolder.mGridView.getRefreshableView().smoothScrollToPositionFromTop(0,0);//By(0,0);
-		mViewHolder.mGridView.setRefreshing(true);
-	}
+        mViewHolder.mGridView.setRefreshing(true);
+    }
 
 //	public void onEventMainThread(RefreshEvent event) {
 //		if(event.className.equals(this.getClass().getName())){
@@ -180,227 +180,227 @@ public class RecentAsksActivity extends PSGodBaseActivity implements Callback {
 //		}
 //	}
 
-	private class RecentPageAsksListener implements OnRefreshListener,
-			OnLastItemVisibleListener {
+    private class RecentPageAsksListener implements OnRefreshListener,
+            OnLastItemVisibleListener {
 
-		public RecentPageAsksListener() {
-			SharedPreferences sp = mContext.getSharedPreferences(
-					Constants.SharedPreferencesKey.NAME, Context.MODE_PRIVATE);
-			mSpKey = Constants.SharedPreferencesKey.INPROGRESS_ASK_LIST_LAST_REFRESH_TIME;
-			mLastUpdatedTime = sp.getLong(mSpKey, DEFAULT_LAST_REFRESH_TIME);
+        public RecentPageAsksListener() {
+            SharedPreferences sp = mContext.getSharedPreferences(
+                    Constants.SharedPreferencesKey.NAME, Context.MODE_PRIVATE);
+            mSpKey = Constants.SharedPreferencesKey.INPROGRESS_ASK_LIST_LAST_REFRESH_TIME;
+            mLastUpdatedTime = sp.getLong(mSpKey, DEFAULT_LAST_REFRESH_TIME);
 
-		}
+        }
 
-		@Override
-		public void onLastItemVisible() {
-			if (canLoadMore) {
-				mPage++;
+        @Override
+        public void onLastItemVisible() {
+            if (canLoadMore) {
+                mPage++;
 
-				mViewHolder.mFooterView.setVisibility(View.VISIBLE);
+                mViewHolder.mFooterView.setVisibility(View.VISIBLE);
 
-				PhotoListRequest.Builder builder = new PhotoListRequest.Builder()
-						.setPage(mPage).setLastUpdated(mLastUpdatedTime)
-						.setType(PhotoItem.TYPE_RECENT_ASK)
-						.setListener(loadMoreListener)
-						.setErrorListener(errorListener);
+                PhotoListRequest.Builder builder = new PhotoListRequest.Builder()
+                        .setPage(mPage).setLastUpdated(mLastUpdatedTime)
+                        .setType(PhotoItem.TYPE_RECENT_ASK)
+                        .setListener(loadMoreListener)
+                        .setErrorListener(errorListener);
 
-				if(mChannelId != null && !mChannelId.equals("")){
-					builder.setChannelId(mChannelId);
-				}
+                if (mChannelId != null && !mChannelId.equals("")) {
+                    builder.setChannelId(mChannelId);
+                }
 
-				PhotoListRequest request = builder.build();
-				request.setTag(TAG);
-				RequestQueue requestQueue = PSGodRequestQueue.getInstance(
-						mContext).getRequestQueue();
-				requestQueue.add(request);
-			}
-		}
+                PhotoListRequest request = builder.build();
+                request.setTag(TAG);
+                RequestQueue requestQueue = PSGodRequestQueue.getInstance(
+                        mContext).getRequestQueue();
+                requestQueue.add(request);
+            }
+        }
 
-		@Override
-		public void onRefresh(PullToRefreshBase refreshView) {
-			refresh(0);
-		}
-	}
+        @Override
+        public void onRefresh(PullToRefreshBase refreshView) {
+            refresh(0);
+        }
+    }
 
-	private CustomProgressingDialog dialog;
+    private CustomProgressingDialog dialog;
 
-	public void refresh(int i) {
-		if (i == 1 && dialog != null) {
-			dialog.show();
-		}
-		canLoadMore = false;
-		mPage = 1;
+    public void refresh(int i) {
+        if (i == 1 && dialog != null) {
+            dialog.show();
+        }
+        canLoadMore = false;
+        mPage = 1;
 
-		if (mLastUpdatedTime == DEFAULT_LAST_REFRESH_TIME) {
-			mLastUpdatedTime = System.currentTimeMillis();
-		}
+        if (mLastUpdatedTime == DEFAULT_LAST_REFRESH_TIME) {
+            mLastUpdatedTime = System.currentTimeMillis();
+        }
 
-		PhotoListRequest.Builder builder = new PhotoListRequest.Builder()
-				.setPage(mPage).setLastUpdated(mLastUpdatedTime)
-				.setType(PhotoItem.TYPE_RECENT_ASK)
-				.setListener(refreshListener).setErrorListener(errorListener);
-		if(mChannelId != null && !mChannelId.equals("")){
-			builder.setChannelId(mChannelId);
-		}
-		PhotoListRequest request = builder.build();
-		request.setTag(TAG);
-		RequestQueue requestQueue = PSGodRequestQueue.getInstance(mContext)
-				.getRequestQueue();
-		requestQueue.add(request);
-	}
+        PhotoListRequest.Builder builder = new PhotoListRequest.Builder()
+                .setPage(mPage).setLastUpdated(mLastUpdatedTime)
+                .setType(PhotoItem.TYPE_RECENT_ASK)
+                .setListener(refreshListener).setErrorListener(errorListener);
+        if (mChannelId != null && !mChannelId.equals("")) {
+            builder.setChannelId(mChannelId);
+        }
+        PhotoListRequest request = builder.build();
+        request.setTag(TAG);
+        RequestQueue requestQueue = PSGodRequestQueue.getInstance(mContext)
+                .getRequestQueue();
+        requestQueue.add(request);
+    }
 
-	private Listener<List<PhotoItem>> refreshListener = new Listener<List<PhotoItem>>() {
-		@Override
-		public void onResponse(List<PhotoItem> items) {
-			mViewHolder.mGridView.onRefreshComplete();
+    private Listener<List<PhotoItem>> refreshListener = new Listener<List<PhotoItem>>() {
+        @Override
+        public void onResponse(List<PhotoItem> items) {
+            mViewHolder.mGridView.onRefreshComplete();
 
-			if (items.size() < 15) {
-				canLoadMore = false;
-			} else {
-				canLoadMore = true;
-			}
+            if (items.size() < 15) {
+                canLoadMore = false;
+            } else {
+                canLoadMore = true;
+            }
 
-			mViewHolder.mEmptyView = findViewById(R.id.activity_ask_empty_view);
-			mViewHolder.mGridView.setEmptyView(mViewHolder.mEmptyView);
+            mViewHolder.mEmptyView = findViewById(R.id.activity_ask_empty_view);
+            mViewHolder.mGridView.setEmptyView(mViewHolder.mEmptyView);
 
-			mLastUpdatedTime = System.currentTimeMillis();
-			if (android.os.Build.VERSION.SDK_INT >= 9) {
-				mContext.getApplicationContext()
-						.getSharedPreferences(
-								Constants.SharedPreferencesKey.NAME,
-								Context.MODE_PRIVATE).edit()
-						.putLong(mSpKey, mLastUpdatedTime).apply();
-			} else {
-				mContext.getApplicationContext()
-						.getSharedPreferences(
-								Constants.SharedPreferencesKey.NAME,
-								Context.MODE_PRIVATE).edit()
-						.putLong(mSpKey, mLastUpdatedTime).commit();
-			}
+            mLastUpdatedTime = System.currentTimeMillis();
+            if (android.os.Build.VERSION.SDK_INT >= 9) {
+                mContext.getApplicationContext()
+                        .getSharedPreferences(
+                                Constants.SharedPreferencesKey.NAME,
+                                Context.MODE_PRIVATE).edit()
+                        .putLong(mSpKey, mLastUpdatedTime).apply();
+            } else {
+                mContext.getApplicationContext()
+                        .getSharedPreferences(
+                                Constants.SharedPreferencesKey.NAME,
+                                Context.MODE_PRIVATE).edit()
+                        .putLong(mSpKey, mLastUpdatedTime).commit();
+            }
 
-			mPhotoItems.clear();
-			mPhotoItems.addAll(items);
-			mAskAdapter.notifyDataSetChanged();
-			PhotoItem.savePhotoList(RecentAsksActivity.this, mPhotoItemDao, items,
-					PhotoItem.TYPE_RECENT_ASK);
-			if (dialog != null && dialog.isShowing()) {
-				dialog.dismiss();
-			}
+            mPhotoItems.clear();
+            mPhotoItems.addAll(items);
+            mAskAdapter.notifyDataSetChanged();
+            PhotoItem.savePhotoList(RecentAsksActivity.this, mPhotoItemDao, items,
+                    PhotoItem.TYPE_RECENT_ASK);
+            if (dialog != null && dialog.isShowing()) {
+                dialog.dismiss();
+            }
 
-			if(progressingDialog.isShowing()){
-				progressingDialog.dismiss();
-			}
-		}
-	};
+            if (progressingDialog.isShowing()) {
+                progressingDialog.dismiss();
+            }
+        }
+    };
 
-	private Listener<List<PhotoItem>> loadMoreListener = new Listener<List<PhotoItem>>() {
-		@Override
-		public void onResponse(List<PhotoItem> items) {
-			if (items.size() > 0) {
-				mPhotoItems.addAll(items);
-				mAskAdapter.notifyDataSetChanged();
-				mViewHolder.mGridView.onRefreshComplete();
-			}
+    private Listener<List<PhotoItem>> loadMoreListener = new Listener<List<PhotoItem>>() {
+        @Override
+        public void onResponse(List<PhotoItem> items) {
+            if (items.size() > 0) {
+                mPhotoItems.addAll(items);
+                mAskAdapter.notifyDataSetChanged();
+                mViewHolder.mGridView.onRefreshComplete();
+            }
 
-			mViewHolder.mFooterView.setVisibility(View.INVISIBLE);
+            mViewHolder.mFooterView.setVisibility(View.INVISIBLE);
 
-			if (items.size() < 15) {
-				canLoadMore = false;
-			} else {
-				canLoadMore = true;
-			}
+            if (items.size() < 15) {
+                canLoadMore = false;
+            } else {
+                canLoadMore = true;
+            }
 
-			if(progressingDialog.isShowing()){
-				progressingDialog.dismiss();
-			}
-		}
-	};
+            if (progressingDialog.isShowing()) {
+                progressingDialog.dismiss();
+            }
+        }
+    };
 
-	private PSGodErrorListener errorListener = new PSGodErrorListener(
-			RecentAsksActivity.class.getSimpleName()) {
-		@Override
-		public void handleError(VolleyError error) {
-			mViewHolder.mGridView.onRefreshComplete();
-			if (dialog != null && dialog.isShowing()) {
-				dialog.dismiss();
-			}
+    private PSGodErrorListener errorListener = new PSGodErrorListener(
+            RecentAsksActivity.class.getSimpleName()) {
+        @Override
+        public void handleError(VolleyError error) {
+            mViewHolder.mGridView.onRefreshComplete();
+            if (dialog != null && dialog.isShowing()) {
+                dialog.dismiss();
+            }
 
-			if(progressingDialog.isShowing()){
-				progressingDialog.dismiss();
-			}
-		}
-	};
+            if (progressingDialog.isShowing()) {
+                progressingDialog.dismiss();
+            }
+        }
+    };
 
-	/**
-	 * 暂停所有的下载
-	 */
-	@Override
-	public void onStop() {
-		super.onStop();
-		RequestQueue requestQueue = PSGodRequestQueue.getInstance(mContext)
-				.getRequestQueue();
-		requestQueue.cancelAll(TAG);
-	}
+    /**
+     * 暂停所有的下载
+     */
+    @Override
+    public void onStop() {
+        super.onStop();
+        RequestQueue requestQueue = PSGodRequestQueue.getInstance(mContext)
+                .getRequestQueue();
+        requestQueue.cancelAll(TAG);
+    }
 
-	@Override
-	public void onDestroy() {
-		super.onDestroy();
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
 //		EventBus.getDefault().unregister(this);
-	}
+    }
 
-	private static class ViewHolder {
-		PullToRefreshStaggeredGridView mGridView;
-		View mEmptyView;
-		View mFooterView;
-	}
+    private static class ViewHolder {
+        PullToRefreshStaggeredGridView mGridView;
+        View mEmptyView;
+        View mFooterView;
+    }
 
-	private void loadDataAsync() {
+    private void loadDataAsync() {
 
-		ThreadManager.executeOnFileThread(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					// mDbPhotoItems = mPhotoItemDao.queryForAll();
-					List<PhotoItem> items = mPhotoItemDao.queryBuilder()
-							.orderBy("update_time", false).where()
-							.eq("from", PhotoItem.TYPE_RECENT_ASK).query();
-					// mPhotoItems.addAll(items);
+        ThreadManager.executeOnFileThread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    // mDbPhotoItems = mPhotoItemDao.queryForAll();
+                    List<PhotoItem> items = mPhotoItemDao.queryBuilder()
+                            .orderBy("update_time", false).where()
+                            .eq("from", PhotoItem.TYPE_RECENT_ASK).query();
+                    // mPhotoItems.addAll(items);
 
-					Logger.log(Logger.LOG_LEVEL_DEBUG, Logger.USER_LEVEL_COLOR,
-							TAG, "loadDataAsync(): size=" + items.size());
+                    Logger.log(Logger.LOG_LEVEL_DEBUG, Logger.USER_LEVEL_COLOR,
+                            TAG, "loadDataAsync(): size=" + items.size());
 
-					Message msg = mHandler.obtainMessage();
-					msg.obj = items;
-					msg.sendToTarget();
-				} catch (SQLException e) {
-					// Log.e(LOG_TAG, "Database exception", e);
-					// tv.setText("Database exeption: " + e);
-					return;
-				}
-			}
-		});
-	}
+                    Message msg = mHandler.obtainMessage();
+                    msg.obj = items;
+                    msg.sendToTarget();
+                } catch (SQLException e) {
+                    // Log.e(LOG_TAG, "Database exception", e);
+                    // tv.setText("Database exeption: " + e);
+                    return;
+                }
+            }
+        });
+    }
 
-	@Override
-	public boolean handleMessage(Message msg) {
-		if (msg.obj instanceof List<?>) {
-			mPhotoItems.clear();
-			List<PhotoItem> items = (List<PhotoItem>) msg.obj;
-			mPhotoItems.addAll(items);
-			mAskAdapter.notifyDataSetChanged();
-			if (NetworkUtil.getNetworkType() != NetworkUtil.NetworkType.NONE) {
-				mViewHolder.mGridView.setRefreshing(true);
-			}
-		}
-		return true;
-	}
+    @Override
+    public boolean handleMessage(Message msg) {
+        if (msg.obj instanceof List<?>) {
+            mPhotoItems.clear();
+            List<PhotoItem> items = (List<PhotoItem>) msg.obj;
+            mPhotoItems.addAll(items);
+            mAskAdapter.notifyDataSetChanged();
+            if (NetworkUtil.getNetworkType() != NetworkUtil.NetworkType.NONE) {
+                mViewHolder.mGridView.setRefreshing(true);
+            }
+        }
+        return true;
+    }
 
-	@Override
-	protected void onNewIntent(Intent intent) {
-		super.onNewIntent(intent);
-		mChannelId = intent.getStringExtra("id");
-		if(intent.getBooleanExtra("isRefresh", false)){
-			setRefreshing();
-		}
-	}
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        mChannelId = intent.getStringExtra("id");
+        if (intent.getBooleanExtra("isRefresh", false)) {
+            setRefreshing();
+        }
+    }
 }
