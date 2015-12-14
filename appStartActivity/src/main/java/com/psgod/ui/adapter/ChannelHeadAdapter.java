@@ -26,7 +26,7 @@ public class ChannelHeadAdapter extends RecyclerView.Adapter<ChannelHeadAdapter.
     private Context context;
     private List<PhotoItem> list;
 
-    private DisplayImageOptions mSmallOptions = Constants.DISPLAY_IMAGE_OPTIONS_SMALL;
+    private DisplayImageOptions mSmallSmallOptions = Constants.DISPLAY_IMAGE_OPTIONS_SMALL_SMALL;
 
     public ChannelHeadAdapter(Context context, List<PhotoItem> list) {
         this.context = context;
@@ -41,7 +41,7 @@ public class ChannelHeadAdapter extends RecyclerView.Adapter<ChannelHeadAdapter.
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        PsGodImageLoader.getInstance().displayImage(list.get(position).getImageURL(), holder.img, mSmallOptions);
+        PsGodImageLoader.getInstance().displayImage(list.get(position).getImageURL(), holder.img, mSmallSmallOptions);
         holder.img.setTag(R.id.tupppai_view_id,position);
         holder.img.setOnClickListener(onClickListener);
         holder.txt.setText(list.get(position).getDesc());

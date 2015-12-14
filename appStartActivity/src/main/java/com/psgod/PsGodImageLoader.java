@@ -1,6 +1,8 @@
 package com.psgod;
 
+import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -17,6 +19,7 @@ public class PsGodImageLoader {
 
     private static ImageLoader imgLoader;
     private static PsGodImageLoader psGodImageLoader;
+    public static Context context;
 
     public static PsGodImageLoader getInstance() {
         if (imgLoader == null) {
@@ -28,8 +31,9 @@ public class PsGodImageLoader {
         return psGodImageLoader;
     }
 
-    public void init(ImageLoaderConfiguration configuration) {
+    public void init(ImageLoaderConfiguration configuration, Context context) {
         imgLoader.init(configuration);
+        this.context = context;
     }
 
     public void displayImage(String url, ImageAware imageAware) {
@@ -76,24 +80,45 @@ public class PsGodImageLoader {
         imgLoader.displayImage(getRuleImageUrl(url, options), imageView, options, listener, progressListener);
     }
 
-    public void loadImage(String url,ImageLoadingListener listener){
+    public void loadImage(String url, ImageLoadingListener listener) {
         imgLoader.loadImage(url, listener);
     }
 
-    public void loadImage(String url, DisplayImageOptions options, ImageLoadingListener listener){
-        imgLoader.loadImage(getRuleImageUrl(url, options),options,listener);
+    public void loadImage(String url, DisplayImageOptions options, ImageLoadingListener listener) {
+        imgLoader.loadImage(getRuleImageUrl(url, options), options, listener);
     }
 
-    public Bitmap loadImageSync(String url){
+    public Bitmap loadImageSync(String url) {
         return imgLoader.loadImageSync(url);
     }
 
-    public void clearDiskCache(){
+    public void clearDiskCache() {
         imgLoader.clearDiskCache();
     }
 
-    public static String getRuleImageUrl(String originImageUrl, DisplayImageOptions options) {
-        return originImageUrl;
+    public String getRuleImageUrl(String originImageUrl, DisplayImageOptions options) {
+        String ruleImageUrl;
+        if(options.equals(Constants.DISPLAY_IMAGE_OPTIONS)){
+            String[] thumbs = originImageUrl.split("\\?");
+            ruleImageUrl = String.format("%s?imageView2/0/w/%s",thumbs[0],
+                    String.valueOf((int)(1080*Utils.getWidthScale(context))));
+        }else if(options.equals(Constants.DISPLAY_IMAGE_OPTIONS_SMALL)){
+            String[] thumbs = originImageUrl.split("\\?");
+            ruleImageUrl = String.format("%s?imageView2/0/w/%s",thumbs[0],
+                    String.valueOf((int)(500*Utils.getWidthScale(context))));
+        }else if(options.equals(Constants.DISPLAY_IMAGE_OPTIONS_AVATAR)){
+            String[] thumbs = originImageUrl.split("\\?");
+            ruleImageUrl = String.format("%s?imageView2/0/w/%s",thumbs[0],
+                    String.valueOf((int)(200*Utils.getWidthScale(context))));
+        }else if(options.equals(Constants.DISPLAY_IMAGE_OPTIONS_SMALL_SMALL)){
+            String[] thumbs = originImageUrl.split("\\?");
+            ruleImageUrl = String.format("%s?imageView2/0/w/%s",thumbs[0],
+                    String.valueOf((int)(300*Utils.getWidthScale(context))));
+        }else {
+        ruleImageUrl = originImageUrl;
+        }
+
+        return ruleImageUrl;
     }
 
 }

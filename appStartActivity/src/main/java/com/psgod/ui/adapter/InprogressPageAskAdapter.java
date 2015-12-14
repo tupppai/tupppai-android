@@ -52,7 +52,7 @@ public class InprogressPageAskAdapter extends BaseAdapter implements
 	private InprogressShareMoreDialog inprogressShareDialog;
 
 	// UIL配置
-	private DisplayImageOptions mOptions = Constants.DISPLAY_IMAGE_OPTIONS;
+	private DisplayImageOptions mSmallSmallOptions = Constants.DISPLAY_IMAGE_OPTIONS_SMALL_SMALL;
 	private DisplayImageOptions mAvatarOptions = Constants.DISPLAY_IMAGE_OPTIONS_AVATAR;
 
 	// TODO 根据接口 更换photoitem类型为新的类型
@@ -128,16 +128,16 @@ public class InprogressPageAskAdapter extends BaseAdapter implements
 		if (photoItem.getUploadImagesList().size() == 1) {
 			imageLoader.displayImage(
 					photoItem.getUploadImagesList().get(0).mImageUrl,
-					viewHolder.originImageFirst, mOptions);
+					viewHolder.originImageFirst, mSmallSmallOptions);
 			viewHolder.originPanelSecond.setVisibility(View.GONE);
 		} else if (photoItem.getUploadImagesList().size() == 2) {
 			viewHolder.originPanelSecond.setVisibility(View.VISIBLE);
 			imageLoader.displayImage(
 					photoItem.getUploadImagesList().get(0).mImageUrl,
-					viewHolder.originImageFirst, mOptions);
+					viewHolder.originImageFirst, mSmallSmallOptions);
 			imageLoader.displayImage(
 					photoItem.getUploadImagesList().get(1).mImageUrl,
-					viewHolder.originImageSecond, mOptions);
+					viewHolder.originImageSecond, mSmallSmallOptions);
 		} else {
 			// 出错
 		}
@@ -162,7 +162,7 @@ public class InprogressPageAskAdapter extends BaseAdapter implements
 				mReplyIv.setOnClickListener(replyClick);
 
 				imageLoader.displayImage(mReplyItems.get(i).getImageURL(),
-						mReplyIv, mOptions);
+						mReplyIv, mSmallSmallOptions);
 				viewHolder.imagePanel.addView(mReplyIv);
 
 			}

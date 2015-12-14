@@ -2,15 +2,11 @@ package com.psgod.ui.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.psgod.PsGodImageLoader;
@@ -33,7 +29,7 @@ public class TupppaiAdapter extends MyBaseAdapter<Tupppai> {
         super(context, list);
     }
 
-    private DisplayImageOptions mSmallOptions = Constants.DISPLAY_IMAGE_OPTIONS_SMALL;
+    private DisplayImageOptions mSmallSmallOptions = Constants.DISPLAY_IMAGE_OPTIONS_SMALL_SMALL;
     private DisplayImageOptions mOptions = Constants.DISPLAY_IMAGE_OPTIONS;
 
     @Override
@@ -68,7 +64,7 @@ public class TupppaiAdapter extends MyBaseAdapter<Tupppai> {
             view.setScaleType(ImageView.ScaleType.CENTER_CROP);
             view.setImageDrawable(context.getResources().getDrawable(R.color.transparent));
             if (i < photoItems.size()) {
-                PsGodImageLoader.getInstance().displayImage(photoItems.get(i).getImageURL(), view, mSmallOptions);
+                PsGodImageLoader.getInstance().displayImage(photoItems.get(i).getImageURL(), view, mSmallSmallOptions);
             }
             holder.linear.addView(view);
         }
