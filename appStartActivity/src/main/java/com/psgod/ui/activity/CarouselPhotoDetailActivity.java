@@ -35,7 +35,7 @@ import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.psgod.PsGodImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.psgod.BitmapUtils;
@@ -339,7 +339,7 @@ public class CarouselPhotoDetailActivity extends PSGodBaseActivity implements
 			mPhotoItems.addAll(items);
 			final int length = mPhotoItems.size();
 
-			ImageLoader imageLoader = ImageLoader.getInstance();
+			PsGodImageLoader imageLoader = PsGodImageLoader.getInstance();
 			mDrawableLists = new BitmapDrawable[length];
 			for (int i = 0; i < length; i++) {
 				final String mImagePath = mPhotoItems.get(i).getImageURL();
@@ -691,7 +691,7 @@ public class CarouselPhotoDetailActivity extends PSGodBaseActivity implements
 
 	// 根据viewpager的变化对图片展示区域对背景做更新
 	private void modifyPhotosContainerBg(int position) {
-		ImageLoader imageLoader = ImageLoader.getInstance();
+		PsGodImageLoader imageLoader = PsGodImageLoader.getInstance();
 
 		String mImagePath = mPhotoItems.get(position).getImageURL();
 		// 将图片毛玻璃化处理后作为背景图
@@ -722,7 +722,7 @@ public class CarouselPhotoDetailActivity extends PSGodBaseActivity implements
 
 	// 根据viewpager的变化对底部栏photoItem的信息进行更新
 	private void modifyPhotoItemInfo(int position) {
-		ImageLoader imageLoader = ImageLoader.getInstance();
+		PsGodImageLoader imageLoader = PsGodImageLoader.getInstance();
 
 		// 同步用户头像
 		String mAvatarPath = mPhotoItems.get(position).getAvatarURL();

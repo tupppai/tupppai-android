@@ -18,7 +18,7 @@
 //import com.android.volley.VolleyError;
 //import com.handmark.pulltorefresh.library.PullToRefreshBase;
 //import com.handmark.pulltorefresh.library.PullToRefreshListView;
-//import com.nostra13.universalimageloader.core.ImageLoader;
+//import com.psgod.PsGodImageLoader;
 //import com.psgod.Constants;
 //import com.psgod.LoadUtils;
 //import com.psgod.R;
@@ -221,7 +221,7 @@
 //                if(mHeadView.getVisibility() == View.GONE){
 //                    mHeadView.setVisibility(View.VISIBLE);
 //                }
-//                ImageLoader.getInstance().displayImage(mActs.get(0).getImage_url(), mHeadImg, Constants.DISPLAY_IMAGE_OPTIONS);
+//                PsGodImageLoader.getInstance().displayImage(mActs.get(0).getImage_url(), mHeadImg, Constants.DISPLAY_IMAGE_OPTIONS);
 //            }else{
 //                mHeadView.setVisibility(View.GONE);
 //                mListView.setEmptyView(mEmptyView);

@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 import com.dodowaterfall.widget.ScaleImageView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.psgod.PsGodImageLoader;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.psgod.Constants;
@@ -132,7 +132,7 @@ public class PhotoWaterFallItemView extends RelativeLayout {
 		mAvatarIv.setUserId(mPhotoItem.getUid());
 
 		// 更新图片
-		final ImageLoader imageLoader = ImageLoader.getInstance();
+		final PsGodImageLoader imageLoader = PsGodImageLoader.getInstance();
 		imageLoader.displayImage(mPhotoItem.getAvatarURL(), mAvatarIv,
 				mAvatarOptions, mAnimateFirstListener);
 		imageView.setImageWidth(photoItem.getImageWidth());

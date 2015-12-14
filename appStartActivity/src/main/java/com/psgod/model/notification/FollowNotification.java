@@ -8,8 +8,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.psgod.PsGodImageLoader;
 import com.psgod.Constants;
+import com.psgod.PsGodImageLoader;
 import com.psgod.R;
 import com.psgod.Utils;
 import com.psgod.model.PhotoItem;
@@ -58,7 +59,7 @@ public class FollowNotification implements INotification {
 		// int genderDrawableId = (mNotificationMessage.getGender() == 0) ?
 		// R.drawable.woman
 		// : R.drawable.man;
-		ImageLoader imageLoader = ImageLoader.getInstance();
+		PsGodImageLoader imageLoader = PsGodImageLoader.getInstance();
 		imageLoader.displayImage(mNotificationMessage.getAvatar(),
 				viewHolder.avatarIv, mAvatarOptions);
 		// viewHolder.genderIv.setImageDrawable(res.getDrawable(genderDrawableId));

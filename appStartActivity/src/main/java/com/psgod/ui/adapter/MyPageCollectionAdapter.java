@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.psgod.PsGodImageLoader;
 import com.psgod.Constants;
 import com.psgod.R;
 import com.psgod.model.PhotoItem;
@@ -80,7 +80,7 @@ public class MyPageCollectionAdapter extends BaseAdapter {
 			mViewHolder = (ViewHolder) convertView.getTag();
 		}
 
-		ImageLoader imageLoader = ImageLoader.getInstance();
+		PsGodImageLoader imageLoader = PsGodImageLoader.getInstance();
 		imageLoader.displayImage(photoItem.getAvatarURL(),
 				mViewHolder.avatarIv, mAvatarOptions);
 		mViewHolder.avatarIv.setUserId(photoItem.getUid()); // 设置点击头像跳转

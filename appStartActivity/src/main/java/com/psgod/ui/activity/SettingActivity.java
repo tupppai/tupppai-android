@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Toast;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.psgod.PsGodImageLoader;
 import com.psgod.Constants;
 import com.psgod.R;
 import com.psgod.UserPreferences;
@@ -245,7 +245,7 @@ public class SettingActivity extends PSGodBaseActivity {
 									@Override
 									public void onClick(DialogInterface arg0,
 											int arg1) {
-										ImageLoader.getInstance()
+										PsGodImageLoader.getInstance()
 												.clearDiskCache();
 										Toast.makeText(SettingActivity.this,
 												"缓存清理成功", Toast.LENGTH_SHORT)

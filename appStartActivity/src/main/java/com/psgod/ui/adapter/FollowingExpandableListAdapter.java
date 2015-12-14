@@ -10,7 +10,7 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.psgod.PsGodImageLoader;
 import com.psgod.Constants;
 import com.psgod.R;
 import com.psgod.model.User;
@@ -147,7 +147,7 @@ public class FollowingExpandableListAdapter extends BaseExpandableListAdapter {
 		viewHolder.followBtn.setUser(user);
 
 		// 更新图片
-		ImageLoader imageLoader = ImageLoader.getInstance();
+		PsGodImageLoader imageLoader = PsGodImageLoader.getInstance();
 		imageLoader.displayImage(user.getAvatarImageUrl(), viewHolder.avatarIv,
 				mAvatarOptions);
 

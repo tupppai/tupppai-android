@@ -15,7 +15,7 @@ import android.widget.TextView;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.psgod.PsGodImageLoader;
 import com.psgod.Constants;
 import com.psgod.R;
 import com.psgod.model.SearchUserData;
@@ -68,7 +68,7 @@ public class SearchUserAdapter extends MyBaseAdapter<SearchUserData> {
 			viewHolder = (ViewHolder) view.getTag();
 		}
 		SearchUserData data = list.get(position);
-		ImageLoader.getInstance().displayImage(data.getAvatar(),
+		PsGodImageLoader.getInstance().displayImage(data.getAvatar(),
 				viewHolder.mAvatar, Constants.DISPLAY_IMAGE_OPTIONS_AVATAR);
 		viewHolder.mAvatar.setTag(data.getUid());
 		viewHolder.mAvatar.setUserId(Long.parseLong(data.getUid()));
@@ -199,7 +199,7 @@ public class SearchUserAdapter extends MyBaseAdapter<SearchUserData> {
 			}
 			SearchUserReplies replies = list.get(position);
 			holder.mImage.setTag(replies.getImage_url());
-			ImageLoader.getInstance().displayImage(replies.getImage_url(),
+			PsGodImageLoader.getInstance().displayImage(replies.getImage_url(),
 					holder.mImage, Constants.DISPLAY_IMAGE_OPTIONS);
 			holder.mImage.setTag(replies.getAsk_id() + "tupai"
 					+ replies.getId());

@@ -22,7 +22,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.psgod.PsGodImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.psgod.Constants;
@@ -53,7 +53,7 @@ public class PhotoDetailFragment extends BaseFragment {
         final View view = LayoutInflater.from(getActivity()).inflate(
                 R.layout.fragment_hot_photo_detail, null);
 
-        ImageLoader imageLoader = ImageLoader.getInstance();
+        PsGodImageLoader imageLoader = PsGodImageLoader.getInstance();
         String imagePath = photoItem.getImageURL();
 
         imageView = (ImageView) view

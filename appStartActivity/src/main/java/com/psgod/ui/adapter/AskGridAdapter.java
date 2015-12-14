@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.psgod.PsGodImageLoader;
 import com.psgod.Constants;
 import com.psgod.R;
 import com.psgod.model.PhotoItem;
@@ -86,7 +86,7 @@ public class AskGridAdapter extends BaseAdapter {
 			viewHolder = (AskGridViewHolder) convertView.getTag();
 		}
 
-		ImageLoader imageLoader = ImageLoader.getInstance();
+		PsGodImageLoader imageLoader = PsGodImageLoader.getInstance();
 		imageLoader.displayImage(photoItem.getImageURL(),
 				viewHolder.mImageView, mOptions);
 		viewHolder.mCountTextView.setVisibility(View.INVISIBLE);

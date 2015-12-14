@@ -1,4 +1,4 @@
-package com.psgod.ui.fragment;
+package com.psgod;
 
 /**
  * Created by Administrator on 2015/12/14 0014.

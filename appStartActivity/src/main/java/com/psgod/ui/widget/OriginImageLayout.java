@@ -17,10 +17,11 @@ import android.widget.ImageView.ScaleType;
 import android.widget.RelativeLayout;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.psgod.PsGodImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.psgod.Constants;
+import com.psgod.PsGodImageLoader;
 import com.psgod.R;
 import com.psgod.Utils;
 import com.psgod.model.ImageData;
@@ -31,7 +32,7 @@ public class OriginImageLayout extends RelativeLayout {
     private Context mContext;
     private ImageView mBackground;
 
-    private ImageLoader imageLoader = ImageLoader.getInstance();
+    private PsGodImageLoader imageLoader = PsGodImageLoader.getInstance();
     private DisplayImageOptions mOptions = Constants.DISPLAY_IMAGE_OPTIONS_SMALL;
 
     private ObjectAnimator scaleWidthAnimator = null;

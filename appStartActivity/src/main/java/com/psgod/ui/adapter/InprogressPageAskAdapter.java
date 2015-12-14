@@ -22,7 +22,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.psgod.PsGodImageLoader;
 import com.psgod.Constants;
 import com.psgod.R;
 import com.psgod.Utils;
@@ -124,7 +124,7 @@ public class InprogressPageAskAdapter extends BaseAdapter implements
 		viewHolder.descEdit.setTag(photoItem);
 		viewHolder.mEditView.setTag(viewHolder);
 
-		ImageLoader imageLoader = ImageLoader.getInstance();
+		PsGodImageLoader imageLoader = PsGodImageLoader.getInstance();
 		if (photoItem.getUploadImagesList().size() == 1) {
 			imageLoader.displayImage(
 					photoItem.getUploadImagesList().get(0).mImageUrl,

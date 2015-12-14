@@ -17,7 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.psgod.PsGodImageLoader;
 import com.psgod.Constants;
 import com.psgod.LoadUtils;
 import com.psgod.R;
@@ -236,7 +236,7 @@ public class RecentActActivity extends PSGodBaseActivity {
         @Override
         public void onResponse(Activities response) {
             if (response.getActs().getPost_btn() != null && !response.getActs().getPost_btn().equals("")) {
-                ImageLoader.getInstance().displayImage(response.getActs().getPost_btn(),
+                PsGodImageLoader.getInstance().displayImage(response.getActs().getPost_btn(),
                         mUpLoad, Constants.DISPLAY_IMAGE_OPTIONS_SMALL);
             }
             mPhotoItems.clear();
@@ -250,7 +250,7 @@ public class RecentActActivity extends PSGodBaseActivity {
                     mHeadView.setVisibility(View.VISIBLE);
                 }
                 mTitle.setText(mAct.getName());
-                ImageLoader.getInstance().
+                PsGodImageLoader.getInstance().
                         displayImage(mAct.getBanner_pic(),
                                 mHeadImg, Constants.DISPLAY_IMAGE_OPTIONS);
             } else {

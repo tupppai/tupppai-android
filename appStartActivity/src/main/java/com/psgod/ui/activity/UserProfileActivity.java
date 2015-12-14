@@ -31,7 +31,7 @@ import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.nineoldandroids.view.ViewHelper;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.psgod.PsGodImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.psgod.BitmapUtils;
@@ -295,7 +295,7 @@ public class UserProfileActivity extends PSGodBaseActivity implements
 				setupPager();
 				setupTabs();
 
-				ImageLoader imageLoader = ImageLoader.getInstance();
+				PsGodImageLoader imageLoader = PsGodImageLoader.getInstance();
 				// imageLoader.displayImage(user.getAvatarImageUrl(),
 				// mAvatarImageView, mAvatarOptions);
 				imageLoader.displayImage(user.getAvatarImageUrl(),

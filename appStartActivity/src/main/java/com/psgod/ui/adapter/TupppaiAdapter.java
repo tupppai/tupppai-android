@@ -13,7 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.psgod.PsGodImageLoader;
 import com.psgod.Constants;
 import com.psgod.R;
 import com.psgod.Utils;
@@ -55,7 +55,7 @@ public class TupppaiAdapter extends MyBaseAdapter<Tupppai> {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        ImageLoader.getInstance().displayImage(list.get(position).getApp_pic(), holder.headImg, mOptions);
+        PsGodImageLoader.getInstance().displayImage(list.get(position).getApp_pic(), holder.headImg, mOptions);
         holder.linear.removeAllViews();
         List<PhotoItem> photoItems = list.get(position).getThreads();
         for (int i = 0; i < 5; i++) {
@@ -68,7 +68,7 @@ public class TupppaiAdapter extends MyBaseAdapter<Tupppai> {
             view.setScaleType(ImageView.ScaleType.CENTER_CROP);
             view.setImageDrawable(context.getResources().getDrawable(R.color.transparent));
             if (i < photoItems.size()) {
-                ImageLoader.getInstance().displayImage(photoItems.get(i).getImageURL(), view, mSmallOptions);
+                PsGodImageLoader.getInstance().displayImage(photoItems.get(i).getImageURL(), view, mSmallOptions);
             }
             holder.linear.addView(view);
         }

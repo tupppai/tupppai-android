@@ -15,7 +15,7 @@ import android.widget.TextView;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response.Listener;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.psgod.PsGodImageLoader;
 import com.psgod.Constants;
 import com.psgod.Logger;
 import com.psgod.R;
@@ -135,7 +135,7 @@ public class UserFragment extends BaseFragment {
 		mViewHolder.myWorksBtn.setText("我的作品 （"
 				+ Integer.toString(user.getReplyCount()) + "）");
 
-		ImageLoader loader = ImageLoader.getInstance();
+		PsGodImageLoader loader = PsGodImageLoader.getInstance();
 		loader.displayImage(user.getAvatarImageUrl(), mViewHolder.avatarIv,
 				mOptions);
 
@@ -172,7 +172,7 @@ public class UserFragment extends BaseFragment {
 				mViewHolder.myWorksBtn.setText("我的作品 （"
 						+ Integer.toString(user.getReplyCount()) + "）");
 
-				ImageLoader loader = ImageLoader.getInstance();
+				PsGodImageLoader loader = PsGodImageLoader.getInstance();
 				loader.displayImage(user.getAvatarImageUrl(),
 						mViewHolder.avatarIv, mOptions);
 

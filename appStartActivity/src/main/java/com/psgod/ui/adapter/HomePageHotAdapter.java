@@ -14,7 +14,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.psgod.PsGodImageLoader;
 import com.psgod.Constants;
 import com.psgod.R;
 import com.psgod.model.BannerData;
@@ -242,7 +242,7 @@ public class HomePageHotAdapter extends BaseExpandableListAdapter {
                 android.view.ViewGroup.LayoutParams.MATCH_PARENT,
                 Utils.dipToPx(mContext, 166));
 
-        ImageLoader imageLoader = ImageLoader.getInstance();
+        PsGodImageLoader imageLoader = PsGodImageLoader.getInstance();
         final ArrayList<View> bannerListViews = new ArrayList<View>();
         for (int i = 0; i < mBannerItems.size(); i++) {
 

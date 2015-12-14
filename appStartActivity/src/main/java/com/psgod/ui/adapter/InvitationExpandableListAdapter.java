@@ -16,7 +16,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.psgod.PsGodImageLoader;
 import com.psgod.Constants;
 import com.psgod.PSGodApplication;
 import com.psgod.R;
@@ -136,7 +136,7 @@ public class InvitationExpandableListAdapter extends BaseExpandableListAdapter {
 			viewHolder = (ViewHolder) convertView.getTag();
 		}
 
-		ImageLoader imageLoader = ImageLoader.getInstance();
+		PsGodImageLoader imageLoader = PsGodImageLoader.getInstance();
 		imageLoader.displayImage(user.getAvatarImageUrl(), viewHolder.avatarIv,
 				mAvatarOptions);
 

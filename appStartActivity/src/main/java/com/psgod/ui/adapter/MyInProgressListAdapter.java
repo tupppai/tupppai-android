@@ -17,7 +17,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.psgod.PsGodImageLoader;
 import com.psgod.Constants;
 import com.psgod.R;
 import com.psgod.model.PhotoItem;
@@ -114,7 +114,7 @@ public class MyInProgressListAdapter extends BaseAdapter {
 
 		// finalConvertView = convertView;
 
-		ImageLoader imageLoader = ImageLoader.getInstance();
+		PsGodImageLoader imageLoader = PsGodImageLoader.getInstance();
 		imageLoader.displayImage(photoItem.getAvatarURL(), viewHolder.avatarIv,
 				mAvatarOptions);
 		imageLoader.displayImage(photoItem.getImageURL(), viewHolder.imageView,

@@ -29,7 +29,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response.Listener;
 import com.nineoldandroids.view.ViewHelper;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.psgod.PsGodImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.psgod.BitmapUtils;
@@ -74,7 +74,7 @@ public class MyPageFragment extends Fragment implements
 	private int headerHeight;
 	private int headerTranslationDis;
 
-	ImageLoader loader = ImageLoader.getInstance();
+	PsGodImageLoader loader = PsGodImageLoader.getInstance();
 	private DisplayImageOptions mAvatarOptions = Constants.DISPLAY_IMAGE_OPTIONS_AVATAR;
 
 	private View mMessageTipView;

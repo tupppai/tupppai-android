@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.psgod.PsGodImageLoader;
 import com.psgod.Constants;
 import com.psgod.R;
 import com.psgod.emoji.FaceConversionUtil;
@@ -117,7 +117,7 @@ public class CommentExpandableListAdapter extends BaseExpandableListAdapter {
         }
 
         // 更新图片
-        ImageLoader imageLoader = ImageLoader.getInstance();
+        PsGodImageLoader imageLoader = PsGodImageLoader.getInstance();
         imageLoader.displayImage(comment.getAvatarURL(), viewHolder.mAvatarIv,
                 mAvatarOptions);
         viewHolder.mNameTv.setText(comment.getNickname());

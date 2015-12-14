@@ -8,8 +8,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.psgod.PsGodImageLoader;
 import com.psgod.Constants;
+import com.psgod.PsGodImageLoader;
 import com.psgod.R;
 import com.psgod.Utils;
 import com.psgod.model.PhotoItem;
@@ -58,7 +59,7 @@ public class ReplyNotification implements INotification {
 		viewHolder.nameTv.setText(mNotificationMessage.getNickName());
 		viewHolder.timeTv.setText(Utils.getTimeFormatText(mNotificationMessage
 				.getCreatedTime()));
-		ImageLoader imageLoader = ImageLoader.getInstance();
+		PsGodImageLoader imageLoader = PsGodImageLoader.getInstance();
 		imageLoader.displayImage(mNotificationMessage.getAvatar(),
 				viewHolder.avatarIv, mAvatarOptions);
 		// viewHolder.imageView.getLayoutParams().width = 100;

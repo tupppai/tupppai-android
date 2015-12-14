@@ -36,7 +36,7 @@ import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.nineoldandroids.view.ViewHelper;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.psgod.PsGodImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
@@ -45,6 +45,7 @@ import com.psgod.AnimUtils;
 import com.psgod.BitmapUtils;
 import com.psgod.Constants;
 import com.psgod.CustomToast;
+import com.psgod.PsGodImageLoader;
 import com.psgod.R;
 import com.psgod.Utils;
 import com.psgod.WeakReferenceHandler;
@@ -180,7 +181,7 @@ public class PhotoItemView extends RelativeLayout implements Callback {
     // 0 未放大 1 放大 2 正在放大或缩小过程中
     private boolean mScaling = false;
     // 图片加载器单例
-    private ImageLoader imageLoader = ImageLoader.getInstance();
+    private PsGodImageLoader imageLoader = PsGodImageLoader.getInstance();
 
     /**
      * photoitemview类型： SINGLE_ASK 单页求P SINGLE_REPLY 单页作品 RECENT_REPLY 最新tab 作品

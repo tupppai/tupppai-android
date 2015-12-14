@@ -25,7 +25,7 @@ import android.widget.ToggleButton;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.psgod.PsGodImageLoader;
 import com.psgod.BitmapUtils;
 import com.psgod.Constants;
 import com.psgod.CustomToast;
@@ -233,7 +233,7 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
 
             mImage.setLayoutParams(lpLayoutParams);
             mImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            ImageLoader.getInstance().displayImage("file://" + pathList.get(0),
+            PsGodImageLoader.getInstance().displayImage("file://" + pathList.get(0),
                     mImage);
             mImageLayout.addView(mImage);
 
@@ -266,7 +266,7 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
                     Utils.dpToPx(mContext, 82), Utils.dpToPx(mContext, 82));
             mImage.setLayoutParams(lpLayoutParams);
             mImage.setScaleType(ImageView.ScaleType.CENTER);
-            ImageLoader.getInstance().displayImage("file://" + pathList.get(0),
+            PsGodImageLoader.getInstance().displayImage("file://" + pathList.get(0),
                     mImage);
             mImageLayout.addView(mImage);
         } else {
@@ -281,7 +281,7 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
                 }
                 mImage.setLayoutParams(lpLayoutParams);
                 mImage.setScaleType(ImageView.ScaleType.CENTER);
-                ImageLoader.getInstance().displayImage(
+                PsGodImageLoader.getInstance().displayImage(
                         "file://" + pathList.get(i), mImage);
                 mImageLayout.addView(mImage);
             }

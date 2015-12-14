@@ -19,7 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.psgod.PsGodImageLoader;
 import com.psgod.Constants;
 import com.psgod.ImageIOManager;
 import com.psgod.R;
@@ -115,7 +115,7 @@ public class InprogressPageReplyAdapter extends BaseAdapter implements
 			mViewHolder = (ViewHolder) convertView.getTag();
 		}
 
-		ImageLoader imageLoader = ImageLoader.getInstance();
+		PsGodImageLoader imageLoader = PsGodImageLoader.getInstance();
 		imageLoader.displayImage(photoItem.getAvatarURL(),
 				mViewHolder.avatarIv, mAvatarOptions);
 		mViewHolder.avatarIv.setUserId(photoItem.getUid()); // 设置点击头像跳转

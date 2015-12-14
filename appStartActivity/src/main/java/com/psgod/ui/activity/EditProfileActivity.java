@@ -35,7 +35,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.psgod.PsGodImageLoader;
 import com.psgod.Constants;
 import com.psgod.Logger;
 import com.psgod.PSGodApplication;
@@ -113,7 +113,7 @@ public class EditProfileActivity extends PSGodBaseActivity implements
 	}
 
 	protected void initData() {
-		ImageLoader loader = ImageLoader.getInstance();
+		PsGodImageLoader loader = PsGodImageLoader.getInstance();
 		// LoginUser实例
 		LoginUser user = LoginUser.getInstance();
 

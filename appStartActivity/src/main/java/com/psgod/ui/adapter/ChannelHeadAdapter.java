@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.psgod.PsGodImageLoader;
 import com.psgod.Constants;
 import com.psgod.R;
 import com.psgod.model.PhotoItem;
@@ -41,7 +41,7 @@ public class ChannelHeadAdapter extends RecyclerView.Adapter<ChannelHeadAdapter.
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        ImageLoader.getInstance().displayImage(list.get(position).getImageURL(), holder.img, mSmallOptions);
+        PsGodImageLoader.getInstance().displayImage(list.get(position).getImageURL(), holder.img, mSmallOptions);
         holder.img.setTag(R.id.tupppai_view_id,position);
         holder.img.setOnClickListener(onClickListener);
         holder.txt.setText(list.get(position).getDesc());

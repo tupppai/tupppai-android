@@ -12,7 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.psgod.PsGodImageLoader;
 import com.psgod.Constants;
 import com.psgod.R;
 import com.psgod.Utils;
@@ -99,7 +99,7 @@ public class UserProfileAsksAdapter extends BaseAdapter {
 		viewHolder.timeTv.setText(photoItem.getUpdateTimeStr());
 		viewHolder.descEdit.setHtmlFromString(photoItem.getDesc(), true);
 
-		ImageLoader imageLoader = ImageLoader.getInstance();
+		PsGodImageLoader imageLoader = PsGodImageLoader.getInstance();
 		if (photoItem.getUploadImagesList().size() == 1) {
 			imageLoader.displayImage(
 					photoItem.getUploadImagesList().get(0).mImageUrl,

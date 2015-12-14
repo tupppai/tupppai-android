@@ -30,7 +30,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.psgod.PsGodImageLoader;
 import com.psgod.Constants;
 import com.psgod.Logger;
 import com.psgod.R;
@@ -144,7 +144,7 @@ public class SetInfoActivity extends PSGodBaseActivity implements
 		openId = intent.getStringExtra(Constants.ThirdAuthInfo.USER_OPENID);
 
 		mSetNickTv.setText(mNickName);
-		ImageLoader imageLoader = ImageLoader.getInstance();
+		PsGodImageLoader imageLoader = PsGodImageLoader.getInstance();
 		imageLoader.displayImage(mAvatarUrl, mSetInfoImageBtn, mAvatarOptions);
 	}
 

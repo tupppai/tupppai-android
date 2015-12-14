@@ -13,8 +13,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.psgod.PsGodImageLoader;
 import com.psgod.Constants;
+import com.psgod.PsGodImageLoader;
 import com.psgod.R;
 import com.psgod.Utils;
 import com.psgod.model.PhotoItem;
@@ -66,7 +67,7 @@ public class CommentNotification implements Serializable, INotification {
 		// 设置头像点击跳转
 		viewHolder.avatarIv.setUserId(mNotificationMessage.getUid());
 
-		ImageLoader imageLoader = ImageLoader.getInstance();
+		PsGodImageLoader imageLoader = PsGodImageLoader.getInstance();
 		imageLoader.displayImage(mNotificationMessage.getAvatar(),
 				viewHolder.avatarIv, mAvatarOptions);
 

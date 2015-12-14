@@ -28,7 +28,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.psgod.PsGodImageLoader;
 import com.psgod.Constants;
 import com.psgod.R;
 import com.psgod.UserPreferences;
@@ -242,7 +242,7 @@ public class MainActivity extends PSGodBaseActivity implements
 
                 if (user.getAvatarImageUrl().equals("")) {
                 } else {
-                    ImageLoader.getInstance().displayImage(user.getAvatarImageUrl(),
+                    PsGodImageLoader.getInstance().displayImage(user.getAvatarImageUrl(),
                             mAvatarImg, mAvatarOptions);
                 }
             }

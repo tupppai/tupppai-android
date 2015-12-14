@@ -20,7 +20,7 @@ import android.widget.TextView;
 
 import com.nineoldandroids.view.ViewHelper;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.psgod.PsGodImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.psgod.BitmapUtils;
@@ -177,14 +177,14 @@ public class CarouselPhotoDetailView extends RelativeLayout {
 
         coverName.setText(mPhotoItem.getNickname());
         coverTime.setText(mPhotoItem.getUpdateTimeStr());
-        ImageLoader.getInstance().displayImage(mPhotoItem.getAvatarURL(), coverAvatar, mAvatarOptions);
+        PsGodImageLoader.getInstance().displayImage(mPhotoItem.getAvatarURL(), coverAvatar, mAvatarOptions);
         coverAvatar.setUserId(mPhotoItem.getUid());
 
         coverCover = new ImageView(mContext);
         coverCover.setLayoutParams
                 (new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.MATCH_PARENT));
-        ImageLoader.getInstance().displayImage(mPhotoItem.getImageURL(), coverCover, mOptions, new ImageLoadingListener() {
+        PsGodImageLoader.getInstance().displayImage(mPhotoItem.getImageURL(), coverCover, mOptions, new ImageLoadingListener() {
             @Override
             public void onLoadingStarted(String s, View view) {
 

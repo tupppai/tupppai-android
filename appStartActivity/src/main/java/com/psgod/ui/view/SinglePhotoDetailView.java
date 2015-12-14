@@ -14,7 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.psgod.PsGodImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.psgod.BitmapUtils;
@@ -102,7 +102,7 @@ public class SinglePhotoDetailView extends RelativeLayout {
         follow.setPhotoItem(mPhotoItem);
         follow.updateFollowView();
         avatar.setUserId(mPhotoItem.getUid());
-        ImageLoader.getInstance().displayImage(mPhotoItem.getAvatarURL(), avatar, mAvatarOptions);
+        PsGodImageLoader.getInstance().displayImage(mPhotoItem.getAvatarURL(), avatar, mAvatarOptions);
         name.setText(mPhotoItem.getNickname());
         time.setText(mPhotoItem.getUpdateTimeStr());
         initImg();
@@ -171,7 +171,7 @@ public class SinglePhotoDetailView extends RelativeLayout {
             LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             imgCover.setLayoutParams(params);
             imgSingle.addView(imgCover);
-            ImageLoader.getInstance().displayImage(mPhotoItem.getImageURL(), imgCover, mOptions, new ImageLoadingListener() {
+            PsGodImageLoader.getInstance().displayImage(mPhotoItem.getImageURL(), imgCover, mOptions, new ImageLoadingListener() {
                 @Override
                 public void onLoadingStarted(String s, View view) {
 
@@ -195,8 +195,8 @@ public class SinglePhotoDetailView extends RelativeLayout {
         } else if (mPhotoItem.getUploadImagesList().size() == 2) {
             imgMutl.setVisibility(VISIBLE);
             imgSingle.setVisibility(INVISIBLE);
-            ImageLoader.getInstance().displayImage(mPhotoItem.getUploadImagesList().get(0).mImageUrl, imgLeft, mOptions);
-            ImageLoader.getInstance().displayImage(mPhotoItem.getUploadImagesList().get(1).mImageUrl, imgRight, mOptions);
+            PsGodImageLoader.getInstance().displayImage(mPhotoItem.getUploadImagesList().get(0).mImageUrl, imgLeft, mOptions);
+            PsGodImageLoader.getInstance().displayImage(mPhotoItem.getUploadImagesList().get(1).mImageUrl, imgRight, mOptions);
             imgLeft.setTag(mPhotoItem.getUploadImagesList().get(0).mImageUrl);
             imgRight.setTag(mPhotoItem.getUploadImagesList().get(1).mImageUrl);
             imgRight.setOnClickListener(imgClick);

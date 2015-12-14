@@ -11,7 +11,7 @@ import android.view.WindowManager;
 
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.psgod.PsGodImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.psgod.emoji.FaceConversionUtil;
@@ -305,6 +305,6 @@ public class PSGodApplication extends Application {
                 .writeDebugLogs() // Remove for release app
                 .build();
         // Initialize ImageLoader with configuration.
-        ImageLoader.getInstance().init(config);
+        PsGodImageLoader.getInstance().init(config);
     }
 }

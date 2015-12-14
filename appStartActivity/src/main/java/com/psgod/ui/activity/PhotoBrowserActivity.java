@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.psgod.PsGodImageLoader;
 import com.psgod.Constants;
 import com.psgod.R;
 import com.psgod.ui.widget.dialog.PSDialog;
@@ -63,7 +63,7 @@ public class PhotoBrowserActivity extends PSGodBaseActivity {
 			}
 		});
 
-		ImageLoader imageLoader = ImageLoader.getInstance();
+		PsGodImageLoader imageLoader = PsGodImageLoader.getInstance();
 		Bitmap bitmap = imageLoader.loadImageSync(mImageUrl);
 		mImageView.setImageBitmap(bitmap);
 

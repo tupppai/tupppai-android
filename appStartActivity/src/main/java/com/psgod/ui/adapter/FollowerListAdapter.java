@@ -11,7 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.psgod.PsGodImageLoader;
 import com.psgod.Constants;
 import com.psgod.R;
 import com.psgod.model.LoginUser;
@@ -108,7 +108,7 @@ public class FollowerListAdapter extends BaseAdapter {
 			viewHolder.followBtn.setVisibility(View.VISIBLE);
 		}
 
-		ImageLoader imageLoader = ImageLoader.getInstance();
+		PsGodImageLoader imageLoader = PsGodImageLoader.getInstance();
 		imageLoader.displayImage(
 				((User) getItem(position)).getAvatarImageUrl(),
 				viewHolder.avatarIv, mAvatarOptions);
