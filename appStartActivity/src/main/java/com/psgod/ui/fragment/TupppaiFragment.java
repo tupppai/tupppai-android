@@ -27,6 +27,7 @@ import com.psgod.ui.activity.RecentAsksActivity;
 import com.psgod.ui.activity.RecentWorkActivity;
 import com.psgod.ui.adapter.TupppaiAdapter;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -113,6 +114,7 @@ public class TupppaiFragment extends BaseFragment {
         askImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                MobclickAgent.onEvent(getActivity(), "Tupppai_Ask_Click");         //统计求P的点击次数
                 Intent intent = new Intent(getActivity(),RecentAsksActivity.class);
                 startActivity(intent);
             }
@@ -120,6 +122,7 @@ public class TupppaiFragment extends BaseFragment {
         workImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                MobclickAgent.onEvent(getActivity(), "Tupppai_Work_Click");        //统计作品的点击次数
                 Intent intent = new Intent(getActivity(), RecentWorkActivity.class);
                 startActivity(intent);
             }
