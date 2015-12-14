@@ -88,7 +88,7 @@
                 android:id="@+id/activity_main_tab_user_img"
                 android:layout_width="23dp"
                 android:layout_height="23dp"
-                android:src="#fff"
+                android:src="@mipmap/tab_my_normal"
                 android:layout_centerHorizontal="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="6dp" />
