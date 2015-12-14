@@ -149,11 +149,13 @@ public class UploadMultiRequest extends BaseRequest<MultiUploadResult> {
 			}
 
 			if(activityId != null && !activityId.equals("")){
-				params.put("activity_id",activityId);
+//				params.put("activity_id",activityId);
+				params.put("category_id",activityId);
 			}
 
 			if(channelId != null && !channelId.equals("")){
-				params.put("activity_id",channelId);
+//				params.put("activity_id",channelId);
+				params.put("category_id",channelId);
 			}
 
 			params.put("upload_ids", uploadIdList.toString());

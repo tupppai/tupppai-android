@@ -147,6 +147,7 @@ public final class PhotoActRequest extends BaseRequest<Activities> {
             StringBuilder sb = new StringBuilder(BaseRequest.PSGOD_BASE_URL);
             sb.append("/thread/get_activity_threads");
             sb.append("?page=").append(page);
+//            sb.append("&category_id=").append(id);
             sb.append("&activity_id=").append(id);
             // sb.append("size=").append(size); 用服务器的默认值
             // private int sort;
