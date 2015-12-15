@@ -84,7 +84,8 @@
         android:textColor="#6F000000"
         android:textSize="14dp"
         android:drawableLeft="@drawable/ic_like_new"
-        android:drawablePadding="3dp" />
+        android:drawablePadding="3dp"
+        android:visibility="gone" />
 
     <View
         android:layout_width="match_parent"
