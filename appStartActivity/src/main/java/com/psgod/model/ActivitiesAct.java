@@ -15,9 +15,13 @@ public class ActivitiesAct implements Serializable{
     private String banner_pic;
     private String url;
     private String ask_id;
-    private String name;
+    private String display_name;
     private String post_btn;
     private int type;
+
+    public void setDisplay_name(String display_name) {
+        this.display_name = display_name;
+    }
 
     public String getPost_btn() {
         return post_btn;
@@ -36,12 +40,12 @@ public class ActivitiesAct implements Serializable{
     }
 
     public String getName() {
-        return name;
+        return display_name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+//    public void setName(String name) {
+//        this.name = name;
+//    }
 
     public int getType() {
         return type;
