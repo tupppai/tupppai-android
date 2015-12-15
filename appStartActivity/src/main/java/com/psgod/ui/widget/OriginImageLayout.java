@@ -32,7 +32,7 @@ public class OriginImageLayout extends RelativeLayout {
     private ImageView mBackground;
 
     private PsGodImageLoader imageLoader = PsGodImageLoader.getInstance();
-    private DisplayImageOptions mSmallSmallOptions = Constants.DISPLAY_IMAGE_OPTIONS_SMALL_SMALL;
+//    private DisplayImageOptions mSmallSmallOptions = Constants.DISPLAY_IMAGE_OPTIONS_SMALL_SMALL;
     private DisplayImageOptions mOptions = Constants.DISPLAY_IMAGE_OPTIONS;
 
 //    private ObjectAnimator scaleWidthAnimator = null;
@@ -136,8 +136,8 @@ public class OriginImageLayout extends RelativeLayout {
         mImageViewRight.setScaleType(ScaleType.CENTER_CROP);
         mImageViewRight.setLayoutParams(rightParams);
 
-        imageLoader.displayImage(originImage1.mImageUrl, mImageViewLeft, mSmallSmallOptions);
-        imageLoader.displayImage(originImage2.mImageUrl, mImageViewRight, mSmallSmallOptions);
+        imageLoader.displayImage(originImage1.mImageUrl, mImageViewLeft, mOptions);
+        imageLoader.displayImage(originImage2.mImageUrl, mImageViewRight, mOptions);
 
         uploadLayout.addView(mImageViewLeft);
         uploadLayout.addView(mImageViewRight);
@@ -222,7 +222,7 @@ public class OriginImageLayout extends RelativeLayout {
         params.addRule(CENTER_IN_PARENT);
         thumbImageView.setLayoutParams(params);
         thumbImageView.setScaleType(ScaleType.FIT_CENTER);
-        imageLoader.displayImage(originImage.mImageUrl, thumbImageView, mSmallSmallOptions, new ImageLoadingListener() {
+        imageLoader.displayImage(originImage.mImageUrl, thumbImageView, mOptions, new ImageLoadingListener() {
             @Override
             public void onLoadingStarted(String s, View view) {
 
@@ -520,16 +520,16 @@ public class OriginImageLayout extends RelativeLayout {
 
             @Override
             public void onAnimationEnd(Animator arg0) {
-                if (images.size() == 2) {
-                    initThumb(clickNum == 0 ? images.get(0) : images.get(1));
-                    if (clickNum == 0) {
-                        imageLoader.displayImage(images.get(0).mImageUrl, mImageViewLeft, mOptions);
-                    } else {
-                        imageLoader.displayImage(images.get(1).mImageUrl, mImageViewRight, mOptions);
-                    }
-                } else {
-                    imageLoader.displayImage(images.get(0).mImageUrl, thumbImageView, mOptions);
-                }
+//                if (images.size() == 2) {
+//                    initThumb(clickNum == 0 ? images.get(0) : images.get(1));
+//                    if (clickNum == 0) {
+//                        imageLoader.displayImage(images.get(0).mImageUrl, mImageViewLeft, mOptions);
+//                    } else {
+//                        imageLoader.displayImage(images.get(1).mImageUrl, mImageViewRight, mOptions);
+//                    }
+//                } else {
+//                    imageLoader.displayImage(images.get(0).mImageUrl, thumbImageView, mOptions);
+//                }
                 uploadLayout.setEnabled(true);
                 mBackground.setVisibility(INVISIBLE);
                 animStart = false;

@@ -211,6 +211,9 @@ public class RecentActActivity extends PSGodBaseActivity {
                     intent.putExtra("AskId", Long.parseLong(mAct.getAsk_id()));
                     intent.putExtra("ActivityId", mAct.getId());
                     intent.putExtra("SelectType", "TypeReplySelect");
+                    new LoadUtils(RecentActActivity.this).isSimple(true).upLoad(1,
+                            Long.parseLong(mAct.getAsk_id().equals("")?"0":mAct.getAsk_id()));
+
                     startActivity(intent);
                 }
             }

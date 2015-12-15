@@ -33,13 +33,21 @@ public class LoadUtils implements Handler.Callback {
     }
 
     private WeakReferenceHandler mHandler = new WeakReferenceHandler(this);
+    private boolean isSimple = false;
+
+    public LoadUtils isSimple(boolean isSimple){
+        this.isSimple = isSimple;
+        return this;
+    }
 
     public void upLoad(final int type, final long pid) {
-        if (mProgressDialog == null) {
-            mProgressDialog = new CustomProgressingDialog(mContext);
-        }
-        if (!mProgressDialog.isShowing()) {
-            mProgressDialog.show();
+        if(!isSimple) {
+            if (mProgressDialog == null) {
+                mProgressDialog = new CustomProgressingDialog(mContext);
+            }
+            if (!mProgressDialog.isShowing()) {
+                mProgressDialog.show();
+            }
         }
 
         ThreadManager.executeOnNetWorkThread(new Runnable() {
@@ -65,14 +73,15 @@ public class LoadUtils implements Handler.Callback {
 
     @Override
     public boolean handleMessage(Message msg) {
-        mProgressDialog.dismiss();
-        View toastView = LayoutInflater.from(mContext).inflate(
-                R.layout.toast_layout, null);
-        TextView aboveText = (TextView) toastView
-                .findViewById(R.id.toast_text_above);
-        TextView belowText = (TextView) toastView
-                .findViewById(R.id.toast_text_below);
-        switch (msg.what) {
+        if(!isSimple) {
+            mProgressDialog.dismiss();
+            View toastView = LayoutInflater.from(mContext).inflate(
+                    R.layout.toast_layout, null);
+            TextView aboveText = (TextView) toastView
+                    .findViewById(R.id.toast_text_above);
+            TextView belowText = (TextView) toastView
+                    .findViewById(R.id.toast_text_below);
+            switch (msg.what) {
 //            case MSG_SUCCESSFUL:
 //                String path = (String) msg.obj;
 //                Toast toast = Toast.makeText(mContext, "素材保存到" + path,
@@ -90,20 +99,24 @@ public class LoadUtils implements Handler.Callback {
 //                // TODO 获取图片信息失败
 //                Toast.makeText(mContext, "下载素材失败", Toast.LENGTH_SHORT).show();
 //                break;
-            case MSG_RECORD_SUCCESS:
-                Toast toast2 = Toast.makeText(mContext, "已塞入进行中",
-                        Toast.LENGTH_SHORT);
-                aboveText.setText("添加成功,");
-                belowText.setText("在“进行中”等你下载喽!");
-                toast2.setView(toastView);
-                toast2.setGravity(Gravity.CENTER, 0, 0);
-                toast2.show();
-                EventBus.getDefault().post(
-                        new MyPageRefreshEvent(MyPageRefreshEvent.REPLY));
-                break;
-            case MSG_RECORD_FAILED:
-                Toast.makeText(mContext, "塞入进行中失败", Toast.LENGTH_SHORT).show();
-                break;
+                case MSG_RECORD_SUCCESS:
+                    Toast toast2 = Toast.makeText(mContext, "已塞入进行中",
+                            Toast.LENGTH_SHORT);
+                    aboveText.setText("添加成功,");
+                    belowText.setText("在“进行中”等你下载喽!");
+                    toast2.setView(toastView);
+                    toast2.setGravity(Gravity.CENTER, 0, 0);
+                    toast2.show();
+                    EventBus.getDefault().post(
+                            new MyPageRefreshEvent(MyPageRefreshEvent.REPLY));
+                    break;
+                case MSG_RECORD_FAILED:
+                    Toast.makeText(mContext, "塞入进行中失败", Toast.LENGTH_SHORT).show();
+                    break;
+            }
+        }else{
+            EventBus.getDefault().post(
+                    new MyPageRefreshEvent(MyPageRefreshEvent.REPLY));
         }
         return true;
     }
