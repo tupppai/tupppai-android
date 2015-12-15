@@ -207,7 +207,7 @@ public class SettingAccountSafeActivity extends PSGodBaseActivity implements
 													.setListener(
 															unbindWeiboListener)
 													.setErrorListener(
-															wechatUnbindErrorListener);
+															weiboUnbindErrorListener);
 											ActionBindAccountRequest request = builder
 													.build();
 											request.setTag(TAG);
@@ -466,6 +466,14 @@ public class SettingAccountSafeActivity extends PSGodBaseActivity implements
 		@Override
 		public void handleError(VolleyError error) {
 			mHandler.sendEmptyMessage(BIND_WECHAT_SUCCESS);
+		}
+	};
+
+	// 取消绑定微博失败
+	private PSGodErrorListener weiboUnbindErrorListener = new PSGodErrorListener() {
+		@Override
+		public void handleError(VolleyError error) {
+			mHandler.sendEmptyMessage(BIND_WEIBO_SUCCESS);
 		}
 	};
 
