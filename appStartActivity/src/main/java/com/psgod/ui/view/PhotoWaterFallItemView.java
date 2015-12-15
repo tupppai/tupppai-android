@@ -228,8 +228,8 @@ public class PhotoWaterFallItemView extends RelativeLayout {
 					boolean havingReplies = (mPhotoItem != null && mPhotoItem
 							.getReplyCount() > 0);
 
-					SinglePhotoDetail.startActivity(mContext, mPhotoItem);
-//					new CarouselPhotoDetailDialog(mContext,mPhotoItem.getAskId(),mPhotoItem.getPid()).show();
+//					SinglePhotoDetail.startActivity(mContext, mPhotoItem);
+					new CarouselPhotoDetailDialog(mContext,mPhotoItem.getAskId(),mPhotoItem.getPid()).show();
 				}
 			});
 

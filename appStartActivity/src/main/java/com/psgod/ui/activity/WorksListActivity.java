@@ -26,6 +26,7 @@ import com.psgod.network.request.UserPhotoRequest;
 import com.psgod.ui.adapter.PhotoWaterFallListAdapter;
 import com.psgod.ui.view.PhotoWaterFallItemView.PhotoWaterFallListType;
 import com.psgod.ui.view.PullToRefreshStaggeredGridView;
+import com.psgod.ui.widget.dialog.CarouselPhotoDetailDialog;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
 
 import java.util.ArrayList;
@@ -108,15 +109,19 @@ public class WorksListActivity extends PSGodBaseActivity {
 			}
 		});
 
-		mWorkdListView.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View view,
-					int position, long vid) {
-				SinglePhotoDetail.startActivity(WorksListActivity.this,
-						mPhotoItems.get(position - 1));
-			}
-		});
+//		mWorkdListView.setOnItemClickListener(new OnItemClickListener() {
+//
+//			@Override
+//			public void onItemClick(AdapterView<?> arg0, View view,
+//					int position, long vid) {
+//				new CarouselPhotoDetailDialog(mContext,mPhotoItems.get(position - 1).getAskId(),
+//						mPhotoItems.get(position - 1).getPid()).show();
+//
+//
+//				SinglePhotoDetail.startActivity(WorksListActivity.this,
+//						mPhotoItems.get(position - 1));
+//			}
+//		});
 	}
 
 	private class WorkListListener implements OnLastItemVisibleListener,
