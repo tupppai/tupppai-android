@@ -181,6 +181,8 @@ public class PagerSlidingTabStrip extends HorizontalScrollView implements
 
 		defaultTabLayoutParams = new LinearLayout.LayoutParams(
 				android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.MATCH_PARENT);
+		defaultTabLayoutParams.gravity = Gravity.CENTER;
+		defaultTabLayoutParams.weight = 1;
 		expandedTabLayoutParams = new LinearLayout.LayoutParams(0,
 				android.view.ViewGroup.LayoutParams.MATCH_PARENT, 1.0f);
 
