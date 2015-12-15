@@ -470,10 +470,16 @@ public class UserProfileActivity extends PSGodBaseActivity implements
             Build.VERSION.SDK).intValue() < Build.VERSION_CODES.HONEYCOMB; // 是否超过3.0版本
 
     private int headerTop = 0;
+    private float originHeaderY = 0;
+    private boolean isFirstScroll = true;
 
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem,
                          int visibleItemCount, int totalItemCount, int pagePosition) {
+//        if(isFirstScroll){
+//            originHeaderY = mLinearHeader.getY();
+//            isFirstScroll = false;
+//        }
         if (viewPager.getCurrentItem() != pagePosition) {
             return;
         }
@@ -483,6 +489,7 @@ public class UserProfileActivity extends PSGodBaseActivity implements
         }
         reLocation = false;
         scrollY = Math.max(-getScrollY(view), headerTranslationDis);
+//        scrollY = -getScrollY(view);
         if (NEED_RELAYOUT) {
             headerTop = scrollY;
             mLinearHeader.post(new Runnable() {
@@ -495,6 +502,7 @@ public class UserProfileActivity extends PSGodBaseActivity implements
             });
         } else {
             ViewHelper.setTranslationY(mLinearHeader, scrollY);
+//            mLinearHeader.setY(originHeaderY + scrollY);
         }
     }
 
