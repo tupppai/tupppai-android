@@ -13,6 +13,7 @@
         android:cacheColorHint="@color/white"
         android:divider="@color/transparent"
         android:dividerHeight="0dip"
+        android:scrollbars="none"
         android:fadingEdge="none"
         android:fastScrollEnabled="false"
         android:listSelector="@color/transparent"

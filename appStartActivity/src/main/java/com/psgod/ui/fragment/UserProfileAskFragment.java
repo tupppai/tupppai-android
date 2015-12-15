@@ -94,6 +94,7 @@ public class UserProfileAskFragment extends ScrollTabHolderFragment {
     private void initViews() {
         listView = (PullToRefreshListView) getView().findViewById(
                 R.id.page_tab_listview);
+        listView.setVerticalScrollBarEnabled(true);
         listView.setMode(Mode.DISABLED);
         mFooterView = LayoutInflater.from(getActivity()).inflate(
                 R.layout.footer_load_more, null);
