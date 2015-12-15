@@ -38,6 +38,7 @@ import com.psgod.BitmapUtils;
 import com.psgod.Constants;
 import com.psgod.R;
 import com.psgod.Utils;
+import com.psgod.eventbus.UserProfileReturn;
 import com.psgod.model.LoginUser;
 import com.psgod.model.User;
 import com.psgod.network.request.ActionFollowRequest;
@@ -52,6 +53,8 @@ import com.psgod.ui.widget.ActionBar;
 import com.psgod.ui.widget.AvatarImageView;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
 import com.psgod.ui.widget.dialog.ImageDialog;
+
+import de.greenrobot.event.EventBus;
 
 public class UserProfileActivity extends PSGodBaseActivity implements
 		OnPageChangeListener, ScrollTabHolder {
@@ -412,7 +415,7 @@ public class UserProfileActivity extends PSGodBaseActivity implements
 	@Override
 	public void onPageSelected(int position) {
 		mTabsTrips.onPageSelected(position);
-
+		EventBus.getDefault().post(new UserProfileReturn());
 		reLocation = true;
 		SparseArrayCompat<ScrollTabHolder> scrollTabHolders = adapter
 				.getScrollTabHolders();

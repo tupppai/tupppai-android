@@ -18,6 +18,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnLastItemVisibleListener;
 import com.psgod.Constants;
 import com.psgod.R;
+import com.psgod.eventbus.UserProfileReturn;
 import com.psgod.model.PhotoItem;
 import com.psgod.network.request.PSGodErrorListener;
 import com.psgod.network.request.PSGodRequestQueue;
@@ -30,6 +31,8 @@ import com.psgod.ui.view.PullToRefreshStaggeredGridView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.greenrobot.event.EventBus;
 
 public class UserProfileWorkFragment extends ScrollTabHolderFragment {
 	private static final String TAG = UserProfileWorkFragment.class
@@ -57,10 +60,16 @@ public class UserProfileWorkFragment extends ScrollTabHolderFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		EventBus.getDefault().register(this);
 		mUid = Constants.CURRENT_OTHER_USER_ID;
 		// 初始化数组
 		mItems = new ArrayList<PhotoItem>();
+	}
+
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		EventBus.getDefault().unregister(this);
 	}
 
 	@Override
@@ -69,6 +78,11 @@ public class UserProfileWorkFragment extends ScrollTabHolderFragment {
 		return inflater.inflate(R.layout.fragment_user_profile_works,
 				container, false);
 	}
+
+	public void onEventMainThread(UserProfileReturn event) {
+		mGridview.getRefreshableView().smoothScrollToPositionFromTop(0,0);
+	}
+
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
