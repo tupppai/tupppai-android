@@ -156,6 +156,7 @@ public class UserProfileWorkFragment extends ScrollTabHolderFragment {
 				getResources().getDimensionPixelSize(
 						R.dimen.max_header_height_profile));
 		placeHolderView.setLayoutParams(params);
+		placeHolderView.setBackground(getResources().getDrawable(R.color.transparent));
 
 		mGridview.getRefreshableView().addHeaderView(placeHolderView);
 	}

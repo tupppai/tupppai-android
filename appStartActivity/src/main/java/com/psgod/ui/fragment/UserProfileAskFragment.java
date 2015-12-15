@@ -154,7 +154,7 @@ public class UserProfileAskFragment extends ScrollTabHolderFragment {
 						.getDimensionPixelSize(
 								R.dimen.max_header_height_profile));
 		placeHolderView.setLayoutParams(params);
-
+		placeHolderView.setBackground(getResources().getDrawable(R.color.transparent));
 		listView.getRefreshableView().addHeaderView(placeHolderView);
 	}
 
