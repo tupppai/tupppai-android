@@ -71,7 +71,7 @@ public class UserProfileActivity extends PSGodBaseActivity implements
     // viewpager adapter
     private SlidingPagerAdapter adapter;
     // 头部区域
-    private RelativeLayout mLinearHeader;
+    private LinearLayout mLinearHeader;
 
     private int scrollY;
 
@@ -358,7 +358,7 @@ public class UserProfileActivity extends PSGodBaseActivity implements
 
         mTabsTrips = (PagerSlidingTabStrip) findViewById(R.id.user_profile_tabs);
         viewPager = (ViewPager) findViewById(R.id.user_profile_view_pager);
-        mLinearHeader = (RelativeLayout) findViewById(R.id.user_profile_header);
+        mLinearHeader = (LinearLayout) findViewById(R.id.user_profile_header);
 
         // 初始化页面元素
 		mActionBar = (ActionBar) findViewById(R.id.actionbar);
