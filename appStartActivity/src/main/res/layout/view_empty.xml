@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:textColor="#8D8D8D"
-            android:text="敬请期待~"
+            android:text="这里什么都没有~"
             android:textSize="15dp" />
 
 </LinearLayout>

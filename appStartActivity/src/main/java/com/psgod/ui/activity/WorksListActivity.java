@@ -81,6 +81,7 @@ public class WorksListActivity extends PSGodBaseActivity {
 	public void initViews() {
 		mWorkdListView = (PullToRefreshStaggeredGridView) findViewById(R.id.list_work);
 		mWorkdListView.setMode(Mode.PULL_FROM_START);
+		mWorkdListView.setEmptyView(LayoutInflater.from(this).inflate(R.layout.view_empty,null));
 		mBackButton = (ImageButton) findViewById(R.id.btn_back);
 
 		mWorksAdapter = new PhotoWaterFallListAdapter(mContext, mPhotoItems,
