@@ -10,57 +10,8 @@
         android:background="#FFFFFF" >
 
         <RelativeLayout
-            android:id="@+id/actionbar"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/actionbar_height" >
-
-            <ImageButton
-                android:id="@+id/setting_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_centerVertical="true"
-                android:paddingLeft="12dp"
-                android:paddingRight="20dp"
-                android:background="@null"
-                android:src="@drawable/ic_my_setting" />
-
-            <TextView
-                android:id="@+id/title_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="我的"
-                android:textColor="#000000"
-                android:textSize="16dp"
-                android:visibility="gone"/>
-
-            <ImageButton
-                android:id="@+id/message_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:paddingLeft="20dp"
-                android:paddingRight="12dp"
-                android:background="@null"
-                android:src="@drawable/ic_my_message" />
-
-            <View
-                android:id="@+id/fragment_my_page_message_tip"
-                android:layout_width="8dp"
-                android:layout_height="8dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="9dp"
-                android:layout_marginTop="13dp"
-                android:background="@drawable/shape_bottom_tab_tip"
-                android:visibility="gone"
-                />
-        </RelativeLayout>
-
-        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/actionbar"
             android:background="#FFFFFF" >
 
             <android.support.v4.view.ViewPager
@@ -72,6 +23,7 @@
                 android:id="@+id/my_profile_header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingTop="@dimen/actionbar_height"
                 android:background="@color/white"
                 android:orientation="vertical" >
 
@@ -227,6 +179,55 @@
                     android:layout_height="47dp"
                     android:background="@color/white" />
             </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/fragment_my_page_title_layout"
+            android:layout_width="match_parent"
+            android:background="@color/transparent"
+            android:layout_height="@dimen/actionbar_height" >
+
+            <ImageButton
+                android:id="@+id/setting_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:paddingLeft="12dp"
+                android:paddingRight="20dp"
+                android:background="@null"
+                android:src="@drawable/ic_my_setting" />
+
+            <TextView
+                android:id="@+id/title_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="我的"
+                android:textColor="#000000"
+                android:textSize="16dp"
+                android:visibility="gone"/>
+
+            <ImageButton
+                android:id="@+id/message_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:paddingLeft="20dp"
+                android:paddingRight="12dp"
+                android:background="@null"
+                android:src="@drawable/ic_my_message" />
+
+            <View
+                android:id="@+id/fragment_my_page_message_tip"
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="9dp"
+                android:layout_marginTop="13dp"
+                android:background="@drawable/shape_bottom_tab_tip"
+                android:visibility="gone"
+                />
         </RelativeLayout>
     </RelativeLayout>
 
