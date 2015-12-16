@@ -351,19 +351,16 @@ public class CarouselPhotoDetailView extends RelativeLayout {
 //                        }
                             if (Math.abs(moveY) < 10 && !isBlow) {
                                 viewPagerBlow(40);
-                            }
-                            if (Utils.pxToDp(mContext, view.getY()) < -55 && moveY < 0) {
+                            } else if (Utils.pxToDp(mContext, view.getY()) < -55 && moveY < 0) {
                                 view.setY(oY);
                                 viewPagerBlow(40);
                             } else if (Utils.pxToDp(mContext, view.getY()) > -50 && moveY > 0 && isBlow) {
                                 viewPagerRestore(84);
-                            }
-                            if (Utils.pxToDp(mContext, view.getY()) > 150 && isAnimEnd && !isBlow) {
+                            } else if (Utils.pxToDp(mContext, view.getY()) > 150 && isAnimEnd && !isBlow) {
                                 if (onEndListener != null) {
                                     onEndListener.onEnd();
                                 }
-                            }
-                            if (isAnimEnd) {
+                            } else if (isAnimEnd) {
                                 goOrigin(view.getY());
                             }
 
@@ -419,7 +416,7 @@ public class CarouselPhotoDetailView extends RelativeLayout {
     private void viewPagerBlow(final float top) {
         isDown = false;
 //        mScroll.setCanScroll(true);
-        if ((!isBlow && vp != null )||isAnimEnd) {
+        if ((!isBlow && vp != null) || isAnimEnd) {
             initBack();
             isBlow = true;
             isAnimEnd = false;
@@ -637,6 +634,6 @@ public class CarouselPhotoDetailView extends RelativeLayout {
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
 
-        return isAnimEnd?super.dispatchTouchEvent(ev):true;
+        return isAnimEnd ? super.dispatchTouchEvent(ev) : true;
     }
 }
