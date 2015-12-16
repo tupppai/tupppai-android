@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -98,6 +99,7 @@ public class UserProfileActivity extends PSGodBaseActivity implements
 
     private RelativeLayout mFollowingLayout;
     private RelativeLayout mFollowerLayout;
+    private RelativeLayout mTitleLayout;
     private RelativeLayout mParent;
 
     private LinearLayout mLinerHeaderOut;
@@ -376,6 +378,7 @@ public class UserProfileActivity extends PSGodBaseActivity implements
         mFollowerLayout = (RelativeLayout) findViewById(R.id.layout_followers_profile);
         mParent = (RelativeLayout) findViewById(R.id.avatar_parent);
         mLinerHeaderOut = (LinearLayout) findViewById(R.id.user_profile_header_out);
+        mTitleLayout = (RelativeLayout) findViewById(R.id.user_profile_title_layout);
         if (isUserOwn) {
             mFollowBtn.setVisibility(View.INVISIBLE);
         }
@@ -427,9 +430,14 @@ public class UserProfileActivity extends PSGodBaseActivity implements
 
         if (position == 0) {
             pageY1 = mLinearHeader.getY();
+            mTitleLayout.setBackgroundColor(Color.parseColor(pauseColorString(colorLeft,true)));
+            mTitleName.setTextColor(Color.parseColor(pauseColorString(255 - colorLeft,false)));
         } else {
             pageY0 = mLinearHeader.getY();
+            mTitleLayout.setBackgroundColor(Color.parseColor(pauseColorString(colorRight,true)));
+            mTitleName.setTextColor(Color.parseColor(pauseColorString(255 - colorRight,false)));
         }
+
 
 //		if (NEED_RELAYOUT) {
         // 修正滚出去的偏移量
@@ -473,6 +481,9 @@ public class UserProfileActivity extends PSGodBaseActivity implements
     private float originHeaderY = 0;
     private boolean isFirstScroll = true;
 
+    private int colorLeft;
+    private int colorRight;
+
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem,
                          int visibleItemCount, int totalItemCount, int pagePosition) {
@@ -489,6 +500,14 @@ public class UserProfileActivity extends PSGodBaseActivity implements
         }
         reLocation = false;
         scrollY = Math.max(-getScrollY(view), headerTranslationDis);
+        int color = (int) ((float) scrollY / (float) headerTranslationDis * 255f)*2;
+        if(pagePosition == 0){
+            colorLeft = color;
+        }else{
+            colorRight = color;
+        }
+        mTitleLayout.setBackgroundColor(Color.parseColor(pauseColorString(color,true)));
+        mTitleName.setTextColor(Color.parseColor(pauseColorString(255 - color,false)));
 //        scrollY = -getScrollY(view);
         if (NEED_RELAYOUT) {
             headerTop = scrollY;
@@ -504,6 +523,20 @@ public class UserProfileActivity extends PSGodBaseActivity implements
             ViewHelper.setTranslationY(mLinearHeader, scrollY);
 //            mLinearHeader.setY(originHeaderY + scrollY);
         }
+    }
+
+    private String pauseColorString(int color, boolean hasAlpha) {
+        String colorStr;
+        String thumb = Integer.toHexString(color < 0 ? 0 : color > 255 ? 255 : color);
+        if (thumb.length() < 2) {
+            thumb = "0" + thumb;
+        }
+        if (hasAlpha) {
+            colorStr = String.format("#%s%s%s%s", thumb, thumb, thumb, thumb);
+        } else {
+            colorStr = String.format("#%s%s%s", thumb, thumb, thumb);
+        }
+        return colorStr;
     }
 
     boolean once = true;
