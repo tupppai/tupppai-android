@@ -634,4 +634,9 @@ public class CarouselPhotoDetailView extends RelativeLayout {
     //判断回弹动画是否结束
     private boolean isOrigin = true;
 
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+
+        return isAnimEnd?super.dispatchTouchEvent(ev):true;
+    }
 }
