@@ -17,168 +17,6 @@
             android:layout_height="match_parent"
             android:background="#FFFFFF">
 
-            <LinearLayout
-                android:id="@+id/user_profile_header_out"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingTop="48dp">
-
-                <RelativeLayout
-                    android:id="@+id/avatar_parent"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp">
-
-                    <LinearLayout
-                        android:id="@+id/avatar_layout"
-                        android:layout_width="82dp"
-                        android:layout_height="82dp"
-                        android:layout_centerInParent="true"
-                        android:background="@drawable/shape_user_profile_circle_imageview"
-                        android:gravity="center">
-
-                        <com.psgod.ui.widget.AvatarImageView
-                            android:id="@+id/user_profile_avatar"
-                            android:layout_width="77dp"
-                            android:layout_height="77dp"
-                            android:layout_centerInParent="true"
-                            android:src="@drawable/head_portrait" />
-                    </LinearLayout>
-
-                    <Button
-                        android:id="@+id/activity_user_profile_follow_btn"
-                        android:layout_width="58dp"
-                        android:layout_height="28dp"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="30dp"
-                        android:layout_toRightOf="@id/avatar_layout"
-                        android:background="@drawable/btn_unfollow"
-                        android:text="+ 关注"
-                        android:textSize="11dp" />
-                </RelativeLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="17dp"
-                    android:background="@drawable/shape_background_gradient"
-                    android:orientation="vertical">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="17dp">
-
-                        <RelativeLayout
-                            android:id="@+id/layout_followers_profile"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true">
-
-                            <TextView
-                                android:id="@+id/user_profile_user_followers"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:includeFontPadding="false"
-                                android:text="粉丝"
-                                android:textColor="#FFFFFF"
-                                android:textSize="15dp" />
-
-                            <TextView
-                                android:id="@+id/user_profile_user_followers_count"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="5dp"
-                                android:layout_toRightOf="@id/user_profile_user_followers"
-                                android:includeFontPadding="false"
-                                android:text="0"
-                                android:textColor="#FFFFFF"
-                                android:textSize="15dp" />
-                        </RelativeLayout>
-
-                        <View
-                            android:id="@+id/left_point"
-                            android:layout_width="5dp"
-                            android:layout_height="5dp"
-                            android:layout_centerVertical="true"
-                            android:layout_marginRight="9dp"
-                            android:layout_toLeftOf="@id/layout_followers_profile"
-                            android:background="@drawable/shape_white_point" />
-
-                        <RelativeLayout
-                            android:id="@+id/layout_following_profile"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="9dp"
-                            android:layout_toLeftOf="@id/left_point">
-
-                            <TextView
-                                android:id="@+id/user_profile_user_following"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:includeFontPadding="false"
-                                android:text="关注"
-                                android:textColor="#FFFFFF"
-                                android:textSize="15dp" />
-
-                            <TextView
-                                android:id="@+id/user_profile_user_following_count"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="5dp"
-                                android:layout_toRightOf="@id/user_profile_user_following"
-                                android:includeFontPadding="false"
-                                android:text="0"
-                                android:textColor="#FFFFFF"
-                                android:textSize="15dp" />
-                        </RelativeLayout>
-
-                        <View
-                            android:id="@+id/right_point"
-                            android:layout_width="5dp"
-                            android:layout_height="5dp"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="9dp"
-                            android:layout_toRightOf="@id/layout_followers_profile"
-                            android:background="@drawable/shape_white_point" />
-
-                        <RelativeLayout
-                            android:id="@+id/layout_like_profile"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="9dp"
-                            android:layout_toRightOf="@id/right_point">
-
-                            <TextView
-                                android:id="@+id/user_profile_user_like"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:includeFontPadding="false"
-                                android:text="获赞"
-                                android:textColor="#FFFFFF"
-                                android:textSize="15dp" />
-
-                            <TextView
-                                android:id="@+id/user_profile_user_like_count"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="5dp"
-                                android:layout_toRightOf="@id/user_profile_user_like"
-                                android:includeFontPadding="false"
-                                android:text="0"
-                                android:textColor="#FFFFFF"
-                                android:textSize="15dp" />
-                        </RelativeLayout>
-                    </RelativeLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="36dp"
-                        android:background="@android:color/transparent" />
-                </LinearLayout>
-            </LinearLayout>
-
             <android.support.v4.view.ViewPager
                 android:id="@+id/user_profile_view_pager"
                 android:layout_width="match_parent"
@@ -189,14 +27,176 @@
                 android:id="@+id/user_profile_header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/user_profile_header_out"
                 android:background="@color/white"
                 android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/user_profile_header_out"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingTop="48dp">
+
+                    <RelativeLayout
+                        android:id="@+id/avatar_parent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp">
+
+                        <LinearLayout
+                            android:id="@+id/avatar_layout"
+                            android:layout_width="82dp"
+                            android:layout_height="82dp"
+                            android:layout_centerInParent="true"
+                            android:background="@drawable/shape_user_profile_circle_imageview"
+                            android:gravity="center">
+
+                            <com.psgod.ui.widget.AvatarImageView
+                                android:id="@+id/user_profile_avatar"
+                                android:layout_width="77dp"
+                                android:layout_height="77dp"
+                                android:layout_centerInParent="true"
+                                android:src="@drawable/head_portrait" />
+                        </LinearLayout>
+
+                        <Button
+                            android:id="@+id/activity_user_profile_follow_btn"
+                            android:layout_width="58dp"
+                            android:layout_height="28dp"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="30dp"
+                            android:layout_toRightOf="@id/avatar_layout"
+                            android:background="@drawable/btn_unfollow"
+                            android:text="+ 关注"
+                            android:textSize="11dp" />
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="17dp"
+                        android:background="@drawable/shape_background_gradient"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="17dp">
+
+                            <RelativeLayout
+                                android:id="@+id/layout_followers_profile"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true">
+
+                                <TextView
+                                    android:id="@+id/user_profile_user_followers"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:includeFontPadding="false"
+                                    android:text="粉丝"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="15dp" />
+
+                                <TextView
+                                    android:id="@+id/user_profile_user_followers_count"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_toRightOf="@id/user_profile_user_followers"
+                                    android:includeFontPadding="false"
+                                    android:text="0"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="15dp" />
+                            </RelativeLayout>
+
+                            <View
+                                android:id="@+id/left_point"
+                                android:layout_width="5dp"
+                                android:layout_height="5dp"
+                                android:layout_centerVertical="true"
+                                android:layout_marginRight="9dp"
+                                android:layout_toLeftOf="@id/layout_followers_profile"
+                                android:background="@drawable/shape_white_point" />
+
+                            <RelativeLayout
+                                android:id="@+id/layout_following_profile"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="9dp"
+                                android:layout_toLeftOf="@id/left_point">
+
+                                <TextView
+                                    android:id="@+id/user_profile_user_following"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:includeFontPadding="false"
+                                    android:text="关注"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="15dp" />
+
+                                <TextView
+                                    android:id="@+id/user_profile_user_following_count"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_toRightOf="@id/user_profile_user_following"
+                                    android:includeFontPadding="false"
+                                    android:text="0"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="15dp" />
+                            </RelativeLayout>
+
+                            <View
+                                android:id="@+id/right_point"
+                                android:layout_width="5dp"
+                                android:layout_height="5dp"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="9dp"
+                                android:layout_toRightOf="@id/layout_followers_profile"
+                                android:background="@drawable/shape_white_point" />
+
+                            <RelativeLayout
+                                android:id="@+id/layout_like_profile"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="9dp"
+                                android:layout_toRightOf="@id/right_point">
+
+                                <TextView
+                                    android:id="@+id/user_profile_user_like"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:includeFontPadding="false"
+                                    android:text="获赞"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="15dp" />
+
+                                <TextView
+                                    android:id="@+id/user_profile_user_like_count"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_toRightOf="@id/user_profile_user_like"
+                                    android:includeFontPadding="false"
+                                    android:text="0"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="15dp" />
+                            </RelativeLayout>
+                        </RelativeLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="36dp"
+                            android:background="@android:color/transparent" />
+                    </LinearLayout>
+                </LinearLayout>
 
                 <com.psgod.ui.view.PagerSlidingTabStrip
                     android:id="@+id/user_profile_tabs"
                     android:layout_width="match_parent"
                     android:layout_height="52dp"
+                    android:layout_below="@+id/user_profile_header_out"
                     android:background="@color/white"
                     psgod:pstsTextAllCaps="false" />
             </RelativeLayout>
@@ -204,6 +204,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/user_profile_title_layout"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:background="@color/transparent"
