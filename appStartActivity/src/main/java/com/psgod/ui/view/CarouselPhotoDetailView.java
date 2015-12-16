@@ -473,71 +473,73 @@ public class CarouselPhotoDetailView extends RelativeLayout {
     }
 
     private void viewPagerRestore(final float top) {
-        if (vp == null || !isAnimEnd) {
+        if (vp == null) {
             return;
         }
-        isDown = true;
-        isBlow = false;
-        isAnimEnd = false;
-        final AnimatorSet anim = new AnimatorSet();
-        anim.setDuration(200);
-        ValueAnimator xAnim = ValueAnimator.ofInt(0, 20);
-        xAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                Integer value = (Integer) valueAnimator.getAnimatedValue();
-                RelativeLayout.LayoutParams vParams = (RelativeLayout.LayoutParams) vp.getLayoutParams();
-                vParams.setMargins(Utils.dpToPx(mContext, value),
-                        Utils.dpToPx(mContext, top / 20f * (float) value - 48), Utils.dpToPx(mContext, (float) value), 0);
-                vp.setLayoutParams(vParams);
-            }
-        });
-        ObjectAnimator scrollAnim = ObjectAnimator.ofFloat(mScroll, "alpha", 1f, 0.0f);
-        xAnim.addListener(restoreAnimListener);
-        anim.playTogether(xAnim, scrollAnim);
-        anim.start();
-
-        ObjectAnimator coverAnim = ObjectAnimator.ofFloat(mCover, "alpha", 0.1f, 1f);
-        coverAnim.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animator) {
-                RelativeLayout.LayoutParams vParams = (RelativeLayout.LayoutParams) vp.getLayoutParams();
-                vParams.setMargins(Utils.dpToPx(mContext, 20),
-                        Utils.dpToPx(mContext, 84), Utils.dpToPx(mContext, 20), 0);
-                vp.setLayoutParams(vParams);
-                mCover.setVisibility(VISIBLE);
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animator) {
-                vp.setOffscreenPageLimit(3);
-                vp.setClipChildren(false);
-                if (vp instanceof StopViewPager) {
-                    ((StopViewPager) vp).setCanScroll(true);
+        if(isAnimEnd) {
+            isDown = true;
+            isBlow = false;
+            isAnimEnd = false;
+            final AnimatorSet anim = new AnimatorSet();
+            anim.setDuration(200);
+            ValueAnimator xAnim = ValueAnimator.ofInt(0, 20);
+            xAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                    Integer value = (Integer) valueAnimator.getAnimatedValue();
+                    RelativeLayout.LayoutParams vParams = (RelativeLayout.LayoutParams) vp.getLayoutParams();
+                    vParams.setMargins(Utils.dpToPx(mContext, value),
+                            Utils.dpToPx(mContext, top / 20f * (float) value - 48), Utils.dpToPx(mContext, (float) value), 0);
+                    vp.setLayoutParams(vParams);
                 }
-                vp.setAdapter(thumbAdatper);
-                int position = thumbAdatper.getItemPosition(CarouselPhotoDetailView.this);
-                vp.setCurrentItem(position == -1 ? 0 : position);
-                isAnimEnd = true;
-                isCover = true;
-                mScroll.setVisibility(GONE);
-            }
+            });
+            ObjectAnimator scrollAnim = ObjectAnimator.ofFloat(mScroll, "alpha", 1f, 0.0f);
+            xAnim.addListener(restoreAnimListener);
+            anim.playTogether(xAnim, scrollAnim);
+            anim.start();
 
-            @Override
-            public void onAnimationCancel(Animator animator) {
+            ObjectAnimator coverAnim = ObjectAnimator.ofFloat(mCover, "alpha", 0.1f, 1f);
+            coverAnim.addListener(new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animator) {
+                    RelativeLayout.LayoutParams vParams = (RelativeLayout.LayoutParams) vp.getLayoutParams();
+                    vParams.setMargins(Utils.dpToPx(mContext, 20),
+                            Utils.dpToPx(mContext, 84), Utils.dpToPx(mContext, 20), 0);
+                    vp.setLayoutParams(vParams);
+                    mCover.setVisibility(VISIBLE);
+                }
 
-            }
+                @Override
+                public void onAnimationEnd(Animator animator) {
+                    vp.setOffscreenPageLimit(3);
+                    vp.setClipChildren(false);
+                    if (vp instanceof StopViewPager) {
+                        ((StopViewPager) vp).setCanScroll(true);
+                    }
+                    vp.setAdapter(thumbAdatper);
+                    int position = thumbAdatper.getItemPosition(CarouselPhotoDetailView.this);
+                    vp.setCurrentItem(position == -1 ? 0 : position);
+                    isAnimEnd = true;
+                    isCover = true;
+                    mScroll.setVisibility(GONE);
+                }
 
-            @Override
-            public void onAnimationRepeat(Animator animator) {
+                @Override
+                public void onAnimationCancel(Animator animator) {
 
-            }
-        });
-        AnimatorSet anim2 = new AnimatorSet();
-        anim2.setStartDelay(250);
-        anim2.setDuration(250);
-        anim2.play(coverAnim);
-        anim2.start();
+                }
+
+                @Override
+                public void onAnimationRepeat(Animator animator) {
+
+                }
+            });
+            AnimatorSet anim2 = new AnimatorSet();
+            anim2.setStartDelay(250);
+            anim2.setDuration(250);
+            anim2.play(coverAnim);
+            anim2.start();
+        }
     }
 
     ViewPagerAdapter adapter;
