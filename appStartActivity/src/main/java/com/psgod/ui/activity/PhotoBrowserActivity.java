@@ -3,6 +3,8 @@ package com.psgod.ui.activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -11,21 +13,27 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.psgod.PsGodImageLoader;
 import com.psgod.Constants;
 import com.psgod.R;
+import com.psgod.ThreadManager;
+import com.psgod.WeakReferenceHandler;
 import com.psgod.ui.widget.dialog.PSDialog;
 
 import uk.co.senab.photoview.PhotoViewAttacher;
 import uk.co.senab.photoview.PhotoViewAttacher.OnPhotoTapListener;
 
-public class PhotoBrowserActivity extends PSGodBaseActivity {
+public class PhotoBrowserActivity extends PSGodBaseActivity implements Handler.Callback{
 	private static final String TAG = PhotoBrowserActivity.class
 			.getSimpleName();
 	private ImageView mImageView;
 	private PhotoViewAttacher mAttacher;
 	private DisplayImageOptions mOptions = Constants.DISPLAY_IMAGE_OPTIONS;
 	private Button mDownLoadBtn;
+
+	private WeakReferenceHandler mHandler = new WeakReferenceHandler(this);
 
 	private Long mAskId;
 	private Long mPhotoId;
@@ -53,19 +61,18 @@ public class PhotoBrowserActivity extends PSGodBaseActivity {
 
 		mDownLoadBtn = (Button) findViewById(R.id.widget_photo_broswer_upload_btn);
 		mImageView = (ImageView) findViewById(R.id.widget_photo_broswer_imageview);
-		mAttacher = new PhotoViewAttacher(mImageView);
 
-		// 单次触摸图片 关闭查看页面
-		mAttacher.setOnPhotoTapListener(new OnPhotoTapListener() {
+		ThreadManager.executeOnNetWorkThread(new Runnable() {
 			@Override
-			public void onPhotoTap(View arg0, float arg1, float arg2) {
-				finish();
+			public void run() {
+				PsGodImageLoader imageLoader = PsGodImageLoader.getInstance();
+				Bitmap bitmap = imageLoader.loadImageSync(mImageUrl);
+				Message message = mHandler.obtainMessage();
+				message.obj = bitmap;
+				mHandler.sendMessage(message);
 			}
 		});
 
-		PsGodImageLoader imageLoader = PsGodImageLoader.getInstance();
-		Bitmap bitmap = imageLoader.loadImageSync(mImageUrl);
-		mImageView.setImageBitmap(bitmap);
 
 		// 点击下载按钮 唤起弹框
 		mDownLoadBtn.setOnClickListener(new OnClickListener() {
@@ -85,5 +92,21 @@ public class PhotoBrowserActivity extends PSGodBaseActivity {
 				}
 			}
 		});
+	}
+
+	@Override
+	public boolean handleMessage(Message msg) {
+		Bitmap bitmap = (Bitmap) msg.obj;
+		mImageView.setImageBitmap(bitmap);
+		mAttacher = new PhotoViewAttacher(mImageView);
+
+		// 单次触摸图片 关闭查看页面
+		mAttacher.setOnPhotoTapListener(new OnPhotoTapListener() {
+			@Override
+			public void onPhotoTap(View arg0, float arg1, float arg2) {
+				finish();
+			}
+		});
+		return true;
 	}
 }
