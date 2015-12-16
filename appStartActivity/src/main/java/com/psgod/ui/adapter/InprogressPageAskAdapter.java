@@ -1,6 +1,7 @@
 package com.psgod.ui.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Message;
 import android.view.Gravity;
@@ -31,7 +32,9 @@ import com.psgod.model.PhotoItem;
 import com.psgod.network.request.EditAskDescRequest;
 import com.psgod.network.request.PSGodErrorListener;
 import com.psgod.network.request.PSGodRequestQueue;
+import com.psgod.ui.activity.CarouselPhotoDetailActivity;
 import com.psgod.ui.activity.SinglePhotoDetail;
+import com.psgod.ui.activity.WorksListActivity;
 import com.psgod.ui.fragment.InprogressPageAskFragment;
 import com.psgod.ui.widget.dialog.CarouselPhotoDetailDialog;
 import com.psgod.ui.widget.dialog.InprogressShareMoreDialog;
@@ -157,9 +160,9 @@ public class InprogressPageAskAdapter extends BaseAdapter implements
 				params.setMargins(Utils.dpToPx(mContext, 10), 0, 0, 0);
 				mReplyIv.setLayoutParams(params);
 				mReplyIv.setScaleType(ImageView.ScaleType.CENTER);
-				mReplyIv.setTag(replyPhotoItem);
 				// mReplyIv点击跳转到对应作品对应的详情页
-				mReplyIv.setOnClickListener(replyClick);
+				mReplyIv.setTag(R.id.inprogress_item,replyPhotoItem);
+				mReplyIv.setOnClickListener(carouselSkipClick);
 
 				imageLoader.displayImage(mReplyItems.get(i).getImageURL(),
 						mReplyIv, mSmallSmallOptions);
@@ -175,13 +178,14 @@ public class InprogressPageAskAdapter extends BaseAdapter implements
 				TextView mTipMoreText = new TextView (mContext);
 				mTipMoreText.setText("查看更多");
 				mTipMoreText.setTextColor(Color.parseColor("#7F4A4A4A"));
+				mTipMoreText.setBackgroundColor(Color.parseColor("#eaeaea"));
 				mTipMoreText.setTextSize(11);
 				mTipMoreText.setLayoutParams(mTipParams);
 				mTipMoreText.setGravity(Gravity.CENTER);
 				mTipMoreText.setTag(replyPhotoItem);
+				mTipMoreText.setTag(R.id.inprogress_item,photoItem);
 				mTipMoreText.setOnClickListener(replyClick);
 				viewHolder.imagePanel.addView(mTipMoreText);
-
 			}
 			convertView.setOnClickListener(carouselSkipClick);
 		} else {
@@ -278,15 +282,21 @@ public class InprogressPageAskAdapter extends BaseAdapter implements
 			PhotoItem photoItem = (PhotoItem) view.getTag(R.id.inprogress_item);
 //			CarouselPhotoDetailActivity.startActivity(mContext, photoItem);
 			new CarouselPhotoDetailDialog(mContext,photoItem.getAskId(),photoItem.getPid()).show();
+//			Intent intent = new Intent(mContext, WorksListActivity.class);
+//			intent.putExtra("ASKID", photoItem.getAskId());
+//			mContext.startActivity(intent);
 		}
 	};
 
 	private OnClickListener replyClick = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			PhotoItem replyPhotoItem = (PhotoItem) v.getTag();
-			new CarouselPhotoDetailDialog(mContext,
-					replyPhotoItem.getAskId(), replyPhotoItem.getPid()).show();
+			PhotoItem replyPhotoItem = (PhotoItem) v.getTag(R.id.inprogress_item);
+			Intent intent = new Intent(mContext, WorksListActivity.class);
+			intent.putExtra("ASKID", replyPhotoItem.getAskId());
+			mContext.startActivity(intent);
+//			new CarouselPhotoDetailDialog(mContext,
+//					replyPhotoItem.getAskId(), replyPhotoItem.getPid()).show();
 		}
 	};
 

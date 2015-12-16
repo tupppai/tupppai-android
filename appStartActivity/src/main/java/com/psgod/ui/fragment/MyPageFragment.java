@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -173,6 +174,8 @@ public class MyPageFragment extends Fragment implements
 		headerTranslationDis = -getResources().getDimensionPixelSize(
 				R.dimen.header_offset_dis);
 
+		mViewHolder.mActionBar = (RelativeLayout) mViewHolder.mView.
+				findViewById(R.id.fragment_my_page_title_layout);
 		mViewHolder.mTabsTrips = (PagerSlidingTabStrip) mViewHolder.mView
 				.findViewById(R.id.my_profile_tabs);
 		mViewHolder.viewPager = (ViewPager) mViewHolder.mView
@@ -315,6 +318,9 @@ public class MyPageFragment extends Fragment implements
 		}
 	};
 
+	private float pageY0 = 0;
+	private float pageY1 = 0;
+	private boolean isFirst = true;
 	private void setupPager() {
 		mViewHolder.adapter = new SlidingPageMyAdapter(getActivity()
 				.getSupportFragmentManager(), mContext, mViewHolder.viewPager);
@@ -332,26 +338,28 @@ public class MyPageFragment extends Fragment implements
 			@Override
 			public void onPageSelected(int position) {
 				mViewHolder.mTabsTrips.onPageSelected(position);
-
-				// if (position == 2) {
-				// MyPageCollectionFragment collectionFragment =
-				// (MyPageCollectionFragment) mViewHolder.adapter.getItem(position);
-				// collectionFragment.setRefreshing();
-				// }
-
 				reLocation = true;
 				SparseArrayCompat<ScrollTabHolder> scrollTabHolders = mViewHolder.adapter
 						.getScrollTabHolders();
 				ScrollTabHolder currentHolder = scrollTabHolders.valueAt(position);
 
-				if (NEED_RELAYOUT) {
-					// 修正滚出去的偏移量
-					currentHolder.adjustScroll(mViewHolder.mLinearHeader.getHeight()
-							+ headerTop);
+				if (position == 0) {
+					pageY1 = mViewHolder.mLinearHeader.getY();
+					mViewHolder.mActionBar.setBackgroundColor(Color.parseColor(pauseColorString(colorLeft, true)));
 				} else {
-					currentHolder.adjustScroll((mViewHolder.mLinearHeader.getHeight()));
+					pageY0 = mViewHolder.mLinearHeader.getY();
+					mViewHolder.mActionBar.setBackgroundColor(Color.parseColor(pauseColorString(colorRight, true)));
+				}
+
+
+				if (isFirst) {
 					ViewHelper.setTranslationY(mViewHolder.mLinearHeader, 0);
-					currentHolder.adjustScroll(scrollY);
+					isFirst = false;
+				} else if
+						(position == 0) {
+					mViewHolder.mLinearHeader.setY(pageY0);
+				} else {
+					mViewHolder.mLinearHeader.setY(pageY1);
 				}
 			}
 
@@ -386,7 +394,8 @@ public class MyPageFragment extends Fragment implements
 			Build.VERSION.SDK).intValue() < Build.VERSION_CODES.HONEYCOMB; // 是否超过3.0版本
 
 	private int headerTop = 0;
-
+	private int colorLeft;
+	private int colorRight;
 	@Override
 	public void onScroll(AbsListView view, int firstVisibleItem,
 						 int visibleItemCount, int totalItemCount, int pagePosition) {
@@ -399,20 +408,44 @@ public class MyPageFragment extends Fragment implements
 		}
 		reLocation = false;
 		scrollY = Math.max(-getScrollY(view), headerTranslationDis);
+		int color = (int) ((float) scrollY / (float) headerTranslationDis * 255f)*2;
+		if(pagePosition == 0){
+			colorLeft = color;
+		}else{
+			colorRight = color;
+		}
+		mViewHolder.mActionBar.setBackgroundColor(Color.parseColor(pauseColorString(color, true)));
+//        scrollY = -getScrollY(view);
 		if (NEED_RELAYOUT) {
 			headerTop = scrollY;
 			mViewHolder.mLinearHeader.post(new Runnable() {
 				@Override
 				public void run() {
 					mViewHolder.mLinearHeader.layout(0, headerTop,
-							mViewHolder.mLinearHeader.getWidth(), headerTop
-									+ mViewHolder.mLinearHeader.getHeight());
+							mViewHolder.mLinearHeader.getWidth(),
+							headerTop + mViewHolder.mLinearHeader.getHeight());
 				}
 			});
 		} else {
 			ViewHelper.setTranslationY(mViewHolder.mLinearHeader, scrollY);
+//            mLinearHeader.setY(originHeaderY + scrollY);
 		}
 	}
+
+	private String pauseColorString(int color, boolean hasAlpha) {
+		String colorStr;
+		String thumb = Integer.toHexString(color < 0 ? 0 : color > 255 ? 255 : color);
+		if (thumb.length() < 2) {
+			thumb = "0" + thumb;
+		}
+		if (hasAlpha) {
+			colorStr = String.format("#%s%s%s%s", thumb, thumb, thumb, thumb);
+		} else {
+			colorStr = String.format("#%s%s%s", thumb, thumb, thumb);
+		}
+		return colorStr;
+	}
+
 
 	boolean once2 = true;
 	boolean once3 = true;
@@ -638,6 +671,7 @@ public class MyPageFragment extends Fragment implements
 		TextView mLikeTv;
 		RelativeLayout mFollowingLayout;
 		RelativeLayout mFollowerLayout;
+		RelativeLayout mActionBar;
 		AvatarImageView mAvatarIv;
 		// 左右滑动tab
 		private PagerSlidingTabStrip mTabsTrips;
