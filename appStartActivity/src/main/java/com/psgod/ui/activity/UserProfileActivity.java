@@ -532,7 +532,7 @@ public class UserProfileActivity extends PSGodBaseActivity implements
             thumb = "0" + thumb;
         }
         if (hasAlpha) {
-            colorStr = String.format("#%s%s%s%s", thumb, thumb, thumb, thumb);
+            colorStr = String.format("#%sFFFFFF", thumb);
         } else {
             colorStr = String.format("#%s%s%s", thumb, thumb, thumb);
         }
