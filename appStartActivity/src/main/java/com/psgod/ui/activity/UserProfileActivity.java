@@ -72,7 +72,7 @@ public class UserProfileActivity extends PSGodBaseActivity implements
     // viewpager adapter
     private SlidingPagerAdapter adapter;
     // 头部区域
-    private LinearLayout mLinearHeader;
+    private RelativeLayout mLinearHeader;
 
     private int scrollY;
 
@@ -86,8 +86,8 @@ public class UserProfileActivity extends PSGodBaseActivity implements
     // {R.drawable.ic_ask_selected,R.drawable.ic_work_normal};
 
     // 页面中元素
-	private ActionBar mActionBar;
-//    private TextView mTitleName;
+//	private ActionBar mActionBar;
+    private TextView mTitleName;
     private AvatarImageView mAvatarImageView;
     // private CircleImageView mGenderImageView;
     private TextView mFollowingCountTv;
@@ -315,8 +315,8 @@ public class UserProfileActivity extends PSGodBaseActivity implements
                 // mGenderImageView.setImageDrawable(res.getDrawable(genderDrawableId));
 
                 mNickName = user.getNickname();
-				mActionBar.setTitle(user.getNickname());
-//                mTitleName.setText(user.getNickname());
+//				mActionBar.setTitle(user.getNickname());
+                mTitleName.setText(user.getNickname());
                 mFollowerCountTv.setText(Integer.toString(user
                         .getFollowerCount()));
                 mFollowingCountTv.setText(Integer.toString(user
@@ -360,11 +360,11 @@ public class UserProfileActivity extends PSGodBaseActivity implements
 
         mTabsTrips = (PagerSlidingTabStrip) findViewById(R.id.user_profile_tabs);
         viewPager = (ViewPager) findViewById(R.id.user_profile_view_pager);
-        mLinearHeader = (LinearLayout) findViewById(R.id.user_profile_header);
+        mLinearHeader = (RelativeLayout) findViewById(R.id.user_profile_header);
 
         // 初始化页面元素
-		mActionBar = (ActionBar) findViewById(R.id.actionbar);
-//        mTitleName = (TextView) findViewById(R.id.user_profile_title_name);
+//		mActionBar = (ActionBar) findViewById(R.id.actionbar);
+        mTitleName = (TextView) findViewById(R.id.user_profile_title_name);
         mAvatarImageView = (AvatarImageView) findViewById(R.id.user_profile_avatar);
         // mGenderImageView = (CircleImageView) findViewById(
         // R.id.user_profile_gender);
