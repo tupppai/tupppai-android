@@ -298,7 +298,8 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
         @Override
         public void onResponse(Long response) {
             if (response != null) {
-                mCommentList.get(0).setCid(response);
+//                mCommentList.get(0).setCid(response);
+                refresh();
             }
         }
     };

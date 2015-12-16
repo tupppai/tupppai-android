@@ -419,9 +419,10 @@ public class CarouselPhotoDetailView extends RelativeLayout {
     private void viewPagerBlow(final float top) {
         isDown = false;
 //        mScroll.setCanScroll(true);
-        if (!isBlow && vp != null) {
+        if ((!isBlow && vp != null )||isAnimEnd) {
             initBack();
             isBlow = true;
+            isAnimEnd = false;
             final AnimatorSet anim = new AnimatorSet();
             anim.setDuration(200);
             ValueAnimator xAnim = ValueAnimator.ofInt(20, 0);
@@ -475,11 +476,12 @@ public class CarouselPhotoDetailView extends RelativeLayout {
     }
 
     private void viewPagerRestore(final float top) {
-        if (vp == null) {
+        if (vp == null || !isAnimEnd) {
             return;
         }
         isDown = true;
         isBlow = false;
+        isAnimEnd = false;
         final AnimatorSet anim = new AnimatorSet();
         anim.setDuration(200);
         ValueAnimator xAnim = ValueAnimator.ofInt(0, 20);
@@ -557,7 +559,6 @@ public class CarouselPhotoDetailView extends RelativeLayout {
             list.add(CarouselPhotoDetailView.this);
             adapter = new ViewPagerAdapter(list);
             vp.setAdapter(adapter);
-            isAnimEnd = false;
             isCover = false;
         }
 
@@ -588,7 +589,6 @@ public class CarouselPhotoDetailView extends RelativeLayout {
         @Override
         public void onAnimationStart(Animator animator) {
             vp.setOffscreenPageLimit(0);
-            isAnimEnd = false;
             isCover = false;
         }
 

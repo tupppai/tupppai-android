@@ -371,8 +371,8 @@ public class CommentListActivity extends PSGodBaseActivity implements
 		@Override
 		public void onResponse(Long response) {
 			if (response != null) {
-				mRecentComments.get(0).setCid(response);
-
+//				mRecentComments.get(0).setCid(response);
+				refresh();
 				atNickName = "";
 				// 清空输入框
 				mCommentEditText.setText("");

@@ -23,6 +23,8 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshExpandableListView;
 import com.psgod.R;
 import com.psgod.WeakReferenceHandler;
+import com.psgod.eventbus.MyPageRefreshEvent;
+import com.psgod.eventbus.RefreshEvent;
 import com.psgod.model.Comment;
 import com.psgod.model.LoginUser;
 import com.psgod.model.PhotoItem;
@@ -37,6 +39,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by Administrator on 2015/11/28 0028.
@@ -268,7 +272,8 @@ public class SinglePhotoView extends RelativeLayout implements
         @Override
         public void onResponse(Long response) {
             if (response != null) {
-                mCommentList.get(0).setCid(response);
+//                mCommentList.get(0).setCid(response);
+                refresh();
             }
         }
     };
