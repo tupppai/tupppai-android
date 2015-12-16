@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F8F8F8"
+    android:background="#f7f7f7"
     android:orientation="vertical"
     android:paddingLeft="9dp"
     android:paddingRight="9dp"
@@ -13,7 +13,14 @@
         <!--android:background="@color/color_aa000000"-->
         <!--android:padding="1dp"-->
         <!--android:layout_height="wrap_content">-->
-
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="0.5dp"
+        android:paddingRight="0.5dp"
+        android:paddingTop="0.5dp"
+        android:paddingBottom="1.5dp"
+        android:background="#16000000">
         <ImageView
             android:id="@+id/item_tupppai_headimg"
             android:layout_width="match_parent"
@@ -34,6 +41,8 @@
             android:paddingLeft="3dp"
             android:paddingRight="11dp"
             android:paddingTop="8dp" />
+    </RelativeLayout>
+
     <!--</RelativeLayout>-->
 
 </RelativeLayout>
