@@ -164,7 +164,7 @@ public final class PhotoListRequest extends BaseRequest<List<PhotoItem>> {
             sb.append("?width=").append(width);
             sb.append("&page=").append(page);
             if(channelId != null && !channelId.equals("")){
-                sb.append("&channel_id=").append(channelId);
+                sb.append("&category_id=").append(channelId);
             }
             // 拉取某个求P的全部作品
             if (askId != 0l) {
