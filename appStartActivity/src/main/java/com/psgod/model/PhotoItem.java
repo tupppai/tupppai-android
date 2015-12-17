@@ -303,7 +303,7 @@ public class PhotoItem implements Serializable, Cloneable {
 		return mCommentContent;
 	}
 
-	public Long getmCategoryId() {
+	public Long getCategoryId() {
 		return mCategoryId;
 	}
 
