@@ -396,10 +396,6 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
                         int imageHeight = mImageBitmap.getHeight();
                         int imageWidth = mImageBitmap.getWidth();
 
-                        CustomToast.show(UploadMultiImageActivity.this,
-                                "height:" + String.valueOf(imageHeight) +
-                                        "  width:" + String.valueOf(imageWidth),Toast.LENGTH_LONG);
-
                         if (imageHeight < 320 || imageWidth < 320) {
                             CustomToast.showError(UploadMultiImageActivity.this, "上传图片尺寸应大于320*320", Toast.LENGTH_LONG);
                             if (mProgressDialog.isShowing()) {
