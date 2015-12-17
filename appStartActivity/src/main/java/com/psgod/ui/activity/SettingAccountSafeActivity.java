@@ -330,7 +330,7 @@ public class SettingAccountSafeActivity extends PSGodBaseActivity implements
 				editor.putBoolean(SPKey.IS_BOUND_WEIBO, true);
 				editor.commit();
 
-				isBoundWeiBo = true;
+				mHandler.sendEmptyMessage(BIND_WEIBO_SUCCESS);
 			} else {
 				mHandler.sendEmptyMessage(BIND_WEIBO_ERROR);
 			}
@@ -364,7 +364,7 @@ public class SettingAccountSafeActivity extends PSGodBaseActivity implements
 				editor.putBoolean(SPKey.IS_BOUND_WEIBO, false);
 				editor.commit();
 
-				isBoundWeiBo = false;
+				mHandler.sendEmptyMessage(BIND_WEIBO_ERROR);
 			} else {
 				mHandler.sendEmptyMessage(BIND_WEIBO_SUCCESS);
 			}
@@ -420,7 +420,7 @@ public class SettingAccountSafeActivity extends PSGodBaseActivity implements
 				editor.putBoolean(SPKey.IS_BOUND_WECHAT, true);
 				editor.commit();
 
-				isBoundWechat = true;
+				mHandler.sendEmptyMessage(BIND_WECHAT_SUCCESS);
 			} else {
 				mHandler.sendEmptyMessage(BIND_WECHAT_ERROR);
 			}
@@ -454,7 +454,7 @@ public class SettingAccountSafeActivity extends PSGodBaseActivity implements
 				editor.putBoolean(SPKey.IS_BOUND_WECHAT, false);
 				editor.commit();
 
-				isBoundWechat = false;
+				mHandler.sendEmptyMessage(BIND_WECHAT_ERROR);
 			} else {
 				mHandler.sendEmptyMessage(BIND_WECHAT_SUCCESS);
 			}
@@ -527,7 +527,7 @@ public class SettingAccountSafeActivity extends PSGodBaseActivity implements
 				editor.putBoolean(SPKey.IS_BOUND_QQ, true);
 				editor.commit();
 
-				isBoundQQ = true;
+				mHandler.sendEmptyMessage(BIND_QQ_SUCCESS);
 			} else {
 				mHandler.sendEmptyMessage(BIND_QQ_ERROR);
 			}
@@ -561,7 +561,7 @@ public class SettingAccountSafeActivity extends PSGodBaseActivity implements
 				editor.putBoolean(SPKey.IS_BOUND_QQ, false);
 				editor.commit();
 
-				isBoundQQ = false;
+				mHandler.sendEmptyMessage(BIND_QQ_ERROR);
 			} else {
 				mHandler.sendEmptyMessage(BIND_QQ_SUCCESS);
 			}
@@ -581,26 +581,32 @@ public class SettingAccountSafeActivity extends PSGodBaseActivity implements
 		switch (msg.what) {
 		case BIND_WEIBO_ERROR:
 			mBindWeiboBtn.setChecked(false);
+			isBoundWeiBo = false;
 			break;
 
 		case BIND_WEIBO_SUCCESS:
 			mBindWeiboBtn.setChecked(true);
+			isBoundWeiBo = true;
 			break;
 
 		case BIND_WECHAT_ERROR:
 			mBindWechatBtn.setChecked(false);
+			isBoundWechat = false;
 			break;
 
 		case BIND_WECHAT_SUCCESS:
 			mBindWechatBtn.setChecked(true);
+			isBoundWechat = true;
 			break;
 
 		case BIND_QQ_ERROR:
 			mBindQQBtn.setChecked(false);
+			isBoundQQ = false;
 			break;
 
 		case BIND_QQ_SUCCESS:
 			mBindQQBtn.setChecked(true);
+			isBoundQQ = true;
 			break;
 
 		default:
