@@ -9,9 +9,11 @@ import java.util.List;
 public class Tupppai implements Serializable {
 
     private String id;
+    private String ask_id;
     private String display_name;
     private String pc_pic;
     private String app_pic;
+    private String banner_pic;
     private String url;
     private String pid;
     private String icon;
@@ -19,6 +21,23 @@ public class Tupppai implements Serializable {
     private String description;
     private String category_type;
     private List<PhotoItem> threads;
+
+
+    public String getBanner_pic() {
+        return banner_pic;
+    }
+
+    public void setBanner_pic(String banner_pic) {
+        this.banner_pic = banner_pic;
+    }
+
+    public String getAsk_id() {
+        return ask_id;
+    }
+
+    public void setAsk_id(String ask_id) {
+        this.ask_id = ask_id;
+    }
 
     public void setId(String id) {
         this.id = id;

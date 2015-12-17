@@ -25,15 +25,16 @@ public class TupppaiRequest extends BaseRequest<List<Tupppai>> {
     @Override
     protected List<Tupppai> doParseNetworkResponse(JSONObject reponse) throws
             UnsupportedEncodingException, JSONException {
-        List<Tupppai> tupppais = JSONArray.parseArray(reponse.getJSONObject("data").
-                getJSONArray("categories").toString(), Tupppai.class);
+        List<Tupppai> tupppais = JSONArray.parseArray(reponse.getJSONArray("data")
+                .toString(), Tupppai.class);
         int length = tupppais.size();
         for(int i = 0; i < length; i++){
             tupppais.get(i).getThreads().clear();
             for(Object jsonObject : JSONArray.parseArray(reponse.
-                    getJSONObject("data").getJSONArray("categories").getJSONObject(i).
+                    getJSONArray("data").getJSONObject(i).
                     getJSONArray("threads").toString())){
-                PhotoItem photoItem = PhotoItem.createPhotoItem(new JSONObject(jsonObject.toString()));
+                PhotoItem photoItem = PhotoItem.
+                        createPhotoItem(new JSONObject(jsonObject.toString()));
                 tupppais.get(i).getThreads().add(photoItem);
             }
         }
@@ -84,7 +85,7 @@ public class TupppaiRequest extends BaseRequest<List<Tupppai>> {
         @Override
         public String createUrl() {
             StringBuilder sb = new StringBuilder(BaseRequest.PSGOD_BASE_URL);
-            sb.append("thread/home");
+            sb.append("category/index");
             sb.append("?page=").append(page);
 
             String url = sb.toString();

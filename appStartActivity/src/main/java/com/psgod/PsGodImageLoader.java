@@ -98,23 +98,26 @@ public class PsGodImageLoader {
 
     public String getRuleImageUrl(String originImageUrl, DisplayImageOptions options) {
         String ruleImageUrl;
-        String[] thumbs = originImageUrl.split("\\?");
-        if (options.equals(Constants.DISPLAY_IMAGE_OPTIONS)) {
-            ruleImageUrl = String.format("%s?imageView2/0/w/%s", thumbs[0],
-                    String.valueOf((int) (1080 * Utils.getWidthScale(context))));
-        } else if (options.equals(Constants.DISPLAY_IMAGE_OPTIONS_SMALL)) {
-            ruleImageUrl = String.format("%s?imageView2/0/w/%s", thumbs[0],
-                    String.valueOf((int) (500 * Utils.getWidthScale(context))));
-        } else if (options.equals(Constants.DISPLAY_IMAGE_OPTIONS_AVATAR)) {
-            ruleImageUrl = String.format("%s?imageView2/0/w/%s", thumbs[0],
-                    String.valueOf((int) (200 * Utils.getWidthScale(context))));
-        } else if (options.equals(Constants.DISPLAY_IMAGE_OPTIONS_SMALL_SMALL)) {
-            ruleImageUrl = String.format("%s?imageView2/0/w/%s", thumbs[0],
-                    String.valueOf((int) (300 * Utils.getWidthScale(context))));
-        } else {
+        if(originImageUrl != null && !originImageUrl.equals("")) {
+            String[] thumbs = originImageUrl.split("\\?");
+            if (options.equals(Constants.DISPLAY_IMAGE_OPTIONS)) {
+                ruleImageUrl = String.format("%s?imageView2/0/w/%s", thumbs[0],
+                        String.valueOf((int) (1080 * Utils.getWidthScale(context))));
+            } else if (options.equals(Constants.DISPLAY_IMAGE_OPTIONS_SMALL)) {
+                ruleImageUrl = String.format("%s?imageView2/0/w/%s", thumbs[0],
+                        String.valueOf((int) (500 * Utils.getWidthScale(context))));
+            } else if (options.equals(Constants.DISPLAY_IMAGE_OPTIONS_AVATAR)) {
+                ruleImageUrl = String.format("%s?imageView2/0/w/%s", thumbs[0],
+                        String.valueOf((int) (200 * Utils.getWidthScale(context))));
+            } else if (options.equals(Constants.DISPLAY_IMAGE_OPTIONS_SMALL_SMALL)) {
+                ruleImageUrl = String.format("%s?imageView2/0/w/%s", thumbs[0],
+                        String.valueOf((int) (300 * Utils.getWidthScale(context))));
+            } else {
+                ruleImageUrl = originImageUrl;
+            }
+        }else{
             ruleImageUrl = originImageUrl;
         }
-
         return ruleImageUrl;
     }
 

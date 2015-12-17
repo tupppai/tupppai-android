@@ -9,10 +9,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.psgod.PsGodImageLoader;
 import com.psgod.Constants;
+import com.psgod.PsGodImageLoader;
 import com.psgod.R;
 import com.psgod.Utils;
+import com.psgod.model.ActivitiesAct;
 import com.psgod.model.PhotoItem;
 import com.psgod.model.Tupppai;
 import com.psgod.ui.activity.ChannelActivity;
@@ -101,7 +102,17 @@ public class TupppaiAdapter extends MyBaseAdapter<Tupppai> {
             intent.putExtra("id", list.get(position).getId());
             intent.putExtra("title", list.get(position).getDisplay_name());
             if (list.get(position).getCategory_type().equals("activity")) {
+                Tupppai tupppai = list.get(position);
                 intent.setClass(context, RecentActActivity.class);
+                ActivitiesAct act = new ActivitiesAct();
+                act.setId(tupppai.getId());
+                act.setAsk_id(tupppai.getAsk_id());
+                act.setBanner_pic(tupppai.getBanner_pic());
+                act.setImage_url(tupppai.getApp_pic());
+                act.setUrl(tupppai.getUrl());
+                act.setPost_btn(tupppai.getPost_btn());
+                act.setDisplay_name(tupppai.getDisplay_name());
+                intent.putExtra(RecentActActivity.OBJ_ACTIVITY, act);
             } else {
                 intent.setClass(context, ChannelActivity.class);
 

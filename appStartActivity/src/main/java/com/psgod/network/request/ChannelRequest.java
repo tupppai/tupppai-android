@@ -21,30 +21,16 @@ public class ChannelRequest extends BaseRequest<Channel> {
         super(method, url, listener, errorListener);
     }
 
-    private boolean isRefresh = false;
-
-    public void setIsRefresh(boolean isRefresh) {
-        this.isRefresh = isRefresh;
-    }
 
     @Override
     protected Channel doParseNetworkResponse(JSONObject reponse) throws
             UnsupportedEncodingException, JSONException {
         Channel channel = new Channel();
-        JSONObject data = reponse.getJSONObject("data");
-        JSONArray replies = data.getJSONArray("replies");
-        if(isRefresh) {
-            JSONArray ask = data.getJSONArray("ask");
-            int length = ask.length();
-            for (int i = 0; i < length; i++) {
-                PhotoItem item = PhotoItem.createPhotoItem(ask.getJSONObject(i));
-                channel.getAsk().add(item);
-            }
-        }
-        int length = replies.length();
+        JSONArray data = reponse.getJSONArray("data");
+        int length = data.length();
         for (int i = 0; i < length; i++) {
-            PhotoItem item = PhotoItem.createPhotoItem(replies.getJSONObject(i));
-            channel.getReplies().add(item);
+            PhotoItem item = PhotoItem.createPhotoItem(data.getJSONObject(i));
+            channel.getData().add(item);
         }
         return channel;
     }
@@ -61,13 +47,18 @@ public class ChannelRequest extends BaseRequest<Channel> {
         private int page = 1;
         private int size = 10;
         private long lastUpdated = -1;
+        private String targetType = "";
         private String id;
         private Response.Listener<Channel> listener;
         private Response.ErrorListener errorListener;
-        private boolean isRefresh = false;
 
         public Builder setId(String id) {
             this.id = id;
+            return this;
+        }
+
+        public Builder setTargetType(String targetType) {
+            this.targetType = targetType;
             return this;
         }
 
@@ -91,11 +82,6 @@ public class ChannelRequest extends BaseRequest<Channel> {
             return this;
         }
 
-        public Builder setIsRefresh(boolean isRefresh) {
-            this.isRefresh = isRefresh;
-            return this;
-        }
-
         public Builder setErrorListener(Response.ErrorListener errorListener) {
             this.errorListener = errorListener;
             return this;
@@ -105,17 +91,17 @@ public class ChannelRequest extends BaseRequest<Channel> {
             String url = createUrl();
             ChannelRequest request = new ChannelRequest(METHOD, url,
                     listener, errorListener);
-            request.setIsRefresh(isRefresh);
             return request;
         }
 
         @Override
         public String createUrl() {
             StringBuilder sb = new StringBuilder(BaseRequest.PSGOD_BASE_URL);
-            sb.append("/thread/get_threads_by_channel");
+            sb.append("category/threads");
             sb.append("?page=").append(page);
             sb.append("&last_updated=").append(lastUpdated);
-            sb.append("&channel_id=").append(id);
+            sb.append("&category_id=").append(id);
+            sb.append("&type=").append(targetType);
 
             String url = sb.toString();
             Logger.log(Logger.LOG_LEVEL_DEBUG, Logger.USER_LEVEL_COLOR, TAG,

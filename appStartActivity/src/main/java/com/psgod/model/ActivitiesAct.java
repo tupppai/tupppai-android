@@ -1,11 +1,14 @@
 package com.psgod.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 
 /**
  * Created by remilia on 2015/11/18.
  */
-public class ActivitiesAct implements Serializable{
+public class ActivitiesAct implements Serializable {
 
     private String id;
 //    private String display_name;
@@ -98,6 +101,7 @@ public class ActivitiesAct implements Serializable{
     public String getId() {
         return id;
     }
+
 
 //    public String getDisplay_name() {
 //        return display_name;

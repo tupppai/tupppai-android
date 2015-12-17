@@ -38,8 +38,7 @@ public final class PhotoActRequest extends BaseRequest<Activities> {
     @Override
     protected Activities doParseNetworkResponse(JSONObject response)
             throws JSONException {
-        JSONObject headObject = response.getJSONObject("data").getJSONObject("activity");
-        JSONArray data = response.getJSONObject("data").getJSONArray("replies");
+        JSONArray data = response.getJSONArray("data");
         int length = data.length();
         Activities activities = new Activities();
         List<PhotoItem> items = new ArrayList<PhotoItem>();
@@ -47,11 +46,6 @@ public final class PhotoActRequest extends BaseRequest<Activities> {
             items.add(PhotoItem.createPhotoItem(data.getJSONObject(ix)));
         }
         activities.setReplies(items);
-        if (headObject.length() > 0) {
-            activities.setActs(com.alibaba.fastjson.JSONArray.parseObject(headObject.toString(), ActivitiesAct.class));
-        }else{
-            activities.setActs(new ActivitiesAct());
-        }
         return activities;
     }
 

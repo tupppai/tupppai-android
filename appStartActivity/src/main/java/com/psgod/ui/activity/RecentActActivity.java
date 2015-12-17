@@ -12,6 +12,8 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -25,7 +27,9 @@ import com.psgod.Utils;
 import com.psgod.eventbus.RefreshEvent;
 import com.psgod.model.Activities;
 import com.psgod.model.ActivitiesAct;
+import com.psgod.model.Channel;
 import com.psgod.model.PhotoItem;
+import com.psgod.network.request.ChannelRequest;
 import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.network.request.PhotoActRequest;
 import com.psgod.ui.adapter.RecentPageActAdapter;
@@ -42,6 +46,7 @@ public class RecentActActivity extends PSGodBaseActivity {
             .getSimpleName();
 
     public static final String INTENT_ID = "id";
+    public static final String OBJ_ACTIVITY = "Activity";
 
     private PullToRefreshListView mListView;
     private View mHeadView;
@@ -78,10 +83,31 @@ public class RecentActActivity extends PSGodBaseActivity {
 
         Intent intent = getIntent();
         id = intent.getStringExtra(INTENT_ID);
-
+        mAct = (ActivitiesAct) intent.getSerializableExtra(OBJ_ACTIVITY);
         initView();
+        initAct();
         initEvent();
         initData();
+    }
+
+    private void initAct() {
+        if(mAct != null) {
+            if (mAct.getPost_btn() != null && !mAct.getPost_btn().equals("")) {
+                PsGodImageLoader.getInstance().displayImage(mAct.getPost_btn(),
+                        mUpLoad, Constants.DISPLAY_IMAGE_OPTIONS_SMALL);
+            }
+            if (mHeadView.getVisibility() == View.GONE) {
+                mHeadView.setVisibility(View.VISIBLE);
+            }
+            mTitle.setText(mAct.getName());
+            PsGodImageLoader.getInstance().
+                    displayImage(mAct.getBanner_pic(),
+                            mHeadImg, Constants.DISPLAY_IMAGE_OPTIONS);
+
+        }else{
+            mHeadView.setVisibility(View.GONE);
+            mListView.setEmptyView(mEmptyView);
+        }
     }
 
     @Override
@@ -94,13 +120,12 @@ public class RecentActActivity extends PSGodBaseActivity {
         mParent = (RelativeLayout) findViewById(R.id.activity_act_parent);
         mListView = (PullToRefreshListView) findViewById(R.id.fragment_recentpage_act_list);
         mTitle = (TextView) findViewById(R.id.activity_act_title_name);
-        mHeadView = LayoutInflater.from(RecentActActivity.this).inflate(R.layout.header_recent_page_act, null);
+        mHeadView = LayoutInflater.from(this).inflate(R.layout.header_recent_page_act, null);
         mHeadImg = (ImageView) mHeadView.findViewById(R.id.header_recentpage_act_img);
         mHeadTxtArea = (RelativeLayout) mHeadView.findViewById(R.id.header_recentpage_act_area);
         mHeadTxtArea.setVisibility(View.GONE);
         mEmptyView = findViewById(R.id.recent_fragment_act_empty_view);
         mPhotoItems = new ArrayList<PhotoItem>();
-        mAct = new ActivitiesAct();
         mAdapter = new RecentPageActAdapter(RecentActActivity.this, mPhotoItems);
         mListView.setAdapter(mAdapter);
         mFollowListFooter = LayoutInflater.from(RecentActActivity.this).inflate(
@@ -152,12 +177,13 @@ public class RecentActActivity extends PSGodBaseActivity {
                 mPage += 1;
                 mFollowListFooter.setVisibility(View.VISIBLE);
 
-                PhotoActRequest.Builder builder = new PhotoActRequest.Builder()
-                        .setPage(mPage).setId(id)
+                ChannelRequest.Builder builder = new ChannelRequest.Builder()
+                        .setPage(mPage).setId(id).setTargetType("reply").
+                                setLastUpdated(mLastUpdatedTime)
                         .setListener(loadMoreListener)
                         .setErrorListener(errorListener);
 
-                PhotoActRequest request = builder.build();
+                ChannelRequest request = builder.build();
                 request.setTag(TAG);
                 RequestQueue requestQueue = PSGodRequestQueue.getInstance(
                         mContext).getRequestQueue();
@@ -173,12 +199,13 @@ public class RecentActActivity extends PSGodBaseActivity {
                 mLastUpdatedTime = System.currentTimeMillis();
             }
 
-            PhotoActRequest.Builder builder = new PhotoActRequest.Builder()
-                    .setPage(mPage).setId(id)
+            ChannelRequest.Builder builder = new ChannelRequest.Builder()
+                    .setPage(mPage).setId(id).setTargetType("reply").
+                            setLastUpdated(mLastUpdatedTime)
                     .setListener(refreshListener)
                     .setErrorListener(errorListener);
 
-            PhotoActRequest request = builder.build();
+            ChannelRequest request = builder.build();
             request.setTag(TAG);
             RequestQueue requestQueue = PSGodRequestQueue.getInstance(mContext)
                     .getRequestQueue();
@@ -212,7 +239,7 @@ public class RecentActActivity extends PSGodBaseActivity {
                     intent.putExtra("ActivityId", mAct.getId());
                     intent.putExtra("SelectType", "TypeReplySelect");
                     new LoadUtils(RecentActActivity.this).isSimple(true).upLoad(1,
-                            Long.parseLong(mAct.getAsk_id().equals("")?"0":mAct.getAsk_id()));
+                            Long.parseLong(mAct.getAsk_id().equals("") ? "0" : mAct.getAsk_id()));
 
                     startActivity(intent);
                 }
@@ -235,34 +262,17 @@ public class RecentActActivity extends PSGodBaseActivity {
         mListView.setRefreshing(true);
     }
 
-    private Response.Listener<Activities> refreshListener = new Response.Listener<Activities>() {
+    private Response.Listener<Channel> refreshListener = new Response.Listener<Channel>() {
         @Override
-        public void onResponse(Activities response) {
-            if (response.getActs().getPost_btn() != null && !response.getActs().getPost_btn().equals("")) {
-                PsGodImageLoader.getInstance().displayImage(response.getActs().getPost_btn(),
-                        mUpLoad, Constants.DISPLAY_IMAGE_OPTIONS_SMALL);
-            }
+        public void onResponse(Channel response) {
             mPhotoItems.clear();
-            if (response.getReplies().size() > 0) {
-                mPhotoItems.addAll(response.getReplies());
+            if (response.getData().size() > 0) {
+                mPhotoItems.addAll(response.getData());
             }
             mAdapter.notifyDataSetChanged();
-            if (response.getActs() != null) {
-                mAct = response.getActs();
-                if (mHeadView.getVisibility() == View.GONE) {
-                    mHeadView.setVisibility(View.VISIBLE);
-                }
-                mTitle.setText(mAct.getName());
-                PsGodImageLoader.getInstance().
-                        displayImage(mAct.getBanner_pic(),
-                                mHeadImg, Constants.DISPLAY_IMAGE_OPTIONS);
-            } else {
-                mHeadView.setVisibility(View.GONE);
-                mListView.setEmptyView(mEmptyView);
-            }
             mListView.onRefreshComplete();
 
-            if (response.getReplies().size() < 15) {
+            if (response.getData().size() < 15) {
                 canLoadMore = false;
             } else {
                 canLoadMore = true;
@@ -289,16 +299,16 @@ public class RecentActActivity extends PSGodBaseActivity {
     };
 
 
-    private Response.Listener<Activities> loadMoreListener = new Response.Listener<Activities>() {
+    private Response.Listener<Channel> loadMoreListener = new Response.Listener<Channel>() {
         @Override
-        public void onResponse(final Activities response) {
-            mPhotoItems.addAll(response.getReplies());
+        public void onResponse(final Channel response) {
+            mPhotoItems.addAll(response.getData());
             mAdapter.notifyDataSetChanged();
             mListView.onRefreshComplete();
 
             mFollowListFooter.setVisibility(View.INVISIBLE);
 
-            if (response.getReplies().size() < 15) {
+            if (response.getData().size() < 15) {
                 canLoadMore = false;
             } else {
                 canLoadMore = true;

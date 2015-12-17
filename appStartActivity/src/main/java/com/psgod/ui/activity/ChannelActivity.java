@@ -124,31 +124,40 @@ public class ChannelActivity extends PSGodBaseActivity {
         mLastUpdatedTime = System.currentTimeMillis();
         page = 1;
         ChannelRequest request = new ChannelRequest.Builder().setListener(refreshListener).
-                setErrorListener(errorListener).setPage(page).setId(id).setIsRefresh(true).build();
-
+                setErrorListener(errorListener).setPage(page).setId(id).setTargetType("reply").build();
+        ChannelRequest headRequest = new ChannelRequest.Builder().setListener(refreshHeadListener).
+                setId(id).setTargetType("ask").build();
         RequestQueue requestQueue = PSGodRequestQueue.getInstance(
                 this).getRequestQueue();
         requestQueue.add(request);
+        requestQueue.add(headRequest);
 
     }
+
+    Response.Listener<Channel> refreshHeadListener = new Response.Listener<Channel>() {
+        @Override
+        public void onResponse(Channel response) {
+            // 保存本次刷新时间到sp
+            if(heads.size() > 0){
+                heads.clear();
+            }
+            heads.addAll(response.getData());
+            headAdapter.notifyDataSetChanged();
+        }
+    };
 
     Response.Listener<Channel> refreshListener = new Response.Listener<Channel>() {
         @Override
         public void onResponse(Channel response) {
             // 保存本次刷新时间到sp
             mList.onRefreshComplete();
-            if (heads.size() > 0) {
-                heads.clear();
-            }
             if (photoItems.size() > 0) {
                 photoItems.clear();
             }
-
-            heads.addAll(response.getAsk());
-            headAdapter.notifyDataSetChanged();
-            photoItems.addAll(response.getReplies());
             mAdapter.notifyDataSetChanged();
-            if (response.getReplies().size() < 10) {
+            photoItems.addAll(response.getData());
+            mAdapter.notifyDataSetChanged();
+            if (response.getData().size() < 15) {
                 canLoadMore = false;
             } else {
                 canLoadMore = true;
@@ -174,12 +183,12 @@ public class ChannelActivity extends PSGodBaseActivity {
         @Override
         public void onResponse(Channel response) {
 
-            if (response.getReplies().size() < 10) {
+            if (response.getData().size() < 15) {
                 canLoadMore = false;
             } else {
                 canLoadMore = true;
             }
-            photoItems.addAll(response.getReplies());
+            photoItems.addAll(response.getData());
             mAdapter.notifyDataSetChanged();
 //            initEmpty(photoItems.size());
         }
@@ -215,7 +224,7 @@ public class ChannelActivity extends PSGodBaseActivity {
                     page++;
                     ChannelRequest request = new ChannelRequest.Builder().setListener(loadMoreListener).
                             setErrorListener(errorListener).setPage(page).setId(id).
-                            setLastUpdated(mLastUpdatedTime).build();
+                            setLastUpdated(mLastUpdatedTime).setTargetType("reply").build();
 
                     RequestQueue requestQueue = PSGodRequestQueue.getInstance(
                             ChannelActivity.this).getRequestQueue();

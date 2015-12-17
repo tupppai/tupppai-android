@@ -9,27 +9,17 @@ import java.util.List;
  */
 public class Channel implements Serializable{
 
-    private List<PhotoItem> ask;
-    private List<PhotoItem> replies;
+    private List<PhotoItem> data;
 
     public Channel() {
-        ask = new ArrayList<PhotoItem>();
-        replies = new ArrayList<PhotoItem>();
+        data = new ArrayList<PhotoItem>();
     }
 
-    public List<PhotoItem> getReplies() {
-        return replies;
+    public List<PhotoItem> getData() {
+        return data;
     }
 
-    public void setReplies(List<PhotoItem> replies) {
-        this.replies = replies;
-    }
-
-    public List<PhotoItem> getAsk() {
-        return ask;
-    }
-
-    public void setAsk(List<PhotoItem> ask) {
-        this.ask = ask;
+    public void setData(List<PhotoItem> data) {
+        this.data = data;
     }
 }
