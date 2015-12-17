@@ -52,7 +52,7 @@ public class CornerImageView extends ImageView {
 
 	/**
 	 * 初始化一些自定义的参数
-	 * 
+	 *
 	 * @param context
 	 * @param attrs
 	 * @param defStyle
@@ -143,7 +143,7 @@ public class CornerImageView extends ImageView {
 
 	/**
 	 * 根据原图添加圆角
-	 * 
+	 *
 	 * @param source
 	 * @return
 	 */
