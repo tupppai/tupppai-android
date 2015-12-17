@@ -182,6 +182,7 @@ public class InprogressPageReplyAdapter extends BaseAdapter implements
                     MultiImageSelectActivity.TYPE_REPLY_SELECT);
             bundle.putLong("AskId", photoItem.getAskId());
             if (photoItem.getCategoryId() != -1) {
+//                if()
                 bundle.putString(MultiImageSelectActivity.ACTIVITY_ID,
                         String.valueOf(photoItem.getCategoryId()));
             }
