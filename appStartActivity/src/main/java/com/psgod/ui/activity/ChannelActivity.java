@@ -1,6 +1,8 @@
 package com.psgod.ui.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,6 +22,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.psgod.Constants;
 import com.psgod.CustomToast;
 import com.psgod.R;
 import com.psgod.model.Channel;
@@ -58,6 +61,7 @@ public class ChannelActivity extends PSGodBaseActivity {
     private TextView mTitleName;
     private ImageView mTitleFinish;
     private PullToRefreshListView mList;
+    private View mFollowListFooter;
 
     private TextView mHeadMore;
     private RecyclerView mHeadList;
@@ -70,6 +74,8 @@ public class ChannelActivity extends PSGodBaseActivity {
 
     private String id;
     private long mLastUpdatedTime;
+    // 列表的类型
+    private String mSpKey;
     private boolean canLoadMore = true;
     private int page = 1;
 
@@ -100,7 +106,11 @@ public class ChannelActivity extends PSGodBaseActivity {
         heads = new ArrayList<PhotoItem>();
         headAdapter = new ChannelHeadAdapter(this, heads);
         mHeadList.setAdapter(headAdapter);
-
+        mFollowListFooter = LayoutInflater.from(this).inflate(
+                R.layout.footer_load_more, null);
+        mList.getRefreshableView().addFooterView(
+                mFollowListFooter);
+        mFollowListFooter.setVisibility(View.GONE);
 //        mEmptyTxt = (TextView) findViewById(R.id.activity_channal_empty_text);
 //        mEmptyView = (LinearLayout) findViewById(R.id.activity_channal_empty_view);
         Intent intent = getIntent();
@@ -118,15 +128,27 @@ public class ChannelActivity extends PSGodBaseActivity {
         helper.setViewMargins(12);
 //        }
         helper.init();
+
+        mSpKey = Constants.SharedPreferencesKey.CHANNEL_LIST_LAST_REFRESH_TIME;
+
+        SharedPreferences sp = getSharedPreferences(
+                Constants.SharedPreferencesKey.NAME, Context.MODE_PRIVATE);
+
+        mLastUpdatedTime = sp.getLong(mSpKey, -1);
     }
 
     private void refresh() {
-        mLastUpdatedTime = System.currentTimeMillis();
+        // 上次刷新时间
+        if (mLastUpdatedTime == -1) {
+            mLastUpdatedTime = System.currentTimeMillis();
+        }
         page = 1;
         ChannelRequest request = new ChannelRequest.Builder().setListener(refreshListener).
-                setErrorListener(errorListener).setPage(page).setId(id).setTargetType("reply").build();
+                setErrorListener(errorListener).setPage(page).
+                setLastUpdated(mLastUpdatedTime).setId(id).setTargetType("reply").build();
         ChannelRequest headRequest = new ChannelRequest.Builder().setListener(refreshHeadListener).
-                setId(id).setTargetType("ask").build();
+                setId(id).setTargetType("ask").
+                setLastUpdated(mLastUpdatedTime).build();
         RequestQueue requestQueue = PSGodRequestQueue.getInstance(
                 this).getRequestQueue();
         requestQueue.add(request);
@@ -150,6 +172,19 @@ public class ChannelActivity extends PSGodBaseActivity {
         @Override
         public void onResponse(Channel response) {
             // 保存本次刷新时间到sp
+            mLastUpdatedTime = System.currentTimeMillis();
+            if (android.os.Build.VERSION.SDK_INT >= 9) {
+                ChannelActivity.this
+                        .getSharedPreferences(
+                                Constants.SharedPreferencesKey.NAME,
+                                Context.MODE_PRIVATE).edit()
+                        .putLong(mSpKey, mLastUpdatedTime).apply();
+            } else {
+                ChannelActivity.this.getSharedPreferences(
+                        Constants.SharedPreferencesKey.NAME,
+                        Context.MODE_PRIVATE).edit()
+                        .putLong(mSpKey, mLastUpdatedTime).commit();
+            }
             mList.onRefreshComplete();
             if (photoItems.size() > 0) {
                 photoItems.clear();
@@ -176,6 +211,7 @@ public class ChannelActivity extends PSGodBaseActivity {
             if (progressingDialog != null && progressingDialog.isShowing()) {
                 progressingDialog.dismiss();
             }
+            mFollowListFooter.setVisibility(View.INVISIBLE);
         }
     };
 
@@ -190,6 +226,7 @@ public class ChannelActivity extends PSGodBaseActivity {
             }
             photoItems.addAll(response.getData());
             mAdapter.notifyDataSetChanged();
+            mFollowListFooter.setVisibility(View.INVISIBLE);
 //            initEmpty(photoItems.size());
         }
     };
@@ -221,6 +258,7 @@ public class ChannelActivity extends PSGodBaseActivity {
             @Override
             public void onLastItemVisible() {
                 if (canLoadMore) {
+                    mFollowListFooter.setVisibility(View.VISIBLE);
                     page++;
                     ChannelRequest request = new ChannelRequest.Builder().setListener(loadMoreListener).
                             setErrorListener(errorListener).setPage(page).setId(id).
