@@ -466,7 +466,7 @@ public class CarouselPhotoDetailView extends RelativeLayout {
             anim.start();
             AnimatorSet anim2 = new AnimatorSet();
             anim2.setStartDelay(250);
-            anim2.setDuration(250);
+            anim2.setDuration(400);
             anim2.play(scrollAnim);
             anim2.start();
         }
@@ -536,7 +536,7 @@ public class CarouselPhotoDetailView extends RelativeLayout {
             });
             AnimatorSet anim2 = new AnimatorSet();
             anim2.setStartDelay(250);
-            anim2.setDuration(250);
+            anim2.setDuration(400);
             anim2.play(coverAnim);
             anim2.start();
         }
