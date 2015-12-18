@@ -167,11 +167,11 @@ public class MainActivity extends PSGodBaseActivity implements
         mMyLayout = (RelativeLayout) findViewById(R.id.activity_main_tab_user);
         mAvatarCase = (AvatarImageView) findViewById(R.id.activity_main_tab_user_case);
         if (BaseRequest.PSGOD_BASE_URL.equals(BaseRequest.PSGOD_BASE_TEST_URL)) {
-            mBottomTab.setBackground(getResources().getDrawable(R.color.color_9fc25b));
-            mMyLayout.setBackground(getResources().getDrawable(R.color.color_9fc25b));
+            mBottomTab.setBackgroundResource(R.color.color_9fc25b);
+            mMyLayout.setBackgroundResource(R.color.color_9fc25b);
         } else {
-            mBottomTab.setBackground(getResources().getDrawable(R.color.white));
-            mMyLayout.setBackground(getResources().getDrawable(R.color.white));
+            mBottomTab.setBackgroundResource(R.color.white);
+            mMyLayout.setBackgroundResource(R.color.white);
         }
 
         mHomeBtn = (RadioButton) findViewById(R.id.activity_main_tab_home_page);

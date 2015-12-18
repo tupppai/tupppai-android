@@ -97,10 +97,13 @@ public class CitySelector {
                 scrolling = false;
                 updateCities(city, cities, country.getCurrentItem());
 
-                tv.setText(CityInfo.getProvinceName()[country.getCurrentItem()]
-                        + "-"
-                        + CityInfo.getCityName()[country.getCurrentItem()][city
-                        .getCurrentItem()]);
+                try {
+                    tv.setText(CityInfo.getProvinceName()[country.getCurrentItem()]
+                            + "-"
+                            + CityInfo.getCityName()[country.getCurrentItem()][city
+                            .getCurrentItem()]);
+                } catch (Exception e) {
+                }
             }
         });
 

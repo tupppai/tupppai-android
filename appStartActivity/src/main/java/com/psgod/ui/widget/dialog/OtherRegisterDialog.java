@@ -107,11 +107,12 @@ public class OtherRegisterDialog extends Dialog {
 
 					@Override
 					public void onComplete(Platform arg0, int arg1,
-							HashMap<String, Object> res) {
+										   HashMap<String, Object> res) {
 						mThirdAuthId = qq.getDb().getUserId();
-						mThirdAuthName = res.get("nickname").toString();
-						mThirdAuthAvatar = res.get("figureurl_qq_2").toString();
-
+						if (res != null) {
+							mThirdAuthName = res.get("nickname").toString();
+							mThirdAuthAvatar = res.get("figureurl_qq_2").toString();
+						}
 						if (!TextUtils.isEmpty(mThirdAuthId)) {
 							QQLoginRequest.Builder builder = new QQLoginRequest.Builder()
 									.setCode(mThirdAuthId)
@@ -123,6 +124,7 @@ public class OtherRegisterDialog extends Dialog {
 									.getInstance(mContext).getRequestQueue();
 							requestQueue.add(request);
 						}
+
 					}
 
 					@Override
@@ -168,10 +170,12 @@ public class OtherRegisterDialog extends Dialog {
 							@Override
 							public void onComplete(Platform platform,
 									int action, HashMap<String, Object> res) {
-								code = res.get("openid").toString();
-								mAvatar = res.get("headimgurl").toString();
-								mGender = res.get("sex").toString();
-								mNickName = res.get("nickname").toString();
+								if(res != null) {
+									code = res.get("openid").toString();
+									mAvatar = res.get("headimgurl").toString();
+									mGender = res.get("sex").toString();
+									mNickName = res.get("nickname").toString();
+								}
 
 								// 验证code是否被注册
 								if (!TextUtils.isEmpty(code)) {
