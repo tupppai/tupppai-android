@@ -101,7 +101,7 @@
                 android:layout_centerHorizontal="true"
                 android:text="我"
                 android:textColor="#4a4a4a"
-                android:textSize="10dp" />
+                android:textSize="9dp" />
         </RelativeLayout>
     </LinearLayout>
     <!-- Tab栏上方小红点区域 -->
