@@ -136,6 +136,7 @@ public class HomePageHotAdapter extends BaseExpandableListAdapter {
             }
 
             photoItemView.setPhotoItem(photoItem);
+            photoItemView.setOnFocusChangeListener(onFocusChangeListener);// 关注接口回调
             return photoItemView;
         }
     }
@@ -326,7 +327,6 @@ public class HomePageHotAdapter extends BaseExpandableListAdapter {
     public class BannerOnPageChangeListener implements OnPageChangeListener {
         @Override
         public void onPageSelected(int page) {
-            Log.d("", "pagePosition" + page);
             for (int i = 0; i < mBannerItems.size(); i++) {
                 if (page == i) {
                     mScrollViews[i].setImageDrawable(mContext.getResources()
@@ -368,5 +368,18 @@ public class HomePageHotAdapter extends BaseExpandableListAdapter {
         }
         super.notifyDataSetChanged();
     }
+
+    PhotoItemView.OnFocusChangeListener onFocusChangeListener = new PhotoItemView.OnFocusChangeListener() {
+        @Override
+        public void onFocusChange(long uid, boolean focusStatus) {
+            for (int i = 0; i < mPhotoItems.size(); i++) {
+                if (mPhotoItems.get(i).getUid() == uid) {
+                    mPhotoItems.get(i).setIsFollowed(focusStatus);
+                }
+            }
+
+            HomePageHotAdapter.this.notifyDataSetChanged();
+        }
+    };
 
 }
