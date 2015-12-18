@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,7 +17,6 @@ import com.psgod.PsGodImageLoader;
 import com.psgod.Constants;
 import com.psgod.R;
 import com.psgod.model.BannerData;
-import com.psgod.model.Channel;
 import com.psgod.model.PhotoItem;
 import com.psgod.network.request.BaseRequest;
 import com.psgod.ui.activity.ChannelActivity;
@@ -136,7 +134,7 @@ public class HomePageHotAdapter extends BaseExpandableListAdapter {
             }
 
             photoItemView.setPhotoItem(photoItem);
-            photoItemView.setOnFocusChangeListener(onFocusChangeListener);// 关注接口回调
+            photoItemView.setOnFollowChangeListener(onFollowChangeListener);// 关注接口回调
             return photoItemView;
         }
     }
@@ -369,7 +367,7 @@ public class HomePageHotAdapter extends BaseExpandableListAdapter {
         super.notifyDataSetChanged();
     }
 
-    PhotoItemView.OnFocusChangeListener onFocusChangeListener = new PhotoItemView.OnFocusChangeListener() {
+    PhotoItemView.OnFollowChangeListener onFollowChangeListener = new PhotoItemView.OnFollowChangeListener() {
         @Override
         public void onFocusChange(long uid, boolean focusStatus) {
             for (int i = 0; i < mPhotoItems.size(); i++) {
