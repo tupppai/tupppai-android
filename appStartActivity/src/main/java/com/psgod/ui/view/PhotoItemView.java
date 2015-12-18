@@ -605,6 +605,7 @@ public class PhotoItemView extends RelativeLayout implements Callback {
             mImageIv.setImageResource(R.drawable.ic_zhanwei);
 
             // 图片回调中将图片毛玻璃化之后作为背景图
+            mImageIv.setTag(R.id.image_url, mPhotoItem.getImageURL());
             imageLoader.displayImage(mPhotoItem.getImageURL(), mImageIv,
                     mOptions, imageLoadingListener);
             mImageArea.addView(mImageIv);
@@ -633,6 +634,7 @@ public class PhotoItemView extends RelativeLayout implements Callback {
             mImageIv.setLayoutParams(singleAskParams);
 
             // 图片回调中将图片毛玻璃化之后作为背景图
+            mImageIv.setTag(R.id.image_url, mPhotoItem.getUploadImagesList().get(0).mImageUrl);
             imageLoader.displayImage(
                     mPhotoItem.getUploadImagesList().get(0).mImageUrl,
                     mImageIv, mOptions, imageLoadingListener);
@@ -1029,8 +1031,15 @@ public class PhotoItemView extends RelativeLayout implements Callback {
         @Override
         public void onLoadingComplete(String imageUri, View view,
                                       Bitmap loadedImage) {
-            mImageArea.setBackground(new BitmapDrawable(getResources(),
-                    BitmapUtils.getBlurBitmap(loadedImage)));
+            String url = (String) view.getTag(R.id.image_url);
+            if (imageUri != null && url != null) {
+                url = url.split("\\?")[0];
+                imageUri = imageUri.split("\\?")[0];
+                if (url.equals(imageUri)) {
+                    mImageArea.setBackground(new BitmapDrawable(getResources(),
+                            BitmapUtils.getBlurBitmap(loadedImage)));
+                }
+            }
         }
 
         @Override
@@ -1268,13 +1277,13 @@ public class PhotoItemView extends RelativeLayout implements Callback {
 
     private OnFollowChangeListener onFollowChangeListener;
 
-    public void setOnFollowChangeListener(OnFollowChangeListener onFollowChangeListener){
+    public void setOnFollowChangeListener(OnFollowChangeListener onFollowChangeListener) {
         this.onFollowChangeListener = onFollowChangeListener;
     }
 
     // 关注接口回调
     public interface OnFollowChangeListener {
-        void onFocusChange(long uid,boolean focusStatus);
+        void onFocusChange(long uid, boolean focusStatus);
     }
 
 }
