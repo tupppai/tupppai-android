@@ -179,7 +179,7 @@ public final class UserPhotoRequest extends BaseRequest<List<PhotoItem>> {
 			sb.append("&size=").append(size);
 
 			if(channelId != null && !channelId.equals("")){
-				sb.append("&channel_id=").append(channelId);
+				sb.append("&category_id=").append(channelId);
 			}
 
 			if (lastUpdated != -1) {

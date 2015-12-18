@@ -115,7 +115,7 @@ public class PhotoItem implements Serializable, Cloneable {
 	@DatabaseField(columnName = "reply_id")
 	private long mReplyId;
 
-	private Long mActivityId = -1l;
+	private Long mCategoryId = -1l;
 
 	// TODO 数据库问题
 	private List<Comment> mHotCommentList = new ArrayList<Comment>();
@@ -191,8 +191,8 @@ public class PhotoItem implements Serializable, Cloneable {
 			item.mReplyId = jsonObj.getLong("reply_id");
 		}
 
-		if(jsonObj.has("activity_id")){
-			item.mActivityId = jsonObj.getLong("activity_id");
+		if(jsonObj.has("category_id")){
+			item.mCategoryId = jsonObj.getLong("category_id");
 		}
 
 		// 获取原图
@@ -303,8 +303,8 @@ public class PhotoItem implements Serializable, Cloneable {
 		return mCommentContent;
 	}
 
-	public Long getActivityId() {
-		return mActivityId;
+	public Long getCategoryId() {
+		return mCategoryId;
 	}
 
 	public static String toLocalTime(String unix) {
