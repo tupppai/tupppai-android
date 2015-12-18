@@ -194,6 +194,10 @@ public class SinglePhotoView extends RelativeLayout implements
         addView(view);
     }
 
+    public void refreshPhotoItem(PhotoItem photoItem){
+        mPhotoItemView.refreshPhotoItem(photoItem);
+    }
+
     public void initEvents() {
         // 发送评论
         mSendCommentBtn.setOnClickListener(new OnClickListener() {

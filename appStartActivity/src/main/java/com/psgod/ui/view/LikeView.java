@@ -108,6 +108,9 @@ public class LikeView extends RelativeLayout {
                 updateLikeView();
             }
            setClickable(true);
+            if(onLikeCheckListener != null){
+                onLikeCheckListener.onLikeCheckListener(mPhotoItem);
+            }
         }
     };
 
@@ -137,6 +140,16 @@ public class LikeView extends RelativeLayout {
         String textLikeCount = Utils.getCountDisplayText(mPhotoItem
                 .getLikeCount());
         likeTxt.setText(textLikeCount);
+    }
+
+    private OnLikeCheckListener onLikeCheckListener;
+
+    public void setOnLikeCheckListener(OnLikeCheckListener onLikeCheckListener) {
+        this.onLikeCheckListener = onLikeCheckListener;
+    }
+
+    public interface  OnLikeCheckListener{
+        void onLikeCheckListener(PhotoItem photoItem);
     }
 
 }
