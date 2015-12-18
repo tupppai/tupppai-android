@@ -77,6 +77,15 @@
                 android:scaleType="matrix"
                 android:src="@drawable/shape_scroll_banner_unselect"
                 android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/scroll_dot5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:scaleType="matrix"
+                android:src="@drawable/shape_scroll_banner_unselect"
+                android:visibility="gone" />
         </LinearLayout>
     </RelativeLayout>
 
