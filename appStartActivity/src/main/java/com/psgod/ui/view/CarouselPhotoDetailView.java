@@ -101,6 +101,11 @@ public class CarouselPhotoDetailView extends RelativeLayout {
 
     boolean backInited = false;
     SinglePhotoView singlePhotoView;
+    private PhotoItemView.OnFollowChangeListener onFollowChangeListener;
+
+    public void setOnFollowChangeListener(PhotoItemView.OnFollowChangeListener onFollowChangeListener) {
+        this.onFollowChangeListener = onFollowChangeListener;
+    }
 
     private void initBack() {
         if (!backInited) {
@@ -113,6 +118,7 @@ public class CarouselPhotoDetailView extends RelativeLayout {
                     }
                 }
             });
+            singlePhotoView.setOnFollowChangeListener(onFollowChangeListener);
             mScroll.addView(singlePhotoView);
             backInited = true;
         }
@@ -377,15 +383,6 @@ public class CarouselPhotoDetailView extends RelativeLayout {
                 return true;
             }
         });
-
-        coverLike.setOnLikeCheckListener(new LikeView.OnLikeCheckListener() {
-            @Override
-            public void onLikeCheckListener(PhotoItem photoItem) {
-                if(singlePhotoView != null) {
-                    singlePhotoView.refreshPhotoItem(photoItem);
-                }
-            }
-        });
     }
 
     private void goOrigin(final float top) {
@@ -432,6 +429,7 @@ public class CarouselPhotoDetailView extends RelativeLayout {
 //        mScroll.setCanScroll(true);
         if ((!isBlow && vp != null) || isAnimEnd) {
             initBack();
+            singlePhotoView.refreshPhotoItem(mPhotoItem);
             isBlow = true;
             isAnimEnd = false;
             final AnimatorSet anim = new AnimatorSet();
@@ -650,12 +648,7 @@ public class CarouselPhotoDetailView extends RelativeLayout {
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-
         return isAnimEnd ? super.dispatchTouchEvent(ev) : true;
     }
 
-    public void refreshPhotoItem(PhotoItem photoItem){
-        mPhotoItem = photoItem;
-        initVariable();
-    }
 }

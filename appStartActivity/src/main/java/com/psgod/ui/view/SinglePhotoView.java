@@ -23,8 +23,6 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshExpandableListView;
 import com.psgod.R;
 import com.psgod.WeakReferenceHandler;
-import com.psgod.eventbus.MyPageRefreshEvent;
-import com.psgod.eventbus.RefreshEvent;
 import com.psgod.model.Comment;
 import com.psgod.model.LoginUser;
 import com.psgod.model.PhotoItem;
@@ -39,8 +37,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
-import de.greenrobot.event.EventBus;
 
 /**
  * Created by Administrator on 2015/11/28 0028.
@@ -83,6 +79,8 @@ public class SinglePhotoView extends RelativeLayout implements
 
     private RelativeLayout mParent;
 
+    private PhotoItemView.OnFollowChangeListener onFollowChangeListener;
+
     private ExecutorService fixedThreadPool = Executors.newFixedThreadPool(1);
 
     // 加载更多footer
@@ -95,7 +93,7 @@ public class SinglePhotoView extends RelativeLayout implements
     private List<Comment> mHotCommentList;
     private List<Comment> mCommentList;
 
-//    private CustomProgressingDialog mProgressDialog;
+    //    private CustomProgressingDialog mProgressDialog;
     private int mPage = 1;
 
     private long replyToCid;
@@ -150,7 +148,7 @@ public class SinglePhotoView extends RelativeLayout implements
         actionBar.setLeftBtnOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(onEndListener != null){
+                if (onEndListener != null) {
                     onEndListener.onEndListener(SinglePhotoView.this);
                 }
             }
@@ -194,8 +192,10 @@ public class SinglePhotoView extends RelativeLayout implements
         addView(view);
     }
 
-    public void refreshPhotoItem(PhotoItem photoItem){
-        mPhotoItemView.refreshPhotoItem(photoItem);
+    public void refreshPhotoItem(PhotoItem photoItem) {
+        if (mPhotoItemView != null) {
+            mPhotoItemView.refreshPhotoItem(photoItem);
+        }
     }
 
     public void initEvents() {
@@ -354,6 +354,9 @@ public class SinglePhotoView extends RelativeLayout implements
             mListView.onRefreshComplete();
 
             mPhotoItemView = mAdapter.getPhotoItemView();
+            if (onFollowChangeListener != null) {
+                mPhotoItemView.setOnFollowChangeListener(onFollowChangeListener);
+            }
             // 获得头部中评论Tv
             mCommentBtn = mPhotoItemView.getRecentPhotoDetailCommentBtn();
 
@@ -531,5 +534,9 @@ public class SinglePhotoView extends RelativeLayout implements
 
     public void setOnEndListener(OnEndListener onEndListener) {
         this.onEndListener = onEndListener;
+    }
+
+    public void setOnFollowChangeListener(PhotoItemView.OnFollowChangeListener onFollowChangeListener) {
+        this.onFollowChangeListener = onFollowChangeListener;
     }
 }

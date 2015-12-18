@@ -18,6 +18,7 @@ import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.network.request.PhotoReplyRequest;
 import com.psgod.ui.adapter.ViewPagerAdapter;
 import com.psgod.ui.view.CarouselPhotoDetailView;
+import com.psgod.ui.view.PhotoItemView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -130,17 +131,30 @@ public class CarouselPhotoDetailDialog extends Dialog {
 
     Response.Listener<List<PhotoItem>> initDataListener = new Response.Listener<List<PhotoItem>>() {
         @Override
-        public void onResponse(List<PhotoItem> items) {
+        public void onResponse(final List<PhotoItem> items) {
             if (views.size() > 0) {
                 views.clear();
             }
+
+            //统一相同用户的关注关系
+            PhotoItemView.OnFollowChangeListener onFollowChangeListener =  new PhotoItemView.OnFollowChangeListener() {
+                @Override
+                public void onFocusChange(long uid, boolean focusStatus) {
+                    int length = items.size();
+                    for (int i = 0; i < length; i++) {
+                        if (items.get(i).getUid() == uid) {
+                            items.get(i).setIsFollowed(focusStatus);
+                        }
+                    }
+                }
+            };
             for (PhotoItem item : items) {
-                if(item.getUploadImagesList().size() == 2 && item.getType() == PhotoItem.TYPE_ASK){
+                if (item.getUploadImagesList().size() == 2 && item.getType() == PhotoItem.TYPE_ASK) {
                     for (int i = 0; i < 2; i++) {
                         item.setImageURL(item.getUploadImagesList().get(i).mImageUrl);
                         CarouselPhotoDetailView view = new CarouselPhotoDetailView(getContext(), item);
                         view.setVp(vp);
-                        view.setOnEndListener( new CarouselPhotoDetailView.OnEndListener() {
+                        view.setOnEndListener(new CarouselPhotoDetailView.OnEndListener() {
                             @Override
                             public void onEnd() {
                                 CarouselPhotoDetailDialog.this.dismiss();
@@ -158,16 +172,17 @@ public class CarouselPhotoDetailDialog extends Dialog {
                         CarouselPhotoDetailDialog.this.dismiss();
                     }
                 });
+                view.setOnFollowChangeListener(onFollowChangeListener);
                 views.add(view);
             }
             adapter.notifyDataSetChanged();
             if (items.size() > 1) {
-                if(askId == replyId){
+                if (askId == replyId) {
                     vp.setCurrentItem(0);
-                }else {
-                    if(items.get(0).getUploadImagesList().size() == 1) {
+                } else {
+                    if (items.get(0).getUploadImagesList().size() == 1) {
                         vp.setCurrentItem(1);
-                    }else{
+                    } else {
                         vp.setCurrentItem(2);
                     }
                 }
@@ -178,6 +193,5 @@ public class CarouselPhotoDetailDialog extends Dialog {
             CarouselPhotoDetailDialog.super.show();
         }
     };
-
 
 }

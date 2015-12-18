@@ -17,8 +17,6 @@ import android.os.Build;
 import android.os.Handler.Callback;
 import android.os.Message;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -34,7 +32,6 @@ import android.widget.Toast;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
-import com.nineoldandroids.view.ViewHelper;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.psgod.PsGodImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -45,7 +42,6 @@ import com.psgod.AnimUtils;
 import com.psgod.BitmapUtils;
 import com.psgod.Constants;
 import com.psgod.CustomToast;
-import com.psgod.PsGodImageLoader;
 import com.psgod.R;
 import com.psgod.Utils;
 import com.psgod.WeakReferenceHandler;
@@ -58,8 +54,6 @@ import com.psgod.network.request.ActionLikeRequest;
 import com.psgod.network.request.PSGodErrorListener;
 import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.ui.activity.CommentListActivity;
-import com.psgod.ui.activity.MainActivity;
-import com.psgod.ui.activity.PSGodBaseActivity;
 import com.psgod.ui.activity.PhotoBrowserActivity;
 import com.psgod.ui.activity.SinglePhotoDetail;
 import com.psgod.ui.activity.WorksListActivity;
@@ -75,7 +69,6 @@ import org.json.JSONObject;
 import org.sufficientlysecure.htmltextview.HtmlTextView;
 
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -612,6 +605,7 @@ public class PhotoItemView extends RelativeLayout implements Callback {
             mImageIv.setImageResource(R.drawable.ic_zhanwei);
 
             // 图片回调中将图片毛玻璃化之后作为背景图
+            mImageIv.setTag(R.id.image_url, mPhotoItem.getImageURL());
             imageLoader.displayImage(mPhotoItem.getImageURL(), mImageIv,
                     mOptions, imageLoadingListener);
             mImageArea.addView(mImageIv);
@@ -640,6 +634,7 @@ public class PhotoItemView extends RelativeLayout implements Callback {
             mImageIv.setLayoutParams(singleAskParams);
 
             // 图片回调中将图片毛玻璃化之后作为背景图
+            mImageIv.setTag(R.id.image_url, mPhotoItem.getUploadImagesList().get(0).mImageUrl);
             imageLoader.displayImage(
                     mPhotoItem.getUploadImagesList().get(0).mImageUrl,
                     mImageIv, mOptions, imageLoadingListener);
@@ -1010,8 +1005,8 @@ public class PhotoItemView extends RelativeLayout implements Callback {
 //                        .setIsFollowed(mPhotoItem.isFollowed() ? false : true);
 //                updateFollowView();
 
-                if (onFocusChangeListener != null) {
-                    onFocusChangeListener.onFocusChange(mPhotoItem.getUid(),
+                if (onFollowChangeListener != null) {
+                    onFollowChangeListener.onFocusChange(mPhotoItem.getUid(),
                             mPhotoItem.isFollowed() ? false : true);
                 }
             }
@@ -1036,8 +1031,15 @@ public class PhotoItemView extends RelativeLayout implements Callback {
         @Override
         public void onLoadingComplete(String imageUri, View view,
                                       Bitmap loadedImage) {
-            mImageArea.setBackground(new BitmapDrawable(getResources(),
-                    BitmapUtils.getBlurBitmap(loadedImage)));
+            String url = (String) view.getTag(R.id.image_url);
+            if (imageUri != null && url != null) {
+                url = url.split("\\?")[0];
+                imageUri = imageUri.split("\\?")[0];
+                if (url.equals(imageUri)) {
+                    mImageArea.setBackground(new BitmapDrawable(getResources(),
+                            BitmapUtils.getBlurBitmap(loadedImage)));
+                }
+            }
         }
 
         @Override
@@ -1273,15 +1275,15 @@ public class PhotoItemView extends RelativeLayout implements Callback {
         this.isRecentAct = isRecentAct;
     }
 
-    private OnFocusChangeListener onFocusChangeListener;
+    private OnFollowChangeListener onFollowChangeListener;
 
-    public void setOnFocusChangeListener(OnFocusChangeListener onFocusChangeListener){
-        this.onFocusChangeListener = onFocusChangeListener;
+    public void setOnFollowChangeListener(OnFollowChangeListener onFollowChangeListener) {
+        this.onFollowChangeListener = onFollowChangeListener;
     }
 
     // 关注接口回调
-    public interface  OnFocusChangeListener{
-        void onFocusChange(long uid,boolean focusStatus);
+    public interface OnFollowChangeListener {
+        void onFocusChange(long uid, boolean focusStatus);
     }
 
 }

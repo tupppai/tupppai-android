@@ -85,11 +85,11 @@ public class PhotoListAdapter extends BaseAdapter{
 
 		photoItemView.setPhotoItem((PhotoItem) getItem(position));
 
-		photoItemView.setOnFocusChangeListener(onFocusChangeListener);// 关注接口回调
+		photoItemView.setOnFollowChangeListener(onFollowChangeListener);// 关注接口回调
 		return convertView;
 	}
 
-	PhotoItemView.OnFocusChangeListener onFocusChangeListener = new PhotoItemView.OnFocusChangeListener() {
+	PhotoItemView.OnFollowChangeListener onFollowChangeListener = new PhotoItemView.OnFollowChangeListener() {
 		@Override
 		public void onFocusChange(long uid, boolean focusStatus) {
 			for (int i = 0; i < mPhotoItems.size(); i++) {

@@ -140,10 +140,20 @@ public class FollowView extends TextView {
                 mPhotoItem
                         .setIsFollowed(mPhotoItem.isFollowed() ? false : true);
                 updateFollowView();
+                if(followChangeListener != null){
+                    followChangeListener.onFocusChange(mPhotoItem.getUid(),
+                            mPhotoItem.isFollowed());
+                }
             }
             setClickable(true);
+
         }
     };
 
 
+    public PhotoItemView.OnFollowChangeListener followChangeListener;
+
+    public void setOnFollowChangeListener(PhotoItemView.OnFollowChangeListener followChangeListener) {
+        this.followChangeListener = followChangeListener;
+    }
 }
