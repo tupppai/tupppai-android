@@ -77,8 +77,8 @@
 
             <com.psgod.ui.widget.AvatarImageView
                 android:id="@+id/activity_main_tab_user_case"
-                android:layout_width="21dp"
-                android:layout_height="21dp"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
                 android:src="#2d2b30"
                 android:visibility="gone"
                 android:layout_centerHorizontal="true"
@@ -86,8 +86,8 @@
                 />
             <com.psgod.ui.widget.AvatarImageView
                 android:id="@+id/activity_main_tab_user_img"
-                android:layout_width="19dp"
-                android:layout_height="19dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:src="@mipmap/tab_my_normal"
                 android:layout_centerHorizontal="true"
                 android:layout_alignParentTop="true"
