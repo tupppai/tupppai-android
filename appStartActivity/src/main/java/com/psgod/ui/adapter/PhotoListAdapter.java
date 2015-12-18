@@ -17,7 +17,7 @@ import java.util.List;
  * 不带评论的PhotoListAdapter 主要用于首页（热门和最近）和关注页
  * 
  */
-public class PhotoListAdapter extends BaseAdapter {
+public class PhotoListAdapter extends BaseAdapter{
 	private Context mContext;
 	private PhotoListType mPhotoListType;
 	private List<PhotoItem> mPhotoItems;
@@ -84,6 +84,22 @@ public class PhotoListAdapter extends BaseAdapter {
 		}
 
 		photoItemView.setPhotoItem((PhotoItem) getItem(position));
+
+		photoItemView.setOnFocusChangeListener(onFocusChangeListener);// 关注接口回调
 		return convertView;
 	}
+
+	PhotoItemView.OnFocusChangeListener onFocusChangeListener = new PhotoItemView.OnFocusChangeListener() {
+		@Override
+		public void onFocusChange(long uid, boolean focusStatus) {
+			for (int i = 0; i < mPhotoItems.size(); i++) {
+				if (mPhotoItems.get(i).getUid() == uid) {
+					mPhotoItems.get(i).setIsFollowed(focusStatus);
+				}
+			}
+
+			PhotoListAdapter.this.notifyDataSetChanged();
+		}
+	};
+
 }

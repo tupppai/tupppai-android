@@ -75,6 +75,7 @@ import org.json.JSONObject;
 import org.sufficientlysecure.htmltextview.HtmlTextView;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -452,6 +453,7 @@ public class PhotoItemView extends RelativeLayout implements Callback {
             public void onClick(View view) {
                 // 请求网络时不可点击
                 mFollowBtn.setClickable(false);
+
 
                 int mType = mPhotoItem.isFollowed() ? TYPE_FOLLOW
                         : TYPE_UNFOLLOW;
@@ -1004,11 +1006,17 @@ public class PhotoItemView extends RelativeLayout implements Callback {
         @Override
         public void onResponse(Boolean response) {
             if (response) {
-                mPhotoItem
-                        .setIsFollowed(mPhotoItem.isFollowed() ? false : true);
-                updateFollowView();
+//                mPhotoItem
+//                        .setIsFollowed(mPhotoItem.isFollowed() ? false : true);
+//                updateFollowView();
+
+                if (onFocusChangeListener != null) {
+                    onFocusChangeListener.onFocusChange(mPhotoItem.getUid(),
+                            mPhotoItem.isFollowed() ? false : true);
+                }
             }
             mFollowBtn.setClickable(true);
+
         }
     };
 
@@ -1263,6 +1271,17 @@ public class PhotoItemView extends RelativeLayout implements Callback {
 
     public void setIsRecentAct(boolean isRecentAct) {
         this.isRecentAct = isRecentAct;
+    }
+
+    private OnFocusChangeListener onFocusChangeListener;
+
+    public void setOnFocusChangeListener(OnFocusChangeListener onFocusChangeListener){
+        this.onFocusChangeListener = onFocusChangeListener;
+    }
+
+    // 关注接口回调
+    public interface  OnFocusChangeListener{
+        void onFocusChange(long uid,boolean focusStatus);
     }
 
 }
