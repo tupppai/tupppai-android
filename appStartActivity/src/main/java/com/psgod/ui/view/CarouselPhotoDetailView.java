@@ -218,6 +218,12 @@ public class CarouselPhotoDetailView extends RelativeLayout {
         coverImgArea.addView(coverCover);
 
         coverDesc.setHtmlFromString(mPhotoItem.getDesc(), true);
+        initVariable();
+
+    }
+
+    //容易发生变化的变量赋值
+    private void initVariable(){
         coverComment.setText(String.valueOf(mPhotoItem.getCommentCount()));
         coverShare.setText(String.valueOf(mPhotoItem.getShareCount()));
         coverLike.setmPhotoItem(mPhotoItem);
@@ -229,7 +235,6 @@ public class CarouselPhotoDetailView extends RelativeLayout {
             coverLike.setVisibility(VISIBLE);
             coverBang.setVisibility(GONE);
         }
-
     }
 
     private OnClickListener commentClick = new OnClickListener() {
@@ -370,6 +375,15 @@ public class CarouselPhotoDetailView extends RelativeLayout {
 
                 }
                 return true;
+            }
+        });
+
+        coverLike.setOnLikeCheckListener(new LikeView.OnLikeCheckListener() {
+            @Override
+            public void onLikeCheckListener(PhotoItem photoItem) {
+                if(singlePhotoView != null) {
+                    singlePhotoView.refreshPhotoItem(photoItem);
+                }
             }
         });
     }
@@ -539,6 +553,7 @@ public class CarouselPhotoDetailView extends RelativeLayout {
             anim2.setDuration(400);
             anim2.play(coverAnim);
             anim2.start();
+            initVariable();
         }
     }
 
@@ -637,5 +652,10 @@ public class CarouselPhotoDetailView extends RelativeLayout {
     public boolean dispatchTouchEvent(MotionEvent ev) {
 
         return isAnimEnd ? super.dispatchTouchEvent(ev) : true;
+    }
+
+    public void refreshPhotoItem(PhotoItem photoItem){
+        mPhotoItem = photoItem;
+        initVariable();
     }
 }

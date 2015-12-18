@@ -77,8 +77,7 @@ public class SinglePhotoDetailView extends RelativeLayout {
     ImageView commentImg;
     TextView commentTxt;
     ImageView bang;
-    LikeView  like;
-
+    LikeView like;
 
 
     private void initView(View view) {
@@ -107,9 +106,7 @@ public class SinglePhotoDetailView extends RelativeLayout {
         time.setText(mPhotoItem.getUpdateTimeStr());
         initImg();
         desc.setText(mPhotoItem.getDesc());
-        shareTxt.setText(String.valueOf(mPhotoItem.getShareCount()));
-        commentTxt.setText(String.valueOf(mPhotoItem.getCommentCount()));
-        like.setmPhotoItem(mPhotoItem);
+        initVariable();
         like.updateLikeView();
         if (mPhotoItem.getType() == 1) {
             bang.setVisibility(VISIBLE);
@@ -118,6 +115,17 @@ public class SinglePhotoDetailView extends RelativeLayout {
             bang.setVisibility(GONE);
             like.setVisibility(VISIBLE);
         }
+    }
+
+    public void refreshPhotoItem(PhotoItem photoItem){
+        mPhotoItem = photoItem;
+        initVariable();
+    }
+
+    private void initVariable() {
+        shareTxt.setText(String.valueOf(mPhotoItem.getShareCount()));
+        commentTxt.setText(String.valueOf(mPhotoItem.getCommentCount()));
+        like.setmPhotoItem(mPhotoItem);
     }
 
     private OnClickListener shareClick = new OnClickListener() {
