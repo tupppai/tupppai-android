@@ -54,7 +54,7 @@ public class HomePageHotAdapter extends BaseExpandableListAdapter {
     private View bannerView;
     private AutoScrollViewPager mBannerViewPager;
     private BannerOnPageChangeListener bannerListener = new BannerOnPageChangeListener();
-    private ImageView[] mScrollViews = new ImageView[5];
+    private ImageView[] mScrollViews = new ImageView[6];
 
     public HomePageHotAdapter(Context context, PhotoListType photoListType,
                               List<PhotoItem> photoItems, List<BannerData> bannerItems) {
@@ -214,6 +214,7 @@ public class HomePageHotAdapter extends BaseExpandableListAdapter {
         mScrollViews[2] = (ImageView) bannerView.findViewById(R.id.scroll_dot2);
         mScrollViews[3] = (ImageView) bannerView.findViewById(R.id.scroll_dot3);
         mScrollViews[4] = (ImageView) bannerView.findViewById(R.id.scroll_dot4);
+        mScrollViews[5] = (ImageView) bannerView.findViewById(R.id.scroll_dot5);
 
         for (int i = 0; i < mBannerItems.size(); i++) {
             if (i == 0) {
