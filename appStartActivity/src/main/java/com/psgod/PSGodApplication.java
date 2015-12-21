@@ -30,6 +30,8 @@ import com.umeng.message.entity.UMessage;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.TimeZone;
+
 import cn.sharesdk.framework.ShareSDK;
 
 /**
@@ -116,6 +118,8 @@ public class PSGodApplication extends Application {
         };
         mPushAgent.setMessageHandler(messageHandler);
 
+        TimeZone.setDefault(TimeZone.getDefault().getTimeZone("GMT+8"));    // 设置时区
+
 
         /**
          * 该Handler是在BroadcastReceiver中被调用，故
@@ -127,8 +131,6 @@ public class PSGodApplication extends Application {
 
                 JSONObject jsonObject = null;
                 try {
-                    Log.e("msg",msg.custom
-                            .toString());
                     jsonObject = new JSONObject(msg.custom
                             .toString());
                     int type = jsonObject.getInt("type");
