@@ -60,6 +60,7 @@ public class PSDialog extends Dialog implements Handler.Callback {
 	private Long mAskId;
 	private Long mPhotoId;
 	private String mType;
+	private long category_id = -1;
 
 	private WeakReferenceHandler mHandler = new WeakReferenceHandler(this);
 	private DisplayImageOptions mOptions = Constants.DISPLAY_IMAGE_OPTIONS;
@@ -86,7 +87,7 @@ public class PSDialog extends Dialog implements Handler.Callback {
 		mAskId = mPhotoItem.getAskId();
 		mPhotoId = mPhotoItem.getPid();
 		mType = (mPhotoItem.getType() == TYPE_ASK) ? "ask" : "reply";
-
+		category_id = mPhotoItem.getCategoryId();
 	}
 
 	// TODO PhotoBroswer的暂时这样
@@ -160,7 +161,7 @@ public class PSDialog extends Dialog implements Handler.Callback {
 					@Override
 					public void run() {
 						ImageInfo info = PhotoRequest.getImageInfo(mType,
-								mPhotoId);
+								mPhotoId,category_id);
 
 						if (!info.isSuccessful) {
 							mHandler.sendEmptyMessage(MSG_RECORD_FAILED);
