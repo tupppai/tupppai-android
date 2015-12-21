@@ -5,7 +5,7 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical"
     android:id="@+id/activity_ask_parent"
-    android:background="#FFFFFF">
+    >
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/actionbar_height"
@@ -50,7 +50,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_horizontal|top"
-        android:visibility="visible"
+        android:visibility="gone"
         android:layout_below="@+id/activity_recent_ask_title">
          
 		<ImageView 

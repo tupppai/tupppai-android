@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/fragment_homepage_hot_parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F8F8F8">
+    >
 
     <com.handmark.pulltorefresh.library.PullToRefreshListView
         android:id="@+id/fragment_homepage_hot_lv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:groupIndicator="@null"
+        android:background="#F8F8F8"
         android:divider="@null" />
 
-</RelativeLayout>
+</merge>

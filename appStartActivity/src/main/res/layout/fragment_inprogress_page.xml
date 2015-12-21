@@ -2,66 +2,65 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#FFFFFF" >
-    
+    android:orientation="vertical">
+
     <android.support.v4.view.ViewPager
         android:id="@+id/fragment_inprogress_view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/actionbar_height" />
-    
-    <RadioGroup 
+
+    <RadioGroup
         android:id="@+id/fragment_inprogress_tab_radio_group"
         android:layout_width="match_parent"
         android:layout_height="@dimen/actionbar_height"
-        android:background="#FFFFFF"
-        android:layout_marginRight="40dp"
         android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:background="#FFFFFF"
         android:gravity="center"
         android:orientation="horizontal">
-        
+
         <RadioButton
             android:id="@+id/fragment_inprogress_ask_radio_btn"
             style="@style/homepage_inprogress_top_tabbar"
             android:checked="true"
             android:gravity="center"
-            android:textColor="#000000"
-            android:text="我的求P" />
-        
+            android:text="我的求P"
+            android:textColor="#000000" />
+
         <RadioButton
             android:id="@+id/fragment_inprogress_reply_radio_btn"
             style="@style/homepage_inprogress_top_tabbar"
             android:checked="true"
             android:gravity="center"
-            android:textColor="#99000000"
-            android:text="我的帮P" />
-        
+            android:text="我的帮P"
+            android:textColor="#99000000" />
+
         <!--<RadioButton-->
-            <!--android:id="@+id/fragment_inprogress_complete_radio_btn"-->
-            <!--style="@style/homepage_inprogress_top_tabbar"-->
-            <!--android:checked="true"-->
-            <!--android:gravity="center"-->
-            <!--android:padding="0dp"-->
-            <!--android:textColor="#99000000"-->
-            <!--android:text="已完成" />-->
-        
+        <!--android:id="@+id/fragment_inprogress_complete_radio_btn"-->
+        <!--style="@style/homepage_inprogress_top_tabbar"-->
+        <!--android:checked="true"-->
+        <!--android:gravity="center"-->
+        <!--android:padding="0dp"-->
+        <!--android:textColor="#99000000"-->
+        <!--android:text="已完成" />-->
+
     </RadioGroup>
-    
-    <ImageView 
-  	    android:id="@+id/fragment_inprogress_cursor"
-  	    android:layout_width="match_parent"
-  	    android:layout_height="4.5dp"
-  	    android:layout_below="@id/fragment_inprogress_tab_radio_group"
-  	    android:layout_marginTop="-4.5dp"
-  	    android:padding="0dp"
-  	    android:scaleType="matrix"
-  	    android:src="@drawable/shape_inprogress_fragment_cursor" />
-    
-    <View 
+
+    <ImageView
+        android:id="@+id/fragment_inprogress_cursor"
+        android:layout_width="match_parent"
+        android:layout_height="4.5dp"
+        android:layout_below="@id/fragment_inprogress_tab_radio_group"
+        android:layout_marginTop="-4.5dp"
+        android:padding="0dp"
+        android:scaleType="matrix"
+        android:src="@drawable/shape_inprogress_fragment_cursor" />
+
+    <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:layout_below="@id/fragment_inprogress_cursor"
         android:background="#1A000000" />
-    
+
 </RelativeLayout>
