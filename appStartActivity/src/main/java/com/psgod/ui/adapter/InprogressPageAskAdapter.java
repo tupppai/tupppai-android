@@ -96,6 +96,7 @@ public class InprogressPageAskAdapter extends BaseAdapter implements
 		if (convertView == null) {
 			convertView = LayoutInflater.from(mContext).inflate(
 					R.layout.item_my_profile_asks, null);
+
 			viewHolder = new ViewHolder();
 			viewHolder.timeTv = (TextView) convertView
 					.findViewById(R.id.item_user_profile_asks_time);
