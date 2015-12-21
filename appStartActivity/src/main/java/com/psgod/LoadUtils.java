@@ -28,6 +28,8 @@ public class LoadUtils implements Handler.Callback {
     public static final int MSG_RECORD_SUCCESS = 0x4402;
     private static final int MSG_RECORD_FAILED = 0x4403;
 
+    private long category_id = -1;
+
     public LoadUtils(Context mContext) {
         this.mContext = mContext;
     }
@@ -37,6 +39,11 @@ public class LoadUtils implements Handler.Callback {
 
     public LoadUtils isSimple(boolean isSimple){
         this.isSimple = isSimple;
+        return this;
+    }
+
+    public LoadUtils setCategory_id(long category_id) {
+        this.category_id = category_id;
         return this;
     }
 
@@ -60,7 +67,7 @@ public class LoadUtils implements Handler.Callback {
                     mType = "reply";
                 }
                 PhotoRequest.ImageInfo info = PhotoRequest.getImageInfo(mType,
-                        pid);
+                        pid,category_id);
                 if (!info.isSuccessful) {
                     mHandler.sendEmptyMessage(MSG_RECORD_FAILED);
                 } else {

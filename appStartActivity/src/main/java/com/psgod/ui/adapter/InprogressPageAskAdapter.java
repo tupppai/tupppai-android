@@ -100,8 +100,12 @@ public class InprogressPageAskAdapter extends BaseAdapter implements
 			viewHolder = new ViewHolder();
 			viewHolder.timeTv = (TextView) convertView
 					.findViewById(R.id.item_user_profile_asks_time);
-			viewHolder.replyCount = (TextView) convertView
-					.findViewById(R.id.item_user_profile_asks_reply_count);
+//			viewHolder.replyCount = (TextView) convertView
+//					.findViewById(R.id.item_user_profile_asks_reply_count);
+			viewHolder.mChannelName = (TextView) convertView.
+					findViewById(R.id.item_user_profile_asks_channel_txt);
+			viewHolder.mChannelTag = (ImageView) convertView.
+					findViewById(R.id.item_user_profile_asks_tag);
 			viewHolder.imagePanel = (LinearLayout) convertView
 					.findViewById(R.id.item_user_profile_asks_middle_panel);
 			viewHolder.originPanelFirst = (RelativeLayout) convertView
@@ -150,7 +154,21 @@ public class InprogressPageAskAdapter extends BaseAdapter implements
 		ArrayList<PhotoItem> mReplyItems = (ArrayList<PhotoItem>) photoItem
 				.getReplyItems();
 		int mSize = mReplyItems.size();
-		viewHolder.replyCount.setText("已有" + photoItem.getReplyCount() + "个作品");
+//		viewHolder.replyCount.setText("已有" + photoItem.getReplyCount() + "个作品");
+		RelativeLayout.LayoutParams tagParams = (RelativeLayout.LayoutParams)
+				viewHolder.timeTv.getLayoutParams();
+		if(photoItem.getCategoryName()!= null && photoItem.getCategoryName().equals("")){
+			viewHolder.mChannelTag.setVisibility(View.GONE);
+			viewHolder.mChannelName.setVisibility(View.GONE);
+			tagParams.setMargins(0, 0, 0, 0);
+			viewHolder.timeTv.setLayoutParams(tagParams);
+		}else{
+			viewHolder.mChannelTag.setVisibility(View.VISIBLE);
+			viewHolder.mChannelName.setText(photoItem.getCategoryName());
+			tagParams.setMargins(Utils.dpToPx(mContext,11), 0, 0, 0);
+			viewHolder.timeTv.setLayoutParams(tagParams);
+		}
+
 		if (mSize > 0) {
 			for (int i = 0; i < mSize; i++) {
 				final PhotoItem replyPhotoItem = mReplyItems.get(i);
@@ -346,7 +364,7 @@ public class InprogressPageAskAdapter extends BaseAdapter implements
 
 	private static class ViewHolder {
 		TextView timeTv;
-		TextView replyCount;
+//		TextView replyCount;
 		LinearLayout imagePanel;
 		RelativeLayout originPanelFirst;
 		RelativeLayout originPanelSecond;
@@ -355,6 +373,8 @@ public class InprogressPageAskAdapter extends BaseAdapter implements
 		EditText descEdit;
 		ImageView mEditImage;
 		TextView mEditView;
+		TextView mChannelName;
+		ImageView mChannelTag;
 	}
 
 	private WeakReferenceHandler mHandler = new WeakReferenceHandler(this);

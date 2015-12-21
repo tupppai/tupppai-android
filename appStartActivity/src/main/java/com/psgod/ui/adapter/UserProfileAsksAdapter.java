@@ -172,6 +172,7 @@ public class UserProfileAsksAdapter extends BaseAdapter {
 	private static class ViewHolder {
 		TextView timeTv;
 		TextView replyCount;
+//		TextView channelName;
 		LinearLayout imagePanel;
 		RelativeLayout originPanelFirst;
 		RelativeLayout originPanelSecond;

@@ -116,6 +116,11 @@ public class PhotoItem implements Serializable, Cloneable {
 	private long mReplyId;
 
 	private Long mCategoryId = -1l;
+	private String mCategoryName = "";
+
+	public String getCategoryName() {
+		return mCategoryName;
+	}
 
 	// TODO 数据库问题
 	private List<Comment> mHotCommentList = new ArrayList<Comment>();
@@ -192,7 +197,12 @@ public class PhotoItem implements Serializable, Cloneable {
 		}
 
 		if(jsonObj.has("category_id")){
-			item.mCategoryId = jsonObj.getLong("category_id");
+			item.mCategoryId = Long.parseLong(jsonObj.getString("category_id").equals("")?"-1"
+					:jsonObj.getString("category_id"));
+		}
+
+		if(jsonObj.has("category_name")){
+			item.mCategoryName = jsonObj.getString("category_name");
 		}
 
 		// 获取原图

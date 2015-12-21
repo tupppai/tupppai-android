@@ -110,6 +110,10 @@ public class InprogressPageReplyAdapter extends BaseAdapter implements
                     .findViewById(R.id.download_iv);
             mViewHolder.mUploadIv = (ImageView) convertView
                     .findViewById(R.id.upload_iv);
+            mViewHolder.mChannelName = (TextView) convertView.
+                    findViewById(R.id.item_inprogress_reply_channel);
+            mViewHolder.mChannelTag = (ImageView) convertView.
+                    findViewById(R.id.item_inprogress_reply_tag);
             convertView.setTag(mViewHolder);
         } else {
             mViewHolder = (ViewHolder) convertView.getTag();
@@ -132,6 +136,14 @@ public class InprogressPageReplyAdapter extends BaseAdapter implements
 
         mViewHolder.mUploadIv.setTag(photoItem);
         mViewHolder.mUploadIv.setOnClickListener(uploadClickListener);
+
+        if(photoItem.getCategoryName()!= null && photoItem.getCategoryName().equals("")){
+            mViewHolder.mChannelTag.setVisibility(View.GONE);
+            mViewHolder.mChannelName.setVisibility(View.GONE);
+        }else{
+            mViewHolder.mChannelTag.setVisibility(View.VISIBLE);
+            mViewHolder.mChannelName.setText(photoItem.getCategoryName());
+        }
 
         convertView.setOnClickListener(new OnClickListener() {
             @Override
@@ -166,6 +178,8 @@ public class InprogressPageReplyAdapter extends BaseAdapter implements
                 return false;
             }
         });
+
+
 
         return convertView;
     }
@@ -239,6 +253,8 @@ public class InprogressPageReplyAdapter extends BaseAdapter implements
         HtmlTextView mAskDesc;
         ImageView mDownloadIv;
         ImageView mUploadIv;
+        ImageView mChannelTag;
+        TextView mChannelName;
     }
 
     @Override
