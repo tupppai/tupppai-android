@@ -5,13 +5,11 @@
     android:layout_height="match_parent"
     android:background="#F8F8F8">
 
-    <com.handmark.pulltorefresh.library.PullToRefreshExpandableListView
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
         android:id="@+id/fragment_homepage_hot_lv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="@null"
         android:groupIndicator="@null"
-        android:listSelector="#00000000"
-        android:scrollbars="none" />
+        android:divider="@null" />
 
 </RelativeLayout>
