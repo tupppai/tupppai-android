@@ -115,7 +115,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:drawableLeft="@drawable/ic_home_share_normal"
+                    android:drawableLeft="@mipmap/ic"
                     android:drawablePadding="5dp"
                     android:padding="5dp"
                     android:text="0"
@@ -129,7 +129,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="5dp"
                     android:layout_toRightOf="@id/simple_type_photo_item_share_tv"
-                    android:drawableLeft="@drawable/ic_home_comment_normal"
+                    android:drawableLeft="@mipmap/ic_comment"
                     android:drawablePadding="5dp"
                     android:padding="5dp"
                     android:text="22"
@@ -160,44 +160,44 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@id/photo_item_works_tv"
-                    android:drawableLeft="@drawable/ic_home_share_normal"
+                    android:drawableLeft="@mipmap/ic"
                     android:drawablePadding="5dp"
                     android:padding="5dp"
                     android:text="0"
                     android:textColor="#4A4A4A"
                     android:textSize="12dp" />
 
-                <TextView
-                    android:id="@+id/photo_item_fav_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="-10dp"
-                    android:layout_toRightOf="@+id/photo_item_fav_img"
-                    android:padding="5dp"
-                    android:text="0"
-                    android:textColor="#4A4A4A"
-                    android:textSize="12dp" />
+                <!--<TextView-->
+                    <!--android:id="@+id/photo_item_fav_tv"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:layout_marginLeft="-10dp"-->
+                    <!--android:layout_toRightOf="@+id/photo_item_fav_img"-->
+                    <!--android:padding="5dp"-->
+                    <!--android:text="0"-->
+                    <!--android:textColor="#4A4A4A"-->
+                    <!--android:textSize="12dp" />-->
 
-                <ImageView
-                    android:id="@+id/photo_item_fav_img"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="4dp"
-                    android:layout_toRightOf="@id/photo_item_share_tv"
-                    android:padding="10dp"
-                    android:src="@drawable/ic_home_fav_normal" />
+                <!--<ImageView-->
+                    <!--android:id="@+id/photo_item_fav_img"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:layout_marginLeft="4dp"-->
+                    <!--android:layout_toRightOf="@id/photo_item_share_tv"-->
+                    <!--android:padding="10dp"-->
+                    <!--android:src="@drawable/ic_home_fav_normal" />-->
 
-                <ImageView
-                    android:id="@+id/photo_item_fav_temp_img"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/photo_item_fav_img"
-                    android:layout_centerVertical="true"
-                    android:padding="10dp"
-                    android:src="@drawable/ic_home_fav_normal"
-                    android:visibility="gone" />
+                <!--<ImageView-->
+                    <!--android:id="@+id/photo_item_fav_temp_img"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignLeft="@+id/photo_item_fav_img"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:padding="10dp"-->
+                    <!--android:src="@drawable/ic_home_fav_normal"-->
+                    <!--android:visibility="gone" />-->
 
                 <TextView
                     android:id="@+id/photo_item_comment_tv"
@@ -205,8 +205,8 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="5dp"
-                    android:layout_toRightOf="@id/photo_item_fav_tv"
-                    android:drawableLeft="@drawable/ic_home_comment_normal"
+                    android:layout_toRightOf="@id/photo_item_share_tv"
+                    android:drawableLeft="@mipmap/ic_comment"
                     android:drawablePadding="5dp"
                     android:padding="5dp"
                     android:text="0"
@@ -237,7 +237,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@id/hot_reply_item_works_tv"
-                    android:drawableLeft="@drawable/ic_home_share_normal"
+                    android:drawableLeft="@mipmap/ic"
                     android:drawablePadding="5dp"
                     android:padding="5dp"
                     android:text="0"
@@ -251,7 +251,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="5dp"
                     android:layout_toRightOf="@id/hot_reply_item_share_tv"
-                    android:drawableLeft="@drawable/ic_home_comment_normal"
+                    android:drawableLeft="@mipmap/ic_comment"
                     android:drawablePadding="5dp"
                     android:padding="5dp"
                     android:text="0"
@@ -282,7 +282,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@id/single_photoitem_works_tv"
-                    android:drawableLeft="@drawable/ic_home_comment_normal"
+                    android:drawableLeft="@mipmap/ic_comment"
                     android:drawablePadding="5dp"
                     android:padding="5dp"
                     android:text="0"
@@ -296,7 +296,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="5dp"
                     android:layout_toRightOf="@id/single_photoitem_comment_tv"
-                    android:drawableLeft="@drawable/ic_home_share_normal"
+                    android:drawableLeft="@mipmap/ic"
                     android:drawablePadding="5dp"
                     android:padding="5dp"
                     android:text="0"
@@ -318,7 +318,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:drawableLeft="@drawable/ic_home_comment_normal"
+                    android:drawableLeft="@mipmap/ic_comment"
                     android:drawablePadding="5dp"
                     android:padding="5dp"
                     android:text="0"
@@ -332,7 +332,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="5dp"
                     android:layout_toRightOf="@id/single_photoitem_ask_comment_tv"
-                    android:drawableLeft="@drawable/ic_home_share_normal"
+                    android:drawableLeft="@mipmap/ic"
                     android:drawablePadding="5dp"
                     android:padding="5dp"
                     android:text="0"

@@ -148,9 +148,9 @@ public class PhotoItemView extends RelativeLayout implements Callback {
     private RelativeLayout mComplexBtnsPanel;
     private ImageView mAllWorksBtn;
     private TextView mComplexShareBtn;
-    private TextView mComplexFavBtn;
-    private ImageView mComplexFavImg;
-    private ImageView mComplexFavTempImg;
+//    private TextView mComplexFavBtn;
+//    private ImageView mComplexFavImg;
+//    private ImageView mComplexFavTempImg;
     private TextView mComplexCommentBtn;
 
     private RelativeLayout mReplyLikedArea;
@@ -286,12 +286,12 @@ public class PhotoItemView extends RelativeLayout implements Callback {
         mAllWorksBtn = (ImageView) this.findViewById(R.id.photo_item_works_tv);
         mComplexShareBtn = (TextView) this
                 .findViewById(R.id.photo_item_share_tv);
-        mComplexFavBtn = (TextView) this.findViewById(R.id.photo_item_fav_tv);
-        mComplexFavImg = (ImageView) this.findViewById(R.id.photo_item_fav_img);
+//        mComplexFavBtn = (TextView) this.findViewById(R.id.photo_item_fav_tv);
+//        mComplexFavImg = (ImageView) this.findViewById(R.id.photo_item_fav_img);
         mComplexCommentBtn = (TextView) this
                 .findViewById(R.id.photo_item_comment_tv);
-        mComplexFavTempImg = (ImageView) this
-                .findViewById(R.id.photo_item_fav_temp_img);
+//        mComplexFavTempImg = (ImageView) this
+//                .findViewById(R.id.photo_item_fav_temp_img);
 
         mReplyLikedArea = (RelativeLayout) this
                 .findViewById(R.id.photo_item_like_area);
@@ -437,8 +437,8 @@ public class PhotoItemView extends RelativeLayout implements Callback {
         });
 
         // 作品收藏
-        mComplexFavBtn.setOnClickListener(favClick);
-        mComplexFavImg.setOnClickListener(favClick);
+//        mComplexFavBtn.setOnClickListener(favClick);
+//        mComplexFavImg.setOnClickListener(favClick);
 
         // 关注按钮点击
         mFollowBtn.setOnClickListener(new OnClickListener() {
@@ -754,7 +754,7 @@ public class PhotoItemView extends RelativeLayout implements Callback {
         updateShareView();
         updateCommentView();
 
-        updateFavView();
+//        updateFavView();
         updateLikeView();
         updateFollowView();
 
@@ -854,19 +854,19 @@ public class PhotoItemView extends RelativeLayout implements Callback {
     /**
      * 根据用户是否收藏
      */
-    public void updateFavView() {
-        Resources res = mContext.getResources();
-        if (mPhotoItem.isCollected()) {
-            mComplexFavImg.setImageDrawable(res
-                    .getDrawable(R.drawable.ic_home_fav_selected));
-        } else {
-            mComplexFavImg.setImageDrawable(res
-                    .getDrawable(R.drawable.ic_home_fav_normal));
-        }
-        String textFavCount = Utils.getCountDisplayText(mPhotoItem
-                .getCollectCount());
-        mComplexFavBtn.setText(textFavCount);
-    }
+//    public void updateFavView() {
+//        Resources res = mContext.getResources();
+//        if (mPhotoItem.isCollected()) {
+//            mComplexFavImg.setImageDrawable(res
+//                    .getDrawable(R.drawable.ic_home_fav_selected));
+//        } else {
+//            mComplexFavImg.setImageDrawable(res
+//                    .getDrawable(R.drawable.ic_home_fav_normal));
+//        }
+//        String textFavCount = Utils.getCountDisplayText(mPhotoItem
+//                .getCollectCount());
+//        mComplexFavBtn.setText(textFavCount);
+//    }
 
     public void updateFollowView() {
         if (mPhotoItem.isFollowed()) {
@@ -965,36 +965,36 @@ public class PhotoItemView extends RelativeLayout implements Callback {
             mLikeBtn.setClickable(true);
         }
     };
-
-    // 收藏回调函数
-    private Listener<Boolean> mActionFavListener = new Listener<Boolean>() {
-        @Override
-        public void onResponse(Boolean response) {
-            if (response) {
-                mPhotoItem
-                        .setCollectCount(mPhotoItem.isCollected() ? mPhotoItem
-                                .getCollectCount() - 1 : mPhotoItem
-                                .getCollectCount() + 1);
-                mPhotoItem.setIsCollected(mPhotoItem.isCollected() ? false
-                        : true);
-                updateFavView();
-            }
-            mComplexFavBtn.setClickable(true);
-            mComplexFavImg.setClickable(true);
-            EventBus.getDefault().post(
-                    new MyPageRefreshEvent(MyPageRefreshEvent.COLLECTION));
-        }
-    };
-
-    // 收藏失败回调函数
-    private PSGodErrorListener mActionFavErrorListener = new PSGodErrorListener(
-            ActionCollectionRequest.class.getSimpleName()) {
-        @Override
-        public void handleError(VolleyError error) {
-            mComplexFavBtn.setClickable(true);
-            CustomToast.show(mContext, "收藏失败，请刷新后重试", Toast.LENGTH_LONG);
-        }
-    };
+//
+//    // 收藏回调函数
+//    private Listener<Boolean> mActionFavListener = new Listener<Boolean>() {
+//        @Override
+//        public void onResponse(Boolean response) {
+//            if (response) {
+//                mPhotoItem
+//                        .setCollectCount(mPhotoItem.isCollected() ? mPhotoItem
+//                                .getCollectCount() - 1 : mPhotoItem
+//                                .getCollectCount() + 1);
+//                mPhotoItem.setIsCollected(mPhotoItem.isCollected() ? false
+//                        : true);
+//                updateFavView();
+//            }
+//            mComplexFavBtn.setClickable(true);
+//            mComplexFavImg.setClickable(true);
+//            EventBus.getDefault().post(
+//                    new MyPageRefreshEvent(MyPageRefreshEvent.COLLECTION));
+//        }
+//    };
+//
+//    // 收藏失败回调函数
+//    private PSGodErrorListener mActionFavErrorListener = new PSGodErrorListener(
+//            ActionCollectionRequest.class.getSimpleName()) {
+//        @Override
+//        public void handleError(VolleyError error) {
+//            mComplexFavBtn.setClickable(true);
+//            CustomToast.show(mContext, "收藏失败，请刷新后重试", Toast.LENGTH_LONG);
+//        }
+//    };
 
     // 关注回调函数
     private Listener<Boolean> mActionFollowListener = new Listener<Boolean>() {
@@ -1238,34 +1238,34 @@ public class PhotoItemView extends RelativeLayout implements Callback {
         }
     };
 
-    OnClickListener favClick = new OnClickListener() {
-
-        @Override
-        public void onClick(View view) {
-            // 请求网络时不可点击
-            mComplexFavBtn.setClickable(false);
-            mComplexFavImg.setClickable(false);
-            if (mComplexFavTempImg.getVisibility() == GONE) {
-                mComplexFavTempImg.setVisibility(VISIBLE);
-                mComplexFavTempImg.setImageDrawable(mComplexFavImg
-                        .getDrawable());
-                AnimUtils.vanishAnimThumb(mContext, mComplexFavTempImg, null);
-            }
-            int mStatus = mPhotoItem.isCollected() ? STATUS_UNCOLLECTION
-                    : STATUS_COLLECTION;
-
-            ActionCollectionRequest.Builder builder = new ActionCollectionRequest.Builder()
-                    .setType(mPhotoItem.getType()).setPid(mPhotoItem.getPid())
-                    .setStatus(mStatus)
-                    .setErrorListener(mActionFavErrorListener)
-                    .setListener(mActionFavListener);
-
-            ActionCollectionRequest request = builder.build();
-            RequestQueue requestQueue = PSGodRequestQueue.getInstance(mContext)
-                    .getRequestQueue();
-            requestQueue.add(request);
-        }
-    };
+//    OnClickListener favClick = new OnClickListener() {
+//
+//        @Override
+//        public void onClick(View view) {
+//            // 请求网络时不可点击
+//            mComplexFavBtn.setClickable(false);
+//            mComplexFavImg.setClickable(false);
+//            if (mComplexFavTempImg.getVisibility() == GONE) {
+//                mComplexFavTempImg.setVisibility(VISIBLE);
+//                mComplexFavTempImg.setImageDrawable(mComplexFavImg
+//                        .getDrawable());
+//                AnimUtils.vanishAnimThumb(mContext, mComplexFavTempImg, null);
+//            }
+//            int mStatus = mPhotoItem.isCollected() ? STATUS_UNCOLLECTION
+//                    : STATUS_COLLECTION;
+//
+//            ActionCollectionRequest.Builder builder = new ActionCollectionRequest.Builder()
+//                    .setType(mPhotoItem.getType()).setPid(mPhotoItem.getPid())
+//                    .setStatus(mStatus)
+//                    .setErrorListener(mActionFavErrorListener)
+//                    .setListener(mActionFavListener);
+//
+//            ActionCollectionRequest request = builder.build();
+//            RequestQueue requestQueue = PSGodRequestQueue.getInstance(mContext)
+//                    .getRequestQueue();
+//            requestQueue.add(request);
+//        }
+//    };
 
     public PhotoItem getPhotoItem() {
         return mPhotoItem;

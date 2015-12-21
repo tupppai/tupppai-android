@@ -49,6 +49,7 @@ public class MultiImageSelectActivity extends PSGodBaseActivity {
 	private final static int MaxImageTwo = 2;
 	private static int MaxImageSelectCount = MaxImageOne;
 	public static final String ACTIVITY_ID = "ActivityId";
+	public static final String CHANNEL_ID = "channel_id";
 
 	public final static String TYPE_ASK_SELECT = "TypeAskSelect";
 	public final static String TYPE_REPLY_SELECT = "TypeReplySelect";
@@ -104,7 +105,7 @@ public class MultiImageSelectActivity extends PSGodBaseActivity {
 
 		mAskId = bundle.getLong("AskId", 0l);
 		mActivityId = bundle.getString(ACTIVITY_ID);
-		mChannelId = bundle.getString("channel_id");
+		mChannelId = bundle.getString(CHANNEL_ID);
 		isAsk = bundle.getBoolean("isAsk",false);
 
 		if (IMAGE_SELECT_TYPE.equals(TYPE_ASK_SELECT)) {
