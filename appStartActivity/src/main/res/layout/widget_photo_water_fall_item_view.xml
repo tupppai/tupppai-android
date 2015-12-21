@@ -132,7 +132,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:src="@drawable/upload_reply_image" />
+            android:src="@mipmap/btn_bang" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -150,9 +150,9 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="13dp"
-            android:drawableLeft="@drawable/ic_like_new"
+            android:drawableLeft="@mipmap/like"
             android:drawablePadding="4dp"
-            android:gravity="right"
+            android:gravity="center"
             android:text="12"
             android:textColor="#6F000000"
             android:textSize="11dp" />

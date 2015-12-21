@@ -124,7 +124,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/single_photo_detail_share_img"
             android:layout_marginTop="30dp"
-            android:src="@mipmap/ic_share"
+            android:src="@mipmap/ic"
             android:layout_below="@+id/single_photo_detail_desc"
             android:layout_marginBottom="20dp"
             android:layout_alignLeft="@+id/single_photo_detail_desc"

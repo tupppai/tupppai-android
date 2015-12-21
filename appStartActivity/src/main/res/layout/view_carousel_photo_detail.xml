@@ -124,7 +124,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="15dp"
                 android:layout_marginLeft="15dp"
-                android:src="@mipmap/ic_share" />
+                android:src="@mipmap/ic" />
 
             <TextView
                 android:id="@+id/view_carp_photo_detail_cover_share"

@@ -50,7 +50,7 @@
             android:layout_marginRight="5dp"
             android:background="@drawable/selector_press"
             android:scaleType="centerInside"
-            android:src="@drawable/ic_search" />
+            android:src="@mipmap/ic_search" />
     </FrameLayout>
 
     <View
