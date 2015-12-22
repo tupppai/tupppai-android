@@ -1,13 +1,14 @@
 package com.psgod.ui.widget;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
-import android.util.TypedValue;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -22,25 +23,18 @@ import com.psgod.network.request.ActionFollowRequest;
 import com.psgod.network.request.PSGodErrorListener;
 import com.psgod.network.request.PSGodRequestQueue;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * 关注和取消关注按钮
- * 
+ *
  * @author Rayal
  */
-public class FollowButton extends ImageView {
-	private final static String TAG = FollowButton.class.getSimpleName();
+public class FollowImage extends ImageView {
+	private final static String TAG = FollowImage.class.getSimpleName();
 
 	public static final int TYPE_FOLLOW = 0;
 	public static final int TYPE_UNFOLLOW = 1;
-	// TYPE_FOLLOW_EACH_STR状态
+	// 互相关注状态
 	public static final int TYPE_FOLLOW_EACH = 2;
-
-	public static final String TYPE_FOLLOW_STR = "已关注";
-	public static final String TYPE_UNFOLLOW_STR = "+ 关注";
-	public static final String TYPE_FOLLOW_EACH_STR = "互相关注";
 
 	private Context mContext;
 	// 状态和对应icon之间关系
@@ -51,30 +45,18 @@ public class FollowButton extends ImageView {
 	// 对应User
 	private User mUser;
 
-	private OnFollowListener onFollowListener;
-
-	private OnErrorListener onErrorListener;
-
-	public void setOnFollowListener(OnFollowListener onFollowListener) {
-		this.onFollowListener = onFollowListener;
-	}
-
-	public void setOnErrorListener(OnErrorListener onErrorListener) {
-		this.onErrorListener = onErrorListener;
-	}
-
 	public static enum FollowState {
-		// 未关注 关注状态 TYPE_FOLLOW_EACH_STR
+		// 未关注 关注状态 互相关注
 		UnFollow, Following, FollowingEach;
 	}
 
 	private OnClickListener mOnClickListener = new OnClickListener() {
 		@Override
 		public void onClick(View view) {
-			// 正在关注 包括TYPE_FOLLOW_EACH_STR
+			// 正在关注 包括互相关注
 			if (state == FollowState.Following
 					|| state == FollowState.FollowingEach) {
-				FollowButton.this.setClickable(false);
+				FollowImage.this.setClickable(false);
 
 				ActionFollowRequest.Builder builder = new ActionFollowRequest.Builder()
 						.setType(TYPE_UNFOLLOW).setUid(mUser.getUid())
@@ -87,7 +69,7 @@ public class FollowButton extends ImageView {
 						mContext).getRequestQueue();
 				requestQueue.add(request);
 			} else if (state == FollowState.UnFollow) {
-				FollowButton.this.setClickable(false);
+				FollowImage.this.setClickable(false);
 
 				ActionFollowRequest.Builder builder = new ActionFollowRequest.Builder()
 						.setType(TYPE_FOLLOW).setUid(mUser.getUid())
@@ -100,7 +82,6 @@ public class FollowButton extends ImageView {
 						mContext).getRequestQueue();
 				requestQueue.add(request);
 			}
-
 		}
 	};
 
@@ -121,14 +102,12 @@ public class FollowButton extends ImageView {
 					} else {
 						state = FollowState.Following;
 					}
+
 					setFollowButtonState(state);
 					Toast.makeText(mContext, "关注成功", Toast.LENGTH_SHORT).show();
 				}
-				if (onFollowListener != null) {
-					onFollowListener.onFollowListener(response, state.name());
-				}
 
-				FollowButton.this.setClickable(true);
+				FollowImage.this.setClickable(true);
 
 				// 关注用户有变化 需要自动刷新我的关注页面
 				Constants.IS_FOLLOW_NEW_USER = true;
@@ -136,22 +115,11 @@ public class FollowButton extends ImageView {
 		}
 	};
 
-	public interface OnFollowListener {
-		void onFollowListener(Boolean response, String state);
-	}
-
-	public interface OnErrorListener {
-		void onErrorListener(VolleyError error);
-	}
-
 	private PSGodErrorListener errorListener = new PSGodErrorListener(
-			FollowButton.class.getSimpleName()) {
+			FollowImage.class.getSimpleName()) {
 		@Override
 		public void handleError(VolleyError error) {
 			// TODO Auto-generated method stub
-			if (onErrorListener != null) {
-				onErrorListener.onErrorListener(error);
-			}
 		}
 	};
 
@@ -165,18 +133,18 @@ public class FollowButton extends ImageView {
 		} else if (mUser.isFollowing() == 0) {
 			state = FollowState.UnFollow;
 		} else if (mUser.isFollowed() == 1 && mUser.isFollowing() == 1) {
-			// TYPE_FOLLOW_EACH_STR状态
+			// 互相关注状态
 			state = FollowState.FollowingEach;
 		}
 		this.setFollowButtonState(state);
 	}
 
-	public FollowButton(Context context) {
+	public FollowImage(Context context) {
 		super(context);
 		mContext = context;
 	}
 
-	public FollowButton(Context context, AttributeSet attrs) {
+	public FollowImage(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		mContext = context;
 
@@ -186,24 +154,18 @@ public class FollowButton extends ImageView {
 //		int height = resources.getDimensionPixelSize(R.dimen.follow_btn_height);
 //		this.setWidth(width);
 //		this.setHeight(height);
-//		ViewGroup.LayoutParams params = getLayoutParams();
-//		if(params )
-//		params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-//		params.width = ViewGroup.LayoutParams.WRAP_CONTENT;
-//		setLayoutParams(params);
 
 		FollowButtonAttribute unfollowAttr = new FollowButtonAttribute();
-		unfollowAttr.srcDrawableId = R.mipmap.btn_addfollow;
-		unfollowAttr.state = TYPE_UNFOLLOW_STR;
+		unfollowAttr.srcDrawable = resources.getDrawable(R.mipmap.btn_home_follow);
 
 		// follow 和 unfollow的命名弄反了╮(╯▽╰)╭
 		FollowButtonAttribute followingAttr = new FollowButtonAttribute();
-		followingAttr.srcDrawableId = R.mipmap.btn_unfollow;
-		followingAttr.state = TYPE_FOLLOW_STR;
+		followingAttr.srcDrawable = resources
+				.getDrawable(R.mipmap.btn_home_followed);
 
 		FollowButtonAttribute followeachAttr = new FollowButtonAttribute();
-		followeachAttr.srcDrawableId = R.mipmap.btn_fri;
-		followeachAttr.state = TYPE_FOLLOW_EACH_STR;
+		followeachAttr.srcDrawable = resources
+				.getDrawable(R.mipmap.btn_fri);
 
 		mBtnAttrs.put(FollowState.UnFollow, unfollowAttr);
 		mBtnAttrs.put(FollowState.Following, followingAttr);
@@ -216,19 +178,11 @@ public class FollowButton extends ImageView {
 	@SuppressLint("NewApi")
 	private void updateButton() {
 		FollowButtonAttribute attr = mBtnAttrs.get(state);
-//		this.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 10);
+
 		if (android.os.Build.VERSION.SDK_INT >= 16) {
-			this.setImageDrawable(getResources().getDrawable(attr.srcDrawableId));
-//			this.setText(attr.state);
-//			if (attr.state.equals(TYPE_FOLLOW_EACH_STR)) {
-//				this.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 9);
-//			}
+			this.setBackground(attr.srcDrawable);
 		} else {
-			this.setImageDrawable(getResources().getDrawable(attr.srcDrawableId));
-//			this.setText(attr.state);
-//			if (attr.state.equals(TYPE_FOLLOW_EACH_STR)) {
-//				this.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 9);
-//			}
+			this.setBackgroundDrawable(attr.srcDrawable);
 		}
 
 	}
@@ -244,7 +198,6 @@ public class FollowButton extends ImageView {
 	}
 
 	private static class FollowButtonAttribute {
-		int srcDrawableId;
-		String state;
+		Drawable srcDrawable;
 	}
 }

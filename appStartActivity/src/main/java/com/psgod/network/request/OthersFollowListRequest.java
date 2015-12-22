@@ -65,6 +65,7 @@ public class OthersFollowListRequest extends BaseRequest<List<User>> {
 			user.setNickname(jsonObject.getString("nickname"));
 			user.setGender(jsonObject.getInt("sex"));
 			user.setFollowing(jsonObject.getInt("is_follow"));
+			user.setFollowed(jsonObject.getInt("is_fan"));
 			user.setFollowerCount(jsonObject.getInt("fans_count"));
 			user.setFollowingCount(jsonObject.getInt("fellow_count"));
 			user.setAskCount(jsonObject.getInt("ask_count"));

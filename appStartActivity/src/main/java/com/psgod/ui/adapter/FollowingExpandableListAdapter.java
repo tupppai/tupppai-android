@@ -17,7 +17,7 @@ import com.psgod.model.User;
 import com.psgod.ui.activity.RecommendFocusActivity;
 import com.psgod.ui.activity.UserProfileActivity;
 import com.psgod.ui.widget.AvatarImageView;
-import com.psgod.ui.widget.FollowButton;
+import com.psgod.ui.widget.FollowImage;
 
 import java.util.List;
 
@@ -112,7 +112,7 @@ public class FollowingExpandableListAdapter extends BaseExpandableListAdapter {
 					.findViewById(R.id.item_user_list_avatar_imgview);
 			viewHolder.nameTv = (TextView) convertView
 					.findViewById(R.id.item_user_list_name_textview);
-			viewHolder.followBtn = (FollowButton) convertView
+			viewHolder.followBtn = (FollowImage) convertView
 					.findViewById(R.id.item_user_list_follow_btn);
 			viewHolder.followerCountTv = (TextView) convertView
 					.findViewById(R.id.item_user_list_follower_num_tag);
@@ -282,7 +282,7 @@ public class FollowingExpandableListAdapter extends BaseExpandableListAdapter {
 
 	private static class ViewHolder {
 		AvatarImageView avatarIv;
-		FollowButton followBtn;
+		FollowImage followBtn;
 		TextView nameTv;
 		TextView followerCountTv;
 		TextView askCountTv;
