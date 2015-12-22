@@ -4,15 +4,14 @@
     android:layout_height="match_parent"
     android:background="#fff" >
 
-    <Button
+    <com.psgod.ui.widget.FollowImage
         android:id="@+id/item_search_user_follow_img"
-        android:layout_width="58dp"
-        android:layout_height="28dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:scaleType="center"
         android:layout_alignParentRight="true"
         android:layout_marginRight="17dp"
-        android:layout_marginTop="23dp"
-        android:background="@drawable/btn_follow"
-        android:textSize="11dp" />
+        android:layout_marginTop="21dp" />
 
     <com.psgod.ui.widget.ChildGridView
         android:id="@+id/item_search_user_grid"

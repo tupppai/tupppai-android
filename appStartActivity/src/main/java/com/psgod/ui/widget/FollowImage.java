@@ -43,7 +43,9 @@ public class FollowImage extends ImageView {
 	// 关注按钮状态
 	private FollowState state = FollowState.UnFollow;
 	// 对应User
-	private User mUser;
+//	private User mUser;
+	private long Uid = 0;
+	private int mIsFan = 0;
 
 	public static enum FollowState {
 		// 未关注 关注状态 互相关注
@@ -59,7 +61,7 @@ public class FollowImage extends ImageView {
 				FollowImage.this.setClickable(false);
 
 				ActionFollowRequest.Builder builder = new ActionFollowRequest.Builder()
-						.setType(TYPE_UNFOLLOW).setUid(mUser.getUid())
+						.setType(TYPE_UNFOLLOW).setUid(Uid)
 						.setErrorListener(errorListener)
 						.setListener(actionFollowListener);
 
@@ -72,7 +74,7 @@ public class FollowImage extends ImageView {
 				FollowImage.this.setClickable(false);
 
 				ActionFollowRequest.Builder builder = new ActionFollowRequest.Builder()
-						.setType(TYPE_FOLLOW).setUid(mUser.getUid())
+						.setType(TYPE_FOLLOW).setUid(Uid)
 						.setErrorListener(errorListener)
 						.setListener(actionFollowListener);
 
@@ -97,7 +99,7 @@ public class FollowImage extends ImageView {
 					Toast.makeText(mContext, "取消关注成功", Toast.LENGTH_SHORT)
 							.show();
 				} else if (state == FollowState.UnFollow) {
-					if (mUser.isFollowed() == 1) {
+					if (mIsFan == 1) {
 						state = FollowState.FollowingEach;
 					} else {
 						state = FollowState.Following;
@@ -124,15 +126,30 @@ public class FollowImage extends ImageView {
 	};
 
 	// 设置对应的user
-	public void setUser(User user) {
-		this.mUser = user;
+//	public void setUser(User user) {
+//		this.mUser = user;
+//
+//		// 关注
+//		if (mUser.isFollowing() == 1 && mUser.isFollowed() == 0) {
+//			state = FollowState.Following;
+//		} else if (mUser.isFollowing() == 0) {
+//			state = FollowState.UnFollow;
+//		} else if (mUser.isFollowed() == 1 && mUser.isFollowing() == 1) {
+//			// 互相关注状态
+//			state = FollowState.FollowingEach;
+//		}
+//		this.setFollowButtonState(state);
+//	}
 
+	public void setUser(long uid,int isFollow, int isFan) {
+
+		this.Uid = uid;
 		// 关注
-		if (mUser.isFollowing() == 1 && mUser.isFollowed() == 0) {
+		if (isFollow == 1 && isFan == 0) {
 			state = FollowState.Following;
-		} else if (mUser.isFollowing() == 0) {
+		} else if (isFollow == 0) {
 			state = FollowState.UnFollow;
-		} else if (mUser.isFollowed() == 1 && mUser.isFollowing() == 1) {
+		} else if (isFan == 1 && isFollow == 1) {
 			// 互相关注状态
 			state = FollowState.FollowingEach;
 		}

@@ -5,7 +5,7 @@ import java.util.List;
 
 
 public class SearchUserData implements Serializable {
-	private String uid;
+	private long uid;
 	private String username;
 	private String nickname;
 	private String phone;
@@ -19,6 +19,7 @@ public class SearchUserData implements Serializable {
 	private String province;
 	private String city;
 	private int is_follow;
+	private int is_fan;
 	private Object bg_image;
 	private int status;
 	private int is_bound_weixin;
@@ -35,17 +36,25 @@ public class SearchUserData implements Serializable {
 	private int collection_count;
 	private List<SearchUserReplies> replies;
 
-	public void setUid(String uid) {
-		this.uid = uid;
-	}
-	
-	
-
 	public int getIs_follow() {
 		return is_follow;
 	}
 
+	public int getIs_fan() {
+		return is_fan;
+	}
 
+	public long getUid() {
+		return uid;
+	}
+
+	public void setUid(long uid) {
+		this.uid = uid;
+	}
+
+	public void setIs_fan(int is_fan) {
+		this.is_fan = is_fan;
+	}
 
 	public void setIs_follow(int is_follow) {
 		this.is_follow = is_follow;
@@ -159,10 +168,6 @@ public class SearchUserData implements Serializable {
 
 	public void setReplies(List<SearchUserReplies> replies) {
 		this.replies = replies;
-	}
-
-	public String getUid() {
-		return uid;
 	}
 
 	public String getUsername() {

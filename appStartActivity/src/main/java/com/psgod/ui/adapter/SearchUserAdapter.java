@@ -2,6 +2,7 @@ package com.psgod.ui.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -26,17 +27,17 @@ import com.psgod.network.request.PSGodErrorListener;
 import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.ui.activity.UserProfileActivity;
 import com.psgod.ui.widget.AvatarImageView;
+import com.psgod.ui.widget.FollowImage;
 import com.psgod.ui.widget.dialog.CarouselPhotoDetailDialog;
 
 import java.util.List;
 
 public class SearchUserAdapter extends MyBaseAdapter<SearchUserData> {
-
-	public static final int FOLLOWED = 1;
-	public static final int UNFOLLOWED = 0;
+	private Context mContext;
 
 	public SearchUserAdapter(Context context, List<SearchUserData> searchUsers) {
 		super(context, searchUsers);
+		mContext = context;
 	}
 
 	private static ViewHolder viewHolder;
@@ -57,7 +58,7 @@ public class SearchUserAdapter extends MyBaseAdapter<SearchUserData> {
 					.findViewById(R.id.item_search_user_follow_txt);
 			viewHolder.mFollowing = (TextView) view
 					.findViewById(R.id.item_search_user_following_txt);
-			viewHolder.mFollowed = (Button) view
+			viewHolder.mFollowed = (FollowImage) view
 					.findViewById(R.id.item_search_user_follow_img);
 			viewHolder.mGrid = (GridView) view
 					.findViewById(R.id.item_search_user_grid);
@@ -70,15 +71,16 @@ public class SearchUserAdapter extends MyBaseAdapter<SearchUserData> {
 		SearchUserData data = list.get(position);
 		PsGodImageLoader.getInstance().displayImage(data.getAvatar(),
 				viewHolder.mAvatar, Constants.DISPLAY_IMAGE_OPTIONS_AVATAR);
-		viewHolder.mAvatar.setTag(data.getUid());
-		viewHolder.mAvatar.setUserId(Long.parseLong(data.getUid()));
-		updateFollowView(viewHolder.mFollowed, data.getIs_follow(),
-				data.getStatus());
+		viewHolder.mAvatar.setTag(Long.toString(data.getUid()));
+		viewHolder.mAvatar.setUserId(data.getUid());
+
+		// 设置关注按钮状态
+		viewHolder.mFollowed.setUser(data.getUid(), data.getIs_follow(), data.getIs_fan());
+
 		viewHolder.mWork.setText(data.getReply_count() + "作品");
 		viewHolder.mFollow.setText(data.getFans_count() + "粉丝");
 		viewHolder.mFollowing.setText(data.getFellow_count() + "关注");
 		viewHolder.mFollowed.setTag(data);
-		viewHolder.mFollowed.setOnClickListener(followedClick);
 		viewHolder.mName.setText(data.getNickname());
 		viewHolder.mClick.setTag(data.getUid());
 		viewHolder.mClick.setOnClickListener(avatarClick);
@@ -99,75 +101,13 @@ public class SearchUserAdapter extends MyBaseAdapter<SearchUserData> {
 		}
 	};
 
-	private OnClickListener followedClick = new OnClickListener() {
-
-		@Override
-		public void onClick(final View view) {
-			final SearchUserData data = (SearchUserData) view.getTag();
-			final int uid = Integer.parseInt(data.getUid());
-			final int follow = data.getIs_follow();
-			final int status = data.getStatus();
-			view.setClickable(false);
-			final int mType = follow == FOLLOWED ? FOLLOWED : UNFOLLOWED;
-			ActionFollowRequest.Builder builder = new ActionFollowRequest.Builder()
-					.setType(mType)
-					.setUid(uid)
-					.setErrorListener(
-							new PSGodErrorListener(
-									ActionCollectionRequest.class
-											.getSimpleName()) {
-								@Override
-								public void handleError(VolleyError error) {
-									view.setClickable(true);
-								}
-							}).setListener(new Listener<Boolean>() {
-						@Override
-						public void onResponse(Boolean response) {
-
-							if (response) {
-								if (mType == 1) {
-									updateFollowView(view, UNFOLLOWED, status);
-									view.setTag(data);
-								} else {
-									updateFollowView(view, FOLLOWED, status);
-									view.setTag(data);
-								}
-							} else {
-
-							}
-							view.setClickable(true);
-						}
-					});
-
-			ActionFollowRequest request = builder.build();
-			RequestQueue requestQueue = PSGodRequestQueue.getInstance(context)
-					.getRequestQueue();
-			requestQueue.add(request);
-
-		}
-	};
-
-	public void updateFollowView(View view, int follow, int status) {
-		if (follow == 1) {
-			((Button) view).setBackgroundResource(R.drawable.btn_follow);
-			// if (status != 1) {
-			// ((Button) view).setText("互相关注");
-			// } else {
-			((Button) view).setText("已关注");
-			// }
-		} else {
-			((Button) view).setBackgroundResource(R.drawable.btn_unfollow);
-			((Button) view).setText("+ 关注");
-		}
-	}
-
 	private class ViewHolder {
 		AvatarImageView mAvatar;
 		TextView mName;
 		TextView mWork;
 		TextView mFollow;
 		TextView mFollowing;
-		Button mFollowed;
+		FollowImage mFollowed;
 		RelativeLayout mClick;
 		GridView mGrid;
 	}

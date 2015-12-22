@@ -144,7 +144,7 @@ public class FollowingExpandableListAdapter extends BaseExpandableListAdapter {
 		});
 
 		// 设置关注btn对应的user
-		viewHolder.followBtn.setUser(user);
+		viewHolder.followBtn.setUser(user.getUid(), user.isFollowing(), user.isFollowed());
 
 		// 更新图片
 		PsGodImageLoader imageLoader = PsGodImageLoader.getInstance();

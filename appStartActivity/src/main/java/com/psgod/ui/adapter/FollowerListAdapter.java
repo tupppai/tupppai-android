@@ -99,7 +99,8 @@ public class FollowerListAdapter extends BaseAdapter {
 		});
 
 		// 设置followBtn对应的User
-		viewHolder.followBtn.setUser((User) getItem(position));
+		User user = (User)getItem(position);
+		viewHolder.followBtn.setUser(user.getUid(), user.isFollowing(), user.isFollowed());
 
 		// 如果是自己，不显示关系按钮
 		if (LoginUser.getInstance().getUid() == ((User) getItem(position)).getUid()) {
