@@ -179,11 +179,7 @@ public class FollowImage extends ImageView {
 	private void updateButton() {
 		FollowButtonAttribute attr = mBtnAttrs.get(state);
 
-		if (android.os.Build.VERSION.SDK_INT >= 16) {
-			this.setBackground(attr.srcDrawable);
-		} else {
-			this.setBackgroundDrawable(attr.srcDrawable);
-		}
+		this.setImageDrawable(attr.srcDrawable);
 
 	}
 

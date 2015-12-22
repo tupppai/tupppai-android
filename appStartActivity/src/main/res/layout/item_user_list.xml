@@ -24,11 +24,12 @@
 
     <com.psgod.ui.widget.FollowImage
         android:id="@+id/item_user_list_follow_btn"
-        android:layout_width="25dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_marginRight="15dp"
+        android:layout_marginRight="5dp"
+        android:padding="10dp"
         android:scaleType="center"
         android:gravity="center"
         android:textSize="10dp" />
