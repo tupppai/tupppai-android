@@ -3,6 +3,7 @@ package com.psgod.ui.view;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
@@ -19,7 +20,7 @@ import com.psgod.network.request.PSGodRequestQueue;
 /**
  * Created by Administrator on 2015/12/2 0002.
  */
-public class FollowView extends TextView {
+public class FollowView extends ImageView {
     public FollowView(Context context) {
         super(context);
         init();
@@ -41,9 +42,9 @@ public class FollowView extends TextView {
 
     public void setPhotoItem(PhotoItem photoItem) {
         this.mPhotoItem = photoItem;
-        if (LoginUser.getInstance().getUid() == mPhotoItem.getUid()){
+        if (LoginUser.getInstance().getUid() == mPhotoItem.getUid()) {
             setVisibility(INVISIBLE);
-        }else{
+        } else {
             setVisibility(VISIBLE);
         }
     }
@@ -99,29 +100,30 @@ public class FollowView extends TextView {
     }
 
     private void initView() {
-        setBackground(getResources().getDrawable(R.drawable.btn_unfollow));
-        setText("+ 关注");
+        setImageDrawable(getResources().getDrawable(
+                R.mipmap.btn_home_follow));
+//        setText("+ 关注");
     }
 
     public void updateFollowView() {
         if (mPhotoItem != null && mPhotoItem.isFollowed()) {
             int id = 0;
             if (followResId == -1) {
-                id = R.drawable.btn_follow;
+                id = R.mipmap.btn_home_followed;
             } else {
                 id = followResId;
             }
-            setBackgroundResource(id);
-            setText("已关注");
+            setImageDrawable(getResources().getDrawable(id));
+//            setText("已关注");
         } else {
             int id = 0;
             if (unfollowResId == -1) {
-                id = R.drawable.btn_unfollow;
+                id = R.mipmap.btn_home_follow;
             } else {
                 id = unfollowResId;
             }
-            setBackgroundResource(id);
-            setText("+ 关注");
+            setImageDrawable(getResources().getDrawable(id));
+//            setText("+ 关注");
         }
     }
 
@@ -140,7 +142,7 @@ public class FollowView extends TextView {
                 mPhotoItem
                         .setIsFollowed(mPhotoItem.isFollowed() ? false : true);
                 updateFollowView();
-                if(followChangeListener != null){
+                if (followChangeListener != null) {
                     followChangeListener.onFocusChange(mPhotoItem.getUid(),
                             mPhotoItem.isFollowed());
                 }

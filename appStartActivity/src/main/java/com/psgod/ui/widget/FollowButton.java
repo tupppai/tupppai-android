@@ -6,7 +6,10 @@ import android.content.res.Resources;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -27,7 +30,7 @@ import java.util.Map;
  * 
  * @author Rayal
  */
-public class FollowButton extends Button {
+public class FollowButton extends ImageView {
 	private final static String TAG = FollowButton.class.getSimpleName();
 
 	public static final int TYPE_FOLLOW = 0;
@@ -179,22 +182,27 @@ public class FollowButton extends Button {
 
 		Resources resources = context.getResources();
 
-		int width = resources.getDimensionPixelSize(R.dimen.follow_btn_width);
-		int height = resources.getDimensionPixelSize(R.dimen.follow_btn_height);
-		this.setWidth(width);
-		this.setHeight(height);
+//		int width = resources.getDimensionPixelSize(R.dimen.follow_btn_width);
+//		int height = resources.getDimensionPixelSize(R.dimen.follow_btn_height);
+//		this.setWidth(width);
+//		this.setHeight(height);
+//		ViewGroup.LayoutParams params = getLayoutParams();
+//		if(params )
+//		params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+//		params.width = ViewGroup.LayoutParams.WRAP_CONTENT;
+//		setLayoutParams(params);
 
 		FollowButtonAttribute unfollowAttr = new FollowButtonAttribute();
-		unfollowAttr.srcDrawableId = R.drawable.btn_unfollow;
+		unfollowAttr.srcDrawableId = R.mipmap.btn_addfollow;
 		unfollowAttr.state = TYPE_UNFOLLOW_STR;
 
 		// follow 和 unfollow的命名弄反了╮(╯▽╰)╭
 		FollowButtonAttribute followingAttr = new FollowButtonAttribute();
-		followingAttr.srcDrawableId = R.drawable.btn_follow;
+		followingAttr.srcDrawableId = R.mipmap.btn_unfollow;
 		followingAttr.state = TYPE_FOLLOW_STR;
 
 		FollowButtonAttribute followeachAttr = new FollowButtonAttribute();
-		followeachAttr.srcDrawableId = R.drawable.btn_follow;
+		followeachAttr.srcDrawableId = R.mipmap.btn_fri;
 		followeachAttr.state = TYPE_FOLLOW_EACH_STR;
 
 		mBtnAttrs.put(FollowState.UnFollow, unfollowAttr);
@@ -208,19 +216,19 @@ public class FollowButton extends Button {
 	@SuppressLint("NewApi")
 	private void updateButton() {
 		FollowButtonAttribute attr = mBtnAttrs.get(state);
-		this.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 10);
+//		this.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 10);
 		if (android.os.Build.VERSION.SDK_INT >= 16) {
-			this.setBackgroundResource(attr.srcDrawableId);
-			this.setText(attr.state);
-			if (attr.state.equals(TYPE_FOLLOW_EACH_STR)) {
-				this.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 9);
-			}
+			this.setImageDrawable(getResources().getDrawable(attr.srcDrawableId));
+//			this.setText(attr.state);
+//			if (attr.state.equals(TYPE_FOLLOW_EACH_STR)) {
+//				this.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 9);
+//			}
 		} else {
-			this.setBackgroundResource(attr.srcDrawableId);
-			this.setText(attr.state);
-			if (attr.state.equals(TYPE_FOLLOW_EACH_STR)) {
-				this.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 9);
-			}
+			this.setImageDrawable(getResources().getDrawable(attr.srcDrawableId));
+//			this.setText(attr.state);
+//			if (attr.state.equals(TYPE_FOLLOW_EACH_STR)) {
+//				this.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 9);
+//			}
 		}
 
 	}
