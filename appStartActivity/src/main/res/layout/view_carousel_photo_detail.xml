@@ -119,11 +119,10 @@
                 android:id="@+id/cover_share_img"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="15dp"
                 android:layout_marginLeft="15dp"
+                android:paddingBottom="2dp"
                 android:src="@mipmap/ic" />
 
             <TextView
@@ -133,8 +132,7 @@
                 android:layout_marginLeft="-4dp"
                 android:layout_toEndOf="@+id/cover_share_img"
                 android:layout_toRightOf="@+id/cover_share_img"
-                android:layout_marginBottom="15dp"
-                android:layout_alignParentBottom="true"
+                android:layout_alignBottom="@+id/cover_share_img"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:text="13"
