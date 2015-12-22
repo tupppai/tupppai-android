@@ -3,7 +3,7 @@
     android:id="@+id/activity_search_parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff" >
+     >
 
     <RelativeLayout
         android:id="@+id/activity_search_title_layout"
@@ -59,6 +59,7 @@
         android:id="@+id/activity_search_tab_rg"
         android:layout_width="match_parent"
         android:layout_height="45dp"
+        android:background="#fff"
         android:layout_below="@+id/activity_search_title_layout"
         android:orientation="horizontal" >
 
@@ -112,6 +113,7 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/activity_search_tab_rg"
         android:layout_marginTop="1dp"
+
         android:descendantFocusability="blocksDescendants" />
 
 </RelativeLayout>
