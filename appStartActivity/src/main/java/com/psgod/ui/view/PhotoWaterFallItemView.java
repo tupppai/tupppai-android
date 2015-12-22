@@ -194,7 +194,8 @@ public class PhotoWaterFallItemView extends RelativeLayout {
 							.getReplyCount() > 0);
 
 					if (havingReplies) {
-						new CarouselPhotoDetailDialog(mContext,mPhotoItem.getAskId(),mPhotoItem.getPid()).show();
+						new CarouselPhotoDetailDialog(mContext,mPhotoItem.getAskId(),
+								mPhotoItem.getPid(),mPhotoItem.getCategoryId()).show();
 					}
 
 					if (!havingReplies) {
@@ -229,7 +230,8 @@ public class PhotoWaterFallItemView extends RelativeLayout {
 							.getReplyCount() > 0);
 
 //					SinglePhotoDetail.startActivity(mContext, mPhotoItem);
-					new CarouselPhotoDetailDialog(mContext,mPhotoItem.getAskId(),mPhotoItem.getPid()).show();
+					new CarouselPhotoDetailDialog(mContext,mPhotoItem.getAskId(),mPhotoItem.getPid()
+					,mPhotoItem.getCategoryId()).show();
 				}
 			});
 

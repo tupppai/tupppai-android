@@ -41,12 +41,12 @@ public class PhotoReplyRequest extends BaseRequest<List<PhotoItem>> {
 
 		if (data.has("ask")) {
 			JSONObject askItem = data.getJSONObject("ask");
-			items.add(PhotoItem.createPhotoItem(askItem));
+			items.add(PhotoItem.createPhotoItem(askItem,getUrl()));
 		}
 
 		int length = replies.length();
 		for (int ix = 0; ix < length; ++ix) {
-			items.add(PhotoItem.createPhotoItem(replies.getJSONObject(ix)));
+			items.add(PhotoItem.createPhotoItem(replies.getJSONObject(ix),getUrl()));
 		}
 		return items;
 	}
@@ -62,6 +62,12 @@ public class PhotoReplyRequest extends BaseRequest<List<PhotoItem>> {
 		private long id;
 		private long pid = -1;
 		private long lastUpdatedTime = -1;
+		private long categoryId = -1;
+
+		public Builder setCategoryId(long categoryId) {
+			this.categoryId = categoryId;
+			return this;
+		}
 
 		public Builder setNeedOriginPhoto(int need) {
 			this.needOriginPhoto = need;
@@ -122,6 +128,10 @@ public class PhotoReplyRequest extends BaseRequest<List<PhotoItem>> {
 			sb.append("&page=").append(page);
 			if (lastUpdatedTime != -1) {
 				sb.append("&last_updated=").append(lastUpdatedTime);
+			}
+
+			if(categoryId != -1){
+				sb.append("&category_id=").append(categoryId);
 			}
 
 			String url = sb.toString();

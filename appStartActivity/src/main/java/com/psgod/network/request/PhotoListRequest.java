@@ -41,7 +41,7 @@ public final class PhotoListRequest extends BaseRequest<List<PhotoItem>> {
         int length = data.length();
         List<PhotoItem> items = new ArrayList<PhotoItem>(length);
         for (int ix = 0; ix < length; ++ix) {
-            items.add(PhotoItem.createPhotoItem(data.getJSONObject(ix)));
+            items.add(PhotoItem.createPhotoItem(data.getJSONObject(ix),getUrl()));
         }
         return items;
     }

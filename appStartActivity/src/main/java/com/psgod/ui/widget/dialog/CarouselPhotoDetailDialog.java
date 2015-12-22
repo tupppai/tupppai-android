@@ -34,6 +34,7 @@ public class CarouselPhotoDetailDialog extends Dialog {
     private List<View> views;
     private long askId;
     private long replyId;
+    private long categoryId = -1;
     ViewPagerAdapter adapter;
     private CustomProgressingDialog progressingDialog;
 
@@ -42,6 +43,14 @@ public class CarouselPhotoDetailDialog extends Dialog {
         mContext = context;
         this.askId = askId;
         this.replyId = replyId;
+    }
+
+    public CarouselPhotoDetailDialog(Context context, long askId, long replyId, long categoryId) {
+        super(context, R.style.CaroPhotoDialog);
+        mContext = context;
+        this.askId = askId;
+        this.replyId = replyId;
+        this.categoryId = categoryId;
     }
 
     public CarouselPhotoDetailDialog(Context context, int theme) {
@@ -104,7 +113,9 @@ public class CarouselPhotoDetailDialog extends Dialog {
         PhotoReplyRequest.Builder builder = new PhotoReplyRequest.Builder()
                 .setId(askId).setPid(replyId).setPage(1)
                 .setListener(initDataListener);
-
+        if(categoryId != -1){
+            builder.setCategoryId(categoryId);
+        }
         PhotoReplyRequest request = builder.build();
         request.setTag(this.getClass().getName());
         RequestQueue requestQueue = PSGodRequestQueue.getInstance(
