@@ -10,6 +10,7 @@ import com.psgod.R;
 import com.psgod.model.PhotoItem;
 import com.psgod.ui.view.PhotoItemView;
 import com.psgod.ui.view.PhotoItemView.PhotoListType;
+import com.psgod.ui.widget.FollowImage;
 
 import java.util.List;
 
@@ -89,12 +90,12 @@ public class PhotoListAdapter extends BaseAdapter{
 		return convertView;
 	}
 
-	PhotoItemView.OnFollowChangeListener onFollowChangeListener = new PhotoItemView.OnFollowChangeListener() {
+	FollowImage.OnFollowChangeListener onFollowChangeListener = new FollowImage.OnFollowChangeListener() {
 		@Override
 		public void onFocusChange(long uid, boolean focusStatus) {
 			for (int i = 0; i < mPhotoItems.size(); i++) {
 				if (mPhotoItems.get(i).getUid() == uid) {
-					mPhotoItems.get(i).setIsFollowed(focusStatus);
+					mPhotoItems.get(i).setmIsFollow(focusStatus);
 				}
 			}
 

@@ -31,6 +31,7 @@ import com.psgod.model.PhotoItem;
 import com.psgod.ui.activity.CommentListActivity;
 import com.psgod.ui.adapter.ViewPagerAdapter;
 import com.psgod.ui.widget.AvatarImageView;
+import com.psgod.ui.widget.FollowImage;
 import com.psgod.ui.widget.StopViewPager;
 import com.psgod.ui.widget.dialog.PSDialog;
 import com.psgod.ui.widget.dialog.ShareMoreDialog;
@@ -101,9 +102,9 @@ public class CarouselPhotoDetailView extends RelativeLayout {
 
     boolean backInited = false;
     SinglePhotoView singlePhotoView;
-    private PhotoItemView.OnFollowChangeListener onFollowChangeListener;
+    private FollowImage.OnFollowChangeListener onFollowChangeListener;
 
-    public void setOnFollowChangeListener(PhotoItemView.OnFollowChangeListener onFollowChangeListener) {
+    public void setOnFollowChangeListener(FollowImage.OnFollowChangeListener onFollowChangeListener) {
         this.onFollowChangeListener = onFollowChangeListener;
     }
 

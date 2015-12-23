@@ -19,6 +19,7 @@ import com.psgod.network.request.ActionCollectionRequest;
 import com.psgod.network.request.ActionFollowRequest;
 import com.psgod.network.request.PSGodErrorListener;
 import com.psgod.network.request.PSGodRequestQueue;
+import com.psgod.ui.widget.FollowImage;
 
 /**
  * Created by Administrator on 2015/12/2 0002.
@@ -175,9 +176,9 @@ public class FollowView extends Button {
         }
     };
 
-    public PhotoItemView.OnFollowChangeListener followChangeListener;
+    public FollowImage.OnFollowChangeListener followChangeListener;
 
-    public void setOnFollowChangeListener(PhotoItemView.OnFollowChangeListener followChangeListener) {
+    public void setOnFollowChangeListener(FollowImage.OnFollowChangeListener followChangeListener) {
         this.followChangeListener = followChangeListener;
     }
 }

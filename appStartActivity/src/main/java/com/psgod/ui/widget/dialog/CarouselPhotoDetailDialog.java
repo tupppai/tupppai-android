@@ -19,6 +19,7 @@ import com.psgod.network.request.PhotoReplyRequest;
 import com.psgod.ui.adapter.ViewPagerAdapter;
 import com.psgod.ui.view.CarouselPhotoDetailView;
 import com.psgod.ui.view.PhotoItemView;
+import com.psgod.ui.widget.FollowImage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -148,7 +149,7 @@ public class CarouselPhotoDetailDialog extends Dialog {
             }
 
             //统一相同用户的关注关系
-            PhotoItemView.OnFollowChangeListener onFollowChangeListener =  new PhotoItemView.OnFollowChangeListener() {
+            FollowImage.OnFollowChangeListener onFollowChangeListener =  new FollowImage.OnFollowChangeListener() {
                 @Override
                 public void onFocusChange(long uid, boolean focusStatus) {
                     int length = items.size();

@@ -23,6 +23,8 @@ import com.psgod.R;
 import com.psgod.model.PhotoItem;
 import com.psgod.ui.activity.PhotoBrowserActivity;
 import com.psgod.ui.widget.AvatarImageView;
+
+import com.psgod.ui.widget.FollowImage;
 import com.psgod.ui.widget.dialog.PSDialog;
 import com.psgod.ui.widget.dialog.ShareMoreDialog;
 
@@ -62,7 +64,7 @@ public class SinglePhotoDetailView extends RelativeLayout {
         addView(view);
     }
 
-    FollowView follow;
+    FollowImage follow;
     AvatarImageView avatar;
     TextView name;
     TextView time;
@@ -78,9 +80,9 @@ public class SinglePhotoDetailView extends RelativeLayout {
     TextView commentTxt;
     ImageView bang;
     LikeView like;
-    private PhotoItemView.OnFollowChangeListener onFollowChangeListener;
+    private FollowImage.OnFollowChangeListener onFollowChangeListener;
 
-    public void setOnFollowChangeListener(PhotoItemView.OnFollowChangeListener onFollowChangeListener) {
+    public void setOnFollowChangeListener(FollowImage.OnFollowChangeListener onFollowChangeListener) {
         this.onFollowChangeListener = onFollowChangeListener;
         if(follow != null) {
             follow.setOnFollowChangeListener(onFollowChangeListener);
@@ -88,7 +90,7 @@ public class SinglePhotoDetailView extends RelativeLayout {
     }
 
     private void initView(View view) {
-        follow = (FollowView) view.findViewById(R.id.single_photo_detail_follow);
+        follow = (FollowImage) view.findViewById(R.id.single_photo_detail_follow);
         avatar = (AvatarImageView) view.findViewById(R.id.single_photo_detail_avatar);
         name = (TextView) view.findViewById(R.id.single_photo_detail_name);
         time = (TextView) view.findViewById(R.id.single_photo_detail_time);
@@ -129,7 +131,7 @@ public class SinglePhotoDetailView extends RelativeLayout {
 
     private void initVariable() {
         follow.setPhotoItem(mPhotoItem);
-        follow.updateFollowView();
+
         shareTxt.setText(String.valueOf(mPhotoItem.getShareCount()));
         commentTxt.setText(String.valueOf(mPhotoItem.getCommentCount()));
         like.setmPhotoItem(mPhotoItem);
