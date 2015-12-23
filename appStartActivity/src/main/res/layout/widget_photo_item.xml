@@ -148,10 +148,10 @@
 
                 <ImageView
                     android:id="@+id/photo_item_works_tv"
-                    android:layout_width="54dp"
-                    android:layout_height="24dp"
+                    android:layout_width="70dp"
+                    android:layout_height="15dp"
                     android:layout_centerVertical="true"
-                    android:background="@drawable/btn_zuopin" />
+                    android:background="@mipmap/qitazuopin" />
 
                 <TextView
                     android:id="@+id/photo_item_share_tv"
@@ -225,10 +225,10 @@
 
                 <ImageView
                     android:id="@+id/hot_reply_item_works_tv"
-                    android:layout_width="54dp"
-                    android:layout_height="24dp"
+                    android:layout_width="70dp"
+                    android:layout_height="15dp"
                     android:layout_centerVertical="true"
-                    android:background="@drawable/btn_zuopin" />
+                    android:background="@mipmap/qitazuopin" />
 
                 <TextView
                     android:id="@+id/hot_reply_item_share_tv"
@@ -270,10 +270,10 @@
 
                 <ImageView
                     android:id="@+id/single_photoitem_works_tv"
-                    android:layout_width="54dp"
-                    android:layout_height="24dp"
+                    android:layout_width="70dp"
+                    android:layout_height="15dp"
                     android:layout_centerVertical="true"
-                    android:background="@drawable/btn_zuopin" />
+                    android:background="@mipmap/qitazuopin" />
 
                 <TextView
                     android:id="@+id/single_photoitem_comment_tv"
