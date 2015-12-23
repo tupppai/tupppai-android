@@ -122,6 +122,16 @@ public class PhotoItem implements Serializable, Cloneable {
 	private String mCategoryName = "";
 	private String mCategoryType = "";
 
+	private int mUpedNum = 0;
+
+	public void setUpedNum(int upedNum) {
+		this.mUpedNum = upedNum;
+	}
+
+	public int getUpedNum() {
+		return mUpedNum;
+	}
+
 	public String getCategoryType() {
 		return mCategoryType;
 	}
@@ -197,6 +207,10 @@ public class PhotoItem implements Serializable, Cloneable {
 		}
 		if (jsonObj.has("comment_time")) {
 			item.mCommentTime = jsonObj.getLong("comment_time");
+		}
+
+		if(jsonObj.has("uped_num")){
+			item.mUpedNum = jsonObj.getInt("uped_num");
 		}
 
 		try {

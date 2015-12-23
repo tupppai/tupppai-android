@@ -153,8 +153,9 @@ public class PhotoItemView extends RelativeLayout implements Callback {
     private TextView mComplexCommentBtn;
 
     private RelativeLayout mReplyLikedArea;
-    private TextView mLikeCountTv;
-    private ImageView mLikeBtn;
+//    private TextView mLikeCountTv;
+//    private ImageView mLikeBtn;
+    private LikeView mLikeView;
 
     private ImageView mHelpPSBtn;
 
@@ -295,9 +296,9 @@ public class PhotoItemView extends RelativeLayout implements Callback {
         mReplyLikedArea = (RelativeLayout) this
                 .findViewById(R.id.photo_item_like_area);
 
-        mLikeBtn = (ImageView) this.findViewById(R.id.photo_item_like_iv);
-        mLikeCountTv = (TextView) this
-                .findViewById(R.id.photo_item_like_count_tv);
+        mLikeView = (LikeView) this.findViewById(R.id.photo_item_like_view);
+//        mLikeCountTv = (TextView) this
+//                .findViewById(R.id.photo_item_like_count_tv);
         mHelpPSBtn = (ImageView) this.findViewById(R.id.photo_item_help_btn);
 
         mCommentsLv = (ListView) this
@@ -402,38 +403,38 @@ public class PhotoItemView extends RelativeLayout implements Callback {
         mFocusAskCommentTv.setOnClickListener(commentListener);
         mComplexCommentBtn.setOnClickListener(commentListener);
 
-        // 作品点赞
-        mLikeBtn.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // 设置点赞的缩放动画,没点赞过进入动画
-                if (!mPhotoItem.isLiked()) {
-                    AnimatorSet animatorZoomSet = new AnimatorSet();
-                    animatorZoomSet.setDuration(800);
-
-                    ObjectAnimator zoomX = ObjectAnimator.ofFloat(mLikeBtn,
-                            "scaleX", 1f, 1.5f, 1f);
-                    ObjectAnimator zoomY = ObjectAnimator.ofFloat(mLikeBtn,
-                            "scaleY", 1f, 1.5f, 1f);
-                    animatorZoomSet.playTogether(zoomX, zoomY);
-                    animatorZoomSet.start();
-                }
-
-                // 点赞网络请求
-                mLikeBtn.setClickable(false);
-
-                int mStatus = mPhotoItem.isLiked() ? 0 : 1;
-                ActionLikeRequest.Builder builder = new ActionLikeRequest.Builder()
-                        .setPid(mPhotoItem.getPid())
-                        .setType(mPhotoItem.getType())
-                        .setListener(mActionLikeListener).setStatus(mStatus)
-                        .setErrorListener(mActionLikeErrorListener);
-                ActionLikeRequest request = builder.build();
-                RequestQueue requestQueue = PSGodRequestQueue.getInstance(
-                        mContext).getRequestQueue();
-                requestQueue.add(request);
-            }
-        });
+//        // 作品点赞
+//        mLikeBtn.setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                // 设置点赞的缩放动画,没点赞过进入动画
+//                if (!mPhotoItem.isLiked()) {
+//                    AnimatorSet animatorZoomSet = new AnimatorSet();
+//                    animatorZoomSet.setDuration(800);
+//
+//                    ObjectAnimator zoomX = ObjectAnimator.ofFloat(mLikeBtn,
+//                            "scaleX", 1f, 1.5f, 1f);
+//                    ObjectAnimator zoomY = ObjectAnimator.ofFloat(mLikeBtn,
+//                            "scaleY", 1f, 1.5f, 1f);
+//                    animatorZoomSet.playTogether(zoomX, zoomY);
+//                    animatorZoomSet.start();
+//                }
+//
+//                // 点赞网络请求
+//                mLikeBtn.setClickable(false);
+//
+//                int mStatus = mPhotoItem.isLiked() ? 0 : 1;
+//                ActionLikeRequest.Builder builder = new ActionLikeRequest.Builder()
+//                        .setPid(mPhotoItem.getPid())
+//                        .setType(mPhotoItem.getType())
+//                        .setListener(mActionLikeListener).setStatus(mStatus)
+//                        .setErrorListener(mActionLikeErrorListener);
+//                ActionLikeRequest request = builder.build();
+//                RequestQueue requestQueue = PSGodRequestQueue.getInstance(
+//                        mContext).getRequestQueue();
+//                requestQueue.add(request);
+//            }
+//        });
 
         // 作品收藏
 //        mComplexFavBtn.setOnClickListener(favClick);
@@ -725,9 +726,10 @@ public class PhotoItemView extends RelativeLayout implements Callback {
         updateBtnsPanel();
         updateShareView();
         updateCommentView();
+        mLikeView.setmPhotoItem(mPhotoItem);
 
 //        updateFavView();
-        updateLikeView();
+//        updateLikeView();
 //        updateFollowView();
 
         // 若热门评论为空 则隐藏区域 首页热门图片类型中
@@ -801,27 +803,27 @@ public class PhotoItemView extends RelativeLayout implements Callback {
         mComplexCommentBtn.setText(textCommentCount);
     }
 
-    /**
-     * 根据用户是否点赞，更新点赞按钮
-     */
-    public void updateLikeView() {
-        if (mPhotoItem.isLiked()) {
-            mLikeBtn.setImageResource(R.drawable.ic_home_like_selected);
-            if (Build.VERSION.SDK_INT >= 16) {
-                mLikeCountTv.setBackground(mContext.getResources().getDrawable(
-                        R.drawable.shape_like_count));
-            }
-        } else {
-            mLikeBtn.setImageResource(R.drawable.ic_home_like_normal);
-            if (Build.VERSION.SDK_INT >= 16) {
-                mLikeCountTv.setBackground(mContext.getResources().getDrawable(
-                        R.drawable.shape_unlike_count));
-            }
-        }
-        String textLikeCount = Utils.getCountDisplayText(mPhotoItem
-                .getLikeCount());
-        mLikeCountTv.setText(textLikeCount);
-    }
+//    /**
+//     * 根据用户是否点赞，更新点赞按钮
+//     */
+//    public void updateLikeView() {
+//        if (mPhotoItem.isLiked()) {
+//            mLikeBtn.setImageResource(R.drawable.ic_home_like_selected);
+//            if (Build.VERSION.SDK_INT >= 16) {
+//                mLikeCountTv.setBackground(mContext.getResources().getDrawable(
+//                        R.drawable.shape_like_count));
+//            }
+//        } else {
+//            mLikeBtn.setImageResource(R.drawable.ic_home_like_normal);
+//            if (Build.VERSION.SDK_INT >= 16) {
+//                mLikeCountTv.setBackground(mContext.getResources().getDrawable(
+//                        R.drawable.shape_unlike_count));
+//            }
+//        }
+//        String textLikeCount = Utils.getCountDisplayText(mPhotoItem
+//                .getLikeCount());
+//        mLikeCountTv.setText(textLikeCount);
+//    }
 
     /**
      * 根据用户是否收藏
@@ -905,28 +907,28 @@ public class PhotoItemView extends RelativeLayout implements Callback {
 
     }
 
-    // 点赞成功回调函数
-    private Listener<Boolean> mActionLikeListener = new Listener<Boolean>() {
-        @Override
-        public void onResponse(Boolean response) {
-            if (response) {
-                mPhotoItem.setLikeCount(mPhotoItem.isLiked() ? mPhotoItem
-                        .getLikeCount() - 1 : mPhotoItem.getLikeCount() + 1);
-                mPhotoItem.setIsLiked(mPhotoItem.isLiked() ? false : true);
-                updateLikeView();
-            }
-            mLikeBtn.setClickable(true);
-        }
-    };
-
-    // 点赞失败回调函数
-    private PSGodErrorListener mActionLikeErrorListener = new PSGodErrorListener(
-            ActionLikeRequest.class.getSimpleName()) {
-        @Override
-        public void handleError(VolleyError error) {
-            mLikeBtn.setClickable(true);
-        }
-    };
+//    // 点赞成功回调函数
+//    private Listener<Boolean> mActionLikeListener = new Listener<Boolean>() {
+//        @Override
+//        public void onResponse(Boolean response) {
+//            if (response) {
+//                mPhotoItem.setLikeCount(mPhotoItem.isLiked() ? mPhotoItem
+//                        .getLikeCount() - 1 : mPhotoItem.getLikeCount() + 1);
+//                mPhotoItem.setIsLiked(mPhotoItem.isLiked() ? false : true);
+//                updateLikeView();
+//            }
+//            mLikeBtn.setClickable(true);
+//        }
+//    };
+//
+//    // 点赞失败回调函数
+//    private PSGodErrorListener mActionLikeErrorListener = new PSGodErrorListener(
+//            ActionLikeRequest.class.getSimpleName()) {
+//        @Override
+//        public void handleError(VolleyError error) {
+//            mLikeBtn.setClickable(true);
+//        }
+//    };
 //
 //    // 收藏回调函数
 //    private Listener<Boolean> mActionFavListener = new Listener<Boolean>() {

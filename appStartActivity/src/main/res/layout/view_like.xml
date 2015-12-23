@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/view_like_img"
         android:src="@mipmap/ic_like"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="6dp"
          />
 
     <TextView
@@ -20,9 +20,12 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/view_like_img"
         android:background="@drawable/shape_like_count"
-        android:textSize="11dp"
-        android:textColor="@color/black"
+        android:layout_marginLeft="-4dp"
+        android:textSize="10dp"
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp"
+        android:textColor="@color/white"
         android:gravity="center"
-        android:text="100"  />
+        android:text="1"  />
 
 </RelativeLayout>
