@@ -301,4 +301,10 @@ public class OtherRegisterDialog extends Dialog {
 		getWindow().setGravity(Gravity.BOTTOM);
 		getWindow().setWindowAnimations(R.style.popwindow_anim_style);
 	}
+
+	@Override
+	public void dismiss() {
+		Utils.hideProgressDialog();
+		super.dismiss();
+	}
 }

@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -329,15 +330,26 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
         public void afterTextChanged(Editable s) {
             editStart = mContentEdit.getSelectionStart();
             editEnd = mContentEdit.getSelectionEnd();
-
-            if (temp.length() > 140) {
-                showToast(new PSGodToast("！最多输入140个字"));
-
-                s.delete(editStart - 1, editEnd);
-                int tempSelection = editStart;
-                mContentEdit.setText(s);
-                mContentEdit.setSelection(tempSelection);
+            mContentEdit.removeTextChangedListener(this);
+            if (!TextUtils.isEmpty(mContentEdit.getText())) {
+                while (s.toString().length() > 140) {
+                    s.delete(editStart - 1, editEnd);
+                    editStart--;
+                    editEnd--;
+                    showToast(new PSGodToast("！最多输入140个字"));
+                }
             }
+            mContentEdit.setText(s);
+            mContentEdit.setSelection(editStart);
+//            if (temp.length() > 140) {
+//                showToast(new PSGodToast("！最多输入140个字"));
+//
+//                s.delete(editStart - 1, editEnd);
+//                int tempSelection = editStart;
+//                mContentEdit.setText(s);
+//                mContentEdit.setSelection(tempSelection);
+//            }
+            mContentEdit.addTextChangedListener(this);
         }
     };
 
