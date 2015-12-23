@@ -24,7 +24,7 @@
             android:layout_marginLeft="6dp"
             android:src="@drawable/shape_set_info_avatar_background" />
 
-        <com.psgod.ui.view.FollowView
+        <com.psgod.ui.widget.FollowImage
             android:id="@+id/single_photo_detail_follow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

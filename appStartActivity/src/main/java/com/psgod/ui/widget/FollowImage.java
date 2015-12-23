@@ -24,6 +24,7 @@ import com.psgod.model.User;
 import com.psgod.network.request.ActionFollowRequest;
 import com.psgod.network.request.PSGodErrorListener;
 import com.psgod.network.request.PSGodRequestQueue;
+import com.psgod.ui.view.PhotoItemView;
 
 /**
  * 关注和取消关注按钮
@@ -184,6 +185,11 @@ public class FollowImage extends ImageView {
 		@Override
 		public void onResponse(Boolean response) {
 			if (response == true) {
+				if (onFollowChangeListener != null) {
+					onFollowChangeListener.onFocusChange(mUid,((state == FollowState.Following
+							|| state == FollowState.FollowingEach) ? false : true));
+				}
+
 				if (state == FollowState.Following
 						|| state == FollowState.FollowingEach) {
 					state = FollowState.UnFollow;
@@ -238,5 +244,16 @@ public class FollowImage extends ImageView {
 
 	private static class FollowButtonAttribute {
 		Drawable srcDrawable;
+	}
+
+	private OnFollowChangeListener onFollowChangeListener;
+
+	public void setOnFollowChangeListener(OnFollowChangeListener onFollowChangeListener) {
+		this.onFollowChangeListener = onFollowChangeListener;
+	}
+
+	// 关注接口回调
+	public interface OnFollowChangeListener {
+		void onFocusChange(long uid, boolean focusStatus);
 	}
 }

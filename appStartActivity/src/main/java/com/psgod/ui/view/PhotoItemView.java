@@ -564,6 +564,7 @@ public class PhotoItemView extends RelativeLayout implements Callback {
         mImageArea.removeAllViews();
 
         mFollowBtn.setPhotoItem(mPhotoItem);
+        mFollowBtn.setOnFollowChangeListener(onFollowChangeListener);
 
         // 作品情况 展示外面image_url
         if (mPhotoType == PhotoItem.TYPE_REPLY) {
@@ -742,6 +743,7 @@ public class PhotoItemView extends RelativeLayout implements Callback {
         } else {
             mCommentsPanel.setVisibility(View.GONE);
         }
+
     }
 
     // 在listview 里嵌套listview无法自动计算大小 只能显示第一行 需要重新计算listview的高度
@@ -1210,15 +1212,11 @@ public class PhotoItemView extends RelativeLayout implements Callback {
         this.isRecentAct = isRecentAct;
     }
 
-    private OnFollowChangeListener onFollowChangeListener;
+    private FollowImage.OnFollowChangeListener onFollowChangeListener;
 
-    public void setOnFollowChangeListener(OnFollowChangeListener onFollowChangeListener) {
+    public void setOnFollowChangeListener(FollowImage.OnFollowChangeListener onFollowChangeListener) {
         this.onFollowChangeListener = onFollowChangeListener;
     }
 
-    // 关注接口回调
-    public interface OnFollowChangeListener {
-        void onFocusChange(long uid, boolean focusStatus);
-    }
 
 }

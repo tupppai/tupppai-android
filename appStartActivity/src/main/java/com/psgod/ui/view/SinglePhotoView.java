@@ -32,6 +32,7 @@ import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.network.request.PostCommentRequest;
 import com.psgod.ui.adapter.SinglePhotoDetailAdapter;
 import com.psgod.ui.widget.ActionBar;
+import com.psgod.ui.widget.FollowImage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,7 +80,7 @@ public class SinglePhotoView extends RelativeLayout implements
 
     private RelativeLayout mParent;
 
-    private PhotoItemView.OnFollowChangeListener onFollowChangeListener;
+    private FollowImage.OnFollowChangeListener onFollowChangeListener;
 
     private ExecutorService fixedThreadPool = Executors.newFixedThreadPool(1);
 
@@ -536,7 +537,7 @@ public class SinglePhotoView extends RelativeLayout implements
         this.onEndListener = onEndListener;
     }
 
-    public void setOnFollowChangeListener(PhotoItemView.OnFollowChangeListener onFollowChangeListener) {
+    public void setOnFollowChangeListener(FollowImage.OnFollowChangeListener onFollowChangeListener) {
         this.onFollowChangeListener = onFollowChangeListener;
     }
 }
