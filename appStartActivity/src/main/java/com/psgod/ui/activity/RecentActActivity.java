@@ -29,6 +29,7 @@ import com.psgod.model.Activities;
 import com.psgod.model.ActivitiesAct;
 import com.psgod.model.Channel;
 import com.psgod.model.PhotoItem;
+import com.psgod.network.request.ActivitiesActRequest;
 import com.psgod.network.request.ChannelRequest;
 import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.network.request.PhotoActRequest;
@@ -54,7 +55,7 @@ public class RecentActActivity extends PSGodBaseActivity {
     private RelativeLayout mHeadTxtArea;
     private RecentPageActAdapter mAdapter;
     private List<PhotoItem> mPhotoItems;
-    private ActivitiesAct mAct;
+    private ActivitiesAct mAct = new ActivitiesAct();
     private View mFollowListFooter;
     private TextView mTitle;
     private ImageView mFinish;
@@ -83,15 +84,13 @@ public class RecentActActivity extends PSGodBaseActivity {
 
         Intent intent = getIntent();
         id = intent.getStringExtra(INTENT_ID);
-        mAct = (ActivitiesAct) intent.getSerializableExtra(OBJ_ACTIVITY);
         initView();
-        initAct();
         initEvent();
         initData();
     }
 
-    private void initAct() {
-        if(mAct != null) {
+    private void initAct(ActivitiesAct mAct) {
+        if (mAct != null) {
             if (mAct.getPost_btn() != null && !mAct.getPost_btn().equals("")) {
                 PsGodImageLoader.getInstance().displayImage(mAct.getPost_btn(),
                         mUpLoad, Constants.DISPLAY_IMAGE_OPTIONS_SMALL);
@@ -104,7 +103,7 @@ public class RecentActActivity extends PSGodBaseActivity {
                     displayImage(mAct.getBanner_pic(),
                             mHeadImg, Constants.DISPLAY_IMAGE_OPTIONS);
 
-        }else{
+        } else {
             mHeadView.setVisibility(View.GONE);
             mListView.setEmptyView(mEmptyView);
         }
@@ -204,12 +203,15 @@ public class RecentActActivity extends PSGodBaseActivity {
                             setLastUpdated(mLastUpdatedTime)
                     .setListener(refreshListener)
                     .setErrorListener(errorListener);
+            ActivitiesActRequest actRequest = new ActivitiesActRequest.Builder().
+                    setCategoryId(id).setListener(actListener).build();
 
             ChannelRequest request = builder.build();
             request.setTag(TAG);
             RequestQueue requestQueue = PSGodRequestQueue.getInstance(mContext)
                     .getRequestQueue();
             requestQueue.add(request);
+            requestQueue.add(actRequest);
         }
     }
 
@@ -262,6 +264,16 @@ public class RecentActActivity extends PSGodBaseActivity {
     private void initData() {
         mListView.setRefreshing(true);
     }
+
+    private Response.Listener<ActivitiesAct> actListener = new Response.Listener<ActivitiesAct>() {
+        @Override
+        public void onResponse(ActivitiesAct act) {
+            if(act != null) {
+                mAct = act;
+                initAct(act);
+            }
+        }
+    };
 
     private Response.Listener<Channel> refreshListener = new Response.Listener<Channel>() {
         @Override

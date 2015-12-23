@@ -3,6 +3,7 @@ package com.psgod.network.request;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.util.Log;
 
 import com.psgod.Logger;
 import com.psgod.PSGodApplication;

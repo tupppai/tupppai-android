@@ -95,7 +95,8 @@ public class SearchWaterFallItemView extends RelativeLayout {
 					SinglePhotoDetail.startActivity(mContext,
 							Utils.dataToPhoto(mData));
 				} else {
-                    new CarouselPhotoDetailDialog(mContext, Long.parseLong(mData.getAsk_id()),Long.parseLong(mData.getId())).show();
+                    new CarouselPhotoDetailDialog(mContext, Long.parseLong(mData.getAsk_id()),
+                            Long.parseLong(mData.getId())).show();
 				}
 
             }

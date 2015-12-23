@@ -33,7 +33,7 @@ public class UserDetailAskRequest extends BaseRequest<List<PhotoItem>> {
 
 		List<PhotoItem> items = new ArrayList<PhotoItem>();
 		for (int i = 0; i < length; i++) {
-			items.add(PhotoItem.createPhotoItem(data.getJSONObject(i)));
+			items.add(PhotoItem.createPhotoItem(data.getJSONObject(i),getUrl()));
 		}
 
 		return items;

@@ -43,7 +43,7 @@ public final class PhotoActRequest extends BaseRequest<Activities> {
         Activities activities = new Activities();
         List<PhotoItem> items = new ArrayList<PhotoItem>();
         for (int ix = 0; ix < length; ++ix) {
-            items.add(PhotoItem.createPhotoItem(data.getJSONObject(ix)));
+            items.add(PhotoItem.createPhotoItem(data.getJSONObject(ix),getUrl()));
         }
         activities.setReplies(items);
         return activities;

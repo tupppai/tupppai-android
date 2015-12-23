@@ -55,7 +55,8 @@ public class ChannelHeadAdapter extends RecyclerView.Adapter<ChannelHeadAdapter.
             if (photoItem.getType() == 1 && photoItem.getReplyCount() == 0) {
                 SinglePhotoDetail.startActivity(context, photoItem);
             } else {
-                new CarouselPhotoDetailDialog(context, photoItem.getAskId(), photoItem.getPid()).show();
+                new CarouselPhotoDetailDialog(context, photoItem.getAskId(), photoItem.getPid()
+                ,photoItem.getCategoryId()).show();
             }
         }
     };

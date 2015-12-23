@@ -300,7 +300,7 @@ public class PSGodApplication extends Application {
                 context).threadPriority(Thread.NORM_PRIORITY - 2)
                 .denyCacheImageMultipleSizesInMemory()
                 .diskCacheFileNameGenerator(new Md5FileNameGenerator())
-                .memoryCacheSize(1024 * 1024 * 2).threadPoolSize(2)
+                .memoryCacheSize(1024 * 1024 * 4).threadPoolSize(2)
                 .memoryCache(new WeakMemoryCache())
                 .diskCacheSize(50 * 1024 * 1024)
                         // 50 MB

@@ -25,8 +25,10 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.psgod.Constants;
 import com.psgod.CustomToast;
 import com.psgod.R;
+import com.psgod.model.ActivitiesAct;
 import com.psgod.model.Channel;
 import com.psgod.model.PhotoItem;
+import com.psgod.network.request.ActivitiesActRequest;
 import com.psgod.network.request.ChannelRequest;
 import com.psgod.network.request.PSGodErrorListener;
 import com.psgod.network.request.PSGodRequestQueue;
@@ -115,8 +117,6 @@ public class ChannelActivity extends PSGodBaseActivity {
 //        mEmptyView = (LinearLayout) findViewById(R.id.activity_channal_empty_view);
         Intent intent = getIntent();
         id = intent.getStringExtra(INTENT_ID);
-        mTitleName.setText(intent.getStringExtra(INTENT_TITLE) == null ? ""
-                : intent.getStringExtra(INTENT_TITLE));
         mUpload = new ImageView(this);
         mUpload.setScaleType(ImageView.ScaleType.CENTER_CROP);
         mUpload.setImageDrawable(getResources().getDrawable(R.mipmap.floating_btn));
@@ -149,12 +149,22 @@ public class ChannelActivity extends PSGodBaseActivity {
         ChannelRequest headRequest = new ChannelRequest.Builder().setListener(refreshHeadListener).
                 setId(id).setTargetType("ask").
                 setLastUpdated(mLastUpdatedTime).build();
+        ActivitiesActRequest actRequest = new ActivitiesActRequest.Builder().setCategoryId(id).
+                setListener(actListener).setErrorListener(errorListener).build();
         RequestQueue requestQueue = PSGodRequestQueue.getInstance(
                 this).getRequestQueue();
         requestQueue.add(request);
         requestQueue.add(headRequest);
+        requestQueue.add(actRequest);
 
     }
+
+    Response.Listener<ActivitiesAct> actListener = new Response.Listener<ActivitiesAct>() {
+        @Override
+        public void onResponse(ActivitiesAct act) {
+            mTitleName.setText(act.getName());
+        }
+    };
 
     Response.Listener<Channel> refreshHeadListener = new Response.Listener<Channel>() {
         @Override

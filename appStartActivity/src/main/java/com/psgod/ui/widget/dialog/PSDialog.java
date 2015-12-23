@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -162,7 +163,6 @@ public class PSDialog extends Dialog implements Handler.Callback {
 					public void run() {
 						ImageInfo info = PhotoRequest.getImageInfo(mType,
 								mPhotoId,category_id);
-
 						if (!info.isSuccessful) {
 							mHandler.sendEmptyMessage(MSG_RECORD_FAILED);
 						} else {

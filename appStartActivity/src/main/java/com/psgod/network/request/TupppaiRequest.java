@@ -34,7 +34,7 @@ public class TupppaiRequest extends BaseRequest<List<Tupppai>> {
                     getJSONArray("data").getJSONObject(i).
                     getJSONArray("threads").toString())){
                 PhotoItem photoItem = PhotoItem.
-                        createPhotoItem(new JSONObject(jsonObject.toString()));
+                        createPhotoItem(new JSONObject(jsonObject.toString()),getUrl());
                 tupppais.get(i).getThreads().add(photoItem);
             }
         }

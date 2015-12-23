@@ -157,15 +157,16 @@ public class InprogressPageAskAdapter extends BaseAdapter implements
 //		viewHolder.replyCount.setText("已有" + photoItem.getReplyCount() + "个作品");
 		RelativeLayout.LayoutParams tagParams = (RelativeLayout.LayoutParams)
 				viewHolder.timeTv.getLayoutParams();
-		if(photoItem.getCategoryName()!= null && photoItem.getCategoryName().equals("")){
+		if(photoItem.getCategoryName()!= null && !photoItem.getCategoryName().equals("")){
+			viewHolder.mChannelTag.setVisibility(View.VISIBLE);
+			viewHolder.mChannelName.setVisibility(View.VISIBLE);
+			viewHolder.mChannelName.setText(photoItem.getCategoryName());
+			tagParams.setMargins(Utils.dpToPx(mContext,11), 0, 0, 0);
+			viewHolder.timeTv.setLayoutParams(tagParams);
+		}else{
 			viewHolder.mChannelTag.setVisibility(View.GONE);
 			viewHolder.mChannelName.setVisibility(View.GONE);
 			tagParams.setMargins(0, 0, 0, 0);
-			viewHolder.timeTv.setLayoutParams(tagParams);
-		}else{
-			viewHolder.mChannelTag.setVisibility(View.VISIBLE);
-			viewHolder.mChannelName.setText(photoItem.getCategoryName());
-			tagParams.setMargins(Utils.dpToPx(mContext,11), 0, 0, 0);
 			viewHolder.timeTv.setLayoutParams(tagParams);
 		}
 

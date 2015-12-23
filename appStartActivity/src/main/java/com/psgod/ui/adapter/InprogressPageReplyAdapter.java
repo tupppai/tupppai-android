@@ -137,12 +137,13 @@ public class InprogressPageReplyAdapter extends BaseAdapter implements
         mViewHolder.mUploadIv.setTag(photoItem);
         mViewHolder.mUploadIv.setOnClickListener(uploadClickListener);
 
-        if(photoItem.getCategoryName()!= null && photoItem.getCategoryName().equals("")){
+        if(photoItem.getCategoryName() != null && !photoItem.getCategoryName().equals("")){
+            mViewHolder.mChannelTag.setVisibility(View.VISIBLE);
+            mViewHolder.mChannelName.setVisibility(View.VISIBLE);
+            mViewHolder.mChannelName.setText(photoItem.getCategoryName());
+        }else{
             mViewHolder.mChannelTag.setVisibility(View.GONE);
             mViewHolder.mChannelName.setVisibility(View.GONE);
-        }else{
-            mViewHolder.mChannelTag.setVisibility(View.VISIBLE);
-            mViewHolder.mChannelName.setText(photoItem.getCategoryName());
         }
 
         convertView.setOnClickListener(new OnClickListener() {

@@ -29,7 +29,7 @@ public class ChannelRequest extends BaseRequest<Channel> {
         JSONArray data = reponse.getJSONArray("data");
         int length = data.length();
         for (int i = 0; i < length; i++) {
-            PhotoItem item = PhotoItem.createPhotoItem(data.getJSONObject(i));
+            PhotoItem item = PhotoItem.createPhotoItem(data.getJSONObject(i),getUrl());
             channel.getData().add(item);
         }
         return channel;
