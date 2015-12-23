@@ -1,5 +1,6 @@
 package com.psgod.ui.widget.dialog;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import com.psgod.Utils;
 import com.psgod.model.PhotoItem;
 import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.network.request.PhotoReplyRequest;
+import com.psgod.ui.activity.PSGodBaseActivity;
 import com.psgod.ui.adapter.ViewPagerAdapter;
 import com.psgod.ui.view.CarouselPhotoDetailView;
 import com.psgod.ui.view.PhotoItemView;
@@ -202,7 +204,9 @@ public class CarouselPhotoDetailDialog extends Dialog {
             if (progressingDialog != null && progressingDialog.isShowing()) {
                 progressingDialog.dismiss();
             }
-            CarouselPhotoDetailDialog.super.show();
+            if(!((PSGodBaseActivity)mContext).isFinishing()) {
+                CarouselPhotoDetailDialog.super.show();
+            }
         }
     };
 
