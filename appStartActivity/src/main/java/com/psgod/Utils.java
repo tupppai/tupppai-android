@@ -171,7 +171,12 @@ public final class Utils {
     // 隐藏对话框
     public static void hideProgressDialog() {
         if ((mProgressDialog != null) && mProgressDialog.isShowing()) {
-            mProgressDialog.dismiss();
+            try {
+                mProgressDialog.dismiss();
+            }catch (Exception e){
+
+            }
+
         }
         mProgressDialog = null;
     }

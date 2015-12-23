@@ -1,10 +1,7 @@
 package com.psgod.ui.view;
 
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.Color;
-import android.os.Build;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +16,7 @@ import com.psgod.R;
 import com.psgod.Utils;
 import com.psgod.model.PhotoItem;
 import com.psgod.network.request.ActionLikeRequest;
+import com.psgod.network.request.ActionLoveRequest;
 import com.psgod.network.request.PSGodErrorListener;
 import com.psgod.network.request.PSGodRequestQueue;
 
@@ -91,20 +89,17 @@ public class LikeView extends RelativeLayout {
 //                    animatorZoomSet.playTogether(zoomX, zoomY,zoomoX,zoomoY);
 //                    animatorZoomSet.start();
 //                }
-//
+
                 // 点赞网络请求
-//                setClickable(false);
-//
-//                int mStatus = mPhotoItem.isLiked() ? 0 : 1;
-//                ActionLikeRequest.Builder builder = new ActionLikeRequest.Builder()
-//                        .setPid(mPhotoItem.getPid())
-//                        .setType(mPhotoItem.getType())
-//                        .setListener(mActionLikeListener).setStatus(mStatus)
-//                        .setErrorListener(mActionLikeErrorListener);
-//                ActionLikeRequest request = builder.build();
-//                RequestQueue requestQueue = PSGodRequestQueue.getInstance(
-//                        getContext()).getRequestQueue();
-//                requestQueue.add(request);
+                setClickable(false);
+                ActionLoveRequest.Builder builder = new ActionLoveRequest.Builder()
+                        .setPid(mPhotoItem.getPid())
+                        .setListener(mActionLikeListener).setNum(mPhotoItem.getLoveCount())
+                        .setErrorListener(mActionLikeErrorListener);
+                ActionLoveRequest request = builder.build();
+                RequestQueue requestQueue = PSGodRequestQueue.getInstance(
+                        getContext()).getRequestQueue();
+                requestQueue.add(request);
             }
         });
 
@@ -117,8 +112,10 @@ public class LikeView extends RelativeLayout {
         @Override
         public void onResponse(Boolean response) {
             if (response) {
-                mPhotoItem.setUpedNum(mPhotoItem.getUpedNum() == 3 ?
-                        0 : mPhotoItem.getUpedNum() + 1);
+                mPhotoItem.setLikeCount(mPhotoItem.getLoveCount() == 3 ?
+                        mPhotoItem.getLikeCount() - 3 : mPhotoItem.getLikeCount() + 1);
+                mPhotoItem.setLoveCount(mPhotoItem.getLoveCount() == 3 ?
+                        0 : mPhotoItem.getLoveCount() + 1);
 //                mPhotoItem.setIsLiked(mPhotoItem.isLiked() ? false : true);
                 updateLikeView();
             }
@@ -152,13 +149,12 @@ public class LikeView extends RelativeLayout {
 //                        R.drawable.shape_unlike_count));
 //            }
 //        }
-
-        likeImg.setImageResource(LIKE_IMAGE_ID[mPhotoItem.getUpedNum()]);
+        likeImg.setImageResource(LIKE_IMAGE_ID[mPhotoItem.getLoveCount()]);
         String textLikeCount = Utils.getCountDisplayText(mPhotoItem
                 .getLikeCount());
         likeTxt.setText(textLikeCount);
-        likeTxt.setBackgroundResource(LIKE_TXT_BACK_COLOR[mPhotoItem.getUpedNum()]);
-        likeTxt.setTextColor(Color.parseColor(LIKE_TXT_COLOR[mPhotoItem.getUpedNum()]));
+        likeTxt.setBackgroundResource(LIKE_TXT_BACK_COLOR[mPhotoItem.getLoveCount()]);
+        likeTxt.setTextColor(Color.parseColor(LIKE_TXT_COLOR[mPhotoItem.getLoveCount()]));
     }
 
     private OnLikeCheckListener onLikeCheckListener;
