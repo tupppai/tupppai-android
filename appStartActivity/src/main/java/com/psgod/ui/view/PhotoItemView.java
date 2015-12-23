@@ -59,6 +59,7 @@ import com.psgod.ui.activity.SinglePhotoDetail;
 import com.psgod.ui.activity.WorksListActivity;
 import com.psgod.ui.adapter.HotCommentListAdapter;
 import com.psgod.ui.widget.AvatarImageView;
+import com.psgod.ui.widget.FollowImage;
 import com.psgod.ui.widget.OriginImageLayout;
 import com.psgod.ui.widget.dialog.CarouselPhotoDetailDialog;
 import com.psgod.ui.widget.dialog.PSDialog;
@@ -94,8 +95,6 @@ public class PhotoItemView extends RelativeLayout implements Callback {
 
     public static final int STATUS_UNCOLLECTION = 101;
     public static final int STATUS_COLLECTION = 102;
-    public static final int TYPE_FOLLOW = 1;
-    public static final int TYPE_UNFOLLOW = 0;
 
     private PhotoItem mPhotoItem = null;
     // ps类型 求助 作品
@@ -109,7 +108,7 @@ public class PhotoItemView extends RelativeLayout implements Callback {
     private AvatarImageView mAvatarIv;
     private TextView mNameTv;
     private TextView mTimeTv;
-    private Button mFollowBtn;
+    private FollowImage mFollowBtn;
     private ImageButton mSingleItemPsBtn;
 
     private RelativeLayout mImageArea;
@@ -235,7 +234,7 @@ public class PhotoItemView extends RelativeLayout implements Callback {
         mNameTv = (TextView) this.findViewById(R.id.photo_item_name_tv);
         mTimeTv = (TextView) this.findViewById(R.id.photo_item_time_tv);
 
-        mFollowBtn = (Button) this.findViewById(R.id.photo_item_follow_btn);
+        mFollowBtn = (FollowImage) this.findViewById(R.id.photo_item_follow_btn);
         mSingleItemPsBtn = (ImageButton) this
                 .findViewById(R.id.single_photo_item_ps_btn);
 
@@ -440,29 +439,6 @@ public class PhotoItemView extends RelativeLayout implements Callback {
 //        mComplexFavBtn.setOnClickListener(favClick);
 //        mComplexFavImg.setOnClickListener(favClick);
 
-        // 关注按钮点击
-        mFollowBtn.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // 请求网络时不可点击
-                mFollowBtn.setClickable(false);
-
-
-                int mType = mPhotoItem.isFollowed() ? TYPE_FOLLOW
-                        : TYPE_UNFOLLOW;
-
-                ActionFollowRequest.Builder builder = new ActionFollowRequest.Builder()
-                        .setType(mType).setUid(mPhotoItem.getUid())
-                        .setErrorListener(mActionFollowErrorListener)
-                        .setListener(mActionFollowListener);
-
-                ActionFollowRequest request = builder.build();
-                RequestQueue requestQueue = PSGodRequestQueue.getInstance(
-                        mContext).getRequestQueue();
-                requestQueue.add(request);
-            }
-        });
-
         // 如果详情页中 点击查看图片详情
         // if (mType == PhotoListType.SINGLE_DETAIL) {
         // mImageIv.setOnClickListener(new OnClickListener() {
@@ -585,13 +561,9 @@ public class PhotoItemView extends RelativeLayout implements Callback {
         imageLoader.displayImage(mPhotoItem.getAvatarURL(), mAvatarIv,
                 mAvatarOptions, mAnimateFirstListener);
 
-        if (LoginUser.getInstance().getUid() == mPhotoItem.getUid()) {
-            mFollowBtn.setVisibility(View.GONE);
-        } else {
-            mFollowBtn.setVisibility(View.VISIBLE);
-        }
-
         mImageArea.removeAllViews();
+
+        mFollowBtn.setPhotoItem(mPhotoItem);
 
         // 作品情况 展示外面image_url
         if (mPhotoType == PhotoItem.TYPE_REPLY) {
@@ -756,7 +728,7 @@ public class PhotoItemView extends RelativeLayout implements Callback {
 
 //        updateFavView();
         updateLikeView();
-        updateFollowView();
+//        updateFollowView();
 
         // 若热门评论为空 则隐藏区域 首页热门图片类型中
         if ((mPhotoItem.getHotCommentList().size() != 0 && !isHomePageFocus)
@@ -867,16 +839,6 @@ public class PhotoItemView extends RelativeLayout implements Callback {
 //                .getCollectCount());
 //        mComplexFavBtn.setText(textFavCount);
 //    }
-
-    public void updateFollowView() {
-        if (mPhotoItem.isFollowed()) {
-            mFollowBtn.setBackgroundResource(R.drawable.btn_follow);
-            mFollowBtn.setText("已关注");
-        } else {
-            mFollowBtn.setBackgroundResource(R.drawable.btn_unfollow);
-            mFollowBtn.setText("+ 关注");
-        }
-    }
 
     private boolean isHomePageFocus = false;
 
@@ -995,34 +957,6 @@ public class PhotoItemView extends RelativeLayout implements Callback {
 //            CustomToast.show(mContext, "收藏失败，请刷新后重试", Toast.LENGTH_LONG);
 //        }
 //    };
-
-    // 关注回调函数
-    private Listener<Boolean> mActionFollowListener = new Listener<Boolean>() {
-        @Override
-        public void onResponse(Boolean response) {
-            if (response) {
-//                mPhotoItem
-//                        .setIsFollowed(mPhotoItem.isFollowed() ? false : true);
-//                updateFollowView();
-
-                if (onFollowChangeListener != null) {
-                    onFollowChangeListener.onFocusChange(mPhotoItem.getUid(),
-                            mPhotoItem.isFollowed() ? false : true);
-                }
-            }
-            mFollowBtn.setClickable(true);
-
-        }
-    };
-
-    // 收藏失败回调函数
-    private PSGodErrorListener mActionFollowErrorListener = new PSGodErrorListener(
-            ActionCollectionRequest.class.getSimpleName()) {
-        @Override
-        public void handleError(VolleyError error) {
-            mFollowBtn.setClickable(true);
-        }
-    };
 
     /**
      * 图片加载回调 将图片毛玻璃化处理后作为背景

@@ -18,6 +18,8 @@ import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.psgod.Constants;
 import com.psgod.R;
+import com.psgod.model.LoginUser;
+import com.psgod.model.PhotoItem;
 import com.psgod.model.User;
 import com.psgod.network.request.ActionFollowRequest;
 import com.psgod.network.request.PSGodErrorListener;
@@ -43,13 +45,103 @@ public class FollowImage extends ImageView {
 	// 关注按钮状态
 	private FollowState state = FollowState.UnFollow;
 	// 对应User
-//	private User mUser;
-	private long Uid = 0;
+	private User mUser;
+	// 对应的PhotoItem
+	private PhotoItem mPhotoItem;
+
+	// 搜索，关注列表，首页列表 三个地方需要用到这个view 需要下面三个参数信息
+	private long mUid = 0;
 	private int mIsFan = 0;
+	private int mIsFollow = 0;
 
 	public static enum FollowState {
 		// 未关注 关注状态 互相关注
 		UnFollow, Following, FollowingEach;
+	}
+
+	public FollowImage(Context context) {
+		super(context);
+		mContext = context;
+	}
+
+	public FollowImage(Context context, AttributeSet attrs) {
+		super(context, attrs);
+		mContext = context;
+
+		Resources resources = context.getResources();
+
+//		int width = resources.getDimensionPixelSize(R.dimen.follow_btn_width);
+//		int height = resources.getDimensionPixelSize(R.dimen.follow_btn_height);
+//		this.setWidth(width);
+//		this.setHeight(height);
+
+		FollowButtonAttribute unfollowAttr = new FollowButtonAttribute();
+		unfollowAttr.srcDrawable = resources.getDrawable(R.mipmap.btn_home_follow);
+
+		// follow 和 unfollow的命名弄反了╮(╯▽╰)╭
+		FollowButtonAttribute followingAttr = new FollowButtonAttribute();
+		followingAttr.srcDrawable = resources
+				.getDrawable(R.mipmap.btn_home_followed);
+
+		FollowButtonAttribute followeachAttr = new FollowButtonAttribute();
+		followeachAttr.srcDrawable = resources
+				.getDrawable(R.mipmap.btn_fri);
+
+		mBtnAttrs.put(FollowState.UnFollow, unfollowAttr);
+		mBtnAttrs.put(FollowState.Following, followingAttr);
+		mBtnAttrs.put(FollowState.FollowingEach, followeachAttr);
+
+		this.setOnClickListener(mOnClickListener);
+	}
+
+	// 设置对应的user
+	public void setUser(User user) {
+		this.mUser = user;
+
+		this.mUid = user.getUid();
+		this.mIsFollow = user.isFollowing();
+		this.mIsFan = user.isFollowed();
+
+		initState();
+	}
+
+	// 设置对应的PhotoItem
+	public void setPhotoItem(PhotoItem photoItem) {
+		this.mPhotoItem = photoItem;
+
+		this.mUid = photoItem.getUid();
+		this.mIsFollow = (photoItem.isFollowing() == true) ? 1 : 0;
+		this.mIsFan = (photoItem.isFollowed() == true) ? 1 : 0;
+
+		initState();
+	}
+
+	// 设置对应的信息
+	public void setUser(long uid,int isFollow, int isFan) {
+
+		this.mUid = uid;
+		this.mIsFollow = isFollow;
+		this.mIsFan = isFan;
+
+		initState();
+	}
+
+	private void initState() {
+		if (LoginUser.getInstance().getUid() == this.mUid) {
+			setVisibility(INVISIBLE);
+		} else {
+			setVisibility(VISIBLE);
+		}
+
+		if (mIsFollow == 1 && mIsFan == 0) {
+			state = FollowState.Following;
+		} else if (mIsFollow == 0) {
+			state = FollowState.UnFollow;
+		} else if (mIsFan == 1 && mIsFollow == 1) {
+			// 互相关注状态
+			state = FollowState.FollowingEach;
+		}
+		this.setFollowButtonState(state);
 	}
 
 	private OnClickListener mOnClickListener = new OnClickListener() {
@@ -61,7 +153,7 @@ public class FollowImage extends ImageView {
 				FollowImage.this.setClickable(false);
 
 				ActionFollowRequest.Builder builder = new ActionFollowRequest.Builder()
-						.setType(TYPE_UNFOLLOW).setUid(Uid)
+						.setType(TYPE_UNFOLLOW).setUid(mUid)
 						.setErrorListener(errorListener)
 						.setListener(actionFollowListener);
 
@@ -74,7 +166,7 @@ public class FollowImage extends ImageView {
 				FollowImage.this.setClickable(false);
 
 				ActionFollowRequest.Builder builder = new ActionFollowRequest.Builder()
-						.setType(TYPE_FOLLOW).setUid(Uid)
+						.setType(TYPE_FOLLOW).setUid(mUid)
 						.setErrorListener(errorListener)
 						.setListener(actionFollowListener);
 
@@ -124,72 +216,6 @@ public class FollowImage extends ImageView {
 			// TODO Auto-generated method stub
 		}
 	};
-
-	// 设置对应的user
-//	public void setUser(User user) {
-//		this.mUser = user;
-//
-//		// 关注
-//		if (mUser.isFollowing() == 1 && mUser.isFollowed() == 0) {
-//			state = FollowState.Following;
-//		} else if (mUser.isFollowing() == 0) {
-//			state = FollowState.UnFollow;
-//		} else if (mUser.isFollowed() == 1 && mUser.isFollowing() == 1) {
-//			// 互相关注状态
-//			state = FollowState.FollowingEach;
-//		}
-//		this.setFollowButtonState(state);
-//	}
-
-	public void setUser(long uid,int isFollow, int isFan) {
-
-		this.Uid = uid;
-		// 关注
-		if (isFollow == 1 && isFan == 0) {
-			state = FollowState.Following;
-		} else if (isFollow == 0) {
-			state = FollowState.UnFollow;
-		} else if (isFan == 1 && isFollow == 1) {
-			// 互相关注状态
-			state = FollowState.FollowingEach;
-		}
-		this.setFollowButtonState(state);
-	}
-
-	public FollowImage(Context context) {
-		super(context);
-		mContext = context;
-	}
-
-	public FollowImage(Context context, AttributeSet attrs) {
-		super(context, attrs);
-		mContext = context;
-
-		Resources resources = context.getResources();
-
-//		int width = resources.getDimensionPixelSize(R.dimen.follow_btn_width);
-//		int height = resources.getDimensionPixelSize(R.dimen.follow_btn_height);
-//		this.setWidth(width);
-//		this.setHeight(height);
-
-		FollowButtonAttribute unfollowAttr = new FollowButtonAttribute();
-		unfollowAttr.srcDrawable = resources.getDrawable(R.mipmap.btn_home_follow);
-
-		// follow 和 unfollow的命名弄反了╮(╯▽╰)╭
-		FollowButtonAttribute followingAttr = new FollowButtonAttribute();
-		followingAttr.srcDrawable = resources
-				.getDrawable(R.mipmap.btn_home_followed);
-
-		FollowButtonAttribute followeachAttr = new FollowButtonAttribute();
-		followeachAttr.srcDrawable = resources
-				.getDrawable(R.mipmap.btn_fri);
-
-		mBtnAttrs.put(FollowState.UnFollow, unfollowAttr);
-		mBtnAttrs.put(FollowState.Following, followingAttr);
-		mBtnAttrs.put(FollowState.FollowingEach, followeachAttr);
-
-		this.setOnClickListener(mOnClickListener);
-	}
 
 	@SuppressWarnings("deprecation")
 	@SuppressLint("NewApi")

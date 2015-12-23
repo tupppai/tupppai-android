@@ -99,8 +99,7 @@ public class FollowerListAdapter extends BaseAdapter {
 		});
 
 		// 设置followBtn对应的User
-		User user = (User)getItem(position);
-		viewHolder.followBtn.setUser(user.getUid(), user.isFollowing(), user.isFollowed());
+		viewHolder.followBtn.setUser((User)getItem(position));
 
 		// 如果是自己，不显示关系按钮
 		if (LoginUser.getInstance().getUid() == ((User) getItem(position)).getUid()) {
@@ -113,11 +112,6 @@ public class FollowerListAdapter extends BaseAdapter {
 		imageLoader.displayImage(
 				((User) getItem(position)).getAvatarImageUrl(),
 				viewHolder.avatarIv, mAvatarOptions);
-
-		Log.d("",
-				"TestCount"
-						+ Integer.toString(((User) getItem(position))
-								.getFollowerCount()));
 
 		viewHolder.nameTv.setText(((User) getItem(position)).getNickname());
 		viewHolder.followerCountTv

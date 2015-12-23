@@ -68,6 +68,8 @@ public class ActionFollowRequest extends BaseRequest<Boolean> {
 					return createParameters();
 				}
 			};
+			Logger.log(Logger.LOG_LEVEL_DEBUG, Logger.USER_LEVEL_COLOR, TAG,
+					"createUrl: " + url + createParameters());
 			return request;
 		}
 
@@ -76,8 +78,6 @@ public class ActionFollowRequest extends BaseRequest<Boolean> {
 			StringBuilder sb = new StringBuilder(BaseRequest.PSGOD_BASE_URL)
 					.append("profile/follow");
 			String url = sb.toString();
-			Logger.log(Logger.LOG_LEVEL_DEBUG, Logger.USER_LEVEL_COLOR, TAG,
-					"createUrl: " + url);
 			return url;
 		}
 

@@ -1,10 +1,13 @@
 package com.psgod.ui.view;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -20,25 +23,26 @@ import com.psgod.network.request.PSGodRequestQueue;
 /**
  * Created by Administrator on 2015/12/2 0002.
  */
-public class FollowView extends ImageView {
+public class FollowView extends Button {
+
+    private Context mContext;
+    private PhotoItem mPhotoItem;
+    public static final int TYPE_UNFOLLOW = 0;
+    public static final int TYPE_FOLLOW = 1;
+    public static final int TYPE_FOLLOW_EACH = 2;
+
+    public int state = TYPE_UNFOLLOW;
+
     public FollowView(Context context) {
         super(context);
-        init();
+        mContext = context;
     }
 
     public FollowView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init();
+        mContext = context;
+        this.setOnClickListener(clickListener);
     }
-
-    public FollowView(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-        init();
-    }
-
-    private PhotoItem mPhotoItem;
-    public static final int TYPE_FOLLOW = 1;
-    public static final int TYPE_UNFOLLOW = 0;
 
     public void setPhotoItem(PhotoItem photoItem) {
         this.mPhotoItem = photoItem;
@@ -47,12 +51,88 @@ public class FollowView extends ImageView {
         } else {
             setVisibility(VISIBLE);
         }
+
+        if (mPhotoItem.isFollowing() == true && mPhotoItem.isFollowed() == false) {
+            state = TYPE_FOLLOW;
+        } else if (mPhotoItem.isFollowing() == true && mPhotoItem.isFollowed() == true) {
+            state = TYPE_FOLLOW_EACH;
+        } else if (mPhotoItem.isFollowing() == false){
+            state = TYPE_UNFOLLOW;
+        }
+
+        setFollowState(state);
     }
 
-    private void init() {
-        initView();
-        initListener();
+    public void setFollowState(int state) {
+        this.state = state;
+        updateFollowView();
     }
+
+    public void updateFollowView() {
+        FollowView.this.setTextSize(10);
+        switch(state) {
+            case TYPE_UNFOLLOW:
+                setBackgroundResource(R.drawable.btn_unfollow);
+                setText("+ 关注");
+                break;
+            case TYPE_FOLLOW:
+                setBackgroundResource(R.drawable.btn_follow);
+                setText("已关注");
+                break;
+            case TYPE_FOLLOW_EACH:
+                setBackgroundResource(R.drawable.btn_follow);
+                setText("互相关注");
+                break;
+        }
+    }
+
+    OnClickListener clickListener = new OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            if (mPhotoItem == null) {
+                return;
+            }
+            setClickable(false);
+
+            int mType = (state == TYPE_UNFOLLOW) ? 0 : 1;
+            ActionFollowRequest.Builder builder = new ActionFollowRequest.Builder()
+                    .setType(mType).setUid(mPhotoItem.getUid())
+                    .setErrorListener(mActionFollowErrorListener)
+                    .setListener(mActionFollowListener);
+
+            ActionFollowRequest request = builder.build();
+            RequestQueue requestQueue = PSGodRequestQueue.getInstance(
+                    getContext()).getRequestQueue();
+            requestQueue.add(request);
+        }
+    };
+
+    private Response.Listener<Boolean> mActionFollowListener = new Response.Listener<Boolean>() {
+        @Override
+        public void onResponse(Boolean response) {
+            if (response) {
+                if (state == TYPE_FOLLOW
+                        || state == TYPE_FOLLOW_EACH) {
+                    state = TYPE_UNFOLLOW;
+                    setFollowState(state);
+                    Toast.makeText(mContext, "取消关注成功", Toast.LENGTH_SHORT)
+                            .show();
+                } else if (state == TYPE_UNFOLLOW) {
+                    if (mPhotoItem.isFollowed() == true) {
+                        state = TYPE_FOLLOW_EACH;
+                    } else {
+                        state = TYPE_FOLLOW;
+                    }
+
+                    setFollowState(state);
+                    Toast.makeText(mContext, "关注成功", Toast.LENGTH_SHORT).show();
+                }
+
+                FollowView.this.setClickable(true);
+            }
+
+        }
+    };
 
     private void initListener() {
         setOnClickListener(new OnClickListener() {
@@ -79,52 +159,12 @@ public class FollowView extends ImageView {
         });
     }
 
-
-    private int followResId = -1;
-    private int unfollowResId = -1;
-
-    public void setFollowResId(int followResId) {
-        this.followResId = followResId;
-    }
-
-    public void setUnfollowResId(int unfollowResId) {
-        this.unfollowResId = unfollowResId;
-    }
-
     public void setActionFollowErrorListener(PSGodErrorListener mActionFollowErrorListener) {
         this.mActionFollowErrorListener = mActionFollowErrorListener;
     }
 
     public void setActionFollowListener(Response.Listener<Boolean> mActionFollowListener) {
         this.mActionFollowListener = mActionFollowListener;
-    }
-
-    private void initView() {
-        setImageDrawable(getResources().getDrawable(
-                R.mipmap.btn_home_follow));
-//        setText("+ 关注");
-    }
-
-    public void updateFollowView() {
-        if (mPhotoItem != null && mPhotoItem.isFollowed()) {
-            int id = 0;
-            if (followResId == -1) {
-                id = R.mipmap.btn_home_followed;
-            } else {
-                id = followResId;
-            }
-            setImageDrawable(getResources().getDrawable(id));
-//            setText("已关注");
-        } else {
-            int id = 0;
-            if (unfollowResId == -1) {
-                id = R.mipmap.btn_home_follow;
-            } else {
-                id = unfollowResId;
-            }
-            setImageDrawable(getResources().getDrawable(id));
-//            setText("+ 关注");
-        }
     }
 
     private PSGodErrorListener mActionFollowErrorListener = new PSGodErrorListener(
@@ -134,24 +174,6 @@ public class FollowView extends ImageView {
             setClickable(true);
         }
     };
-
-    private Response.Listener<Boolean> mActionFollowListener = new Response.Listener<Boolean>() {
-        @Override
-        public void onResponse(Boolean response) {
-            if (response) {
-                mPhotoItem
-                        .setIsFollowed(mPhotoItem.isFollowed() ? false : true);
-                updateFollowView();
-                if (followChangeListener != null) {
-                    followChangeListener.onFocusChange(mPhotoItem.getUid(),
-                            mPhotoItem.isFollowed());
-                }
-            }
-            setClickable(true);
-
-        }
-    };
-
 
     public PhotoItemView.OnFollowChangeListener followChangeListener;
 
