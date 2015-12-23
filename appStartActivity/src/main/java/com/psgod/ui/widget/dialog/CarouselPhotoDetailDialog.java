@@ -120,6 +120,7 @@ public class CarouselPhotoDetailDialog extends Dialog {
             builder.setCategoryId(categoryId);
         }
         PhotoReplyRequest request = builder.build();
+        request.setTag(mContext.getClass().getSimpleName());
         request.setTag(this.getClass().getName());
         RequestQueue requestQueue = PSGodRequestQueue.getInstance(
                 mContext).getRequestQueue();
