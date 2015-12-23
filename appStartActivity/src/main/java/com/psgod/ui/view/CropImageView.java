@@ -373,7 +373,12 @@ public class CropImageView extends ImageView {
 		int y = (int) ((mCropRect.top - mRegionRect.top) / values[4]);
 		int width = (int) (mCropRect.width() / values[0]);
 		int height = (int) (mCropRect.height() / values[4]);
-		Bitmap ret = Bitmap.createBitmap(tmpBitmap, x, y, width, height);
+		Bitmap ret;
+		if(x + width <= tmpBitmap.getWidth() && y + height <= tmpBitmap.getHeight()) {
+			ret = Bitmap.createBitmap(tmpBitmap, x, y, width, height);
+		}else{
+			ret = tmpBitmap;
+		}
 		tmpBitmap.recycle();
 		tmpBitmap = null;
 		return ret;
