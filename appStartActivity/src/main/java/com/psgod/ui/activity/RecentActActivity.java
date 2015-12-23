@@ -223,12 +223,7 @@ public class RecentActActivity extends PSGodBaseActivity {
         mHeadImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!mAct.getUrl().equals("")) {
-                    Intent intent = new Intent(RecentActActivity.this, WebBrowserActivity.class);
-                    intent.putExtra(WebBrowserActivity.KEY_DESC, mAct.getName());
-                    intent.putExtra(WebBrowserActivity.KEY_URL, mAct.getUrl());
-                    RecentActActivity.this.startActivity(intent);
-                }
+               Utils.skipByUrl(RecentActActivity.this,mAct.getUrl(),mAct.getName());
             }
         });
         mUpLoad.setOnClickListener(new View.OnClickListener() {

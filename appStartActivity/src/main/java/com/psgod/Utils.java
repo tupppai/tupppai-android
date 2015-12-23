@@ -2,6 +2,7 @@ package com.psgod;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -14,6 +15,10 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.psgod.model.PhotoItem;
+import com.psgod.network.request.BaseRequest;
+import com.psgod.ui.activity.ChannelActivity;
+import com.psgod.ui.activity.RecentActActivity;
+import com.psgod.ui.activity.WebBrowserActivity;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
 
 import org.json.JSONException;
@@ -259,5 +264,39 @@ public final class Utils {
                 .getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getMetrics(outMetrics);
         result = pxToDpFloat(context, outMetrics.heightPixels) / pxToDpOrigin(context, 1776f);
         return result;
+    }
+
+    public static void skipByUrl(Context context,String url,String title){
+        if (url.indexOf("http") != -1) {
+            Intent intent = new Intent(context,
+                    WebBrowserActivity.class);
+            intent.putExtra(WebBrowserActivity.KEY_URL, url);
+            intent.putExtra(WebBrowserActivity.KEY_DESC, title);
+            context.startActivity(intent);
+        } else if (url.indexOf("tupppai://") == -1) {
+            Intent intent = new Intent(context,
+                    WebBrowserActivity.class);
+            intent.putExtra(WebBrowserActivity.KEY_URL,
+                    BaseRequest.PSGOD_BASE_URL + url);
+            intent.putExtra(WebBrowserActivity.KEY_DESC, title);
+            context.startActivity(intent);
+        } else {
+            String[] s = url.split("tupppai://");
+            if (s.length == 2) {
+                String[] thumb = s[1].split("/");
+                if (thumb.length == 2) {
+                    Intent intent = new Intent();
+                    if (thumb[0].equals("activity")) {
+                        intent.setClass(context, RecentActActivity.class);
+                        intent.putExtra(RecentActActivity.INTENT_ID, thumb[1]);
+                    } else {
+                        intent.setClass(context, ChannelActivity.class);
+                        intent.putExtra(ChannelActivity.INTENT_ID, thumb[1]);
+                        intent.putExtra(ChannelActivity.INTENT_TITLE, title);
+                    }
+                    context.startActivity(intent);
+                }
+            }
+        }
     }
 }

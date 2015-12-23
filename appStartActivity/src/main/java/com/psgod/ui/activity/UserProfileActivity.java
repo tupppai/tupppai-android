@@ -355,8 +355,13 @@ public class UserProfileActivity extends PSGodBaseActivity implements
     private void initViews() {
         headerHeight = getResources().getDimensionPixelSize(
                 R.dimen.max_header_height_profile);
-        headerTranslationDis = -getResources().getDimensionPixelSize(
-                R.dimen.header_offset_dis_profile);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
+            headerTranslationDis = Utils.dpToPx(this,-176);
+        }else{
+            headerTranslationDis = -getResources().getDimensionPixelSize(
+                    R.dimen.header_offset_dis_profile);
+        }
+
 
         mTabsTrips = (PagerSlidingTabStrip) findViewById(R.id.user_profile_tabs);
         viewPager = (ViewPager) findViewById(R.id.user_profile_view_pager);

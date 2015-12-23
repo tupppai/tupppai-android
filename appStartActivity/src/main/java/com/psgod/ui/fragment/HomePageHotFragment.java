@@ -260,37 +260,7 @@ public class HomePageHotFragment extends BaseFragment implements Callback {
 
                 @Override
                 public void onClick(View arg0) {
-                    if (bannerData.getUrl().indexOf("http") != -1) {
-                        Intent intent = new Intent(mContext,
-                                WebBrowserActivity.class);
-                        intent.putExtra(WebBrowserActivity.KEY_URL, bannerData.getUrl());
-                        intent.putExtra(WebBrowserActivity.KEY_DESC, bannerData.getDesc());
-                        mContext.startActivity(intent);
-                    } else if (bannerData.getUrl().indexOf("tupppai://") == -1) {
-                        Intent intent = new Intent(mContext,
-                                WebBrowserActivity.class);
-                        intent.putExtra(WebBrowserActivity.KEY_URL,
-                                BaseRequest.PSGOD_BASE_URL + bannerData.getUrl());
-                        intent.putExtra(WebBrowserActivity.KEY_DESC, bannerData.getDesc());
-                        mContext.startActivity(intent);
-                    } else {
-                        String[] s = bannerData.getUrl().split("tupppai://");
-                        if (s.length == 2) {
-                            String[] thumb = s[1].split("/");
-                            if (thumb.length == 2) {
-                                Intent intent = new Intent();
-                                if (thumb[0].equals("activity")) {
-                                    intent.setClass(mContext, RecentActActivity.class);
-                                    intent.putExtra(RecentActActivity.INTENT_ID, thumb[1]);
-                                } else {
-                                    intent.setClass(mContext, ChannelActivity.class);
-                                    intent.putExtra(ChannelActivity.INTENT_ID, thumb[1]);
-                                    intent.putExtra(ChannelActivity.INTENT_TITLE, bannerData.getDesc());
-                                }
-                                mContext.startActivity(intent);
-                            }
-                        }
-                    }
+                    com.psgod.Utils.skipByUrl(getActivity(),bannerData.getUrl(),bannerData.getDesc());
                 }
             });
 
