@@ -34,7 +34,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-public class AvatarImageView extends RelativeLayout implements ImageAware {
+public class AvatarImageView extends RelativeLayout implements PsGodImageLoader.ImageArea {
     private boolean isVip = false;
     private AvatarImage mAvatarImage;
     private ImageView mVipicon;
@@ -80,45 +80,6 @@ public class AvatarImageView extends RelativeLayout implements ImageAware {
             mVipicon.setVisibility(GONE);
         }
     }
-
-    @Override
-    public int getId() {
-        return super.getId();
-    }
-
-    @Override
-    public ViewScaleType getScaleType() {
-        return ViewScaleType.FIT_INSIDE;
-    }
-
-    @Override
-    public View getWrappedView() {
-        return mAvatarImage;
-    }
-
-    @Override
-    public boolean isCollected() {
-        return mAvatarImage == null;
-    }
-
-    @Override
-    public boolean setImageDrawable(Drawable drawable) {
-        if (mAvatarImage != null) {
-            mAvatarImage.setImageDrawable(drawable);
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public boolean setImageBitmap(Bitmap bitmap) {
-        if (mAvatarImage != null) {
-            mAvatarImage.setImageBitmap(bitmap);
-            return true;
-        }
-        return false;
-    }
-
 
     private boolean isRealWidth = false;
 
@@ -191,5 +152,10 @@ public class AvatarImageView extends RelativeLayout implements ImageAware {
 
     public boolean isVip() {
         return isVip;
+    }
+
+    @Override
+    public ImageView getImage() {
+        return mAvatarImage;
     }
 }

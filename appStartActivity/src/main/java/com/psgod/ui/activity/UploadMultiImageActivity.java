@@ -234,6 +234,12 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
 
             mImage.setLayoutParams(lpLayoutParams);
             mImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            mImage.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
             PsGodImageLoader.getInstance().displayImage("file://" + pathList.get(0),
                     mImage);
             mImageLayout.addView(mImage);
@@ -245,6 +251,12 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
             mImage2.setLayoutParams(lpLayoutParamAdd);
             mImage2.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
             mImage2.setBackgroundResource(R.drawable.add_photo);
+            mImage2.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
             mImageLayout.addView(mImage2);
 
             mImage2.setOnClickListener(new OnClickListener() {
@@ -267,6 +279,12 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
                     Utils.dpToPx(mContext, 82), Utils.dpToPx(mContext, 82));
             mImage.setLayoutParams(lpLayoutParams);
             mImage.setScaleType(ImageView.ScaleType.CENTER);
+            mImage.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
             PsGodImageLoader.getInstance().displayImage("file://" + pathList.get(0),
                     mImage);
             mImageLayout.addView(mImage);
@@ -282,6 +300,12 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
                 }
                 mImage.setLayoutParams(lpLayoutParams);
                 mImage.setScaleType(ImageView.ScaleType.CENTER);
+                mImage.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        finish();
+                    }
+                });
                 PsGodImageLoader.getInstance().displayImage(
                         "file://" + pathList.get(i), mImage);
                 mImageLayout.addView(mImage);

@@ -19,12 +19,12 @@
 
             <ImageButton
                 android:id="@+id/btn_back"
-                android:layout_width="21dp"
-                android:layout_height="21dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="19dp"
+                android:layout_marginLeft="4dp"
                 android:background="@null"
-                android:padding="5dp"
+                android:padding="19dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_back_white" />
 

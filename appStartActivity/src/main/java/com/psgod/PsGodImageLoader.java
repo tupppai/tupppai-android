@@ -88,6 +88,29 @@ public class PsGodImageLoader {
         imgLoader.loadImage(getRuleImageUrl(url, options), options, listener);
     }
 
+    public void displayImage(String url, ImageArea imageArea) {
+        imgLoader.displayImage(url, imageArea.getImage());
+    }
+
+    public void displayImage(String url, ImageArea imageArea, DisplayImageOptions options) {
+        imgLoader.displayImage(getRuleImageUrl(url, options), imageArea.getImage(), options);
+    }
+
+    public void displayImage(String url, ImageArea imageArea, DisplayImageOptions options,
+                             ImageLoadingListener listener) {
+        imgLoader.displayImage(getRuleImageUrl(url, options), imageArea.getImage(), options, listener);
+    }
+
+    public void displayImage(String url, ImageArea imageArea, ImageLoadingListener listener) {
+        imgLoader.displayImage(url, imageArea.getImage(), listener);
+    }
+
+    public void displayImage(String url, ImageArea imageArea, DisplayImageOptions options,
+                             ImageLoadingListener listener, ImageLoadingProgressListener progressListener) {
+        imgLoader.displayImage(getRuleImageUrl(url, options), imageArea.getImage(), options, listener, progressListener);
+    }
+
+
     public Bitmap loadImageSync(String url) {
         return imgLoader.loadImageSync(url);
     }
@@ -119,6 +142,10 @@ public class PsGodImageLoader {
             ruleImageUrl = originImageUrl;
         }
         return ruleImageUrl;
+    }
+
+    public interface ImageArea{
+        ImageView getImage();
     }
 
 }

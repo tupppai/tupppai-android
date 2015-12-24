@@ -59,6 +59,12 @@ android {
         yingyongbao {}
         meizu {}
         huawei {}
+        _91helper{}
+        anzhi{}
+        pphelper{}
+        vivo{}
+        coolpad{}
+        oppo{}
     }
 
     productFlavors.all {
