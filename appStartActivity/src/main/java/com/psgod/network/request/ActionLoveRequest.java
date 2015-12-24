@@ -69,7 +69,7 @@ public class ActionLoveRequest extends BaseRequest<Boolean> {
         public String createUrl() {
             StringBuilder sb = new StringBuilder(BaseRequest.PSGOD_BASE_URL);
             sb.append("reply/loveReply/" + pid);
-            sb.append("?num=" + num);
+            sb.append("?num=" + (num < 0?0:num));
 
             if(num == -1){
                 sb.append("&status=").append(0);
