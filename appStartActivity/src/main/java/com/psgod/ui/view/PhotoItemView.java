@@ -752,6 +752,12 @@ public class PhotoItemView extends RelativeLayout implements Callback {
             mCommentsPanel.setVisibility(View.GONE);
         }
 
+        if (isHomePageFocus) {
+            mFollowBtn.setVisibility(View.INVISIBLE);
+        } else {
+            mFollowBtn.setVisibility(View.VISIBLE);
+        }
+
     }
 
     // 在listview 里嵌套listview无法自动计算大小 只能显示第一行 需要重新计算listview的高度
