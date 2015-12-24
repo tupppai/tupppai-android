@@ -4,11 +4,15 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response.Listener;
@@ -60,11 +64,15 @@ public class OtherRegisterDialog extends Dialog {
 	private String mThirdAuthGender = "";
 	private String mThirdAuthAvatar = "";
 
-	public OtherRegisterDialog(Context context) {
+	private Handler mHandler;
+	private static final int WECHATUNEXIT = 0x131;
+
+	public OtherRegisterDialog(Context context , Handler handler) {
 		super(context, R.style.ActionSheetDialog);
 		setContentView(R.layout.dialog_other_register);
 
 		mContext = context;
+		this.mHandler = handler;
 
 		getWindow().getAttributes().width = Constants.WIDTH_OF_SCREEN;
 		setCanceledOnTouchOutside(true);
@@ -160,11 +168,23 @@ public class OtherRegisterDialog extends Dialog {
 							weixin.removeAccount();
 							ShareSDK.removeCookieOnAuthorize(true);
 						}
+
 						weixin.setPlatformActionListener(new PlatformActionListener() {
 							@Override
 							public void onError(Platform arg0, int arg1,
-									Throwable arg2) {
+									Throwable t) {
 								com.psgod.Utils.hideProgressDialog();
+								// 操作失败的处理代码
+								String expName = t.getClass().getSimpleName();
+								//判断有没有安装客户端
+								if ("WechatClientNotExistException".equals(expName)||
+										"WechatTimelineNotSupportedException".equals(expName)
+										|| "WechatFavoriteNotSupportedException".equals(expName)){
+									Message msg = mHandler.obtainMessage();
+									msg.what = WECHATUNEXIT;
+									msg.sendToTarget();
+									return;
+								}
 							}
 
 							@Override

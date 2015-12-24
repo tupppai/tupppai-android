@@ -2,8 +2,12 @@ package com.psgod.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -16,6 +20,7 @@ import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.psgod.Constants;
 import com.psgod.R;
+import com.psgod.WeakReferenceHandler;
 import com.psgod.model.LoginUser;
 import com.psgod.network.request.BaseRequest;
 import com.psgod.network.request.PSGodErrorListener;
@@ -41,7 +46,7 @@ import cn.sharesdk.sina.weibo.SinaWeibo;
  * 
  */
 public class WelcomeActivity extends PSGodBaseActivity implements
-		OnClickListener {
+		OnClickListener,Handler.Callback {
 	private final static String TAG = WelcomeActivity.class.getSimpleName();
 	public static final int JUMP_FROM_LOGIN = 100;
 	private Context mContext;
@@ -59,6 +64,9 @@ public class WelcomeActivity extends PSGodBaseActivity implements
 
 	private CustomProgressingDialog mProgressDialog;
 	private OtherRegisterDialog dialog;
+
+	private WeakReferenceHandler mHandler = new WeakReferenceHandler(this);
+	private static final int WECHATUNEXIT = 0x131;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -163,7 +171,7 @@ public class WelcomeActivity extends PSGodBaseActivity implements
 		// 其他方式注册
 		case R.id.others_register_btn:
 			if (dialog == null) {
-				dialog = new OtherRegisterDialog(mContext);
+				dialog = new OtherRegisterDialog(mContext,mHandler);
 			}
 			if (dialog.isShowing()) {
 				dialog.dismiss();
@@ -289,5 +297,18 @@ public class WelcomeActivity extends PSGodBaseActivity implements
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		context.startActivity(intent);
+	}
+
+	@Override
+	public boolean handleMessage(Message msg) {
+		switch (msg.what) {
+			case WECHATUNEXIT:
+				Toast.makeText(mContext,"请先安装微信客户端, 再使用微信登录",Toast.LENGTH_SHORT).show();
+				break;
+
+			default:
+				break;
+		}
+		return false;
 	}
 }
