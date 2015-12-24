@@ -31,24 +31,23 @@ public class UserDetailRequest extends BaseRequest<UserDetailResult> {
 	protected UserDetailResult doParseNetworkResponse(JSONObject response)
 			throws UnsupportedEncodingException, JSONException {
 		UserDetailResult result = new UserDetailResult();
-		User retUser = new User();
 
 		JSONObject data = response.getJSONObject("data");
-		retUser.setUid(data.getLong("uid"));
-		retUser.setNickname(data.getString("nickname"));
-		retUser.setGender(data.getInt("sex"));
-		retUser.setAvatarImageUrl(data.getString("avatar"));
-		retUser.setFollowerCount(data.getInt("fans_count"));
-		retUser.setFollowingCount(data.getInt("fellow_count"));
-		retUser.setAskCount(data.getInt("ask_count"));
-		retUser.setReplyCount(data.getInt("reply_count"));
-		retUser.setBackgroundUrl(data.getString("bg_image"));
-		retUser.setFollowed(data.getInt("is_fan"));
-		retUser.setFollowing(data.getInt("is_follow"));
-		retUser.setLikedCount(data.getInt("uped_count"));
+//		retUser.setUid(data.getLong("uid"));
+//		retUser.setNickname(data.getString("nickname"));
+//		retUser.setGender(data.getInt("sex"));
+//		retUser.setAvatarImageUrl(data.getString("avatar"));
+//		retUser.setFollowerCount(data.getInt("fans_count"));
+//		retUser.setFollowingCount(data.getInt("fellow_count"));
+//		retUser.setAskCount(data.getInt("ask_count"));
+//		retUser.setReplyCount(data.getInt("reply_count"));
+//		retUser.setBackgroundUrl(data.getString("bg_image"));
+//		retUser.setFollowed(data.getInt("is_fan"));
+//		retUser.setFollowing(data.getInt("is_follow"));
+//		retUser.setLikedCount(data.getInt("uped_count"));
 		// retUser.setLikedCount(data.getInt("like_count"));
 
-		result.user = retUser;
+		result.user = User.createUser(data);
 
 		if (data.has("asks")) {
 			JSONArray asks = data.getJSONArray("asks");

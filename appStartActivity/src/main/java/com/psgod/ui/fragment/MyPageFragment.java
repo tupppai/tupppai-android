@@ -43,6 +43,7 @@ import com.psgod.eventbus.MyInfoRefreshEvent;
 import com.psgod.eventbus.PushEvent;
 import com.psgod.eventbus.UpdateTabStatusEvent;
 import com.psgod.model.LoginUser;
+import com.psgod.model.User;
 import com.psgod.network.request.GetUserInfoRequest;
 import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.ui.activity.FollowerListActivity;
@@ -262,7 +263,7 @@ public class MyPageFragment extends Fragment implements
 
 		// 先加载本地数据
 		LoginUser user = LoginUser.getInstance();
-
+		mViewHolder.mAvatarIv.setUser(new User(user));
 		if (user != null && user.getAvatarImageUrl() != null
 				&& user.getAvatarImageUrl() != "") {
 			loader.displayImage(user.getAvatarImageUrl(),
@@ -599,7 +600,7 @@ public class MyPageFragment extends Fragment implements
 			@Override
 			public void onClick(View view) {
 				ImageDialog dialog = new ImageDialog(getActivity(),
-						(ImageView) view);
+						((AvatarImageView)view).getImage());
 				dialog.show();
 			}
 		});

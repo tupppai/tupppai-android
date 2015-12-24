@@ -208,7 +208,7 @@ public class UserProfileActivity extends PSGodBaseActivity implements
             @Override
             public void onClick(View view) {
                 ImageDialog dialog = new ImageDialog(UserProfileActivity.this,
-                        (ImageView) view);
+                        ((AvatarImageView)view).getImage());
                 dialog.show();
             }
         });
@@ -306,7 +306,7 @@ public class UserProfileActivity extends PSGodBaseActivity implements
                 // mAvatarImageView, mAvatarOptions);
                 imageLoader.displayImage(user.getAvatarImageUrl(),
                         mAvatarImageView, mAvatarOptions, imageLoadingListener);
-
+                mAvatarImageView.setUser(user);
                 // 设置性别
                 Resources res = getApplicationContext().getResources();
                 // int genderDrawableId = (user.getGender() == 0) ?
