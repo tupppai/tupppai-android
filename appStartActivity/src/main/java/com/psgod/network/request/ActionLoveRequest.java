@@ -71,6 +71,10 @@ public class ActionLoveRequest extends BaseRequest<Boolean> {
             sb.append("reply/loveReply/" + pid);
             sb.append("?num=" + num);
 
+            if(num == -1){
+                sb.append("&status=").append(0);
+            }
+
             String url = sb.toString();
             Logger.log(Logger.LOG_LEVEL_DEBUG, Logger.USER_LEVEL_COLOR, TAG,
                     "createUrl: " + url);
