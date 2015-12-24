@@ -15,6 +15,7 @@ import com.psgod.PsGodImageLoader;
 import com.psgod.Constants;
 import com.psgod.R;
 import com.psgod.model.PhotoItem;
+import com.psgod.model.User;
 import com.psgod.model.notification.NotificationMessage;
 import com.psgod.ui.activity.CommentListActivity;
 import com.psgod.ui.activity.UserProfileActivity;
@@ -91,6 +92,7 @@ public class MessageListAdapter extends BaseAdapter {
                         .findViewById(R.id.item_message_list_time_tv);
 
                 convertView.setTag(viewHolderSystem);
+                User user = new User();
                 viewHolderSystem.avatarIv.setUserId(message.getUid());
                 convertView.setOnClickListener(new OnClickListener() {
                     @Override
@@ -123,7 +125,7 @@ public class MessageListAdapter extends BaseAdapter {
                         .findViewById(R.id.item_follow_list_time_tv);
 
                 convertView.setTag(viewHolderFollow);
-                viewHolderFollow.avatarIv.setUserId(message.getUid());
+                viewHolderFollow.avatarIv.setUserId(message.getUid(),message.get);
                 // 关注消息点击打开其他人主页
                 convertView.setOnClickListener(new OnClickListener() {
                     @Override

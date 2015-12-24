@@ -18,9 +18,9 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp" >
 
-            <com.psgod.ui.widget.AvatarLayout
+            <com.psgod.ui.widget.AvatarImageView
                 android:id="@+id/photo_item_avatar_imgview"
-                android:layout_width="40dp"
+                android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"

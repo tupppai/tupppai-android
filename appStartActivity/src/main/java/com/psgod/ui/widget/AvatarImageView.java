@@ -2,50 +2,192 @@ package com.psgod.ui.widget;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.assist.ViewScaleType;
+import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
+import com.nostra13.universalimageloader.core.imageaware.ImageAware;
+import com.nostra13.universalimageloader.core.imageaware.ImageViewAware;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.psgod.Constants;
+import com.psgod.PsGodImageLoader;
+import com.psgod.R;
+import com.psgod.Utils;
 import com.psgod.ui.activity.UserProfileActivity;
 import com.psgod.ui.view.CircleImageView;
 
-public class AvatarImageView extends CircleImageView {
-	private Context mContext;
-	private Long mUserId;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
-	public AvatarImageView(Context context) {
-		super(context);
-		mContext = context;
-		init();
-	}
+public class AvatarImageView extends RelativeLayout implements ImageAware {
+    private boolean isVip = false;
+    private AvatarImage mAvatarImage;
+    private ImageView mVipicon;
+    private Long mUserId;
 
-	public AvatarImageView(Context context, AttributeSet attrs) {
-		this(context, attrs, 0);
-		mContext = context;
-		init();
-	}
 
-	public AvatarImageView(Context context, AttributeSet attrs, int defStyle) {
-		super(context, attrs, defStyle);
-		mContext = context;
-		init();
-	}
 
-	public void init() {
-		this.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if (mUserId != null) {
-					Intent intent = new Intent(mContext,
-							UserProfileActivity.class);
-					intent.putExtra(Constants.IntentKey.USER_ID, mUserId);
-					mContext.startActivity(intent);
-				}
-			}
-		});
-	}
+    public AvatarImageView(Context context) {
+        super(context);
+        init();
+    }
 
-	public void setUserId(Long userId) {
-		mUserId = userId;
-	}
+    public AvatarImageView(Context context, AttributeSet attrs) {
+        super(context, attrs, 0);
+        init();
+    }
+
+    public AvatarImageView(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        init();
+    }
+
+    public void init() {
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.widget_avatar_layout,null);
+        addView(view);
+        mAvatarImage = (AvatarImage) view.findViewById(R.id.avatar_imgview);
+        mVipicon = (ImageView) view.findViewById(R.id.avatar_vip_icon);
+
+        this.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mUserId != null) {
+                    Intent intent = new Intent(getContext(),
+                            UserProfileActivity.class);
+                    intent.putExtra(Constants.IntentKey.USER_ID, mUserId);
+                    getContext().startActivity(intent);
+                }
+            }
+        });
+
+        Log.e("id",""+ getId());
+    }
+
+    @Override
+    public int getId() {
+        return super.getId();
+    }
+
+    @Override
+    public ViewScaleType getScaleType() {
+        return ViewScaleType.CROP;
+    }
+
+    @Override
+    public View getWrappedView() {
+        return mAvatarImage;
+    }
+
+    @Override
+    public boolean isCollected() {
+        return mAvatarImage == null;
+    }
+
+    @Override
+    public boolean setImageDrawable(Drawable drawable) {
+        if (mAvatarImage != null){
+            mAvatarImage.setImageDrawable(drawable);
+            return true;
+        }
+         return false;
+    }
+
+    @Override
+    public boolean setImageBitmap(Bitmap bitmap) {
+        if (mAvatarImage != null){
+            mAvatarImage.setImageBitmap(bitmap);
+            return true;
+        }
+        return false;
+    }
+
+
+
+
+    private boolean isRealWidth = false;
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        if(!isRealWidth && isVip) {
+            RelativeLayout.LayoutParams imageParams = (LayoutParams) mAvatarImage.getLayoutParams();
+            if (imageParams != null) {
+                imageParams.width = getMeasuredWidth();
+                imageParams.height = getMeasuredWidth();
+                mAvatarImage.setLayoutParams(imageParams);
+            }
+            int vWidth = getMeasuredWidth() / 3;
+            int vHeight = getMeasuredWidth() / 3;
+            RelativeLayout.LayoutParams vParams = (LayoutParams) mVipicon.getLayoutParams();
+            if (vParams != null) {
+                vParams.width = vWidth;
+                vParams.height = vHeight;
+                mVipicon.setLayoutParams(vParams);
+            }
+            ViewGroup.LayoutParams params = getLayoutParams();
+            if (params != null) {
+                params.width = getMeasuredWidth() + Utils.dpToPx(getContext(), 5);
+                setLayoutParams(params);
+            }
+            isRealWidth = true;
+        }
+    }
+
+//    private void initSize(View view) {
+//        ViewGroup.LayoutParams groupLayoutParams = this.getLayoutParams();
+//        FrameLayout.LayoutParams mlayoutParams = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT,
+//                LayoutParams.MATCH_PARENT);
+//        mAvatarImage.setLayoutParams(mlayoutParams);
+//        mAvatarImage.setPadding(0, 0, Utils.dpToPx(mContext, 5), 0);
+//
+//        FrameLayout.LayoutParams mIconLayoutParams = new FrameLayout.LayoutParams(Utils.dpToPx(mContext, 5),
+//                Utils.dpToPx(mContext, 5));
+//        mIconLayoutParams.gravity = Gravity.RIGHT | Gravity.BOTTOM;
+//        mVipicon.setLayoutParams(mIconLayoutParams);
+//    }
+
+//    public void setAvatarUrl(String avatarUrl) {
+//        imageLoader.displayImage(avatarUrl, mAvatarImage,
+//                mAvatarOptions, mAnimateFirstListener);
+//    }
+
+    public void setUser(Long userId,boolean isVip) {
+        this.mUserId = userId;
+        this.isVip = isVip;
+
+        if(mVipicon != null) {
+            if (isVip) {
+                mVipicon.setVisibility(VISIBLE);
+            } else {
+                mVipicon.setVisibility(GONE);
+            }
+            postInvalidate();
+        }
+    }
+
+    public void setIsVip(boolean isVip) {
+        this.isVip = isVip;
+    }
+
+    public Long getmUserId() {
+        return mUserId;
+    }
+
+    public boolean isVip() {
+        return isVip;
+    }
 }

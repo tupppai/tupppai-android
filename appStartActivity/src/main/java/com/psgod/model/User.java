@@ -3,6 +3,8 @@ package com.psgod.model;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Field;
+
 public class User {
 	protected long mUid;
 	protected String mAvatarImageUrl;
@@ -16,6 +18,7 @@ public class User {
 	protected int mFollowerCount;
 	protected int mFollowingCount;
 	protected int mLikedCount;
+	protected boolean mIsStar ;
 
 	// 是否被邀请过 用于邀请相关页面
 	protected Boolean mIsInvited;
@@ -46,7 +49,19 @@ public class User {
 			user.mIsInvited = false;
 		}
 
+		if(jsonObject.has("is_star")){
+			user.mIsStar = jsonObject.getBoolean("is_star");
+		}
+
 		return user;
+	}
+
+	public boolean isStar() {
+		return mIsStar;
+	}
+
+	public void setIsStar(boolean mIsStar) {
+		this.mIsStar = mIsStar;
 	}
 
 	public Boolean getIsInvited() {
@@ -167,5 +182,27 @@ public class User {
 
 	public void setFollowing(int isFollowing) {
 		this.mIsFollowing = isFollowing;
+	}
+
+	public User(Object object){
+		super();
+
+		Field[] fields = object.getClass().getDeclaredFields();
+		for (int i = 0; i < fields.length; i++) {
+			fields[i].setAccessible(true);
+			switch (fields[i].getName()){
+				case "mUid":
+				case "uid":
+//					mUid = fields[i].get
+			}
+//			if (fields[i].getName().equals())
+//			fields[i].set(bugMy, new BugMy());
+//			System.out.println(fields[i].get(bugMy));
+		}
+
+	}
+
+	public User(){
+		super();
 	}
 }

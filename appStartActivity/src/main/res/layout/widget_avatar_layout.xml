@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <com.psgod.ui.widget.AvatarImageView
+    <com.psgod.ui.widget.AvatarImage
         android:id="@+id/avatar_imgview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -13,8 +13,11 @@
         android:id="@+id/avatar_vip_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
+        android:layout_alignRight="@+id/avatar_imgview"
+        android:layout_alignBottom="@+id/avatar_imgview"
         android:layout_marginRight="-5dp"
-        android:src="@mipmap/icon_v" />
+        android:visibility="gone"
+        android:src="@mipmap/icon_v"
+ />
 
-</FrameLayout>
+</RelativeLayout>

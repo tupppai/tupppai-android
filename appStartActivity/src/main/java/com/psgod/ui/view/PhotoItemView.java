@@ -6,20 +6,15 @@ package com.psgod.ui.view;
  * @author brandwang
  */
 
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.os.Build;
 import android.os.Handler.Callback;
 import android.os.Message;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
@@ -27,9 +22,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.volley.RequestQueue;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -38,28 +31,20 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
-import com.psgod.AnimUtils;
 import com.psgod.BitmapUtils;
 import com.psgod.Constants;
-import com.psgod.CustomToast;
 import com.psgod.R;
 import com.psgod.Utils;
 import com.psgod.WeakReferenceHandler;
-import com.psgod.eventbus.MyPageRefreshEvent;
-import com.psgod.model.LoginUser;
 import com.psgod.model.PhotoItem;
-import com.psgod.network.request.ActionCollectionRequest;
-import com.psgod.network.request.ActionFollowRequest;
-import com.psgod.network.request.ActionLikeRequest;
 import com.psgod.network.request.PSGodErrorListener;
-import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.ui.activity.CommentListActivity;
 import com.psgod.ui.activity.PhotoBrowserActivity;
 import com.psgod.ui.activity.SinglePhotoDetail;
 import com.psgod.ui.activity.WorksListActivity;
 import com.psgod.ui.adapter.HotCommentListAdapter;
 import com.psgod.ui.widget.AvatarImageView;
-import com.psgod.ui.widget.AvatarLayout;
+import com.psgod.ui.widget.AvatarImage;
 import com.psgod.ui.widget.FollowImage;
 import com.psgod.ui.widget.OriginImageLayout;
 import com.psgod.ui.widget.dialog.CarouselPhotoDetailDialog;
@@ -81,7 +66,6 @@ import cn.sharesdk.framework.Platform.ShareParams;
 import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.wechat.moments.WechatMoments;
-import de.greenrobot.event.EventBus;
 
 public class PhotoItemView extends RelativeLayout implements Callback {
     private static final String TAG = PhotoItemView.class.getSimpleName();
@@ -106,7 +90,6 @@ public class PhotoItemView extends RelativeLayout implements Callback {
 
     private AnimateFirstDisplayListener mAnimateFirstListener;
 
-    private AvatarLayout mAvatarIv;
     private AvatarImageView mAvatarImage;
     private TextView mNameTv;
     private TextView mTimeTv;
@@ -232,7 +215,7 @@ public class PhotoItemView extends RelativeLayout implements Callback {
      * 初始化视图
      */
     private void initViews() {
-        mAvatarIv = (AvatarLayout) this
+        mAvatarImage = (AvatarImageView) this
                 .findViewById(R.id.photo_item_avatar_imgview);
         mNameTv = (TextView) this.findViewById(R.id.photo_item_name_tv);
         mTimeTv = (TextView) this.findViewById(R.id.photo_item_time_tv);
@@ -560,13 +543,12 @@ public class PhotoItemView extends RelativeLayout implements Callback {
 
         mDescTv.setHtmlFromString(mPhotoItem.getDesc(), true);
 
-        mAvatarIv.setAvatarUrl(mPhotoItem.getAvatarURL());
 
 //        mAvatarImage = mAvatarIv.getmAvatarImage();
 //
-//        mAvatarImage.setUserId(mPhotoItem.getUid());
-//        imageLoader.displayImage(mPhotoItem.getAvatarURL(), mAvatarImage,
-//                mAvatarOptions, mAnimateFirstListener);
+        mAvatarImage.setUserId(mPhotoItem.getUid());
+        imageLoader.displayImage(mPhotoItem.getAvatarURL(), mAvatarImage,
+                mAvatarOptions, mAnimateFirstListener);
 
         mImageArea.removeAllViews();
 
