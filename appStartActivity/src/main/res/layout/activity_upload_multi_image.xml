@@ -22,7 +22,6 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="4dp"
                 android:background="@null"
                 android:padding="19dp"
                 android:scaleType="centerCrop"
