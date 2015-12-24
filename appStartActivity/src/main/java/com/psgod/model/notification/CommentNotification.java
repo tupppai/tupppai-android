@@ -19,6 +19,7 @@ import com.psgod.PsGodImageLoader;
 import com.psgod.R;
 import com.psgod.Utils;
 import com.psgod.model.PhotoItem;
+import com.psgod.model.User;
 import com.psgod.ui.widget.AvatarImageView;
 
 import org.json.JSONException;
@@ -65,7 +66,7 @@ public class CommentNotification implements Serializable, INotification {
 		}
 
 		// 设置头像点击跳转
-		viewHolder.avatarIv.setUserId(mNotificationMessage.getUid());
+		viewHolder.avatarIv.setUser(new User(mNotificationMessage));
 
 		PsGodImageLoader imageLoader = PsGodImageLoader.getInstance();
 		imageLoader.displayImage(mNotificationMessage.getAvatar(),

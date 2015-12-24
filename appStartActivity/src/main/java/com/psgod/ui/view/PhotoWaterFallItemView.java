@@ -23,6 +23,7 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
 import com.psgod.Constants;
 import com.psgod.R;
 import com.psgod.model.PhotoItem;
+import com.psgod.model.User;
 import com.psgod.ui.activity.SinglePhotoDetail;
 import com.psgod.ui.widget.AvatarImageView;
 import com.psgod.ui.widget.dialog.CarouselPhotoDetailDialog;
@@ -129,7 +130,7 @@ public class PhotoWaterFallItemView extends RelativeLayout {
 	// 配置图片显示细节,更新数据
 	public void setPhotoItem(PhotoItem photoItem, PhotoWaterFallListType type) {
 		mPhotoItem = photoItem;
-		mAvatarIv.setUserId(mPhotoItem.getUid());
+		mAvatarIv.setUser(new User(mPhotoItem));
 
 		// 更新图片
 		final PsGodImageLoader imageLoader = PsGodImageLoader.getInstance();

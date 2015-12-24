@@ -23,6 +23,7 @@ import com.psgod.Constants;
 import com.psgod.R;
 import com.psgod.Utils;
 import com.psgod.model.SearchWork;
+import com.psgod.model.User;
 import com.psgod.ui.activity.SinglePhotoDetail;
 import com.psgod.ui.widget.AvatarImageView;
 import com.psgod.ui.widget.dialog.CarouselPhotoDetailDialog;
@@ -122,7 +123,7 @@ public class SearchWaterFallItemView extends RelativeLayout {
     // 配置图片显示细节,更新数据
     public void setData(SearchWork.Data data) {
         mData = data;
-        mAvatarIv.setUserId(Long.parseLong(mData.getUid()));
+        mAvatarIv.setUser(new User(mData));
 
         // 更新图片
         final PsGodImageLoader imageLoader = PsGodImageLoader.getInstance();

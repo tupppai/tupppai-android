@@ -14,6 +14,7 @@ import com.psgod.PsGodImageLoader;
 import com.psgod.Constants;
 import com.psgod.R;
 import com.psgod.model.PhotoItem;
+import com.psgod.model.User;
 import com.psgod.ui.activity.SinglePhotoDetail;
 import com.psgod.ui.widget.AvatarImageView;
 import com.psgod.ui.widget.dialog.CarouselPhotoDetailDialog;
@@ -83,7 +84,7 @@ public class MyPageCollectionAdapter extends BaseAdapter {
 		PsGodImageLoader imageLoader = PsGodImageLoader.getInstance();
 		imageLoader.displayImage(photoItem.getAvatarURL(),
 				mViewHolder.avatarIv, mAvatarOptions);
-		mViewHolder.avatarIv.setUserId(photoItem.getUid()); // 设置点击头像跳转
+		mViewHolder.avatarIv.setUser(new User(photoItem)); // 设置点击头像跳转
 		imageLoader.displayImage(photoItem.getImageURL(),
 				mViewHolder.mImageView, mOptions);
 

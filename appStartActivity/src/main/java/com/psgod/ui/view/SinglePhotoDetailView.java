@@ -21,6 +21,7 @@ import com.psgod.BitmapUtils;
 import com.psgod.Constants;
 import com.psgod.R;
 import com.psgod.model.PhotoItem;
+import com.psgod.model.User;
 import com.psgod.ui.activity.PhotoBrowserActivity;
 import com.psgod.ui.widget.AvatarImageView;
 
@@ -107,7 +108,7 @@ public class SinglePhotoDetailView extends RelativeLayout {
         bang = (ImageView) view.findViewById(R.id.single_photo_detail_bang);
         like = (LikeView) view.findViewById(R.id.single_photo_detail_like);
 
-        avatar.setUserId(mPhotoItem.getUid());
+        avatar.setUser(new User(mPhotoItem));
         PsGodImageLoader.getInstance().displayImage(mPhotoItem.getAvatarURL(), avatar, mAvatarOptions);
         name.setText(mPhotoItem.getNickname());
         time.setText(mPhotoItem.getUpdateTimeStr());

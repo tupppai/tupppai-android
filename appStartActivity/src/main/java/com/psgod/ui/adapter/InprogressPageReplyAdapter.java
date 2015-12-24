@@ -26,6 +26,7 @@ import com.psgod.R;
 import com.psgod.ThreadManager;
 import com.psgod.WeakReferenceHandler;
 import com.psgod.model.PhotoItem;
+import com.psgod.model.User;
 import com.psgod.network.request.PhotoRequest;
 import com.psgod.network.request.PhotoRequest.ImageInfo;
 import com.psgod.ui.activity.MultiImageSelectActivity;
@@ -122,7 +123,7 @@ public class InprogressPageReplyAdapter extends BaseAdapter implements
         PsGodImageLoader imageLoader = PsGodImageLoader.getInstance();
         imageLoader.displayImage(photoItem.getAvatarURL(),
                 mViewHolder.avatarIv, mAvatarOptions);
-        mViewHolder.avatarIv.setUserId(photoItem.getUid()); // 设置点击头像跳转
+        mViewHolder.avatarIv.setUser(new User(photoItem)); // 设置点击头像跳转
         imageLoader.displayImage(photoItem.getImageURL(),
                 mViewHolder.mImageView, mOptions);
 

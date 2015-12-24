@@ -84,7 +84,7 @@ public class FollowerListAdapter extends BaseAdapter {
 		}
 
 		// 头像设置点击跳转
-		viewHolder.avatarIv.setUserId(((User) getItem(position)).getUid());
+		viewHolder.avatarIv.setUser(mUsers.get(position));
 
 		// 点击昵称跳转
 		viewHolder.nameTv.setOnClickListener(new OnClickListener() {

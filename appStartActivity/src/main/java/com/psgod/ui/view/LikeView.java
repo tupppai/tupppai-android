@@ -106,7 +106,39 @@ public class LikeView extends RelativeLayout {
         if (mPhotoItem != null) {
             updateLikeView();
         }
+
+        setOnLongClickListener(new OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                ActionLoveRequest.Builder builder = new ActionLoveRequest.Builder()
+                        .setPid(mPhotoItem.getPid())
+                        .setListener(mActionLikeClearListener).setNum(-1)
+                        .setErrorListener(mActionLikeErrorListener);
+                ActionLoveRequest request = builder.build();
+                RequestQueue requestQueue = PSGodRequestQueue.getInstance(
+                        getContext()).getRequestQueue();
+                requestQueue.add(request);
+                return true;
+            }
+        });
     }
+
+    private Response.Listener<Boolean> mActionLikeClearListener = new Response.Listener<Boolean>() {
+        @Override
+        public void onResponse(Boolean response) {
+            if (response) {
+                mPhotoItem.setLikeCount(
+                        mPhotoItem.getLikeCount() - mPhotoItem.getLoveCount());
+                mPhotoItem.setLoveCount(0);
+//                mPhotoItem.setIsLiked(mPhotoItem.isLiked() ? false : true);
+                updateLikeView();
+            }
+            setClickable(true);
+            if (onLikeCheckListener != null) {
+                onLikeCheckListener.onLikeCheckListener(mPhotoItem);
+            }
+        }
+    };
 
     private Response.Listener<Boolean> mActionLikeListener = new Response.Listener<Boolean>() {
         @Override

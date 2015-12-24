@@ -93,7 +93,7 @@ public class MessageListAdapter extends BaseAdapter {
 
                 convertView.setTag(viewHolderSystem);
                 User user = new User();
-                viewHolderSystem.avatarIv.setUserId(message.getUid());
+                viewHolderSystem.avatarIv.setUser(new User(message));
                 convertView.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -125,7 +125,7 @@ public class MessageListAdapter extends BaseAdapter {
                         .findViewById(R.id.item_follow_list_time_tv);
 
                 convertView.setTag(viewHolderFollow);
-                viewHolderFollow.avatarIv.setUserId(message.getUid(),message.get);
+                viewHolderFollow.avatarIv.setUser(new User(message));
                 // 关注消息点击打开其他人主页
                 convertView.setOnClickListener(new OnClickListener() {
                     @Override
@@ -154,7 +154,7 @@ public class MessageListAdapter extends BaseAdapter {
                         .findViewById(R.id.item_like_list_image);
 
                 convertView.setTag(viewHolderLike);
-                viewHolderLike.avatarIv.setUserId(message.getUid());
+                viewHolderLike.avatarIv.setUser(new User(message));
                 convertView.setOnClickListener(new OnClickListener() {
 
                     @Override
@@ -179,7 +179,7 @@ public class MessageListAdapter extends BaseAdapter {
                         .findViewById(R.id.item_reply_list_time_tv);
 
                 convertView.setTag(viewHolderReply);
-                viewHolderReply.avatarIv.setUserId(message.getUid());
+                viewHolderReply.avatarIv.setUser(new User(message));
                 // 回复作品消息 点击跳转详情页
                 convertView.setOnClickListener(new OnClickListener() {
                     @Override
@@ -206,7 +206,7 @@ public class MessageListAdapter extends BaseAdapter {
                         .findViewById(R.id.item_comment_list_time_tv);
 
                 convertView.setTag(mMessages.get(position));
-                viewHolderComment.avatarIv.setUserId(message.getUid());
+                viewHolderComment.avatarIv.setUser(new User(message));
                 // 评论消息点击跳转照片单页
                 convertView.setOnClickListener(new OnClickListener() {
                     @Override

@@ -50,7 +50,7 @@ public class PhotoItem implements Serializable, Cloneable {
 	@DatabaseField(columnName = "avatar_url")
 	private String mAvatarURL;
 	// 0: 女 1: 男
-	private boolean mIsVip;
+	private boolean mIsStar;
 	@DatabaseField(columnName = "gender")
 	private int mGender;
 	// 照片是否已经被下载过
@@ -186,8 +186,8 @@ public class PhotoItem implements Serializable, Cloneable {
 		item.mUid = jsonObj.getLong("uid");
 		item.mNickname = jsonObj.getString("nickname");
 		item.mAvatarURL = jsonObj.getString("avatar");
-		if (jsonObj.has("is_god")) {
-			item.mIsVip = jsonObj.getBoolean("is_god");
+		if (jsonObj.has("is_star")) {
+			item.mIsStar = jsonObj.getBoolean("is_star");
 		}
 		item.mGender = jsonObj.getInt("sex");
 		if (jsonObj.has("is_download")) {
@@ -536,12 +536,12 @@ public class PhotoItem implements Serializable, Cloneable {
 		this.mImageURL = imageURL;
 	}
 
-	public boolean getmIsVip() {
-		return mIsVip;
+	public boolean getmIsStar() {
+		return mIsStar;
 	}
 
-	public void setmIsVip(boolean mIsVip) {
-		this.mIsVip = mIsVip;
+	public void setmIsStar(boolean mIsStar) {
+		this.mIsStar = mIsStar;
 	}
 
 	public int getImageWidth() {

@@ -37,6 +37,7 @@ import com.psgod.R;
 import com.psgod.Utils;
 import com.psgod.WeakReferenceHandler;
 import com.psgod.model.PhotoItem;
+import com.psgod.model.User;
 import com.psgod.network.request.PSGodErrorListener;
 import com.psgod.ui.activity.CommentListActivity;
 import com.psgod.ui.activity.PhotoBrowserActivity;
@@ -546,7 +547,7 @@ public class PhotoItemView extends RelativeLayout implements Callback {
 
 //        mAvatarImage = mAvatarIv.getmAvatarImage();
 //
-        mAvatarImage.setUserId(mPhotoItem.getUid());
+        mAvatarImage.setUser(new User(mPhotoItem));
         imageLoader.displayImage(mPhotoItem.getAvatarURL(), mAvatarImage,
                 mAvatarOptions, mAnimateFirstListener);
 

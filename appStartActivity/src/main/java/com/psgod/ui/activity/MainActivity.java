@@ -55,6 +55,7 @@ import com.psgod.ui.fragment.HomePageHotFragment;
 import com.psgod.ui.fragment.InprogressPageFragment;
 import com.psgod.ui.fragment.MyPageFragment;
 import com.psgod.ui.fragment.TupppaiFragment;
+import com.psgod.ui.widget.AvatarImage;
 import com.psgod.ui.widget.AvatarImageView;
 import com.psgod.ui.widget.dialog.CameraPopupwindow;
 import com.umeng.message.PushAgent;
@@ -123,7 +124,7 @@ public class MainActivity extends PSGodBaseActivity implements
     private RadioButton mRecentBtn;
     private RadioButton mInprogressingBtn;
     private AvatarImageView mAvatarImg;
-    private AvatarImageView mAvatarCase;
+    private AvatarImage mAvatarCase;
     private RelativeLayout mMyLayout;
 
     //	private ImageView mAddImgView;
@@ -165,7 +166,7 @@ public class MainActivity extends PSGodBaseActivity implements
         mBottomTab = (RadioGroup) findViewById(R.id.psgod_rg_tab);
         mAvatarImg = (AvatarImageView) findViewById(R.id.activity_main_tab_user_img);
         mMyLayout = (RelativeLayout) findViewById(R.id.activity_main_tab_user);
-        mAvatarCase = (AvatarImageView) findViewById(R.id.activity_main_tab_user_case);
+        mAvatarCase = (AvatarImage) findViewById(R.id.activity_main_tab_user_case);
         if (BaseRequest.PSGOD_BASE_URL.equals(BaseRequest.PSGOD_BASE_TEST_URL)) {
             mBottomTab.setBackgroundResource(R.color.color_9fc25b);
             mMyLayout.setBackgroundResource(R.color.color_9fc25b);

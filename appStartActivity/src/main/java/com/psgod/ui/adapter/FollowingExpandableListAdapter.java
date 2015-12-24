@@ -126,8 +126,8 @@ public class FollowingExpandableListAdapter extends BaseExpandableListAdapter {
 		}
 
 		// 头像设置点击跳转
-		viewHolder.avatarIv.setUserId(((User) getChild(groupPosition,
-				childPosition)).getUid());
+		viewHolder.avatarIv.setUser(((User) getChild(groupPosition,
+				childPosition)));
 
 		// 点击昵称跳转
 		viewHolder.nameTv.setOnClickListener(new OnClickListener() {

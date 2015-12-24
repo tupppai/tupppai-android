@@ -16,6 +16,7 @@ import com.psgod.Constants;
 import com.psgod.R;
 import com.psgod.emoji.FaceConversionUtil;
 import com.psgod.model.Comment;
+import com.psgod.model.User;
 import com.psgod.network.request.PSGodErrorListener;
 import com.psgod.ui.widget.AvatarImageView;
 
@@ -122,7 +123,7 @@ public class CommentExpandableListAdapter extends BaseExpandableListAdapter {
                 mAvatarOptions);
         viewHolder.mNameTv.setText(comment.getNickname());
         // 设置用户头像点击ID
-        viewHolder.mAvatarIv.setUserId(comment.getUid());
+        viewHolder.mAvatarIv.setUser(new User(comment));
         viewHolder.mTimeTv.setText(comment.getUpdateTimeStr());
 
         // 若有嵌套评论情况

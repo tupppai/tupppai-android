@@ -55,6 +55,16 @@ public class Comment implements Serializable {
 	@DatabaseField(columnName = "is_like")
 	protected boolean mIsLiked; // 是否点过赞
 
+	protected boolean mIsStar;
+
+	public boolean isStar() {
+		return mIsStar;
+	}
+
+	public void setIsStar(boolean mIsStar) {
+		this.mIsStar = mIsStar;
+	}
+
 	// 外键 PhotoItem pid
 	@DatabaseField(canBeNull = true, foreign = true, columnName = "pid")
 	protected PhotoItem mPhotoItem;
@@ -90,6 +100,10 @@ public class Comment implements Serializable {
 						.getLong("comment_id"), replyer.getLong("uid"), replyer
 						.getString("content"), replyer.getString("nickname")));
 			}
+		}
+
+		if(jsonObj.has("is_star")){
+			comment.mIsStar = jsonObj.getBoolean("is_star");
 		}
 		// TODO
 		comment.mPhotoItem = null;

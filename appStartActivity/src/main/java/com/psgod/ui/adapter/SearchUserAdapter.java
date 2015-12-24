@@ -21,6 +21,7 @@ import com.psgod.Constants;
 import com.psgod.R;
 import com.psgod.model.SearchUserData;
 import com.psgod.model.SearchUserReplies;
+import com.psgod.model.User;
 import com.psgod.network.request.ActionCollectionRequest;
 import com.psgod.network.request.ActionFollowRequest;
 import com.psgod.network.request.PSGodErrorListener;
@@ -72,7 +73,7 @@ public class SearchUserAdapter extends MyBaseAdapter<SearchUserData> {
 		PsGodImageLoader.getInstance().displayImage(data.getAvatar(),
 				viewHolder.mAvatar, Constants.DISPLAY_IMAGE_OPTIONS_AVATAR);
 		viewHolder.mAvatar.setTag(Long.toString(data.getUid()));
-		viewHolder.mAvatar.setUserId(data.getUid());
+		viewHolder.mAvatar.setUser(new User(data));
 
 		// 设置关注按钮状态
 		viewHolder.mFollowed.setUser(data.getUid(), data.getIs_follow(), data.getIs_fan());

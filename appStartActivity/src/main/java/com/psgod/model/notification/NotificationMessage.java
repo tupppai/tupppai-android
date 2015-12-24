@@ -19,6 +19,8 @@ public class NotificationMessage implements Serializable {
 	private long mUid;
 	private String mNickName;
 
+	private boolean mIsStar;
+
 	private String mAvatar;
 	private String mContent;
 	private long mCreatedTime;
@@ -38,6 +40,14 @@ public class NotificationMessage implements Serializable {
 	private long mTargetAskId = -1;
 
 	private long mCommentId = -1;
+
+	public boolean isStar() {
+		return mIsStar;
+	}
+
+	public void setIsStar(boolean mIsStar) {
+		this.mIsStar = mIsStar;
+	}
 
 	public static NotificationMessage createNotification(JSONObject jsonObj)
 			throws JSONException {
@@ -102,6 +112,10 @@ public class NotificationMessage implements Serializable {
 
 		if (jsonObj.has("comment_id")) {
 			notification.setCommentId(jsonObj.getLong("comment_id"));
+		}
+
+		if (jsonObj.has("is_star")){
+			notification.mIsStar = jsonObj.getBoolean("is_star");
 		}
 
 		return notification;

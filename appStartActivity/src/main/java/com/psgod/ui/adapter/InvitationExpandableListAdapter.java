@@ -145,7 +145,7 @@ public class InvitationExpandableListAdapter extends BaseExpandableListAdapter {
 		viewHolder.askCountTv.setText(user.getFollowingCount() + "求P");
 		viewHolder.workCountTv.setText(user.getReplyCount() + "作品");
 
-		viewHolder.avatarIv.setUserId(user.getUid());
+		viewHolder.avatarIv.setUser(user);
 
 		// 是否被邀请
 		if (user.getIsInvited()) {

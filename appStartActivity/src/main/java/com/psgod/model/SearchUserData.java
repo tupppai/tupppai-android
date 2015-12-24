@@ -35,6 +35,15 @@ public class SearchUserData implements Serializable {
 	private int inprogress_count;
 	private int collection_count;
 	private List<SearchUserReplies> replies;
+	private boolean is_star;
+
+	public boolean is_star() {
+		return is_star;
+	}
+
+	public void setIs_star(boolean is_star) {
+		this.is_star = is_star;
+	}
 
 	public int getIs_follow() {
 		return is_follow;

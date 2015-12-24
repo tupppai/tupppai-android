@@ -47,6 +47,7 @@ import com.psgod.WeakReferenceHandler;
 import com.psgod.eventbus.ImgRefreshEvent;
 import com.psgod.model.ImageData;
 import com.psgod.model.PhotoItem;
+import com.psgod.model.User;
 import com.psgod.network.request.ActionLikeRequest;
 import com.psgod.network.request.PSGodErrorListener;
 import com.psgod.network.request.PSGodRequestQueue;
@@ -730,7 +731,7 @@ public class CarouselPhotoDetailActivity extends PSGodBaseActivity implements
 		// 同步用户昵称
 		mUserNickName.setText(mPhotoItems.get(position).getNickname());
 		// 同步用户uid
-		mUserAvatar.setUserId(mPhotoItems.get(position).getUid());
+		mUserAvatar.setUser(new User(mPhotoItems));
 		// 同步时间
 		mCreated.setText(mPhotoItems.get(position).getUpdateTimeStr());
 		// 同步作品描述

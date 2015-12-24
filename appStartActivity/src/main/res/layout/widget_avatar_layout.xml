@@ -5,8 +5,11 @@
 
     <com.psgod.ui.widget.AvatarImage
         android:id="@+id/avatar_imgview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
         android:src="@drawable/head_portrait"/>
 
     <ImageView
@@ -15,8 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_alignRight="@+id/avatar_imgview"
         android:layout_alignBottom="@+id/avatar_imgview"
-        android:layout_marginRight="-5dp"
-        android:visibility="gone"
+        android:visibility="visible"
         android:src="@mipmap/icon_v"
  />
 

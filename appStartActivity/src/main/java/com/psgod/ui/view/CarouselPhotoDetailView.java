@@ -28,6 +28,7 @@ import com.psgod.Constants;
 import com.psgod.R;
 import com.psgod.Utils;
 import com.psgod.model.PhotoItem;
+import com.psgod.model.User;
 import com.psgod.ui.activity.CommentListActivity;
 import com.psgod.ui.adapter.ViewPagerAdapter;
 import com.psgod.ui.widget.AvatarImageView;
@@ -185,7 +186,7 @@ public class CarouselPhotoDetailView extends RelativeLayout {
         coverName.setText(mPhotoItem.getNickname());
         coverTime.setText(mPhotoItem.getUpdateTimeStr());
         PsGodImageLoader.getInstance().displayImage(mPhotoItem.getAvatarURL(), coverAvatar, mAvatarOptions);
-        coverAvatar.setUserId(mPhotoItem.getUid());
+        coverAvatar.setUser(new User(mPhotoItem));
 
         coverCover = new ImageView(mContext);
         coverCover.setLayoutParams

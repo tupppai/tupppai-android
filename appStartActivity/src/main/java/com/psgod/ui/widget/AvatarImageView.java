@@ -26,6 +26,7 @@ import com.psgod.Constants;
 import com.psgod.PsGodImageLoader;
 import com.psgod.R;
 import com.psgod.Utils;
+import com.psgod.model.User;
 import com.psgod.ui.activity.UserProfileActivity;
 import com.psgod.ui.view.CircleImageView;
 
@@ -38,7 +39,6 @@ public class AvatarImageView extends RelativeLayout implements ImageAware {
     private AvatarImage mAvatarImage;
     private ImageView mVipicon;
     private Long mUserId;
-
 
 
     public AvatarImageView(Context context) {
@@ -57,7 +57,7 @@ public class AvatarImageView extends RelativeLayout implements ImageAware {
     }
 
     public void init() {
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.widget_avatar_layout,null);
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.widget_avatar_layout, null);
         addView(view);
         mAvatarImage = (AvatarImage) view.findViewById(R.id.avatar_imgview);
         mVipicon = (ImageView) view.findViewById(R.id.avatar_vip_icon);
@@ -74,7 +74,11 @@ public class AvatarImageView extends RelativeLayout implements ImageAware {
             }
         });
 
-        Log.e("id",""+ getId());
+        if (isVip) {
+            mVipicon.setVisibility(VISIBLE);
+        } else {
+            mVipicon.setVisibility(GONE);
+        }
     }
 
     @Override
@@ -84,7 +88,7 @@ public class AvatarImageView extends RelativeLayout implements ImageAware {
 
     @Override
     public ViewScaleType getScaleType() {
-        return ViewScaleType.CROP;
+        return ViewScaleType.FIT_INSIDE;
     }
 
     @Override
@@ -99,16 +103,16 @@ public class AvatarImageView extends RelativeLayout implements ImageAware {
 
     @Override
     public boolean setImageDrawable(Drawable drawable) {
-        if (mAvatarImage != null){
+        if (mAvatarImage != null) {
             mAvatarImage.setImageDrawable(drawable);
             return true;
         }
-         return false;
+        return false;
     }
 
     @Override
     public boolean setImageBitmap(Bitmap bitmap) {
-        if (mAvatarImage != null){
+        if (mAvatarImage != null) {
             mAvatarImage.setImageBitmap(bitmap);
             return true;
         }
@@ -116,14 +120,12 @@ public class AvatarImageView extends RelativeLayout implements ImageAware {
     }
 
 
-
-
     private boolean isRealWidth = false;
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        if(!isRealWidth && isVip) {
+        if (!isRealWidth && isVip) {
             RelativeLayout.LayoutParams imageParams = (LayoutParams) mAvatarImage.getLayoutParams();
             if (imageParams != null) {
                 imageParams.width = getMeasuredWidth();
@@ -138,11 +140,11 @@ public class AvatarImageView extends RelativeLayout implements ImageAware {
                 vParams.height = vHeight;
                 mVipicon.setLayoutParams(vParams);
             }
-            ViewGroup.LayoutParams params = getLayoutParams();
-            if (params != null) {
-                params.width = getMeasuredWidth() + Utils.dpToPx(getContext(), 5);
-                setLayoutParams(params);
-            }
+//            ViewGroup.LayoutParams params = getLayoutParams();
+//            if (params != null) {
+//                params.width = getMeasuredWidth() + vWidth;
+//                setLayoutParams(params);
+//            }
             isRealWidth = true;
         }
     }
@@ -165,11 +167,11 @@ public class AvatarImageView extends RelativeLayout implements ImageAware {
 //                mAvatarOptions, mAnimateFirstListener);
 //    }
 
-    public void setUser(Long userId,boolean isVip) {
-        this.mUserId = userId;
-        this.isVip = isVip;
+    public void setUser(User user) {
+        this.mUserId = user.getUid();
+        this.isVip = user.isStar();
 
-        if(mVipicon != null) {
+        if (mVipicon != null) {
             if (isVip) {
                 mVipicon.setVisibility(VISIBLE);
             } else {

@@ -30,6 +30,7 @@ import com.psgod.Utils;
 import com.psgod.emoji.FaceConversionUtil;
 import com.psgod.model.Comment;
 import com.psgod.model.PhotoItem;
+import com.psgod.model.User;
 import com.psgod.network.request.ActionCommentLikeRequest;
 import com.psgod.network.request.PSGodErrorListener;
 import com.psgod.network.request.PSGodRequestQueue;
@@ -159,7 +160,7 @@ public class SinglePhotoDetailAdapter extends BaseExpandableListAdapter {
 		viewHolder.mNameTv.setText(comment.getNickname());
 		viewHolder.mCommentTimeTv.setText(mCreateTimeStr);
 		viewHolder.mLikeCountTv.setText(String.valueOf(comment.getLikeCount()));
-		viewHolder.mAvatarIv.setUserId(comment.getUid());
+		viewHolder.mAvatarIv.setUser(new User(comment));
 		updateLikeView(comment, viewHolder);
 
 		// 若有嵌套评论情况

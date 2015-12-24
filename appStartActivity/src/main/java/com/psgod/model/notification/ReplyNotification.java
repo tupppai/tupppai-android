@@ -14,6 +14,7 @@ import com.psgod.PsGodImageLoader;
 import com.psgod.R;
 import com.psgod.Utils;
 import com.psgod.model.PhotoItem;
+import com.psgod.model.User;
 import com.psgod.ui.view.ViewUtils;
 import com.psgod.ui.widget.AvatarImageView;
 
@@ -54,7 +55,7 @@ public class ReplyNotification implements INotification {
 		}
 
 		// 设置头像点击跳转
-		viewHolder.avatarIv.setUserId(mNotificationMessage.getUid());
+		viewHolder.avatarIv.setUser(new User(mNotificationMessage));
 
 		viewHolder.nameTv.setText(mNotificationMessage.getNickName());
 		viewHolder.timeTv.setText(Utils.getTimeFormatText(mNotificationMessage
