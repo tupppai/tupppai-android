@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 22
+    compileSdkVersion 19
     buildToolsVersion "23.0.1"
 
     defaultConfig {
@@ -59,18 +59,22 @@ android {
         yingyongbao {}
         meizu {}
         huawei {}
-        _91helper{}
-        anzhi{}
-        pphelper{}
-        vivo{}
-        coolpad{}
-        oppo{}
+        _91helper {}
+        anzhi {}
+        pphelper {}
+        vivo {}
+        coolpad {}
+        oppo {}
     }
 
     productFlavors.all {
         flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
 }
 
 dependencies {
