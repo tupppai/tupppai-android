@@ -59,6 +59,7 @@ import com.psgod.ui.activity.SinglePhotoDetail;
 import com.psgod.ui.activity.WorksListActivity;
 import com.psgod.ui.adapter.HotCommentListAdapter;
 import com.psgod.ui.widget.AvatarImageView;
+import com.psgod.ui.widget.AvatarLayout;
 import com.psgod.ui.widget.FollowImage;
 import com.psgod.ui.widget.OriginImageLayout;
 import com.psgod.ui.widget.dialog.CarouselPhotoDetailDialog;
@@ -105,7 +106,8 @@ public class PhotoItemView extends RelativeLayout implements Callback {
 
     private AnimateFirstDisplayListener mAnimateFirstListener;
 
-    private AvatarImageView mAvatarIv;
+    private AvatarLayout mAvatarIv;
+    private AvatarImageView mAvatarImage;
     private TextView mNameTv;
     private TextView mTimeTv;
     private FollowImage mFollowBtn;
@@ -230,7 +232,7 @@ public class PhotoItemView extends RelativeLayout implements Callback {
      * 初始化视图
      */
     private void initViews() {
-        mAvatarIv = (AvatarImageView) this
+        mAvatarIv = (AvatarLayout) this
                 .findViewById(R.id.photo_item_avatar_imgview);
         mNameTv = (TextView) this.findViewById(R.id.photo_item_name_tv);
         mTimeTv = (TextView) this.findViewById(R.id.photo_item_time_tv);
@@ -558,9 +560,13 @@ public class PhotoItemView extends RelativeLayout implements Callback {
 
         mDescTv.setHtmlFromString(mPhotoItem.getDesc(), true);
 
-        mAvatarIv.setUserId(mPhotoItem.getUid());
-        imageLoader.displayImage(mPhotoItem.getAvatarURL(), mAvatarIv,
-                mAvatarOptions, mAnimateFirstListener);
+        mAvatarIv.setAvatarUrl(mPhotoItem.getAvatarURL());
+
+//        mAvatarImage = mAvatarIv.getmAvatarImage();
+//
+//        mAvatarImage.setUserId(mPhotoItem.getUid());
+//        imageLoader.displayImage(mPhotoItem.getAvatarURL(), mAvatarImage,
+//                mAvatarOptions, mAnimateFirstListener);
 
         mImageArea.removeAllViews();
 

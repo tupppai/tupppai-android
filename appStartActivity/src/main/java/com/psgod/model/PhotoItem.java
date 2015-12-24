@@ -50,6 +50,7 @@ public class PhotoItem implements Serializable, Cloneable {
 	@DatabaseField(columnName = "avatar_url")
 	private String mAvatarURL;
 	// 0: 女 1: 男
+	private boolean mIsVip;
 	@DatabaseField(columnName = "gender")
 	private int mGender;
 	// 照片是否已经被下载过
@@ -185,6 +186,9 @@ public class PhotoItem implements Serializable, Cloneable {
 		item.mUid = jsonObj.getLong("uid");
 		item.mNickname = jsonObj.getString("nickname");
 		item.mAvatarURL = jsonObj.getString("avatar");
+		if (jsonObj.has("is_god")) {
+			item.mIsVip = jsonObj.getBoolean("is_god");
+		}
 		item.mGender = jsonObj.getInt("sex");
 		if (jsonObj.has("is_download")) {
 			item.mIsDownloaded = jsonObj.getBoolean("is_download");
@@ -192,8 +196,12 @@ public class PhotoItem implements Serializable, Cloneable {
 		if (jsonObj.has("collected")) {
 			item.mIsCollected = jsonObj.getBoolean("collected");
 		}
-		item.mIsFollowed = jsonObj.getBoolean("is_fan");
-		item.mIsFollow = jsonObj.getBoolean("is_follow");
+		if (jsonObj.has("is_fan")) {
+			item.mIsFollowed = jsonObj.getBoolean("is_fan");
+		}
+		if (jsonObj.has("is_follow")) {
+			item.mIsFollow = jsonObj.getBoolean("is_follow");
+		}
 
 		item.mIsLiked = jsonObj.getBoolean("uped");
 		item.mImageURL = jsonObj.getString("image_url");
@@ -526,6 +534,14 @@ public class PhotoItem implements Serializable, Cloneable {
 
 	public void setImageURL(String imageURL) {
 		this.mImageURL = imageURL;
+	}
+
+	public boolean getmIsVip() {
+		return mIsVip;
+	}
+
+	public void setmIsVip(boolean mIsVip) {
+		this.mIsVip = mIsVip;
 	}
 
 	public int getImageWidth() {
