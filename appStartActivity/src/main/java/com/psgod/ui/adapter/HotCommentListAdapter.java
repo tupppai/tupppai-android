@@ -70,6 +70,8 @@ public class HotCommentListAdapter extends BaseAdapter {
 					.findViewById(R.id.item_hotcomment_list_name_tv);
 			viewHolder.mContentTv = (TextView) convertView
 					.findViewById(R.id.item_hotcomment_list_content_tv);
+			viewHolder.mAiteTv = (TextView) convertView
+					.findViewById(R.id.item_hotcomment_list_aite_name);
 			convertView.setTag(viewHolder);
 		} else {
 			viewHolder = (ViewHolder) convertView.getTag();
@@ -116,5 +118,6 @@ public class HotCommentListAdapter extends BaseAdapter {
 	private static class ViewHolder {
 		TextView mNameTv;
 		TextView mContentTv;
+		TextView mAiteTv;
 	}
 }

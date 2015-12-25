@@ -400,13 +400,30 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="0dp"
-            android:visibility="gone" >
+            android:visibility="visible" >
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/color_22000000"
+                />
+
+            <ImageView
+                android:id="@+id/photo_item_hot_comments_tag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_hot_comment"
+                android:layout_marginTop="9dp"
+                />
 
             <com.psgod.ui.widget.ChildListView
                 android:id="@+id/photo_item_hot_comments_lv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/photo_item_hot_comments_tag"
                 android:background="#FFFFFF"
+                android:layout_marginTop="1dp"
+                android:layout_marginLeft="7dp"
                 android:divider="@null"
                 android:scrollbars="none" />
         </RelativeLayout>

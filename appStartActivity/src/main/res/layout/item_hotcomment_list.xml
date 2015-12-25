@@ -17,16 +17,29 @@
             android:paddingTop="7dp"
             android:background="@drawable/selector_press"
             android:includeFontPadding="false"
-            android:textColor="#99000000"
+            android:textColor="#000000"
             android:textSize="13dp" />
+
+        <TextView
+            android:id="@+id/item_hotcomment_list_aite_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/item_hotcomment_list_name_tv"
+            android:layout_toRightOf="@+id/item_hotcomment_list_name_tv"
+            android:background="@drawable/selector_press"
+            android:textSize="13dp"
+            android:textColor="#000000"
+            android:paddingTop="7dp"
+            android:paddingBottom="7dp"
+            />
 
         <TextView
             android:id="@+id/item_hotcomment_list_content_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/item_hotcomment_list_name_tv"
-            android:layout_marginLeft="7dp"
-            android:layout_toRightOf="@+id/item_hotcomment_list_name_tv"
+            android:layout_alignTop="@+id/item_hotcomment_list_aite_name"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/item_hotcomment_list_aite_name"
             android:ellipsize="end"
             android:background="@drawable/selector_press"
             android:includeFontPadding="false"

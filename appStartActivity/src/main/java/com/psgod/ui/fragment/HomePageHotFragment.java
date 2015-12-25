@@ -171,6 +171,7 @@ public class HomePageHotFragment extends BaseFragment implements Callback {
 
         loadDataAsync();
         loadBannerData(); // 加载banner数据
+
         return parentView;
     }
 
