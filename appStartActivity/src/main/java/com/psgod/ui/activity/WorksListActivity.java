@@ -34,81 +34,79 @@ import java.util.List;
 
 /**
  * 全部作品页面
- * 
+ *
  * @author ZouMengyuan
- * 
  */
 public class WorksListActivity extends PSGodBaseActivity {
-	private final static String TAG = WorksListActivity.class.getSimpleName();
+    private final static String TAG = WorksListActivity.class.getSimpleName();
 
-	private Context mContext;
-	private List<PhotoItem> mPhotoItems = new ArrayList<PhotoItem>();
-	private PullToRefreshStaggeredGridView mWorkdListView = null;
-	private View mFootView;
-	private ImageButton mBackButton;
-	private PhotoWaterFallListAdapter mWorksAdapter = null;
-	private CustomProgressingDialog mProgressDialog;
-	private WorkListListener mWorkListListener;
+    private Context mContext;
+    private List<PhotoItem> mPhotoItems = new ArrayList<PhotoItem>();
+    private PullToRefreshStaggeredGridView mWorkdListView = null;
+    private View mFootView;
+    private ImageButton mBackButton;
+    private PhotoWaterFallListAdapter mWorksAdapter = null;
+    private CustomProgressingDialog mProgressDialog;
+    private WorkListListener mWorkListListener;
 
-	private int mPage = 1;
-	// 控制是否可以加载下一页
-	private boolean canLoadMore = false;
-	private Long askId;
+    private int mPage = 1;
+    // 控制是否可以加载下一页
+    private boolean canLoadMore = false;
+    private Long askId;
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_works_list);
-		mContext = this;
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_works_list);
+        mContext = this;
 
-		Intent intent = getIntent();
-		askId = intent.getLongExtra("ASKID", 0);
+        Intent intent = getIntent();
+        askId = intent.getLongExtra("ASKID", 0);
 
-		initViews();
-		initListeners();
+        initViews();
+        initListeners();
 
-		if (mProgressDialog == null) {
-			mProgressDialog = new CustomProgressingDialog(mContext);
-		}
+        if (mProgressDialog == null) {
+            mProgressDialog = new CustomProgressingDialog(mContext);
+        }
 
-		if (!mProgressDialog.isShowing()) {
-			mProgressDialog.show();
-		}
+        if (!mProgressDialog.isShowing()) {
+            mProgressDialog.show();
+        }
 
-		refresh();
-	}
+        refresh();
+    }
 
-	public void initViews() {
-		mWorkdListView = (PullToRefreshStaggeredGridView) findViewById(R.id.list_work);
-		mWorkdListView.setMode(Mode.PULL_FROM_START);
-		mWorkdListView.setEmptyView(LayoutInflater.from(this).inflate(R.layout.view_empty,null));
-		mBackButton = (ImageButton) findViewById(R.id.btn_back);
+    public void initViews() {
+        mWorkdListView = (PullToRefreshStaggeredGridView) findViewById(R.id.list_work);
+        mWorkdListView.setMode(Mode.PULL_FROM_START);
+        mBackButton = (ImageButton) findViewById(R.id.btn_back);
 
-		mWorksAdapter = new PhotoWaterFallListAdapter(mContext, mPhotoItems,
-				PhotoWaterFallListType.ALL_WORK);
-		mWorksAdapter.setType(1);
-		mWorkdListView.setAdapter(mWorksAdapter);
+        mWorksAdapter = new PhotoWaterFallListAdapter(mContext, mPhotoItems,
+                PhotoWaterFallListType.ALL_WORK);
+        mWorksAdapter.setType(1);
+        mWorkdListView.setAdapter(mWorksAdapter);
 
-		mFootView = LayoutInflater.from(mContext).inflate(
-				R.layout.footer_load_more, null);
-		mFootView.setVisibility(View.GONE);
-		mWorkdListView.getRefreshableView().addFooterView(mFootView);
+        mFootView = LayoutInflater.from(mContext).inflate(
+                R.layout.footer_load_more, null);
+        mFootView.setVisibility(View.GONE);
+        mWorkdListView.getRefreshableView().addFooterView(mFootView);
 
-		mWorkListListener = new WorkListListener(mContext);
-		mWorkdListView.setOnRefreshListener(mWorkListListener);
-		mWorkdListView.setOnLastItemVisibleListener(mWorkListListener);
-		mWorkdListView.setScrollingWhileRefreshingEnabled(true);
+        mWorkListListener = new WorkListListener(mContext);
+        mWorkdListView.setOnRefreshListener(mWorkListListener);
+        mWorkdListView.setOnLastItemVisibleListener(mWorkListListener);
+        mWorkdListView.setScrollingWhileRefreshingEnabled(true);
 
-	}
+    }
 
-	public void initListeners() {
-		mBackButton.setOnClickListener(new OnClickListener() {
+    public void initListeners() {
+        mBackButton.setOnClickListener(new OnClickListener() {
 
-			@Override
-			public void onClick(View v) {
-				finish();
-			}
-		});
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
 //		mWorkdListView.setOnItemClickListener(new OnItemClickListener() {
 //
@@ -123,116 +121,118 @@ public class WorksListActivity extends PSGodBaseActivity {
 //						mPhotoItems.get(position - 1));
 //			}
 //		});
-	}
+    }
 
-	private class WorkListListener implements OnLastItemVisibleListener,
-			OnRefreshListener {
-		private Context mContext;
+    private class WorkListListener implements OnLastItemVisibleListener,
+            OnRefreshListener {
+        private Context mContext;
 
-		public WorkListListener(Context context) {
-			mContext = context;
-		}
+        public WorkListListener(Context context) {
+            mContext = context;
+        }
 
-		@Override
-		public void onLastItemVisible() {
-			if (canLoadMore) {
-				mPage = mPage + 1;
-				mFootView.setVisibility(View.VISIBLE);
-				// 上拉加载更多
-				PhotoListRequest.Builder builder = new PhotoListRequest.Builder()
-						.setPage(mPage).setType(PhotoItem.TYPE_RECENT_WORK)
-						.setAskId(askId).setListener(loadMoreListener)
-						.setErrorListener(errorListener);
+        @Override
+        public void onLastItemVisible() {
+            if (canLoadMore) {
+                mPage = mPage + 1;
+                mFootView.setVisibility(View.VISIBLE);
+                // 上拉加载更多
+                PhotoListRequest.Builder builder = new PhotoListRequest.Builder()
+                        .setPage(mPage).setType(PhotoItem.TYPE_RECENT_WORK)
+                        .setAskId(askId).setListener(loadMoreListener)
+                        .setErrorListener(errorListener);
 
-				PhotoListRequest request = builder.build();
-				request.setTag(TAG);
-				RequestQueue requestQueue = PSGodRequestQueue.getInstance(
-						mContext).getRequestQueue();
-				requestQueue.add(request);
-			}
-		}
+                PhotoListRequest request = builder.build();
+                request.setTag(TAG);
+                RequestQueue requestQueue = PSGodRequestQueue.getInstance(
+                        mContext).getRequestQueue();
+                requestQueue.add(request);
+            }
+        }
 
-		@Override
-		public void onRefresh(PullToRefreshBase refreshView) {
-			refresh();
-		}
-	}
+        @Override
+        public void onRefresh(PullToRefreshBase refreshView) {
+            refresh();
+        }
+    }
 
-	// 刷新操作
-	private void refresh() {
-		mPage = 1;
-		canLoadMore = false;
+    // 刷新操作
+    private void refresh() {
+        mPage = 1;
+        canLoadMore = false;
 
-		PhotoListRequest.Builder builder = new PhotoListRequest.Builder()
-				.setPage(mPage).setType(PhotoItem.TYPE_RECENT_WORK)
-				.setAskId(askId).setListener(refreshListener)
-				.setErrorListener(errorListener);
+        PhotoListRequest.Builder builder = new PhotoListRequest.Builder()
+                .setPage(mPage).setType(PhotoItem.TYPE_RECENT_WORK)
+                .setAskId(askId).setListener(refreshListener)
+                .setErrorListener(errorListener);
 
-		PhotoListRequest request = builder.build();
-		request.setTag(TAG);
-		RequestQueue requestQueue = PSGodRequestQueue.getInstance(mContext)
-				.getRequestQueue();
-		requestQueue.add(request);
-	}
+        PhotoListRequest request = builder.build();
+        request.setTag(TAG);
+        RequestQueue requestQueue = PSGodRequestQueue.getInstance(mContext)
+                .getRequestQueue();
+        requestQueue.add(request);
+    }
 
-	private Listener<List<PhotoItem>> refreshListener = new Listener<List<PhotoItem>>() {
-		@Override
-		public void onResponse(List<PhotoItem> items) {
-			mPhotoItems.clear();
-			mPhotoItems.addAll(items);
-			mWorksAdapter.notifyDataSetChanged();
-			mWorkdListView.onRefreshComplete();
+    private Listener<List<PhotoItem>> refreshListener = new Listener<List<PhotoItem>>() {
+        @Override
+        public void onResponse(List<PhotoItem> items) {
+            mPhotoItems.clear();
+            mPhotoItems.addAll(items);
+            mWorksAdapter.notifyDataSetChanged();
+            mWorkdListView.onRefreshComplete();
 
-			if (items.size() < 15) {
-				canLoadMore = false;
-			} else {
-				canLoadMore = true;
-			}
+            if (items.size() < 15) {
+                canLoadMore = false;
+            } else {
+                canLoadMore = true;
+            }
 
-			if (mProgressDialog.isShowing()) {
-				mProgressDialog.dismiss();
-			}
+            if (mProgressDialog.isShowing()) {
+                mProgressDialog.dismiss();
+            }
+            mWorkdListView.setEmptyView(
+                    LayoutInflater.from(WorksListActivity.this).inflate(R.layout.view_empty, null));
 
-		}
-	};
+        }
+    };
 
-	private Listener<List<PhotoItem>> loadMoreListener = new Listener<List<PhotoItem>>() {
-		@Override
-		public void onResponse(List<PhotoItem> items) {
-			if (items.size() > 0) {
-				mPhotoItems.addAll(items);
-			}
-			mWorksAdapter.notifyDataSetChanged();
-			mWorkdListView.onRefreshComplete();
+    private Listener<List<PhotoItem>> loadMoreListener = new Listener<List<PhotoItem>>() {
+        @Override
+        public void onResponse(List<PhotoItem> items) {
+            if (items.size() > 0) {
+                mPhotoItems.addAll(items);
+            }
+            mWorksAdapter.notifyDataSetChanged();
+            mWorkdListView.onRefreshComplete();
 
-			mFootView.setVisibility(View.INVISIBLE);
+            mFootView.setVisibility(View.INVISIBLE);
 
-			if (items.size() < 15) {
-				canLoadMore = false;
-			} else {
-				canLoadMore = true;
-			}
-		}
-	};
+            if (items.size() < 15) {
+                canLoadMore = false;
+            } else {
+                canLoadMore = true;
+            }
+        }
+    };
 
-	private PSGodErrorListener errorListener = new PSGodErrorListener(
-			UserPhotoRequest.class.getSimpleName()) {
-		@Override
-		public void handleError(VolleyError error) {
-			// TODO
-			mWorkdListView.onRefreshComplete();
-		}
-	};
+    private PSGodErrorListener errorListener = new PSGodErrorListener(
+            UserPhotoRequest.class.getSimpleName()) {
+        @Override
+        public void handleError(VolleyError error) {
+            // TODO
+            mWorkdListView.onRefreshComplete();
+        }
+    };
 
-	/**
-	 * 暂停所有的下载
-	 */
-	@Override
-	public void onStop() {
-		super.onStop();
-		RequestQueue requestQueue = PSGodRequestQueue.getInstance(mContext)
-				.getRequestQueue();
-		requestQueue.cancelAll(TAG);
-	}
+    /**
+     * 暂停所有的下载
+     */
+    @Override
+    public void onStop() {
+        super.onStop();
+        RequestQueue requestQueue = PSGodRequestQueue.getInstance(mContext)
+                .getRequestQueue();
+        requestQueue.cancelAll(TAG);
+    }
 
 }
