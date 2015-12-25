@@ -452,7 +452,7 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
                         UploadImageRequest.Builder builder = new UploadImageRequest.Builder()
                                 .setBitmap(mImageBitmap).setErrorListener(
                                         errorListener);
-                        if ((i + 1) == pathList.size()) {
+                        if (i == 1) {
                             builder.setListener(uploadImageListener);
                         } else {
                             builder.setListener(uploadImageListenerId);
@@ -483,6 +483,21 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
         @Override
         public void onResponse(ImageUploadResult response) {
             mUploadIdList.add(response.id);
+            if(mUploadIdList.size() == 2) {
+                UploadMultiRequest.Builder builder = new UploadMultiRequest.Builder()
+                        .setUploadType(IMAGE_UPLOAD_TYPE).setContent(contentString)
+                        .setUploadIdList(mUploadIdList)
+                        .setRatioList(mImageRatioList).setAskId(mAskId)
+                        .setActivityId(mActivityId).setChannelId(mChannelId)
+                        .setLabelIdList(mSelectLabelIds)
+                        .setScaleList(mImageScaleList).setListener(uploadListener)
+                        .setErrorListener(errorListener);
+
+                UploadMultiRequest request = builder.builder();
+                RequestQueue reqeustQueue = PSGodRequestQueue.getInstance(
+                        getApplicationContext()).getRequestQueue();
+                reqeustQueue.add(request);
+            }
         }
 
     };
@@ -492,19 +507,21 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
         @Override
         public void onResponse(ImageUploadResult response) {
             mUploadIdList.add(response.id);
-            UploadMultiRequest.Builder builder = new UploadMultiRequest.Builder()
-                    .setUploadType(IMAGE_UPLOAD_TYPE).setContent(contentString)
-                    .setUploadIdList(mUploadIdList)
-                    .setRatioList(mImageRatioList).setAskId(mAskId)
-                    .setActivityId(mActivityId).setChannelId(mChannelId)
-                    .setLabelIdList(mSelectLabelIds)
-                    .setScaleList(mImageScaleList).setListener(uploadListener)
-                    .setErrorListener(errorListener);
+            if(mUploadIdList.size() == 2) {
+                UploadMultiRequest.Builder builder = new UploadMultiRequest.Builder()
+                        .setUploadType(IMAGE_UPLOAD_TYPE).setContent(contentString)
+                        .setUploadIdList(mUploadIdList)
+                        .setRatioList(mImageRatioList).setAskId(mAskId)
+                        .setActivityId(mActivityId).setChannelId(mChannelId)
+                        .setLabelIdList(mSelectLabelIds)
+                        .setScaleList(mImageScaleList).setListener(uploadListener)
+                        .setErrorListener(errorListener);
 
-            UploadMultiRequest request = builder.builder();
-            RequestQueue reqeustQueue = PSGodRequestQueue.getInstance(
-                    getApplicationContext()).getRequestQueue();
-            reqeustQueue.add(request);
+                UploadMultiRequest request = builder.builder();
+                RequestQueue reqeustQueue = PSGodRequestQueue.getInstance(
+                        getApplicationContext()).getRequestQueue();
+                reqeustQueue.add(request);
+            }
         }
 
     };
