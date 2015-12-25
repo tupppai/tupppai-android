@@ -434,9 +434,9 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
 
 //                        if (imageHeight < 320 || imageWidth < 320) {
 //                        CustomToast.showError(UploadMultiImageActivity.this, "上传图片尺寸应大于320*320", Toast.LENGTH_LONG);
-                        if (mProgressDialog.isShowing()) {
-                            mProgressDialog.dismiss();
-                        }
+//                        if (mProgressDialog.isShowing()) {
+//                            mProgressDialog.dismiss();
+//                        }
 //                            break;
 //                        }
                         float mRatio = (float) imageHeight / imageWidth;
