@@ -126,9 +126,16 @@ public class PSDialog extends Dialog implements Handler.Callback {
 							mHandler.sendEmptyMessage(MSG_FAILED);
 						} else {
 							for(String s:info.urls){
+								String[] thumbs = s.split("/");
+								String name;
+								if(thumbs.length > 0) {
+									name = thumbs[thumbs.length - 1];
+								}else {
+									name = s;
+								}
 								Bitmap image = PhotoRequest.downloadImage(s);
 								String path = ImageIOManager.getInstance()
-										.saveImage(String.valueOf(mPhotoId), image);
+										.saveImage(name, image);
 								// 更新相册后通知系统扫描更新
 								Intent intent = new Intent(
 										Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);

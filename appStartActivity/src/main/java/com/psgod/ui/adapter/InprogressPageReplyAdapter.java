@@ -55,7 +55,7 @@ public class InprogressPageReplyAdapter extends BaseAdapter implements
     // 根据type+id进行下载
     private Long mAskId;
     private Long mPhotoId;
-    private String mType = "reply";
+    private String mType = "ask";
     private WeakReferenceHandler mHandler = new WeakReferenceHandler(this);
 
     private static final int MSG_SUCCESSFUL = 0x4440;
@@ -132,7 +132,6 @@ public class InprogressPageReplyAdapter extends BaseAdapter implements
         mViewHolder.mAskDesc.setHtmlFromString(photoItem.getDesc(),
                 true);
 
-        mViewHolder.mDownloadIv.setTag(photoItem.getPid());
         mViewHolder.mDownloadIv.setOnClickListener(downloadListener);
 
         mViewHolder.mUploadIv.setTag(photoItem);
@@ -232,9 +231,16 @@ public class InprogressPageReplyAdapter extends BaseAdapter implements
                         mHandler.sendEmptyMessage(MSG_FAILED);
                     } else {
                         for(String s : info.urls) {
+                            String[] thumbs = s.split("/");
+                            String name;
+                            if(thumbs.length > 0) {
+                                name = thumbs[thumbs.length - 1];
+                            }else {
+                                name = s;
+                            }
                             Bitmap image = PhotoRequest.downloadImage(s);
                             String path = ImageIOManager.getInstance().saveImage(
-                                    String.valueOf(view.getTag()), image);
+                                    name, image);
 
                             // 更新相册后通知系统扫描更新
                             Intent intent = new Intent(
