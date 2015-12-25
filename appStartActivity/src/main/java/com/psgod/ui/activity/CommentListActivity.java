@@ -336,6 +336,7 @@ public class CommentListActivity extends PSGodBaseActivity implements
 
 					// 后台发送评论
 					sendCommentBackEnd();
+					mCommentLv.getRefreshableView().setSelection(0);
 				}
 			}
 		});
@@ -520,7 +521,7 @@ public class CommentListActivity extends PSGodBaseActivity implements
 	public boolean handleMessage(Message msg) {
 		int group = msg.getData().getInt("group");
 		int child = msg.getData().getInt("child");
-		mCommentLv.getRefreshableView().smoothScrollToPosition(child + 2);
+		mCommentLv.getRefreshableView().smoothScrollToPosition(child + 3);
 		mAdapter.setSelectItem(child);
 		return false;
 	}

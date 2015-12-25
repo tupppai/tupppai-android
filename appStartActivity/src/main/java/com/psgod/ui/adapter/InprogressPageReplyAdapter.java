@@ -231,20 +231,22 @@ public class InprogressPageReplyAdapter extends BaseAdapter implements
                     if (!info.isSuccessful) {
                         mHandler.sendEmptyMessage(MSG_FAILED);
                     } else {
-                        Bitmap image = PhotoRequest.downloadImage(info.url);
-                        String path = ImageIOManager.getInstance().saveImage(
-                                String.valueOf(view.getTag()), image);
+                        for(String s : info.urls) {
+                            Bitmap image = PhotoRequest.downloadImage(s);
+                            String path = ImageIOManager.getInstance().saveImage(
+                                    String.valueOf(view.getTag()), image);
 
-                        // 更新相册后通知系统扫描更新
-                        Intent intent = new Intent(
-                                Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-                        Uri uri = Uri.fromFile(new File(path));
-                        intent.setData(uri);
-                        mContext.sendBroadcast(intent);
+                            // 更新相册后通知系统扫描更新
+                            Intent intent = new Intent(
+                                    Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+                            Uri uri = Uri.fromFile(new File(path));
+                            intent.setData(uri);
+                            mContext.sendBroadcast(intent);
 
-                        Message msg = mHandler.obtainMessage(MSG_SUCCESSFUL);
-                        msg.obj = path;
-                        msg.sendToTarget();
+                            Message msg = mHandler.obtainMessage(MSG_SUCCESSFUL);
+                            msg.obj = path;
+                            msg.sendToTarget();
+                        }
                     }
                 }
             });

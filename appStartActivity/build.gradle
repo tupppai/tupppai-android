@@ -65,6 +65,7 @@ android {
         vivo {}
         coolpad {}
         oppo {}
+        letv {}
     }
 
     productFlavors.all {

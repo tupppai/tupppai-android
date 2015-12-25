@@ -141,7 +141,7 @@ public class RecentActActivity extends PSGodBaseActivity {
         progressingDialog.show();
 
         mUpLoad = new ImageView(this);
-        mUpLoad.setImageDrawable(getResources().getDrawable(R.mipmap.btn_home_follow));
+        mUpLoad.setImageDrawable(getResources().getDrawable(R.mipmap.btn_act_reply));
         mUpLoad.setScaleType(ImageView.ScaleType.FIT_XY);
         FloatScrollHelper helper = new FloatScrollHelper(mListView, mParent, mUpLoad, this);
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {

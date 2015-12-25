@@ -215,7 +215,7 @@ public class SearchUserFragment extends BaseFragment {
 		View emptyView = view
 				.findViewById(R.id.fragment_search_user_list_empty_view);
 		mEmptyTextView = (TextView) view.findViewById(R.id.empty_text);
-		mEmptyTextView.setText("我们的频道很快出版喽，敬请期待");
+		mEmptyTextView.setText("");
 		listView.setEmptyView(emptyView);
 
 		dialog = new CustomProgressingDialog(getActivity());

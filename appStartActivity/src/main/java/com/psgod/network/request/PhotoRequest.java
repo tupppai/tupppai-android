@@ -9,6 +9,7 @@ import com.psgod.Logger;
 import com.psgod.PSGodApplication;
 import com.psgod.R;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
@@ -34,7 +35,12 @@ public class PhotoRequest {
 
             if ((obj != null) && (obj.getInt("ret") == 1)) {
                 JSONObject data = obj.getJSONObject("data");
-                res.url = data.getString("url");
+                JSONArray urls = data.getJSONArray("urls");
+                int length = urls.length();
+                res.urls = new String[length];
+                for (int i = 0; i <length; i++) {
+                    res.urls[i] = urls.getString(i);
+                }
                 res.isSuccessful = true;
             }
         } catch (Exception e) {
@@ -61,7 +67,12 @@ public class PhotoRequest {
 
             if ((obj != null) && (obj.getInt("ret") == 1)) {
                 JSONObject data = obj.getJSONObject("data");
-                res.url = data.getString("url");
+                JSONArray urls = data.getJSONArray("urls");
+                int length = urls.length();
+                res.urls = new String[length];
+                for (int i = 0; i <length; i++) {
+                    res.urls[i] = urls.getString(i);
+                }
                 res.isSuccessful = true;
             }
         } catch (Exception e) {
@@ -99,7 +110,7 @@ public class PhotoRequest {
 
     public static class ImageInfo {
         public boolean isSuccessful;
-        public String url;
+        public String[] urls;
         public int width;
         public int height;
     }

@@ -183,13 +183,21 @@ public class PhotoItem implements Serializable, Cloneable {
 		if (jsonObj.has("id")) {
 			item.mPid = jsonObj.getLong("id");
 		}
-		item.mUid = jsonObj.getLong("uid");
-		item.mNickname = jsonObj.getString("nickname");
-		item.mAvatarURL = jsonObj.getString("avatar");
+		if(jsonObj.has("uid")) {
+			item.mUid = jsonObj.getLong("uid");
+		}
+		if(jsonObj.has("nickname")) {
+			item.mNickname = jsonObj.getString("nickname");
+		}
+		if(jsonObj.has("avatar")) {
+			item.mAvatarURL = jsonObj.getString("avatar");
+		}
 		if (jsonObj.has("is_star")) {
 			item.mIsStar = jsonObj.getBoolean("is_star");
 		}
-		item.mGender = jsonObj.getInt("sex");
+		if(jsonObj.has("sex")) {
+			item.mGender = jsonObj.getInt("sex");
+		}
 		if (jsonObj.has("is_download")) {
 			item.mIsDownloaded = jsonObj.getBoolean("is_download");
 		}

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Message;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -23,6 +24,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.psgod.CustomToast;
 import com.psgod.PsGodImageLoader;
 import com.psgod.Constants;
 import com.psgod.R;
@@ -325,22 +327,26 @@ public class InprogressPageAskAdapter extends BaseAdapter implements
 		@Override
 		public void onClick(View v) {
 			ViewHolder holder = (ViewHolder) v.getTag();
-			PhotoItem item = (PhotoItem) holder.descEdit.getTag();
-			holder.mEditImage.setVisibility(View.VISIBLE);
-			holder.mEditView.setVisibility(View.GONE);
-			holder.descEdit.setEnabled(false);
-			holder.descEdit.setFocusableInTouchMode(false);
-			if (!holder.descEdit.getText().toString().equals(item.getDesc())) {
-				EditAskDescRequest.Builder builder = new EditAskDescRequest.Builder()
-						.setAskId(item.getAskId())
-						.setDesc(holder.descEdit.getText().toString())
-						.setListener(listener).setErrorListener(errorListener);
-				EditAskDescRequest request = builder.build();
-				request.setTag(TAG);
+			if(holder.descEdit.getText() == null || holder.descEdit.getText().toString().equals("")){
+				CustomToast.show(mContext,"描述不可为空",Toast.LENGTH_LONG);
+			}else {
+				PhotoItem item = (PhotoItem) holder.descEdit.getTag();
+				holder.mEditImage.setVisibility(View.VISIBLE);
+				holder.mEditView.setVisibility(View.GONE);
+				holder.descEdit.setEnabled(false);
+				holder.descEdit.setFocusableInTouchMode(false);
+				if (!holder.descEdit.getText().toString().equals(item.getDesc())) {
+					EditAskDescRequest.Builder builder = new EditAskDescRequest.Builder()
+							.setAskId(item.getAskId())
+							.setDesc(holder.descEdit.getText().toString())
+							.setListener(listener).setErrorListener(errorListener);
+					EditAskDescRequest request = builder.build();
+					request.setTag(TAG);
 
-				RequestQueue requestQueue = PSGodRequestQueue.getInstance(
-						mContext).getRequestQueue();
-				requestQueue.add(request);
+					RequestQueue requestQueue = PSGodRequestQueue.getInstance(
+							mContext).getRequestQueue();
+					requestQueue.add(request);
+				}
 			}
 		}
 	};
@@ -376,6 +382,7 @@ public class InprogressPageAskAdapter extends BaseAdapter implements
 		TextView mEditView;
 		TextView mChannelName;
 		ImageView mChannelTag;
+
 	}
 
 	private WeakReferenceHandler mHandler = new WeakReferenceHandler(this);
