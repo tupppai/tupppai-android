@@ -207,7 +207,7 @@
             android:background="@null"
             android:paddingLeft="12dp"
             android:paddingRight="20dp"
-            android:src="@drawable/ic_my_setting" />
+            android:src="@mipmap/ic_my_setting_white" />
 
         <TextView
             android:id="@+id/title_tv"
@@ -228,7 +228,7 @@
             android:background="@null"
             android:paddingLeft="20dp"
             android:paddingRight="12dp"
-            android:src="@drawable/ic_my_message" />
+            android:src="@mipmap/ic_message" />
 
         <View
             android:id="@+id/fragment_my_page_message_tip"

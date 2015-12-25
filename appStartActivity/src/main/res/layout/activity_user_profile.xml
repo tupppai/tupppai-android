@@ -225,8 +225,9 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:paddingLeft="16dp"
-            android:src="@drawable/selector_back_btn"
+            android:src="@drawable/ic_back_white"
             android:paddingRight="16dp"
+            android:id="@+id/activity_user_profile_finish"
             />
 
 

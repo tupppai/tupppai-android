@@ -52,6 +52,7 @@ import com.psgod.ui.fragment.ScrollTabHolder;
 import com.psgod.ui.view.PagerSlidingTabStrip;
 import com.psgod.ui.widget.ActionBar;
 import com.psgod.ui.widget.AvatarImageView;
+import com.psgod.ui.widget.FinishView;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
 import com.psgod.ui.widget.dialog.ImageDialog;
 
@@ -97,6 +98,7 @@ public class UserProfileActivity extends PSGodBaseActivity implements
     private TextView mFollowerText;
     private TextView mLikedCount;
     private Button mFollowBtn;
+    private FinishView mFinish;
 
     private RelativeLayout mFollowingLayout;
     private RelativeLayout mFollowerLayout;
@@ -386,6 +388,8 @@ public class UserProfileActivity extends PSGodBaseActivity implements
         mFollowerText = (TextView) findViewById(R.id.user_profile_user_followers);
         mLikedCount = (TextView) findViewById(R.id.user_profile_user_like_count);
         mFollowBtn = (Button) findViewById(R.id.activity_user_profile_follow_btn);
+        mFinish = (FinishView) findViewById(R.id.activity_user_profile_finish);
+
         mFollowingLayout = (RelativeLayout) findViewById(R.id.layout_following_profile);
         mFollowerLayout = (RelativeLayout) findViewById(R.id.layout_followers_profile);
         mParent = (RelativeLayout) findViewById(R.id.avatar_parent);
@@ -519,7 +523,12 @@ public class UserProfileActivity extends PSGodBaseActivity implements
             colorRight = color;
         }
         mTitleLayout.setBackgroundColor(Color.parseColor(pauseColorString(color,true)));
-        mTitleName.setTextColor(Color.parseColor(pauseColorString(255 - color,false)));
+//        mTitleName.setTextColor(Color.parseColor(pauseColorString(255 - color,false)));
+        if(color > 150){
+            mFinish.setImageResource(R.drawable.ic_back_gray);
+        }else{
+            mFinish.setImageResource(R.drawable.ic_back_white);
+        }
 //        scrollY = -getScrollY(view);
         if (NEED_RELAYOUT) {
             headerTop = scrollY;

@@ -227,7 +227,8 @@
                 android:layout_centerVertical="true"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
-                android:src="@drawable/selector_back_btn" />
+                android:id="@+id/activity_user_profile_finish"
+                android:src="@drawable/ic_back_white" />
 
             <Button
                 android:id="@+id/activity_user_profile_follow_btn"

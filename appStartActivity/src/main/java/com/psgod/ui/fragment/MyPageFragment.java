@@ -426,6 +426,13 @@ public class MyPageFragment extends Fragment implements
 			colorRight = color;
 		}
 		mViewHolder.mActionBar.setBackgroundColor(Color.parseColor(pauseColorString(color, true)));
+		if(color > 150){
+			mViewHolder.mMessageButton.setImageResource(R.mipmap.ic_message_black);
+			mViewHolder.mSettingButton.setImageResource(R.mipmap.ic_my_setting_white);
+		}else{
+			mViewHolder.mMessageButton.setImageResource(R.mipmap.ic_message);
+			mViewHolder.mSettingButton.setImageResource(R.mipmap.ic_my_setting);
+		}
 //        scrollY = -getScrollY(view);
 		if (NEED_RELAYOUT) {
 			headerTop = scrollY;

@@ -29,7 +29,7 @@
     <!--<dimen name="split_one_pixels">1px</dimen>-->
     <dimen name="split_one_dip">1dp</dimen>
     <dimen name="max_header_height">260dp</dimen>
-    <dimen name="max_header_height_profile">260dp</dimen>
+    <dimen name="max_header_height_profile">275dp</dimen>
     <dimen name="header_offset_dis">220dp</dimen>
     <dimen name="header_offset_dis_profile">242dp</dimen>
     <dimen name="indicator_right_padding">10dp</dimen>
