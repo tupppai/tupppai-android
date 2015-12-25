@@ -134,7 +134,7 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
         mAskId = bundle.getLong("AskId", mAskId);
         mActivityId = bundle.getString("ActivityId");
         mChannelId = bundle.getString("channel_id");
-        isAsk = bundle.getBoolean("isAsk",false);
+        isAsk = bundle.getBoolean("isAsk", false);
         if (type.equals(TYPE_ASK_SELECT)) {
             IMAGE_UPLOAD_TYPE = TYPE_ASK_UPLOAD;
         } else {
@@ -432,13 +432,13 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
                         int imageHeight = mImageBitmap.getHeight();
                         int imageWidth = mImageBitmap.getWidth();
 
-                        if (imageHeight < 320 || imageWidth < 320) {
-                            CustomToast.showError(UploadMultiImageActivity.this, "上传图片尺寸应大于320*320", Toast.LENGTH_LONG);
-                            if (mProgressDialog.isShowing()) {
-                                mProgressDialog.dismiss();
-                            }
-                            break;
+//                        if (imageHeight < 320 || imageWidth < 320) {
+//                        CustomToast.showError(UploadMultiImageActivity.this, "上传图片尺寸应大于320*320", Toast.LENGTH_LONG);
+                        if (mProgressDialog.isShowing()) {
+                            mProgressDialog.dismiss();
                         }
+//                            break;
+//                        }
                         float mRatio = (float) imageHeight / imageWidth;
                         mImageRatioList.add(mRatio);
 
@@ -574,14 +574,14 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
 //                        true);
                 EventBus.getDefault().post(new MyPageRefreshEvent(MyPageRefreshEvent.ASK));
                 Intent intent = new Intent();
-                intent.putExtra("isRefresh",true);
-                if(isAsk) {
+                intent.putExtra("isRefresh", true);
+                if (isAsk) {
                     intent.setClass(UploadMultiImageActivity.this, RecentAsksActivity.class);
-                }else{
-                    intent.setClass(UploadMultiImageActivity.this,ChannelActivity.class);
+                } else {
+                    intent.setClass(UploadMultiImageActivity.this, ChannelActivity.class);
                 }
-                if(mChannelId != null && !mChannelId.equals("")){
-                    intent.putExtra("id",mChannelId);
+                if (mChannelId != null && !mChannelId.equals("")) {
+                    intent.putExtra("id", mChannelId);
                 }
                 startActivity(intent);
             } else {
@@ -597,15 +597,15 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
 //                        true);
                 EventBus.getDefault().post(new MyPageRefreshEvent(MyPageRefreshEvent.WORK));
                 Intent intent = new Intent();
-                intent.putExtra("isRefresh",true);
-                if(mActivityId != null && !mActivityId.equals("")){
-                    intent.setClass(UploadMultiImageActivity.this,RecentActActivity.class);
-                    intent.putExtra("id",mActivityId);
-                }else if(mChannelId != null && !mChannelId.equals("")){
+                intent.putExtra("isRefresh", true);
+                if (mActivityId != null && !mActivityId.equals("")) {
+                    intent.setClass(UploadMultiImageActivity.this, RecentActActivity.class);
+                    intent.putExtra("id", mActivityId);
+                } else if (mChannelId != null && !mChannelId.equals("")) {
                     intent.setClass(UploadMultiImageActivity.this, ChannelActivity.class);
-                    intent.putExtra("id",mChannelId);
-                }else{
-                    intent.setClass(UploadMultiImageActivity.this,RecentWorkActivity.class);
+                    intent.putExtra("id", mChannelId);
+                } else {
+                    intent.setClass(UploadMultiImageActivity.this, RecentWorkActivity.class);
                 }
                 startActivity(intent);
             }
