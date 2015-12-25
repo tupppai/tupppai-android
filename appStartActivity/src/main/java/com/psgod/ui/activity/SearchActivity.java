@@ -120,7 +120,6 @@ public class SearchActivity extends PSGodBaseActivity {
 					@Override
 					public boolean onEditorAction(TextView v, int actionId,
 							KeyEvent event) {
-						Log.e("search",String.valueOf(actionId));
 						if (actionId == EditorInfo.IME_ACTION_SEND
 								|| (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
 							if (event.getAction() == KeyEvent.ACTION_UP) {
