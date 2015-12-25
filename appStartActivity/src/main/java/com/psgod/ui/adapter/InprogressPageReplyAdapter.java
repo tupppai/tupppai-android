@@ -132,6 +132,7 @@ public class InprogressPageReplyAdapter extends BaseAdapter implements
         mViewHolder.mAskDesc.setHtmlFromString(photoItem.getDesc(),
                 true);
 
+        mViewHolder.mDownloadIv.setTag(photoItem.getPid());
         mViewHolder.mDownloadIv.setOnClickListener(downloadListener);
 
         mViewHolder.mUploadIv.setTag(photoItem);

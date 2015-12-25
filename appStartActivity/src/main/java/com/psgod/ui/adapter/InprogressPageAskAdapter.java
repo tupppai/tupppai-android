@@ -327,14 +327,15 @@ public class InprogressPageAskAdapter extends BaseAdapter implements
 		@Override
 		public void onClick(View v) {
 			ViewHolder holder = (ViewHolder) v.getTag();
+			PhotoItem item = (PhotoItem) holder.descEdit.getTag();
+			holder.mEditImage.setVisibility(View.VISIBLE);
+			holder.mEditView.setVisibility(View.GONE);
+			holder.descEdit.setEnabled(false);
+			holder.descEdit.setFocusableInTouchMode(false);
 			if(holder.descEdit.getText() == null || holder.descEdit.getText().toString().equals("")){
 				CustomToast.show(mContext,"描述不可为空",Toast.LENGTH_LONG);
+				holder.descEdit.setText(item.getDesc());
 			}else {
-				PhotoItem item = (PhotoItem) holder.descEdit.getTag();
-				holder.mEditImage.setVisibility(View.VISIBLE);
-				holder.mEditView.setVisibility(View.GONE);
-				holder.descEdit.setEnabled(false);
-				holder.descEdit.setFocusableInTouchMode(false);
 				if (!holder.descEdit.getText().toString().equals(item.getDesc())) {
 					EditAskDescRequest.Builder builder = new EditAskDescRequest.Builder()
 							.setAskId(item.getAskId())
@@ -356,7 +357,6 @@ public class InprogressPageAskAdapter extends BaseAdapter implements
 		public void onResponse(Boolean response) {
 			if (response) {
 				Toast.makeText(mContext, "修改成功", Toast.LENGTH_SHORT).show();
-
 			}
 		}
 	};
