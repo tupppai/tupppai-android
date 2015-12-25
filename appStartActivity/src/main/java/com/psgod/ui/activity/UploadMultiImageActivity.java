@@ -483,7 +483,7 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
         @Override
         public void onResponse(ImageUploadResult response) {
             mUploadIdList.add(response.id);
-            if(mUploadIdList.size() == 2) {
+            if(mUploadIdList.size() == pathList.size()) {
                 UploadMultiRequest.Builder builder = new UploadMultiRequest.Builder()
                         .setUploadType(IMAGE_UPLOAD_TYPE).setContent(contentString)
                         .setUploadIdList(mUploadIdList)
@@ -507,7 +507,7 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
         @Override
         public void onResponse(ImageUploadResult response) {
             mUploadIdList.add(response.id);
-            if(mUploadIdList.size() == 2) {
+            if(mUploadIdList.size() == pathList.size()) {
                 UploadMultiRequest.Builder builder = new UploadMultiRequest.Builder()
                         .setUploadType(IMAGE_UPLOAD_TYPE).setContent(contentString)
                         .setUploadIdList(mUploadIdList)
