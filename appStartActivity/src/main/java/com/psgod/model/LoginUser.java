@@ -270,6 +270,10 @@ public class LoginUser {
         return mIsInitialized;
     }
 
+    public boolean isStar() {
+        return mIsStar;
+    }
+
     public long getUid() {
         return mUid;
     }

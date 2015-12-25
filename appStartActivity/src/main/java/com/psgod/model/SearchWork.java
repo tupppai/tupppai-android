@@ -69,13 +69,13 @@ public class SearchWork implements Serializable{
 		private String image_url;
 		private int image_width;
 		private int image_height;
-		private int is_star;
+		private boolean is_star;
 
-		public int getIs_star() {
+		public boolean getIs_star() {
 			return is_star;
 		}
 
-		public void setIs_star(int is_star) {
+		public void setIs_star(boolean is_star) {
 			this.is_star = is_star;
 		}
 

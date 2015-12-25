@@ -97,10 +97,10 @@ public class MyPageCollectionAdapter extends BaseAdapter {
 				.setText(Integer.toString(photoItem.getLikeCount()));
 
 		if (photoItem.getType() == PhotoItem.TYPE_ASK) {
-			mViewHolder.imageType.setBackgroundResource(R.drawable.ic_yuantu);
+			mViewHolder.imageType.setBackgroundResource(R.mipmap.top_yuantu);
 			// mViewHolder.mReplyCountTv.setVisibility(View.VISIBLE);
 		} else {
-			mViewHolder.imageType.setBackgroundResource(R.drawable.ic_zuopin);
+			mViewHolder.imageType.setBackgroundResource(R.mipmap.top_zuopin);
 			// mViewHolder.mReplyCountTv.setVisibility(View.GONE);
 		}
 

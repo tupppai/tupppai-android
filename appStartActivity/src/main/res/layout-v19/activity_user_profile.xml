@@ -7,8 +7,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -18,8 +17,8 @@
             <android.support.v4.view.ViewPager
                 android:id="@+id/user_profile_view_pager"
                 android:layout_width="match_parent"
-                android:layout_marginTop="57dp"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:layout_marginTop="57dp" />
 
             <RelativeLayout
                 android:id="@+id/user_profile_header"
@@ -57,22 +56,33 @@
                                 android:src="@drawable/head_portrait" />
                         </LinearLayout>
 
-                        <Button
-                            android:id="@+id/activity_user_profile_follow_btn"
-                            android:layout_width="58dp"
-                            android:layout_height="28dp"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="30dp"
-                            android:layout_toRightOf="@id/avatar_layout"
-                            android:background="@drawable/btn_unfollow"
-                            android:text="+ 关注"
-                            android:textSize="11dp" />
+                        <TextView
+                            android:id="@+id/user_profile_title_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:text="flan"
+                            android:layout_below="@+id/avatar_layout"
+                            android:layout_marginTop="40dp"
+                            android:textColor="@color/white"
+                            android:textSize="16dp" />
+
+                        <ImageView
+                            android:id="@+id/user_profile_title_vip"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBottom="@+id/user_profile_title_name"
+                            android:layout_toRightOf="@+id/user_profile_title_name"
+                            android:layout_marginLeft="10dp"
+                            android:visibility="gone"
+                            android:layout_marginBottom="2dp"
+                            android:src="@mipmap/ic_renzheng"/>
                     </RelativeLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="17dp"
+                        android:layout_marginTop="4dp"
                         android:background="@drawable/shape_background_gradient"
                         android:orientation="vertical">
 
@@ -205,30 +215,30 @@
         android:id="@+id/user_profile_title_layout"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:paddingTop="22dp"
-        >
+        android:paddingTop="22dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="48dp">
-        <com.psgod.ui.widget.FinishView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="16dp"
-            android:src="@drawable/selector_back_btn"
-            android:paddingRight="16dp"
-            android:layout_centerVertical="true"
-            />
 
-        <TextView
-            android:id="@+id/user_profile_title_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
-            android:textColor="@color/white"
-            android:textSize="16dp"
-            android:text="" />
+            <com.psgod.ui.widget.FinishView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:src="@drawable/selector_back_btn" />
+
+            <Button
+                android:id="@+id/activity_user_profile_follow_btn"
+                android:layout_width="58dp"
+                android:layout_height="28dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/btn_unfollow"
+                android:text="+ 关注"
+                android:textSize="11dp" />
         </RelativeLayout>
     </RelativeLayout>
     <!--<com.psgod.ui.widget.ActionBar-->

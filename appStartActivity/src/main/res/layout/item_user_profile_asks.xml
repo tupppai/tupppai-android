@@ -63,8 +63,10 @@
 		        <ImageView 
 		            android:layout_width="wrap_content"
 		            android:layout_height="wrap_content"
-		            android:src="@drawable/ic_yuantu"
+		            android:src="@mipmap/top_yuantu"
 		            android:scaleType="centerCrop"
+					android:layout_marginLeft="-1dp"
+					android:layout_marginTop="-1dp"
 		            android:layout_alignParentTop="true"
 		            android:layout_alignParentLeft="true" />
 		        
@@ -88,7 +90,9 @@
 		        <ImageView 
 		            android:layout_width="wrap_content"
 		            android:layout_height="wrap_content"
-		            android:src="@drawable/ic_yuantu"
+		            android:src="@mipmap/top_yuantu"
+					android:layout_marginLeft="-1dp"
+					android:layout_marginTop="-1dp"
 		            android:scaleType="centerCrop"
 		            android:layout_alignParentTop="true"
 		            android:layout_alignParentLeft="true" />

@@ -80,8 +80,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
-            android:drawableLeft="@drawable/ic_like_white"
+            android:drawableLeft="@mipmap/ic_like_w"
             android:drawablePadding="3dp"
+            android:paddingTop="5dp"
             android:text="123"
             android:textColor="#FFFFFF"
             android:textSize="11dp" />

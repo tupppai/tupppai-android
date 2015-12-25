@@ -88,6 +88,7 @@ public class UserProfileActivity extends PSGodBaseActivity implements
     // 页面中元素
 //	private ActionBar mActionBar;
     private TextView mTitleName;
+    private ImageView mVip;
     private AvatarImageView mAvatarImageView;
     // private CircleImageView mGenderImageView;
     private TextView mFollowingCountTv;
@@ -317,6 +318,11 @@ public class UserProfileActivity extends PSGodBaseActivity implements
                 mNickName = user.getNickname();
 //				mActionBar.setTitle(user.getNickname());
                 mTitleName.setText(user.getNickname());
+                if(user.isStar()){
+                    mVip.setVisibility(View.VISIBLE);
+                }else{
+                    mVip.setVisibility(View.GONE);
+                }
                 mFollowerCountTv.setText(Integer.toString(user
                         .getFollowerCount()));
                 mFollowingCountTv.setText(Integer.toString(user
@@ -356,7 +362,7 @@ public class UserProfileActivity extends PSGodBaseActivity implements
         headerHeight = getResources().getDimensionPixelSize(
                 R.dimen.max_header_height_profile);
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
-            headerTranslationDis = Utils.dpToPx(this,-176);
+            headerTranslationDis = Utils.dpToPx(this,-220);
         }else{
             headerTranslationDis = -getResources().getDimensionPixelSize(
                     R.dimen.header_offset_dis_profile);
@@ -370,6 +376,7 @@ public class UserProfileActivity extends PSGodBaseActivity implements
         // 初始化页面元素
 //		mActionBar = (ActionBar) findViewById(R.id.actionbar);
         mTitleName = (TextView) findViewById(R.id.user_profile_title_name);
+        mVip = (ImageView) findViewById(R.id.user_profile_title_vip);
         mAvatarImageView = (AvatarImageView) findViewById(R.id.user_profile_avatar);
         // mGenderImageView = (CircleImageView) findViewById(
         // R.id.user_profile_gender);

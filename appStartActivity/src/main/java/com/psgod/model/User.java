@@ -194,7 +194,11 @@ public class User {
                 switch (fields[i].getName()) {
                     case "mUid":
                     case "uid":
-                        mUid = fields[i].getLong(object);
+                        try {
+                            mUid = fields[i].getLong(object);
+                        } catch (IllegalArgumentException e) {
+                            mUid = Long.parseLong(fields[i].get(object).toString());
+                        }
 //                        mark++;
                         break;
                     case "mIsStar":

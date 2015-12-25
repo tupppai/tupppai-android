@@ -194,6 +194,8 @@ public class MyPageFragment extends Fragment implements
 				.findViewById(R.id.my_profile_user_followers_count);
 		mViewHolder.mNickNameText = (TextView) mViewHolder.mView
 				.findViewById(R.id.nickname_text);
+		mViewHolder.mNickNameVip = (ImageView) mViewHolder.mView
+				.findViewById(R.id.nickname_vip);
 		mViewHolder.mFollowingLayout = (RelativeLayout) mViewHolder.mView
 				.findViewById(R.id.layout_following);
 		mViewHolder.mFollowerLayout = (RelativeLayout) mViewHolder.mView
@@ -276,7 +278,11 @@ public class MyPageFragment extends Fragment implements
 				.getFollowerCount()));
 		mViewHolder.mLikeTv.setText(Integer.toString(user.getLikedCount()));
 		mViewHolder.mNickNameText.setText(user.getNickname());
-
+		if(user.isStar()){
+			mViewHolder.mNickNameVip.setVisibility(View.VISIBLE);
+		}else {
+			mViewHolder.mNickNameVip.setVisibility(View.GONE);
+		}
 		// 请求后台用户数据进行更新
 		GetUserInfoRequest.Builder builder = new GetUserInfoRequest.Builder()
 				.setListener(getUserInfoListener);
@@ -311,7 +317,11 @@ public class MyPageFragment extends Fragment implements
 				mViewHolder.mLikeTv.setText(Integer.toString(user
 						.getLikedCount()));
 				mViewHolder.mNickNameText.setText(user.getNickname());
-
+				if(user.isStar()){
+					mViewHolder.mNickNameVip.setVisibility(View.VISIBLE);
+				}else{
+					mViewHolder.mNickNameVip.setVisibility(View.GONE);
+				}
 				if (dialog != null && dialog.isShowing()) {
 					dialog.dismiss();
 				}
@@ -667,6 +677,7 @@ public class MyPageFragment extends Fragment implements
 		ImageButton mSettingButton;
 		ImageButton mMessageButton;
 		TextView mNickNameText;
+		ImageView mNickNameVip;
 		TextView mFollowingTv;
 		TextView mFollowerTv;
 		TextView mLikeTv;
