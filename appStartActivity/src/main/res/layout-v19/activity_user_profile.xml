@@ -228,7 +228,17 @@
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
                 android:id="@+id/activity_user_profile_finish"
-                android:src="@drawable/ic_back_white" />
+                android:src="@mipmap/ic_back_white" />
+
+            <TextView
+                android:id="@+id/activity_user_profile_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:textColor="@color/white"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                />
 
             <Button
                 android:id="@+id/activity_user_profile_follow_btn"

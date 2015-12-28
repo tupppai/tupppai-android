@@ -3,13 +3,12 @@
     xmlns:psgod="http://schemas.android.com/apk/res/com.psgod"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:clipToPadding="true">
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -19,8 +18,8 @@
             <android.support.v4.view.ViewPager
                 android:id="@+id/user_profile_view_pager"
                 android:layout_width="match_parent"
-                android:layout_marginTop="57dp"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:layout_marginTop="57dp" />
 
             <RelativeLayout
                 android:id="@+id/user_profile_header"
@@ -62,10 +61,10 @@
                             android:id="@+id/user_profile_title_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:text="flan"
                             android:layout_below="@+id/avatar_layout"
+                            android:layout_centerHorizontal="true"
                             android:layout_marginTop="40dp"
+                            android:text="flan"
                             android:textColor="@color/white"
                             android:textSize="16dp" />
 
@@ -74,11 +73,11 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignBottom="@+id/user_profile_title_name"
-                            android:layout_toRightOf="@+id/user_profile_title_name"
-                            android:layout_marginLeft="10dp"
                             android:layout_marginBottom="2dp"
-                            android:visibility="gone"
-                            android:src="@mipmap/ic_renzheng"/>
+                            android:layout_marginLeft="10dp"
+                            android:layout_toRightOf="@+id/user_profile_title_name"
+                            android:src="@mipmap/ic_renzheng"
+                            android:visibility="gone" />
                     </RelativeLayout>
 
                     <LinearLayout
@@ -217,19 +216,26 @@
         android:id="@+id/user_profile_title_layout"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:background="@color/transparent"
-        >
+        android:background="@color/transparent">
 
         <com.psgod.ui.widget.FinishView
+            android:id="@+id/activity_user_profile_finish"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:paddingLeft="16dp"
-            android:src="@drawable/ic_back_white"
             android:paddingRight="16dp"
-            android:id="@+id/activity_user_profile_finish"
-            />
+            android:src="@mipmap/ic_back_white" />
 
+
+        <TextView
+            android:id="@+id/activity_user_profile_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:textColor="@color/white"
+            android:textSize="18dp" />
 
         <Button
             android:id="@+id/activity_user_profile_follow_btn"

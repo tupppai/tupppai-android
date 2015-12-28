@@ -89,6 +89,7 @@ public class UserProfileActivity extends PSGodBaseActivity implements
     // 页面中元素
 //	private ActionBar mActionBar;
     private TextView mTitleName;
+    private TextView mTitle;
     private ImageView mVip;
     private AvatarImageView mAvatarImageView;
     // private CircleImageView mGenderImageView;
@@ -211,7 +212,7 @@ public class UserProfileActivity extends PSGodBaseActivity implements
             @Override
             public void onClick(View view) {
                 ImageDialog dialog = new ImageDialog(UserProfileActivity.this,
-                        ((AvatarImageView)view).getImage());
+                        ((AvatarImageView) view).getImage());
                 dialog.show();
             }
         });
@@ -320,9 +321,10 @@ public class UserProfileActivity extends PSGodBaseActivity implements
                 mNickName = user.getNickname();
 //				mActionBar.setTitle(user.getNickname());
                 mTitleName.setText(user.getNickname());
-                if(user.isStar()){
+                mTitle.setText(user.getNickname());
+                if (user.isStar()) {
                     mVip.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     mVip.setVisibility(View.GONE);
                 }
                 mFollowerCountTv.setText(Integer.toString(user
@@ -363,9 +365,9 @@ public class UserProfileActivity extends PSGodBaseActivity implements
     private void initViews() {
         headerHeight = getResources().getDimensionPixelSize(
                 R.dimen.max_header_height_profile);
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
-            headerTranslationDis = Utils.dpToPx(this,-220);
-        }else{
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            headerTranslationDis = Utils.dpToPx(this, -220);
+        } else {
             headerTranslationDis = -getResources().getDimensionPixelSize(
                     R.dimen.header_offset_dis_profile);
         }
@@ -378,6 +380,7 @@ public class UserProfileActivity extends PSGodBaseActivity implements
         // 初始化页面元素
 //		mActionBar = (ActionBar) findViewById(R.id.actionbar);
         mTitleName = (TextView) findViewById(R.id.user_profile_title_name);
+        mTitle = (TextView) findViewById(R.id.activity_user_profile_title);
         mVip = (ImageView) findViewById(R.id.user_profile_title_vip);
         mAvatarImageView = (AvatarImageView) findViewById(R.id.user_profile_avatar);
         // mGenderImageView = (CircleImageView) findViewById(
@@ -446,12 +449,28 @@ public class UserProfileActivity extends PSGodBaseActivity implements
 
         if (position == 0) {
             pageY1 = mLinearHeader.getY();
-            mTitleLayout.setBackgroundColor(Color.parseColor(pauseColorString(colorLeft,true)));
-            mTitleName.setTextColor(Color.parseColor(pauseColorString(255 - colorLeft,false)));
+            mTitleLayout.setBackgroundColor(Color.parseColor(pauseColorString(colorLeft, true)));
+            mTitleName.setTextColor(Color.parseColor(pauseColorString(255 - colorLeft, false)));
+            mTitle.setTextColor(Color.parseColor(pauseColorString(255 - (colorLeft - 245) * 13, false)));
+            if (colorLeft < 230) {
+                mTitle.setVisibility(View.INVISIBLE);
+                mTitleName.setVisibility(View.VISIBLE);
+            } else {
+                mTitle.setVisibility(View.VISIBLE);
+                mTitleName.setVisibility(View.INVISIBLE);
+            }
         } else {
             pageY0 = mLinearHeader.getY();
-            mTitleLayout.setBackgroundColor(Color.parseColor(pauseColorString(colorRight,true)));
-            mTitleName.setTextColor(Color.parseColor(pauseColorString(255 - colorRight,false)));
+            mTitleLayout.setBackgroundColor(Color.parseColor(pauseColorString(colorRight, true)));
+            mTitleName.setTextColor(Color.parseColor(pauseColorString(255 - colorRight, false)));
+            mTitle.setTextColor(Color.parseColor(pauseColorString(255 - (colorRight - 245) * 13, false)));
+            if (colorRight < 230) {
+                mTitle.setVisibility(View.INVISIBLE);
+                mTitleName.setVisibility(View.VISIBLE);
+            } else {
+                mTitle.setVisibility(View.VISIBLE);
+                mTitleName.setVisibility(View.INVISIBLE);
+            }
         }
 
 
@@ -516,18 +535,26 @@ public class UserProfileActivity extends PSGodBaseActivity implements
         }
         reLocation = false;
         scrollY = Math.max(-getScrollY(view), headerTranslationDis);
-        int color = (int) ((float) scrollY / (float) headerTranslationDis * 255f)*2;
-        if(pagePosition == 0){
+        int color = (int) ((float) scrollY / (float) headerTranslationDis * 255f) * 2;
+        if (pagePosition == 0) {
             colorLeft = color;
-        }else{
+        } else {
             colorRight = color;
         }
-        mTitleLayout.setBackgroundColor(Color.parseColor(pauseColorString(color,true)));
-//        mTitleName.setTextColor(Color.parseColor(pauseColorString(255 - color,false)));
-        if(color > 150){
+        mTitleLayout.setBackgroundColor(Color.parseColor(pauseColorString(color, true)));
+        mTitleName.setTextColor(Color.parseColor(pauseColorString(255 - color / 2, false)));
+        if (color < 230) {
+            mTitle.setVisibility(View.INVISIBLE);
+            mTitleName.setVisibility(View.VISIBLE);
+        } else {
+            mTitle.setVisibility(View.VISIBLE);
+            mTitleName.setVisibility(View.INVISIBLE);
+        }
+        mTitle.setTextColor(Color.parseColor(pauseColorString(255 - (color - 245) * 13, false)));
+        if (color > 150) {
             mFinish.setImageResource(R.drawable.ic_back_gray);
-        }else{
-            mFinish.setImageResource(R.drawable.ic_back_white);
+        } else {
+            mFinish.setImageResource(R.mipmap.ic_back_white);
         }
 //        scrollY = -getScrollY(view);
         if (NEED_RELAYOUT) {
