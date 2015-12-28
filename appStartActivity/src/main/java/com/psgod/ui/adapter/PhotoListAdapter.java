@@ -24,9 +24,14 @@ public class PhotoListAdapter extends BaseAdapter{
 	private List<PhotoItem> mPhotoItems;
 
 	private boolean isHomePageFouce = false;
+	private boolean isHomePageHot = false;
 
 	public void setIsHomePageFouce(boolean isHomePageFouce) {
 		this.isHomePageFouce = isHomePageFouce;
+	}
+
+	public void setIsHomePageHot(boolean isHomePageHot) {
+		this.isHomePageHot = isHomePageHot;
 	}
 
 	public PhotoListAdapter(Context context, PhotoListType photoListType,
@@ -74,6 +79,7 @@ public class PhotoListAdapter extends BaseAdapter{
 
 		PhotoItem photoItem = (PhotoItem) getItem(position);
 		photoItemView.setIsHomePageFocus(isHomePageFouce);
+		photoItemView.setIsHomePageHot(isHomePageHot);
 		if ((mPhotoListType == PhotoListType.RECENT_REPLY)
 				|| (mPhotoListType == PhotoListType.SINGLE_ASK)
 				|| (mPhotoListType == PhotoListType.SINGLE_REPLY)) {
