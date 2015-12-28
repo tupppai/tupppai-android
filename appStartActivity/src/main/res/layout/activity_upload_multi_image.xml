@@ -25,7 +25,7 @@
                 android:background="@null"
                 android:padding="19dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/ic_back_white" />
+                android:src="@mipmap/ic_back_white" />
 
             <TextView
                 android:layout_width="wrap_content"
