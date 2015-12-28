@@ -223,7 +223,7 @@ public class RecentActActivity extends PSGodBaseActivity {
         mHeadImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               Utils.skipByUrl(RecentActActivity.this,mAct.getUrl(),mAct.getName());
+                Utils.skipByUrl(RecentActActivity.this, mAct.getUrl(), mAct.getName());
             }
         });
         mUpLoad.setOnClickListener(new View.OnClickListener() {
@@ -232,7 +232,8 @@ public class RecentActActivity extends PSGodBaseActivity {
                 if (mAct != null) {
 //                    loadUtils.upLoad(mActs.get(0).getType(), Long.parseLong(mActs.get(0).getAsk_id()));
                     Intent intent = new Intent(RecentActActivity.this, MultiImageSelectActivity.class);
-                    intent.putExtra("AskId", Long.parseLong(mAct.getAsk_id()));
+                    intent.putExtra("AskId", Long.parseLong(mAct.getAsk_id() == null ?
+                            "0" : mAct.getAsk_id().equals("") ? "0" : mAct.getAsk_id()));
                     intent.putExtra("ActivityId", mAct.getId());
                     intent.putExtra("SelectType", "TypeReplySelect");
                     new LoadUtils(RecentActActivity.this).isSimple(true).
@@ -263,7 +264,7 @@ public class RecentActActivity extends PSGodBaseActivity {
     private Response.Listener<ActivitiesAct> actListener = new Response.Listener<ActivitiesAct>() {
         @Override
         public void onResponse(ActivitiesAct act) {
-            if(act != null) {
+            if (act != null) {
                 mAct = act;
                 initAct(act);
             }

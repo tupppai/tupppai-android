@@ -110,6 +110,10 @@ public class PsGodImageLoader {
         imgLoader.displayImage(getRuleImageUrl(url, options), imageArea.getImage(), options, listener, progressListener);
     }
 
+    public void displayLocaleImage(){
+//        imgLoader.
+    }
+
 
     public Bitmap loadImageSync(String url) {
         return imgLoader.loadImageSync(url);
