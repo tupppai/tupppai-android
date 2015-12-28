@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/image_select_parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#2c2c2c"
@@ -7,6 +8,7 @@
     android:fitsSystemWindows="true">
 
     <RelativeLayout
+        android:id="@+id/select_footer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#2c2c2c" >
@@ -34,6 +36,16 @@
             android:layout_height="50dp"
             android:layout_alignParentBottom="true"
             android:background="#414141" >
+
+            <TextView
+                android:id="@+id/select_folder"
+                android:layout_width="70dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="10dp"
+                android:text="全部图片"
+                android:gravity="center"
+                android:clickable="true"/>
 
             <TextView
                 android:id="@+id/text_next"
