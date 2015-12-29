@@ -233,19 +233,19 @@ public class RecentActActivity extends PSGodBaseActivity {
             @Override
             public void onClick(View view) {
                 if (mAct != null) {
-////                    loadUtils.upLoad(mActs.get(0).getType(), Long.parseLong(mActs.get(0).getAsk_id()));
-//                    Intent intent = new Intent(RecentActActivity.this, MultiImageSelectActivity.class);
-//                    intent.putExtra("AskId", Long.parseLong(mAct.getAsk_id()));
-//                    intent.putExtra("ActivityId", mAct.getId());
-//                    intent.putExtra("SelectType", "TypeReplySelect");
-//                    new LoadUtils(RecentActActivity.this).isSimple(true).
-//                            setCategory_id(Long.parseLong(mAct.getId())).upLoad(1,
-//                            Long.parseLong(mAct.getAsk_id().equals("") ? "0" : mAct.getAsk_id()));
-//
-//                    startActivity(intent);
-                    ImageCategoryWindow imageCategoryWindow = new ImageCategoryWindow(RecentActActivity.this,
-                            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-                    imageCategoryWindow.showAtLocation(mParent, Gravity.BOTTOM,0,0);
+//                    loadUtils.upLoad(mActs.get(0).getType(), Long.parseLong(mActs.get(0).getAsk_id()));
+                    Intent intent = new Intent(RecentActActivity.this, MultiImageSelectActivity.class);
+                    intent.putExtra("AskId", Long.parseLong(mAct.getAsk_id()));
+                    intent.putExtra("ActivityId", mAct.getId());
+                    intent.putExtra("SelectType", "TypeReplySelect");
+                    new LoadUtils(RecentActActivity.this).isSimple(true).
+                            setCategory_id(Long.parseLong(mAct.getId())).upLoad(1,
+                            Long.parseLong(mAct.getAsk_id().equals("") ? "0" : mAct.getAsk_id()));
+
+                    startActivity(intent);
+//                    ImageCategoryWindow imageCategoryWindow = new ImageCategoryWindow(RecentActActivity.this,
+//                            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+//                    imageCategoryWindow.showAtLocation(mParent, Gravity.BOTTOM,0,0);
                 }
             }
         });
