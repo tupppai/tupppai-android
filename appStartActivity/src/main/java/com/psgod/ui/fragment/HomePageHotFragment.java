@@ -189,7 +189,7 @@ public class HomePageHotFragment extends BaseFragment implements Callback {
 
         for (int i = 0,length = mBannerItems.size(); i < length ; i++) {
             ImageView scrollImage = new ImageView(mContext);
-            scrollImage.setScaleType(ImageView.ScaleType.MATRIX);
+            scrollImage.setScaleType(ImageView.ScaleType.FIT_XY);
             if (i == 0) {
                 scrollImage.setBackgroundResource(R.drawable.shape_scroll_banner_select);
                 scrollLayoutParams.setMargins(0,0,0,0);

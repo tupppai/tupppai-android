@@ -1,5 +1,6 @@
 package com.psgod.ui.activity;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
@@ -12,22 +13,32 @@ import android.provider.MediaStore;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.view.Gravity;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.psgod.Constants;
 import com.psgod.R;
 import com.psgod.UploadCache;
 import com.psgod.eventbus.MyPageRefreshEvent;
 import com.psgod.eventbus.RefreshEvent;
 import com.psgod.model.FileUtils;
+import com.psgod.model.SelectFolder;
 import com.psgod.model.SelectImage;
 import com.psgod.ui.adapter.MultiImageSelectAdapter;
+import com.psgod.ui.adapter.SelectFolderAdapter;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -55,8 +66,17 @@ public class MultiImageSelectActivity extends PSGodBaseActivity {
 	public final static String TYPE_REPLY_SELECT = "TypeReplySelect";
 	public static String IMAGE_SELECT_TYPE = TYPE_ASK_SELECT;
 
+	// 选择全部图片
+	private static final int LOADER_ALL = 0;
+	// 选择某个文件夹下的图片
+	private static final int LOADER_CATEGORY = 1;
+
+	private static final int REQUEST_CAMERA = 0x225;
+
+	private View mParentView;
 	private TextView mNextText;
 	private TextView mSelectCountText;
+	private TextView mSelectFolderText;
 	private ImageButton mBackBtn;
 	private GridView mImageGridView;
 	private MultiImageSelectAdapter mMultiImageAdapter;
@@ -66,12 +86,18 @@ public class MultiImageSelectActivity extends PSGodBaseActivity {
 	private String mActivityId;
 	private String mChannelId;
 	private boolean isAsk;
-
 	private File mTmpFile;
-	private static final int REQUEST_CAMERA = 0x225;
+
+	private View mFolderPopView;
+	private PopupWindow mFolderPopupWindow;
+	private ListView mImageListView;
+	private SelectFolderAdapter mFolderAdapter;
+	private boolean hasFolderGened = false;
 
 	// 结果数据
 	private ArrayList<String> resultList = new ArrayList<String>();
+	// 文件夹数据
+	private ArrayList<SelectFolder> mResultFolder = new ArrayList<SelectFolder>();
 	private boolean isFinish = false;
 
 	public void onEventMainThread(RefreshEvent event) {
@@ -96,6 +122,7 @@ public class MultiImageSelectActivity extends PSGodBaseActivity {
 		mContext = this;
 		setContentView(R.layout.activity_multi_image_select);
 		EventBus.getDefault().register(this);
+
 		initViews();
 		initListeners();
 
@@ -126,27 +153,22 @@ public class MultiImageSelectActivity extends PSGodBaseActivity {
 		}
 
 		// 扫描手机内的图片
-		getSupportLoaderManager().initLoader(0, null, mLoaderCallback);
+		getSupportLoaderManager().initLoader(LOADER_ALL, null, mLoaderCallback);
 
-	}
-
-	@Override
-	public void onDestroy() {
-		super.onDestroy();
-		UploadCache.getInstence().clear();
-		EventBus.getDefault().post(new MyPageRefreshEvent(MyPageRefreshEvent.ASK));
-		EventBus.getDefault().post(new MyPageRefreshEvent(MyPageRefreshEvent.REPLY));
-		EventBus.getDefault().unregister(this);
 	}
 
 	public void initViews() {
+		mFolderAdapter = new SelectFolderAdapter(this);
+
 		mImageGridView = (GridView) findViewById(R.id.image_select_grid);
 		mMultiImageAdapter = new MultiImageSelectAdapter(mContext);
 		mImageGridView.setAdapter(mMultiImageAdapter);
 
+		mParentView = findViewById(R.id.image_select_parent);
 		mBackBtn = (ImageButton) findViewById(R.id.btn_back);
 		mNextText = (TextView) findViewById(R.id.text_next);
 		mSelectCountText = (TextView) findViewById(R.id.select_count);
+		mSelectFolderText = (TextView) findViewById(R.id.select_folder);
 		mNextText.setEnabled(false);
 
 		mImageGridView.getViewTreeObserver().addOnGlobalLayoutListener(
@@ -180,6 +202,10 @@ public class MultiImageSelectActivity extends PSGodBaseActivity {
 						}
 					}
 				});
+
+		if (mFolderPopupWindow == null) {
+			createPopupFolder();
+		}
 	}
 
 	public void initListeners() {
@@ -207,6 +233,36 @@ public class MultiImageSelectActivity extends PSGodBaseActivity {
 					}
 				});
 
+		mSelectFolderText.setOnClickListener(new View.OnClickListener() {
+			@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+			@SuppressLint("NewApi")
+			@Override
+			public void onClick(View view) {
+				if (mFolderPopupWindow.isShowing()) {
+					mFolderPopupWindow.dismiss();
+				} else {
+					mFolderPopupWindow.showAtLocation(mParentView, Gravity.CENTER, 0, 0);
+					mFolderPopupWindow.setFocusable(true);
+					mFolderPopupWindow.update();
+
+					mFolderPopupWindow.getContentView().setOnTouchListener(new View.OnTouchListener(){
+						@Override
+						public boolean onTouch(View v, MotionEvent event) {
+							// TODO Auto-generated method stub
+							mFolderPopupWindow.setFocusable(false);
+							mFolderPopupWindow.dismiss();
+							return true;
+						}
+
+					});
+
+					int index = mFolderAdapter.getSelectIndex();
+					index = index == 0 ? index : index - 1;
+					mImageListView.setSelection(index);
+				}
+			}
+		});
+
 		mNextText.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -221,8 +277,8 @@ public class MultiImageSelectActivity extends PSGodBaseActivity {
 						resultList);
 				bundle.putLong("AskId", mAskId);
 				bundle.putString("ActivityId", mActivityId);
-				bundle.putString("channel_id",mChannelId);
-				bundle.putBoolean("isAsk",isAsk);
+				bundle.putString("channel_id", mChannelId);
+				bundle.putBoolean("isAsk", isAsk);
 				intent.putExtras(bundle);
 				startActivity(intent);
 			}
@@ -252,6 +308,66 @@ public class MultiImageSelectActivity extends PSGodBaseActivity {
 		} else {
 			Toast.makeText(this, "没有相机", Toast.LENGTH_SHORT).show();
 		}
+	}
+
+	/**
+	 * 创建弹出的ListView
+	 */
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	@SuppressLint("NewApi")
+	private void createPopupFolder() {
+		mFolderPopView = LayoutInflater.from(mContext)
+				.inflate(R.layout.popupwindow_select_image_folder, null);
+		mImageListView = (ListView) mFolderPopView.findViewById(R.id.image_folder_list);
+		mFolderPopupWindow = new PopupWindow(mFolderPopView, ViewGroup.LayoutParams.MATCH_PARENT,
+				ViewGroup.LayoutParams.WRAP_CONTENT, true);
+		mFolderPopupWindow.setWidth(Constants.WIDTH_OF_SCREEN);
+		mFolderPopupWindow.setHeight(Constants.HEIGHT_OF_SCREEN*3/5);
+		mFolderPopupWindow.setOutsideTouchable(true);
+
+		mImageListView.setAdapter(mFolderAdapter);
+
+		mImageListView
+				.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+					@Override
+					public void onItemClick(AdapterView<?> adapterView,
+											View view, int i, long l) {
+						if (i == 0) {
+							getSupportLoaderManager()
+									.restartLoader(LOADER_ALL, null,
+											mLoaderCallback);
+							mSelectFolderText.setText("全部图片");
+						} else {
+							SelectFolder folder = (SelectFolder) adapterView.getAdapter()
+									.getItem(i);
+							if (null != folder) {
+								Bundle args = new Bundle();
+								args.putString("path", folder.path);
+								getSupportLoaderManager()
+										.restartLoader(LOADER_CATEGORY, args,
+												mLoaderCallback);
+								mSelectFolderText.setText(folder.name);
+							}
+						}
+						mFolderAdapter.setSelectIndex(i);
+						mFolderPopupWindow.dismiss();
+
+						// 滑动到最初始位置
+						mImageGridView.smoothScrollToPosition(0);
+					}
+				});
+
+		// 处理PopupWindow显示后，返回键无法响应
+		mImageListView.setOnKeyListener(new View.OnKeyListener() {
+
+			@Override
+			public boolean onKey(View v, int keyCode, KeyEvent event) {
+				// TODO Auto-generated method stub
+				mFolderPopupWindow.dismiss();
+				return false;
+			}
+
+		});
 	}
 
 	@Override
@@ -339,11 +455,22 @@ public class MultiImageSelectActivity extends PSGodBaseActivity {
 
 		@Override
 		public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-			CursorLoader cursorLoader = new CursorLoader(
-					MultiImageSelectActivity.this,
-					MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-					IMAGE_PROJECTION, null, null, IMAGE_PROJECTION[2] + " DESC");
-			return cursorLoader;
+			if (id == LOADER_ALL) {
+				CursorLoader cursorLoader = new CursorLoader(MultiImageSelectActivity.this,
+						MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+						IMAGE_PROJECTION, null, null, IMAGE_PROJECTION[2]
+						+ " DESC");
+				return cursorLoader;
+			} else if (id == LOADER_CATEGORY) {
+				CursorLoader cursorLoader = new CursorLoader(MultiImageSelectActivity.this,
+						MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+						IMAGE_PROJECTION, IMAGE_PROJECTION[0] + " like '%"
+						+ args.getString("path") + "%'", null,
+						IMAGE_PROJECTION[2] + " DESC");
+				return cursorLoader;
+			}
+
+			return null;
 		}
 
 		@Override
@@ -364,6 +491,27 @@ public class MultiImageSelectActivity extends PSGodBaseActivity {
 								dateTime);
 						images.add(image);
 
+						if (!hasFolderGened) {
+							// 获取文件夹名称
+							File imageFile = new File(path);
+							File folderFile = imageFile.getParentFile();
+							SelectFolder folder = new SelectFolder();
+							folder.name = folderFile.getName();
+							folder.path = folderFile.getAbsolutePath();
+							folder.cover = image;
+							if (!mResultFolder.contains(folder)) {
+								List<SelectImage> imageList = new ArrayList<SelectImage>();
+								imageList.add(image);
+								folder.images = imageList;
+								mResultFolder.add(folder);
+							} else {
+								// 更新
+								SelectFolder f = mResultFolder.get(mResultFolder
+										.indexOf(folder));
+								f.images.add(image);
+							}
+						}
+
 					} while (data.moveToNext());
 
 					mMultiImageAdapter.setData(images);
@@ -371,6 +519,9 @@ public class MultiImageSelectActivity extends PSGodBaseActivity {
 					if (resultList != null && resultList.size() > 0) {
 						mMultiImageAdapter.setDefaultSelected(resultList);
 					}
+
+					mFolderAdapter.setData(mResultFolder);
+					hasFolderGened = true;
 
 				}
 			}
@@ -381,5 +532,14 @@ public class MultiImageSelectActivity extends PSGodBaseActivity {
 
 		}
 	};
+
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		UploadCache.getInstence().clear();
+		EventBus.getDefault().post(new MyPageRefreshEvent(MyPageRefreshEvent.ASK));
+		EventBus.getDefault().post(new MyPageRefreshEvent(MyPageRefreshEvent.REPLY));
+		EventBus.getDefault().unregister(this);
+	}
 
 }

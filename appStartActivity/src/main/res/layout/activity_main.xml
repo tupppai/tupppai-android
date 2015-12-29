@@ -12,81 +12,115 @@
         android:layout_above="@+id/middle"
         ></FrameLayout>
 
+    <!-- 底部tab栏 -->
     <LinearLayout
         android:id="@+id/psgod_linear_tab"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal">
-        <!-- 底部切换tab栏 -->
-        <RadioGroup
-            android:id="@+id/psgod_rg_tab"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_weight="1"
-            android:background="@color/white"
-            android:orientation="horizontal">
-
-            <com.psgod.ui.view.DrawableCenterRadioButton
-                android:id="@+id/activity_main_tab_home_page"
-                style="@style/main_activity_bottom_tabbar"
-                android:layout_marginTop="4.5dp"
-                android:checked="true"
-                android:drawableTop="@drawable/selector_main_activity_home_tab"
-                android:textSize="10dp" />
-
-            <com.psgod.ui.view.DrawableCenterRadioButton
-                android:id="@+id/activity_main_tab_recent"
-                style="@style/main_activity_bottom_tabbar"
-                android:layout_marginTop="4.5dp"
-                android:drawableTop="@drawable/selector_main_activity_recent_page_tab"
-                android:textSize="10dp" />
-
-
-            <!--<ImageView-->
-            <!--android:id="@+id/activity_main_tab_add"-->
-            <!--style="@style/main_activity_bottom_tabbar"-->
-            <!--android:textSize="10dp"-->
-            <!--android:src="@drawable/tab_add"-->
-            <!--android:layout_marginTop="4.5dp"-->
-            <!--android:layout_marginBottom="4.5dp" />-->
-
-            <com.psgod.ui.view.DrawableCenterRadioButton
-                android:id="@+id/activity_main_tab_inprogressing"
-                style="@style/main_activity_bottom_tabbar"
-                android:layout_marginTop="4.5dp"
-                android:drawableTop="@drawable/selector_main_activity_inprogressing_tab"
-                android:textSize="10dp" />
-
-            <RadioButton
-                android:id="@+id/activity_main_tab_thumb"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:button="@null"
-                />
-        </RadioGroup>
 
         <RelativeLayout
-            android:id="@+id/activity_main_tab_user"
-            android:layout_width="match_parent"
+            android:id="@+id/activity_main_tab_home_page"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:orientation="vertical"
-            android:textSize="10dp">
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/activity_main_tab_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/tab_home_selected"
+                android:layout_marginTop="6dp"
+                android:layout_centerHorizontal="true"/>
+
+            <TextView
+                android:id="@+id/activity_main_tab_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/activity_main_tab_image"
+                android:layout_marginTop="2dp"
+                android:layout_centerHorizontal="true"
+                android:text="首页"
+                android:textSize="10dp"
+                android:textColor="#4A4A4A"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/activity_tab_tupai_page"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/activity_tupai_tab_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/tab_tupai_normal"
+                android:layout_marginTop="6dp"
+                android:layout_centerHorizontal="true"/>
+
+            <TextView
+                android:id="@+id/activity_tupai_tab_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/activity_tupai_tab_image"
+                android:layout_marginTop="2dp"
+                android:layout_centerHorizontal="true"
+                android:text="图派"
+                android:textSize="10dp"
+                android:textColor="#4A4A4A"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/activity_inprogress_tab_page"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/activity_inprogress_tab_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/tab_jingxingzhong_normal"
+                android:layout_marginTop="6dp"
+                android:layout_centerHorizontal="true"/>
+
+            <TextView
+                android:id="@+id/activity_inprogress_tab_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/activity_inprogress_tab_image"
+                android:layout_marginTop="2dp"
+                android:layout_centerHorizontal="true"
+                android:text="进行中"
+                android:textSize="10dp"
+                android:textColor="#4A4A4A"/>
+
+        </RelativeLayout>
+        <!-- 底部头像tab栏 -->
+        <RelativeLayout
+            android:id="@+id/activity_main_tab_user"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
             <com.psgod.ui.widget.AvatarImage
                 android:id="@+id/activity_main_tab_user_case"
-                android:layout_width="22dp"
-                android:layout_height="22dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:src="#2d2b30"
                 android:visibility="gone"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="5dp"
-                />
+                android:layout_marginTop="5dp" />
+
             <com.psgod.ui.widget.AvatarImageView
                 android:id="@+id/activity_main_tab_user_img"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
                 android:src="@mipmap/tab_my_normal"
                 android:layout_centerHorizontal="true"
                 android:layout_alignParentTop="true"
@@ -100,7 +134,7 @@
                 android:layout_centerHorizontal="true"
                 android:text="我"
                 android:textColor="#4a4a4a"
-                android:textSize="9dp" />
+                android:textSize="10dp" />
         </RelativeLayout>
     </LinearLayout>
     <!-- Tab栏上方小红点区域 -->

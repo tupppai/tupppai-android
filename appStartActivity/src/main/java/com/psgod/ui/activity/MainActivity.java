@@ -3,6 +3,7 @@ package com.psgod.ui.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
@@ -17,6 +18,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -77,8 +80,7 @@ import de.greenrobot.event.EventBus;
  *
  * @author rayalyuan
  */
-public class MainActivity extends PSGodBaseActivity implements
-        OnCheckedChangeListener {
+public class MainActivity extends PSGodBaseActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
     public static final int JUMP_FROM_LOGIN = 100;
     // 是否准备双击退出程序
@@ -93,13 +95,12 @@ public class MainActivity extends PSGodBaseActivity implements
         String KEY_NEED_REFRESH = "NeedRefresh"; // 是否需要刷新(true or false)，默认true
 
         int VALUE_FRAGMENT_ID_HOMEPAGE = R.id.activity_main_tab_home_page;
-        int VALUE_FRAGMENT_ID_RECENT = R.id.activity_main_tab_recent;
-        int VALUE_FRAGMENT_ID_INPROGRESSING = R.id.activity_main_tab_inprogressing;
+        int VALUE_FRAGMENT_ID_RECENT = R.id.activity_tab_tupai_page;
+        int VALUE_FRAGMENT_ID_INPROGRESSING = R.id.activity_inprogress_tab_page;
         int VALUE_FRAGMENT_ID_USER = R.id.activity_main_tab_user;
 
         int VALUE_HOMEPAGE_ID_HOT = 0;
         int VALUE_HOMEPAGE_ID_FOCUS = 1;
-
 
         // 求p和作品页面
         int VALUE_RECENTPAGE_ID_ACT = 2;
@@ -112,25 +113,30 @@ public class MainActivity extends PSGodBaseActivity implements
         int VALUE_INPROGRESS_ID_COMPLETE = 2;
     }
 
-    private final int[] TAB_IDS = new int[]{R.id.activity_main_tab_home_page,
-            R.id.activity_main_tab_recent,
-            R.id.activity_main_tab_inprogressing, R.id.activity_main_tab_user};
-    private final Map<Integer, Fragment> MAIN_ACTIVITY_FRAGMENTS = new HashMap<Integer, Fragment>();
     private final int DEFAULT_FRAGMENT_ID = -1;
+    private final int[] TAB_IDS = new int[]{
+            R.id.activity_main_tab_home_page,R.id.activity_tab_tupai_page,
+            R.id.activity_inprogress_tab_page, R.id.activity_main_tab_user};
+    private final Map<Integer, Fragment> MAIN_ACTIVITY_FRAGMENTS = new HashMap<Integer, Fragment>();
 
     private FragmentManager mFragmentManager;
-    private RadioGroup mBottomTab;
-    private RadioButton mHomeBtn;
-    private RadioButton mRecentBtn;
-    private RadioButton mInprogressingBtn;
+
+    private LinearLayout mBottomLayout;
+    private RelativeLayout mHomeLayout;
+    private RelativeLayout mTupaiLayout;
+    private RelativeLayout mInprogressLayout;
+    private RelativeLayout mMyLayout;
     private AvatarImageView mAvatarImg;
     private AvatarImage mAvatarCase;
-    private RelativeLayout mMyLayout;
+    private RelativeLayout [] mBottomTabLayout = new RelativeLayout[3];
 
-    //	private ImageView mAddImgView;
-    private CameraPopupwindow cameraPopupwindow;
-
-    private RelativeLayout mParent;
+    private ImageView mHomeImage;
+    private ImageView mTupaiImage;
+    private ImageView mInprogressImage;
+    private ImageView [] mBottomTabImage = new ImageView [3];
+    private Integer [] mTabDrawableIds = {R.mipmap.tab_home_normal,R.mipmap.tab_tupai_normal,
+            R.mipmap.tab_jingxingzhong_normal,R.mipmap.tab_home_selected,
+            R.mipmap.tab_tupai_selected,R.mipmap.tab_jingxingzhong_selected};
 
     // 小红点区域
     private LinearLayout mTabTipsMessage;
@@ -163,29 +169,39 @@ public class MainActivity extends PSGodBaseActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mBottomTab = (RadioGroup) findViewById(R.id.psgod_rg_tab);
+        mBottomLayout = (LinearLayout) findViewById(R.id.psgod_linear_tab);
         mAvatarImg = (AvatarImageView) findViewById(R.id.activity_main_tab_user_img);
-        mMyLayout = (RelativeLayout) findViewById(R.id.activity_main_tab_user);
+
         mAvatarCase = (AvatarImage) findViewById(R.id.activity_main_tab_user_case);
+
+        mHomeLayout = (RelativeLayout) findViewById(R.id.activity_main_tab_home_page);
+        mTupaiLayout = (RelativeLayout) findViewById(R.id.activity_tab_tupai_page);
+        mInprogressLayout = (RelativeLayout) findViewById(R.id.activity_inprogress_tab_page);
+        mMyLayout = (RelativeLayout) findViewById(R.id.activity_main_tab_user);
+
+        mBottomTabLayout[0] = mHomeLayout;
+        mBottomTabLayout[1] = mTupaiLayout;
+        mBottomTabLayout[2] = mInprogressLayout;
+
+        mHomeImage = (ImageView) findViewById(R.id.activity_main_tab_image);
+        mTupaiImage = (ImageView) findViewById(R.id.activity_tupai_tab_image);
+        mInprogressImage = (ImageView) findViewById(R.id.activity_inprogress_tab_image);
+
+        mBottomTabImage[0] = mHomeImage;
+        mBottomTabImage[1] = mTupaiImage;
+        mBottomTabImage[2] = mInprogressImage;
+
         if (BaseRequest.PSGOD_BASE_URL.equals(BaseRequest.PSGOD_BASE_TEST_URL)) {
-            mBottomTab.setBackgroundResource(R.color.color_9fc25b);
+            mBottomLayout.setBackgroundResource(R.color.color_9fc25b);
             mMyLayout.setBackgroundResource(R.color.color_9fc25b);
         } else {
-            mBottomTab.setBackgroundResource(R.color.white);
+            mBottomLayout.setBackgroundResource(R.color.white);
             mMyLayout.setBackgroundResource(R.color.white);
         }
-
-        mHomeBtn = (RadioButton) findViewById(R.id.activity_main_tab_home_page);
-        mRecentBtn = (RadioButton) findViewById(R.id.activity_main_tab_recent);
-
-        mInprogressingBtn = (RadioButton) findViewById(R.id.activity_main_tab_inprogressing);
-//		mAddImgView = (ImageView) findViewById(R.id.activity_main_tab_add);
-        mParent = (RelativeLayout) findViewById(R.id.activity_main_parent);
 
         // 个人页面tab小红点 消息按钮
         mTabTipsMessage = (LinearLayout) findViewById(R.id.psgod_rg_tab_tips_user);
 
-        mBottomTab.setOnCheckedChangeListener(this);
         mFragmentManager = getSupportFragmentManager();
         showFragment(R.id.activity_main_tab_home_page);
 
@@ -448,16 +464,9 @@ public class MainActivity extends PSGodBaseActivity implements
     View.OnClickListener myClick = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            int length = mBottomTab.getChildCount();
-            for (int i = 0; i < length; i++) {
-                if (mBottomTab.getChildAt(i) instanceof RadioButton) {
-                    RadioButton rb = (RadioButton) mBottomTab.getChildAt(i);
-                    if(i == length - 1){
-                        rb.setChecked(true);
-                    }else {
-                        rb.setChecked(false);
-                    }
-                }
+            Resources res = MainActivity.this.getResources();
+            for (int i = 0 ; i < 3 ; i++) {
+                mBottomTabImage[i].setImageDrawable(res.getDrawable(mTabDrawableIds[i]));
             }
 
             if(mAvatarCase.getVisibility() == View.GONE){
@@ -471,11 +480,38 @@ public class MainActivity extends PSGodBaseActivity implements
         }
     };
 
+    // 设置底部Tab的Drawable
+    private void setBottomTabImageDrawable(int id){
+        Resources res = this.getResources();
+        int currentTabId = 0;
+        for (int i = 0 ; i < 3 ; i++) {
+            mBottomTabImage[i].setImageDrawable(res.getDrawable(mTabDrawableIds[i]));
+            if (id == TAB_IDS[i]){
+                currentTabId = i;
+            }
+        }
+        mBottomTabImage[currentTabId].setImageDrawable(res.getDrawable(mTabDrawableIds[currentTabId+3]));
+
+    }
+
     private void initEvents() {
         mMyLayout.setOnClickListener(myClick);
         mAvatarImg.setOnClickListener(myClick);
+        for (int i = 0 ; i < 3 ; i++) {
+            mBottomTabLayout[i].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    setBottomTabImageDrawable(view.getId());
+                    showFragment(view.getId());
+                    if (mAvatarCase.getVisibility() == View.VISIBLE) {
+                        mAvatarCase.setVisibility(View.GONE);
+                    }
+                }
+            });
+        }
+
         // 双击最近tab自动刷新
-		mRecentBtn.setOnTouchListener(new OnTouchListener() {
+        mTupaiLayout.setOnTouchListener(new OnTouchListener() {
 			int count = 0;
 			int firClick = 0;
 			int secClick = 0;
@@ -502,7 +538,7 @@ public class MainActivity extends PSGodBaseActivity implements
 		});
 
         // 双击首页tab刷新
-        mHomeBtn.setOnTouchListener(new OnTouchListener() {
+        mHomeLayout.setOnTouchListener(new OnTouchListener() {
             int count = 0;
             int firClick = 0;
             int secClick = 0;
@@ -549,7 +585,7 @@ public class MainActivity extends PSGodBaseActivity implements
         });
 
         // 双击进行中tab刷新
-        mInprogressingBtn.setOnTouchListener(new OnTouchListener() {
+        mInprogressLayout.setOnTouchListener(new OnTouchListener() {
             int count = 0;
             int firClick = 0;
             int secClick = 0;
@@ -596,21 +632,6 @@ public class MainActivity extends PSGodBaseActivity implements
                 return false;
             }
         });
-
-//		mAddImgView.setOnClickListener(new OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
-//				showCameraPopupwindow(v); // 弹出选择上传求P还是作品的PopupWindow
-//			}
-//		});
-    }
-
-    private void showCameraPopupwindow(View view) {
-        if (null == cameraPopupwindow) {
-            cameraPopupwindow = new CameraPopupwindow(this);
-        }
-
-        cameraPopupwindow.showCameraPopupwindow(view);
     }
 
     @Override
@@ -625,18 +646,19 @@ public class MainActivity extends PSGodBaseActivity implements
         int fragmentId = mIntent.getIntExtra(IntentParams.KEY_FRAGMENT_ID,
                 DEFAULT_FRAGMENT_ID);
         if (fragmentId != DEFAULT_FRAGMENT_ID) {
-            mBottomTab.check(fragmentId);
+            // 设置Tab对应的Drawable
+            setBottomTabImageDrawable(fragmentId);
             Fragment mFragment = getFragment(fragmentId);
             if (fragmentId == R.id.activity_main_tab_home_page) {
                 HomePageFragment fragment = (HomePageFragment) getFragment(R.id.activity_main_tab_home_page);
                 fragment.onNewIntent(mIntent);
             }
-            if (fragmentId == R.id.activity_main_tab_recent) {
+            if (fragmentId == R.id.activity_tab_tupai_page) {
 //				RecentPageFragment recentFragment = (RecentPageFragment) getFragment(R.id.activity_main_tab_recent);
 //				recentFragment.onNewIntent(mIntent);
-                TupppaiFragment recentFragment = (TupppaiFragment) getFragment(R.id.activity_main_tab_recent);
+                TupppaiFragment recentFragment = (TupppaiFragment) getFragment(R.id.activity_tab_tupai_page);
             }
-            if (fragmentId == R.id.activity_main_tab_inprogressing) {
+            if (fragmentId == R.id.activity_inprogress_tab_page) {
                 InprogressPageFragment inprogressFragment = (InprogressPageFragment) getFragment(fragmentId);
                 // showFragment(R.id.activity_main_tab_inprogressing);
                 inprogressFragment.onNewIntent(mIntent);
@@ -658,29 +680,6 @@ public class MainActivity extends PSGodBaseActivity implements
                 startActivity(newIntent);
                 finish();
             }
-        }
-    }
-
-    @Override
-    public void onCheckedChanged(RadioGroup group, int checkedId) {
-        if(checkedId != R.id.activity_main_tab_thumb) {
-            if(mAvatarCase.getVisibility() == View.VISIBLE){
-                mAvatarCase.setVisibility(View.GONE);
-            }
-            showFragment(checkedId);
-        }
-
-        if (checkedId == R.id.activity_main_tab_recent) {
-            // 若关注了新的用户 则自动刷新我的关注页面
-            // if (Constants.IS_FOCUS_FRAGMENT_CREATED &&
-            // Constants.IS_FOLLOW_NEW_USER) {
-            // FocusFragment focusFragment = (FocusFragment)
-            // getFragment(R.id.activity_main_tab_recent);
-            // focusFragment.setRefreshing();
-            // }
-        } else if (checkedId == R.id.activity_main_tab_user) {
-//            mTabTipsMessage.setVisibility(View.INVISIBLE);
-//            EventBus.getDefault().post(new MyInfoRefreshEvent(MyPageFragment.class.getSimpleName()));
         }
     }
 
@@ -784,11 +783,10 @@ public class MainActivity extends PSGodBaseActivity implements
                 case R.id.activity_main_tab_home_page:
                     fragment = new HomePageFragment();
                     break;
-                case R.id.activity_main_tab_recent:
-//				fragment = new RecentPageFragment();
+                case R.id.activity_tab_tupai_page:
                     fragment = new TupppaiFragment();
                     break;
-                case R.id.activity_main_tab_inprogressing:
+                case R.id.activity_inprogress_tab_page:
                     fragment = new InprogressPageFragment();
                     break;
                 case R.id.activity_main_tab_user:
