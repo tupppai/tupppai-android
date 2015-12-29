@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -35,6 +37,7 @@ import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.network.request.PhotoActRequest;
 import com.psgod.ui.adapter.RecentPageActAdapter;
 import com.psgod.ui.widget.FloatScrollHelper;
+import com.psgod.ui.widget.ImageCategoryWindow;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
 
 import java.util.ArrayList;
@@ -223,23 +226,26 @@ public class RecentActActivity extends PSGodBaseActivity {
         mHeadImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               Utils.skipByUrl(RecentActActivity.this,mAct.getUrl(),mAct.getName());
+                Utils.skipByUrl(RecentActActivity.this, mAct.getUrl(), mAct.getName());
             }
         });
         mUpLoad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (mAct != null) {
-//                    loadUtils.upLoad(mActs.get(0).getType(), Long.parseLong(mActs.get(0).getAsk_id()));
-                    Intent intent = new Intent(RecentActActivity.this, MultiImageSelectActivity.class);
-                    intent.putExtra("AskId", Long.parseLong(mAct.getAsk_id()));
-                    intent.putExtra("ActivityId", mAct.getId());
-                    intent.putExtra("SelectType", "TypeReplySelect");
-                    new LoadUtils(RecentActActivity.this).isSimple(true).
-                            setCategory_id(Long.parseLong(mAct.getId())).upLoad(1,
-                            Long.parseLong(mAct.getAsk_id().equals("") ? "0" : mAct.getAsk_id()));
-
-                    startActivity(intent);
+////                    loadUtils.upLoad(mActs.get(0).getType(), Long.parseLong(mActs.get(0).getAsk_id()));
+//                    Intent intent = new Intent(RecentActActivity.this, MultiImageSelectActivity.class);
+//                    intent.putExtra("AskId", Long.parseLong(mAct.getAsk_id()));
+//                    intent.putExtra("ActivityId", mAct.getId());
+//                    intent.putExtra("SelectType", "TypeReplySelect");
+//                    new LoadUtils(RecentActActivity.this).isSimple(true).
+//                            setCategory_id(Long.parseLong(mAct.getId())).upLoad(1,
+//                            Long.parseLong(mAct.getAsk_id().equals("") ? "0" : mAct.getAsk_id()));
+//
+//                    startActivity(intent);
+                    ImageCategoryWindow imageCategoryWindow = new ImageCategoryWindow(RecentActActivity.this,
+                            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+                    imageCategoryWindow.showAtLocation(mParent, Gravity.BOTTOM,0,0);
                 }
             }
         });
@@ -263,7 +269,7 @@ public class RecentActActivity extends PSGodBaseActivity {
     private Response.Listener<ActivitiesAct> actListener = new Response.Listener<ActivitiesAct>() {
         @Override
         public void onResponse(ActivitiesAct act) {
-            if(act != null) {
+            if (act != null) {
                 mAct = act;
                 initAct(act);
             }

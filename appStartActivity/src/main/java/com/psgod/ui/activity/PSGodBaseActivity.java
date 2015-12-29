@@ -26,9 +26,12 @@ import com.psgod.PSGodToast;
 import com.psgod.R;
 import com.psgod.Utils;
 import com.psgod.WeakReferenceHandler;
+import com.psgod.model.SelectImage;
 import com.psgod.network.NetworkUtil;
+import com.psgod.ui.widget.ImageCategoryWindow;
 import com.umeng.analytics.MobclickAgent;
 
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -36,244 +39,248 @@ import java.util.TreeSet;
  * 应用的基础Activity，实现一些公共的逻辑 所有的Activity都必须继承PSGodBaseActivity
  *
  * @author rayalyuan
- *
  */
 public abstract class PSGodBaseActivity extends FragmentActivity implements
-		Handler.Callback {
-	private static final String TAG = PSGodBaseActivity.class.getSimpleName();
+        Handler.Callback {
+    private static final String TAG = PSGodBaseActivity.class.getSimpleName();
 
-	protected static final int MSG_SHOW_TOAST = 0x6600;
-	protected static final int MSG_REMOVE_TOAST = 0x6601;
+    protected static final int MSG_SHOW_TOAST = 0x6600;
+    protected static final int MSG_REMOVE_TOAST = 0x6601;
 
-	protected Set<PSGodToast> mToasts = new TreeSet<PSGodToast>();
-	protected TextView mToastView;
-	protected boolean mIsShowingToast = false;
-	protected PSGodToast mCurrentToast;
+    protected Set<PSGodToast> mToasts = new TreeSet<PSGodToast>();
+    protected TextView mToastView;
+    protected boolean mIsShowingToast = false;
+    protected PSGodToast mCurrentToast;
 
-	protected WeakReferenceHandler mBaseHandler = new WeakReferenceHandler(this);
+    protected List<String> selectResultImages;
 
-	// protected static int countOfActivity = 0;
+    protected WeakReferenceHandler mBaseHandler = new WeakReferenceHandler(this);
 
-	// public static final String CONNECTIVITY_CHANGE_ACTION =
-	// "android.net.conn.CONNECTIVITY_CHANGE";
-	// private BroadcastReceiver mReceiver;
+    // protected static int countOfActivity = 0;
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+    // public static final String CONNECTIVITY_CHANGE_ACTION =
+    // "android.net.conn.CONNECTIVITY_CHANGE";
+    // private BroadcastReceiver mReceiver;
 
-		// 判断当前SDK版本号，如果是4.4以上，则加入沉浸式状态栏
-		if (VERSION.SDK_INT >= VERSION_CODES.KITKAT) {
-			getWindow().addFlags(
-					WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-			getWindow().addFlags(
-					WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-		}
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-		// ++countOfActivity;
+        // 判断当前SDK版本号，如果是4.4以上，则加入沉浸式状态栏
+        if (VERSION.SDK_INT >= VERSION_CODES.KITKAT) {
+            getWindow().addFlags(
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            getWindow().addFlags(
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        }
 
-		// //友盟统计应用启动数据
-		// PushAgent.getInstance(this).onAppStart();
+        // ++countOfActivity;
 
-		// if (countOfActivity == 1) {
-		// IntentFilter filter = new IntentFilter();
-		// filter.addAction(CONNECTIVITY_CHANGE_ACTION);
-		// mReceiver = new NetworkStateReceiver();
-		// this.getApplication().registerReceiver(mReceiver, filter);
-		// }
-	}
+        // //友盟统计应用启动数据
+        // PushAgent.getInstance(this).onAppStart();
 
-	//开启友盟统计
-	@Override
-	protected void onResume() {
-		super.onResume();
-		MobclickAgent.onResume(this);
-	};
+        // if (countOfActivity == 1) {
+        // IntentFilter filter = new IntentFilter();
+        // filter.addAction(CONNECTIVITY_CHANGE_ACTION);
+        // mReceiver = new NetworkStateReceiver();
+        // this.getApplication().registerReceiver(mReceiver, filter);
+        // }
+    }
 
-	@Override
-	protected void onPause() {
-		super.onPause();
-		MobclickAgent.onPause(this);
-	}
+    //开启友盟统计
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
 
-	@Override
-	public void onStop() {
-		super.onStop();
-		mToasts.clear();
-		mIsShowingToast = false;
-		if (mToastView != null) {
-			mToastView.setVisibility(View.GONE);
-		}
-	}
+    ;
 
-	private boolean isJump = false;
-	@Override
-	public void finish() {
-		if (getIntent().getBooleanExtra("isSingle",false)){
-			Intent intent = new Intent(this,MainActivity.class);
-			startActivity(intent);
-			isJump = true;
-		}
-		super.finish();
-	}
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
 
-	@Override
-	public void onDestroy() {
-		if (getIntent().getBooleanExtra("isSingle",false) && !isJump){
-			Intent intent = new Intent(this,MainActivity.class);
-			startActivity(intent);
-		}
-		super.onDestroy();
-		// --countOfActivity;
-		// if (countOfActivity == 0) {
-		// this.getApplication().unregisterReceiver(mReceiver);
-		// }
-	}
+    @Override
+    public void onStop() {
+        super.onStop();
+        mToasts.clear();
+        mIsShowingToast = false;
+        if (mToastView != null) {
+            mToastView.setVisibility(View.GONE);
+        }
+    }
 
-	@Override
-	protected void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
-		outState.remove("android:support:fragments");
-	}
+    private boolean isJump = false;
 
-	protected void showToast(PSGodToast toast) {
-		if (mToastView == null) {
-			Resources res = getResources();
-			int topMargin = 0;
-			// 4.4以上版本，加了状态栏，弹出Tosat时要margintop要考虑进去
-			if (VERSION.SDK_INT >= VERSION_CODES.KITKAT) {
-				topMargin = res.getDimensionPixelSize(R.dimen.actionbar_height)
-						+ Utils.getStatusBarHeight(getApplicationContext());
-			} else {
-				topMargin = res.getDimensionPixelSize(R.dimen.actionbar_height);
-			}
-			int height = res.getDimensionPixelSize(R.dimen.toast_height);
-			FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
-					ViewGroup.LayoutParams.MATCH_PARENT, height);
-			params.setMargins(0, topMargin, 0, 0);
-			mToastView = new TextView(this);
-			mToastView.setGravity(Gravity.CENTER);
-			mToastView.setBackgroundColor(android.graphics.Color
-					.parseColor("#FE8282"));
-			mToastView.setText(toast.getContent());
-			mToastView.setVisibility(View.GONE);
-			mToastView.setTextColor(android.graphics.Color
-					.parseColor("#FFFFFF"));
-			// mToastView.setTextSize(); TODO
-			addContentView(mToastView, params);
-		}
+    @Override
+    public void finish() {
+        if (getIntent().getBooleanExtra("isSingle", false)) {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            isJump = true;
+        }
+        super.finish();
+    }
 
-		mToasts.add(toast);
-		mBaseHandler.obtainMessage(MSG_SHOW_TOAST).sendToTarget();
-	}
+    @Override
+    public void onDestroy() {
+        if (getIntent().getBooleanExtra("isSingle", false) && !isJump) {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        }
+        super.onDestroy();
+        // --countOfActivity;
+        // if (countOfActivity == 0) {
+        // this.getApplication().unregisterReceiver(mReceiver);
+        // }
+    }
 
-	@Override
-	public boolean handleMessage(Message msg) {
-		switch (msg.what) {
-		case MSG_SHOW_TOAST:
-			if (mToasts.isEmpty()) {
-				break;
-			}
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.remove("android:support:fragments");
+    }
 
-			boolean needUpdate = false;
-			PSGodToast toast = mToasts.iterator().next();
-			if (mIsShowingToast) {
-				if (mCurrentToast.getPriority() < toast.getPriority()) {
-					long duration = mCurrentToast.getDuration();
-					mCurrentToast = toast;
-					needUpdate = true;
+    protected void showToast(PSGodToast toast) {
+        if (mToastView == null) {
+            Resources res = getResources();
+            int topMargin = 0;
+            // 4.4以上版本，加了状态栏，弹出Tosat时要margintop要考虑进去
+            if (VERSION.SDK_INT >= VERSION_CODES.KITKAT) {
+                topMargin = res.getDimensionPixelSize(R.dimen.actionbar_height)
+                        + Utils.getStatusBarHeight(getApplicationContext());
+            } else {
+                topMargin = res.getDimensionPixelSize(R.dimen.actionbar_height);
+            }
+            int height = res.getDimensionPixelSize(R.dimen.toast_height);
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT, height);
+            params.setMargins(0, topMargin, 0, 0);
+            mToastView = new TextView(this);
+            mToastView.setGravity(Gravity.CENTER);
+            mToastView.setBackgroundColor(android.graphics.Color
+                    .parseColor("#FE8282"));
+            mToastView.setText(toast.getContent());
+            mToastView.setVisibility(View.GONE);
+            mToastView.setTextColor(android.graphics.Color
+                    .parseColor("#FFFFFF"));
+            // mToastView.setTextSize(); TODO
+            addContentView(mToastView, params);
+        }
 
-					if (duration != PSGodToast.DURATION_FOREVER) {
-						mBaseHandler.removeMessages(MSG_REMOVE_TOAST);
-					}
-				}
-			} else {
-				mIsShowingToast = true;
-				mCurrentToast = toast;
-				needUpdate = true;
-			}
+        mToasts.add(toast);
+        mBaseHandler.obtainMessage(MSG_SHOW_TOAST).sendToTarget();
+    }
 
-			if (needUpdate) {
-				mToastView.setText(mCurrentToast.getContent());
-				mToastView.setVisibility(View.VISIBLE);
+    @Override
+    public boolean handleMessage(Message msg) {
+        switch (msg.what) {
+            case MSG_SHOW_TOAST:
+                if (mToasts.isEmpty()) {
+                    break;
+                }
 
-				final AlphaAnimation appearAnimation = new AlphaAnimation(0, 1);
-				appearAnimation.setDuration(500);
-				mToastView.setAnimation(appearAnimation);
-				appearAnimation.startNow();
+                boolean needUpdate = false;
+                PSGodToast toast = mToasts.iterator().next();
+                if (mIsShowingToast) {
+                    if (mCurrentToast.getPriority() < toast.getPriority()) {
+                        long duration = mCurrentToast.getDuration();
+                        mCurrentToast = toast;
+                        needUpdate = true;
 
-				long duration = mCurrentToast.getDuration();
-				if (duration != PSGodToast.DURATION_FOREVER) {
-					mBaseHandler.postDelayed(new Runnable() {
-						@Override
-						public void run() {
-							mBaseHandler.obtainMessage(MSG_REMOVE_TOAST)
-									.sendToTarget();
-						}
-					}, duration);
-				}
-			}
-			break;
-		case MSG_REMOVE_TOAST:
-			mToasts.remove(mCurrentToast);
-			mIsShowingToast = false;
-			if (mToasts.isEmpty()) {
-				mToastView.clearAnimation();
-				final AlphaAnimation disappearAnimation = new AlphaAnimation(1,
-						0);
-				disappearAnimation.setDuration(500);
-				mToastView.setAnimation(disappearAnimation);
-				disappearAnimation.startNow();
-				disappearAnimation
-						.setAnimationListener(new AnimationListener() {
+                        if (duration != PSGodToast.DURATION_FOREVER) {
+                            mBaseHandler.removeMessages(MSG_REMOVE_TOAST);
+                        }
+                    }
+                } else {
+                    mIsShowingToast = true;
+                    mCurrentToast = toast;
+                    needUpdate = true;
+                }
 
-							@Override
-							public void onAnimationStart(Animation animation) {
+                if (needUpdate) {
+                    mToastView.setText(mCurrentToast.getContent());
+                    mToastView.setVisibility(View.VISIBLE);
 
-							}
+                    final AlphaAnimation appearAnimation = new AlphaAnimation(0, 1);
+                    appearAnimation.setDuration(500);
+                    mToastView.setAnimation(appearAnimation);
+                    appearAnimation.startNow();
 
-							@Override
-							public void onAnimationRepeat(Animation animation) {
+                    long duration = mCurrentToast.getDuration();
+                    if (duration != PSGodToast.DURATION_FOREVER) {
+                        mBaseHandler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                mBaseHandler.obtainMessage(MSG_REMOVE_TOAST)
+                                        .sendToTarget();
+                            }
+                        }, duration);
+                    }
+                }
+                break;
+            case MSG_REMOVE_TOAST:
+                mToasts.remove(mCurrentToast);
+                mIsShowingToast = false;
+                if (mToasts.isEmpty()) {
+                    mToastView.clearAnimation();
+                    final AlphaAnimation disappearAnimation = new AlphaAnimation(1,
+                            0);
+                    disappearAnimation.setDuration(500);
+                    mToastView.setAnimation(disappearAnimation);
+                    disappearAnimation.startNow();
+                    disappearAnimation
+                            .setAnimationListener(new AnimationListener() {
 
-							}
+                                @Override
+                                public void onAnimationStart(Animation animation) {
 
-							@Override
-							public void onAnimationEnd(Animation animation) {
-								mToastView.setVisibility(View.GONE);
-							}
-						});
+                                }
 
-			} else {
-				mBaseHandler.obtainMessage(MSG_SHOW_TOAST).sendToTarget();
-			}
-			break;
-		default:
-			break;
-		}
-		return true;
-	}
+                                @Override
+                                public void onAnimationRepeat(Animation animation) {
 
-	protected void onNetworkStateChanged(int networkType) {
-		Logger.log(Logger.LOG_LEVEL_DEBUG, Logger.USER_LEVEL_COLOR, TAG,
-				"onNetworkStateChanged(): networkType=" + networkType);
-	}
+                                }
 
-	protected class NetworkStateReceiver extends BroadcastReceiver {
-		int preNetworkType;
+                                @Override
+                                public void onAnimationEnd(Animation animation) {
+                                    mToastView.setVisibility(View.GONE);
+                                }
+                            });
 
-		public NetworkStateReceiver() {
-			preNetworkType = NetworkUtil.getNetworkType();
-		}
+                } else {
+                    mBaseHandler.obtainMessage(MSG_SHOW_TOAST).sendToTarget();
+                }
+                break;
+            default:
+                break;
+        }
+        return true;
+    }
 
-		@Override
-		public void onReceive(Context context, Intent intent) {
-			int networkType = NetworkUtil.getNetworkType();
-			if (preNetworkType != networkType) {
-				preNetworkType = networkType;
-				onNetworkStateChanged(networkType);
-			}
-		}
-	}
+    protected void onNetworkStateChanged(int networkType) {
+        Logger.log(Logger.LOG_LEVEL_DEBUG, Logger.USER_LEVEL_COLOR, TAG,
+                "onNetworkStateChanged(): networkType=" + networkType);
+    }
+
+    protected class NetworkStateReceiver extends BroadcastReceiver {
+        int preNetworkType;
+
+        public NetworkStateReceiver() {
+            preNetworkType = NetworkUtil.getNetworkType();
+        }
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int networkType = NetworkUtil.getNetworkType();
+            if (preNetworkType != networkType) {
+                preNetworkType = networkType;
+                onNetworkStateChanged(networkType);
+            }
+        }
+    }
 
 //	private float leftX;
 //	private float moveX;
@@ -298,4 +305,15 @@ public abstract class PSGodBaseActivity extends FragmentActivity implements
 //		}
 //		return super.dispatchTouchEvent(ev);
 //	}
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case ImageCategoryWindow.RESULT_CODE:
+                selectResultImages.addAll(data.getStringArrayListExtra(ImageCategoryWindow.RESULT));
+                break;
+        }
+    }
 }
