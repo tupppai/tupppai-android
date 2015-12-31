@@ -348,6 +348,24 @@ public class ShareMoreDialog extends Dialog {
 			Utils.hideProgressDialog();
 
 			ShareSDK.initSDK(mContext);
+			Platform qZone = ShareSDK
+					.getPlatform(mContext, QZone.NAME);
+			qZone.setPlatformActionListener(new PlatformActionListener() {
+				@Override
+				public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+
+				}
+
+				@Override
+				public void onError(Platform platform, int i, Throwable throwable) {
+
+				}
+
+				@Override
+				public void onCancel(Platform platform, int i) {
+
+				}
+			});
 			try {
 				OnekeyShare oks = new OnekeyShare();
 				oks.setPlatform(QZone.NAME);
@@ -438,6 +456,7 @@ public class ShareMoreDialog extends Dialog {
 				@Override
 				public void onComplete(Platform arg0, int arg1,
 						HashMap<String, Object> arg2) {
+					ShareMoreDialog.this.dismiss();
 				}
 
 				@Override

@@ -46,6 +46,7 @@ import com.psgod.model.LoginUser;
 import com.psgod.model.User;
 import com.psgod.network.request.GetUserInfoRequest;
 import com.psgod.network.request.PSGodRequestQueue;
+import com.psgod.ui.activity.EditProfileActivity;
 import com.psgod.ui.activity.FollowerListActivity;
 import com.psgod.ui.activity.FollowingListActivity;
 import com.psgod.ui.activity.NewMessageActivity;
@@ -646,9 +647,11 @@ public class MyPageFragment extends Fragment implements
 
             @Override
             public void onClick(View view) {
-                ImageDialog dialog = new ImageDialog(getActivity(),
-                        ((AvatarImageView) view).getImage());
-                dialog.show();
+//                ImageDialog dialog = new ImageDialog(getActivity(),
+//                        ((AvatarImageView) view).getImage());
+//                dialog.show();
+                Intent intent = new Intent(mContext, EditProfileActivity.class);
+                startActivity(intent);
             }
         });
     }
