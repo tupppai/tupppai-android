@@ -36,6 +36,7 @@ import com.psgod.network.request.PhotoActRequest;
 import com.psgod.ui.adapter.RecentPageActAdapter;
 import com.psgod.ui.widget.FloatScrollHelper;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
+import com.psgod.ui.widget.dialog.ImageSelectDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -231,16 +232,17 @@ public class RecentActActivity extends PSGodBaseActivity {
             public void onClick(View view) {
                 if (mAct != null) {
 //                    loadUtils.upLoad(mActs.get(0).getType(), Long.parseLong(mActs.get(0).getAsk_id()));
-                    Intent intent = new Intent(RecentActActivity.this, MultiImageSelectActivity.class);
-                    intent.putExtra("AskId", Long.parseLong(mAct.getAsk_id() == null ?
-                            "0" : mAct.getAsk_id().equals("") ? "0" : mAct.getAsk_id()));
-                    intent.putExtra("ActivityId", mAct.getId());
-                    intent.putExtra("SelectType", "TypeReplySelect");
-                    new LoadUtils(RecentActActivity.this).isSimple(true).
-                            setCategory_id(Long.parseLong(mAct.getId())).upLoad(1,
-                            Long.parseLong(mAct.getAsk_id().equals("") ? "0" : mAct.getAsk_id()));
-
-                    startActivity(intent);
+//                    Intent intent = new Intent(RecentActActivity.this, MultiImageSelectActivity.class);
+//                    intent.putExtra("AskId", Long.parseLong(mAct.getAsk_id() == null ?
+//                            "0" : mAct.getAsk_id().equals("") ? "0" : mAct.getAsk_id()));
+//                    intent.putExtra("ActivityId", mAct.getId());
+//                    intent.putExtra("SelectType", "TypeReplySelect");
+//                    new LoadUtils(RecentActActivity.this).isSimple(true).
+//                            setCategory_id(Long.parseLong(mAct.getId())).upLoad(1,
+//                            Long.parseLong(mAct.getAsk_id().equals("") ? "0" : mAct.getAsk_id()));
+//
+//                    startActivity(intent);
+                    new ImageSelectDialog(RecentActActivity.this,Long.parseLong(id)).show();
                 }
             }
         });
