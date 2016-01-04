@@ -554,6 +554,14 @@ public class MultiImageSelectActivity extends PSGodBaseActivity {
     };
 
     @Override
+    public void finish() {
+        Intent intent = new Intent();
+        intent.putExtra(ImageCategoryWindow.RESULT,resultList);
+        setResult(ImageCategoryWindow.RESULT_CODE,intent);
+        super.finish();
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         UploadCache.getInstence().clear();

@@ -31,6 +31,7 @@ import com.psgod.network.NetworkUtil;
 import com.psgod.ui.widget.ImageCategoryWindow;
 import com.umeng.analytics.MobclickAgent;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -52,7 +53,7 @@ public abstract class PSGodBaseActivity extends FragmentActivity implements
     protected boolean mIsShowingToast = false;
     protected PSGodToast mCurrentToast;
 
-    protected List<String> selectResultImages;
+    protected List<String> selectResultImages = new ArrayList<String>();
 
     protected WeakReferenceHandler mBaseHandler = new WeakReferenceHandler(this);
 
@@ -309,11 +310,17 @@ public abstract class PSGodBaseActivity extends FragmentActivity implements
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
+        switch (resultCode) {
             case ImageCategoryWindow.RESULT_CODE:
-                selectResultImages.addAll(data.getStringArrayListExtra(ImageCategoryWindow.RESULT));
+                if(data != null) {
+                    List<String> imageCategoryStrs = data.
+                            getStringArrayListExtra(ImageCategoryWindow.RESULT);
+                    if (imageCategoryStrs != null && imageCategoryStrs.size() > 0) {
+                        selectResultImages.addAll(imageCategoryStrs);
+                    }
+                }
                 break;
         }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

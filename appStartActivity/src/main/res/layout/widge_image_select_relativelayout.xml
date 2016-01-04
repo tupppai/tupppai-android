@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.psgod.ui.widget.ImageSelectInputView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#f2f2f2"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp"
+    >
+
+    <ImageView
+        android:id="@+id/widge_image_select_bangplist_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_centerVertical="true"
+        android:src="@mipmap/bangplist_selected"/>
+
+    <ImageView
+        android:id="@+id/widge_image_select_image_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/bangp_ic_image"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/widge_image_select_bangplist_img"
+        android:layout_marginLeft="15dp"
+        />
+
+
+    <EditText
+        android:id="@+id/widge_image_select_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:lines="3"
+        android:background="#fff"
+        android:textSize="14dp"
+        android:textColor="#50484b"
+        android:gravity="center_vertical|left"
+        android:layout_marginLeft="15dp"
+        android:layout_toRightOf="@+id/widge_image_select_image_img"
+        android:layout_toLeftOf="@+id/widge_image_select_up"
+        />
+
+    <TextView
+        android:id="@+id/widge_image_select_up"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="发布"
+        android:textColor="#000"
+        android:textSize="14dp"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        />
+
+</com.psgod.ui.widget.ImageSelectInputView>

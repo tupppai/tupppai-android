@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/dialog_image_select_input"
+        layout="@layout/widge_image_select_relativelayout" />
+
+    <RelativeLayout
+        android:id="@+id/dialog_image_select_area"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dialog_image_select_input"
+        android:visibility="visible"
+        >
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/dialog_image_select_imgarea"
+            android:layout_width="match_parent"
+            android:layout_height="202dp"
+            android:background="#f2f2f2" />
+
+        <ImageView
+            android:id="@+id/dialog_image_select_img_thumb"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_below="@id/dialog_image_select_imgarea"
+            android:src="#f2f2f2" />
+
+        <RelativeLayout
+            android:id="@+id/dialog_image_select_operarea"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_below="@id/dialog_image_select_img_thumb"
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/dialog_image_select_album_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:padding="5dp"
+                android:layout_marginLeft="7dp"
+                android:textSize="14dp"
+                android:text="相册"
+                />
+
+            <TextView
+                android:id="@+id/dialog_image_select_photo_txt"
+                android:layout_width="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="7dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:padding="5dp"
+                android:layout_toRightOf="@+id/dialog_image_select_album_txt"
+                android:textSize="14dp"
+                android:text="拍照"
+                />
+
+            <TextView
+                android:id="@+id/dialog_image_select_num_txt"
+                android:layout_width="wrap_content"
+                android:layout_centerVertical="true"
+                android:textSize="14dp"
+                android:text="1"
+                android:background="@drawable/shape_like"
+                android:paddingLeft="6dp"
+                android:paddingRight="6dp"
+                android:paddingTop="1dp"
+                android:paddingBottom="1dp"
+                android:layout_toLeftOf="@+id/dialog_image_select_sure_txt"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/dialog_image_select_sure_txt"
+                android:layout_width="wrap_content"
+                android:layout_centerVertical="true"
+                android:textSize="14dp"
+                android:text="确定"
+                android:padding="5dp"
+                android:gravity="center"
+                android:layout_marginRight="8dp"
+                android:layout_alignParentRight="true"
+                android:layout_height="match_parent" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>
