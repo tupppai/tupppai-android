@@ -153,6 +153,8 @@
         <activity android:name=".ui.activity.MessageSystemActivity" />
         <activity android:name=".ui.activity.SearchActivity" />
         <activity android:name=".ui.activity.NewLoginInputPhoneActivity" />
+        <activity android:name=".ui.activity.NewPhoneLoginActivity" />
+        <activity android:name=".ui.activity.NewRegisterPhoneActivity" />
 
         <!-- sharesdk -->
         <activity

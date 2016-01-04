@@ -7,18 +7,11 @@
     android:fitsSystemWindows="true"
     android:background="#FFFFFF">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="33dp"
-        android:layout_gravity="center_horizontal"
-        android:src="@mipmap/input_phone_logo"/>
-
     <EditText
-        android:id="@+id/phone_edit"
+        android:id="@+id/input_phone"
         android:layout_width="match_parent"
         android:layout_height="47dp"
-        android:layout_marginTop="45dp"
+        android:layout_marginTop="52dp"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
         android:paddingLeft="12dp"
@@ -28,23 +21,53 @@
         android:textSize="13dp"
         android:textColor="#66000000"/>
 
-    <Button
-        android:id="@+id/next_btn"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="47dp"
-        android:layout_marginTop="19dp"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
-        android:text="下一步"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/shape_register_login_edit_background">
+
+        <ImageView
+            android:id="@+id/forget_passwd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/ic_forget_passwd"/>
+
+        <EditText
+            android:id="@+id/input_passwd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/forget_passwd"
+            android:paddingLeft="12dp"
+            android:background="@null"
+            android:layout_centerVertical="true"
+            android:hint="密码"
+            android:textSize="13dp"
+            android:textColor="#66000000"/>
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/login_btn"
+        android:layout_width="match_parent"
+        android:layout_height="47dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="92dp"
+        android:text="登录"
         android:textSize="13dp"
         android:textColor="#FFFFFF"
         android:gravity="center"
-        android:background="@drawable/selector_register_login_button_background" />
+        android:background="@drawable/selector_register_login_button_background"/>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="55dp"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
         android:background="#19000000"/>
