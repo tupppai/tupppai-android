@@ -151,8 +151,8 @@
         <activity android:name=".ui.activity.SettingAccountSafeActivity" />
         <activity android:name=".ui.activity.MessageLikeActivity" />
         <activity android:name=".ui.activity.MessageSystemActivity" />
-        <activity android:name=".ui.activity.SearchActivity" >
-        </activity>
+        <activity android:name=".ui.activity.SearchActivity" />
+        <activity android:name=".ui.activity.NewLoginInputPhoneActivity" />
 
         <!-- sharesdk -->
         <activity
