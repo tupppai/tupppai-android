@@ -337,7 +337,22 @@ public class InprogressShareMoreDialog extends Dialog {
 
 			ShareSDK.initSDK(mContext);
 			try {
-				OnekeyShare oks = new OnekeyShare();
+				OnekeyShare oks = new OnekeyShare(){
+					@Override
+					public void onError(Platform arg0, int arg1,
+										Throwable arg2) {
+					}
+
+					@Override
+					public void onComplete(Platform arg0, int arg1,
+										   HashMap<String, Object> arg2) {
+						InprogressShareMoreDialog.this.dismiss();
+					}
+
+					@Override
+					public void onCancel(Platform arg0, int arg1) {
+					}
+				};
 
 				oks.setPlatform(QZone.NAME);
 				oks.setTitle(response.getString("title"));
@@ -373,6 +388,7 @@ public class InprogressShareMoreDialog extends Dialog {
 						@Override
 						public void onComplete(Platform arg0, int arg1,
 								HashMap<String, Object> arg2) {
+							InprogressShareMoreDialog.this.dismiss();
 						}
 
 						@Override
@@ -422,6 +438,7 @@ public class InprogressShareMoreDialog extends Dialog {
 				@Override
 				public void onComplete(Platform arg0, int arg1,
 						HashMap<String, Object> arg2) {
+					InprogressShareMoreDialog.this.dismiss();
 				}
 
 				@Override
@@ -462,7 +479,22 @@ public class InprogressShareMoreDialog extends Dialog {
 
 			ShareSDK.initSDK(mContext);
 			try {
-				OnekeyShare oks = new OnekeyShare();
+				OnekeyShare oks = new OnekeyShare(){
+					@Override
+					public void onError(Platform arg0, int arg1,
+										Throwable arg2) {
+					}
+
+					@Override
+					public void onComplete(Platform arg0, int arg1,
+										   HashMap<String, Object> arg2) {
+						InprogressShareMoreDialog.this.dismiss();
+					}
+
+					@Override
+					public void onCancel(Platform arg0, int arg1) {
+					}
+				};
 
 				oks.setPlatform(QQ.NAME);
 				oks.setTitle(response.getString("title"));
@@ -485,7 +517,22 @@ public class InprogressShareMoreDialog extends Dialog {
 
 			ShareSDK.initSDK(mContext);
 			try {
-				OnekeyShare oks = new OnekeyShare();
+				OnekeyShare oks = new OnekeyShare(){
+					@Override
+					public void onError(Platform arg0, int arg1,
+										Throwable arg2) {
+					}
+
+					@Override
+					public void onComplete(Platform arg0, int arg1,
+										   HashMap<String, Object> arg2) {
+						InprogressShareMoreDialog.this.dismiss();
+					}
+
+					@Override
+					public void onCancel(Platform arg0, int arg1) {
+					}
+				};
 
 				oks.setPlatform(SinaWeibo.NAME);
 				oks.disableSSOWhenAuthorize();

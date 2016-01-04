@@ -135,6 +135,7 @@ public class CitySelector {
         button_ok.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                try {
                 Integer[] provinceId = CityInfo.getProvinceId();
                 Integer[][] cityId = CityInfo.getCityId();
                 String[] provinceName = CityInfo.getProvinceName();
@@ -157,7 +158,11 @@ public class CitySelector {
 
                 msg.setData(bundle);
                 msg.sendToTarget();
+                }catch (IndexOutOfBoundsException e){
 
+                }catch (Exception e){
+
+                }
                 window.dismiss();
             }
         });
