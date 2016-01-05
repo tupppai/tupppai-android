@@ -3,7 +3,6 @@ package com.psgod.ui.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +11,6 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -25,18 +22,16 @@ import com.psgod.LoadUtils;
 import com.psgod.R;
 import com.psgod.Utils;
 import com.psgod.eventbus.RefreshEvent;
-import com.psgod.model.Activities;
 import com.psgod.model.ActivitiesAct;
 import com.psgod.model.Channel;
 import com.psgod.model.PhotoItem;
 import com.psgod.network.request.ActivitiesActRequest;
 import com.psgod.network.request.ChannelRequest;
 import com.psgod.network.request.PSGodRequestQueue;
-import com.psgod.network.request.PhotoActRequest;
 import com.psgod.ui.adapter.RecentPageActAdapter;
 import com.psgod.ui.widget.FloatScrollHelper;
-import com.psgod.ui.widget.dialog.CustomProgressingDialog;
 import com.psgod.ui.widget.dialog.ImageSelectDialog;
+import com.psgod.ui.widget.dialog.CustomProgressingDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -242,7 +237,9 @@ public class RecentActActivity extends PSGodBaseActivity {
 //                            Long.parseLong(mAct.getAsk_id().equals("") ? "0" : mAct.getAsk_id()));
 //
 //                    startActivity(intent);
-                    new ImageSelectDialog(RecentActActivity.this,Long.parseLong(id)).show();
+//                    new ImageSelectDialog(RecentActActivity.this,Long.parseLong(id)).show();
+                    new ImageSelectDialog(RecentActActivity.this,
+                            ImageSelectDialog.SHOW_TYPE_ACTIVITY).show();
                 }
             }
         });

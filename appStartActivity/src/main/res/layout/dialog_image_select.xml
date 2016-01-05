@@ -19,7 +19,7 @@
             android:id="@+id/dialog_image_select_imgarea"
             android:layout_width="match_parent"
             android:layout_height="202dp"
-            android:background="#f2f2f2" />
+            android:background="#000" />
 
         <ImageView
             android:id="@+id/dialog_image_select_img_thumb"
