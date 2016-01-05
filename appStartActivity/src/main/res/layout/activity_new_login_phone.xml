@@ -46,6 +46,7 @@
             android:paddingLeft="12dp"
             android:background="@null"
             android:layout_centerVertical="true"
+            android:inputType="textPassword"
             android:hint="密码"
             android:textSize="13dp"
             android:textColor="#66000000"/>

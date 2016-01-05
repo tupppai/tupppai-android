@@ -25,6 +25,7 @@ import com.psgod.ui.widget.dialog.CustomProgressingDialog;
  */
 public class NewLoginInputPhoneActivity extends PSGodBaseActivity{
     private static final String TAG = NewLoginInputPhoneActivity.class.getSimpleName();
+    private static final String PHONE = "PhoneNum";
 
     private EditText mPhoneEdit;
     private Button mNextButton;
@@ -89,9 +90,11 @@ public class NewLoginInputPhoneActivity extends PSGodBaseActivity{
             }
             if (response) {
                 Intent intent = new Intent(NewLoginInputPhoneActivity.this,NewPhoneLoginActivity.class);
+                intent.putExtra(PHONE,mPhoneEdit.getText().toString().trim());
                 startActivity(intent);
             } else {
                 Intent intent = new Intent(NewLoginInputPhoneActivity.this,NewRegisterPhoneActivity.class);
+                intent.putExtra(PHONE,mPhoneEdit.getText().toString().trim());
                 startActivity(intent);
             }
         }
@@ -132,5 +135,16 @@ public class NewLoginInputPhoneActivity extends PSGodBaseActivity{
             return false;
         }
         return true;
+    }
+
+    /**
+     * 暂停所有的下载
+     */
+    @Override
+    public void onStop() {
+        super.onStop();
+        RequestQueue requestQueue = PSGodRequestQueue.getInstance(this)
+                .getRequestQueue();
+        requestQueue.cancelAll(this);
     }
 }
