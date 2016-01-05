@@ -32,9 +32,10 @@
         <ImageView
             android:id="@+id/forget_passwd"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:layout_centerVertical="true"
             android:src="@mipmap/ic_forget_passwd"/>
 

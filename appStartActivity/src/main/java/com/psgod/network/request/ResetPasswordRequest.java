@@ -10,22 +10,21 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ResetPasswordRequest extends BaseRequest<Boolean> {
+public class ResetPasswordRequest extends BaseRequest<JSONObject> {
 
 	private static final String TAG = ResetPasswordRequest.class
 			.getSimpleName();
 
 	private ResetPasswordRequest(int method, String url,
-			Listener<Boolean> listener, ErrorListener errorListener) {
+			Listener<JSONObject> listener, ErrorListener errorListener) {
 		super(method, url, listener, errorListener);
 	}
 
 	@Override
-	protected Boolean doParseNetworkResponse(JSONObject response)
+	protected JSONObject doParseNetworkResponse(JSONObject response)
 			throws JSONException {
 		JSONObject data = response.getJSONObject("data");
-		Boolean status = data.getBoolean("status");
-		return status;
+		return data;
 	}
 
 	public static class Builder implements IPostRequestBuilder {
@@ -33,7 +32,7 @@ public class ResetPasswordRequest extends BaseRequest<Boolean> {
 		private String mPhoneNumber;
 		private String mNewPassword;
 		private String mVerifyCode;
-		private Listener<Boolean> listener;
+		private Listener<JSONObject> listener;
 		private ErrorListener errorListener;
 
 		public Builder setPhoneNumber(String mPhoneNumber) {
@@ -51,7 +50,7 @@ public class ResetPasswordRequest extends BaseRequest<Boolean> {
 			return this;
 		}
 
-		public Builder setListener(Listener<Boolean> listener) {
+		public Builder setListener(Listener<JSONObject> listener) {
 			this.listener = listener;
 			return this;
 		}

@@ -1,11 +1,13 @@
 package com.psgod.ui.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -36,6 +38,7 @@ public class NewPhoneLoginActivity extends PSGodBaseActivity {
     private EditText mPhoneText;
     private EditText mPasswdText;
     private Button mLoginBtn;
+    private ImageView mResetBtn;
 
     private CustomProgressingDialog mProgressDialog;
     private WeakReferenceHandler handler = new WeakReferenceHandler(this);
@@ -64,6 +67,7 @@ public class NewPhoneLoginActivity extends PSGodBaseActivity {
         mPhoneText.setText(mPhoneNum);
         mPasswdText = (EditText) findViewById(R.id.input_passwd);
         mLoginBtn = (Button) findViewById(R.id.login_btn);
+        mResetBtn = (ImageView) findViewById(R.id.forget_passwd);
 
     }
 
@@ -93,6 +97,15 @@ public class NewPhoneLoginActivity extends PSGodBaseActivity {
                             NewPhoneLoginActivity.this).getRequestQueue();
                     requestQueue.add(request);
                 }
+            }
+        });
+
+        mResetBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(NewPhoneLoginActivity.this,NewResetPasswdActivity.class);
+                intent.putExtra(PHONE,mPhoneNum);
+                startActivity(intent);
             }
         });
     }
