@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -16,9 +17,17 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
 import com.psgod.R;
 import com.psgod.WeakReferenceHandler;
+import com.psgod.model.PhotoItem;
+import com.psgod.network.request.PSGodRequestQueue;
+import com.psgod.network.request.UserPhotoRequest;
+import com.psgod.ui.adapter.MultiImageSelectRecyclerAdapter;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -31,6 +40,7 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
     private int showType;
     private Context mContext;
 
+    private List<PhotoItem> mPhotoItems = new ArrayList<>();
     private RelativeLayout mView;
     private RelativeLayout mArea;
     private RelativeLayout mInputArea;
@@ -44,7 +54,7 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
     private EditText mEdit;
     private TextView mUpTxt;
 
-//    private
+    private MultiImageSelectRecyclerAdapter mAdapter;
 
     private WeakReferenceHandler mHandler = new WeakReferenceHandler(this);
     private ExecutorService fixedThreadPool = Executors.newFixedThreadPool(1);
@@ -77,8 +87,7 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
         getWindow().setGravity(Gravity.BOTTOM);
         getWindow().setWindowAnimations(R.style.popwindow_anim_style);
         getWindow().setSoftInputMode(
-                WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE |
-                        WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+                WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         super.show();
     }
 
@@ -99,25 +108,27 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
         mEdit = (EditText) mView.findViewById(R.id.widge_image_select_edit);
         mUpTxt = (TextView) mView.findViewById(R.id.widge_image_select_up);
 
-        switch (showType){
-            case SHOW_TYPE_ASK:
-                mBangpImg.setVisibility(View.GONE);
-                mImageimg.setImageResource(R.mipmap.zuopin_ic_image_selected);
-                mPhotoTxt.setVisibility(View.VISIBLE);
-                break;
-            case SHOW_TYPE_REPLY:
-                mBangpImg.setVisibility(View.VISIBLE);
-                mImageimg.setImageResource(R.mipmap.bangp_ic_image);
-                mPhotoTxt.setVisibility(View.GONE);
+        mImageArea.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
+        mAdapter = new MultiImageSelectRecyclerAdapter(mContext);
+        mImageArea.setAdapter(mAdapter);
 
-                break;
-            case SHOW_TYPE_ACTIVITY:
-                mBangpImg.setVisibility(View.GONE);
-                mImageimg.setImageResource(R.mipmap.zuopin_ic_image_selected);
-                mPhotoTxt.setVisibility(View.GONE);
-
-                break;
-        }
+//        switch (showType){
+//            case SHOW_TYPE_ASK:
+//                mBangpImg.setVisibility(View.GONE);
+//                mImageimg.setImageResource(R.mipmap.zuopin_ic_image_selected);
+//                mPhotoTxt.setVisibility(View.VISIBLE);
+//                break;
+//            case SHOW_TYPE_REPLY:
+//                mBangpImg.setVisibility(View.VISIBLE);
+//                mImageimg.setImageResource(R.mipmap.bangp_ic_image);
+//                mPhotoTxt.setVisibility(View.GONE);
+//                break;
+//            case SHOW_TYPE_ACTIVITY:
+//                mBangpImg.setVisibility(View.GONE);
+//                mImageimg.setImageResource(R.mipmap.zuopin_ic_image_selected);
+//                mPhotoTxt.setVisibility(View.GONE);
+//                break;
+//        }
     }
 
     private void initListener() {
@@ -164,8 +175,30 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
                 break;
             case AREA_SHOW:
                 mArea.setVisibility(View.VISIBLE);
+                UserPhotoRequest.Builder builder = new UserPhotoRequest.Builder()
+                        .setType(2).setPage(0)
+                        .setListener(refreshListener);
+
+                if (categoryid != -1) {
+                    builder.setChannelId(categoryid + "");
+                }
+                UserPhotoRequest request = builder.build();
+                RequestQueue requestQueue = PSGodRequestQueue.getInstance(mContext)
+                        .getRequestQueue();
+                requestQueue.add(request);
                 break;
         }
         return true;
     }
+
+    private Response.Listener<List<PhotoItem>> refreshListener = new Response.Listener<List<PhotoItem>>() {
+        @Override
+        public void onResponse(List<PhotoItem> items) {
+            mPhotoItems.clear();
+            mPhotoItems.addAll(items);
+            mAdapter.setAdapterType(MultiImageSelectRecyclerAdapter.TYPE_BANG);
+            mAdapter.setBangData(mPhotoItems);
+            mAdapter.notifyDataSetChanged();
+        }
+    };
 }

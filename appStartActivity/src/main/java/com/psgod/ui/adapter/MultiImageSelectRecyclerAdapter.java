@@ -23,8 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MultiImageSelectRecyclerAdapter extends RecyclerView.Adapter<MultiImageSelectRecyclerAdapter.ViewHolde> {
-    private final static String TAG = MultiImageSelectRecyclerAdapter.class
-            .getSimpleName();
 
     public static final int TYPE_IMAGE = 0;
     public static final int TYPE_BANG = 1;
@@ -35,12 +33,10 @@ public class MultiImageSelectRecyclerAdapter extends RecyclerView.Adapter<MultiI
     private List<PhotoItem> mPhotoItems = new ArrayList<PhotoItem>();
 
     private int checkedPhotoItem = 0;
-    private int mItemSize;
-    private int adapterType;
+    private int adapterType = 0;
 
-    public MultiImageSelectRecyclerAdapter(Context context, int adapterType) {
+    public MultiImageSelectRecyclerAdapter(Context context) {
         mContext = context;
-        this.adapterType = adapterType;
     }
 
     /**
@@ -103,6 +99,10 @@ public class MultiImageSelectRecyclerAdapter extends RecyclerView.Adapter<MultiI
 
     public void setBangData(List<PhotoItem> photoItems) {
         mPhotoItems = photoItems;
+    }
+
+    public void setAdapterType(int adapterType){
+        this.adapterType = adapterType;
     }
 
     @Override

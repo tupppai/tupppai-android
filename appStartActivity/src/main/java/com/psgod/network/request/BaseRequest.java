@@ -24,7 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public abstract class BaseRequest<T> extends Request<T> {
-	public static final String PSGOD_BASE_TEST_URL = "http://api.loiter.us/"; // 测试环境
+	public static final String PSGOD_BASE_TEST_URL = "http://api2.loiter.us/"; // 测试环境
 
 	public static final String PSGOD_BASE_RELEASE_URL = "http://api.qiupsdashen.com/"; // 正式环境
 

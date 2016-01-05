@@ -13,13 +13,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/dialog_image_select_input"
-        android:visibility="visible"
+        android:visibility="gone"
         >
         <android.support.v7.widget.RecyclerView
             android:id="@+id/dialog_image_select_imgarea"
             android:layout_width="match_parent"
             android:layout_height="202dp"
-            android:background="#000" />
+            android:background="#f2f2f2" />
 
         <ImageView
             android:id="@+id/dialog_image_select_img_thumb"
