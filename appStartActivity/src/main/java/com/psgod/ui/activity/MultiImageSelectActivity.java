@@ -13,7 +13,6 @@ import android.provider.MediaStore;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -30,7 +29,6 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.psgod.Constants;
 import com.psgod.R;
 import com.psgod.UploadCache;
 import com.psgod.eventbus.MyPageRefreshEvent;
@@ -40,7 +38,7 @@ import com.psgod.model.SelectFolder;
 import com.psgod.model.SelectImage;
 import com.psgod.ui.adapter.MultiImageSelectAdapter;
 import com.psgod.ui.adapter.SelectFolderAdapter;
-import com.psgod.ui.widget.ImageCategoryWindow;
+import com.psgod.ui.widget.ImageCategoryDialog;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -63,6 +61,7 @@ public class MultiImageSelectActivity extends PSGodBaseActivity {
     private static int MaxImageSelectCount = MaxImageOne;
     public static final String ACTIVITY_ID = "ActivityId";
     public static final String CHANNEL_ID = "channel_id";
+    public static final String SELECT_IMAGE = "select_image";
 
     public final static String TYPE_ASK_SELECT = "TypeAskSelect";
     public final static String TYPE_REPLY_SELECT = "TypeReplySelect";
@@ -117,6 +116,7 @@ public class MultiImageSelectActivity extends PSGodBaseActivity {
         }
     }
 
+    private List<String> selectImages;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -136,6 +136,11 @@ public class MultiImageSelectActivity extends PSGodBaseActivity {
         mActivityId = bundle.getString(ACTIVITY_ID);
         mChannelId = bundle.getString(CHANNEL_ID);
         isAsk = bundle.getBoolean("isAsk", false);
+        selectImages = bundle.getStringArrayList(SELECT_IMAGE);
+        if(selectImages == null){
+            selectImages = new ArrayList<>();
+        }
+
 
         if (IMAGE_SELECT_TYPE.equals(TYPE_ASK_SELECT)) {
             MaxImageSelectCount = MaxImageTwo;
@@ -164,6 +169,7 @@ public class MultiImageSelectActivity extends PSGodBaseActivity {
 
         mImageGridView = (GridView) findViewById(R.id.image_select_grid);
         mMultiImageAdapter = new MultiImageSelectAdapter(mContext);
+        mMultiImageAdapter.setDefaultSelected(selectImages);
         mImageGridView.setAdapter(mMultiImageAdapter);
 
         mParentView = findViewById(R.id.image_select_parent);
@@ -210,19 +216,19 @@ public class MultiImageSelectActivity extends PSGodBaseActivity {
         }
 
         Intent intent = getIntent();
-        if (intent.getStringExtra(ImageCategoryWindow.PATH) == null ||
-                intent.getStringExtra(ImageCategoryWindow.PATH).equals("")) {
+        if (intent.getStringExtra(ImageCategoryDialog.PATH) == null ||
+                intent.getStringExtra(ImageCategoryDialog.PATH).equals("")) {
             getSupportLoaderManager()
                     .restartLoader(LOADER_ALL, null,
                             mLoaderCallback);
             mSelectFolderText.setText("全部图片");
-        } else if (intent.getStringExtra(ImageCategoryWindow.PATH) != null) {
+        } else if (intent.getStringExtra(ImageCategoryDialog.PATH) != null) {
             Bundle args = new Bundle();
-            args.putString("path", intent.getStringExtra(ImageCategoryWindow.PATH));
+            args.putString("path", intent.getStringExtra(ImageCategoryDialog.PATH));
             getSupportLoaderManager()
                     .restartLoader(LOADER_CATEGORY, args,
                             mLoaderCallback);
-            mSelectFolderText.setText(intent.getStringExtra(ImageCategoryWindow.NAME));
+            mSelectFolderText.setText(intent.getStringExtra(ImageCategoryDialog.NAME));
         }
 
     }
@@ -556,8 +562,8 @@ public class MultiImageSelectActivity extends PSGodBaseActivity {
     @Override
     public void finish() {
         Intent intent = new Intent();
-        intent.putExtra(ImageCategoryWindow.RESULT,resultList);
-        setResult(ImageCategoryWindow.RESULT_CODE,intent);
+        intent.putExtra(ImageCategoryDialog.RESULT,resultList);
+        setResult(ImageCategoryDialog.RESULT_CODE,intent);
         super.finish();
     }
 

@@ -9,8 +9,10 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.psgod.Constants;
+import com.psgod.CustomToast;
 import com.psgod.PsGodImageLoader;
 import com.psgod.R;
 import com.psgod.model.PhotoItem;
@@ -26,6 +28,11 @@ public class MultiImageSelectRecyclerAdapter extends RecyclerView.Adapter<MultiI
 
     public static final int TYPE_IMAGE = 0;
     public static final int TYPE_BANG = 1;
+
+    public static final int TYPE_ASK = 0;
+    public static final int TYPE_REPLY = 1;
+
+    private int uploadType = TYPE_ASK;
 
     private Context mContext;
     private List<SelectImage> mImages = new ArrayList<SelectImage>();
@@ -48,9 +55,19 @@ public class MultiImageSelectRecyclerAdapter extends RecyclerView.Adapter<MultiI
         if (mSelectedImages.contains(image)) {
             mSelectedImages.remove(image);
         } else {
-            mSelectedImages.add(image);
+            if (mSelectedImages.size() >= 2 && uploadType == TYPE_ASK) {
+                CustomToast.show(mContext, "求P最多只能选择2张图片哦~", Toast.LENGTH_SHORT);
+            } else if (mSelectedImages.size() >= 1 && uploadType == TYPE_REPLY) {
+                CustomToast.show(mContext, "作品最多只能选择1张图片哦~", Toast.LENGTH_SHORT);
+            } else {
+                mSelectedImages.add(image);
+            }
         }
         notifyDataSetChanged();
+    }
+
+    public void setUploadType(int uploadType) {
+        this.uploadType = uploadType;
     }
 
     /**
@@ -58,16 +75,15 @@ public class MultiImageSelectRecyclerAdapter extends RecyclerView.Adapter<MultiI
      *
      * @param resultList
      */
-    public void setDefaultSelected(ArrayList<String> resultList) {
-        for (String path : resultList) {
-            SelectImage image = getImageByPath(path);
+    public void setDefaultSelected(List<SelectImage> resultList) {
+        mSelectedImages.clear();
+        for (SelectImage selectImage : resultList) {
+            SelectImage image = getImageByPath(selectImage.path);
             if (image != null) {
                 mSelectedImages.add(image);
             }
         }
-        if (mSelectedImages.size() > 0) {
-            notifyDataSetChanged();
-        }
+        notifyDataSetChanged();
     }
 
     public SelectImage getImageByPath(String path) {
@@ -87,22 +103,35 @@ public class MultiImageSelectRecyclerAdapter extends RecyclerView.Adapter<MultiI
      * @param images
      */
     public void setData(List<SelectImage> images) {
-        mSelectedImages.clear();
+//        mSelectedImages.clear();
+//
+//        if (images != null && images.size() > 0) {
+//            mImages = images;
+//        } else {
+//            mImages.clear();
+//        }
+//        notifyDataSetChanged();
+        this.mImages = images;
+    }
 
-        if (images != null && images.size() > 0) {
-            mImages = images;
-        } else {
-            mImages.clear();
-        }
-        notifyDataSetChanged();
+    public List<SelectImage> getSelectedImages() {
+        return mSelectedImages;
     }
 
     public void setBangData(List<PhotoItem> photoItems) {
         mPhotoItems = photoItems;
     }
 
-    public void setAdapterType(int adapterType){
+    public void setAdapterType(int adapterType) {
         this.adapterType = adapterType;
+    }
+
+    public int getCheckedPhotoItemNum() {
+        return checkedPhotoItem;
+    }
+
+    public PhotoItem getCheckedPhotoItem() {
+        return mPhotoItems.get(checkedPhotoItem);
     }
 
     @Override
@@ -128,7 +157,7 @@ public class MultiImageSelectRecyclerAdapter extends RecyclerView.Adapter<MultiI
                 } else {
                     holder.bangCheck.setImageResource(R.mipmap.zuopin_ic_sel_nor);
                 }
-                holder.itemView.setTag(R.id.tupppai_view_id,position);
+                holder.itemView.setTag(R.id.tupppai_view_id, position);
                 holder.itemView.setOnClickListener(bangClick);
             }
         } else {
@@ -140,13 +169,26 @@ public class MultiImageSelectRecyclerAdapter extends RecyclerView.Adapter<MultiI
         }
     }
 
+    private OnImageClickListener onImageClickListener;
+
+    public void setOnImageClickListener(OnImageClickListener onImageClickListener) {
+        this.onImageClickListener = onImageClickListener;
+    }
+
     private View.OnClickListener imageClick = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             Integer position = (Integer) view.getTag(R.id.tupppai_view_id);
             select(mImages.get(position));
+            if (onImageClickListener != null) {
+                onImageClickListener.onImageClick(view, mSelectedImages);
+            }
         }
     };
+
+    public interface OnImageClickListener {
+        void onImageClick(View view, List<SelectImage> selectImages);
+    }
 
     private View.OnClickListener bangClick = new View.OnClickListener() {
         @Override
@@ -209,13 +251,13 @@ public class MultiImageSelectRecyclerAdapter extends RecyclerView.Adapter<MultiI
             File imageFile = new File(data.path);
 //			Bitmap bitmap = BitmapFactory.decodeFile()
             // 显示图片
-            Picasso.with(mContext).load(imageFile)
-                    .placeholder(R.drawable.default_error)
-                            // .error(R.drawable.default_error)
-                    .centerCrop().into(imageImage);
-//                String uri = "file://" + imageFile.getPath();
-//                image.setScaleType(ImageView.ScaleType.CENTER_CROP);
-//                ImageLoader.getInstance().displayImage(uri, image, Constants.DISPLAY_IMAGE_OPTIONS_LOCAL);
+//            Picasso.with(mContext).load(imageFile)
+//                    .placeholder(R.drawable.default_error)
+//                            // .error(R.drawable.default_error)
+//                    .centerCrop().into(imageImage);
+            PsGodImageLoader.getInstance().
+                    displayImage(imageFile.getPath()
+                            , imageImage, Constants.DISPLAY_IMAGE_OPTIONS_LOCAL);
         }
     }
 

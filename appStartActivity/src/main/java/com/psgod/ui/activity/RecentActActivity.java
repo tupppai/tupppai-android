@@ -30,6 +30,7 @@ import com.psgod.network.request.ChannelRequest;
 import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.ui.adapter.RecentPageActAdapter;
 import com.psgod.ui.widget.FloatScrollHelper;
+import com.psgod.ui.widget.ImageCategoryDialog;
 import com.psgod.ui.widget.dialog.ImageSelectDialog;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
 
@@ -238,8 +239,9 @@ public class RecentActActivity extends PSGodBaseActivity {
 //
 //                    startActivity(intent);
 //                    new ImageSelectDialog(RecentActActivity.this,Long.parseLong(id)).show();
-                    new ImageSelectDialog(RecentActActivity.this,
-                            ImageSelectDialog.SHOW_TYPE_ACTIVITY).show();
+                    mImageSelectDialog = new ImageSelectDialog(RecentActActivity.this,
+                            ImageSelectDialog.SHOW_TYPE_ACTIVITY);
+                    mImageSelectDialog.show();
                 }
             }
         });
@@ -358,5 +360,6 @@ public class RecentActActivity extends PSGodBaseActivity {
             listListener.onRefresh(mListView);
         }
     }
+
 
 }

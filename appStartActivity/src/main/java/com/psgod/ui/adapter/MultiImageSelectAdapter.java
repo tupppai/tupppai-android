@@ -65,16 +65,15 @@ public class MultiImageSelectAdapter extends BaseAdapter {
      *
      * @param resultList
      */
-    public void setDefaultSelected(ArrayList<String> resultList) {
+    public void setDefaultSelected(List<String> resultList) {
+        mSelectedImages.clear();
         for (String path : resultList) {
             SelectImage image = getImageByPath(path);
             if (image != null) {
                 mSelectedImages.add(image);
             }
         }
-        if (mSelectedImages.size() > 0) {
-            notifyDataSetChanged();
-        }
+        notifyDataSetChanged();
     }
 
     public SelectImage getImageByPath(String path) {
@@ -224,10 +223,10 @@ public class MultiImageSelectAdapter extends BaseAdapter {
 //			Bitmap bitmap = BitmapFactory.decodeFile()
             if (mItemSize > 0) {
                 // 显示图片
-				Picasso.with(mContext).load(imageFile)
-						.placeholder(R.drawable.default_error)
-						// .error(R.drawable.default_error)
-						.resize(mItemSize, mItemSize).centerCrop().into(image);
+                Picasso.with(mContext).load(imageFile)
+                        .placeholder(R.drawable.default_error)
+                                // .error(R.drawable.default_error)
+                        .resize(mItemSize, mItemSize).centerCrop().into(image);
 //                String uri = "file://" + imageFile.getPath();
 //                image.setScaleType(ImageView.ScaleType.CENTER_CROP);
 //                ImageLoader.getInstance().displayImage(uri, image, Constants.DISPLAY_IMAGE_OPTIONS_LOCAL);

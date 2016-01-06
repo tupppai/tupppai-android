@@ -2,8 +2,14 @@ package com.psgod.ui.widget.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.database.Cursor;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.MediaStore;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -13,18 +19,24 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.PopupWindow;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.psgod.Constants;
+import com.psgod.PsGodImageLoader;
 import com.psgod.R;
+import com.psgod.Utils;
 import com.psgod.WeakReferenceHandler;
 import com.psgod.model.PhotoItem;
+import com.psgod.model.SelectImage;
 import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.network.request.UserPhotoRequest;
+import com.psgod.ui.activity.PSGodBaseActivity;
 import com.psgod.ui.adapter.MultiImageSelectRecyclerAdapter;
+import com.psgod.ui.widget.ImageCategoryDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +57,7 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
     private RelativeLayout mArea;
     private RelativeLayout mInputArea;
     private RecyclerView mImageArea;
+    private LinearLayout mPreviewArea;
     private TextView mAlbumTxt;
     private TextView mPhotoTxt;
     private TextView mNumTxt;
@@ -55,12 +68,15 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
     private TextView mUpTxt;
 
     private MultiImageSelectRecyclerAdapter mAdapter;
+    private List<SelectImage> selectResultImages = new ArrayList<SelectImage>();
+    private List<SelectImage> images = new ArrayList<SelectImage>();
 
     private WeakReferenceHandler mHandler = new WeakReferenceHandler(this);
     private ExecutorService fixedThreadPool = Executors.newFixedThreadPool(1);
 
     public static final int HIDE_INPUT = 1;
-    public static final int AREA_SHOW = 2;
+    public static final int AREA_SHOW_BANG = 2;
+    public static final int AREA_SHOW_IMG = 3;
 
     public static final int SHOW_TYPE_ASK = 0;
     public static final int SHOW_TYPE_REPLY = 1;
@@ -87,8 +103,24 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
         getWindow().setGravity(Gravity.BOTTOM);
         getWindow().setWindowAnimations(R.style.popwindow_anim_style);
         getWindow().setSoftInputMode(
-                WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+                WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN
+                        | WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         super.show();
+    }
+
+    //设置头部默认选择图片,用于相册选择图片后的回调
+    public void setselectResultImages(List<String> selectResultImages) {
+        if (this.selectResultImages.size() > 0) {
+            this.selectResultImages.clear();
+        }
+        for (String s : selectResultImages) {
+            SelectImage selectImage = new SelectImage(s, "", 0);
+            this.selectResultImages.add(selectImage);
+        }
+        images.addAll(0, this.selectResultImages);
+        showPreview();
+        mAdapter.setDefaultSelected(this.selectResultImages);
+        mAdapter.notifyDataSetChanged();
     }
 
     private void initView() {
@@ -99,6 +131,7 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
         mArea = (RelativeLayout) mView.findViewById(R.id.dialog_image_select_area);
         mInputArea = (RelativeLayout) mView.findViewById(R.id.dialog_image_select_input);
         mImageArea = (RecyclerView) mView.findViewById(R.id.dialog_image_select_imgarea);
+        mPreviewArea = (LinearLayout) mView.findViewById(R.id.dialog_image_select_previewarea);
         mAlbumTxt = (TextView) mView.findViewById(R.id.dialog_image_select_album_txt);
         mPhotoTxt = (TextView) mView.findViewById(R.id.dialog_image_select_photo_txt);
         mNumTxt = (TextView) mView.findViewById(R.id.dialog_image_select_num_txt);
@@ -108,28 +141,105 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
         mEdit = (EditText) mView.findViewById(R.id.widge_image_select_edit);
         mUpTxt = (TextView) mView.findViewById(R.id.widge_image_select_up);
 
-        mImageArea.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
+        mNumTxt.setText(String.valueOf(selectResultImages.size()));
+        mImageArea.setLayoutManager(new LinearLayoutManager(mContext,
+                LinearLayoutManager.HORIZONTAL, false));
         mAdapter = new MultiImageSelectRecyclerAdapter(mContext);
+        mAdapter.setData(images);
+        mAdapter.setBangData(mPhotoItems);
         mImageArea.setAdapter(mAdapter);
 
-//        switch (showType){
-//            case SHOW_TYPE_ASK:
-//                mBangpImg.setVisibility(View.GONE);
-//                mImageimg.setImageResource(R.mipmap.zuopin_ic_image_selected);
-//                mPhotoTxt.setVisibility(View.VISIBLE);
-//                break;
-//            case SHOW_TYPE_REPLY:
-//                mBangpImg.setVisibility(View.VISIBLE);
-//                mImageimg.setImageResource(R.mipmap.bangp_ic_image);
-//                mPhotoTxt.setVisibility(View.GONE);
-//                break;
-//            case SHOW_TYPE_ACTIVITY:
-//                mBangpImg.setVisibility(View.GONE);
-//                mImageimg.setImageResource(R.mipmap.zuopin_ic_image_selected);
-//                mPhotoTxt.setVisibility(View.GONE);
-//                break;
-//        }
+        switch (showType) {
+            case SHOW_TYPE_ASK:
+                mBangpImg.setVisibility(View.GONE);
+                mImageimg.setImageResource(R.mipmap.zuopin_ic_image_selected);
+                mPhotoTxt.setVisibility(View.VISIBLE);
+                mAdapter.setUploadType(MultiImageSelectRecyclerAdapter.TYPE_ASK);
+                break;
+            case SHOW_TYPE_REPLY:
+                mBangpImg.setVisibility(View.VISIBLE);
+                mImageimg.setImageResource(R.mipmap.bangp_ic_image);
+                mPhotoTxt.setVisibility(View.GONE);
+                mAdapter.setUploadType(MultiImageSelectRecyclerAdapter.TYPE_REPLY);
+                break;
+            case SHOW_TYPE_ACTIVITY:
+                mBangpImg.setVisibility(View.GONE);
+                mImageimg.setImageResource(R.mipmap.zuopin_ic_image_selected);
+                mPhotoTxt.setVisibility(View.GONE);
+                mAdapter.setUploadType(MultiImageSelectRecyclerAdapter.TYPE_REPLY);
+                break;
+        }
     }
+
+    //显示预览
+    private void showPreview() {
+        if (mPreviewArea.getVisibility() != View.VISIBLE) {
+            mPreviewArea.setVisibility(View.VISIBLE);
+        }
+        mPreviewArea.removeAllViews();
+        if (selectResultImages.size() == 0) {
+            mPreviewArea.setVisibility(View.INVISIBLE);
+        } else {
+            for (SelectImage image : selectResultImages) {
+                ImageView view = new ImageView(mContext);
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.
+                        LayoutParams(Utils.dpToPx(mContext, 25), Utils.dpToPx(mContext, 25));
+                view.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                layoutParams.setMargins(Utils.dpToPx(mContext, 6), 0, 0, 0);
+                view.setLayoutParams(layoutParams);
+                PsGodImageLoader.getInstance().
+                        displayImage(image.path, view, Constants.DISPLAY_IMAGE_OPTIONS_LOCAL);
+                view.setTag(image);
+                view.setOnClickListener(previewClick);
+                mPreviewArea.addView(view);
+            }
+        }
+    }
+
+    private View.OnClickListener previewClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            SelectImage image = (SelectImage) view.getTag();
+            int length = images.size();
+            for (int i = 0; i < length; i++) {
+                if (images.get(i).path.equals(image.path)) {
+                    mImageArea.getLayoutManager().scrollToPosition(i);
+                    imageImageClick.onClick(view);
+                    return;
+                }
+            }
+        }
+    };
+
+    private boolean isInitImages = false;
+
+    View.OnClickListener imageImageClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            if (!isInitImages) {
+                ((PSGodBaseActivity) mContext).
+                        getSupportLoaderManager().initLoader(0, null, mLoaderCallback);
+                isInitImages = true;
+            }
+            mNumTxt.setText(String.valueOf(selectResultImages.size()));
+            mAdapter.setDefaultSelected(selectResultImages);
+            mAdapter.setAdapterType(MultiImageSelectRecyclerAdapter.TYPE_IMAGE);
+            mAdapter.notifyDataSetChanged();
+            hideInputPanel();
+            fixedThreadPool.execute(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(150);
+                        Message msg = mHandler.obtainMessage(AREA_SHOW_IMG);
+                        mHandler.sendMessage(msg);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
+    };
 
     private void initListener() {
         mEdit.setOnClickListener(new View.OnClickListener() {
@@ -142,19 +252,49 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
         mBangpImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mAdapter.setAdapterType(MultiImageSelectRecyclerAdapter.TYPE_BANG);
+                mAdapter.notifyDataSetChanged();
                 hideInputPanel();
                 fixedThreadPool.execute(new Runnable() {
                     @Override
                     public void run() {
                         try {
                             Thread.sleep(150);
-                            Message msg = mHandler.obtainMessage(AREA_SHOW);
+                            Message msg = mHandler.obtainMessage(AREA_SHOW_BANG);
                             mHandler.sendMessage(msg);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
                     }
                 });
+            }
+        });
+
+        mImageimg.setOnClickListener(imageImageClick);
+
+        mAlbumTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new ImageCategoryDialog(mContext).
+                        show(selectResultImages);
+            }
+        });
+
+        mAdapter.setOnImageClickListener(new MultiImageSelectRecyclerAdapter.
+                OnImageClickListener() {
+            @Override
+            public void onImageClick(View view, List<SelectImage> selectImages) {
+                mNumTxt.setText(String.valueOf(selectImages.size()));
+            }
+        });
+
+        mSureTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //点击确定时，才填充选择list
+                selectResultImages.clear();
+                selectResultImages.addAll(mAdapter.getSelectedImages());
+                showPreview();
             }
         });
     }
@@ -173,12 +313,16 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
             case HIDE_INPUT:
                 hideInputPanel();
                 break;
-            case AREA_SHOW:
+            //显示帮p列表
+            case AREA_SHOW_BANG:
                 mArea.setVisibility(View.VISIBLE);
                 UserPhotoRequest.Builder builder = new UserPhotoRequest.Builder()
                         .setType(2).setPage(0)
                         .setListener(refreshListener);
-
+                mNumTxt.setVisibility(View.INVISIBLE);
+                mPhotoTxt.setVisibility(View.INVISIBLE);
+                mAlbumTxt.setVisibility(View.INVISIBLE);
+                mSureTxt.setVisibility(View.GONE);
                 if (categoryid != -1) {
                     builder.setChannelId(categoryid + "");
                 }
@@ -186,6 +330,17 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
                 RequestQueue requestQueue = PSGodRequestQueue.getInstance(mContext)
                         .getRequestQueue();
                 requestQueue.add(request);
+                break;
+            //显示图片列表
+            case AREA_SHOW_IMG:
+                mArea.setVisibility(View.VISIBLE);
+                mNumTxt.setVisibility(View.VISIBLE);
+                mAlbumTxt.setVisibility(View.VISIBLE);
+                mPhotoTxt.setVisibility(View.VISIBLE);
+                mSureTxt.setText("确定");
+                if (showType == SHOW_TYPE_ACTIVITY) {
+                    mPhotoTxt.setVisibility(View.INVISIBLE);
+                }
                 break;
         }
         return true;
@@ -196,9 +351,54 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
         public void onResponse(List<PhotoItem> items) {
             mPhotoItems.clear();
             mPhotoItems.addAll(items);
-            mAdapter.setAdapterType(MultiImageSelectRecyclerAdapter.TYPE_BANG);
-            mAdapter.setBangData(mPhotoItems);
             mAdapter.notifyDataSetChanged();
         }
     };
+
+    private LoaderManager.LoaderCallbacks<Cursor> mLoaderCallback = new LoaderManager.LoaderCallbacks<Cursor>() {
+
+        private final String[] IMAGE_PROJECTION = {
+                MediaStore.Images.Media.DATA,
+                MediaStore.Images.Media.DISPLAY_NAME,
+                MediaStore.Images.Media.DATE_ADDED, MediaStore.Images.Media._ID};
+
+        @Override
+        public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+            CursorLoader cursorLoader = new CursorLoader(mContext,
+                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                    IMAGE_PROJECTION, null, null, IMAGE_PROJECTION[2]
+                    + " DESC");
+            return cursorLoader;
+        }
+
+        @Override
+        public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+            if (data != null) {
+                int count = data.getCount();
+                if (count > 0) {
+                    data.moveToFirst();
+                    images.clear();
+                    do {
+                        String path = data.getString(data
+                                .getColumnIndexOrThrow(IMAGE_PROJECTION[0]));
+                        String name = data.getString(data
+                                .getColumnIndexOrThrow(IMAGE_PROJECTION[1]));
+                        long dateTime = data.getLong(data
+                                .getColumnIndexOrThrow(IMAGE_PROJECTION[2]));
+                        SelectImage image = new SelectImage(path, name,
+                                dateTime);
+                        images.add(image);
+                    } while (data.moveToNext());
+                    mAdapter.notifyDataSetChanged();
+                }
+            }
+        }
+
+        @Override
+        public void onLoaderReset(Loader<Cursor> loader) {
+
+        }
+    };
+
+
 }

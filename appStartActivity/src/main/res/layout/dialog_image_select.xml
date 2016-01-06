@@ -4,9 +4,32 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
+    <LinearLayout
+        android:id="@+id/dialog_image_select_previewarea"
+        android:layout_width="match_parent"
+        android:background="#f2f2f2"
+        android:visibility="invisible"
+        android:orientation="horizontal"
+        android:paddingLeft="3dp"
+        android:paddingTop="6dp"
+        android:paddingBottom="7dp"
+        android:layout_height="38dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#aaaaaa"
+        android:layout_below="@+id/dialog_image_select_previewarea"
+        />
+
     <include
         android:id="@+id/dialog_image_select_input"
-        layout="@layout/widge_image_select_relativelayout" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0.5dp"
+        android:layout_below="@+id/dialog_image_select_previewarea"
+        layout="@layout/widge_image_select_relativelayout"
+         />
 
     <RelativeLayout
         android:id="@+id/dialog_image_select_area"
@@ -79,7 +102,7 @@
                 android:layout_width="wrap_content"
                 android:layout_centerVertical="true"
                 android:textSize="14dp"
-                android:text="确定"
+                android:text="已选"
                 android:padding="5dp"
                 android:gravity="center"
                 android:layout_marginRight="8dp"
