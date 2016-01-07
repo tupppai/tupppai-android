@@ -110,6 +110,10 @@ public class PsGodImageLoader {
         imgLoader.displayImage(getRuleImageUrl(url, options), imageArea.getImage(), options, listener, progressListener);
     }
 
+    public void displayLocaleImage() {
+//        imgLoader.
+    }
+
 
     public Bitmap loadImageSync(String url) {
         return imgLoader.loadImageSync(url);
@@ -121,7 +125,7 @@ public class PsGodImageLoader {
 
     public String getRuleImageUrl(String originImageUrl, DisplayImageOptions options) {
         String ruleImageUrl;
-        if(originImageUrl != null && !originImageUrl.equals("")) {
+        if (originImageUrl != null && !originImageUrl.equals("")) {
             String[] thumbs = originImageUrl.split("\\?");
             if (options.equals(Constants.DISPLAY_IMAGE_OPTIONS)) {
                 ruleImageUrl = String.format("%s?imageView2/0/w/%s", thumbs[0],
@@ -135,16 +139,18 @@ public class PsGodImageLoader {
             } else if (options.equals(Constants.DISPLAY_IMAGE_OPTIONS_SMALL_SMALL)) {
                 ruleImageUrl = String.format("%s?imageView2/0/w/%s", thumbs[0],
                         String.valueOf((int) (300 * Utils.getWidthScale(context))));
+            } else if (options.equals(Constants.DISPLAY_IMAGE_OPTIONS_LOCAL)) {
+                ruleImageUrl = "file://" + originImageUrl;
             } else {
                 ruleImageUrl = originImageUrl;
             }
-        }else{
+        } else {
             ruleImageUrl = originImageUrl;
         }
         return ruleImageUrl;
     }
 
-    public interface ImageArea{
+    public interface ImageArea {
         ImageView getImage();
     }
 

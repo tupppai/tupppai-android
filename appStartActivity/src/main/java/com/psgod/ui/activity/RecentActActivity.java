@@ -3,19 +3,14 @@ package com.psgod.ui.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -27,17 +22,16 @@ import com.psgod.LoadUtils;
 import com.psgod.R;
 import com.psgod.Utils;
 import com.psgod.eventbus.RefreshEvent;
-import com.psgod.model.Activities;
 import com.psgod.model.ActivitiesAct;
 import com.psgod.model.Channel;
 import com.psgod.model.PhotoItem;
 import com.psgod.network.request.ActivitiesActRequest;
 import com.psgod.network.request.ChannelRequest;
 import com.psgod.network.request.PSGodRequestQueue;
-import com.psgod.network.request.PhotoActRequest;
 import com.psgod.ui.adapter.RecentPageActAdapter;
 import com.psgod.ui.widget.FloatScrollHelper;
-import com.psgod.ui.widget.ImageCategoryWindow;
+import com.psgod.ui.widget.ImageCategoryDialog;
+import com.psgod.ui.widget.dialog.ImageSelectDialog;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
 
 import java.util.ArrayList;
@@ -234,18 +228,20 @@ public class RecentActActivity extends PSGodBaseActivity {
             public void onClick(View view) {
                 if (mAct != null) {
 //                    loadUtils.upLoad(mActs.get(0).getType(), Long.parseLong(mActs.get(0).getAsk_id()));
-                    Intent intent = new Intent(RecentActActivity.this, MultiImageSelectActivity.class);
-                    intent.putExtra("AskId", Long.parseLong(mAct.getAsk_id()));
-                    intent.putExtra("ActivityId", mAct.getId());
-                    intent.putExtra("SelectType", "TypeReplySelect");
-                    new LoadUtils(RecentActActivity.this).isSimple(true).
-                            setCategory_id(Long.parseLong(mAct.getId())).upLoad(1,
-                            Long.parseLong(mAct.getAsk_id().equals("") ? "0" : mAct.getAsk_id()));
-
-                    startActivity(intent);
-//                    ImageCategoryWindow imageCategoryWindow = new ImageCategoryWindow(RecentActActivity.this,
-//                            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-//                    imageCategoryWindow.showAtLocation(mParent, Gravity.BOTTOM,0,0);
+//                    Intent intent = new Intent(RecentActActivity.this, MultiImageSelectActivity.class);
+//                    intent.putExtra("AskId", Long.parseLong(mAct.getAsk_id() == null ?
+//                            "0" : mAct.getAsk_id().equals("") ? "0" : mAct.getAsk_id()));
+//                    intent.putExtra("ActivityId", mAct.getId());
+//                    intent.putExtra("SelectType", "TypeReplySelect");
+//                    new LoadUtils(RecentActActivity.this).isSimple(true).
+//                            setCategory_id(Long.parseLong(mAct.getId())).upLoad(1,
+//                            Long.parseLong(mAct.getAsk_id().equals("") ? "0" : mAct.getAsk_id()));
+//
+//                    startActivity(intent);
+//                    new ImageSelectDialog(RecentActActivity.this,Long.parseLong(id)).show();
+                    mImageSelectDialog = new ImageSelectDialog(RecentActActivity.this,
+                            ImageSelectDialog.SHOW_TYPE_ACTIVITY);
+                    mImageSelectDialog.show();
                 }
             }
         });
@@ -364,5 +360,6 @@ public class RecentActActivity extends PSGodBaseActivity {
             listListener.onRefresh(mListView);
         }
     }
+
 
 }

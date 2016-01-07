@@ -1,5 +1,6 @@
 package com.psgod.ui.widget;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -11,8 +12,10 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
@@ -31,9 +34,8 @@ import java.util.List;
 /**
  * Created by Administrator on 2015/12/29 0029.
  */
-public class ImageCategoryWindow {
+public class ImageCategoryDialog extends Dialog {
 
-    private PopupWindow mPopupWindow;
     private ListView mList;
     private SelectFolderAdapter mFolderAdapter;
     private Context mContext;
@@ -43,69 +45,15 @@ public class ImageCategoryWindow {
     public static final int RESULT_CODE = 5049;
     public static final String RESULT = "select_image_result";
 
-    private ImageCategoryWindow() {
-
-    }
-
-    public ImageCategoryWindow(Context context, int width, int height, boolean focusable) {
-        super();
-        View view = LayoutInflater.from(context).
-                inflate(R.layout.popupwindow_select_image_folder, null);
+    public ImageCategoryDialog(Context context) {
+        super(context, R.style.ImageSelectDialog);
         mContext = context;
-        initDefaultView(view);
-        mPopupWindow = new PopupWindow(view, width, height, focusable);
-        initCommon();
-        ((PSGodBaseActivity) mContext).getSupportLoaderManager().initLoader(0, null, mLoaderCallback);
     }
 
-    private void initCommon() {
-        mPopupWindow.setOutsideTouchable(true);
-        mPopupWindow.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#00000000")));
-    }
-
-    public ImageCategoryWindow(View view, int width, int height, boolean focusable) {
-        super();
-        mPopupWindow = new PopupWindow(view, width, height, focusable);
-        initCommon();
-    }
-
-    public void showAtLocation(View parent, int gravity, int x, int y) {
-        if (mPopupWindow != null) {
-            mPopupWindow.showAtLocation(parent, gravity, x, y);
-        }
-    }
-
-    public void showAsDropDown(View anchor) {
-        if (mPopupWindow != null) {
-            mPopupWindow.showAsDropDown(anchor);
-        }
-    }
-
-    public void showAsDropDown(View anchor, int xoff, int yoff) {
-        if (mPopupWindow != null) {
-            mPopupWindow.showAsDropDown(anchor, xoff, yoff);
-        }
-    }
-
-    public void showAsDropDown(View anchor, int xoff, int yoff, int gravity) {
-        if (mPopupWindow != null) {
-            mPopupWindow.showAsDropDown(anchor, xoff, yoff, gravity);
-        }
-    }
-
-    public PopupWindow getmPopupWindow() {
-        return mPopupWindow;
-    }
-
-    public boolean isShow(){
-        return mPopupWindow.isShowing();
-    }
-
-    public void dismiss(){
-        mPopupWindow.dismiss();
-    }
-
-    private void initDefaultView(View view) {
+    private void initView() {
+        View view = LayoutInflater.from(mContext).
+                inflate(R.layout.popupwindow_select_image_folder, null);
+        setContentView(view);
         mList = (ListView) view.findViewById(R.id.image_folder_list);
         mFolderAdapter = new SelectFolderAdapter(mContext);
         mFolderAdapter.setSelectIndex(-1);
@@ -122,9 +70,18 @@ public class ImageCategoryWindow {
                     intent.putExtra(PATH, folder.path);
                     intent.putExtra(NAME, folder.name);
                 }
-                ((PSGodBaseActivity)mContext).startActivityForResult(intent, RESULT_CODE);
+                ArrayList<String> selectStrs = new ArrayList<String>();
+                if (selectImages != null) {
+                    for (SelectImage selectImage : selectImages) {
+                        selectStrs.add(selectImage.path);
+                    }
+                    intent.putStringArrayListExtra(MultiImageSelectActivity.SELECT_IMAGE, selectStrs);
+                }
+                ((PSGodBaseActivity) mContext).startActivityForResult(intent, RESULT_CODE);
+                dismiss();
             }
         });
+        ((PSGodBaseActivity) mContext).getSupportLoaderManager().initLoader(0, null, mLoaderCallback);
     }
 
     private LoaderManager.LoaderCallbacks<Cursor> mLoaderCallback = new LoaderManager.LoaderCallbacks<Cursor>() {
@@ -199,4 +156,30 @@ public class ImageCategoryWindow {
 
         }
     };
+
+    @Override
+    public void show() {
+        initView();
+        getWindow().getAttributes().width = -1;
+        getWindow().getAttributes().height = -1;
+        getWindow().setGravity(Gravity.BOTTOM);
+        getWindow().setWindowAnimations(R.style.popwindow_anim_style);
+        getWindow().setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        super.show();
+    }
+
+    List<SelectImage> selectImages;
+
+    public void show(List<SelectImage> selectImages) {
+        initView();
+        this.selectImages = selectImages;
+        getWindow().getAttributes().width = -1;
+        getWindow().getAttributes().height = -1;
+        getWindow().setGravity(Gravity.BOTTOM);
+        getWindow().setWindowAnimations(R.style.popwindow_anim_style);
+        getWindow().setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        super.show();
+    }
 }

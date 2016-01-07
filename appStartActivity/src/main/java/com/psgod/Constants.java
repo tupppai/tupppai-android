@@ -79,6 +79,16 @@ public class Constants {
 			.considerExifParams(true).displayer(new FadeInBitmapDisplayer(100))
 			.displayer(new SimpleBitmapDisplayer()).build();
 
+	// UIL 图片加载默认配置
+	public static final DisplayImageOptions DISPLAY_IMAGE_OPTIONS_LOCAL = new DisplayImageOptions.Builder()
+			.showImageForEmptyUri(R.drawable.ic_lietu)
+			.showImageOnFail(R.drawable.ic_lietu)
+			.showImageOnLoading(R.drawable.ic_zhanwei).cacheInMemory(true)
+			.bitmapConfig(Config.RGB_565)
+			.imageScaleType(ImageScaleType.IN_SAMPLE_POWER_OF_2)
+			.considerExifParams(true).displayer(new FadeInBitmapDisplayer(100))
+			.displayer(new SimpleBitmapDisplayer()).build();
+
 	// UIL 图片加载默认配置 （小）
 	public static final DisplayImageOptions DISPLAY_IMAGE_OPTIONS_SMALL = new DisplayImageOptions.Builder()
 			.showImageForEmptyUri(R.drawable.ic_zhanwei_small)

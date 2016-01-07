@@ -11,7 +11,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.FragmentActivity;
 import android.view.Gravity;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -26,11 +25,12 @@ import com.psgod.PSGodToast;
 import com.psgod.R;
 import com.psgod.Utils;
 import com.psgod.WeakReferenceHandler;
-import com.psgod.model.SelectImage;
 import com.psgod.network.NetworkUtil;
-import com.psgod.ui.widget.ImageCategoryWindow;
+import com.psgod.ui.widget.ImageCategoryDialog;
+import com.psgod.ui.widget.dialog.ImageSelectDialog;
 import com.umeng.analytics.MobclickAgent;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -51,8 +51,9 @@ public abstract class PSGodBaseActivity extends FragmentActivity implements
     protected TextView mToastView;
     protected boolean mIsShowingToast = false;
     protected PSGodToast mCurrentToast;
+    protected ImageSelectDialog mImageSelectDialog;
 
-    protected List<String> selectResultImages;
+    protected List<String> selectResultImages = new ArrayList<String>();
 
     protected WeakReferenceHandler mBaseHandler = new WeakReferenceHandler(this);
 
@@ -309,11 +310,20 @@ public abstract class PSGodBaseActivity extends FragmentActivity implements
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case ImageCategoryWindow.RESULT_CODE:
-                selectResultImages.addAll(data.getStringArrayListExtra(ImageCategoryWindow.RESULT));
+        switch (resultCode) {
+            case ImageCategoryDialog.RESULT_CODE:
+                if(data != null) {
+                    List<String> imageCategoryStrs = data.
+                            getStringArrayListExtra(ImageCategoryDialog.RESULT);
+                    if (imageCategoryStrs != null && imageCategoryStrs.size() > 0) {
+                        selectResultImages.addAll(imageCategoryStrs);
+                    }
+                }
+                if(mImageSelectDialog != null){
+                    mImageSelectDialog.setselectResultImages(selectResultImages);
+                }
                 break;
         }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }
