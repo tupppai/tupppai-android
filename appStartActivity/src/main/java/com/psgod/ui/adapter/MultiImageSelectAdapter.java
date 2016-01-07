@@ -68,10 +68,10 @@ public class MultiImageSelectAdapter extends BaseAdapter {
     public void setDefaultSelected(List<String> resultList) {
         mSelectedImages.clear();
         for (String path : resultList) {
-            SelectImage image = getImageByPath(path);
-            if (image != null) {
-                mSelectedImages.add(image);
-            }
+            SelectImage image = new SelectImage(path, "", 0);
+//            if (image != null) {
+            mSelectedImages.add(image);
+//            }
         }
         notifyDataSetChanged();
     }

@@ -29,6 +29,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.psgod.Constants;
 import com.psgod.R;
 import com.psgod.UploadCache;
 import com.psgod.eventbus.MyPageRefreshEvent;
@@ -62,6 +63,7 @@ public class MultiImageSelectActivity extends PSGodBaseActivity {
     public static final String ACTIVITY_ID = "ActivityId";
     public static final String CHANNEL_ID = "channel_id";
     public static final String SELECT_IMAGE = "select_image";
+    public static final String SELECT_TYPE = "SelectType";
 
     public final static String TYPE_ASK_SELECT = "TypeAskSelect";
     public final static String TYPE_REPLY_SELECT = "TypeReplySelect";
@@ -81,13 +83,14 @@ public class MultiImageSelectActivity extends PSGodBaseActivity {
     private ImageButton mBackBtn;
     private GridView mImageGridView;
     private MultiImageSelectAdapter mMultiImageAdapter;
-    private List<SelectImage> images;
+    private List<SelectImage> images = new ArrayList<SelectImage>();
 
     private Long mAskId = 0l;
     private String mActivityId;
     private String mChannelId;
     private boolean isAsk;
     private File mTmpFile;
+    private String jumpPath;
 
     private View mFolderPopView;
     private PopupWindow mFolderPopupWindow;
@@ -116,7 +119,6 @@ public class MultiImageSelectActivity extends PSGodBaseActivity {
         }
     }
 
-    private List<String> selectImages;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -130,18 +132,17 @@ public class MultiImageSelectActivity extends PSGodBaseActivity {
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        IMAGE_SELECT_TYPE = bundle.getString("SelectType", "");
+        IMAGE_SELECT_TYPE = bundle.getString(SELECT_TYPE, "");
 
         mAskId = bundle.getLong("AskId", 0l);
         mActivityId = bundle.getString(ACTIVITY_ID);
         mChannelId = bundle.getString(CHANNEL_ID);
         isAsk = bundle.getBoolean("isAsk", false);
-        selectImages = bundle.getStringArrayList(SELECT_IMAGE);
-        if(selectImages == null){
+        List<String> selectImages = bundle.getStringArrayList(SELECT_IMAGE);
+        if (selectImages == null) {
             selectImages = new ArrayList<>();
         }
-
-
+        resultList.addAll(selectImages);
         if (IMAGE_SELECT_TYPE.equals(TYPE_ASK_SELECT)) {
             MaxImageSelectCount = MaxImageTwo;
         } else {
@@ -169,7 +170,7 @@ public class MultiImageSelectActivity extends PSGodBaseActivity {
 
         mImageGridView = (GridView) findViewById(R.id.image_select_grid);
         mMultiImageAdapter = new MultiImageSelectAdapter(mContext);
-        mMultiImageAdapter.setDefaultSelected(selectImages);
+
         mImageGridView.setAdapter(mMultiImageAdapter);
 
         mParentView = findViewById(R.id.image_select_parent);
@@ -216,20 +217,25 @@ public class MultiImageSelectActivity extends PSGodBaseActivity {
         }
 
         Intent intent = getIntent();
-        if (intent.getStringExtra(ImageCategoryDialog.PATH) == null ||
-                intent.getStringExtra(ImageCategoryDialog.PATH).equals("")) {
+        jumpPath = intent.getStringExtra(ImageCategoryDialog.PATH);
+        if (jumpPath == null ||
+                jumpPath.equals("")) {
             getSupportLoaderManager()
                     .restartLoader(LOADER_ALL, null,
                             mLoaderCallback);
             mSelectFolderText.setText("全部图片");
-        } else if (intent.getStringExtra(ImageCategoryDialog.PATH) != null) {
+        } else if (jumpPath != null) {
             Bundle args = new Bundle();
-            args.putString("path", intent.getStringExtra(ImageCategoryDialog.PATH));
+            args.putString("path", jumpPath);
             getSupportLoaderManager()
                     .restartLoader(LOADER_CATEGORY, args,
                             mLoaderCallback);
             mSelectFolderText.setText(intent.getStringExtra(ImageCategoryDialog.NAME));
         }
+
+//        getSupportLoaderManager()
+//                .restartLoader(0, null,
+//                        mFolderCallback);
 
     }
 
@@ -347,8 +353,8 @@ public class MultiImageSelectActivity extends PSGodBaseActivity {
         mImageListView = (ListView) mFolderPopView.findViewById(R.id.image_folder_list);
         mFolderPopupWindow = new PopupWindow(mFolderPopView, ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT, true);
-//		mFolderPopupWindow.setWidth(Constants.WIDTH_OF_SCREEN);
-//		mFolderPopupWindow.setHeight(Constants.HEIGHT_OF_SCREEN*3/5);
+        mFolderPopupWindow.setWidth(Constants.WIDTH_OF_SCREEN);
+        mFolderPopupWindow.setHeight(Constants.HEIGHT_OF_SCREEN * 3 / 5);
         mFolderPopupWindow.setOutsideTouchable(true);
 
         mImageListView.setAdapter(mFolderAdapter);
@@ -413,6 +419,7 @@ public class MultiImageSelectActivity extends PSGodBaseActivity {
                 resultList.add(mTmpFile.getAbsolutePath());
                 // 调用相机拍照后，再次扫描手机内的图片
                 getSupportLoaderManager().initLoader(0, null, mLoaderCallback);
+//                getSupportLoaderManager().initLoader(0, null, mFolderCallback);
                 mSelectCountText.setText(Integer.toString(resultList.size()));
 
                 Intent intent = new Intent(MultiImageSelectActivity.this,
@@ -472,6 +479,8 @@ public class MultiImageSelectActivity extends PSGodBaseActivity {
         }
     }
 
+    private String folderName;
+
     private LoaderManager.LoaderCallbacks<Cursor> mLoaderCallback = new LoaderManager.LoaderCallbacks<Cursor>() {
 
         private final String[] IMAGE_PROJECTION = {
@@ -488,6 +497,7 @@ public class MultiImageSelectActivity extends PSGodBaseActivity {
                         + " DESC");
                 return cursorLoader;
             } else if (id == LOADER_CATEGORY) {
+                folderName = args.getString("path");
                 CursorLoader cursorLoader = new CursorLoader(MultiImageSelectActivity.this,
                         MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                         IMAGE_PROJECTION, IMAGE_PROJECTION[0] + " like '%"
@@ -502,7 +512,89 @@ public class MultiImageSelectActivity extends PSGodBaseActivity {
         @Override
         public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
             if (data != null) {
-                images = new ArrayList<SelectImage>();
+                if (images != null && images.size() > 0) {
+                    images.clear();
+                }
+                int resultLength = resultList.size();
+                for(int i = 0 ; i <resultLength; i++ ){
+//                    images.add();
+                }
+                int count = data.getCount();
+                if (count > 0) {
+                    data.moveToFirst();
+
+                    do {
+                        String path = data.getString(data
+                                .getColumnIndexOrThrow(IMAGE_PROJECTION[0]));
+                        String name = data.getString(data
+                                .getColumnIndexOrThrow(IMAGE_PROJECTION[1]));
+                        long dateTime = data.getLong(data
+                                .getColumnIndexOrThrow(IMAGE_PROJECTION[2]));
+                        SelectImage image = new SelectImage(path, name,
+                                dateTime);
+                        images.add(image);
+
+//                        if (!hasFolderGened) {
+//                            // 获取文件夹名称
+//                            File imageFile = new File(path);
+//                            File folderFile = imageFile.getParentFile();
+//                            SelectFolder folder = new SelectFolder();
+//                            folder.name = folderFile.getName();
+//                            folder.path = folderFile.getAbsolutePath();
+//                            folder.cover = image;
+//                            if (!mResultFolder.contains(folder)) {
+//                                List<SelectImage> imageList = new ArrayList<SelectImage>();
+//                                imageList.add(image);
+//                                folder.images = imageList;
+//                                mResultFolder.add(folder);
+//                            } else {
+//                                // 更新
+//                                SelectFolder f = mResultFolder.get(mResultFolder
+//                                        .indexOf(folder));
+//                                f.images.add(image);
+//                            }
+//                        }
+
+                    } while (data.moveToNext());
+
+                    mMultiImageAdapter.setData(images);
+                    // 设定默认选择
+                    if (resultList != null && resultList.size() > 0) {
+                        mMultiImageAdapter.setDefaultSelected(resultList);
+                    }
+
+                    if (!hasFolderGened) {
+                        getSupportLoaderManager().initLoader(0, null, mFolderCallback);
+                    }
+                }
+            }
+        }
+
+        @Override
+        public void onLoaderReset(Loader<Cursor> loader) {
+
+        }
+    };
+
+    private LoaderManager.LoaderCallbacks<Cursor> mFolderCallback = new LoaderManager.LoaderCallbacks<Cursor>() {
+
+        private final String[] IMAGE_PROJECTION = {
+                MediaStore.Images.Media.DATA,
+                MediaStore.Images.Media.DISPLAY_NAME,
+                MediaStore.Images.Media.DATE_ADDED, MediaStore.Images.Media._ID};
+
+        @Override
+        public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+            CursorLoader cursorLoader = new CursorLoader(MultiImageSelectActivity.this,
+                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                    IMAGE_PROJECTION, null, null, IMAGE_PROJECTION[2]
+                    + " DESC");
+            return cursorLoader;
+        }
+
+        @Override
+        public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+            if (data != null) {
                 int count = data.getCount();
                 if (count > 0) {
                     data.moveToFirst();
@@ -515,40 +607,30 @@ public class MultiImageSelectActivity extends PSGodBaseActivity {
                                 .getColumnIndexOrThrow(IMAGE_PROJECTION[2]));
                         SelectImage image = new SelectImage(path, name,
                                 dateTime);
-                        images.add(image);
-
-                        if (!hasFolderGened) {
-                            // 获取文件夹名称
-                            File imageFile = new File(path);
-                            File folderFile = imageFile.getParentFile();
-                            SelectFolder folder = new SelectFolder();
-                            folder.name = folderFile.getName();
-                            folder.path = folderFile.getAbsolutePath();
-                            folder.cover = image;
-                            if (!mResultFolder.contains(folder)) {
-                                List<SelectImage> imageList = new ArrayList<SelectImage>();
-                                imageList.add(image);
-                                folder.images = imageList;
-                                mResultFolder.add(folder);
-                            } else {
-                                // 更新
-                                SelectFolder f = mResultFolder.get(mResultFolder
-                                        .indexOf(folder));
-                                f.images.add(image);
+                        // 获取文件夹名称
+                        File imageFile = new File(path);
+                        File folderFile = imageFile.getParentFile();
+                        SelectFolder folder = new SelectFolder();
+                        folder.name = folderFile.getName();
+                        folder.path = folderFile.getAbsolutePath();
+                        folder.cover = image;
+                        if (!mResultFolder.contains(folder)) {
+                            List<SelectImage> imageList = new ArrayList<SelectImage>();
+                            imageList.add(image);
+                            folder.images = imageList;
+                            mResultFolder.add(folder);
+                            if (folderFile.getPath().equals(jumpPath)) {
+                                mFolderAdapter.setSelectIndex(mResultFolder.size());
                             }
+                        } else {
+                            // 更新
+                            SelectFolder f = mResultFolder.get(mResultFolder
+                                    .indexOf(folder));
+                            f.images.add(image);
                         }
-
                     } while (data.moveToNext());
-
-                    mMultiImageAdapter.setData(images);
-                    // 设定默认选择
-                    if (resultList != null && resultList.size() > 0) {
-                        mMultiImageAdapter.setDefaultSelected(resultList);
-                    }
-
                     mFolderAdapter.setData(mResultFolder);
                     hasFolderGened = true;
-
                 }
             }
         }
@@ -562,8 +644,8 @@ public class MultiImageSelectActivity extends PSGodBaseActivity {
     @Override
     public void finish() {
         Intent intent = new Intent();
-        intent.putExtra(ImageCategoryDialog.RESULT,resultList);
-        setResult(ImageCategoryDialog.RESULT_CODE,intent);
+        intent.putExtra(ImageCategoryDialog.RESULT, resultList);
+        setResult(ImageCategoryDialog.RESULT_CODE, intent);
         super.finish();
     }
 

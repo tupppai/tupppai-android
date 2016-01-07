@@ -34,6 +34,7 @@ import com.psgod.model.PhotoItem;
 import com.psgod.model.SelectImage;
 import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.network.request.UserPhotoRequest;
+import com.psgod.ui.activity.MultiImageSelectActivity;
 import com.psgod.ui.activity.PSGodBaseActivity;
 import com.psgod.ui.adapter.MultiImageSelectRecyclerAdapter;
 import com.psgod.ui.widget.ImageCategoryDialog;
@@ -70,6 +71,7 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
     private MultiImageSelectRecyclerAdapter mAdapter;
     private List<SelectImage> selectResultImages = new ArrayList<SelectImage>();
     private List<SelectImage> images = new ArrayList<SelectImage>();
+    private List<SelectImage> originImages = new ArrayList<SelectImage>();
 
     private WeakReferenceHandler mHandler = new WeakReferenceHandler(this);
     private ExecutorService fixedThreadPool = Executors.newFixedThreadPool(1);
@@ -117,7 +119,22 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
             SelectImage selectImage = new SelectImage(s, "", 0);
             this.selectResultImages.add(selectImage);
         }
-        images.addAll(0, this.selectResultImages);
+        if (images != null && images.size() > 0) {
+            images.clear();
+        }
+        images.addAll(this.selectResultImages);
+        images.addAll(originImages);
+        int selectLength = this.selectResultImages.size();
+        int imageLength = images.size();
+        for (int i = 0; i < selectLength; i++) {
+            for (int y = selectLength; y < imageLength; y++) {
+                if (images.get(y).path.equals(images.get(i).path)) {
+                    images.remove(y);
+                    imageLength--;
+                    y--;
+                }
+            }
+        }
         showPreview();
         mAdapter.setDefaultSelected(this.selectResultImages);
         mAdapter.notifyDataSetChanged();
@@ -276,7 +293,9 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
             @Override
             public void onClick(View view) {
                 new ImageCategoryDialog(mContext).
-                        show(selectResultImages);
+                        show(selectResultImages, showType == SHOW_TYPE_ASK ?
+                                MultiImageSelectActivity.TYPE_ASK_SELECT :
+                                MultiImageSelectActivity.TYPE_REPLY_SELECT);
             }
         });
 
@@ -377,7 +396,7 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
                 int count = data.getCount();
                 if (count > 0) {
                     data.moveToFirst();
-                    images.clear();
+                    originImages.clear();
                     do {
                         String path = data.getString(data
                                 .getColumnIndexOrThrow(IMAGE_PROJECTION[0]));
@@ -385,10 +404,12 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
                                 .getColumnIndexOrThrow(IMAGE_PROJECTION[1]));
                         long dateTime = data.getLong(data
                                 .getColumnIndexOrThrow(IMAGE_PROJECTION[2]));
+
                         SelectImage image = new SelectImage(path, name,
                                 dateTime);
-                        images.add(image);
-                    } while (data.moveToNext());
+                        originImages.add(image);
+                    } while (data.moveToNext() && originImages.size() <= 5);
+                    images.addAll(originImages);
                     mAdapter.notifyDataSetChanged();
                 }
             }

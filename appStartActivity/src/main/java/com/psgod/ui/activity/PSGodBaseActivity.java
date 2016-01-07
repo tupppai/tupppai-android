@@ -315,6 +315,7 @@ public abstract class PSGodBaseActivity extends FragmentActivity implements
                 if(data != null) {
                     List<String> imageCategoryStrs = data.
                             getStringArrayListExtra(ImageCategoryDialog.RESULT);
+                    selectResultImages.clear();
                     if (imageCategoryStrs != null && imageCategoryStrs.size() > 0) {
                         selectResultImages.addAll(imageCategoryStrs);
                     }
