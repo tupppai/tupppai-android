@@ -90,7 +90,7 @@ public class SetInfoActivity extends PSGodBaseActivity implements
 	private int provinceId;
 	// 城市id
 	private int cityId;
-	// 注册平台类型 包括第三方 weibo weixin mobile
+	// 注册平台类型 包括第三方 weibo weixin mobile qq
 	private String type = "mobile";
 
 	private WeakReferenceHandler mHandler = new WeakReferenceHandler(this);

@@ -230,7 +230,7 @@ public class MainActivity extends PSGodBaseActivity {
         // 初始化广播监听
         initReceiver();
 
-        initAvatar();
+//        initAvatar();
 
         // umeng应用自动更新
         UmengUpdateAgent.update(this);

@@ -14,6 +14,8 @@ import com.android.volley.toolbox.HttpHeaderParser;
 import com.psgod.Constants;
 import com.psgod.PSGodApplication;
 import com.psgod.UserPreferences;
+import com.psgod.model.LoginUser;
+import com.psgod.ui.activity.BindInputPhoneActivity;
 import com.psgod.ui.activity.WelcomeActivity;
 
 import org.json.JSONException;
@@ -24,11 +26,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public abstract class BaseRequest<T> extends Request<T> {
-	public static final String PSGOD_BASE_TEST_URL = "http://api2.loiter.us/"; // 测试环境
+	public static final String PSGOD_BASE_TEST_URL = "http://client.qiupsdashen.com/"; // 测试环境
 
 	public static final String PSGOD_BASE_RELEASE_URL = "http://api.qiupsdashen.com/"; // 正式环境
 
-	public static String PSGOD_BASE_URL = PSGOD_BASE_RELEASE_URL;
+	public static String PSGOD_BASE_URL = PSGOD_BASE_TEST_URL;
 
 	protected static final String PROTOCOL_CHARSET = "utf-8";
 
@@ -78,26 +80,36 @@ public abstract class BaseRequest<T> extends Request<T> {
 			int ret = jsonObj.getInt("ret");
 			String info = jsonObj.getString("info");
 			if (ret == 2) {
-				// ret=2表示token失效 需重新验证
-				UserPreferences.TokenVerify.setToken(""); // 将本地token清空
-				Constants.IS_FOCUS_FRAGMENT_CREATED = false;
-				Constants.IS_HOME_FRAGMENT_CREATED = false;
-				Constants.IS_MESSAGE_FRAGMENT_CREATED = false;
-				Constants.IS_USER_FRAGMENT_CREATED = false;
-				Constants.IS_INPROGRESS_FRAGMENT_CREATED = false;
+				if (LoginUser.getInstance().getPhoneNum().equals("0")) {
+					Intent intent = new Intent(PSGodApplication.getAppContext(),
+							BindInputPhoneActivity.class);
+					intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+					intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+					PSGodApplication.getAppContext().startActivity(intent);
+					return Response.error(new VolleyError("请输入手机号"));
+				} else {
+					// ret=2表示token失效 需重新验证
+					UserPreferences.TokenVerify.setToken(""); // 将本地token清空
+					Constants.IS_FOCUS_FRAGMENT_CREATED = false;
+					Constants.IS_HOME_FRAGMENT_CREATED = false;
+					Constants.IS_MESSAGE_FRAGMENT_CREATED = false;
+					Constants.IS_USER_FRAGMENT_CREATED = false;
+					Constants.IS_INPROGRESS_FRAGMENT_CREATED = false;
 
-				// TODO
-				// WelcomeActivity.startNewActivityAndFinishAllBefore(
-				// PSGodApplication.getAppContext(),
-				// WelcomeActivity.class.getName(), null);
+					// TODO
+					// WelcomeActivity.startNewActivityAndFinishAllBefore(
+					// PSGodApplication.getAppContext(),
+					// WelcomeActivity.class.getName(), null);
 
-				Intent intent = new Intent(PSGodApplication.getAppContext(),
-						WelcomeActivity.class);
-				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				PSGodApplication.getAppContext().startActivity(intent);
+					Intent intent = new Intent(PSGodApplication.getAppContext(),
+							WelcomeActivity.class);
+					intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+					intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+					PSGodApplication.getAppContext().startActivity(intent);
+					return Response.error(new VolleyError(info));
+				}
 
-				return Response.error(new VolleyError(info));
+
 			} else if (ret == 0) {
 				return Response.error(new VolleyError(info));
 			} else {

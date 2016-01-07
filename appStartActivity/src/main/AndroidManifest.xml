@@ -156,6 +156,8 @@
         <activity android:name=".ui.activity.NewPhoneLoginActivity" />
         <activity android:name=".ui.activity.NewRegisterPhoneActivity" />
         <activity android:name=".ui.activity.NewResetPasswdActivity" />
+        <activity android:name=".ui.activity.BindInputPhoneActivity" />
+        <activity android:name=".ui.activity.BindPhoneActivity" />
 
         <!-- sharesdk -->
         <activity

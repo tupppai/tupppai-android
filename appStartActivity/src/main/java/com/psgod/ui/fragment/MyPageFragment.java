@@ -114,7 +114,7 @@ public class MyPageFragment extends Fragment implements
         if ((dialog != null) || (!dialog.isShowing())) {
             dialog.show();
         }
-        initMyFragmentData();
+//        initMyFragmentData();
     }
 
     public void onEventMainThread(InitEvent event) {
