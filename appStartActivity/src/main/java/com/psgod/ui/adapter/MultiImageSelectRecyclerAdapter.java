@@ -39,7 +39,7 @@ public class MultiImageSelectRecyclerAdapter extends RecyclerView.Adapter<MultiI
     private List<SelectImage> mSelectedImages = new ArrayList<SelectImage>();
     private List<PhotoItem> mPhotoItems = new ArrayList<PhotoItem>();
 
-    private int checkedPhotoItem = 0;
+    private int checkedPhotoItem = -1;
     private int adapterType = 0;
 
     public MultiImageSelectRecyclerAdapter(Context context) {

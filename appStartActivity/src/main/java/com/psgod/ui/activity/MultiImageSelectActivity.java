@@ -517,12 +517,12 @@ public class MultiImageSelectActivity extends PSGodBaseActivity {
                 }
                 int resultLength = resultList.size();
                 for(int i = 0 ; i <resultLength; i++ ){
-//                    images.add();
+                    images.add(new SelectImage(resultList.get(i),"",0));
                 }
                 int count = data.getCount();
                 if (count > 0) {
                     data.moveToFirst();
-
+                    out:
                     do {
                         String path = data.getString(data
                                 .getColumnIndexOrThrow(IMAGE_PROJECTION[0]));
@@ -532,28 +532,15 @@ public class MultiImageSelectActivity extends PSGodBaseActivity {
                                 .getColumnIndexOrThrow(IMAGE_PROJECTION[2]));
                         SelectImage image = new SelectImage(path, name,
                                 dateTime);
+                        //判断是否是已选择的图片，因为已经置顶，如果是则不填充
+                        for(int i = 0 ; i <resultLength; i++ ){
+                            if(resultList.get(i).equals(path)){
+                                images.get(i).name = name;
+                                images.get(i).time = dateTime;
+                                continue out;
+                            }
+                        }
                         images.add(image);
-
-//                        if (!hasFolderGened) {
-//                            // 获取文件夹名称
-//                            File imageFile = new File(path);
-//                            File folderFile = imageFile.getParentFile();
-//                            SelectFolder folder = new SelectFolder();
-//                            folder.name = folderFile.getName();
-//                            folder.path = folderFile.getAbsolutePath();
-//                            folder.cover = image;
-//                            if (!mResultFolder.contains(folder)) {
-//                                List<SelectImage> imageList = new ArrayList<SelectImage>();
-//                                imageList.add(image);
-//                                folder.images = imageList;
-//                                mResultFolder.add(folder);
-//                            } else {
-//                                // 更新
-//                                SelectFolder f = mResultFolder.get(mResultFolder
-//                                        .indexOf(folder));
-//                                f.images.add(image);
-//                            }
-//                        }
 
                     } while (data.moveToNext());
 
@@ -563,6 +550,7 @@ public class MultiImageSelectActivity extends PSGodBaseActivity {
                         mMultiImageAdapter.setDefaultSelected(resultList);
                     }
 
+                    //初始化文件目录
                     if (!hasFolderGened) {
                         getSupportLoaderManager().initLoader(0, null, mFolderCallback);
                     }
@@ -619,6 +607,7 @@ public class MultiImageSelectActivity extends PSGodBaseActivity {
                             imageList.add(image);
                             folder.images = imageList;
                             mResultFolder.add(folder);
+                            // 判断进入时是那个相册被选中
                             if (folderFile.getPath().equals(jumpPath)) {
                                 mFolderAdapter.setSelectIndex(mResultFolder.size());
                             }

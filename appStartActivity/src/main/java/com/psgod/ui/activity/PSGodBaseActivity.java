@@ -1,5 +1,6 @@
 package com.psgod.ui.activity;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -324,6 +325,11 @@ public abstract class PSGodBaseActivity extends FragmentActivity implements
                     mImageSelectDialog.setselectResultImages(selectResultImages);
                 }
                 break;
+        }
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == ImageSelectDialog.CAMERA) {
+                mImageSelectDialog.addCamera();
+            }
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

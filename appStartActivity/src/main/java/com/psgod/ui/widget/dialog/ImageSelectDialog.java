@@ -2,7 +2,9 @@ package com.psgod.ui.widget.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -22,14 +24,17 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.psgod.Constants;
+import com.psgod.CustomToast;
 import com.psgod.PsGodImageLoader;
 import com.psgod.R;
 import com.psgod.Utils;
 import com.psgod.WeakReferenceHandler;
+import com.psgod.model.FileUtils;
 import com.psgod.model.PhotoItem;
 import com.psgod.model.SelectImage;
 import com.psgod.network.request.PSGodRequestQueue;
@@ -39,6 +44,7 @@ import com.psgod.ui.activity.PSGodBaseActivity;
 import com.psgod.ui.adapter.MultiImageSelectRecyclerAdapter;
 import com.psgod.ui.widget.ImageCategoryDialog;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -83,6 +89,9 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
     public static final int SHOW_TYPE_ASK = 0;
     public static final int SHOW_TYPE_REPLY = 1;
     public static final int SHOW_TYPE_ACTIVITY = 2;
+
+    public static final int CAMERA = 500;
+    private File cameraImage;
 
     public ImageSelectDialog(Context context, int showType) {
         super(context, R.style.ImageSelectDialog);
@@ -138,6 +147,22 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
         showPreview();
         mAdapter.setDefaultSelected(this.selectResultImages);
         mAdapter.notifyDataSetChanged();
+    }
+
+    public void addCamera() {
+        SelectImage image = new SelectImage(cameraImage.getPath(), "", 0);
+        selectResultImages.add(0, image);
+        images.add(0, image);
+        mAdapter.setDefaultSelected(selectResultImages);
+        ((PSGodBaseActivity) mContext).
+                getSupportLoaderManager().initLoader(0, null, mLoaderCallback);
+        mAdapter.notifyDataSetChanged();
+        showPreview();
+        notifySelectNum();
+    }
+
+    private void notifySelectNum() {
+        mNumTxt.setText(String.valueOf(selectResultImages.size()));
     }
 
     private void initView() {
@@ -238,6 +263,14 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
                         getSupportLoaderManager().initLoader(0, null, mLoaderCallback);
                 isInitImages = true;
             }
+            mNumTxt.setVisibility(View.VISIBLE);
+            mAlbumTxt.setVisibility(View.VISIBLE);
+            mPhotoTxt.setVisibility(View.VISIBLE);
+            mSureTxt.setText("确定");
+            if (showType == SHOW_TYPE_ACTIVITY) {
+                mPhotoTxt.setVisibility(View.INVISIBLE);
+            }
+            mSureTxt.setVisibility(View.VISIBLE);
             mNumTxt.setText(String.valueOf(selectResultImages.size()));
             mAdapter.setDefaultSelected(selectResultImages);
             mAdapter.setAdapterType(MultiImageSelectRecyclerAdapter.TYPE_IMAGE);
@@ -271,6 +304,10 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
             public void onClick(View view) {
                 mAdapter.setAdapterType(MultiImageSelectRecyclerAdapter.TYPE_BANG);
                 mAdapter.notifyDataSetChanged();
+                mNumTxt.setVisibility(View.INVISIBLE);
+                mPhotoTxt.setVisibility(View.INVISIBLE);
+                mAlbumTxt.setVisibility(View.INVISIBLE);
+                mSureTxt.setVisibility(View.GONE);
                 hideInputPanel();
                 fixedThreadPool.execute(new Runnable() {
                     @Override
@@ -316,6 +353,60 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
                 showPreview();
             }
         });
+
+        mPhotoTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (showType == SHOW_TYPE_ASK) {
+                    if (selectResultImages.size() >= 2) {
+                        CustomToast.show(mContext, "求p最多只可以发2张~", Toast.LENGTH_LONG);
+                        return;
+                    }
+                } else {
+                    if (selectResultImages.size() >= 1) {
+                        CustomToast.show(mContext, "作品最多只可以发1张~", Toast.LENGTH_LONG);
+                        return;
+                    }
+                }
+                cameraImage = FileUtils.createTmpFile(mContext);
+                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                if (cameraIntent.resolveActivity(mContext.getPackageManager()) != null) {
+                    cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT,
+                            Uri.fromFile(cameraImage));
+                    ((PSGodBaseActivity) mContext).startActivityForResult(cameraIntent, CAMERA);
+                } else {
+                    Toast.makeText(mContext, "没有相机", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        mUpTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (selectResultImages.size() <= 0) {
+                    CustomToast.show(mContext, "最少选择一张图片~", Toast.LENGTH_LONG);
+                } else if (mEdit.getText().toString().trim().length() == 0) {
+                    CustomToast.show(mContext, "描述不能为空~", Toast.LENGTH_LONG);
+                } else {
+                    switch (showType) {
+                        case SHOW_TYPE_ASK:
+
+                            break;
+                        case SHOW_TYPE_REPLY:
+                            if (mAdapter.getCheckedPhotoItemNum() == -1){
+                                CustomToast.show(mContext,"请选择求p~",Toast.LENGTH_LONG);
+                            }else{
+
+                            }
+                            break;
+                        case SHOW_TYPE_ACTIVITY:
+
+                            break;
+                    }
+                }
+            }
+        });
+
     }
 
     // 隐藏输入法
@@ -338,10 +429,6 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
                 UserPhotoRequest.Builder builder = new UserPhotoRequest.Builder()
                         .setType(2).setPage(0)
                         .setListener(refreshListener);
-                mNumTxt.setVisibility(View.INVISIBLE);
-                mPhotoTxt.setVisibility(View.INVISIBLE);
-                mAlbumTxt.setVisibility(View.INVISIBLE);
-                mSureTxt.setVisibility(View.GONE);
                 if (categoryid != -1) {
                     builder.setChannelId(categoryid + "");
                 }
@@ -353,13 +440,6 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
             //显示图片列表
             case AREA_SHOW_IMG:
                 mArea.setVisibility(View.VISIBLE);
-                mNumTxt.setVisibility(View.VISIBLE);
-                mAlbumTxt.setVisibility(View.VISIBLE);
-                mPhotoTxt.setVisibility(View.VISIBLE);
-                mSureTxt.setText("确定");
-                if (showType == SHOW_TYPE_ACTIVITY) {
-                    mPhotoTxt.setVisibility(View.INVISIBLE);
-                }
                 break;
         }
         return true;
@@ -375,6 +455,9 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
     };
 
     private LoaderManager.LoaderCallbacks<Cursor> mLoaderCallback = new LoaderManager.LoaderCallbacks<Cursor>() {
+
+        //判断是否是第一次初始化，如果不是则不需要再finish时填充originImages-+
+        private boolean isFirst = true;
 
         private final String[] IMAGE_PROJECTION = {
                 MediaStore.Images.Media.DATA,
@@ -408,9 +491,12 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
                         SelectImage image = new SelectImage(path, name,
                                 dateTime);
                         originImages.add(image);
-                    } while (data.moveToNext() && originImages.size() <= 5);
-                    images.addAll(originImages);
-                    mAdapter.notifyDataSetChanged();
+                    } while (data.moveToNext() && originImages.size() <= 100);
+                    if (isFirst) {
+                        images.addAll(originImages);
+                        mAdapter.notifyDataSetChanged();
+                        isFirst = false;
+                    }
                 }
             }
         }
@@ -420,6 +506,5 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
 
         }
     };
-
 
 }
