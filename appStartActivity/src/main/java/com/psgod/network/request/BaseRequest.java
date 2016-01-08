@@ -16,7 +16,7 @@ import com.psgod.PSGodApplication;
 import com.psgod.UserPreferences;
 import com.psgod.model.LoginUser;
 import com.psgod.ui.activity.BindInputPhoneActivity;
-import com.psgod.ui.activity.WelcomeActivity;
+import com.psgod.ui.activity.NewLoginInputPhoneActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -84,7 +84,6 @@ public abstract class BaseRequest<T> extends Request<T> {
 					Intent intent = new Intent(PSGodApplication.getAppContext(),
 							BindInputPhoneActivity.class);
 					intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-					intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 					PSGodApplication.getAppContext().startActivity(intent);
 					return Response.error(new VolleyError("ThirdLogin"));
 				} else {
@@ -102,7 +101,7 @@ public abstract class BaseRequest<T> extends Request<T> {
 					// WelcomeActivity.class.getName(), null);
 
 					Intent intent = new Intent(PSGodApplication.getAppContext(),
-							WelcomeActivity.class);
+							NewLoginInputPhoneActivity.class);
 					intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 					intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 					PSGodApplication.getAppContext().startActivity(intent);

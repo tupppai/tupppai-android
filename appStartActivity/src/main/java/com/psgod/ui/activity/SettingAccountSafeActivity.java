@@ -56,6 +56,7 @@ public class SettingAccountSafeActivity extends PSGodBaseActivity implements
 	private Context mContext;
 
 	private TextView mBindingPhoneTv;
+	private TextView mBindPhoneStatusTv;
 	private TextView mEditPasswdTv;
 	private ToggleButton mBindWeiboBtn;
 	private ToggleButton mBindWechatBtn;
@@ -83,6 +84,7 @@ public class SettingAccountSafeActivity extends PSGodBaseActivity implements
 
 	private void initViews() {
 		mBindingPhoneTv = (TextView) findViewById(R.id.account_binding_phone_num);
+		mBindPhoneStatusTv = (TextView) findViewById(R.id.account_binding_status);
 		mEditPasswdTv = (TextView) findViewById(R.id.activity_edit_passwd_btn);
 		mBindQQBtn = (ToggleButton) findViewById(R.id.account_binding_qq_toggle_btn);
 		mBindWechatBtn = (ToggleButton) findViewById(R.id.account_binding_wechat_toggle_btn);
@@ -93,7 +95,13 @@ public class SettingAccountSafeActivity extends PSGodBaseActivity implements
 		isBoundWechat = user.isBoundWechat();
 		isBoundQQ = user.isBoundQQ();
 
-		mBindingPhoneTv.setText("手机号" + user.getPhoneNum());
+		if (user.getPhoneNum().equals("0")) {
+			mBindingPhoneTv.setText("手机号");
+			mBindPhoneStatusTv.setText("未绑定");
+		} else {
+			mBindingPhoneTv.setText("手机号" + user.getPhoneNum());
+			mBindPhoneStatusTv.setText("已绑定");
+		}
 		mBindWeiboBtn.setChecked(isBoundWeiBo);
 		mBindWechatBtn.setChecked(isBoundWechat);
 		mBindQQBtn.setChecked(isBoundQQ);

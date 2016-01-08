@@ -2,19 +2,25 @@ package com.psgod.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Looper;
 import android.os.Message;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.psgod.Constants;
+import com.psgod.CustomToast;
+import com.psgod.PSGodApplication;
 import com.psgod.PSGodToast;
 import com.psgod.R;
 import com.psgod.Utils;
@@ -24,10 +30,22 @@ import com.psgod.model.RegisterData;
 import com.psgod.network.request.GetVerifyCodeRequest;
 import com.psgod.network.request.PSGodErrorListener;
 import com.psgod.network.request.PSGodRequestQueue;
+import com.psgod.network.request.QQLoginRequest;
 import com.psgod.network.request.RegisterRequest;
+import com.psgod.network.request.WechatUserInfoRequest;
+import com.psgod.network.request.WeiboLoginRequest;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
 
 import org.json.JSONObject;
+
+import java.util.HashMap;
+
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.sina.weibo.SinaWeibo;
+import cn.sharesdk.tencent.qq.QQ;
+import cn.sharesdk.wechat.friends.Wechat;
 
 /**
  * Created by pires on 16/1/4.
@@ -38,6 +56,9 @@ public class NewRegisterPhoneActivity extends PSGodBaseActivity{
     private static final int JUMP_FROM_LOGIN_ACTIVITY = 100;
     private static final int RESEND_TIME_IN_SEC = 60; // 重新发送验证时间（秒）
     private static final int MSG_TIMER = 0x3311;
+    private static final String QQPLAT = "qq";
+    private static final String WEIBOPLAT = "weibo";
+    private static final String WEIXINPLAT = "weixin";
     private Context mContext;
     private RegisterData mRegisterData = new RegisterData();
 
@@ -46,6 +67,15 @@ public class NewRegisterPhoneActivity extends PSGodBaseActivity{
     private EditText mVerifyText;
     private Button mResendButton;
     private Button mRegisterBtn;
+
+    private ImageView mWeiboLoginBtn;
+    private ImageView mWechatLoginBtn;
+    private ImageView mQQLoginBtn;
+
+    private String mThirdAuthId = "";
+    private String mThirdAuthName = "";
+    private String mThirdAuthGender = "";
+    private String mThirdAuthAvatar = "";
 
     private int mLeftTime = RESEND_TIME_IN_SEC;
     private WeakReferenceHandler mHandler = new WeakReferenceHandler(this);
@@ -78,6 +108,10 @@ public class NewRegisterPhoneActivity extends PSGodBaseActivity{
         mVerifyText = (EditText) findViewById(R.id.verify_code);
         mResendButton = (Button) findViewById(R.id.get_verify_code);
         mRegisterBtn = (Button) findViewById(R.id.register_login_btn);
+
+        mWeiboLoginBtn = (ImageView) findViewById(R.id.weibo_login);
+        mWechatLoginBtn = (ImageView) findViewById(R.id.weixin_login);
+        mQQLoginBtn = (ImageView) findViewById(R.id.qq_login);
     }
 
     private void callInputPanel() {
@@ -90,6 +124,216 @@ public class NewRegisterPhoneActivity extends PSGodBaseActivity{
     }
 
     private void initEvents() {
+        // QQ登录
+        mQQLoginBtn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+                // 显示等待对话框
+                if (mProgressDialog == null) {
+                    mProgressDialog = new CustomProgressingDialog(
+                            NewRegisterPhoneActivity.this);
+                }
+                if (!mProgressDialog.isShowing()) {
+                    mProgressDialog.show();
+                }
+
+                Platform qq = ShareSDK.getPlatform(QQ.NAME);
+                qq.SSOSetting(false);
+                qq.setPlatformActionListener(qqLoginListener);
+                if (qq.isValid()) {
+                    qq.removeAccount();
+                    ShareSDK.removeCookieOnAuthorize(true);
+                }
+                qq.showUser(null);
+            }
+        });
+
+        // 微博登录
+        mWeiboLoginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // 显示等待对话框
+                if (mProgressDialog == null) {
+                    mProgressDialog = new CustomProgressingDialog(
+                            NewRegisterPhoneActivity.this);
+                }
+                if (!mProgressDialog.isShowing()) {
+                    mProgressDialog.show();
+                }
+
+                Platform weibo = ShareSDK.getPlatform(SinaWeibo.NAME);
+
+                weibo.SSOSetting(false);
+                weibo.setPlatformActionListener(weiboLoginListener);
+                if (weibo.isValid()) {
+                    weibo.removeAccount();
+                    ShareSDK.removeCookieOnAuthorize(true);
+                }
+                weibo.showUser(null);
+            }
+        });
+
+        // 微信授权回调
+        final Response.Listener<WechatUserInfoRequest.WechatUserWrapper> wechatAuthListener = new Response.Listener<WechatUserInfoRequest.WechatUserWrapper>() {
+            @Override
+            public void onResponse(WechatUserInfoRequest.WechatUserWrapper response) {
+                if ((mProgressDialog != null) && mProgressDialog.isShowing()) {
+                    mProgressDialog.dismiss();
+                }
+
+                try {
+                    int isRegistered = response.isRegistered;
+                    // 已注册
+                    if (isRegistered == 1) {
+                        JSONObject userInfoData = response.UserObject;
+                        LoginUser.getInstance()
+                                .initFromJSONObject(userInfoData);
+
+                        Bundle extras = new Bundle();
+                        extras.putInt(Constants.IntentKey.ACTIVITY_JUMP_FROM,
+                                JUMP_FROM_LOGIN_ACTIVITY);
+                        MainActivity.startNewActivityAndFinishAllBefore(
+                                NewRegisterPhoneActivity.this,
+                                MainActivity.class.getName(), extras);
+                    }
+                    // 未注册
+                    if (isRegistered == 0) {
+                        SharedPreferences.Editor editor = PSGodApplication
+                                .getAppContext()
+                                .getSharedPreferences(Constants.SharedPreferencesKey.NAME,
+                                        Context.MODE_PRIVATE).edit();
+                        editor.putString(Constants.ThirdAuthInfo.THIRD_AUTH_PLATFORM,WEIXINPLAT);
+                        editor.putString(Constants.ThirdAuthInfo.USER_OPENID, mThirdAuthId);
+                        editor.putString(Constants.ThirdAuthInfo.USER_AVATAR, mThirdAuthAvatar);
+                        editor.putString(Constants.ThirdAuthInfo.USER_NICKNAME, mThirdAuthName);
+                        if (android.os.Build.VERSION.SDK_INT >= 9) {
+                            editor.apply();
+                        } else {
+                            editor.commit();
+                        }
+
+                        JSONObject userInfoData = new JSONObject();
+                        userInfoData.put("uid", 0l);
+                        userInfoData.put("nickname", mThirdAuthName);
+                        userInfoData.put("sex", 0);
+                        userInfoData.put("phone", "0");
+                        userInfoData.put("avatar", mThirdAuthAvatar);
+                        userInfoData.put("fans_count", 0);
+                        userInfoData.put("fellow_count", 0);
+                        userInfoData.put("uped_count", 0);
+                        userInfoData.put("ask_count", 0);
+                        userInfoData.put("reply_count", 0);
+                        userInfoData.put("inprogress_count", 0);
+                        userInfoData.put("collection_count", 0);
+                        userInfoData.put("is_bound_weixin", 0);
+                        userInfoData.put("is_bound_qq", 0);
+                        userInfoData.put("is_bound_weibo", 0);
+                        userInfoData.put("city", 1);
+                        userInfoData.put("province", 11);
+
+                        LoginUser.getInstance().initFromJSONObject(userInfoData);
+
+                        Bundle extras = new Bundle();
+                        extras.putInt(Constants.IntentKey.ACTIVITY_JUMP_FROM,
+                                JUMP_FROM_LOGIN_ACTIVITY);
+                        MainActivity.startNewActivityAndFinishAllBefore(
+                                NewRegisterPhoneActivity.this, MainActivity.class.getName(),
+                                extras);
+//						Intent intent = new Intent(LoginActivity.this,
+//								SetInfoActivity.class);
+//
+//						intent.putExtra(
+//								Constants.ThirdAuthInfo.THIRD_AUTH_PLATFORM,
+//								"weixin");
+//						intent.putExtra(Constants.ThirdAuthInfo.USER_OPENID,
+//								mThirdAuthId);
+//						intent.putExtra(Constants.ThirdAuthInfo.USER_AVATAR,
+//								mThirdAuthAvatar);
+//						intent.putExtra(Constants.ThirdAuthInfo.USER_GENDER,
+//								mThirdAuthGender);
+//						intent.putExtra(Constants.ThirdAuthInfo.USER_NICKNAME,
+//								mThirdAuthName);
+//
+//						startActivity(intent);
+//						finish();
+                    }
+                } catch (Exception e) {
+                }
+            }
+        };
+
+        // 微信登录
+        mWechatLoginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                // 显示等待对话框
+                if (mProgressDialog == null) {
+                    mProgressDialog = new CustomProgressingDialog(
+                            NewRegisterPhoneActivity.this);
+                }
+                if (!mProgressDialog.isShowing()) {
+                    mProgressDialog.show();
+                }
+
+                // 微信授权
+                Platform weixin = ShareSDK.getPlatform(Wechat.NAME);
+                if (weixin.isValid()) {
+                    weixin.removeAccount();
+                    ShareSDK.removeCookieOnAuthorize(true);
+                }
+                weixin.setPlatformActionListener(new PlatformActionListener() {
+                    @Override
+                    public void onError(Platform arg0, int arg1, Throwable arg2) {
+                        Looper.prepare();
+                        if (mProgressDialog != null
+                                && mProgressDialog.isShowing()) {
+                            mProgressDialog.dismiss();
+                        }
+                        CustomToast.show(NewRegisterPhoneActivity.this, "微信登录异常",
+                                Toast.LENGTH_LONG);
+                        Looper.loop();
+                    }
+
+                    @Override
+                    public void onComplete(Platform platform, int action,
+                                           HashMap<String, Object> res) {
+                        mThirdAuthId = res.get("openid").toString();
+                        mThirdAuthAvatar = res.get("headimgurl").toString();
+                        mThirdAuthGender = res.get("sex").toString();
+                        mThirdAuthName = res.get("nickname").toString();
+
+                        // 验证code是否被注册
+                        if (!TextUtils.isEmpty(mThirdAuthId)) {
+                            WechatUserInfoRequest.Builder builder = new WechatUserInfoRequest.Builder()
+                                    .setCode(mThirdAuthId)
+                                    .setListener(wechatAuthListener)
+                                    .setErrorListener(errorListener);
+
+                            WechatUserInfoRequest request = builder.build();
+                            request.setTag(TAG);
+                            RequestQueue requestQueue = PSGodRequestQueue
+                                    .getInstance(NewRegisterPhoneActivity.this)
+                                    .getRequestQueue();
+                            requestQueue.add(request);
+                        }
+                    }
+
+                    @Override
+                    public void onCancel(Platform arg0, int arg1) {
+                        if (mProgressDialog != null
+                                && mProgressDialog.isShowing()) {
+                            mProgressDialog.dismiss();
+                        }
+                        CustomToast.show(NewRegisterPhoneActivity.this, "取消微信登录",
+                                Toast.LENGTH_LONG);
+                    }
+                });
+                weixin.SSOSetting(true);
+                weixin.showUser(null);
+            }
+        });
+
         mResendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -166,6 +410,257 @@ public class NewRegisterPhoneActivity extends PSGodBaseActivity{
         });
 
     }
+
+    // QQ登录监听事件
+    private PlatformActionListener qqLoginListener = new PlatformActionListener() {
+
+        @Override
+        public void onError(Platform arg0, int arg1, Throwable arg2) {
+            if ((mProgressDialog != null) && mProgressDialog.isShowing()) {
+                mProgressDialog.dismiss();
+            }
+        }
+
+        @Override
+        public void onComplete(Platform arg0, int arg1,
+                               HashMap<String, Object> res) {
+            mThirdAuthId = ShareSDK.getPlatform(QQ.NAME).getDb().getUserId();
+            mThirdAuthName = res.get("nickname").toString();
+            mThirdAuthAvatar = res.get("figureurl_qq_2").toString();
+
+            if (!TextUtils.isEmpty(mThirdAuthId)) {
+                QQLoginRequest.Builder builder = new QQLoginRequest.Builder()
+                        .setCode(mThirdAuthId).setListener(qqAuthListener)
+                        .setErrorListener(errorListener);
+
+                QQLoginRequest request = builder.build();
+                RequestQueue requestQueue = PSGodRequestQueue.getInstance(
+                        NewRegisterPhoneActivity.this).getRequestQueue();
+                requestQueue.add(request);
+            }
+        }
+
+        @Override
+        public void onCancel(Platform arg0, int arg1) {
+            // TODO Auto-generated method stub
+            if ((mProgressDialog != null) && mProgressDialog.isShowing()) {
+                mProgressDialog.dismiss();
+            }
+        }
+    };
+
+    private Response.Listener<QQLoginRequest.QQLoginWrapper> qqAuthListener = new Response.Listener<QQLoginRequest.QQLoginWrapper>() {
+
+        @Override
+        public void onResponse(QQLoginRequest.QQLoginWrapper response) {
+            if ((mProgressDialog != null) && mProgressDialog.isShowing()) {
+                mProgressDialog.dismiss();
+            }
+
+            try {
+                int isRegistered = response.isRegistered;
+                // 已注册
+                if (isRegistered == 1) {
+                    JSONObject userInfoData = response.UserObject;
+                    LoginUser.getInstance().initFromJSONObject(userInfoData);
+
+                    Bundle extras = new Bundle();
+                    extras.putInt(Constants.IntentKey.ACTIVITY_JUMP_FROM,
+                            LoginActivity.JUMP_FROM_LOGIN);
+
+                    // 关闭之前所有页面
+                    MainActivity.startNewActivityAndFinishAllBefore(
+                            NewRegisterPhoneActivity.this, MainActivity.class.getName(),
+                            extras);
+                }
+                // 未注册
+                if (isRegistered == 0) {
+                    SharedPreferences.Editor editor = PSGodApplication
+                            .getAppContext()
+                            .getSharedPreferences(Constants.SharedPreferencesKey.NAME,
+                                    Context.MODE_PRIVATE).edit();
+                    editor.putString(Constants.ThirdAuthInfo.THIRD_AUTH_PLATFORM,QQPLAT);
+                    editor.putString(Constants.ThirdAuthInfo.USER_OPENID, mThirdAuthId);
+                    editor.putString(Constants.ThirdAuthInfo.USER_AVATAR, mThirdAuthAvatar);
+                    editor.putString(Constants.ThirdAuthInfo.USER_NICKNAME, mThirdAuthName);
+                    if (android.os.Build.VERSION.SDK_INT >= 9) {
+                        editor.apply();
+                    } else {
+                        editor.commit();
+                    }
+
+                    JSONObject userInfoData = new JSONObject();
+                    userInfoData.put("uid", 0l);
+                    userInfoData.put("nickname", mThirdAuthName);
+                    userInfoData.put("sex", 0);
+                    userInfoData.put("phone", "0");
+                    userInfoData.put("avatar", mThirdAuthAvatar);
+                    userInfoData.put("fans_count", 0);
+                    userInfoData.put("fellow_count", 0);
+                    userInfoData.put("uped_count", 0);
+                    userInfoData.put("ask_count", 0);
+                    userInfoData.put("reply_count", 0);
+                    userInfoData.put("inprogress_count", 0);
+                    userInfoData.put("collection_count", 0);
+                    userInfoData.put("is_bound_weixin", 0);
+                    userInfoData.put("is_bound_qq", 0);
+                    userInfoData.put("is_bound_weibo", 0);
+                    userInfoData.put("city", 1);
+                    userInfoData.put("province", 11);
+
+                    LoginUser.getInstance().initFromJSONObject(userInfoData);
+
+                    Bundle extras = new Bundle();
+                    extras.putInt(Constants.IntentKey.ACTIVITY_JUMP_FROM,
+                            JUMP_FROM_LOGIN_ACTIVITY);
+                    MainActivity.startNewActivityAndFinishAllBefore(
+                            NewRegisterPhoneActivity.this, MainActivity.class.getName(),
+                            extras);
+//					Intent intent = new Intent(LoginActivity.this,
+//							SetInfoActivity.class);
+//
+//					intent.putExtra(
+//							Constants.ThirdAuthInfo.THIRD_AUTH_PLATFORM, "qq");
+//					intent.putExtra(Constants.ThirdAuthInfo.USER_OPENID,
+//							mThirdAuthId);
+//					intent.putExtra(Constants.ThirdAuthInfo.USER_AVATAR,
+//							mThirdAuthAvatar);
+//					intent.putExtra(Constants.ThirdAuthInfo.USER_NICKNAME,
+//							mThirdAuthName);
+//
+//					LoginActivity.this.startActivity(intent);
+                }
+            } catch (Exception e) {
+            }
+        }
+    };
+
+    // 微博登录的监听事件
+    private PlatformActionListener weiboLoginListener = new PlatformActionListener() {
+        @Override
+        public void onError(Platform arg0, int arg1, Throwable arg2) {
+            if ((mProgressDialog != null) && mProgressDialog.isShowing()) {
+                mProgressDialog.dismiss();
+            }
+        }
+
+        // 用户授权
+        @Override
+        public void onComplete(Platform arg0, int arg1,
+                               HashMap<String, Object> res) {
+            mThirdAuthId = res.get("id").toString();
+            mThirdAuthName = res.get("name").toString();
+            mThirdAuthAvatar = res.get("profile_image_url").toString();
+
+            if (!TextUtils.isEmpty(mThirdAuthId)) {
+                WeiboLoginRequest.Builder builder = new WeiboLoginRequest.Builder()
+                        .setCode(mThirdAuthId).setListener(weiboAuthListener)
+                        .setErrorListener(errorListener);
+
+                WeiboLoginRequest request = builder.build();
+                request.setTag(TAG);
+                RequestQueue requestQueue = PSGodRequestQueue.getInstance(
+                        NewRegisterPhoneActivity.this).getRequestQueue();
+                requestQueue.add(request);
+            }
+        }
+
+        @Override
+        public void onCancel(Platform arg0, int arg1) {
+            // TODO Auto-generated method stub
+            if ((mProgressDialog != null) && mProgressDialog.isShowing()) {
+                mProgressDialog.dismiss();
+            }
+        }
+    };
+
+    private Response.Listener<WeiboLoginRequest.WeiboLoginWrapper> weiboAuthListener = new Response.Listener<WeiboLoginRequest.WeiboLoginWrapper>() {
+        @Override
+        public void onResponse(WeiboLoginRequest.WeiboLoginWrapper response) {
+            if ((mProgressDialog != null) && mProgressDialog.isShowing()) {
+                mProgressDialog.dismiss();
+            }
+
+            try {
+                int isRegistered = response.isRegistered;
+                // 已注册
+                if (isRegistered == 1) {
+                    JSONObject userInfoData = response.UserObject;
+                    LoginUser.getInstance().initFromJSONObject(userInfoData);
+
+                    Bundle extras = new Bundle();
+                    extras.putInt(Constants.IntentKey.ACTIVITY_JUMP_FROM,
+                            JUMP_FROM_LOGIN_ACTIVITY);
+                    MainActivity.startNewActivityAndFinishAllBefore(
+                            NewRegisterPhoneActivity.this, MainActivity.class.getName(),
+                            extras);
+                }
+                // 未注册
+                if (isRegistered == 0) {
+
+                    SharedPreferences.Editor editor = PSGodApplication
+                            .getAppContext()
+                            .getSharedPreferences(Constants.SharedPreferencesKey.NAME,
+                                    Context.MODE_PRIVATE).edit();
+                    editor.putString(Constants.ThirdAuthInfo.THIRD_AUTH_PLATFORM,WEIBOPLAT);
+                    editor.putString(Constants.ThirdAuthInfo.USER_OPENID, mThirdAuthId);
+                    editor.putString(Constants.ThirdAuthInfo.USER_AVATAR, mThirdAuthAvatar);
+                    editor.putString(Constants.ThirdAuthInfo.USER_NICKNAME, mThirdAuthName);
+                    if (android.os.Build.VERSION.SDK_INT >= 9) {
+                        editor.apply();
+                    } else {
+                        editor.commit();
+                    }
+
+                    JSONObject userInfoData = new JSONObject();
+                    userInfoData.put("uid", 0l);
+                    userInfoData.put("nickname", mThirdAuthName);
+                    userInfoData.put("sex", 0);
+                    userInfoData.put("phone", "0");
+                    userInfoData.put("avatar", mThirdAuthAvatar);
+                    userInfoData.put("fans_count", 0);
+                    userInfoData.put("fellow_count", 0);
+                    userInfoData.put("uped_count", 0);
+                    userInfoData.put("ask_count", 0);
+                    userInfoData.put("reply_count", 0);
+                    userInfoData.put("inprogress_count", 0);
+                    userInfoData.put("collection_count", 0);
+                    userInfoData.put("is_bound_weixin", 0);
+                    userInfoData.put("is_bound_qq", 0);
+                    userInfoData.put("is_bound_weibo", 0);
+                    userInfoData.put("city", 1);
+                    userInfoData.put("province", 11);
+
+                    LoginUser.getInstance().initFromJSONObject(userInfoData);
+
+                    Bundle extras = new Bundle();
+                    extras.putInt(Constants.IntentKey.ACTIVITY_JUMP_FROM,
+                            JUMP_FROM_LOGIN_ACTIVITY);
+                    MainActivity.startNewActivityAndFinishAllBefore(
+                            NewRegisterPhoneActivity.this, MainActivity.class.getName(),
+                            extras);
+//					Intent intent = new Intent(LoginActivity.this,
+//							SetInfoActivity.class);
+//
+//					intent.putExtra(
+//							Constants.ThirdAuthInfo.THIRD_AUTH_PLATFORM,
+//							"weibo");
+//					intent.putExtra(Constants.ThirdAuthInfo.USER_OPENID,
+//							mThirdAuthId);
+//					intent.putExtra(Constants.ThirdAuthInfo.USER_NICKNAME,
+//							mThirdAuthName);
+//					intent.putExtra(Constants.ThirdAuthInfo.USER_AVATAR,
+//							mThirdAuthAvatar);
+//
+//					startActivity(intent);
+//					finish();
+                }
+            } catch (Exception e) {
+
+            }
+        }
+
+    };
 
     private Response.Listener<JSONObject> registerListener = new Response.Listener<JSONObject>() {
         @Override
