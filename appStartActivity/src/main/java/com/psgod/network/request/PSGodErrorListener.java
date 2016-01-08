@@ -35,7 +35,6 @@ public abstract class PSGodErrorListener implements ErrorListener {
 //		msg = TextUtils.isEmpty(msg) ? " Empty message" : msg;
 		Logger.log(Logger.LOG_LEVEL_ERROR, Logger.USER_LEVEL_COLOR, tag, msg);
 
-
 		// 错误提示
 		// Utils.showDebugToast("请求失败，请稍后再试");
 		handleError(error);

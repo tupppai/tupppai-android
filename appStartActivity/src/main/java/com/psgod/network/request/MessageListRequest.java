@@ -51,6 +51,7 @@ public class MessageListRequest extends BaseRequest<List<NotificationMessage>> {
 		
 		public static final int MESSAGE_TYPE_LIKE = 0;
 		public static final int MESSAGE_TYPE_SYSTEM = 1;
+		public static final int MESSAGE_TYPE_COMMENT = 2;
 
 		private int type;
 		private int mPage;
@@ -114,6 +115,10 @@ public class MessageListRequest extends BaseRequest<List<NotificationMessage>> {
 			case MESSAGE_TYPE_SYSTEM:
 				sb.append("system");
 				break;
+			case MESSAGE_TYPE_COMMENT:
+				sb.append("comment");
+				break;
+
 			}
 
 			if (mLastUpdated != -1) {

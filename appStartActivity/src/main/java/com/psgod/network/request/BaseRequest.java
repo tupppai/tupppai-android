@@ -108,7 +108,6 @@ public abstract class BaseRequest<T> extends Request<T> {
 					return Response.error(new VolleyError(info));
 				}
 
-
 			} else if (ret == 0) {
 				return Response.error(new VolleyError(info));
 			} else {
