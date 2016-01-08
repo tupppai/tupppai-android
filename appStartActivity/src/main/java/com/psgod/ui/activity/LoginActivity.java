@@ -54,6 +54,9 @@ public class LoginActivity extends PSGodBaseActivity implements
 		Handler.Callback {
 	private final static String TAG = LoginActivity.class.getSimpleName();
 	public static final int JUMP_FROM_LOGIN = 100;
+	private static final String QQPLAT = "qq";
+	private static final String WEIBOPLAT = "weibo";
+	private static final String WEIXINPLAT = "weixin";
 
 	private Button mLoginButton;
 	private EditText mLoginNum;
@@ -167,9 +170,10 @@ public class LoginActivity extends PSGodBaseActivity implements
 							.getAppContext()
 							.getSharedPreferences(Constants.SharedPreferencesKey.NAME,
 									Context.MODE_PRIVATE).edit();
-					editor.putString(Constants.ThirdAuthInfoSharedPreference.QQ_OPEN_ID, mThirdAuthId);
-					editor.putString(Constants.ThirdAuthInfoSharedPreference.QQ_AVATAR_URL, mThirdAuthAvatar);
-					editor.putString(Constants.ThirdAuthInfoSharedPreference.QQ_NICKNAME, mThirdAuthName);
+					editor.putString(Constants.ThirdAuthInfo.THIRD_AUTH_PLATFORM,QQPLAT);
+					editor.putString(Constants.ThirdAuthInfo.USER_OPENID, mThirdAuthId);
+					editor.putString(Constants.ThirdAuthInfo.USER_AVATAR, mThirdAuthAvatar);
+					editor.putString(Constants.ThirdAuthInfo.USER_NICKNAME, mThirdAuthName);
 					if (android.os.Build.VERSION.SDK_INT >= 9) {
 						editor.apply();
 					} else {
@@ -289,9 +293,10 @@ public class LoginActivity extends PSGodBaseActivity implements
 							.getAppContext()
 							.getSharedPreferences(Constants.SharedPreferencesKey.NAME,
 									Context.MODE_PRIVATE).edit();
-					editor.putString(Constants.ThirdAuthInfoSharedPreference.WEIBO_OPEN_ID, mThirdAuthId);
-					editor.putString(Constants.ThirdAuthInfoSharedPreference.WEIBO_AVATAR_URL, mThirdAuthAvatar);
-					editor.putString(Constants.ThirdAuthInfoSharedPreference.WEIBO_NICKNAME, mThirdAuthName);
+					editor.putString(Constants.ThirdAuthInfo.THIRD_AUTH_PLATFORM,WEIBOPLAT);
+					editor.putString(Constants.ThirdAuthInfo.USER_OPENID, mThirdAuthId);
+					editor.putString(Constants.ThirdAuthInfo.USER_AVATAR, mThirdAuthAvatar);
+					editor.putString(Constants.ThirdAuthInfo.USER_NICKNAME, mThirdAuthName);
 					if (android.os.Build.VERSION.SDK_INT >= 9) {
 						editor.apply();
 					} else {
@@ -428,9 +433,10 @@ public class LoginActivity extends PSGodBaseActivity implements
 								.getAppContext()
 								.getSharedPreferences(Constants.SharedPreferencesKey.NAME,
 										Context.MODE_PRIVATE).edit();
-						editor.putString(Constants.ThirdAuthInfoSharedPreference.WEIXIN_OPEN_ID, mThirdAuthId);
-						editor.putString(Constants.ThirdAuthInfoSharedPreference.WEIXIN_AVATAR_URL, mThirdAuthAvatar);
-						editor.putString(Constants.ThirdAuthInfoSharedPreference.WEIXIN_NICKNAME, mThirdAuthName);
+						editor.putString(Constants.ThirdAuthInfo.THIRD_AUTH_PLATFORM,WEIXINPLAT);
+						editor.putString(Constants.ThirdAuthInfo.USER_OPENID, mThirdAuthId);
+						editor.putString(Constants.ThirdAuthInfo.USER_AVATAR, mThirdAuthAvatar);
+						editor.putString(Constants.ThirdAuthInfo.USER_NICKNAME, mThirdAuthName);
 						if (android.os.Build.VERSION.SDK_INT >= 9) {
 							editor.apply();
 						} else {

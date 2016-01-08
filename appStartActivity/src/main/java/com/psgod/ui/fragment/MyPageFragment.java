@@ -28,6 +28,7 @@ import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response.Listener;
+import com.android.volley.VolleyError;
 import com.nineoldandroids.view.ViewHelper;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.psgod.PsGodImageLoader;
@@ -45,6 +46,7 @@ import com.psgod.eventbus.UpdateTabStatusEvent;
 import com.psgod.model.LoginUser;
 import com.psgod.model.User;
 import com.psgod.network.request.GetUserInfoRequest;
+import com.psgod.network.request.PSGodErrorListener;
 import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.ui.activity.EditProfileActivity;
 import com.psgod.ui.activity.FollowerListActivity;
@@ -114,7 +116,7 @@ public class MyPageFragment extends Fragment implements
         if ((dialog != null) || (!dialog.isShowing())) {
             dialog.show();
         }
-//        initMyFragmentData();
+        initMyFragmentData();
     }
 
     public void onEventMainThread(InitEvent event) {
@@ -220,7 +222,7 @@ public class MyPageFragment extends Fragment implements
 //		if (Constants.HAS_CHANGE_PHOTO == true) {
 //			initMyFragmentData();
 //		}
-        initMyFragmentData();
+//        initMyFragmentData();
 
         int mMessageCount = UserPreferences.PushMessage
                 .getPushMessageCount(UserPreferences.PushMessage.PUSH_COMMENT)
@@ -285,7 +287,15 @@ public class MyPageFragment extends Fragment implements
         }
         // 请求后台用户数据进行更新
         GetUserInfoRequest.Builder builder = new GetUserInfoRequest.Builder()
-                .setListener(getUserInfoListener);
+                .setListener(getUserInfoListener)
+                .setErrorListener(new PSGodErrorListener() {
+                    @Override
+                    public void handleError(VolleyError error) {
+                        if ((dialog != null) && (dialog.isShowing())) {
+                            dialog.dismiss();
+                        }
+                    }
+                });
 
         GetUserInfoRequest request = builder.build();
         request.setTag(TAG);

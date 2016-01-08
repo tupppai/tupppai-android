@@ -86,7 +86,7 @@ public abstract class BaseRequest<T> extends Request<T> {
 					intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 					intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 					PSGodApplication.getAppContext().startActivity(intent);
-					return Response.error(new VolleyError("请输入手机号"));
+					return Response.error(new VolleyError("ThirdLogin"));
 				} else {
 					// ret=2表示token失效 需重新验证
 					UserPreferences.TokenVerify.setToken(""); // 将本地token清空

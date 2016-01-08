@@ -147,20 +147,6 @@ public class Constants {
 		String USER_AVATAR = "UserAvatar";
 	}
 
-	public static interface  ThirdAuthInfoSharedPreference {
-		String WEIBO_NICKNAME = "WeiBoNickName";
-		String WEIBO_AVATAR_URL = "WeiBoAvatarUrl";
-		String WEIBO_OPEN_ID = "WeiBoOpenId";
-
-		String WEIXIN_NICKNAME = "WeixinNickName";
-		String WEIXIN_AVATAR_URL = "WeixinAvatarUrl";
-		String WEIXIN_OPEN_ID = "WeixinOpenId";
-
-		String QQ_NICKNAME = "QQNickName";
-		String QQ_AVATAR_URL = "QQAvatarUrl";
-		String QQ_OPEN_ID = "QQOpenId";
-	}
-
 	public static interface IntentKey {
 		String PHOTO_ITEM_TYPE = "PhotoItemType";
 		String USER_ID = "UserId";

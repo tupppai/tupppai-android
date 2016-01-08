@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -20,6 +22,7 @@ import com.psgod.PSGodToast;
 import com.psgod.R;
 import com.psgod.Utils;
 import com.psgod.WeakReferenceHandler;
+import com.psgod.eventbus.AvatarEvent;
 import com.psgod.model.LoginUser;
 import com.psgod.model.RegisterData;
 import com.psgod.network.request.GetVerifyCodeRequest;
@@ -30,8 +33,12 @@ import com.psgod.ui.widget.dialog.CustomProgressingDialog;
 
 import org.json.JSONObject;
 
+import de.greenrobot.event.EventBus;
+
 /**
  * Created by pires on 16/1/7.
+ *
+ * 绑定手机号
  */
 public class BindPhoneActivity extends PSGodBaseActivity {
 
@@ -43,6 +50,7 @@ public class BindPhoneActivity extends PSGodBaseActivity {
 
     private RegisterData mRegisterData = new RegisterData();
 
+    private ImageView mBackBtn;
     private EditText mPhoneText;
     private EditText mCodeText;
     private EditText mPasswdText;
@@ -52,15 +60,24 @@ public class BindPhoneActivity extends PSGodBaseActivity {
     private int mLeftTime = RESEND_TIME_IN_SEC;
     private WeakReferenceHandler mHandler = new WeakReferenceHandler(this);
     private CustomProgressingDialog mProgressDialog;
+    private String mPhoneNum;
 
     @Override
     public void onCreate(Bundle savedInstancestate) {
         super.onCreate(savedInstancestate);
         setContentView(R.layout.activity_bind_phone);
         mContext = this;
+        mPhoneNum = getIntent().getStringExtra(PHONE);
 
         initViews();
         initEvents();
+
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                callInputPanel();
+            }
+        }, 200);
     }
 
     private void initEvents() {
@@ -111,9 +128,7 @@ public class BindPhoneActivity extends PSGodBaseActivity {
             @Override
             public void onClick(View view) {
                 if (validate()) {
-                    SharedPreferences sp = PSGodApplication.getAppContext()
-                            .getSharedPreferences(Constants.SharedPreferencesKey.NAME,
-                                    Context.MODE_PRIVATE);
+
                     // 显示等待对话框
                     if (mProgressDialog == null) {
                         mProgressDialog = new CustomProgressingDialog(
@@ -123,13 +138,17 @@ public class BindPhoneActivity extends PSGodBaseActivity {
                         mProgressDialog.show();
                     }
 
-                    String qqOpenId = sp.getString(Constants.ThirdAuthInfoSharedPreference.QQ_OPEN_ID, "");
-                    if (!TextUtils.isEmpty(qqOpenId)) {
-                        mRegisterData.setOpenId(sp.getString(Constants.ThirdAuthInfoSharedPreference.QQ_OPEN_ID, ""));
-                        mRegisterData.setThirdAvatar(sp.getString(Constants.ThirdAuthInfoSharedPreference.QQ_AVATAR_URL, ""));
-                        mRegisterData.setNickname(sp.getString(Constants.ThirdAuthInfoSharedPreference.QQ_NICKNAME, ""));
+                    SharedPreferences sp = PSGodApplication.getAppContext()
+                            .getSharedPreferences(Constants.SharedPreferencesKey.NAME,
+                                    Context.MODE_PRIVATE);
+                    String thirdAuthType = sp.getString(Constants.ThirdAuthInfo.THIRD_AUTH_PLATFORM, "qq");
+                    String openId = sp.getString(Constants.ThirdAuthInfo.USER_OPENID, "");
+                    if (!TextUtils.isEmpty(openId)) {
+                        mRegisterData.setOpenId(openId);
+                        mRegisterData.setThirdAvatar(sp.getString(Constants.ThirdAuthInfo.USER_AVATAR, ""));
+                        mRegisterData.setNickname(sp.getString(Constants.ThirdAuthInfo.USER_NICKNAME, ""));
 
-                        mRegisterData.setThirdAuthType("qq");
+                        mRegisterData.setThirdAuthType(thirdAuthType);
                         mRegisterData.setPhoneNumber(mPhoneText.getText().toString());
                         mRegisterData.setPassword(mPasswdText.getText().toString());
                         mRegisterData.setVerifyCode(mCodeText.getText().toString());
@@ -139,12 +158,20 @@ public class BindPhoneActivity extends PSGodBaseActivity {
                                 .setListener(new Response.Listener<JSONObject>() {
                                     @Override
                                     public void onResponse(JSONObject data) {
-                                        showToast(new PSGodToast("绑定QQ成功"));
+                                        showToast(new PSGodToast("绑定成功"));
+                                        // 更新tab头像
+                                        EventBus.getDefault().post(new AvatarEvent());
 
                                         if (data != null) {
                                             // 存储服务端返回的用户信息到sp
                                             LoginUser.getInstance().initFromJSONObject(data);
                                         }
+
+                                        if ((mProgressDialog != null) && (mProgressDialog.isShowing())) {
+                                            mProgressDialog.dismiss();
+                                        }
+
+                                        BindPhoneActivity.this.finish();
                                     }
                                 });
                         RegisterRequest request = builder.build();
@@ -154,84 +181,23 @@ public class BindPhoneActivity extends PSGodBaseActivity {
                                 .getRequestQueue();
                         requestQueue.add(request);
                     }
-
-                    String weixinOpenId = sp.getString(Constants.ThirdAuthInfoSharedPreference.WEIXIN_OPEN_ID, "");
-                    if (!TextUtils.isEmpty(weixinOpenId)) {
-                        mRegisterData.setOpenId(sp.getString(Constants.ThirdAuthInfoSharedPreference.WEIXIN_OPEN_ID, ""));
-                        mRegisterData.setThirdAvatar(sp.getString(Constants.ThirdAuthInfoSharedPreference.WEIXIN_AVATAR_URL, ""));
-                        mRegisterData.setNickname(sp.getString(Constants.ThirdAuthInfoSharedPreference.WEIXIN_NICKNAME, ""));
-
-                        mRegisterData.setThirdAuthType("weixin");
-                        mRegisterData.setPhoneNumber(mPhoneText.getText().toString());
-                        mRegisterData.setPassword(mPasswdText.getText().toString());
-                        mRegisterData.setVerifyCode(mCodeText.getText().toString());
-                        RegisterRequest.Builder builder = new RegisterRequest.Builder()
-                                .setRegisterData(mRegisterData)
-                                .setErrorListener(errorListener)
-                                .setListener(new Response.Listener<JSONObject>() {
-                                    @Override
-                                    public void onResponse(JSONObject data) {
-                                        showToast(new PSGodToast("绑定微信成功"));
-
-                                        if (data != null) {
-                                            // 存储服务端返回的用户信息到sp
-                                            LoginUser.getInstance().initFromJSONObject(data);
-                                        }
-                                    }
-                                });
-                        RegisterRequest request = builder.build();
-                        request.setTag(TAG);
-                        RequestQueue requestQueue = PSGodRequestQueue
-                                .getInstance(BindPhoneActivity.this)
-                                .getRequestQueue();
-                        requestQueue.add(request);
-                    }
-
-                    String weiboOpenId = sp.getString(Constants.ThirdAuthInfoSharedPreference.WEIBO_OPEN_ID, "");
-                    if (!TextUtils.isEmpty(weiboOpenId)) {
-                        mRegisterData.setOpenId(sp.getString(Constants.ThirdAuthInfoSharedPreference.WEIBO_OPEN_ID, ""));
-                        mRegisterData.setThirdAvatar(sp.getString(Constants.ThirdAuthInfoSharedPreference.WEIBO_AVATAR_URL, ""));
-                        mRegisterData.setNickname(sp.getString(Constants.ThirdAuthInfoSharedPreference.WEIBO_NICKNAME, ""));
-
-                        mRegisterData.setThirdAuthType("weibo");
-                        mRegisterData.setPhoneNumber(mPhoneText.getText().toString());
-                        mRegisterData.setPassword(mPasswdText.getText().toString());
-                        mRegisterData.setVerifyCode(mCodeText.getText().toString());
-                        RegisterRequest.Builder builder = new RegisterRequest.Builder()
-                                .setRegisterData(mRegisterData)
-                                .setErrorListener(errorListener)
-                                .setListener(new Response.Listener<JSONObject>() {
-                                    @Override
-                                    public void onResponse(JSONObject data) {
-                                        showToast(new PSGodToast("绑定微博成功"));
-
-                                        if (data != null) {
-                                            // 存储服务端返回的用户信息到sp
-                                            LoginUser.getInstance().initFromJSONObject(data);
-                                        }
-                                    }
-                                });
-                        RegisterRequest request = builder.build();
-                        request.setTag(TAG);
-                        RequestQueue requestQueue = PSGodRequestQueue
-                                .getInstance(BindPhoneActivity.this)
-                                .getRequestQueue();
-                        requestQueue.add(request);
-                    }
-
-                    if ((mProgressDialog != null) && (mProgressDialog.isShowing())) {
-                        mProgressDialog.dismiss();
-                    }
-
-                    BindPhoneActivity.this.finish();
 
                 }
+            }
+        });
+
+        mBackBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                BindPhoneActivity.this.finish();
             }
         });
     }
 
     private void initViews() {
+        mBackBtn = (ImageView) findViewById(R.id.ic_back);
         mPhoneText = (EditText) findViewById(R.id.input_phone);
+        mPhoneText.setText(mPhoneNum);
         mCodeText = (EditText) findViewById(R.id.verify_code);
         mPasswdText = (EditText) findViewById(R.id.input_passwd);
         mResendButton = (Button) findViewById(R.id.get_verify_code);
@@ -290,6 +256,15 @@ public class BindPhoneActivity extends PSGodBaseActivity {
         return true;
     }
 
+    private void callInputPanel() {
+        // 唤起输入键盘 并输入框取得焦点
+        mCodeText.setFocusableInTouchMode(true);
+        mCodeText.requestFocus();
+
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(mCodeText, 0);
+    }
+
     // 获取到验证码
     private Response.Listener<Boolean> getVerifyCodeListener = new Response.Listener<Boolean>() {
         @Override
@@ -307,6 +282,7 @@ public class BindPhoneActivity extends PSGodBaseActivity {
             if ((mProgressDialog != null) && mProgressDialog.isShowing()) {
                 mProgressDialog.dismiss();
             }
+            Toast.makeText(mContext,"绑定失败", Toast.LENGTH_SHORT).show();
         }
 
     };
