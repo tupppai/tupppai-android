@@ -241,7 +241,8 @@ public class RecentActActivity extends PSGodBaseActivity {
 //                    startActivity(intent);
 
                     mImageSelectDialog = new ImageSelectDialog(RecentActActivity.this,
-                            ImageSelectDialog.SHOW_TYPE_REPLY);
+                            mAct.getId(), mAct.getAsk_id(),
+                            ImageSelectDialog.SHOW_TYPE_ACTIVITY);
                     mImageSelectDialog.show();
                 }
             }

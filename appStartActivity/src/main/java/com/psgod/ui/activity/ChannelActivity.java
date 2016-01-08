@@ -3,12 +3,15 @@ package com.psgod.ui.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -25,6 +28,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.psgod.Constants;
 import com.psgod.CustomToast;
 import com.psgod.R;
+import com.psgod.Utils;
 import com.psgod.model.ActivitiesAct;
 import com.psgod.model.Channel;
 import com.psgod.model.PhotoItem;
@@ -38,6 +42,7 @@ import com.psgod.ui.view.PhotoItemView;
 import com.psgod.ui.widget.FloatScrollHelper;
 import com.psgod.ui.widget.dialog.CameraPopupwindow;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
+import com.psgod.ui.widget.dialog.ImageSelectDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,7 +91,9 @@ public class ChannelActivity extends PSGodBaseActivity {
     //    private LinearLayout mEmptyView;
 //    private TextView mEmptyTxt;
     private RelativeLayout mParent;
-    private ImageView mUpload;
+    private LinearLayout mUpload;
+    private TextView mUploadLeft;
+    private TextView mUploadRight;
 
     private void initView() {
         progressingDialog = new CustomProgressingDialog(this);
@@ -117,15 +124,39 @@ public class ChannelActivity extends PSGodBaseActivity {
 //        mEmptyView = (LinearLayout) findViewById(R.id.activity_channal_empty_view);
         Intent intent = getIntent();
         id = intent.getStringExtra(INTENT_ID);
-        mUpload = new ImageView(this);
-        mUpload.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        mUpload.setImageDrawable(getResources().getDrawable(R.mipmap.floating_btn));
+//        mUpload = new ImageView(this);
+//        mUpload.setScaleType(ImageView.ScaleType.CENTER_CROP);
+//        mUpload.setImageDrawable(getResources().getDrawable(R.mipmap.floating_btn));
+        mUpload = new LinearLayout(this);
+        RelativeLayout.LayoutParams uploadParams = new RelativeLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,Utils.dpToPx(this,44)
+        );
+        mUpload.setLayoutParams(uploadParams);
+        mUploadLeft = new TextView(this);
+        mUploadRight = new TextView(this);
+        LinearLayout.LayoutParams leftRigthParams = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        leftRigthParams.weight = 1;
+        mUploadLeft.setLayoutParams(leftRigthParams);
+        mUploadLeft.setGravity(Gravity.CENTER);
+        mUploadLeft.setTextSize(14);
+        mUploadLeft.setTextColor(Color.parseColor("#ffffff"));
+        mUploadLeft.setText("我要求P");
+        mUploadLeft.setBackgroundColor(Color.parseColor("#e04a4a4a"));
+        mUploadRight.setLayoutParams(leftRigthParams);
+        mUploadRight.setGravity(Gravity.CENTER);
+        mUploadRight.setTextSize(14);
+        mUploadRight.setTextColor(Color.parseColor("#000000"));
+        mUploadRight.setText("发布作品");
+        mUploadRight.setBackgroundColor(Color.parseColor("#e0ffef00"));
+        mUpload.addView(mUploadLeft);
+        mUpload.addView(mUploadRight);
         FloatScrollHelper helper = new FloatScrollHelper(mList, mParent, mUpload, this);
-        helper.setViewHeight(80);
+        helper.setViewHeight(44);
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
 //            helper.setViewMarginsV19(12);
 //        } else {
-        helper.setViewMargins(12);
+        helper.setViewMargins(0);
 //        }
         helper.init();
 
@@ -290,15 +321,28 @@ public class ChannelActivity extends PSGodBaseActivity {
             }
         });
 
-        mUpload.setOnClickListener(new View.OnClickListener() {
+        mUploadLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CameraPopupwindow popupwindow = new CameraPopupwindow(ChannelActivity.this, id);
-                popupwindow.showCameraPopupwindow(mParent);
+//                CameraPopupwindow popupwindow = new CameraPopupwindow(ChannelActivity.this, id);
+//                popupwindow.showCameraPopupwindow(mParent);
+
+                mImageSelectDialog = new ImageSelectDialog(ChannelActivity.this,id,
+                        ImageSelectDialog.SHOW_TYPE_ASK);
+                mImageSelectDialog.show();
 //                Intent intent = new Intent(ChannelActivity.this,
 //                        UploadSelectReplyListActivity.class);
 //                intent.putExtra("channel_id" , id);
 //                startActivity(intent);
+            }
+        });
+
+        mUploadRight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mImageSelectDialog = new ImageSelectDialog(ChannelActivity.this,id,
+                        ImageSelectDialog.SHOW_TYPE_REPLY);
+                mImageSelectDialog.show();
             }
         });
     }

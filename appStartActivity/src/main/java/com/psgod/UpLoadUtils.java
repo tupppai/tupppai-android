@@ -17,6 +17,7 @@ import com.psgod.network.request.UploadImageRequest;
 import com.psgod.network.request.UploadMultiRequest;
 import com.psgod.ui.activity.ChannelActivity;
 import com.psgod.ui.activity.MultiImageSelectActivity;
+import com.psgod.ui.activity.PSGodBaseActivity;
 import com.psgod.ui.activity.RecentActActivity;
 import com.psgod.ui.activity.RecentAsksActivity;
 import com.psgod.ui.activity.RecentWorkActivity;
@@ -35,7 +36,7 @@ public class UpLoadUtils {
 
     private static UpLoadUtils upLoadUtils;
 
-    private Context mContext;
+    private PSGodBaseActivity mContext;
     private String descTxt;
     private List<String> pathList;
     private CustomProgressingDialog mProgressDialog;
@@ -60,7 +61,7 @@ public class UpLoadUtils {
 
     }
 
-    public static UpLoadUtils getInstance(Context context) {
+    public static UpLoadUtils getInstance(PSGodBaseActivity context) {
         if (upLoadUtils == null) {
             upLoadUtils = new UpLoadUtils();
         }
@@ -74,9 +75,10 @@ public class UpLoadUtils {
         descTxt = dsec;
         this.pathList = pathList;
         this.mAskId = askId;
-        switch (uploadType){
+        switch (uploadType) {
             case TYPE_ASK_UPLOAD:
                 this.uploadType = UploadMultiRequest.TYPE_ASK_UPLOAD;
+                mChannelId = categoryId;
                 break;
             case TYPE_ACTIVITY_UPLOAD:
                 this.uploadType = UploadMultiRequest.TYPE_REPLY_UPLOAD;
@@ -87,7 +89,6 @@ public class UpLoadUtils {
                 mChannelId = categoryId;
                 break;
         }
-        this.uploadType = uploadType;
         // 显示等待对话框
         if (!mProgressDialog.isShowing()) {
             mProgressDialog.show();
@@ -152,7 +153,6 @@ public class UpLoadUtils {
                         .setUploadIdList(mUploadIdList)
                         .setRatioList(mImageRatioList).setAskId(mAskId)
                         .setActivityId(mActivityId).setChannelId(mChannelId)
-                        .setLabelIdList(mSelectLabelIds)
                         .setScaleList(mImageScaleList).setListener(uploadListener)
                         .setErrorListener(errorListener);
 
@@ -176,7 +176,6 @@ public class UpLoadUtils {
                         .setUploadIdList(mUploadIdList)
                         .setRatioList(mImageRatioList).setAskId(mAskId)
                         .setActivityId(mActivityId).setChannelId(mChannelId)
-                        .setLabelIdList(mSelectLabelIds)
                         .setScaleList(mImageScaleList).setListener(uploadListener)
                         .setErrorListener(errorListener);
 
@@ -196,7 +195,7 @@ public class UpLoadUtils {
 
             Toast.makeText(mContext, "上传成功", Toast.LENGTH_SHORT).show();
 
-            if (IMAGE_UPLOAD_TYPE == TYPE_ASK_UPLOAD) {
+            if (uploadType == UploadMultiRequest.TYPE_ASK_UPLOAD) {
                 // 新建求P成功后跳转最新求p 页面
 //                Intent intent = new Intent(UploadMultiImageActivity.this,
 //                        MainActivity.class);
@@ -210,15 +209,13 @@ public class UpLoadUtils {
                 EventBus.getDefault().post(new MyPageRefreshEvent(MyPageRefreshEvent.ASK));
                 Intent intent = new Intent();
                 intent.putExtra("isRefresh", true);
-                if (isAsk) {
-                    intent.setClass(UploadMultiImageActivity.this, RecentAsksActivity.class);
-                } else {
-                    intent.setClass(UploadMultiImageActivity.this, ChannelActivity.class);
-                }
                 if (mChannelId != null && !mChannelId.equals("")) {
                     intent.putExtra("id", mChannelId);
+                    intent.setClass(mContext, ChannelActivity.class);
+                } else {
+                    intent.setClass(mContext, RecentAsksActivity.class);
                 }
-                startActivity(intent);
+                mContext.startActivity(intent);
             } else {
                 // 新建作品成功后跳转最新作品 页面
 //                Intent intent = new Intent(UploadMultiImageActivity.this,
@@ -234,19 +231,18 @@ public class UpLoadUtils {
                 Intent intent = new Intent();
                 intent.putExtra("isRefresh", true);
                 if (mActivityId != null && !mActivityId.equals("")) {
-                    intent.setClass(UploadMultiImageActivity.this, RecentActActivity.class);
+                    intent.setClass(mContext, RecentActActivity.class);
                     intent.putExtra("id", mActivityId);
                 } else if (mChannelId != null && !mChannelId.equals("")) {
-                    intent.setClass(UploadMultiImageActivity.this, ChannelActivity.class);
+                    intent.setClass(mContext, ChannelActivity.class);
                     intent.putExtra("id", mChannelId);
                 } else {
-                    intent.setClass(UploadMultiImageActivity.this, RecentWorkActivity.class);
+                    intent.setClass(mContext, RecentWorkActivity.class);
                 }
-                startActivity(intent);
+                mContext.startActivity(intent);
             }
             EventBus.getDefault().post(new RefreshEvent(TupppaiFragment.class.getName()));
             EventBus.getDefault().post(new RefreshEvent(MultiImageSelectActivity.class.getName()));
-            UploadMultiImageActivity.this.finish();
         }
     };
 

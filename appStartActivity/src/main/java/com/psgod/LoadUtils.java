@@ -37,6 +37,7 @@ public class LoadUtils implements Handler.Callback {
     private WeakReferenceHandler mHandler = new WeakReferenceHandler(this);
     private boolean isSimple = false;
 
+    //是否需要弹出进度条
     public LoadUtils isSimple(boolean isSimple){
         this.isSimple = isSimple;
         return this;

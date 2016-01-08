@@ -2,6 +2,7 @@ package com.psgod.ui.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,19 +52,44 @@ public class MultiImageSelectRecyclerAdapter extends RecyclerView.Adapter<MultiI
      *
      * @param image
      */
-    public void select(SelectImage image) {
+
+    long timeOne;
+    long timeSecond;
+
+    public boolean select(SelectImage image) {
+
         if (mSelectedImages.contains(image)) {
             mSelectedImages.remove(image);
+            notifyDataSetChanged();
+            return true;
         } else {
             if (mSelectedImages.size() >= 2 && uploadType == TYPE_ASK) {
-                CustomToast.show(mContext, "求P最多只能选择2张图片哦~", Toast.LENGTH_SHORT);
+                if (timeOne == 0) {
+                    timeOne = System.currentTimeMillis();
+                } else {
+                    timeSecond = System.currentTimeMillis();
+                }
+                if (timeSecond - timeOne > 1000 || timeSecond == 0) {
+                    CustomToast.show(mContext, "求P最多只能选择2张图片哦~", Toast.LENGTH_SHORT);
+                    timeOne = 0;
+                }
             } else if (mSelectedImages.size() >= 1 && uploadType == TYPE_REPLY) {
-                CustomToast.show(mContext, "作品最多只能选择1张图片哦~", Toast.LENGTH_SHORT);
+                if (timeOne == 0) {
+                    timeOne = System.currentTimeMillis();
+                } else {
+                    timeSecond = System.currentTimeMillis();
+                }
+                if (timeSecond - timeOne > 1000  || timeSecond == 0) {
+                    CustomToast.show(mContext, "作品最多只能选择1张图片哦~", Toast.LENGTH_SHORT);
+                    timeOne = 0;
+                }
             } else {
                 mSelectedImages.add(image);
+                notifyDataSetChanged();
+                return true;
             }
         }
-        notifyDataSetChanged();
+        return false;
     }
 
     public void setUploadType(int uploadType) {
@@ -164,7 +190,7 @@ public class MultiImageSelectRecyclerAdapter extends RecyclerView.Adapter<MultiI
             holder.imageArea.setVisibility(View.VISIBLE);
             holder.bangArea.setVisibility(View.INVISIBLE);
             holder.bindData(mImages.get(position));
-            holder.itemView.setTag(R.id.tupppai_view_id, position);
+            holder.itemView.setTag(R.id.tupppai_view_id, mImages.get(position));
             holder.itemView.setOnClickListener(imageClick);
         }
     }
@@ -178,9 +204,8 @@ public class MultiImageSelectRecyclerAdapter extends RecyclerView.Adapter<MultiI
     private View.OnClickListener imageClick = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Integer position = (Integer) view.getTag(R.id.tupppai_view_id);
-            select(mImages.get(position));
-            if (onImageClickListener != null) {
+            SelectImage image = (SelectImage) view.getTag(R.id.tupppai_view_id);
+            if (onImageClickListener != null && select(image)) {
                 onImageClickListener.onImageClick(view, mSelectedImages);
             }
         }

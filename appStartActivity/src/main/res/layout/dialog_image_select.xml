@@ -44,6 +44,17 @@
             android:layout_height="202dp"
             android:background="#f2f2f2" />
 
+        <TextView
+            android:id="@+id/dialog_image_select_empty"
+            android:layout_width="match_parent"
+            android:layout_height="202dp"
+            android:gravity="center"
+            android:textSize="20dp"
+            android:visibility="gone"
+            android:textColor="@color/color_aa000000"
+            android:text="你还没有求P任务，快去添加一个吧~"
+            />
+
         <ImageView
             android:id="@+id/dialog_image_select_img_thumb"
             android:layout_width="match_parent"

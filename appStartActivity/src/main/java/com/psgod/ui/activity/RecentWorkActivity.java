@@ -3,15 +3,20 @@ package com.psgod.ui.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -24,6 +29,7 @@ import com.psgod.Constants;
 import com.psgod.Logger;
 import com.psgod.R;
 import com.psgod.ThreadManager;
+import com.psgod.Utils;
 import com.psgod.WeakReferenceHandler;
 import com.psgod.db.DatabaseHelper;
 import com.psgod.eventbus.RefreshEvent;
@@ -37,6 +43,7 @@ import com.psgod.ui.view.PhotoItemView;
 import com.psgod.ui.widget.FloatScrollHelper;
 import com.psgod.ui.widget.dialog.CameraPopupwindow;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
+import com.psgod.ui.widget.dialog.ImageSelectDialog;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -56,7 +63,7 @@ public class RecentWorkActivity extends PSGodBaseActivity implements Handler.Cal
     private Dao<PhotoItem, Long> mPhotoItemDao;
     private WeakReferenceHandler mHandler = new WeakReferenceHandler(this);
     private ImageView finishImg;
-    private ImageView mUpload;
+    private TextView mUpload;
     private RelativeLayout mParent;
 
     // 带评论
@@ -120,16 +127,24 @@ public class RecentWorkActivity extends PSGodBaseActivity implements Handler.Cal
 
         mViewHolder.mPhotoListView.setScrollingWhileRefreshingEnabled(true);
 
-        mUpload = new ImageView(this);
-        mUpload.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        mUpload.setImageDrawable(getResources().getDrawable(R.mipmap.floating_btn));
+        mUpload = new TextView(this);
+//        mUpload.setScaleType(ImageView.ScaleType.CENTER_CROP);
+//        mUpload.setImageDrawable(getResources().getDrawable(R.mipmap.floating_btn));
+        RelativeLayout.LayoutParams leftRigthParams = new RelativeLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, Utils.dpToPx(this,44));
+        mUpload.setLayoutParams(leftRigthParams);
+        mUpload.setGravity(Gravity.CENTER);
+        mUpload.setTextSize(14);
+        mUpload.setTextColor(Color.parseColor("#000000"));
+        mUpload.setText("发布作品");
+        mUpload.setBackgroundColor(Color.parseColor("#e0ffef00"));
         FloatScrollHelper helper = new FloatScrollHelper(
                 mViewHolder.mPhotoListView, mParent, mUpload, this);
-        helper.setViewHeight(80);
+        helper.setViewHeight(44);
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
 //            helper.setViewMargins(32);
 //        }else {
-        helper.setViewMargins(12);
+        helper.setViewMargins(0);
 //        }
         helper.init();
 
@@ -151,12 +166,15 @@ public class RecentWorkActivity extends PSGodBaseActivity implements Handler.Cal
         mUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(RecentWorkActivity.this,
-                        UploadSelectReplyListActivity.class);
-                // bundle.putString("SelectType",
-                // MultiImageSelectActivity.TYPE_REPLY_SELECT);
-                // intent.putExtras(bundle);
-                startActivity(intent);
+//                Intent intent = new Intent(RecentWorkActivity.this,
+//                        UploadSelectReplyListActivity.class);
+//                // bundle.putString("SelectType",
+//                // MultiImageSelectActivity.TYPE_REPLY_SELECT);
+//                // intent.putExtras(bundle);
+//                startActivity(intent);
+                mImageSelectDialog = new ImageSelectDialog(RecentWorkActivity.this,
+                        ImageSelectDialog.SHOW_TYPE_REPLY);
+                mImageSelectDialog.show();
             }
         });
     }

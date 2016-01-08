@@ -30,8 +30,10 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.psgod.Constants;
 import com.psgod.CustomToast;
+import com.psgod.LoadUtils;
 import com.psgod.PsGodImageLoader;
 import com.psgod.R;
+import com.psgod.UpLoadUtils;
 import com.psgod.Utils;
 import com.psgod.WeakReferenceHandler;
 import com.psgod.model.FileUtils;
@@ -55,9 +57,11 @@ import java.util.concurrent.Executors;
  */
 public class ImageSelectDialog extends Dialog implements Handler.Callback {
 
-    private long categoryid = -1;
+    private String categoryid = "";
+    //活动需要手动传askid
+    private String askId = "";
     private int showType;
-    private Context mContext;
+    private PSGodBaseActivity mContext;
 
     private List<PhotoItem> mPhotoItems = new ArrayList<>();
     private RelativeLayout mView;
@@ -73,6 +77,7 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
     private ImageView mImageimg;
     private EditText mEdit;
     private TextView mUpTxt;
+    private View mEnpty;
 
     private MultiImageSelectRecyclerAdapter mAdapter;
     private List<SelectImage> selectResultImages = new ArrayList<SelectImage>();
@@ -93,15 +98,23 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
     public static final int CAMERA = 500;
     private File cameraImage;
 
-    public ImageSelectDialog(Context context, int showType) {
+    public ImageSelectDialog(PSGodBaseActivity context, int showType) {
         super(context, R.style.ImageSelectDialog);
         mContext = context;
         this.showType = showType;
     }
 
-    public ImageSelectDialog(Context context, long categoryid, int showType) {
+    public ImageSelectDialog(PSGodBaseActivity context, String categoryid, int showType) {
         super(context, R.style.ImageSelectDialog);
         this.categoryid = categoryid;
+        mContext = context;
+        this.showType = showType;
+    }
+
+    public ImageSelectDialog(PSGodBaseActivity context, String categoryid, String askId, int showType) {
+        super(context, R.style.ImageSelectDialog);
+        this.categoryid = categoryid;
+        this.askId = askId;
         mContext = context;
         this.showType = showType;
     }
@@ -154,7 +167,7 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
         selectResultImages.add(0, image);
         images.add(0, image);
         mAdapter.setDefaultSelected(selectResultImages);
-        ((PSGodBaseActivity) mContext).
+        mContext.
                 getSupportLoaderManager().initLoader(0, null, mLoaderCallback);
         mAdapter.notifyDataSetChanged();
         showPreview();
@@ -182,6 +195,7 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
         mImageimg = (ImageView) mView.findViewById(R.id.widge_image_select_image_img);
         mEdit = (EditText) mView.findViewById(R.id.widge_image_select_edit);
         mUpTxt = (TextView) mView.findViewById(R.id.widge_image_select_up);
+        mEnpty = mView.findViewById(R.id.dialog_image_select_empty);
 
         mNumTxt.setText(String.valueOf(selectResultImages.size()));
         mImageArea.setLayoutManager(new LinearLayoutManager(mContext,
@@ -266,7 +280,6 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
             mNumTxt.setVisibility(View.VISIBLE);
             mAlbumTxt.setVisibility(View.VISIBLE);
             mPhotoTxt.setVisibility(View.VISIBLE);
-            mSureTxt.setText("确定");
             if (showType == SHOW_TYPE_ACTIVITY) {
                 mPhotoTxt.setVisibility(View.INVISIBLE);
             }
@@ -308,6 +321,16 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
                 mPhotoTxt.setVisibility(View.INVISIBLE);
                 mAlbumTxt.setVisibility(View.INVISIBLE);
                 mSureTxt.setVisibility(View.GONE);
+                UserPhotoRequest.Builder builder = new UserPhotoRequest.Builder()
+                        .setType(2).setPage(0)
+                        .setListener(refreshListener);
+                if (categoryid != null && !categoryid.equals("")) {
+                    builder.setChannelId(categoryid + "");
+                }
+                UserPhotoRequest request = builder.build();
+                RequestQueue requestQueue = PSGodRequestQueue.getInstance(mContext)
+                        .getRequestQueue();
+                requestQueue.add(request);
                 hideInputPanel();
                 fixedThreadPool.execute(new Runnable() {
                     @Override
@@ -341,6 +364,9 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
             @Override
             public void onImageClick(View view, List<SelectImage> selectImages) {
                 mNumTxt.setText(String.valueOf(selectImages.size()));
+                selectResultImages.clear();
+                selectResultImages.addAll(selectImages);
+                showPreview();
             }
         });
 
@@ -348,9 +374,7 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
             @Override
             public void onClick(View view) {
                 //点击确定时，才填充选择list
-                selectResultImages.clear();
-                selectResultImages.addAll(mAdapter.getSelectedImages());
-                showPreview();
+
             }
         });
 
@@ -373,7 +397,7 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
                 if (cameraIntent.resolveActivity(mContext.getPackageManager()) != null) {
                     cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT,
                             Uri.fromFile(cameraImage));
-                    ((PSGodBaseActivity) mContext).startActivityForResult(cameraIntent, CAMERA);
+                    mContext.startActivityForResult(cameraIntent, CAMERA);
                 } else {
                     Toast.makeText(mContext, "没有相机", Toast.LENGTH_SHORT).show();
                 }
@@ -383,6 +407,7 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
         mUpTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                UpLoadUtils upLoadUtils = UpLoadUtils.getInstance(mContext);
                 if (selectResultImages.size() <= 0) {
                     CustomToast.show(mContext, "最少选择一张图片~", Toast.LENGTH_LONG);
                 } else if (mEdit.getText().toString().trim().length() == 0) {
@@ -390,17 +415,31 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
                 } else {
                     switch (showType) {
                         case SHOW_TYPE_ASK:
-
+                            upLoadUtils.upLoad(mEdit.getText().toString(),
+                                    Utils.selectImageToString(selectResultImages),
+                                    0, categoryid, UpLoadUtils.TYPE_ASK_UPLOAD);
+                            dismiss();
                             break;
                         case SHOW_TYPE_REPLY:
-                            if (mAdapter.getCheckedPhotoItemNum() == -1){
-                                CustomToast.show(mContext,"请选择求p~",Toast.LENGTH_LONG);
-                            }else{
-
+                            if (mAdapter.getCheckedPhotoItemNum() == -1) {
+                                CustomToast.show(mContext, "请选择求p~", Toast.LENGTH_LONG);
+                            } else {
+                                upLoadUtils.upLoad(mEdit.getText().toString(),
+                                        Utils.selectImageToString(selectResultImages),
+                                        mAdapter.getCheckedPhotoItem().getAskId(),
+                                        categoryid, UpLoadUtils.TYPE_REPLY_UPLOAD);
+                                dismiss();
                             }
                             break;
                         case SHOW_TYPE_ACTIVITY:
-
+                            new LoadUtils(mContext).isSimple(true).
+                                    setCategory_id(Long.parseLong(categoryid.equals("") ? "0" : categoryid))
+                                    .upLoad(1, Long.parseLong(askId.equals("") ? "0" : askId));
+                            upLoadUtils.upLoad(mEdit.getText().toString(),
+                                    Utils.selectImageToString(selectResultImages),
+                                    Long.parseLong(askId), categoryid,
+                                    UpLoadUtils.TYPE_ACTIVITY_UPLOAD);
+                            dismiss();
                             break;
                     }
                 }
@@ -426,16 +465,6 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
             //显示帮p列表
             case AREA_SHOW_BANG:
                 mArea.setVisibility(View.VISIBLE);
-                UserPhotoRequest.Builder builder = new UserPhotoRequest.Builder()
-                        .setType(2).setPage(0)
-                        .setListener(refreshListener);
-                if (categoryid != -1) {
-                    builder.setChannelId(categoryid + "");
-                }
-                UserPhotoRequest request = builder.build();
-                RequestQueue requestQueue = PSGodRequestQueue.getInstance(mContext)
-                        .getRequestQueue();
-                requestQueue.add(request);
                 break;
             //显示图片列表
             case AREA_SHOW_IMG:
@@ -451,6 +480,11 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
             mPhotoItems.clear();
             mPhotoItems.addAll(items);
             mAdapter.notifyDataSetChanged();
+            if(mPhotoItems.size() == 0){
+                mEnpty.setVisibility(View.VISIBLE);
+            }else{
+                mEnpty.setVisibility(View.GONE);
+            }
         }
     };
 

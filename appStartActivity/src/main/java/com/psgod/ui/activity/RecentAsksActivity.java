@@ -3,14 +3,18 @@ package com.psgod.ui.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler.Callback;
 import android.os.Message;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response.Listener;
@@ -25,6 +29,7 @@ import com.psgod.Constants;
 import com.psgod.Logger;
 import com.psgod.R;
 import com.psgod.ThreadManager;
+import com.psgod.Utils;
 import com.psgod.WeakReferenceHandler;
 import com.psgod.db.DatabaseHelper;
 import com.psgod.model.PhotoItem;
@@ -38,6 +43,7 @@ import com.psgod.ui.view.PullToRefreshStaggeredGridView;
 import com.psgod.ui.widget.FloatScrollHelper;
 import com.psgod.ui.widget.dialog.CameraPopupwindow;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
+import com.psgod.ui.widget.dialog.ImageSelectDialog;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -55,7 +61,7 @@ public class RecentAsksActivity extends PSGodBaseActivity implements Callback {
     private DatabaseHelper mDatabaseHelper = null;
     private Dao<PhotoItem, Long> mPhotoItemDao;
     private ImageView finishImg;
-    private ImageView mUpload;
+    private TextView mUpload;
     private RelativeLayout mParent;
     private WeakReferenceHandler mHandler = new WeakReferenceHandler(this);
 
@@ -110,17 +116,24 @@ public class RecentAsksActivity extends PSGodBaseActivity implements Callback {
                 finish();
             }
         });
-
-        mUpload = new ImageView(this);
-        mUpload.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        mUpload.setImageDrawable(getResources().getDrawable(R.mipmap.floating_btn));
+        RelativeLayout.LayoutParams leftRigthParams = new RelativeLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, Utils.dpToPx(this, 44));
+        mUpload = new TextView(this);
+        mUpload.setLayoutParams(leftRigthParams);
+        mUpload.setGravity(Gravity.CENTER);
+        mUpload.setTextSize(14);
+        mUpload.setTextColor(Color.parseColor("#ffffff"));
+        mUpload.setText("我要求P");
+        mUpload.setBackgroundColor(Color.parseColor("#e04a4a4a"));
+//        mUpload.setScaleType(ImageView.ScaleType.CENTER_CROP);
+//        mUpload.setImageDrawable(getResources().getDrawable(R.mipmap.floating_btn));
         FloatScrollHelper helper = new FloatScrollHelper(
                 mViewHolder.mGridView, mParent, mUpload, this);
         helper.setViewHeight(80);
 //		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
 //			helper.setViewMargins(32);
 //		}else {
-        helper.setViewMargins(12);
+        helper.setViewMargins(0);
 //		}
         helper.init();
 
@@ -151,15 +164,18 @@ public class RecentAsksActivity extends PSGodBaseActivity implements Callback {
         mUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intentM = new Intent(RecentAsksActivity.this,
-                        MultiImageSelectActivity.class);
-                Bundle bundleM = new Bundle();
-                bundleM.putString("SelectType",
-                        MultiImageSelectActivity.TYPE_ASK_SELECT);
-                bundleM.putString("channel_id", mChannelId);
-                bundleM.putBoolean("isAsk", true);
-                intentM.putExtras(bundleM);
-                startActivity(intentM);
+//                Intent intentM = new Intent(RecentAsksActivity.this,
+//                        MultiImageSelectActivity.class);
+//                Bundle bundleM = new Bundle();
+//                bundleM.putString("SelectType",
+//                        MultiImageSelectActivity.TYPE_ASK_SELECT);
+//                bundleM.putString("channel_id", mChannelId);
+//                bundleM.putBoolean("isAsk", true);
+//                intentM.putExtras(bundleM);
+//                startActivity(intentM);
+                mImageSelectDialog = new ImageSelectDialog(RecentAsksActivity.this,
+                        ImageSelectDialog.SHOW_TYPE_ASK);
+                mImageSelectDialog.show();
             }
         });
     }

@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.psgod.model.PhotoItem;
+import com.psgod.model.SelectImage;
 import com.psgod.network.request.BaseRequest;
 import com.psgod.ui.activity.ChannelActivity;
 import com.psgod.ui.activity.RecentActActivity;
@@ -26,7 +27,9 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -67,9 +70,10 @@ public final class Utils {
         final float scale = context.getResources().getDisplayMetrics().density;
         return pxValue / scale + 0.5f;
     }
+
     public static int pxToDp(Context context, float pxValue) {
         final float scale = context.getResources().getDisplayMetrics().density;
-        return (int)(pxValue / scale + 0.5f);
+        return (int) (pxValue / scale + 0.5f);
     }
 
     public static float pxToDpOrigin(Context context, float dpValue) {
@@ -173,7 +177,7 @@ public final class Utils {
         if ((mProgressDialog != null) && mProgressDialog.isShowing()) {
             try {
                 mProgressDialog.dismiss();
-            }catch (Exception e){
+            } catch (Exception e) {
 
             }
 
@@ -271,7 +275,15 @@ public final class Utils {
         return result;
     }
 
-    public static void skipByUrl(Context context,String url,String title){
+    public static List<String> selectImageToString(List<SelectImage> images) {
+        List<String> strs = new ArrayList<String>();
+        for (SelectImage image : images) {
+            strs.add(image.path);
+        }
+        return strs;
+    }
+
+    public static void skipByUrl(Context context, String url, String title) {
         if (url.indexOf("http") != -1) {
             Intent intent = new Intent(context,
                     WebBrowserActivity.class);
