@@ -44,7 +44,6 @@ import com.psgod.network.request.UserPhotoRequest;
 import com.psgod.ui.activity.MultiImageSelectActivity;
 import com.psgod.ui.activity.PSGodBaseActivity;
 import com.psgod.ui.adapter.MultiImageSelectRecyclerAdapter;
-import com.psgod.ui.widget.ImageCategoryDialog;
 
 import java.io.File;
 import java.util.ArrayList;

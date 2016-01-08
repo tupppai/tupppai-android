@@ -30,7 +30,6 @@ import com.psgod.network.request.ChannelRequest;
 import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.ui.adapter.RecentPageActAdapter;
 import com.psgod.ui.widget.FloatScrollHelper;
-import com.psgod.ui.widget.ImageCategoryDialog;
 import com.psgod.ui.widget.dialog.ImageSelectDialog;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
 

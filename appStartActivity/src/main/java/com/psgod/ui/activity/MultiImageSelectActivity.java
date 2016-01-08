@@ -39,7 +39,7 @@ import com.psgod.model.SelectFolder;
 import com.psgod.model.SelectImage;
 import com.psgod.ui.adapter.MultiImageSelectAdapter;
 import com.psgod.ui.adapter.SelectFolderAdapter;
-import com.psgod.ui.widget.ImageCategoryDialog;
+import com.psgod.ui.widget.dialog.ImageCategoryDialog;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -353,8 +353,8 @@ public class MultiImageSelectActivity extends PSGodBaseActivity {
         mImageListView = (ListView) mFolderPopView.findViewById(R.id.image_folder_list);
         mFolderPopupWindow = new PopupWindow(mFolderPopView, ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT, true);
-        mFolderPopupWindow.setWidth(Constants.WIDTH_OF_SCREEN);
-        mFolderPopupWindow.setHeight(Constants.HEIGHT_OF_SCREEN * 3 / 5);
+        mFolderPopupWindow.setWidth(-1);
+        mFolderPopupWindow.setHeight(-1);
         mFolderPopupWindow.setOutsideTouchable(true);
 
         mImageListView.setAdapter(mFolderAdapter);

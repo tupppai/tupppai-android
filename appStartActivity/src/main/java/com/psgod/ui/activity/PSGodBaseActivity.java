@@ -27,7 +27,7 @@ import com.psgod.R;
 import com.psgod.Utils;
 import com.psgod.WeakReferenceHandler;
 import com.psgod.network.NetworkUtil;
-import com.psgod.ui.widget.ImageCategoryDialog;
+import com.psgod.ui.widget.dialog.ImageCategoryDialog;
 import com.psgod.ui.widget.dialog.ImageSelectDialog;
 import com.umeng.analytics.MobclickAgent;
 

@@ -32,7 +32,7 @@ public class SelectFolderAdapter extends BaseAdapter {
     public SelectFolderAdapter(Context context){
         mContext = context;
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        mImageSize = 72;
+        mImageSize = 200;
     }
 
     /**

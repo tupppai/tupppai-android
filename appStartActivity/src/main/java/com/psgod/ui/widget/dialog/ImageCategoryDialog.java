@@ -1,4 +1,4 @@
-package com.psgod.ui.widget;
+package com.psgod.ui.widget.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -19,6 +19,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import com.psgod.R;
 import com.psgod.model.SelectFolder;
@@ -38,6 +39,7 @@ import java.util.List;
 public class ImageCategoryDialog extends Dialog {
 
     private ListView mList;
+    private TextView mCancel;
     private SelectFolderAdapter mFolderAdapter;
     private Context mContext;
 
@@ -56,6 +58,13 @@ public class ImageCategoryDialog extends Dialog {
                 inflate(R.layout.popupwindow_select_image_folder, null);
         setContentView(view);
         mList = (ListView) view.findViewById(R.id.image_folder_list);
+        mCancel = (TextView) view.findViewById(R.id.image_folder_cancel);
+        mCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dismiss();
+            }
+        });
         mFolderAdapter = new SelectFolderAdapter(mContext);
         mFolderAdapter.setSelectIndex(-1);
         mList.setAdapter(mFolderAdapter);
