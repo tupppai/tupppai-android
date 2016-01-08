@@ -25,7 +25,7 @@ public abstract class PSGodErrorListener implements ErrorListener {
 		if ((msg != null) && (!msg.equals("")) && (msg.startsWith("java.net.UnknownHostException"))) {
 			msg = "网络连接不可用，请稍后再试";
 			Utils.showDebugToast(msg);
-		} else if (msg.equals("ThirdLogin")) {
+		} else if ((msg != null) && (!msg.equals("")) && msg.equals("ThirdLogin")) {
 			// 第三方登录，未注册手机号时，错误信息
 		} else {
 			msg = TextUtils.isEmpty(msg) ? "网络不稳定，请稍后再试" : msg ;
