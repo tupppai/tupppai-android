@@ -287,6 +287,7 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
             mAdapter.setDefaultSelected(selectResultImages);
             mAdapter.setAdapterType(MultiImageSelectRecyclerAdapter.TYPE_IMAGE);
             mAdapter.notifyDataSetChanged();
+            mEnpty.setVisibility(View.GONE);
             hideInputPanel();
             fixedThreadPool.execute(new Runnable() {
                 @Override
@@ -319,6 +320,11 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
                 mNumTxt.setVisibility(View.INVISIBLE);
                 mPhotoTxt.setVisibility(View.INVISIBLE);
                 mAlbumTxt.setVisibility(View.INVISIBLE);
+                if(mPhotoItems.size() == 0){
+                    mEnpty.setVisibility(View.VISIBLE);
+                }else{
+                    mEnpty.setVisibility(View.GONE);
+                }
                 mSureTxt.setVisibility(View.GONE);
                 UserPhotoRequest.Builder builder = new UserPhotoRequest.Builder()
                         .setType(2).setPage(0)
