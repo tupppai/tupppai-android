@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/image_select_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true">
+
+    <RelativeLayout
+        android:id="@+id/select_footer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+         >
+
+        <RelativeLayout
+            android:id="@+id/actionbar"
+            android:layout_width="match_parent"
+            android:background="@color/white"
+            android:layout_height="59dp" >
+
+            <ImageButton
+                android:id="@+id/btn_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                android:padding="10dp"
+                android:src="@drawable/selector_back_btn" 
+                android:background="@null"/>
+
+            <TextView
+                android:id="@+id/title_album_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:text="呵呵呵"
+                />
+
+            <TextView
+                android:id="@+id/title_album_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="取消"
+                android:textSize="15dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:padding="15dp"
+
+                />
+
+        </RelativeLayout>
+        
+        <RelativeLayout
+            android:id="@+id/select_next_layout"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/white" >
+
+            <TextView
+                android:id="@+id/select_folder"
+                android:layout_width="70dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="10dp"
+                android:text="全部图片"
+                android:gravity="center"
+                android:clickable="true"/>
+
+            <TextView
+                android:id="@+id/text_next"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="17dp"
+                android:text="确定"
+                android:textColor="#000"
+                android:textSize="16dp"
+                android:gravity="center_vertical"
+                 />
+
+            <TextView
+                android:id="@+id/select_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginRight="7dp"
+                android:layout_toLeftOf="@id/text_next"
+                android:text="0"
+                android:textColor="#000000"
+                android:textSize="12dp" 
+                android:background="@drawable/shape_multi_image_count"
+                android:layout_centerVertical="true" />
+        </RelativeLayout>
+        
+        <GridView
+            android:id="@+id/image_select_grid"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/actionbar"
+            android:layout_above="@id/select_next_layout"
+            android:gravity="center"
+            android:background="#2c2c2c"
+            android:horizontalSpacing="3dp"
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="3dp" />
+    </RelativeLayout>
+
+</RelativeLayout>

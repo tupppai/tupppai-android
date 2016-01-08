@@ -134,6 +134,8 @@
         <activity android:name=".ui.activity.WebBrowserActivity" />
         <activity android:name=".ui.activity.MultiImageSelectActivity"
             android:launchMode="singleTask"/>
+        <activity android:name=".ui.activity.AlbumImageSelectActivity"
+            android:launchMode="singleTask"/>
         <activity android:name=".ui.activity.RecentAsksActivity"
             android:launchMode="singleTask"/>
         <activity android:name=".ui.activity.RecentWorkActivity"

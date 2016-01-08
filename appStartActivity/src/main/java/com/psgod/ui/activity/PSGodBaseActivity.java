@@ -54,6 +54,7 @@ public abstract class PSGodBaseActivity extends FragmentActivity implements
     protected PSGodToast mCurrentToast;
     protected ImageSelectDialog mImageSelectDialog;
 
+    //这个是相册回调结果的list，不要和类本身的结果集混了
     protected List<String> selectResultImages = new ArrayList<String>();
 
     protected WeakReferenceHandler mBaseHandler = new WeakReferenceHandler(this);
