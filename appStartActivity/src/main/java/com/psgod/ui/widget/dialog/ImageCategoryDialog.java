@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.psgod.R;
 import com.psgod.model.SelectFolder;
 import com.psgod.model.SelectImage;
+import com.psgod.ui.activity.AlbumImageSelectActivity;
 import com.psgod.ui.activity.PSGodBaseActivity;
 import com.psgod.ui.adapter.SelectFolderAdapter;
 
