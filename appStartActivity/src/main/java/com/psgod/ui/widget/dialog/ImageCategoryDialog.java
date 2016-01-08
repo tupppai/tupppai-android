@@ -20,7 +20,7 @@ import android.widget.TextView;
 import com.psgod.R;
 import com.psgod.model.SelectFolder;
 import com.psgod.model.SelectImage;
-import com.psgod.ui.activity.AlbumImageSelectActivity;
+import com.psgod.ui.activity.AlbumSelectImageActivity;
 import com.psgod.ui.activity.PSGodBaseActivity;
 import com.psgod.ui.adapter.SelectFolderAdapter;
 
@@ -66,7 +66,7 @@ public class ImageCategoryDialog extends Dialog {
         mList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(mContext, AlbumImageSelectActivity.class);
+                Intent intent = new Intent(mContext, AlbumSelectImageActivity.class);
                 if (i == 0) {
                     intent.putExtra(PATH, "");
                 } else {
@@ -80,8 +80,8 @@ public class ImageCategoryDialog extends Dialog {
                     for (SelectImage selectImage : selectImages) {
                         selectStrs.add(selectImage.path);
                     }
-                    intent.putStringArrayListExtra(AlbumImageSelectActivity.SELECT_IMAGE, selectStrs);
-                    intent.putExtra(AlbumImageSelectActivity.SELECT_TYPE,selectType);
+                    intent.putStringArrayListExtra(AlbumSelectImageActivity.SELECT_IMAGE, selectStrs);
+                    intent.putExtra(AlbumSelectImageActivity.SELECT_TYPE,selectType);
                 }
                 ((PSGodBaseActivity) mContext).startActivityForResult(intent, RESULT_CODE);
                 dismiss();
