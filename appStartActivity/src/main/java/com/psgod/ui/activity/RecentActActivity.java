@@ -228,6 +228,7 @@ public class RecentActActivity extends PSGodBaseActivity {
             public void onClick(View view) {
                 if (mAct != null) {
 //                    loadUtils.upLoad(mActs.get(0).getType(), Long.parseLong(mActs.get(0).getAsk_id()));
+
 //                    Intent intent = new Intent(RecentActActivity.this, MultiImageSelectActivity.class);
 //                    intent.putExtra("AskId", Long.parseLong(mAct.getAsk_id() == null ?
 //                            "0" : mAct.getAsk_id().equals("") ? "0" : mAct.getAsk_id()));
@@ -238,9 +239,9 @@ public class RecentActActivity extends PSGodBaseActivity {
 //                            Long.parseLong(mAct.getAsk_id().equals("") ? "0" : mAct.getAsk_id()));
 //
 //                    startActivity(intent);
-//                    new ImageSelectDialog(RecentActActivity.this,Long.parseLong(id)).show();
+
                     mImageSelectDialog = new ImageSelectDialog(RecentActActivity.this,
-                            ImageSelectDialog.SHOW_TYPE_ACTIVITY);
+                            ImageSelectDialog.SHOW_TYPE_REPLY);
                     mImageSelectDialog.show();
                 }
             }

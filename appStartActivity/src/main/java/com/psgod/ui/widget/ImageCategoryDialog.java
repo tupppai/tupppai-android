@@ -76,6 +76,7 @@ public class ImageCategoryDialog extends Dialog {
                         selectStrs.add(selectImage.path);
                     }
                     intent.putStringArrayListExtra(MultiImageSelectActivity.SELECT_IMAGE, selectStrs);
+                    intent.putExtra(MultiImageSelectActivity.SELECT_TYPE,selectType);
                 }
                 ((PSGodBaseActivity) mContext).startActivityForResult(intent, RESULT_CODE);
                 dismiss();
@@ -170,10 +171,12 @@ public class ImageCategoryDialog extends Dialog {
     }
 
     List<SelectImage> selectImages;
+    String selectType;
 
-    public void show(List<SelectImage> selectImages) {
+    public void show(List<SelectImage> selectImages,String selectType) {
         initView();
         this.selectImages = selectImages;
+        this.selectType = selectType;
         getWindow().getAttributes().width = -1;
         getWindow().getAttributes().height = -1;
         getWindow().setGravity(Gravity.BOTTOM);
