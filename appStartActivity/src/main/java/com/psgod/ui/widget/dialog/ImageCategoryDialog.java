@@ -4,28 +4,22 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.psgod.R;
 import com.psgod.model.SelectFolder;
 import com.psgod.model.SelectImage;
-import com.psgod.ui.activity.AlbumImageSelectActivity;
-import com.psgod.ui.activity.AlbumImageSelectActivity;
 import com.psgod.ui.activity.PSGodBaseActivity;
 import com.psgod.ui.adapter.SelectFolderAdapter;
 
