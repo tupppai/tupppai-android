@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#E6FFFFFF"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true">
+
+    <ImageView
+        android:id="@+id/ic_back"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="15dp"
+        android:src="@mipmap/ic_back"
+        android:scaleType="fitXY"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="6dp"
+        android:src="@mipmap/ic_welcome"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="11dp"
+        android:layout_gravity="center_horizontal"
+        android:text="请绑定手机号"
+        android:textColor="#7F090909"
+        android:textSize="13dp"/>
+
+    <EditText
+        android:id="@+id/input_phone"
+        android:layout_width="match_parent"
+        android:layout_height="47dp"
+        android:layout_marginTop="29dp"
+        android:layout_marginLeft="34dp"
+        android:layout_marginRight="34dp"
+        android:paddingLeft="14dp"
+        android:inputType="number"
+        android:background="@drawable/shape_register_login_edit_background"
+        android:hint="手机号"
+        android:textSize="13dp"
+        android:textColor="#66000000"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="47dp"
+        android:layout_marginLeft="34dp"
+        android:layout_marginRight="34dp"
+        android:layout_marginTop="13dp"
+        android:background="@drawable/shape_register_login_edit_background">
+
+        <Button
+            android:id="@+id/get_verify_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="8dp"
+            android:layout_centerVertical="true"
+            android:text="获取验证码"
+            android:textSize="13dp"
+            android:textColor="#090909"
+            android:background="@null"/>
+
+        <EditText
+            android:id="@+id/verify_code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/get_verify_code"
+            android:layout_marginLeft="14dp"
+            android:layout_centerVertical="true"
+            android:hint="验证码"
+            android:inputType="number"
+            android:textSize="13dp"
+            android:textColor="#66000000"
+            android:background="@null"/>
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/input_passwd"
+        android:layout_width="match_parent"
+        android:layout_height="47dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginLeft="34dp"
+        android:layout_marginRight="34dp"
+        android:paddingLeft="14dp"
+        android:inputType="textPassword"
+        android:background="@drawable/shape_register_login_edit_background"
+        android:hint="设置新密码"
+        android:textSize="13dp"
+        android:textColor="#66000000"/>
+
+    <Button
+        android:id="@+id/bind_btn"
+        android:layout_width="match_parent"
+        android:layout_height="47dp"
+        android:layout_marginTop="27dp"
+        android:layout_marginLeft="34dp"
+        android:layout_marginRight="34dp"
+        android:layout_marginBottom="43dp"
+        android:text="确认并绑定"
+        android:textSize="13dp"
+        android:textColor="#FFFFFF"
+        android:gravity="center"
+        android:background="@drawable/selector_register_login_button_background"/>
+
+</LinearLayout>

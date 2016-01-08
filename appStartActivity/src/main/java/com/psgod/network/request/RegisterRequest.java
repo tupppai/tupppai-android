@@ -77,12 +77,14 @@ public class RegisterRequest extends BaseRequest<JSONObject> {
 			params.put("type", registerData.getThirdAuthType());
 			params.put("mobile", registerData.getPhoneNumber());
 			params.put("password", registerData.getPassword());
-			params.put("avatar", registerData.getAvatar());
-			params.put("sex", String.valueOf(registerData.getGender()));
-			params.put("nickname", registerData.getNickname());
-			params.put("province", String.valueOf(registerData.getProvinceId()));
-			params.put("city", String.valueOf(registerData.getCityId()));
+			if (!TextUtils.isEmpty(registerData.getNickname())) {
+				params.put("nickname", registerData.getNickname());
+			}
 			params.put("code", registerData.getVerifyCode());
+//			params.put("avatar", registerData.getAvatar());
+//			params.put("sex", String.valueOf(registerData.getGender()));
+//			params.put("province", String.valueOf(registerData.getProvinceId()));
+//			params.put("city", String.valueOf(registerData.getCityId()));
 
 			if (!TextUtils.isEmpty(registerData.getOpenId())) {
 				params.put("openid", registerData.getOpenId());

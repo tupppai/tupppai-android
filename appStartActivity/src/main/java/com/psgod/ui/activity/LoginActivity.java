@@ -1,7 +1,9 @@
 package com.psgod.ui.activity;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -20,6 +22,7 @@ import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.psgod.Constants;
 import com.psgod.CustomToast;
+import com.psgod.PSGodApplication;
 import com.psgod.R;
 import com.psgod.Utils;
 import com.psgod.model.LoginUser;
@@ -51,6 +54,9 @@ public class LoginActivity extends PSGodBaseActivity implements
 		Handler.Callback {
 	private final static String TAG = LoginActivity.class.getSimpleName();
 	public static final int JUMP_FROM_LOGIN = 100;
+	private static final String QQPLAT = "qq";
+	private static final String WEIBOPLAT = "weibo";
+	private static final String WEIXINPLAT = "weixin";
 
 	private Button mLoginButton;
 	private EditText mLoginNum;
@@ -160,19 +166,60 @@ public class LoginActivity extends PSGodBaseActivity implements
 				}
 				// 未注册
 				if (isRegistered == 0) {
-					Intent intent = new Intent(LoginActivity.this,
-							SetInfoActivity.class);
+					SharedPreferences.Editor editor = PSGodApplication
+							.getAppContext()
+							.getSharedPreferences(Constants.SharedPreferencesKey.NAME,
+									Context.MODE_PRIVATE).edit();
+					editor.putString(Constants.ThirdAuthInfo.THIRD_AUTH_PLATFORM,QQPLAT);
+					editor.putString(Constants.ThirdAuthInfo.USER_OPENID, mThirdAuthId);
+					editor.putString(Constants.ThirdAuthInfo.USER_AVATAR, mThirdAuthAvatar);
+					editor.putString(Constants.ThirdAuthInfo.USER_NICKNAME, mThirdAuthName);
+					if (android.os.Build.VERSION.SDK_INT >= 9) {
+						editor.apply();
+					} else {
+						editor.commit();
+					}
 
-					intent.putExtra(
-							Constants.ThirdAuthInfo.THIRD_AUTH_PLATFORM, "qq");
-					intent.putExtra(Constants.ThirdAuthInfo.USER_OPENID,
-							mThirdAuthId);
-					intent.putExtra(Constants.ThirdAuthInfo.USER_AVATAR,
-							mThirdAuthAvatar);
-					intent.putExtra(Constants.ThirdAuthInfo.USER_NICKNAME,
-							mThirdAuthName);
+					JSONObject userInfoData = new JSONObject();
+					userInfoData.put("uid", 0l);
+					userInfoData.put("nickname", mThirdAuthName);
+					userInfoData.put("sex", 0);
+					userInfoData.put("phone", "0");
+					userInfoData.put("avatar", mThirdAuthAvatar);
+					userInfoData.put("fans_count", 0);
+					userInfoData.put("fellow_count", 0);
+					userInfoData.put("uped_count", 0);
+					userInfoData.put("ask_count", 0);
+					userInfoData.put("reply_count", 0);
+					userInfoData.put("inprogress_count", 0);
+					userInfoData.put("collection_count", 0);
+					userInfoData.put("is_bound_weixin", 0);
+					userInfoData.put("is_bound_qq", 0);
+					userInfoData.put("is_bound_weibo", 0);
+					userInfoData.put("city", 1);
+					userInfoData.put("province", 11);
 
-					LoginActivity.this.startActivity(intent);
+					LoginUser.getInstance().initFromJSONObject(userInfoData);
+
+					Bundle extras = new Bundle();
+					extras.putInt(Constants.IntentKey.ACTIVITY_JUMP_FROM,
+							JUMP_FROM_LOGIN);
+					MainActivity.startNewActivityAndFinishAllBefore(
+							LoginActivity.this, MainActivity.class.getName(),
+							extras);
+//					Intent intent = new Intent(LoginActivity.this,
+//							SetInfoActivity.class);
+//
+//					intent.putExtra(
+//							Constants.ThirdAuthInfo.THIRD_AUTH_PLATFORM, "qq");
+//					intent.putExtra(Constants.ThirdAuthInfo.USER_OPENID,
+//							mThirdAuthId);
+//					intent.putExtra(Constants.ThirdAuthInfo.USER_AVATAR,
+//							mThirdAuthAvatar);
+//					intent.putExtra(Constants.ThirdAuthInfo.USER_NICKNAME,
+//							mThirdAuthName);
+//
+//					LoginActivity.this.startActivity(intent);
 				}
 			} catch (Exception e) {
 			}
@@ -241,21 +288,63 @@ public class LoginActivity extends PSGodBaseActivity implements
 				}
 				// 未注册
 				if (isRegistered == 0) {
-					Intent intent = new Intent(LoginActivity.this,
-							SetInfoActivity.class);
 
-					intent.putExtra(
-							Constants.ThirdAuthInfo.THIRD_AUTH_PLATFORM,
-							"weibo");
-					intent.putExtra(Constants.ThirdAuthInfo.USER_OPENID,
-							mThirdAuthId);
-					intent.putExtra(Constants.ThirdAuthInfo.USER_NICKNAME,
-							mThirdAuthName);
-					intent.putExtra(Constants.ThirdAuthInfo.USER_AVATAR,
-							mThirdAuthAvatar);
+					SharedPreferences.Editor editor = PSGodApplication
+							.getAppContext()
+							.getSharedPreferences(Constants.SharedPreferencesKey.NAME,
+									Context.MODE_PRIVATE).edit();
+					editor.putString(Constants.ThirdAuthInfo.THIRD_AUTH_PLATFORM,WEIBOPLAT);
+					editor.putString(Constants.ThirdAuthInfo.USER_OPENID, mThirdAuthId);
+					editor.putString(Constants.ThirdAuthInfo.USER_AVATAR, mThirdAuthAvatar);
+					editor.putString(Constants.ThirdAuthInfo.USER_NICKNAME, mThirdAuthName);
+					if (android.os.Build.VERSION.SDK_INT >= 9) {
+						editor.apply();
+					} else {
+						editor.commit();
+					}
 
-					startActivity(intent);
-					finish();
+					JSONObject userInfoData = new JSONObject();
+					userInfoData.put("uid", 0l);
+					userInfoData.put("nickname", mThirdAuthName);
+					userInfoData.put("sex", 0);
+					userInfoData.put("phone", "0");
+					userInfoData.put("avatar", mThirdAuthAvatar);
+					userInfoData.put("fans_count", 0);
+					userInfoData.put("fellow_count", 0);
+					userInfoData.put("uped_count", 0);
+					userInfoData.put("ask_count", 0);
+					userInfoData.put("reply_count", 0);
+					userInfoData.put("inprogress_count", 0);
+					userInfoData.put("collection_count", 0);
+					userInfoData.put("is_bound_weixin", 0);
+					userInfoData.put("is_bound_qq", 0);
+					userInfoData.put("is_bound_weibo", 0);
+					userInfoData.put("city", 1);
+					userInfoData.put("province", 11);
+
+					LoginUser.getInstance().initFromJSONObject(userInfoData);
+
+					Bundle extras = new Bundle();
+					extras.putInt(Constants.IntentKey.ACTIVITY_JUMP_FROM,
+							JUMP_FROM_LOGIN);
+					MainActivity.startNewActivityAndFinishAllBefore(
+							LoginActivity.this, MainActivity.class.getName(),
+							extras);
+//					Intent intent = new Intent(LoginActivity.this,
+//							SetInfoActivity.class);
+//
+//					intent.putExtra(
+//							Constants.ThirdAuthInfo.THIRD_AUTH_PLATFORM,
+//							"weibo");
+//					intent.putExtra(Constants.ThirdAuthInfo.USER_OPENID,
+//							mThirdAuthId);
+//					intent.putExtra(Constants.ThirdAuthInfo.USER_NICKNAME,
+//							mThirdAuthName);
+//					intent.putExtra(Constants.ThirdAuthInfo.USER_AVATAR,
+//							mThirdAuthAvatar);
+//
+//					startActivity(intent);
+//					finish();
 				}
 			} catch (Exception e) {
 
@@ -340,23 +429,64 @@ public class LoginActivity extends PSGodBaseActivity implements
 					}
 					// 未注册
 					if (isRegistered == 0) {
-						Intent intent = new Intent(LoginActivity.this,
-								SetInfoActivity.class);
+						SharedPreferences.Editor editor = PSGodApplication
+								.getAppContext()
+								.getSharedPreferences(Constants.SharedPreferencesKey.NAME,
+										Context.MODE_PRIVATE).edit();
+						editor.putString(Constants.ThirdAuthInfo.THIRD_AUTH_PLATFORM,WEIXINPLAT);
+						editor.putString(Constants.ThirdAuthInfo.USER_OPENID, mThirdAuthId);
+						editor.putString(Constants.ThirdAuthInfo.USER_AVATAR, mThirdAuthAvatar);
+						editor.putString(Constants.ThirdAuthInfo.USER_NICKNAME, mThirdAuthName);
+						if (android.os.Build.VERSION.SDK_INT >= 9) {
+							editor.apply();
+						} else {
+							editor.commit();
+						}
 
-						intent.putExtra(
-								Constants.ThirdAuthInfo.THIRD_AUTH_PLATFORM,
-								"weixin");
-						intent.putExtra(Constants.ThirdAuthInfo.USER_OPENID,
-								mThirdAuthId);
-						intent.putExtra(Constants.ThirdAuthInfo.USER_AVATAR,
-								mThirdAuthAvatar);
-						intent.putExtra(Constants.ThirdAuthInfo.USER_GENDER,
-								mThirdAuthGender);
-						intent.putExtra(Constants.ThirdAuthInfo.USER_NICKNAME,
-								mThirdAuthName);
+						JSONObject userInfoData = new JSONObject();
+						userInfoData.put("uid", 0l);
+						userInfoData.put("nickname", mThirdAuthName);
+						userInfoData.put("sex", 0);
+						userInfoData.put("phone", "0");
+						userInfoData.put("avatar", mThirdAuthAvatar);
+						userInfoData.put("fans_count", 0);
+						userInfoData.put("fellow_count", 0);
+						userInfoData.put("uped_count", 0);
+						userInfoData.put("ask_count", 0);
+						userInfoData.put("reply_count", 0);
+						userInfoData.put("inprogress_count", 0);
+						userInfoData.put("collection_count", 0);
+						userInfoData.put("is_bound_weixin", 0);
+						userInfoData.put("is_bound_qq", 0);
+						userInfoData.put("is_bound_weibo", 0);
+						userInfoData.put("city", 1);
+						userInfoData.put("province", 11);
 
-						startActivity(intent);
-						finish();
+						LoginUser.getInstance().initFromJSONObject(userInfoData);
+
+						Bundle extras = new Bundle();
+						extras.putInt(Constants.IntentKey.ACTIVITY_JUMP_FROM,
+								JUMP_FROM_LOGIN);
+						MainActivity.startNewActivityAndFinishAllBefore(
+								LoginActivity.this, MainActivity.class.getName(),
+								extras);
+//						Intent intent = new Intent(LoginActivity.this,
+//								SetInfoActivity.class);
+//
+//						intent.putExtra(
+//								Constants.ThirdAuthInfo.THIRD_AUTH_PLATFORM,
+//								"weixin");
+//						intent.putExtra(Constants.ThirdAuthInfo.USER_OPENID,
+//								mThirdAuthId);
+//						intent.putExtra(Constants.ThirdAuthInfo.USER_AVATAR,
+//								mThirdAuthAvatar);
+//						intent.putExtra(Constants.ThirdAuthInfo.USER_GENDER,
+//								mThirdAuthGender);
+//						intent.putExtra(Constants.ThirdAuthInfo.USER_NICKNAME,
+//								mThirdAuthName);
+//
+//						startActivity(intent);
+//						finish();
 					}
 				} catch (Exception e) {
 				}

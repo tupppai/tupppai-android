@@ -92,7 +92,7 @@ public class WelcomeScrollActivity extends PSGodBaseActivity {
 			public void onClick(View arg0) {
 				Intent intent = getIntent();
 				intent.setClass(WelcomeScrollActivity.this,
-						WelcomeActivity.class);
+						NewLoginInputPhoneActivity.class);
 				startActivity(intent);
 				WelcomeScrollActivity.this.finish();
 			}

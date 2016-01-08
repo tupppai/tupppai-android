@@ -20,6 +20,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.psgod.Constants;
 import com.psgod.R;
 import com.psgod.eventbus.MyPageRefreshEvent;
+import com.psgod.model.LoginUser;
 import com.psgod.model.PhotoItem;
 import com.psgod.network.NetworkUtil;
 import com.psgod.network.request.PSGodErrorListener;
@@ -87,7 +88,8 @@ public class InprogressPageReplyFragment extends Fragment {
 		mViewHolder.mListView.getRefreshableView().addFooterView(
 				mViewHolder.mFootView);
 
-		if (NetworkUtil.getNetworkType() != NetworkUtil.NetworkType.NONE) {
+		// 如果当前未使用手机号登录，则不刷新，否则会弹出两次绑定手机号activity
+		if ((NetworkUtil.getNetworkType() != NetworkUtil.NetworkType.NONE) && !LoginUser.getInstance().getPhoneNum().equals("0")) {
 			mViewHolder.mListView.setRefreshing(true);
 		}
 	}

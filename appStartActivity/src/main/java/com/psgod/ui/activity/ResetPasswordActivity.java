@@ -86,7 +86,7 @@ public class ResetPasswordActivity extends PSGodBaseActivity {
 				ResetPasswordRequest.Builder builder = new ResetPasswordRequest.Builder()
 						.setPhoneNumber(mPhoneNumber)
 						.setNewPassword(mNewPassword)
-						.setVerifyCode(mVerifyCode).setListener(listener)
+						.setVerifyCode(mVerifyCode).setListener(null)
 						.setErrorListener(errorListener);
 
 				ResetPasswordRequest request = builder.build();

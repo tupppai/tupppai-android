@@ -28,13 +28,14 @@ import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response.Listener;
+import com.android.volley.VolleyError;
 import com.nineoldandroids.view.ViewHelper;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.psgod.PsGodImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.psgod.BitmapUtils;
 import com.psgod.Constants;
+import com.psgod.PsGodImageLoader;
 import com.psgod.R;
 import com.psgod.UserPreferences;
 import com.psgod.Utils;
@@ -45,6 +46,7 @@ import com.psgod.eventbus.UpdateTabStatusEvent;
 import com.psgod.model.LoginUser;
 import com.psgod.model.User;
 import com.psgod.network.request.GetUserInfoRequest;
+import com.psgod.network.request.PSGodErrorListener;
 import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.ui.activity.EditProfileActivity;
 import com.psgod.ui.activity.FollowerListActivity;
@@ -55,7 +57,6 @@ import com.psgod.ui.adapter.SlidingPageMyAdapter;
 import com.psgod.ui.view.PagerSlidingTabStrip;
 import com.psgod.ui.widget.AvatarImageView;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
-import com.psgod.ui.widget.dialog.ImageDialog;
 
 import org.json.JSONObject;
 
@@ -80,6 +81,7 @@ public class MyPageFragment extends Fragment implements
     private DisplayImageOptions mAvatarOptions = Constants.DISPLAY_IMAGE_OPTIONS_AVATAR;
 
     private View mMessageTipView;
+    private CustomProgressingDialog mProgressDialog;
 
     // @Override
     // public void onHiddenChanged(boolean hidden) {
@@ -111,9 +113,6 @@ public class MyPageFragment extends Fragment implements
         setupPager();
         setupTabs();
 
-        if ((dialog != null) || (!dialog.isShowing())) {
-            dialog.show();
-        }
         initMyFragmentData();
     }
 
@@ -207,11 +206,6 @@ public class MyPageFragment extends Fragment implements
         mMessageTipView = mViewHolder.mView
                 .findViewById(R.id.fragment_my_page_message_tip);
 
-        if (dialog == null) {
-            dialog = new CustomProgressingDialog(
-                    getActivity());
-        }
-        dialog = new CustomProgressingDialog(getActivity());
     }
 
     @Override
@@ -220,7 +214,7 @@ public class MyPageFragment extends Fragment implements
 //		if (Constants.HAS_CHANGE_PHOTO == true) {
 //			initMyFragmentData();
 //		}
-        initMyFragmentData();
+//        initMyFragmentData();
 
         int mMessageCount = UserPreferences.PushMessage
                 .getPushMessageCount(UserPreferences.PushMessage.PUSH_COMMENT)
@@ -255,8 +249,6 @@ public class MyPageFragment extends Fragment implements
         return parentview;
     }
 
-    private CustomProgressingDialog dialog;
-
     // 初始化用户个人数据
     public void initMyFragmentData() {
         if (mViewHolder.mAvatarIv == null) {
@@ -283,15 +275,30 @@ public class MyPageFragment extends Fragment implements
         } else {
             mViewHolder.mNickNameVip.setVisibility(View.GONE);
         }
-        // 请求后台用户数据进行更新
-        GetUserInfoRequest.Builder builder = new GetUserInfoRequest.Builder()
-                .setListener(getUserInfoListener);
-
-        GetUserInfoRequest request = builder.build();
-        request.setTag(TAG);
-        RequestQueue requestQueue = PSGodRequestQueue
-                .getInstance(getActivity()).getRequestQueue();
-        requestQueue.add(request);
+        if (!user.getPhoneNum().equals("0")) {
+            if (mProgressDialog == null) {
+                mProgressDialog = new CustomProgressingDialog(mContext);
+            }
+            if (!mProgressDialog.isShowing()) {
+                mProgressDialog.show();
+            }
+            // 请求后台用户数据进行更新
+            GetUserInfoRequest.Builder builder = new GetUserInfoRequest.Builder()
+                    .setListener(getUserInfoListener)
+                    .setErrorListener(new PSGodErrorListener() {
+                        @Override
+                        public void handleError(VolleyError error) {
+                            if ((mProgressDialog != null) && (mProgressDialog.isShowing())) {
+                                mProgressDialog.dismiss();
+                            }
+                        }
+                    });
+            GetUserInfoRequest request = builder.build();
+            request.setTag(TAG);
+            RequestQueue requestQueue = PSGodRequestQueue
+                    .getInstance(getActivity()).getRequestQueue();
+            requestQueue.add(request);
+        }
     }
 
     // 获取用户后台信息之后回调
@@ -323,8 +330,8 @@ public class MyPageFragment extends Fragment implements
                 } else {
                     mViewHolder.mNickNameVip.setVisibility(View.GONE);
                 }
-                if (dialog != null && dialog.isShowing()) {
-                    dialog.dismiss();
+                if (mProgressDialog != null && mProgressDialog.isShowing()) {
+                    mProgressDialog.dismiss();
                 }
             }
         }

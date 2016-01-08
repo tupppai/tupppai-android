@@ -328,10 +328,10 @@ public class SettingActivity extends PSGodBaseActivity {
 										Constants.IS_USER_FRAGMENT_CREATED = false;
 										Constants.IS_INPROGRESS_FRAGMENT_CREATED = false;
 
-										WelcomeActivity
+										NewLoginInputPhoneActivity
 												.startNewActivityAndFinishAllBefore(
 														SettingActivity.this,
-														WelcomeActivity.class
+														NewLoginInputPhoneActivity.class
 																.getName(),
 														null);
 									}

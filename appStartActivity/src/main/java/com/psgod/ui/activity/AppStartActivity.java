@@ -165,12 +165,12 @@ public class AppStartActivity extends PSGodBaseActivity implements
 					startActivity(MainActivity.class);
 					break;
 				case TOKEN_RESULT_EMPTY:
-					startActivity(WelcomeActivity.class);
+					startActivity(NewLoginInputPhoneActivity.class);
 					break;
 				case TOKEN_RESULT_EXPIRED:
 					Toast.makeText(AppStartActivity.this, "身份过期或失效，请重新登录",
 							Toast.LENGTH_SHORT).show();
-					startActivity(WelcomeActivity.class);
+					startActivity(NewLoginInputPhoneActivity.class);
 					break;
 				case TOKEN_RESULT_NETWORK_ERROR:
 					if (!mNetworkError) {
