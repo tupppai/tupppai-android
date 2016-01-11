@@ -6,13 +6,14 @@
     android:background="#f2f2f2"
     android:paddingTop="8dp"
     android:paddingBottom="8dp"
+    android:paddingLeft="7.5dp"
     >
 
     <ImageView
         android:id="@+id/widge_image_select_bangplist_img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
+        android:padding="7.5dp"
         android:layout_centerVertical="true"
         android:src="@mipmap/bangplist_selected"/>
 
@@ -21,9 +22,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@mipmap/bangp_ic_image"
+        android:padding="7.5dp"
         android:layout_centerVertical="true"
         android:layout_toRightOf="@id/widge_image_select_bangplist_img"
-        android:layout_marginLeft="15dp"
         />
 
 
@@ -37,7 +38,7 @@
         android:textSize="14dp"
         android:textColor="#50484b"
         android:gravity="center_vertical|left"
-        android:layout_marginLeft="15dp"
+        android:layout_marginLeft="7.5dp"
         android:layout_toRightOf="@+id/widge_image_select_image_img"
         android:layout_toLeftOf="@+id/widge_image_select_up"
         />

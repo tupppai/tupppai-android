@@ -89,6 +89,7 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
     public static final int HIDE_INPUT = 1;
     public static final int AREA_SHOW_BANG = 2;
     public static final int AREA_SHOW_IMG = 3;
+    public static final int HIDE_DIALOG = 4;
 
     public static final int SHOW_TYPE_ASK = 0;
     public static final int SHOW_TYPE_REPLY = 1;
@@ -127,7 +128,10 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
         getWindow().setWindowAnimations(R.style.popwindow_anim_style);
         getWindow().setSoftInputMode(
                 WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN
-                        | WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+                        | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        if(mImageimg.hasOnClickListeners()) {
+            mImageimg.callOnClick();
+        }
         super.show();
     }
 
@@ -207,19 +211,16 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
         switch (showType) {
             case SHOW_TYPE_ASK:
                 mBangpImg.setVisibility(View.GONE);
-                mImageimg.setImageResource(R.mipmap.zuopin_ic_image_selected);
                 mPhotoTxt.setVisibility(View.VISIBLE);
                 mAdapter.setUploadType(MultiImageSelectRecyclerAdapter.TYPE_ASK);
                 break;
             case SHOW_TYPE_REPLY:
                 mBangpImg.setVisibility(View.VISIBLE);
-                mImageimg.setImageResource(R.mipmap.bangp_ic_image);
                 mPhotoTxt.setVisibility(View.GONE);
                 mAdapter.setUploadType(MultiImageSelectRecyclerAdapter.TYPE_REPLY);
                 break;
             case SHOW_TYPE_ACTIVITY:
                 mBangpImg.setVisibility(View.GONE);
-                mImageimg.setImageResource(R.mipmap.zuopin_ic_image_selected);
                 mPhotoTxt.setVisibility(View.GONE);
                 mAdapter.setUploadType(MultiImageSelectRecyclerAdapter.TYPE_REPLY);
                 break;
@@ -232,9 +233,28 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
             mPreviewArea.setVisibility(View.VISIBLE);
         }
         mPreviewArea.removeAllViews();
-        if (selectResultImages.size() == 0) {
+        if (selectResultImages.size() == 0 && mAdapter.getCheckedPhotoItem() == null) {
             mPreviewArea.setVisibility(View.INVISIBLE);
-        } else {
+            mImageimg.setImageResource(R.mipmap.bangp_ic_image);
+        }else {
+            if(selectResultImages.size() == 0) {
+                mImageimg.setImageResource(R.mipmap.bangp_ic_image);
+            }else{
+                mImageimg.setImageResource(R.mipmap.zuopin_ic_image_selected);
+            }
+            if (mAdapter.getCheckedPhotoItem() != null) {
+                ImageView view = new ImageView(mContext);
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.
+                        LayoutParams(Utils.dpToPx(mContext, 25), Utils.dpToPx(mContext, 25));
+                view.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                layoutParams.setMargins(Utils.dpToPx(mContext, 6), 0, 0, 0);
+                view.setLayoutParams(layoutParams);
+                PsGodImageLoader.getInstance().
+                        displayImage(mAdapter.getCheckedPhotoItem().getImageURL()
+                                , view, Constants.DISPLAY_IMAGE_OPTIONS_SMALL_SMALL);
+                view.setOnClickListener(previewBangClick);
+                mPreviewArea.addView(view);
+            }
             for (SelectImage image : selectResultImages) {
                 ImageView view = new ImageView(mContext);
                 LinearLayout.LayoutParams layoutParams = new LinearLayout.
@@ -250,6 +270,16 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
             }
         }
     }
+
+    private View.OnClickListener previewBangClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            if (mBangpImg.hasOnClickListeners()) {
+                mBangpImg.callOnClick();
+                mImageArea.getLayoutManager().scrollToPosition(mAdapter.getCheckedPhotoItemNum());
+            }
+        }
+    };
 
     private View.OnClickListener previewClick = new View.OnClickListener() {
         @Override
@@ -320,9 +350,9 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
                 mNumTxt.setVisibility(View.INVISIBLE);
                 mPhotoTxt.setVisibility(View.INVISIBLE);
                 mAlbumTxt.setVisibility(View.INVISIBLE);
-                if(mPhotoItems.size() == 0){
+                if (mPhotoItems.size() == 0) {
                     mEnpty.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     mEnpty.setVisibility(View.GONE);
                 }
                 mSureTxt.setVisibility(View.GONE);
@@ -375,6 +405,14 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
             }
         });
 
+        mAdapter.setOnBangClickListener(new MultiImageSelectRecyclerAdapter.
+                OnBangClickListener() {
+            @Override
+            public void onBangClick(View view) {
+                showPreview();
+            }
+        });
+
         mSureTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -423,7 +461,18 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
                             upLoadUtils.upLoad(mEdit.getText().toString(),
                                     Utils.selectImageToString(selectResultImages),
                                     0, categoryid, UpLoadUtils.TYPE_ASK_UPLOAD);
-                            dismiss();
+                            hideInputPanel();
+                            fixedThreadPool.execute(new Runnable() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        Thread.sleep(200);
+                                        mHandler.handleMessage(mHandler.obtainMessage(HIDE_DIALOG));
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            });
                             break;
                         case SHOW_TYPE_REPLY:
                             if (mAdapter.getCheckedPhotoItemNum() == -1) {
@@ -433,7 +482,18 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
                                         Utils.selectImageToString(selectResultImages),
                                         mAdapter.getCheckedPhotoItem().getAskId(),
                                         categoryid, UpLoadUtils.TYPE_REPLY_UPLOAD);
-                                dismiss();
+                                hideInputPanel();
+                                fixedThreadPool.execute(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        try {
+                                            Thread.sleep(200);
+                                            mHandler.handleMessage(mHandler.obtainMessage(HIDE_DIALOG));
+                                        } catch (InterruptedException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                });
                             }
                             break;
                         case SHOW_TYPE_ACTIVITY:
@@ -444,7 +504,18 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
                                     Utils.selectImageToString(selectResultImages),
                                     Long.parseLong(askId), categoryid,
                                     UpLoadUtils.TYPE_ACTIVITY_UPLOAD);
-                            dismiss();
+                            hideInputPanel();
+                            fixedThreadPool.execute(new Runnable() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        Thread.sleep(200);
+                                        mHandler.handleMessage(mHandler.obtainMessage(HIDE_DIALOG));
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            });
                             break;
                     }
                 }
@@ -475,6 +546,9 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
             case AREA_SHOW_IMG:
                 mArea.setVisibility(View.VISIBLE);
                 break;
+            case HIDE_DIALOG:
+                dismiss();
+                break;
         }
         return true;
     }
@@ -485,9 +559,9 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
             mPhotoItems.clear();
             mPhotoItems.addAll(items);
             mAdapter.notifyDataSetChanged();
-            if(mPhotoItems.size() == 0){
+            if (mPhotoItems.size() == 0) {
                 mEnpty.setVisibility(View.VISIBLE);
-            }else{
+            } else {
                 mEnpty.setVisibility(View.GONE);
             }
         }
@@ -546,4 +620,8 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
         }
     };
 
+    @Override
+    public void dismiss() {
+        super.dismiss();
+    }
 }

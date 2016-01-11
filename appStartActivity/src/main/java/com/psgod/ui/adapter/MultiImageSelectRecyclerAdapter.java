@@ -79,7 +79,7 @@ public class MultiImageSelectRecyclerAdapter extends RecyclerView.Adapter<MultiI
                 } else {
                     timeSecond = System.currentTimeMillis();
                 }
-                if (timeSecond - timeOne > 1000  || timeSecond == 0) {
+                if (timeSecond - timeOne > 1000 || timeSecond == 0) {
                     CustomToast.show(mContext, "作品最多只能选择1张图片哦~", Toast.LENGTH_SHORT);
                     timeOne = 0;
                 }
@@ -157,7 +157,7 @@ public class MultiImageSelectRecyclerAdapter extends RecyclerView.Adapter<MultiI
     }
 
     public PhotoItem getCheckedPhotoItem() {
-        return mPhotoItems.get(checkedPhotoItem);
+        return checkedPhotoItem >= 0 ? mPhotoItems.get(checkedPhotoItem) : null;
     }
 
     @Override
@@ -196,6 +196,11 @@ public class MultiImageSelectRecyclerAdapter extends RecyclerView.Adapter<MultiI
     }
 
     private OnImageClickListener onImageClickListener;
+    private OnBangClickListener onBangClickListener;
+
+    public void setOnBangClickListener(OnBangClickListener onBangClickListener) {
+        this.onBangClickListener = onBangClickListener;
+    }
 
     public void setOnImageClickListener(OnImageClickListener onImageClickListener) {
         this.onImageClickListener = onImageClickListener;
@@ -215,12 +220,19 @@ public class MultiImageSelectRecyclerAdapter extends RecyclerView.Adapter<MultiI
         void onImageClick(View view, List<SelectImage> selectImages);
     }
 
+    public interface OnBangClickListener {
+        void onBangClick(View view);
+    }
+
     private View.OnClickListener bangClick = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             Integer position = (Integer) view.getTag(R.id.tupppai_view_id);
             checkedPhotoItem = position;
             notifyDataSetChanged();
+            if(onBangClickListener != null){
+                onBangClickListener.onBangClick(view);
+            }
         }
     };
 

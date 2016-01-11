@@ -289,6 +289,7 @@ public class AlbumSelectImageActivity extends PSGodBaseActivity {
                 } else {
                     mFolderPopupWindow.showAtLocation(mParentView, Gravity.CENTER, 0, 0);
                     mFolderPopupWindow.setFocusable(true);
+                    mFolderPopupWindow.setAnimationStyle(R.style.popwindow_anim_style);
                     mFolderPopupWindow.update();
 
                     mFolderPopupWindow.getContentView().setOnTouchListener(new View.OnTouchListener() {
