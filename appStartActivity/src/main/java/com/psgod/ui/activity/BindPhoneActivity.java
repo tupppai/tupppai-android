@@ -77,7 +77,7 @@ public class BindPhoneActivity extends PSGodBaseActivity {
             public void run() {
                 callInputPanel();
             }
-        }, 200);
+        }, 100);
     }
 
     private void initEvents() {
