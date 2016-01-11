@@ -20,6 +20,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.psgod.Constants;
 import com.psgod.R;
 import com.psgod.eventbus.MyPageRefreshEvent;
+import com.psgod.model.LoginUser;
 import com.psgod.model.PhotoItem;
 import com.psgod.network.NetworkUtil;
 import com.psgod.network.request.PSGodErrorListener;
@@ -86,6 +87,9 @@ public class InprogressPageAskFragment extends Fragment {
 		mViewHolder.mListView.getRefreshableView().addFooterView(
 				mViewHolder.mFooterView);
 		mViewHolder.mFooterView.setVisibility(View.GONE);
+		mViewHolder.mEmptyView = mViewHolder.mView
+				.findViewById(R.id.fragment_ask_empty_view);
+		mViewHolder.mListView.setEmptyView(mViewHolder.mEmptyView);
 
 		mInprogressingAskListener = new InprogressingAskListener();
 		mViewHolder.mListView.setOnRefreshListener(mInprogressingAskListener);
@@ -199,10 +203,6 @@ public class InprogressPageAskFragment extends Fragment {
 			} else {
 				canLoadMore = true;
 			}
-
-			mViewHolder.mEmptyView = mViewHolder.mView
-					.findViewById(R.id.fragment_ask_empty_view);
-			mViewHolder.mListView.setEmptyView(mViewHolder.mEmptyView);
 
 			mLastUpdatedTime = System.currentTimeMillis();
 			if (android.os.Build.VERSION.SDK_INT >= 9) {

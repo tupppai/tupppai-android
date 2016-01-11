@@ -81,6 +81,8 @@ public class InprogressPageReplyFragment extends Fragment {
 
 		mViewHolder.mEmptyView = mViewHolder.mView
 				.findViewById(R.id.inprogress_fragment_reply_empty_view);
+		mViewHolder.mListView.getRefreshableView().setEmptyView(
+				mViewHolder.mEmptyView);
 
 		mViewHolder.mFootView = LayoutInflater.from(mContext).inflate(
 				R.layout.footer_load_more, null);
@@ -89,8 +91,10 @@ public class InprogressPageReplyFragment extends Fragment {
 				mViewHolder.mFootView);
 
 		// 如果当前未使用手机号登录，则不刷新，否则会弹出两次绑定手机号activity
-		if ((NetworkUtil.getNetworkType() != NetworkUtil.NetworkType.NONE) && !LoginUser.getInstance().getPhoneNum().equals("0")) {
-			mViewHolder.mListView.setRefreshing(true);
+		if ((NetworkUtil.getNetworkType() != NetworkUtil.NetworkType.NONE) ) {
+			if (!LoginUser.getInstance().getPhoneNum().equals("0")) {
+				mViewHolder.mListView.setRefreshing(true);
+			}
 		}
 	}
 
@@ -192,9 +196,6 @@ public class InprogressPageReplyFragment extends Fragment {
 			mPhotoItems.addAll(items);
 			mReplyAdapter.notifyDataSetChanged();
 			mViewHolder.mListView.onRefreshComplete();
-
-			mViewHolder.mListView.getRefreshableView().setEmptyView(
-					mViewHolder.mEmptyView);
 
 			if (items.size() < 15) {
 				canLoadMore = false;

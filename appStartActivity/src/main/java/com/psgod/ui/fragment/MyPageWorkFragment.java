@@ -20,7 +20,9 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnLastItemVisibleListener;
 import com.psgod.Constants;
 import com.psgod.R;
+import com.psgod.Utils;
 import com.psgod.eventbus.MyPageRefreshEvent;
+import com.psgod.model.LoginUser;
 import com.psgod.model.PhotoItem;
 import com.psgod.network.request.PSGodErrorListener;
 import com.psgod.network.request.PSGodRequestQueue;
@@ -42,7 +44,7 @@ public class MyPageWorkFragment extends ScrollTabHolderFragment {
 	private Context mContext;
 	private PhotoWaterFallListAdapter adapter;
 	private ViewHolder mViewHolder;
-	private List<PhotoItem> mItems;
+	private List<PhotoItem> mItems = new ArrayList<>();
 
 	private int mPage;
 	private boolean canLoadMore = true;
@@ -68,8 +70,6 @@ public class MyPageWorkFragment extends ScrollTabHolderFragment {
 		super.onCreate(savedInstanceState);
 		EventBus.getDefault().register(this);
 		mContext = getActivity();
-		// 初始化数组
-		mItems = new ArrayList<PhotoItem>();
 	}
 
 	@Override
@@ -108,6 +108,9 @@ public class MyPageWorkFragment extends ScrollTabHolderFragment {
 		mViewHolder.listView.getRefreshableView().addFooterView(
 				mViewHolder.mFooterView);
 		mViewHolder.mFooterView.setVisibility(View.GONE);
+		View mEmptyView = getView().findViewById(
+				R.id.my_page_reply_empty_view);
+		mViewHolder.listView.setEmptyView(mEmptyView);
 
 		// 设置listView监听器
 		setListViewListener();
@@ -252,10 +255,6 @@ public class MyPageWorkFragment extends ScrollTabHolderFragment {
 			// }
 			// }
 
-			View mEmptyView = getView().findViewById(
-					R.id.my_page_reply_empty_view);
-			mViewHolder.listView.setEmptyView(mEmptyView);
-
 			mLastUpdatedTime = System.currentTimeMillis();
 			if (android.os.Build.VERSION.SDK_INT >= 9) {
 				mContext.getApplicationContext()
@@ -307,7 +306,6 @@ public class MyPageWorkFragment extends ScrollTabHolderFragment {
 			UserProfileAskFragment.class.getSimpleName()) {
 		@Override
 		public void handleError(VolleyError error) {
-			// TODO
 			mViewHolder.listView.onRefreshComplete();
 		}
 	};
