@@ -63,6 +63,7 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
     private PSGodBaseActivity mContext;
 
     private List<PhotoItem> mPhotoItems = new ArrayList<>();
+    private List<PhotoItem> mDonePhotoItems = new ArrayList<>();
     private RelativeLayout mView;
     private RelativeLayout mArea;
     private RelativeLayout mInputArea;
@@ -72,6 +73,7 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
     private TextView mPhotoTxt;
     private TextView mNumTxt;
     private TextView mSureTxt;
+    private TextView mDoneTxt;
     private ImageView mBangpImg;
     private ImageView mImageimg;
     private EditText mEdit;
@@ -97,6 +99,8 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
 
     public static final int CAMERA = 500;
     private File cameraImage;
+
+    private int bangType = MultiImageSelectRecyclerAdapter.TYPE_BANG_NOW;
 
     public ImageSelectDialog(PSGodBaseActivity context, int showType) {
         super(context, R.style.ImageSelectDialog);
@@ -194,6 +198,7 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
         mPhotoTxt = (TextView) mView.findViewById(R.id.dialog_image_select_photo_txt);
         mNumTxt = (TextView) mView.findViewById(R.id.dialog_image_select_num_txt);
         mSureTxt = (TextView) mView.findViewById(R.id.dialog_image_select_sure_txt);
+        mDoneTxt = (TextView) mView.findViewById(R.id.dialog_image_select_done_txt);
         mBangpImg = (ImageView) mView.findViewById(R.id.widge_image_select_bangplist_img);
         mImageimg = (ImageView) mView.findViewById(R.id.widge_image_select_image_img);
         mEdit = (EditText) mView.findViewById(R.id.widge_image_select_edit);
@@ -206,6 +211,7 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
         mAdapter = new MultiImageSelectRecyclerAdapter(mContext);
         mAdapter.setData(images);
         mAdapter.setBangData(mPhotoItems);
+        mAdapter.setDoneBangData(mDonePhotoItems);
         mImageArea.setAdapter(mAdapter);
 
         switch (showType) {
@@ -275,6 +281,7 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
         @Override
         public void onClick(View view) {
             if (mBangpImg.hasOnClickListeners()) {
+                bangType = mAdapter.getCheckBangType();
                 mBangpImg.callOnClick();
                 mImageArea.getLayoutManager().scrollToPosition(mAdapter.getCheckedPhotoItemNum());
             }
@@ -309,6 +316,7 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
             mNumTxt.setVisibility(View.VISIBLE);
             mAlbumTxt.setVisibility(View.VISIBLE);
             mPhotoTxt.setVisibility(View.VISIBLE);
+            mDoneTxt.setVisibility(View.GONE);
             if (showType == SHOW_TYPE_ACTIVITY) {
                 mPhotoTxt.setVisibility(View.INVISIBLE);
             }
@@ -346,10 +354,12 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
             @Override
             public void onClick(View view) {
                 mAdapter.setAdapterType(MultiImageSelectRecyclerAdapter.TYPE_BANG);
+                mAdapter.setBangType(bangType);
                 mAdapter.notifyDataSetChanged();
                 mNumTxt.setVisibility(View.INVISIBLE);
                 mPhotoTxt.setVisibility(View.INVISIBLE);
                 mAlbumTxt.setVisibility(View.INVISIBLE);
+                mDoneTxt.setVisibility(View.VISIBLE);
                 if (mPhotoItems.size() == 0) {
                     mEnpty.setVisibility(View.VISIBLE);
                 } else {
@@ -357,15 +367,20 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
                 }
                 mSureTxt.setVisibility(View.GONE);
                 UserPhotoRequest.Builder builder = new UserPhotoRequest.Builder()
-                        .setType(2).setPage(0)
+                        .setType(UserPhotoRequest.Builder.MY_INPROGRESS).setPage(0).setSize(20)
                         .setListener(refreshListener);
+                UserPhotoRequest.Builder doneBuilder = new UserPhotoRequest.Builder()
+                        .setType(UserPhotoRequest.Builder.MY_DONE).setPage(0).setSize(20)
+                        .setListener(refreshDoneListener);
                 if (categoryid != null && !categoryid.equals("")) {
                     builder.setChannelId(categoryid + "");
+                    doneBuilder.setChannelId(categoryid + "");
                 }
                 UserPhotoRequest request = builder.build();
                 RequestQueue requestQueue = PSGodRequestQueue.getInstance(mContext)
                         .getRequestQueue();
                 requestQueue.add(request);
+                requestQueue.add(doneBuilder.build());
                 hideInputPanel();
                 fixedThreadPool.execute(new Runnable() {
                     @Override
@@ -402,6 +417,22 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
                 selectResultImages.clear();
                 selectResultImages.addAll(selectImages);
                 showPreview();
+            }
+        });
+
+        mDoneTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(bangType == MultiImageSelectRecyclerAdapter.TYPE_BANG_NOW){
+                    bangType = MultiImageSelectRecyclerAdapter.TYPE_BANG_DONE;
+                    mDoneTxt.setText("当前任务");
+                }else{
+                    bangType = MultiImageSelectRecyclerAdapter.TYPE_BANG_NOW;
+                    mDoneTxt.setText("历史任务");
+                }
+                if(mBangpImg.hasOnClickListeners()) {
+                    mBangpImg.callOnClick();
+                }
             }
         });
 
@@ -559,7 +590,21 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
             mPhotoItems.clear();
             mPhotoItems.addAll(items);
             mAdapter.notifyDataSetChanged();
-            if (mPhotoItems.size() == 0) {
+            if (mPhotoItems.size() == 0 && bangType == MultiImageSelectRecyclerAdapter.TYPE_BANG_NOW) {
+                mEnpty.setVisibility(View.VISIBLE);
+            } else {
+                mEnpty.setVisibility(View.GONE);
+            }
+        }
+    };
+
+    private Response.Listener<List<PhotoItem>> refreshDoneListener = new Response.Listener<List<PhotoItem>>() {
+        @Override
+        public void onResponse(List<PhotoItem> items) {
+            mDonePhotoItems.clear();
+            mDonePhotoItems.addAll(items);
+            mAdapter.notifyDataSetChanged();
+            if (mDonePhotoItems.size() == 0 && bangType == MultiImageSelectRecyclerAdapter.TYPE_BANG_DONE) {
                 mEnpty.setVisibility(View.VISIBLE);
             } else {
                 mEnpty.setVisibility(View.GONE);

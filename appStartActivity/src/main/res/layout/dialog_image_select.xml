@@ -120,6 +120,18 @@
                 android:layout_alignParentRight="true"
                 android:layout_height="match_parent" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="历史任务"
+                android:textSize="14dp"
+                android:layout_marginLeft="7dp"
+                android:padding="5dp"
+                android:visibility="gone"
+                android:id="@+id/dialog_image_select_done_txt"
+                android:layout_centerVertical="true"
+                />
+
         </RelativeLayout>
 
     </RelativeLayout>
