@@ -34,239 +34,266 @@ import java.util.List;
 import de.greenrobot.event.EventBus;
 
 public class InprogressPageReplyFragment extends Fragment {
-	private static final String TAG = InprogressPageReplyFragment.class
-			.getSimpleName();
+    private static final String TAG = InprogressPageReplyFragment.class
+            .getSimpleName();
 
-	private Context mContext;
-	private ViewHolder mViewHolder;
-	private List<PhotoItem> mPhotoItems = new ArrayList<PhotoItem>();
-	private InprogressPageReplyAdapter mReplyAdapter;
-	private MyInProgressListener mInProgressListener;
+    private Context mContext;
+    private ViewHolder mViewHolder;
+    private List<PhotoItem> mPhotoItems = new ArrayList<PhotoItem>();
+    private InprogressPageReplyAdapter mReplyAdapter;
+    private MyInProgressListener mInProgressListener;
 
-	public static final int MY_INPROGRESS = 2;
-	private int mPage = 1;
+    public static final int MY_INPROGRESS = 2;
+    private int mPage = 1;
 
-	private String mSpKey;
-	private static final long DEFAULT_LAST_REFRESH_TIME = -1;
-	private long mLastUpdatedTime;
-	// 控制是否可以加载下一页
-	private boolean canLoadMore = false;
+    private String mSpKey;
+    private static final long DEFAULT_LAST_REFRESH_TIME = -1;
+    private long mLastUpdatedTime;
+    // 控制是否可以加载下一页
+    private boolean canLoadMore = false;
+    private boolean isDone = false;
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		EventBus.getDefault().register(this);
-		mContext = getActivity();
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+        mContext = getActivity();
 
-		FrameLayout parentview = new FrameLayout(getActivity());
-		FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
-				android.view.ViewGroup.LayoutParams.MATCH_PARENT,
-				android.view.ViewGroup.LayoutParams.MATCH_PARENT);
-		parentview.setLayoutParams(params);
+        FrameLayout parentview = new FrameLayout(getActivity());
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
+                android.view.ViewGroup.LayoutParams.MATCH_PARENT,
+                android.view.ViewGroup.LayoutParams.MATCH_PARENT);
+        parentview.setLayoutParams(params);
 
-		mViewHolder = new ViewHolder();
-		mViewHolder.mParentView = parentview;
-		mViewHolder.mView = LayoutInflater.from(getActivity()).inflate(
-				R.layout.fragment_inprogress_page_reply, parentview, true);
-		mViewHolder.mListView = (PullToRefreshListView) mViewHolder.mView
-				.findViewById(R.id.inprogress_reply_listview);
-		mViewHolder.mListView.setMode(Mode.PULL_FROM_START);
-		mReplyAdapter = new InprogressPageReplyAdapter(mContext, mPhotoItems);
-		mViewHolder.mListView.getRefreshableView().setAdapter(mReplyAdapter);
+        mViewHolder = new ViewHolder();
+        mViewHolder.mParentView = parentview;
+        mViewHolder.mView = LayoutInflater.from(getActivity()).inflate(
+                R.layout.fragment_inprogress_page_reply, parentview, true);
+        mViewHolder.mListView = (PullToRefreshListView) mViewHolder.mView
+                .findViewById(R.id.inprogress_reply_listview);
+        mViewHolder.mListView.setMode(Mode.PULL_FROM_START);
+        mReplyAdapter = new InprogressPageReplyAdapter(mContext, mPhotoItems);
+        mViewHolder.mListView.getRefreshableView().setAdapter(mReplyAdapter);
 
-		mInProgressListener = new MyInProgressListener(mContext);
-		mViewHolder.mListView.setOnRefreshListener(mInProgressListener);
-		mViewHolder.mListView.setOnLastItemVisibleListener(mInProgressListener);
-		mViewHolder.mListView.setScrollingWhileRefreshingEnabled(true);
+        mInProgressListener = new MyInProgressListener(mContext);
+        mViewHolder.mListView.setOnRefreshListener(mInProgressListener);
+        mViewHolder.mListView.setOnLastItemVisibleListener(mInProgressListener);
+        mViewHolder.mListView.setScrollingWhileRefreshingEnabled(true);
 
-		mViewHolder.mEmptyView = mViewHolder.mView
-				.findViewById(R.id.inprogress_fragment_reply_empty_view);
-		mViewHolder.mListView.getRefreshableView().setEmptyView(
-				mViewHolder.mEmptyView);
+        mViewHolder.mEmptyView = mViewHolder.mView
+                .findViewById(R.id.inprogress_fragment_reply_empty_view);
 
-		mViewHolder.mFootView = LayoutInflater.from(mContext).inflate(
-				R.layout.footer_load_more, null);
-		mViewHolder.mFootView.setVisibility(View.GONE);
-		mViewHolder.mListView.getRefreshableView().addFooterView(
-				mViewHolder.mFootView);
+        mViewHolder.mFootView = LayoutInflater.from(mContext).inflate(
+                R.layout.footer_load_more, null);
+        mViewHolder.mFootView.setVisibility(View.GONE);
+        mViewHolder.mListView.getRefreshableView().addFooterView(
+                mViewHolder.mFootView);
 
-		// 如果当前未使用手机号登录，则不刷新，否则会弹出两次绑定手机号activity
-		if ((NetworkUtil.getNetworkType() != NetworkUtil.NetworkType.NONE) ) {
-			if (!LoginUser.getInstance().getPhoneNum().equals("0")) {
-				mViewHolder.mListView.setRefreshing(true);
-			}
-		}
-	}
+        // 如果当前未使用手机号登录，则不刷新，否则会弹出两次绑定手机号activity
+        if ((NetworkUtil.getNetworkType() != NetworkUtil.NetworkType.NONE) && !LoginUser.getInstance().getPhoneNum().equals("0")) {
+            mViewHolder.mListView.setRefreshing(true);
+        }
+    }
 
-	@Override
-	public void onDestroy() {
-		super.onDestroy();
-		EventBus.getDefault().unregister(this);
-	}
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
 
-	public void onEventMainThread(MyPageRefreshEvent event) {
-		if (event.getType() == MyPageRefreshEvent.REPLY) {
-			refresh();
-		}
-	}
+    public void onEventMainThread(MyPageRefreshEvent event) {
+        if (event.getType() == MyPageRefreshEvent.REPLY) {
+            refresh();
+        }
+    }
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		FrameLayout parentview = new FrameLayout(getActivity());
-		FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
-				android.view.ViewGroup.LayoutParams.MATCH_PARENT,
-				android.view.ViewGroup.LayoutParams.MATCH_PARENT);
-		parentview.setLayoutParams(params);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        FrameLayout parentview = new FrameLayout(getActivity());
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
+                android.view.ViewGroup.LayoutParams.MATCH_PARENT,
+                android.view.ViewGroup.LayoutParams.MATCH_PARENT);
+        parentview.setLayoutParams(params);
 
-		mViewHolder.mParentView.removeView(mViewHolder.mView);
-		parentview.addView(mViewHolder.mView);
+        mViewHolder.mParentView.removeView(mViewHolder.mView);
+        parentview.addView(mViewHolder.mView);
 
-		mViewHolder.mParentView = parentview;
-		return parentview;
-	}
+        mViewHolder.mParentView = parentview;
+        return parentview;
+    }
 
-	// 触发自动刷新
-	public void setRefreshing() {
-		mViewHolder.mListView.setRefreshing(true);
-	}
+    // 触发自动刷新
+    public void setRefreshing() {
+        mViewHolder.mListView.setRefreshing(true);
+    }
 
-	private class MyInProgressListener implements OnLastItemVisibleListener,
-			OnRefreshListener {
-		private Context mContext;
+    private class MyInProgressListener implements OnLastItemVisibleListener,
+            OnRefreshListener {
+        private Context mContext;
 
-		public MyInProgressListener(Context context) {
-			mContext = context;
+        public MyInProgressListener(Context context) {
+            mContext = context;
 
-			SharedPreferences sp = mContext.getSharedPreferences(
-					Constants.SharedPreferencesKey.NAME, Context.MODE_PRIVATE);
-			mSpKey = Constants.SharedPreferencesKey.INPROGRESS_REPLY_LIST_LAST_REFRESH_TIME;
-			mLastUpdatedTime = sp.getLong(mSpKey, DEFAULT_LAST_REFRESH_TIME);
-		}
+            SharedPreferences sp = mContext.getSharedPreferences(
+                    Constants.SharedPreferencesKey.NAME, Context.MODE_PRIVATE);
+            mSpKey = Constants.SharedPreferencesKey.INPROGRESS_REPLY_LIST_LAST_REFRESH_TIME;
+            mLastUpdatedTime = sp.getLong(mSpKey, DEFAULT_LAST_REFRESH_TIME);
+        }
 
-		@Override
-		public void onLastItemVisible() {
-			if (canLoadMore) {
-				mPage = mPage + 1;
-				mViewHolder.mFootView.setVisibility(View.VISIBLE);
-				// 上拉加载更多
-				UserPhotoRequest.Builder builder = new UserPhotoRequest.Builder()
-						.setType(MY_INPROGRESS).setPage(mPage)
-						.setListener(loadMoreListener)
-						.setErrorListener(errorListener);
-				UserPhotoRequest request = builder.build();
-				request.setTag(TAG);
-				RequestQueue requestQueue = PSGodRequestQueue.getInstance(
-						mContext).getRequestQueue();
-				requestQueue.add(request);
-			}
-		}
+        @Override
+        public void onLastItemVisible() {
+            if (isDone) {
+                if (canLoadMore) {
+                    mPage = mPage + 1;
+                    mViewHolder.mFootView.setVisibility(View.VISIBLE);
+                    // 上拉加载更多
+                    UserPhotoRequest.Builder builder = new UserPhotoRequest.Builder()
+                            .setType(UserPhotoRequest.Builder.MY_DONE).setPage(mPage)
+                            .setListener(loadMoreListener)
+                            .setErrorListener(errorListener);
+                    UserPhotoRequest request = builder.build();
+                    request.setTag(TAG);
+                    RequestQueue requestQueue = PSGodRequestQueue.getInstance(
+                            mContext).getRequestQueue();
+                    requestQueue.add(request);
+                }
+            } else {
+                if (canLoadMore) {
+                    mPage = mPage + 1;
+                    mViewHolder.mFootView.setVisibility(View.VISIBLE);
+                    // 上拉加载更多
+                    UserPhotoRequest.Builder builder = new UserPhotoRequest.Builder()
+                            .setType(MY_INPROGRESS).setPage(mPage)
+                            .setListener(loadMoreListener)
+                            .setErrorListener(errorListener);
+                    UserPhotoRequest request = builder.build();
+                    request.setTag(TAG);
+                    RequestQueue requestQueue = PSGodRequestQueue.getInstance(
+                            mContext).getRequestQueue();
+                    requestQueue.add(request);
+                }
+            }
+        }
 
-		@Override
-		public void onRefresh(PullToRefreshBase refreshView) {
-			refresh();
-		}
-	}
+        @Override
+        public void onRefresh(PullToRefreshBase refreshView) {
+            refresh();
+        }
+    }
 
-	// 刷新操作
-	private void refresh() {
-		mPage = 1;
-		canLoadMore = false;
+    // 刷新操作
+    private void refresh() {
+        mPage = 1;
+        canLoadMore = false;
+        isDone = false;
+        mReplyAdapter.clear();
 
-		if (mLastUpdatedTime == DEFAULT_LAST_REFRESH_TIME) {
-			mLastUpdatedTime = System.currentTimeMillis();
-		}
+        if (mLastUpdatedTime == DEFAULT_LAST_REFRESH_TIME) {
+            mLastUpdatedTime = System.currentTimeMillis();
+        }
 
-		UserPhotoRequest.Builder builder = new UserPhotoRequest.Builder()
-				.setType(MY_INPROGRESS).setPage(mPage)
-				.setLastUpdated(mLastUpdatedTime).setListener(refreshListener)
-				.setErrorListener(errorListener);
+        UserPhotoRequest.Builder builder = new UserPhotoRequest.Builder()
+                .setType(UserPhotoRequest.Builder.MY_INPROGRESS).setPage(mPage)
+                .setLastUpdated(mLastUpdatedTime).setListener(refreshListener)
+                .setErrorListener(errorListener);
 
-		UserPhotoRequest request = builder.build();
-		request.setTag(TAG);
-		RequestQueue requestQueue = PSGodRequestQueue.getInstance(mContext)
-				.getRequestQueue();
-		requestQueue.add(request);
-	}
+        UserPhotoRequest request = builder.build();
+        request.setTag(TAG);
+        RequestQueue requestQueue = PSGodRequestQueue.getInstance(mContext)
+                .getRequestQueue();
+        requestQueue.add(request);
+    }
 
-	private Listener<List<PhotoItem>> refreshListener = new Listener<List<PhotoItem>>() {
-		@Override
-		public void onResponse(List<PhotoItem> items) {
-			mPhotoItems.clear();
-			mPhotoItems.addAll(items);
-			mReplyAdapter.notifyDataSetChanged();
-			mViewHolder.mListView.onRefreshComplete();
+    private Listener<List<PhotoItem>> refreshListener = new Listener<List<PhotoItem>>() {
+        @Override
+        public void onResponse(List<PhotoItem> items) {
+            mPhotoItems.clear();
+            mPhotoItems.addAll(items);
+            mReplyAdapter.notifyDataSetChanged();
+            mViewHolder.mListView.onRefreshComplete();
 
-			if (items.size() < 15) {
-				canLoadMore = false;
-			} else {
-				canLoadMore = true;
-			}
+            mViewHolder.mListView.getRefreshableView().setEmptyView(
+                    mViewHolder.mEmptyView);
 
-			// 保存本次刷新时间到sp
-			mLastUpdatedTime = System.currentTimeMillis();
-			if (android.os.Build.VERSION.SDK_INT >= 9) {
-				mContext.getApplicationContext()
-						.getSharedPreferences(
-								Constants.SharedPreferencesKey.NAME,
-								Context.MODE_PRIVATE).edit()
-						.putLong(mSpKey, mLastUpdatedTime).apply();
-			} else {
-				mContext.getApplicationContext()
-						.getSharedPreferences(
-								Constants.SharedPreferencesKey.NAME,
-								Context.MODE_PRIVATE).edit()
-						.putLong(mSpKey, mLastUpdatedTime).commit();
-			}
+            isLast(items);
 
-		}
-	};
+            // 保存本次刷新时间到sp
+            mLastUpdatedTime = System.currentTimeMillis();
+            if (android.os.Build.VERSION.SDK_INT >= 9) {
+                mContext.getApplicationContext()
+                        .getSharedPreferences(
+                                Constants.SharedPreferencesKey.NAME,
+                                Context.MODE_PRIVATE).edit()
+                        .putLong(mSpKey, mLastUpdatedTime).apply();
+            } else {
+                mContext.getApplicationContext()
+                        .getSharedPreferences(
+                                Constants.SharedPreferencesKey.NAME,
+                                Context.MODE_PRIVATE).edit()
+                        .putLong(mSpKey, mLastUpdatedTime).commit();
+            }
 
-	private Listener<List<PhotoItem>> loadMoreListener = new Listener<List<PhotoItem>>() {
-		@Override
-		public void onResponse(List<PhotoItem> items) {
-			if (items.size() > 0) {
-				mPhotoItems.addAll(items);
-			}
-			mReplyAdapter.notifyDataSetChanged();
-			mViewHolder.mListView.onRefreshComplete();
+        }
+    };
 
-			mViewHolder.mFootView.setVisibility(View.INVISIBLE);
+    private Listener<List<PhotoItem>> loadMoreListener = new Listener<List<PhotoItem>>() {
+        @Override
+        public void onResponse(List<PhotoItem> items) {
+            if (items.size() > 0) {
+                mPhotoItems.addAll(items);
+            }
+            mReplyAdapter.notifyDataSetChanged();
+            mViewHolder.mListView.onRefreshComplete();
 
-			if (items.size() < 15) {
-				canLoadMore = false;
-			} else {
-				canLoadMore = true;
-			}
-		}
-	};
+            mViewHolder.mFootView.setVisibility(View.INVISIBLE);
 
-	private PSGodErrorListener errorListener = new PSGodErrorListener(
-			UserPhotoRequest.class.getSimpleName()) {
-		@Override
-		public void handleError(VolleyError error) {
-			// TODO
-			mViewHolder.mListView.onRefreshComplete();
-		}
-	};
+            isLast(items);
+        }
+    };
 
-	/**
-	 * 暂停所有的下载
-	 */
-	@Override
-	public void onStop() {
-		super.onStop();
-		RequestQueue requestQueue = PSGodRequestQueue.getInstance(mContext)
-				.getRequestQueue();
-		requestQueue.cancelAll(TAG);
-	}
+    private void isLast(List<PhotoItem> items){
+        if (items.size() < 15) {
+            if(isDone) {
+                canLoadMore = false;
+            }else{
+                canLoadMore = true;
+                isDone = true;
+                mPage = 0;
+                mReplyAdapter.setIsGone(true);
+                mReplyAdapter.setGoneStartNum(mPhotoItems.size());
+            }
+        } else {
+            canLoadMore = true;
+        }
+    }
 
-	private static class ViewHolder {
-		ViewGroup mParentView;
-		View mView;
-		PullToRefreshListView mListView;
-		View mEmptyView;
-		View mFootView;
-	}
+    private PSGodErrorListener errorListener = new PSGodErrorListener(
+            UserPhotoRequest.class.getSimpleName()) {
+        @Override
+        public void handleError(VolleyError error) {
+            // TODO
+            mViewHolder.mListView.onRefreshComplete();
+        }
+    };
+
+    /**
+     * 暂停所有的下载
+     */
+    @Override
+    public void onStop() {
+        super.onStop();
+        RequestQueue requestQueue = PSGodRequestQueue.getInstance(mContext)
+                .getRequestQueue();
+        requestQueue.cancelAll(TAG);
+    }
+
+    private static class ViewHolder {
+        ViewGroup mParentView;
+        View mView;
+        PullToRefreshListView mListView;
+        View mEmptyView;
+        View mFootView;
+    }
 
 }

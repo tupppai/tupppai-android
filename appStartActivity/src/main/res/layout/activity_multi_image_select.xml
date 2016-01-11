@@ -43,6 +43,7 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentLeft="true"
                 android:layout_marginLeft="10dp"
+                android:textColor="@color/white"
                 android:text="全部图片"
                 android:gravity="center"
                 android:clickable="true"/>

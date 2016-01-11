@@ -82,6 +82,7 @@ public final class UserPhotoRequest extends BaseRequest<List<PhotoItem>> {
         public static final int MY_COLLECTION = 3;
         public static final int MY_PICTURE = 4;
         public static final int MY_PAGE_ASK = 5;
+        public static final int MY_DONE = 6;
 
         Resources res = PSGodApplication.getAppContext().getResources();
         private int width = Constants.WIDTH_OF_SCREEN - 2
@@ -171,7 +172,7 @@ public final class UserPhotoRequest extends BaseRequest<List<PhotoItem>> {
                     sb.append("profile/asks");
                     break;
 
-                case 100:
+                case MY_DONE:
                     sb.append("profile/done");
                     break;
 
