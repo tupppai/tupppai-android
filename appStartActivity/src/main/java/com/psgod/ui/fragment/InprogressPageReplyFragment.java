@@ -82,6 +82,8 @@ public class InprogressPageReplyFragment extends Fragment {
 
         mViewHolder.mEmptyView = mViewHolder.mView
                 .findViewById(R.id.inprogress_fragment_reply_empty_view);
+		mViewHolder.mListView.getRefreshableView().setEmptyView(
+				mViewHolder.mEmptyView);
 
         mViewHolder.mFootView = LayoutInflater.from(mContext).inflate(
                 R.layout.footer_load_more, null);
@@ -212,9 +214,6 @@ public class InprogressPageReplyFragment extends Fragment {
             mPhotoItems.addAll(items);
             mReplyAdapter.notifyDataSetChanged();
             mViewHolder.mListView.onRefreshComplete();
-
-            mViewHolder.mListView.getRefreshableView().setEmptyView(
-                    mViewHolder.mEmptyView);
 
             isLast(items);
 
