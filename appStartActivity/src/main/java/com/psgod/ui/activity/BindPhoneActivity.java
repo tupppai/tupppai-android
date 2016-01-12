@@ -23,12 +23,16 @@ import com.psgod.R;
 import com.psgod.Utils;
 import com.psgod.WeakReferenceHandler;
 import com.psgod.eventbus.AvatarEvent;
+import com.psgod.eventbus.InitEvent;
+import com.psgod.eventbus.MyPageRefreshEvent;
+import com.psgod.eventbus.RefreshEvent;
 import com.psgod.model.LoginUser;
 import com.psgod.model.RegisterData;
 import com.psgod.network.request.GetVerifyCodeRequest;
 import com.psgod.network.request.PSGodErrorListener;
 import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.network.request.RegisterRequest;
+import com.psgod.ui.fragment.HomePageFocusFragment;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
 
 import org.json.JSONObject;
@@ -159,13 +163,19 @@ public class BindPhoneActivity extends PSGodBaseActivity {
                                     @Override
                                     public void onResponse(JSONObject data) {
                                         showToast(new PSGodToast("绑定成功"));
-                                        // 更新tab头像
-                                        EventBus.getDefault().post(new AvatarEvent());
 
                                         if (data != null) {
                                             // 存储服务端返回的用户信息到sp
                                             LoginUser.getInstance().initFromJSONObject(data);
                                         }
+                                        // 更新tab头像
+                                        EventBus.getDefault().post(new AvatarEvent());
+                                        EventBus.getDefault().post(new RefreshEvent(HomePageFocusFragment.class.getName()));
+                                        EventBus.getDefault().post(new MyPageRefreshEvent(MyPageRefreshEvent.ASK));
+                                        EventBus.getDefault().post(new MyPageRefreshEvent(MyPageRefreshEvent.REPLY));
+                                        EventBus.getDefault().post(new MyPageRefreshEvent(MyPageRefreshEvent.WORK));
+                                        EventBus.getDefault().post(new MyPageRefreshEvent(MyPageRefreshEvent.COLLECTION));
+                                        EventBus.getDefault().post(new InitEvent());
 
                                         if ((mProgressDialog != null) && (mProgressDialog.isShowing())) {
                                             mProgressDialog.dismiss();
