@@ -301,6 +301,15 @@ public class RecentPageAsksFragment extends BaseFragment implements Callback {
 	public void onDestroy() {
 		super.onDestroy();
 		EventBus.getDefault().unregister(this);
+		Logger.log(Logger.LOG_LEVEL_DEBUG, Logger.USER_LEVEL_COLOR, TAG,
+				"onDestroy");
+		// Step2: 释放内存
+		if (mDatabaseHelper != null) {
+			OpenHelperManager.releaseHelper();
+			mDatabaseHelper = null;
+		}
+
+		mPhotoItemDao = null;
 	}
 
 	private static class ViewHolder {
@@ -351,4 +360,5 @@ public class RecentPageAsksFragment extends BaseFragment implements Callback {
 		}
 		return true;
 	}
+
 }

@@ -49,6 +49,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.greenrobot.event.EventBus;
+
 public class RecentAsksActivity extends PSGodBaseActivity implements Callback {
     private static final String TAG = RecentAsksActivity.class
             .getSimpleName();
@@ -361,6 +363,15 @@ public class RecentAsksActivity extends PSGodBaseActivity implements Callback {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        Logger.log(Logger.LOG_LEVEL_DEBUG, Logger.USER_LEVEL_COLOR, TAG,
+                "onDestroy");
+        // Step2: 释放内存
+        if (mDatabaseHelper != null) {
+            OpenHelperManager.releaseHelper();
+            mDatabaseHelper = null;
+        }
+
+        mPhotoItemDao = null;
 //		EventBus.getDefault().unregister(this);
     }
 

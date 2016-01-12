@@ -55,7 +55,7 @@ public abstract class PSGodBaseActivity extends FragmentActivity implements
     protected ImageSelectDialog mImageSelectDialog;
 
     //这个是相册回调结果的list，不要和类本身的结果集混了
-    protected List<String> selectResultImages = new ArrayList<String>();
+    protected List<String> selectResultImages;
 
     protected WeakReferenceHandler mBaseHandler = new WeakReferenceHandler(this);
 
@@ -314,6 +314,9 @@ public abstract class PSGodBaseActivity extends FragmentActivity implements
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (resultCode) {
             case ImageCategoryDialog.RESULT_CODE:
+                if (selectResultImages == null){
+                    selectResultImages = new ArrayList<String>();
+                }
                 if(data != null) {
                     List<String> imageCategoryStrs = data.
                             getStringArrayListExtra(ImageCategoryDialog.RESULT);

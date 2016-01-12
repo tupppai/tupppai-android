@@ -38,7 +38,7 @@
         android:layout_below="@+id/dialog_image_select_input"
         android:visibility="visible"
         >
-        <android.support.v7.widget.RecyclerView
+        <com.psgod.ui.view.EmptyRecyclerView
             android:id="@+id/dialog_image_select_imgarea"
             android:layout_width="match_parent"
             android:layout_height="202dp"

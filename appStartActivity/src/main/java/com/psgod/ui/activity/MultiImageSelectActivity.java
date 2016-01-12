@@ -632,9 +632,6 @@ public class MultiImageSelectActivity extends PSGodBaseActivity {
 
     @Override
     public void finish() {
-        Intent intent = new Intent();
-        intent.putExtra(ImageCategoryDialog.RESULT, resultList);
-        setResult(ImageCategoryDialog.RESULT_CODE, intent);
         super.finish();
     }
 
@@ -643,7 +640,7 @@ public class MultiImageSelectActivity extends PSGodBaseActivity {
         super.onDestroy();
         UploadCache.getInstence().clear();
         EventBus.getDefault().post(new MyPageRefreshEvent(MyPageRefreshEvent.ASK));
-        EventBus.getDefault().post(new MyPageRefreshEvent(MyPageRefreshEvent.REPLY));
+//        EventBus.getDefault().post(new MyPageRefreshEvent(MyPageRefreshEvent.REPLY));
         EventBus.getDefault().unregister(this);
     }
 
