@@ -3,6 +3,7 @@ package com.psgod.ui.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Looper;
 import android.text.TextUtils;
@@ -11,6 +12,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -23,6 +25,7 @@ import com.psgod.R;
 import com.psgod.Utils;
 import com.psgod.WeakReferenceHandler;
 import com.psgod.model.LoginUser;
+import com.psgod.network.request.BaseRequest;
 import com.psgod.network.request.PSGodErrorListener;
 import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.network.request.QQLoginRequest;
@@ -55,7 +58,9 @@ public class NewLoginInputPhoneActivity extends PSGodBaseActivity{
 
     private EditText mPhoneEdit;
     private Button mNextButton;
+    private LinearLayout mParentLayout;
 
+    private ImageView mChangeRequestUrlImage;
     private ImageView mWeiboLoginBtn;
     private ImageView mWechatLoginBtn;
     private ImageView mQQLoginBtn;
@@ -67,6 +72,8 @@ public class NewLoginInputPhoneActivity extends PSGodBaseActivity{
 
     private CustomProgressingDialog mProgressDialog;
     private WeakReferenceHandler handler = new WeakReferenceHandler(this);
+
+    private int mClickItems = 0;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,12 +82,12 @@ public class NewLoginInputPhoneActivity extends PSGodBaseActivity{
         initViews();
         initEvents();
 
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                callInputPanel();
-            }
-        },200);
+//        handler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                callInputPanel();
+//            }
+//        },200);
 
     }
 
@@ -109,6 +116,8 @@ public class NewLoginInputPhoneActivity extends PSGodBaseActivity{
     }
 
     private void initViews() {
+        mParentLayout = (LinearLayout) findViewById(R.id.parent_layout);
+        mChangeRequestUrlImage = (ImageView) findViewById(R.id.logo_click);
         mPhoneEdit = (EditText) findViewById(R.id.phone_edit);
         mNextButton = (Button) findViewById(R.id.next_btn);
         mWeiboLoginBtn = (ImageView) findViewById(R.id.weibo_login);
@@ -117,6 +126,27 @@ public class NewLoginInputPhoneActivity extends PSGodBaseActivity{
     }
 
     private void initEvents() {
+        mChangeRequestUrlImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mClickItems++;
+                if (mClickItems == 7) {
+                    mClickItems = 0;
+                    mChangeRequestUrlImage.setEnabled(false);
+                    if (BaseRequest.PSGOD_BASE_URL.equals(BaseRequest.PSGOD_BASE_RELEASE_URL)) {
+                        BaseRequest.PSGOD_BASE_URL = BaseRequest.PSGOD_BASE_TEST_URL;
+                        Utils.showDebugToast("切换到测试服");
+                        mParentLayout.setBackgroundColor(Color.parseColor("#9fc25b"));
+                    } else {
+                        BaseRequest.PSGOD_BASE_URL = BaseRequest.PSGOD_BASE_RELEASE_URL;
+                        Utils.showDebugToast("切换到正式服");
+                        mParentLayout.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                    }
+                    mChangeRequestUrlImage.setEnabled(true);
+                }
+            }
+        });
+
         // QQ登录
         mQQLoginBtn.setOnClickListener(new View.OnClickListener() {
 
