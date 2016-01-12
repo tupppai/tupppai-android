@@ -117,6 +117,9 @@ public class NewLoginInputPhoneActivity extends PSGodBaseActivity{
 
     private void initViews() {
         mParentLayout = (LinearLayout) findViewById(R.id.parent_layout);
+        mParentLayout.setBackgroundColor(BaseRequest.PSGOD_BASE_URL.equals
+                (BaseRequest.PSGOD_BASE_RELEASE_URL) == true ?
+                Color.parseColor("#9fc25b") : Color.parseColor("#FFFFFF"));
         mChangeRequestUrlImage = (ImageView) findViewById(R.id.logo_click);
         mPhoneEdit = (EditText) findViewById(R.id.phone_edit);
         mNextButton = (Button) findViewById(R.id.next_btn);
