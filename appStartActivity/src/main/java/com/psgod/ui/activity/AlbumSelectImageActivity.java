@@ -50,10 +50,9 @@ import java.util.List;
 import de.greenrobot.event.EventBus;
 
 /**
- * 上传多图 选择图片
- *
- * @author ZouMengyuan
+ * 相册选择页
  */
+
 public class AlbumSelectImageActivity extends PSGodBaseActivity {
     private final static String TAG = AlbumSelectImageActivity.class
             .getSimpleName();
