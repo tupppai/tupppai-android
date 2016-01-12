@@ -322,13 +322,13 @@ public class HomePageFocusFragment extends BaseFragment implements Callback {
 			// 保存本次刷新时间到sp
 			mLastUpdatedTime = System.currentTimeMillis();
 			if (android.os.Build.VERSION.SDK_INT >= 9) {
-				getActivity()
+				mContext
 						.getSharedPreferences(
 								Constants.SharedPreferencesKey.NAME,
 								Context.MODE_PRIVATE).edit()
 						.putLong(mSpKey, mLastUpdatedTime).apply();
 			} else {
-				getActivity()
+				mContext
 						.getSharedPreferences(
 								Constants.SharedPreferencesKey.NAME,
 								Context.MODE_PRIVATE).edit()
