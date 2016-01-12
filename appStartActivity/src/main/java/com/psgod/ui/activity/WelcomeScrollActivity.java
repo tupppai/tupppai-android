@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.psgod.R;
@@ -28,8 +29,9 @@ public class WelcomeScrollActivity extends PSGodBaseActivity {
 	private ImageView mScrollDot1;
 	private ImageView mScrollDot2;
 	private ImageView mScrollDot3;
-	
-	private TextView mEnterText;
+
+	private LinearLayout mScrollDotLayout;
+	private ImageView mEnterImage;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -44,8 +46,9 @@ public class WelcomeScrollActivity extends PSGodBaseActivity {
 		mScrollDot1 = (ImageView) findViewById(R.id.scroll_dot1);
 		mScrollDot2 = (ImageView) findViewById(R.id.scroll_dot2);
 		mScrollDot3 = (ImageView) findViewById(R.id.scroll_dot3);
-		
-		mEnterText = (TextView) findViewById(R.id.enter_text);
+
+		mScrollDotLayout = (LinearLayout) findViewById(R.id.scroll_dot_layout);
+		mEnterImage = (ImageView) findViewById(R.id.enter_text);
 
 		// viewpager滚动页面
 		LayoutInflater mLi = LayoutInflater.from(this);
@@ -85,8 +88,8 @@ public class WelcomeScrollActivity extends PSGodBaseActivity {
 		};
 
 		mViewPager.setAdapter(mPagerAdapter);
-		
-		mEnterText.setOnClickListener(new OnClickListener() {
+
+		mEnterImage.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View arg0) {
@@ -106,6 +109,7 @@ public class WelcomeScrollActivity extends PSGodBaseActivity {
 		public void onPageSelected(int page) {
 			switch (page) {
 			case 0:
+				mScrollDotLayout.setVisibility(View.VISIBLE);
 				mSrcollDot0.setImageDrawable(getResources().getDrawable(
 						R.drawable.shape_scroll_select));
 				mScrollDot1.setImageDrawable(getResources().getDrawable(
@@ -114,10 +118,11 @@ public class WelcomeScrollActivity extends PSGodBaseActivity {
 						R.drawable.shape_scroll_unselect));
 				mScrollDot3.setImageDrawable(getResources().getDrawable(
 						R.drawable.shape_scroll_unselect));
-				mEnterText.setVisibility(View.GONE);
+				mEnterImage.setVisibility(View.GONE);
 				break;
 
 			case 1:
+				mScrollDotLayout.setVisibility(View.VISIBLE);
 				mScrollDot1.setImageDrawable(getResources().getDrawable(
 						R.drawable.shape_scroll_select));
 				mSrcollDot0.setImageDrawable(getResources().getDrawable(
@@ -126,10 +131,11 @@ public class WelcomeScrollActivity extends PSGodBaseActivity {
 						R.drawable.shape_scroll_unselect));
 				mScrollDot3.setImageDrawable(getResources().getDrawable(
 						R.drawable.shape_scroll_unselect));
-				mEnterText.setVisibility(View.GONE);
+				mEnterImage.setVisibility(View.GONE);
 				break;
 
 			case 2:
+				mScrollDotLayout.setVisibility(View.VISIBLE);
 				mScrollDot2.setImageDrawable(getResources().getDrawable(
 						R.drawable.shape_scroll_select));
 				mScrollDot1.setImageDrawable(getResources().getDrawable(
@@ -138,10 +144,11 @@ public class WelcomeScrollActivity extends PSGodBaseActivity {
 						R.drawable.shape_scroll_unselect));
 				mScrollDot3.setImageDrawable(getResources().getDrawable(
 						R.drawable.shape_scroll_unselect));
-				mEnterText.setVisibility(View.GONE);
+				mEnterImage.setVisibility(View.GONE);
 				break;
 
 			case 3:
+				mScrollDotLayout.setVisibility(View.GONE);
 				mScrollDot3.setImageDrawable(getResources().getDrawable(
 						R.drawable.shape_scroll_select));
 				mSrcollDot0.setImageDrawable(getResources().getDrawable(
@@ -150,7 +157,7 @@ public class WelcomeScrollActivity extends PSGodBaseActivity {
 						R.drawable.shape_scroll_unselect));
 				mScrollDot2.setImageDrawable(getResources().getDrawable(
 						R.drawable.shape_scroll_unselect));
-				mEnterText.setVisibility(View.VISIBLE);
+				mEnterImage.setVisibility(View.VISIBLE);
 
 				break;
 

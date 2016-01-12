@@ -108,6 +108,8 @@ public class HomePageHotFragment extends BaseFragment implements Callback {
     private LinearLayout mScrollLayout;
     private DisplayImageOptions mOptions = Constants.DISPLAY_BANNER_OPTIONS;
 
+    private Boolean HasAddBanner = false;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -171,7 +173,6 @@ public class HomePageHotFragment extends BaseFragment implements Callback {
                 mViewHolder.mParent);
 
         loadDataAsync();
-        loadBannerData(); // 加载banner数据
 
         return parentView;
     }
@@ -311,9 +312,11 @@ public class HomePageHotFragment extends BaseFragment implements Callback {
     private Listener<List<BannerData>> mBannerListener = new Listener<List<BannerData>>() {
         @Override
         public void onResponse(List<BannerData> bannerItems) {
+            mBannerItems.clear();
             mBannerItems.addAll(bannerItems);
-            if (bannerItems.size() > 0) {
+            if ((bannerItems.size() > 0) && HasAddBanner == false ) {
                 mViewHolder.mPhotoListView.getRefreshableView().addHeaderView(getBannerView());
+                HasAddBanner = true;
             }
         }
     };
@@ -482,6 +485,7 @@ public class HomePageHotFragment extends BaseFragment implements Callback {
 
         @Override
         public void onRefresh(PullToRefreshBase refreshView) {
+            loadBannerData();         // 下拉刷新时，加载banner
             mPage = 1;
             // 上次刷新时间
             if (mLastUpdatedTime == DEFAULT_LAST_REFRESH_TIME) {

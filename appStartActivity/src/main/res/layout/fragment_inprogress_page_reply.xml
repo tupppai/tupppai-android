@@ -34,7 +34,7 @@
             android:layout_marginTop="35dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:text="还没认领帮P?  就这样少了个炫（装）技（B）的机会咯？"
+            android:text="  还没认领帮P?  就这样少了个炫（装）技（B）的机会咯？"
             android:textColor="#8D8D8D"
             android:textSize="15dp" />
     </LinearLayout>
