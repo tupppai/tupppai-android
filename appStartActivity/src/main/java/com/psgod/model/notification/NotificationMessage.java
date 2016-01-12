@@ -36,6 +36,9 @@ public class NotificationMessage implements Serializable {
 	private long mAskId;
 	private long mReplyId;
 
+	private String mDesc;
+	private long mForCommentId;
+
 	// 收到的赞需要用到的ask_id
 	private long mTargetAskId = -1;
 
@@ -105,6 +108,14 @@ public class NotificationMessage implements Serializable {
 			notification.setReplyId(jsonObj.getLong("reply_id"));
 		}
 
+		if (jsonObj.has("desc")) {
+			notification.setmDesc(jsonObj.getString("desc"));
+		}
+
+		if (jsonObj.has("for_comment")) {
+			notification.setmForCommentId(jsonObj.getLong("for_comment"));
+		}
+
 		// 收到的赞需要的ask_id
 		if (jsonObj.has("target_ask_id")) {
 			notification.setTargetAskId(jsonObj.getLong("target_ask_id"));
@@ -151,6 +162,22 @@ public class NotificationMessage implements Serializable {
 
 	public void setTargetType(int target_type) {
 		this.mTargetType = target_type;
+	}
+
+	public String getmDesc() {
+		return mDesc;
+	}
+
+	public void setmDesc(String mDesc) {
+		this.mDesc = mDesc;
+	}
+
+	public long getmForCommentId() {
+		return mForCommentId;
+	}
+
+	public void setmForCommentId(long mForCommentId) {
+		this.mForCommentId = mForCommentId;
 	}
 
 	public void setPicUrl(String pic_url) {

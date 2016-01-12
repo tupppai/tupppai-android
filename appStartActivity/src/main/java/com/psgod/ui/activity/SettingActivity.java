@@ -293,7 +293,7 @@ public class SettingActivity extends PSGodBaseActivity {
 			public void onClick(View arg0) {
 				Intent intent = new Intent(SettingActivity.this,
 						WebBrowserActivity.class);
-				intent.putExtra(WebBrowserActivity.KEY_URL, BaseRequest.PSGOD_BASE_TEST_URL+
+				intent.putExtra(WebBrowserActivity.KEY_URL, BaseRequest.PSGOD_BASE_URL+
 						"mobile/contacts.html" + "?version=" + getVersion());
 				intent.putExtra(WebBrowserActivity.KEY_DESC,"关于我们");
 				startActivity(intent);

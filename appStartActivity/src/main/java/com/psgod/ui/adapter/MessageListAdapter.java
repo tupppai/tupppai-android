@@ -204,6 +204,10 @@ public class MessageListAdapter extends BaseAdapter {
                         .findViewById(R.id.item_comment_list_name_tv);
                 viewHolderComment.timeTv = (TextView) convertView
                         .findViewById(R.id.item_comment_list_time_tv);
+                viewHolderComment.commentTypeTv = (TextView) convertView
+                        .findViewById(R.id.comment_type);
+                viewHolderComment.commentContentTv = (TextView) convertView
+                        .findViewById(R.id.omment_content);
 
                 convertView.setTag(mMessages.get(position));
                 viewHolderComment.avatarIv.setUser(new User(message));
@@ -285,8 +289,16 @@ public class MessageListAdapter extends BaseAdapter {
                 viewHolderComment.nameTv.setText(message.getNickName());
                 viewHolderComment.commentTv.setText(message.getContent());
                 viewHolderComment.timeTv
-                        .setText(PhotoItem.getUpdateTimeStr(mMessages.get(position)
+                        .setText(PhotoItem.getUpdateTimeStr(message
                                 .getCreatedTime()));
+                viewHolderComment.commentContentTv.setText(message.getmDesc());
+                if (message.getmForCommentId() == 0l) {
+                    viewHolderComment.commentTypeTv.setText("回复我的图片：");
+                    viewHolderComment.imageView.setVisibility(View.VISIBLE);
+                } else {
+                    viewHolderComment.commentTypeTv.setText("回复我的评论：");
+                    viewHolderComment.imageView.setVisibility(View.GONE);
+                }
                 break;
 
             case Constants.PUSH_MESSAGE_FOLLOW:
@@ -327,6 +339,8 @@ public class MessageListAdapter extends BaseAdapter {
         TextView nameTv;
         TextView timeTv;
         TextView commentTv;
+        TextView commentTypeTv;
+        TextView commentContentTv;
         ImageView imageView;
 
     }
