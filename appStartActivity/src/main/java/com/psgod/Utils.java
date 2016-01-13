@@ -300,7 +300,6 @@ public final class Utils {
         } else {
             /**
              * tupppai:// + activity + / + id
-             *
              */
             String[] s = url.split("tupppai://");
             if (s.length == 2) {

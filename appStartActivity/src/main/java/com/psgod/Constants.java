@@ -120,7 +120,7 @@ public class Constants {
 			.imageScaleType(ImageScaleType.IN_SAMPLE_INT).cacheOnDisk(true)
 			.considerExifParams(true).displayer(new SimpleBitmapDisplayer())
 			.build();
-	
+
 	// UIL Banner默认配置
 	public static final DisplayImageOptions DISPLAY_BANNER_OPTIONS = new DisplayImageOptions.Builder()
 			.showImageForEmptyUri(R.drawable.banner_zhanwei)

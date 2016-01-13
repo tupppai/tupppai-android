@@ -27,12 +27,15 @@ import java.util.List;
 
 public class MultiImageSelectRecyclerAdapter extends RecyclerView.Adapter<MultiImageSelectRecyclerAdapter.ViewHolde> {
 
+    //adapterType
     public static final int TYPE_IMAGE = 0;
     public static final int TYPE_BANG = 1;
 
+    //uploadType
     public static final int TYPE_ASK = 0;
     public static final int TYPE_REPLY = 1;
 
+    //bangType
     public static final int TYPE_BANG_NOW = 0;
     public static final int TYPE_BANG_DONE = 1;
 
@@ -187,29 +190,33 @@ public class MultiImageSelectRecyclerAdapter extends RecyclerView.Adapter<MultiI
     @Override
     public void onBindViewHolder(ViewHolde holder, int position) {
         if (adapterType == TYPE_BANG) {
-            List<PhotoItem> photoItems;
-            if (bangType == TYPE_BANG_NOW) {
-                photoItems = mPhotoItems;
+            if (position == 20) {
+
             } else {
-                photoItems = mDonePhotoItems;
-            }
-            holder.imageArea.setVisibility(View.INVISIBLE);
-            holder.bangArea.setVisibility(View.VISIBLE);
-            if (photoItems != null) {
-                PsGodImageLoader.getInstance().displayImage(photoItems.get(position).getImageURL()
-                        , holder.bangImage, Constants.DISPLAY_IMAGE_OPTIONS_SMALL_SMALL);
-                PsGodImageLoader.getInstance().displayImage(photoItems.get(position).getAvatarURL()
-                        , holder.bangAvatar, Constants.DISPLAY_IMAGE_OPTIONS_AVATAR);
-                holder.bangName.setText(photoItems.get(position).getNickname());
-                holder.bangDesc.setText(photoItems.get(position).getDesc());
-                if (position == (bangType == TYPE_BANG_NOW ? checkedPhotoItem - 1
-                        : -checkedPhotoItem - 1)) {
-                    holder.bangCheck.setImageResource(R.mipmap.zuopin_ic_sel_sel);
+                List<PhotoItem> photoItems;
+                if (bangType == TYPE_BANG_NOW) {
+                    photoItems = mPhotoItems;
                 } else {
-                    holder.bangCheck.setImageResource(R.mipmap.zuopin_ic_sel_nor);
+                    photoItems = mDonePhotoItems;
                 }
-                holder.itemView.setTag(R.id.tupppai_view_id, position);
-                holder.itemView.setOnClickListener(bangClick);
+                holder.imageArea.setVisibility(View.INVISIBLE);
+                holder.bangArea.setVisibility(View.VISIBLE);
+                if (photoItems != null) {
+                    PsGodImageLoader.getInstance().displayImage(photoItems.get(position).getImageURL()
+                            , holder.bangImage, Constants.DISPLAY_IMAGE_OPTIONS_SMALL_SMALL);
+                    PsGodImageLoader.getInstance().displayImage(photoItems.get(position).getAvatarURL()
+                            , holder.bangAvatar, Constants.DISPLAY_IMAGE_OPTIONS_AVATAR);
+                    holder.bangName.setText(photoItems.get(position).getNickname());
+                    holder.bangDesc.setText(photoItems.get(position).getDesc());
+                    if (position == (bangType == TYPE_BANG_NOW ? checkedPhotoItem - 1
+                            : -checkedPhotoItem - 1)) {
+                        holder.bangCheck.setImageResource(R.mipmap.zuopin_ic_sel_sel);
+                    } else {
+                        holder.bangCheck.setImageResource(R.mipmap.zuopin_ic_sel_nor);
+                    }
+                    holder.itemView.setTag(R.id.tupppai_view_id, position);
+                    holder.itemView.setOnClickListener(bangClick);
+                }
             }
         } else {
             holder.imageArea.setVisibility(View.VISIBLE);
@@ -219,11 +226,6 @@ public class MultiImageSelectRecyclerAdapter extends RecyclerView.Adapter<MultiI
             holder.itemView.setOnClickListener(imageClick);
         }
     }
-//
-//    @Override
-//    public int getItemViewType(int position) {
-//        return position == 20 ? 0 : 1;
-//    }
 
     private OnImageClickListener onImageClickListener;
     private OnBangClickListener onBangClickListener;
@@ -273,8 +275,9 @@ public class MultiImageSelectRecyclerAdapter extends RecyclerView.Adapter<MultiI
 
     @Override
     public int getItemCount() {
-        return adapterType == TYPE_BANG ? bangType == TYPE_BANG_NOW ? mPhotoItems.size() :
-                mDonePhotoItems.size() : mImages.size();
+        return adapterType == TYPE_BANG ? bangType == TYPE_BANG_NOW ? mPhotoItems.size() == 20 ? 21 :
+                mPhotoItems.size() : mDonePhotoItems.size() == 20 ? 21 : mDonePhotoItems.size()
+                : mImages.size();
     }
 
     class ViewHolde extends RecyclerView.ViewHolder {
