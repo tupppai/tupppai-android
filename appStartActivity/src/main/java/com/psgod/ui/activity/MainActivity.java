@@ -115,7 +115,7 @@ public class MainActivity extends PSGodBaseActivity {
 
     private final int DEFAULT_FRAGMENT_ID = -1;
     private final int[] TAB_IDS = new int[]{
-            R.id.activity_main_tab_home_page,R.id.activity_tab_tupai_page,
+            R.id.activity_main_tab_home_page, R.id.activity_tab_tupai_page,
             R.id.activity_inprogress_tab_page, R.id.activity_main_tab_user};
     private final Map<Integer, Fragment> MAIN_ACTIVITY_FRAGMENTS = new HashMap<Integer, Fragment>();
 
@@ -128,15 +128,15 @@ public class MainActivity extends PSGodBaseActivity {
     private RelativeLayout mMyLayout;
     private AvatarImageView mAvatarImg;
     private AvatarImage mAvatarCase;
-    private RelativeLayout [] mBottomTabLayout = new RelativeLayout[3];
+    private RelativeLayout[] mBottomTabLayout = new RelativeLayout[3];
 
     private ImageView mHomeImage;
     private ImageView mTupaiImage;
     private ImageView mInprogressImage;
-    private ImageView [] mBottomTabImage = new ImageView [3];
-    private Integer [] mTabDrawableIds = {R.mipmap.tab_home_normal,R.mipmap.tab_tupai_normal,
-            R.mipmap.tab_jingxingzhong_normal,R.mipmap.tab_home_selected,
-            R.mipmap.tab_tupai_selected,R.mipmap.tab_jingxingzhong_selected};
+    private ImageView[] mBottomTabImage = new ImageView[3];
+    private Integer[] mTabDrawableIds = {R.mipmap.tab_home_normal, R.mipmap.tab_tupai_normal,
+            R.mipmap.tab_jingxingzhong_normal, R.mipmap.tab_home_selected,
+            R.mipmap.tab_tupai_selected, R.mipmap.tab_jingxingzhong_selected};
 
     // 小红点区域
     private LinearLayout mTabTipsMessage;
@@ -203,7 +203,8 @@ public class MainActivity extends PSGodBaseActivity {
         mTabTipsMessage = (LinearLayout) findViewById(R.id.psgod_rg_tab_tips_user);
 
         mFragmentManager = getSupportFragmentManager();
-        showFragment(R.id.activity_main_tab_home_page);
+
+//        showFragment(fragmentId);
 
         // 启动友盟消息推送
         mPushAgent = PushAgent.getInstance(this);
@@ -237,6 +238,24 @@ public class MainActivity extends PSGodBaseActivity {
         // umeng应用自动更新
         UmengUpdateAgent.update(this);
         EventBus.getDefault().register(this);
+        int fragmentId = getIntent().getIntExtra(IntentParams.KEY_FRAGMENT_ID,
+                IntentParams.VALUE_FRAGMENT_ID_HOMEPAGE);
+        switch (fragmentId) {
+            case IntentParams.VALUE_FRAGMENT_ID_HOMEPAGE:
+                mBottomTabLayout[0].callOnClick();
+                break;
+            case IntentParams.VALUE_FRAGMENT_ID_RECENT:
+                mBottomTabLayout[1].callOnClick();
+                break;
+            case IntentParams.VALUE_FRAGMENT_ID_INPROGRESSING:
+                mBottomTabLayout[2].callOnClick();
+                break;
+            case IntentParams.VALUE_FRAGMENT_ID_USER:
+                mMyLayout.callOnClick();
+            default:
+                mBottomTabLayout[0].callOnClick();
+                break;
+        }
     }
 
     private void initAvatar() {
@@ -467,11 +486,11 @@ public class MainActivity extends PSGodBaseActivity {
         @Override
         public void onClick(View view) {
             Resources res = MainActivity.this.getResources();
-            for (int i = 0 ; i < 3 ; i++) {
+            for (int i = 0; i < 3; i++) {
                 mBottomTabImage[i].setImageDrawable(res.getDrawable(mTabDrawableIds[i]));
             }
 
-            if(mAvatarCase.getVisibility() == View.GONE){
+            if (mAvatarCase.getVisibility() == View.GONE) {
                 mAvatarCase.setVisibility(View.VISIBLE);
             }
 
@@ -483,23 +502,23 @@ public class MainActivity extends PSGodBaseActivity {
     };
 
     // 设置底部Tab的Drawable
-    private void setBottomTabImageDrawable(int id){
+    private void setBottomTabImageDrawable(int id) {
         Resources res = this.getResources();
         int currentTabId = 0;
-        for (int i = 0 ; i < 3 ; i++) {
+        for (int i = 0; i < 3; i++) {
             mBottomTabImage[i].setImageDrawable(res.getDrawable(mTabDrawableIds[i]));
-            if (id == TAB_IDS[i]){
+            if (id == TAB_IDS[i]) {
                 currentTabId = i;
             }
         }
-        mBottomTabImage[currentTabId].setImageDrawable(res.getDrawable(mTabDrawableIds[currentTabId+3]));
+        mBottomTabImage[currentTabId].setImageDrawable(res.getDrawable(mTabDrawableIds[currentTabId + 3]));
 
     }
 
     private void initEvents() {
         mMyLayout.setOnClickListener(myClick);
         mAvatarImg.setOnClickListener(myClick);
-        for (int i = 0 ; i < 3 ; i++) {
+        for (int i = 0; i < 3; i++) {
             mBottomTabLayout[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -514,30 +533,30 @@ public class MainActivity extends PSGodBaseActivity {
 
         // 双击最近tab自动刷新
         mTupaiLayout.setOnTouchListener(new OnTouchListener() {
-			int count = 0;
-			int firClick = 0;
-			int secClick = 0;
+            int count = 0;
+            int firClick = 0;
+            int secClick = 0;
 
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				if (MotionEvent.ACTION_DOWN == event.getAction()) {
-					count++;
-					if (count == 1) {
-						firClick = (int) System.currentTimeMillis();
-					} else if (count == 2) {
-						secClick = (int) System.currentTimeMillis();
-						if (secClick - firClick < 1200) {
-							// 双击事件 下拉刷新首页热门列表
-							EventBus.getDefault().post(new RefreshEvent(TupppaiFragment.class.getName()));
-						}
-						count = 0;
-						firClick = 0;
-						secClick = 0;
-					}
-				}
-				return false;
-			}
-		});
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (MotionEvent.ACTION_DOWN == event.getAction()) {
+                    count++;
+                    if (count == 1) {
+                        firClick = (int) System.currentTimeMillis();
+                    } else if (count == 2) {
+                        secClick = (int) System.currentTimeMillis();
+                        if (secClick - firClick < 1200) {
+                            // 双击事件 下拉刷新首页热门列表
+                            EventBus.getDefault().post(new RefreshEvent(TupppaiFragment.class.getName()));
+                        }
+                        count = 0;
+                        firClick = 0;
+                        secClick = 0;
+                    }
+                }
+                return false;
+            }
+        });
 
         // 双击首页tab刷新
         mHomeLayout.setOnTouchListener(new OnTouchListener() {

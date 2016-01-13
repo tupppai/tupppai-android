@@ -1,8 +1,10 @@
 package com.psgod.ui.adapter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +18,10 @@ import com.psgod.Constants;
 import com.psgod.CustomToast;
 import com.psgod.PsGodImageLoader;
 import com.psgod.R;
+import com.psgod.Utils;
 import com.psgod.model.PhotoItem;
 import com.psgod.model.SelectImage;
+import com.psgod.ui.activity.MainActivity;
 import com.psgod.ui.activity.PSGodBaseActivity;
 import com.squareup.picasso.Picasso;
 
@@ -176,6 +180,14 @@ public class MultiImageSelectRecyclerAdapter extends RecyclerView.Adapter<MultiI
         return checkedPhotoItem > 0 ? TYPE_BANG_NOW : TYPE_BANG_DONE;
     }
 
+    /**
+     *
+     * 0为无选择
+     * 正数为现在的任务，序号从1开始
+     * 负数为过去任务，序号从-1开始
+     *
+     * @return
+     */
     public PhotoItem getCheckedPhotoItem() {
         return checkedPhotoItem >= 1 ? mPhotoItems.get(checkedPhotoItem - 1) :
                 checkedPhotoItem <= -1 ? mDonePhotoItems.get(-checkedPhotoItem - 1) : null;
@@ -188,10 +200,25 @@ public class MultiImageSelectRecyclerAdapter extends RecyclerView.Adapter<MultiI
     }
 
     @Override
+    public int getItemViewType(int position) {
+        return adapterType == TYPE_IMAGE ? 0 : position == 20 ? 1 : 0;
+    }
+
+    @Override
     public void onBindViewHolder(ViewHolde holder, int position) {
         if (adapterType == TYPE_BANG) {
-            if (position == 20) {
-
+            if (getItemViewType(position) == 1) {
+                ((RelativeLayout) holder.itemView).removeAllViews();
+                TextView textView = new TextView(mContext);
+                RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
+                        Utils.dpToPx(mContext,135), Utils.dpToPx(mContext,202)
+                );
+                textView.setGravity(Gravity.CENTER);
+                textView.setText("查看全部");
+                textView.setLayoutParams(layoutParams);
+                textView.setTextSize(15);
+                ((RelativeLayout) holder.itemView).addView(textView);
+                holder.itemView.setOnClickListener(bangMoreClick);
             } else {
                 List<PhotoItem> photoItems;
                 if (bangType == TYPE_BANG_NOW) {
@@ -237,6 +264,17 @@ public class MultiImageSelectRecyclerAdapter extends RecyclerView.Adapter<MultiI
     public void setOnImageClickListener(OnImageClickListener onImageClickListener) {
         this.onImageClickListener = onImageClickListener;
     }
+
+    private View.OnClickListener bangMoreClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Bundle bundle = new Bundle();
+            bundle.putInt(MainActivity.IntentParams.KEY_FRAGMENT_ID,
+                    R.id.activity_inprogress_tab_page);
+            MainActivity.startNewActivityAndFinishAllBefore(mContext,
+                    mContext.getClass().getSimpleName(),bundle);
+        }
+    };
 
     private View.OnClickListener imageClick = new View.OnClickListener() {
         @Override
