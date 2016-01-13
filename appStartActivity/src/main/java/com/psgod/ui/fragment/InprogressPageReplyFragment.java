@@ -82,8 +82,8 @@ public class InprogressPageReplyFragment extends Fragment {
 
         mViewHolder.mEmptyView = mViewHolder.mView
                 .findViewById(R.id.inprogress_fragment_reply_empty_view);
-		mViewHolder.mListView.getRefreshableView().setEmptyView(
-				mViewHolder.mEmptyView);
+        mViewHolder.mListView.getRefreshableView().setEmptyView(
+                mViewHolder.mEmptyView);
 
         mViewHolder.mFootView = LayoutInflater.from(mContext).inflate(
                 R.layout.footer_load_more, null);
@@ -251,16 +251,26 @@ public class InprogressPageReplyFragment extends Fragment {
         }
     };
 
-    private void isLast(List<PhotoItem> items){
+    private void isLast(List<PhotoItem> items) {
         if (items.size() < 15) {
-            if(isDone) {
+            if (isDone) {
                 canLoadMore = false;
-            }else{
+            } else {
                 canLoadMore = true;
                 isDone = true;
-                mPage = 0;
+                mPage = 1;
                 mReplyAdapter.setIsGone(true);
                 mReplyAdapter.setGoneStartNum(mPhotoItems.size());
+
+                UserPhotoRequest.Builder builder = new UserPhotoRequest.Builder()
+                        .setType(UserPhotoRequest.Builder.MY_DONE).setPage(mPage)
+                        .setListener(loadMoreListener)
+                        .setErrorListener(errorListener);
+                UserPhotoRequest request = builder.build();
+                request.setTag(TAG);
+                RequestQueue requestQueue = PSGodRequestQueue.getInstance(
+                        mContext).getRequestQueue();
+                requestQueue.add(request);
             }
         } else {
             canLoadMore = true;
