@@ -76,6 +76,11 @@ public class LocalLinkMovementMethod extends LinkMovementMethod {
 							buffer.getSpanEnd(link[0]));
 				}
 
+				/**
+				 * ==================================================================================
+				 *
+				 */
+
 				if (widget instanceof HtmlTextView) {
 					((HtmlTextView) widget).mLinkHit = false;
 					Intent intent = new Intent(mContext,

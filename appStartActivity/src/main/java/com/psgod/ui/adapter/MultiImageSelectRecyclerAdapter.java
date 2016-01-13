@@ -170,7 +170,7 @@ public class MultiImageSelectRecyclerAdapter extends RecyclerView.Adapter<MultiI
     }
 
     public int getCheckBangType() {
-        return checkedPhotoItem > 0? TYPE_BANG_NOW : TYPE_BANG_DONE;
+        return checkedPhotoItem > 0 ? TYPE_BANG_NOW : TYPE_BANG_DONE;
     }
 
     public PhotoItem getCheckedPhotoItem() {
@@ -219,6 +219,11 @@ public class MultiImageSelectRecyclerAdapter extends RecyclerView.Adapter<MultiI
             holder.itemView.setOnClickListener(imageClick);
         }
     }
+//
+//    @Override
+//    public int getItemViewType(int position) {
+//        return position == 20 ? 0 : 1;
+//    }
 
     private OnImageClickListener onImageClickListener;
     private OnBangClickListener onBangClickListener;
@@ -268,7 +273,7 @@ public class MultiImageSelectRecyclerAdapter extends RecyclerView.Adapter<MultiI
 
     @Override
     public int getItemCount() {
-        return adapterType == TYPE_BANG ? bangType == TYPE_BANG_NOW?mPhotoItems.size() :
+        return adapterType == TYPE_BANG ? bangType == TYPE_BANG_NOW ? mPhotoItems.size() :
                 mDonePhotoItems.size() : mImages.size();
     }
 

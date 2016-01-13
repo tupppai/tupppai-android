@@ -122,7 +122,7 @@ public final class Utils {
     /**
      * 校验手机格式是否符合要求
      *
-     * @param editText
+     * @param text
      * @return
      */
     public static boolean matchPhoneNum(String text) {
@@ -298,6 +298,10 @@ public final class Utils {
             intent.putExtra(WebBrowserActivity.KEY_DESC, title);
             context.startActivity(intent);
         } else {
+            /**
+             * tupppai:// + activity + / + id
+             *
+             */
             String[] s = url.split("tupppai://");
             if (s.length == 2) {
                 String[] thumb = s[1].split("/");

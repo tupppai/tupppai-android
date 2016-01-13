@@ -484,9 +484,17 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
             public void onClick(View view) {
                 UpLoadUtils upLoadUtils = UpLoadUtils.getInstance(mContext);
                 if (selectResultImages.size() <= 0) {
-                    CustomToast.show(mContext, "最少选择一张图片~", Toast.LENGTH_LONG);
-                } else if (mEdit.getText().toString().trim().length() == 0) {
-                    CustomToast.show(mContext, "描述不能为空~", Toast.LENGTH_LONG);
+                    switch (showType){
+                        case SHOW_TYPE_ASK:
+                            CustomToast.show(mContext, "请至少选择一张求P~", Toast.LENGTH_LONG);
+                            break;
+                        case SHOW_TYPE_ACTIVITY:
+                        case SHOW_TYPE_REPLY:
+                            CustomToast.show(mContext, "最少选择一张作品~", Toast.LENGTH_LONG);
+                            break;
+                    }
+                } else if (mEdit.getText().toString().trim().length() < 3) {
+                    CustomToast.show(mContext, "请输入至少3个字符的描述~", Toast.LENGTH_LONG);
                 } else {
                     switch (showType) {
                         case SHOW_TYPE_ASK:
@@ -508,7 +516,7 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
                             break;
                         case SHOW_TYPE_REPLY:
                             if (mAdapter.getCheckedPhotoItemNum() == -1) {
-                                CustomToast.show(mContext, "请选择求p~", Toast.LENGTH_LONG);
+                                CustomToast.show(mContext, "请选择对应的帮P任务~", Toast.LENGTH_LONG);
                             } else {
                                 upLoadUtils.upLoad(mEdit.getText().toString(),
                                         Utils.selectImageToString(selectResultImages),

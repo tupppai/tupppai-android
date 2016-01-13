@@ -15,6 +15,7 @@ import android.webkit.WebViewClient;
 
 import com.psgod.R;
 import com.psgod.UserPreferences;
+import com.psgod.ui.view.TupppaiWebViewChrome;
 import com.psgod.ui.widget.ActionBar;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
 
@@ -50,8 +51,8 @@ public class WebBrowserActivity extends PSGodBaseActivity {
 		if(desc!=null && !desc.equals("")){
 			mActionBar.setTitle(desc);
 		}
-
-		mWebView.setWebChromeClient(new WebChromeClient() {
+		mWebView.getSettings().setJavaScriptEnabled(true);
+		mWebView.setWebChromeClient(new TupppaiWebViewChrome(this){
 			@Override
 			public void onProgressChanged(WebView view, int progress) {
 				// WebBrowserActivity.this.setProgress(progress * 100);
