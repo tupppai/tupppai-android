@@ -33,7 +33,7 @@ public abstract class BaseRequest<T> extends Request<T> {
 
     public static final String PSGOD_BASE_RELEASE_URL = "http://api.qiupsdashen.com/"; // 正式环境
 
-    public static String PSGOD_BASE_URL = PSGOD_BASE_RELEASE_URL;
+    public static String PSGOD_BASE_URL = PSGOD_BASE_TEST_URL;
 
     protected static final String PROTOCOL_CHARSET = "utf-8";
 
@@ -135,10 +135,10 @@ public abstract class BaseRequest<T> extends Request<T> {
 //                    "当前版本过低，请更新版本", Toast.LENGTH_LONG);
             return Response.error(new ParseError(e));
         } catch (JSONException je) {
-            Looper.prepare();
-            CustomToast.showError(PSGodApplication.getAppContext(),
-                    "当前版本过低，请更新版本", Toast.LENGTH_LONG);
-            Looper.loop();
+//            Looper.prepare();
+//            CustomToast.showError(PSGodApplication.getAppContext(),
+//                    "当前版本过低，请更新版本", Toast.LENGTH_LONG);
+//            Looper.loop();
             return Response.error(new ParseError(je));
         }
     }
