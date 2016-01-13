@@ -9,34 +9,39 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:divider="@null"
+        android:visibility="gone"
         android:background="#F7F7F7"
         android:scrollbars="none" />
     
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/inprogress_fragment_reply_empty_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/actionbar"
         android:gravity="center_horizontal|top"
         android:orientation="vertical"
-        android:visibility="gone" >
+        android:visibility="visible" >
 
         <ImageView
+            android:id="@+id/empty_img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="60dp"
+            android:layout_centerHorizontal="true"
             android:background="@drawable/ic_pencil" />
 
         <TextView
             android:id="@+id/empty_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/empty_img"
             android:layout_marginTop="35dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:text="  还没认领帮P?  就这样少了个炫（装）技（B）的机会咯？"
+            android:layout_centerHorizontal="true"
+            android:text="还没认领帮P?  就这样少了个炫（装）技（B）的机会咯？"
             android:textColor="#8D8D8D"
             android:textSize="15dp" />
-    </LinearLayout>
+    </RelativeLayout>
     
 </LinearLayout>
