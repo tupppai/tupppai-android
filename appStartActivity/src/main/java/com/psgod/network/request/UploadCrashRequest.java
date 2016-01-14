@@ -2,6 +2,7 @@ package com.psgod.network.request;
 
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
+import com.psgod.Constants;
 import com.psgod.Logger;
 
 import org.json.JSONException;
@@ -62,7 +63,7 @@ public class UploadCrashRequest extends BaseRequest<Boolean>{
 		
 		@Override
 		public String createUrl() {
-			StringBuilder sb = new StringBuilder("http://api.loiter.us/")
+			StringBuilder sb = new StringBuilder(BaseRequest.PSGOD_BASE_URL)
 					.append("app/exceptions");
 			String url = sb.toString();
 			return url;

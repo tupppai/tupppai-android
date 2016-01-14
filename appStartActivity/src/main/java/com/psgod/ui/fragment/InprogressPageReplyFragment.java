@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
 
 import com.android.volley.RequestQueue;
@@ -80,6 +81,16 @@ public class InprogressPageReplyFragment extends Fragment {
         mViewHolder.mListView.setOnRefreshListener(mInProgressListener);
         mViewHolder.mListView.setOnLastItemVisibleListener(mInProgressListener);
         mViewHolder.mListView.setScrollingWhileRefreshingEnabled(true);
+        mViewHolder.mListView.getRefreshableView().setGroupIndicator(null);
+
+        mViewHolder.mListView.getRefreshableView().
+                setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+                    @Override
+                    public boolean onGroupClick(ExpandableListView expandableListView,
+                                                View view, int i, long l) {
+                        return true;
+                    }
+                });
 
         mViewHolder.mEmptyView = mViewHolder.mView
                 .findViewById(R.id.inprogress_fragment_reply_empty_view);
@@ -213,7 +224,9 @@ public class InprogressPageReplyFragment extends Fragment {
             mPhotoItems.addAll(items);
             mReplyAdapter.notifyDataSetChanged();
             mViewHolder.mListView.onRefreshComplete();
-
+            for (int i = 0; i < mReplyAdapter.getGroupCount(); i++) {
+                mViewHolder.mListView.getRefreshableView().expandGroup(i);
+            }
             isLast(items);
 
             // 保存本次刷新时间到sp
@@ -243,6 +256,9 @@ public class InprogressPageReplyFragment extends Fragment {
             }
             mReplyAdapter.notifyDataSetChanged();
             mViewHolder.mListView.onRefreshComplete();
+            for (int i = 0; i < mReplyAdapter.getGroupCount(); i++) {
+                mViewHolder.mListView.getRefreshableView().expandGroup(i);
+            }
 
             mViewHolder.mFootView.setVisibility(View.INVISIBLE);
             mViewHolder.mListView.getRefreshableView().setEmptyView(
