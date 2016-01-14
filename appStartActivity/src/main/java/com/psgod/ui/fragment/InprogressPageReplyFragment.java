@@ -16,6 +16,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnLastItemVisibleListener;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
+import com.handmark.pulltorefresh.library.PullToRefreshExpandableListView;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.psgod.Constants;
 import com.psgod.R;
@@ -69,7 +70,7 @@ public class InprogressPageReplyFragment extends Fragment {
         mViewHolder.mParentView = parentview;
         mViewHolder.mView = LayoutInflater.from(getActivity()).inflate(
                 R.layout.fragment_inprogress_page_reply, parentview, true);
-        mViewHolder.mListView = (PullToRefreshListView) mViewHolder.mView
+        mViewHolder.mListView = (PullToRefreshExpandableListView) mViewHolder.mView
                 .findViewById(R.id.inprogress_reply_listview);
         mViewHolder.mListView.setMode(Mode.PULL_FROM_START);
         mReplyAdapter = new InprogressPageReplyAdapter(mContext, mPhotoItems);
@@ -299,7 +300,7 @@ public class InprogressPageReplyFragment extends Fragment {
     private static class ViewHolder {
         ViewGroup mParentView;
         View mView;
-        PullToRefreshListView mListView;
+        PullToRefreshExpandableListView mListView;
         View mEmptyView;
         View mFootView;
     }

@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <com.handmark.pulltorefresh.library.PullToRefreshListView
+    <com.handmark.pulltorefresh.library.PullToRefreshExpandableListView
         android:id="@+id/inprogress_reply_listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
