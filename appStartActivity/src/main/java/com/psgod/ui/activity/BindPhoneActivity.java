@@ -70,6 +70,7 @@ public class BindPhoneActivity extends PSGodBaseActivity {
     public void onCreate(Bundle savedInstancestate) {
         super.onCreate(savedInstancestate);
         setContentView(R.layout.activity_bind_phone);
+        EventBus.getDefault().register(this);
         mContext = this;
         mPhoneNum = getIntent().getStringExtra(PHONE);
 
@@ -296,6 +297,12 @@ public class BindPhoneActivity extends PSGodBaseActivity {
         }
 
     };
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
 
     /**
      * 暂停所有的下载
