@@ -166,7 +166,7 @@ public class InprogressPageReplyAdapter extends BaseAdapter implements
 //        if (type == TYPE_ITEM && convertView instanceof RelativeLayout) {
         final PhotoItem photoItem = mPhotoItems.get(position);
         if(position >= goneStartNum){
-            mViewHolder.mParent.setBackgroundColor(Color.parseColor("#EAEAEA"));
+            mViewHolder.mParent.setBackgroundColor(Color.parseColor("#F0EFF5"));
         }else {
             mViewHolder.mParent.setBackgroundColor(Color.parseColor("#FFFFFF"));
         }
