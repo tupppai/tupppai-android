@@ -82,8 +82,6 @@ public class InprogressPageReplyFragment extends Fragment {
 
         mViewHolder.mEmptyView = mViewHolder.mView
                 .findViewById(R.id.inprogress_fragment_reply_empty_view);
-        mViewHolder.mListView.getRefreshableView().setEmptyView(
-                mViewHolder.mEmptyView);
 
         mViewHolder.mFootView = LayoutInflater.from(mContext).inflate(
                 R.layout.footer_load_more, null);
@@ -246,7 +244,8 @@ public class InprogressPageReplyFragment extends Fragment {
             mViewHolder.mListView.onRefreshComplete();
 
             mViewHolder.mFootView.setVisibility(View.INVISIBLE);
-
+            mViewHolder.mListView.getRefreshableView().setEmptyView(
+                    mViewHolder.mEmptyView);
             isLast(items);
         }
     };
@@ -258,8 +257,8 @@ public class InprogressPageReplyFragment extends Fragment {
             } else {
                 canLoadMore = true;
                 isDone = true;
-                mPage = 1;
-                mReplyAdapter.setIsGone(true);
+                mPage = 0;
+//                mReplyAdapter.setIsGone(true);
                 mReplyAdapter.setGoneStartNum(mPhotoItems.size());
 
                 UserPhotoRequest.Builder builder = new UserPhotoRequest.Builder()

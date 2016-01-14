@@ -4,10 +4,12 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,6 +20,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,7 +59,7 @@ public class InprogressPageReplyAdapter extends BaseAdapter implements
     public static final int TYPE_SEPARATOR = 1;
 
     private int goneStartNum = -1;
-    private boolean isGone = false;
+//    private boolean isGone = false;
 
     private Context mContext;
     private List<PhotoItem> mPhotoItems = new ArrayList<PhotoItem>();
@@ -82,27 +85,27 @@ public class InprogressPageReplyAdapter extends BaseAdapter implements
         mPhotoItems = photoItems;
     }
 
-    public void setIsGone(boolean isGone) {
-        this.isGone = isGone;
-    }
+//    public void setIsGone(boolean isGone) {
+//        this.isGone = isGone;
+//    }
 
     public void setGoneStartNum(int goneStartNum) {
         this.goneStartNum = goneStartNum;
     }
 
+
+//    public int getViewTypeCount() {
+//        return 2;
+//    }
+
+//    @Override
+//    public int getItemViewType(int position) {
+//        return position == goneStartNum ? TYPE_SEPARATOR : TYPE_ITEM;
+//    }
+
     @Override
     public int getCount() {
-        return isGone ? mPhotoItems.size() + 1: mPhotoItems.size();
-    }
-
-    @Override
-    public int getViewTypeCount() {
-        return 2;
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        return position == goneStartNum ? TYPE_SEPARATOR : TYPE_ITEM;
+        return mPhotoItems.size();
     }
 
     @Override
@@ -119,112 +122,114 @@ public class InprogressPageReplyAdapter extends BaseAdapter implements
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        int type = getItemViewType(position);
+//        int type = getItemViewType(position);
         if (convertView == null) {
-            switch (type) {
-                case TYPE_ITEM:
-                    mViewHolder = new ViewHolder();
-                    convertView = LayoutInflater.from(mContext).inflate(
-                            R.layout.item_inprogress_reply, null);
-                    mViewHolder.avatarIv = (AvatarImageView) convertView
-                            .findViewById(R.id.avatar_imgview);
-                    mViewHolder.mNicknaemTv = (TextView) convertView
-                            .findViewById(R.id.nickname_tv);
-                    mViewHolder.mTimeTv = (TextView) convertView
-                            .findViewById(R.id.item_time);
-                    mViewHolder.mImageView = (ImageView) convertView
-                            .findViewById(R.id.reply_imageview);
-                    mViewHolder.mAskDesc = (HtmlTextView) convertView
-                            .findViewById(R.id.ask_desc_tv);
-                    mViewHolder.mDownloadIv = (ImageView) convertView
-                            .findViewById(R.id.download_iv);
-                    mViewHolder.mUploadIv = (ImageView) convertView
-                            .findViewById(R.id.upload_iv);
-                    mViewHolder.mChannelName = (TextView) convertView.
-                            findViewById(R.id.item_inprogress_reply_channel);
-                    mViewHolder.mChannelTag = (ImageView) convertView.
-                            findViewById(R.id.item_inprogress_reply_tag);
-                    convertView.setTag(mViewHolder);
-                    break;
-                case TYPE_SEPARATOR:
-                    convertView = LayoutInflater.from(mContext).
-                            inflate(R.layout.item_inprogress_reply_gone,null);
-                    break;
-            }
+//            switch (type) {
+//                case TYPE_ITEM:
+            mViewHolder = new ViewHolder();
+            convertView = LayoutInflater.from(mContext).inflate(
+                    R.layout.item_inprogress_reply, null);
+            mViewHolder.mParent = (RelativeLayout) convertView.
+                    findViewById(R.id.item_inprogress_reply_parent);
+            mViewHolder.avatarIv = (AvatarImageView) convertView
+                    .findViewById(R.id.avatar_imgview);
+            mViewHolder.mNicknaemTv = (TextView) convertView
+                    .findViewById(R.id.nickname_tv);
+            mViewHolder.mTimeTv = (TextView) convertView
+                    .findViewById(R.id.item_time);
+            mViewHolder.mImageView = (ImageView) convertView
+                    .findViewById(R.id.reply_imageview);
+            mViewHolder.mAskDesc = (HtmlTextView) convertView
+                    .findViewById(R.id.ask_desc_tv);
+            mViewHolder.mDownloadIv = (ImageView) convertView
+                    .findViewById(R.id.download_iv);
+            mViewHolder.mUploadIv = (ImageView) convertView
+                    .findViewById(R.id.upload_iv);
+            mViewHolder.mChannelName = (TextView) convertView.
+                    findViewById(R.id.item_inprogress_reply_channel);
+            mViewHolder.mChannelTag = (ImageView) convertView.
+                    findViewById(R.id.item_inprogress_reply_tag);
+            convertView.setTag(mViewHolder);
+//                    break;
+//                case TYPE_SEPARATOR:
+//                    convertView = LayoutInflater.from(mContext).
+//                            inflate(R.layout.item_inprogress_reply_gone,null);
+//                    break;
+//            }
         } else {
-            switch (type){
-                case TYPE_ITEM:
-                    mViewHolder = (ViewHolder) convertView.getTag();
-                    break;
-            }
+//            switch (type){
+//                case TYPE_ITEM:
+            mViewHolder = (ViewHolder) convertView.getTag();
+//                    break;
+//            }
+        }
+//        if (type == TYPE_ITEM && convertView instanceof RelativeLayout) {
+        final PhotoItem photoItem = mPhotoItems.get(position);
+        if(position >= goneStartNum){
+            mViewHolder.mParent.setBackgroundColor(Color.parseColor("#EAEAEA"));
+        }else {
+            mViewHolder.mParent.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        PsGodImageLoader imageLoader = PsGodImageLoader.getInstance();
+        imageLoader.displayImage(photoItem.getAvatarURL(),
+                mViewHolder.avatarIv, mAvatarOptions);
+        mViewHolder.avatarIv.setUser(new User(photoItem)); // 设置点击头像跳转
+        imageLoader.displayImage(photoItem.getImageURL(),
+                mViewHolder.mImageView, mOptions);
+
+        mViewHolder.mNicknaemTv.setText(photoItem.getNickname());
+        mViewHolder.mTimeTv.setText(photoItem.getUpdateTimeStr());
+        mViewHolder.mAskDesc.setHtmlFromString(photoItem.getDesc(),
+                true);
+
+        mViewHolder.mDownloadIv.setTag(photoItem.getPid());
+        mViewHolder.mDownloadIv.setOnClickListener(downloadListener);
+
+        mViewHolder.mUploadIv.setTag(photoItem);
+        mViewHolder.mUploadIv.setOnClickListener(uploadClickListener);
+
+        if (photoItem.getCategoryName() != null && !photoItem.getCategoryName().equals("")) {
+            mViewHolder.mChannelTag.setVisibility(View.VISIBLE);
+            mViewHolder.mChannelName.setVisibility(View.VISIBLE);
+            mViewHolder.mChannelName.setText(photoItem.getCategoryName());
+        } else {
+            mViewHolder.mChannelTag.setVisibility(View.GONE);
+            mViewHolder.mChannelName.setVisibility(View.GONE);
         }
 
-        if(isGone && position >= goneStartNum){
-            position -= 1 ;
-        }
-        if(type == TYPE_ITEM) {
-            final PhotoItem photoItem = mPhotoItems.get(position);
-            PsGodImageLoader imageLoader = PsGodImageLoader.getInstance();
-            imageLoader.displayImage(photoItem.getAvatarURL(),
-                    mViewHolder.avatarIv, mAvatarOptions);
-            mViewHolder.avatarIv.setUser(new User(photoItem)); // 设置点击头像跳转
-            imageLoader.displayImage(photoItem.getImageURL(),
-                    mViewHolder.mImageView, mOptions);
-
-            mViewHolder.mNicknaemTv.setText(photoItem.getNickname());
-            mViewHolder.mTimeTv.setText(photoItem.getUpdateTimeStr());
-            mViewHolder.mAskDesc.setHtmlFromString(photoItem.getDesc(),
-                    true);
-
-            mViewHolder.mDownloadIv.setTag(photoItem.getPid());
-            mViewHolder.mDownloadIv.setOnClickListener(downloadListener);
-
-            mViewHolder.mUploadIv.setTag(photoItem);
-            mViewHolder.mUploadIv.setOnClickListener(uploadClickListener);
-
-            if (photoItem.getCategoryName() != null && !photoItem.getCategoryName().equals("")) {
-                mViewHolder.mChannelTag.setVisibility(View.VISIBLE);
-                mViewHolder.mChannelName.setVisibility(View.VISIBLE);
-                mViewHolder.mChannelName.setText(photoItem.getCategoryName());
-            } else {
-                mViewHolder.mChannelTag.setVisibility(View.GONE);
-                mViewHolder.mChannelName.setVisibility(View.GONE);
-            }
-
-            convertView.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // 我的帮p主体均为ask
-                    if (photoItem.getType() == PhotoItem.TYPE_ASK) {
-                        if (photoItem.getReplyCount() == 0) {
-                            SinglePhotoDetail.startActivity(mContext, photoItem);
-                        } else {
-                            new CarouselPhotoDetailDialog(mContext, photoItem.getAskId(), photoItem.getPid()).show();
-                        }
-                    }
-
-                }
-            });
-
-            convertView.setOnLongClickListener(new OnLongClickListener() {
-
-                @Override
-                public boolean onLongClick(View arg0) {
-                    if (inprogressShareDialog == null) {
-                        inprogressShareDialog = new InprogressShareMoreDialog(
-                                mContext);
-                    }
-                    inprogressShareDialog.setPhotoItem(photoItem,
-                            InprogressShareMoreDialog.SHARE_TYPE_REPLY);
-                    if (inprogressShareDialog.isShowing()) {
-                        inprogressShareDialog.dismiss();
+        convertView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 我的帮p主体均为ask
+                if (photoItem.getType() == PhotoItem.TYPE_ASK) {
+                    if (photoItem.getReplyCount() == 0) {
+                        SinglePhotoDetail.startActivity(mContext, photoItem);
                     } else {
-                        inprogressShareDialog.show(InprogressShareMoreDialog.GONETYPE_DELETE);
+                        new CarouselPhotoDetailDialog(mContext, photoItem.getAskId(), photoItem.getPid()).show();
                     }
-                    return false;
                 }
-            });
-        }
+
+            }
+        });
+
+        convertView.setOnLongClickListener(new OnLongClickListener() {
+
+            @Override
+            public boolean onLongClick(View arg0) {
+                if (inprogressShareDialog == null) {
+                    inprogressShareDialog = new InprogressShareMoreDialog(
+                            mContext);
+                }
+                inprogressShareDialog.setPhotoItem(photoItem,
+                        InprogressShareMoreDialog.SHARE_TYPE_REPLY);
+                if (inprogressShareDialog.isShowing()) {
+                    inprogressShareDialog.dismiss();
+                } else {
+                    inprogressShareDialog.show(InprogressShareMoreDialog.GONETYPE_DELETE);
+                }
+                return false;
+            }
+        });
 
 
         return convertView;
@@ -305,6 +310,7 @@ public class InprogressPageReplyAdapter extends BaseAdapter implements
     };
 
     private static class ViewHolder {
+        RelativeLayout mParent;
         AvatarImageView avatarIv;
         TextView mNicknaemTv;
         TextView mTimeTv;
@@ -336,8 +342,8 @@ public class InprogressPageReplyAdapter extends BaseAdapter implements
         return true;
     }
 
-    public void clear(){
-        isGone = false;
+    public void clear() {
+//        isGone = false;
         goneStartNum = -1;
     }
 
