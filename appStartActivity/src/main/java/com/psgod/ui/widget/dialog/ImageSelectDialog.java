@@ -16,6 +16,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -90,6 +91,7 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
     private ExecutorService fixedThreadPool = Executors.newFixedThreadPool(1);
 
     public static final int HIDE_INPUT = 1;
+    public static final int SHOW_INPUT = 5;
     public static final int AREA_SHOW_BANG = 2;
     public static final int AREA_SHOW_IMG = 3;
     public static final int HIDE_DIALOG = 4;
@@ -344,10 +346,29 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
     };
 
     private void initListener() {
-        mEdit.setOnClickListener(new View.OnClickListener() {
+//        mEdit.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                mArea.setVisibility(View.GONE);
+//            }
+//        });
+
+        mEdit.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View view) {
+            public boolean onTouch(View view, MotionEvent motionEvent) {
                 mArea.setVisibility(View.GONE);
+//                fixedThreadPool.execute(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        try {
+//                            Thread.sleep(150);
+//                            mHandler.handleMessage(mHandler.obtainMessage(SHOW_INPUT));
+//                        } catch (InterruptedException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                });
+                return false;
             }
         });
 
@@ -572,11 +593,21 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
         imm.hideSoftInputFromWindow(mEdit.getWindowToken(), 0);
     }
 
+    // 显示输入法
+    private void showInputPanel() {
+        // 显示软键盘
+        InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(mView, InputMethodManager.SHOW_FORCED);
+    }
+
     @Override
     public boolean handleMessage(Message message) {
         switch (message.what) {
             case HIDE_INPUT:
                 hideInputPanel();
+                break;
+            case SHOW_INPUT:
+                showInputPanel();
                 break;
             //显示帮p列表
             case AREA_SHOW_BANG:
