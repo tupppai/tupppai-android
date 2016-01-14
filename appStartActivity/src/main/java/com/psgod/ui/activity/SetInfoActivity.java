@@ -36,6 +36,7 @@ import com.psgod.Logger;
 import com.psgod.R;
 import com.psgod.WeakReferenceHandler;
 import com.psgod.model.RegisterData;
+import com.psgod.network.request.BaseRequest;
 import com.psgod.ui.adapter.CityInfo;
 import com.psgod.ui.view.CircleImageView;
 import com.psgod.ui.widget.CitySelector;
@@ -197,8 +198,8 @@ public class SetInfoActivity extends PSGodBaseActivity implements
 			public void onClick(View arg0) {
 				Intent intent = new Intent(SetInfoActivity.this,
 						WebBrowserActivity.class);
-				intent.putExtra(WebBrowserActivity.KEY_URL,
-						"http://api.loiter.us/mobile/agreement.html");
+				intent.putExtra(WebBrowserActivity.KEY_URL, BaseRequest.PSGOD_BASE_URL +
+						"mobile/agreement.html");
 				intent.putExtra(WebBrowserActivity.KEY_DESC,"用户协议");
 				startActivity(intent);
 			}
