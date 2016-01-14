@@ -9,7 +9,7 @@
 
     <ImageView
         android:layout_width="2dp"
-        android:layout_height="14dp"
+        android:layout_height="16dp"
         android:background="#fee223" />
 
     <TextView

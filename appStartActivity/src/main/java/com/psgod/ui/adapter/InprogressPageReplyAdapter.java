@@ -172,7 +172,7 @@ public class InprogressPageReplyAdapter extends BaseExpandableListAdapter implem
                 public void run() {
                     PhotoItem photoItem = (PhotoItem) view.getTag();
                     ImageInfo info = PhotoRequest.getImageInfo(mType,
-                            photoItem.getPid(),photoItem.getCategoryId());
+                            photoItem.getPid(), photoItem.getCategoryId());
                     EventBus.getDefault().post(new MyPageRefreshEvent(MyPageRefreshEvent.REPLY));
                     if (!info.isSuccessful) {
                         mHandler.sendEmptyMessage(MSG_FAILED);
@@ -292,9 +292,13 @@ public class InprogressPageReplyAdapter extends BaseExpandableListAdapter implem
         }
         switch (i) {
             case TYPE_ITEM:
+                view.setPadding(Utils.dpToPx(mContext, 10),
+                        Utils.dpToPx(mContext, 20), 0, Utils.dpToPx(mContext, 10));
                 goneViewHolder.textView.setText("当前任务");
                 break;
             case TYPE_SEPARATOR:
+                view.setPadding(Utils.dpToPx(mContext, 10),
+                        Utils.dpToPx(mContext, 10), 0, Utils.dpToPx(mContext, 10));
                 goneViewHolder.textView.setText("历史任务");
                 break;
         }
