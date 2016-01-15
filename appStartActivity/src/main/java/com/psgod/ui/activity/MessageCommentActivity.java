@@ -181,8 +181,7 @@ public class MessageCommentActivity extends PSGodBaseActivity {
                 canLoadMore = true;
             }
 
-            mEmptyView = MessageCommentActivity.this
-                    .findViewById(R.id.activity_message_system_list_empty_view);
+            mEmptyView = MessageCommentActivity.this.findViewById(R.id.activity_message_comment_list_empty_view);
             mListView.setEmptyView(mEmptyView);
 
             // 保存本次刷新时间到sp

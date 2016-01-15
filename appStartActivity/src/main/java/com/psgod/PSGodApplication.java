@@ -20,6 +20,7 @@ import com.psgod.model.NotificationBean;
 import com.psgod.ui.activity.AppStartActivity;
 import com.psgod.ui.activity.FollowingListActivity;
 import com.psgod.ui.activity.MainActivity;
+import com.psgod.ui.activity.MessageCommentActivity;
 import com.psgod.ui.activity.MessageLikeActivity;
 import com.psgod.ui.activity.MessageSystemActivity;
 import com.umeng.message.PushAgent;
@@ -147,11 +148,15 @@ public class PSGodApplication extends Application {
 
                     switch (type) {
                         case 0:
+                            /**
+                             * isSingle标记是否为通知跳转，为true是finish会跳转回MainActivity                             *
+                             */
                             intent.putExtra("isSingle",true);
                             intent.setClass(getApplicationContext(), MessageSystemActivity.class);
                             break;
                         case 1:
-                            intent.setClass(getApplicationContext(), MainActivity.class);
+                            intent.putExtra("isSingle",true);
+                            intent.setClass(getApplicationContext(), MessageCommentActivity.class);
 //                            PhotoItem item = new PhotoItem();
 ////                            item.setPid(targetId);
 ////                            item.setType(targetType);
