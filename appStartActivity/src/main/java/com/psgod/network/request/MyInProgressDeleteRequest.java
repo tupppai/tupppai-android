@@ -98,9 +98,9 @@ public class MyInProgressDeleteRequest extends BaseRequest<Boolean> {
 		public Map<String, String> createParameters() {
 			Map<String, String> params = new HashMap<String, String>();
 			params.put("id", Long.toString(id));
-			if(categoryId != -1) {
-				params.put("category_id", String.valueOf(categoryId));
-			}
+//			if(categoryId != -1) {
+////				params.put("category_id", String.valueOf(categoryId));
+//			}
 			return params;
 		}
 
