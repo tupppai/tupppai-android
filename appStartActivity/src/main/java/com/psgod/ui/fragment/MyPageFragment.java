@@ -276,12 +276,12 @@ public class MyPageFragment extends Fragment implements
             mViewHolder.mNickNameVip.setVisibility(View.GONE);
         }
         if (!user.getPhoneNum().equals("0")) {
-            if (mProgressDialog == null) {
-                mProgressDialog = new CustomProgressingDialog(mContext);
-            }
-            if (!mProgressDialog.isShowing()) {
-                mProgressDialog.show();
-            }
+//            if (mProgressDialog == null) {
+//                mProgressDialog = new CustomProgressingDialog(mContext);
+//            }
+//            if (!mProgressDialog.isShowing()) {
+//                mProgressDialog.show();
+//            }
             // 请求后台用户数据进行更新
             GetUserInfoRequest.Builder builder = new GetUserInfoRequest.Builder()
                     .setListener(getUserInfoListener)

@@ -36,8 +36,14 @@ public class MyInProgressDeleteRequest extends BaseRequest<Boolean> {
 
 
 		private long id;
+		private long categoryId = -1;
 		private Listener<Boolean> mListener;
 		private ErrorListener mErrorListener;
+
+		public Builder setCategoryId(long categoryId) {
+			this.categoryId = categoryId;
+			return this;
+		}
 
 		public Builder setId(long id) {
 			this.id = id;
@@ -92,6 +98,9 @@ public class MyInProgressDeleteRequest extends BaseRequest<Boolean> {
 		public Map<String, String> createParameters() {
 			Map<String, String> params = new HashMap<String, String>();
 			params.put("id", Long.toString(id));
+			if(categoryId != -1) {
+				params.put("category_id", String.valueOf(categoryId));
+			}
 			return params;
 		}
 

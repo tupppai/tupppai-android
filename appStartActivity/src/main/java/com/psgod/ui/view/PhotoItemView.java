@@ -36,6 +36,7 @@ import com.psgod.Constants;
 import com.psgod.R;
 import com.psgod.Utils;
 import com.psgod.WeakReferenceHandler;
+import com.psgod.model.LoginUser;
 import com.psgod.model.PhotoItem;
 import com.psgod.model.User;
 import com.psgod.network.request.PSGodErrorListener;
@@ -554,6 +555,11 @@ public class PhotoItemView extends RelativeLayout implements Callback {
         mImageArea.removeAllViews();
 
         mFollowBtn.setPhotoItem(mPhotoItem);
+        if ((LoginUser.getInstance().getUid() == mPhotoItem.getUid()) || isHomePageFocus) {
+            mFollowBtn.setVisibility(INVISIBLE);
+        } else {
+            mFollowBtn.setVisibility(VISIBLE);
+        }
         mFollowBtn.setOnFollowChangeListener(onFollowChangeListener);
 
         // 作品情况 展示外面image_url
@@ -733,12 +739,6 @@ public class PhotoItemView extends RelativeLayout implements Callback {
             mCommentsPanel.setVisibility(View.VISIBLE);
         } else {
             mCommentsPanel.setVisibility(View.GONE);
-        }
-
-        if (isHomePageFocus) {
-            mFollowBtn.setVisibility(View.INVISIBLE);
-        } else {
-            mFollowBtn.setVisibility(View.VISIBLE);
         }
 
     }
