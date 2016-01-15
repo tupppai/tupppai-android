@@ -31,15 +31,15 @@ import java.util.List;
 
 public class MultiImageSelectRecyclerAdapter extends RecyclerView.Adapter<MultiImageSelectRecyclerAdapter.ViewHolde> {
 
-    //adapterType
+    //adapterType adapter的类型，任务或者本地图片
     public static final int TYPE_IMAGE = 0;
     public static final int TYPE_BANG = 1;
 
-    //uploadType
+    //uploadType 上传类型，用来判断可选择的图片数量
     public static final int TYPE_ASK = 0;
     public static final int TYPE_REPLY = 1;
 
-    //bangType
+    //bangType 任务类型，判断是当前任务还是过去任务
     public static final int TYPE_BANG_NOW = 0;
     public static final int TYPE_BANG_DONE = 1;
 
@@ -47,12 +47,22 @@ public class MultiImageSelectRecyclerAdapter extends RecyclerView.Adapter<MultiI
     private int bangType = TYPE_BANG_NOW;
 
     private Context mContext;
+
+    //图片集合
     private List<SelectImage> mImages = new ArrayList<SelectImage>();
+
+    //被选中的图片集合
     private List<SelectImage> mSelectedImages = new ArrayList<SelectImage>();
+
+    //任务集合
     private List<PhotoItem> mPhotoItems = new ArrayList<PhotoItem>();
+
+    //过去任务的集合
     private List<PhotoItem> mDonePhotoItems = new ArrayList<PhotoItem>();
 
+    // 选择任务的序号
     private int checkedPhotoItem = 0;
+
     private int adapterType = 0;
 
     public MultiImageSelectRecyclerAdapter(Context context) {
@@ -61,7 +71,6 @@ public class MultiImageSelectRecyclerAdapter extends RecyclerView.Adapter<MultiI
 
     /**
      * 选择某个图片，改变选择状态
-     *
      * @param image
      */
 
@@ -114,7 +123,6 @@ public class MultiImageSelectRecyclerAdapter extends RecyclerView.Adapter<MultiI
 
     /**
      * 通过图片路径设置默认选择
-     *
      * @param resultList
      */
     public void setDefaultSelected(List<SelectImage> resultList) {
@@ -171,6 +179,7 @@ public class MultiImageSelectRecyclerAdapter extends RecyclerView.Adapter<MultiI
     public void setAdapterType(int adapterType) {
         this.adapterType = adapterType;
     }
+
 
     public int getCheckedPhotoItemNum() {
         return checkedPhotoItem > 0 ? checkedPhotoItem - 1 : -checkedPhotoItem - 1;

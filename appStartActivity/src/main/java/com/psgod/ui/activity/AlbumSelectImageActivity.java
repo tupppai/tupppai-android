@@ -146,30 +146,33 @@ public class AlbumSelectImageActivity extends PSGodBaseActivity {
             selectImages = new ArrayList<>();
         }
         resultList.addAll(selectImages);
+        notifySelectTxt();
+
         if (IMAGE_SELECT_TYPE.equals(TYPE_ASK_SELECT)) {
             MaxImageSelectCount = MaxImageTwo;
         } else {
             MaxImageSelectCount = MaxImageOne;
         }
 
-        if (intent.hasExtra("resultList")) {
-            resultList = intent.getStringArrayListExtra("resultList");
-            mSelectCountText.setText(Integer.toString(resultList.size()));
-
-            if (resultList.size() != 0) {
-                mNextText.setEnabled(true);
-                mNextText.setTextColor(Color.parseColor("#000000"));
-
-            } else {
-                mNextText.setEnabled(false);
-                mNextText.setTextColor(Color.parseColor("#7a000000"));
-
-            }
-        }
+//        if (intent.hasExtra("resultList")) {
+//            resultList = intent.getStringArrayListExtra("resultList");
+//        }
 
         // 扫描手机内的图片
 //        getSupportLoaderManager().initLoader(LOADER_ALL, null, mLoaderCallback);
 
+    }
+
+    private void notifySelectTxt(){
+        if(resultList.size() > 0){
+            mSelectCountText.setText(Integer.toString(resultList.size()));
+            mNextText.setEnabled(true);
+            mNextText.setTextColor(Color.parseColor("#000000"));
+        }else{
+            mSelectCountText.setText(Integer.toString(resultList.size()));
+            mNextText.setEnabled(false);
+            mNextText.setTextColor(Color.parseColor("#7a000000"));
+        }
     }
 
     public void initViews() {
@@ -357,7 +360,7 @@ public class AlbumSelectImageActivity extends PSGodBaseActivity {
                         resultList.clear();
                         mMultiImageAdapter.setDefaultSelected(resultList);
                         mMultiImageAdapter.notifyDataSetChanged();
-                        mSelectCountText.setText("0");
+                        notifySelectTxt();
                         dialogInterface.dismiss();
                     }
                 }).create();
@@ -463,8 +466,7 @@ public class AlbumSelectImageActivity extends PSGodBaseActivity {
                 // 调用相机拍照后，再次扫描手机内的图片
                 getSupportLoaderManager().initLoader(0, null, mLoaderCallback);
 //                getSupportLoaderManager().initLoader(0, null, mFolderCallback);
-                mSelectCountText.setText(Integer.toString(resultList.size()));
-
+               notifySelectTxt();
 //                Intent intent = new Intent(AlbumImageSelectActivity.this,
 //                        UploadMultiImageActivity.class);
 //                Bundle bundle = new Bundle();
@@ -494,16 +496,7 @@ public class AlbumSelectImageActivity extends PSGodBaseActivity {
                 resultList.remove(image.path);
                 // 移除
 
-                if (resultList.size() != 0) {
-                    mSelectCountText
-                            .setText(Integer.toString(resultList.size()));
-                    mNextText.setEnabled(true);
-                    mNextText.setTextColor(Color.parseColor("#000000"));
-                } else {
-                    mSelectCountText.setText("0");
-                    mNextText.setEnabled(false);
-                    mNextText.setTextColor(Color.parseColor("#7a000000"));
-                }
+               notifySelectTxt();
             } else {
                 // 添加
                 View view = new View(this);
@@ -517,9 +510,7 @@ public class AlbumSelectImageActivity extends PSGodBaseActivity {
                 }
 
                 resultList.add(image.path);
-                mSelectCountText.setText(Integer.toString(resultList.size()));
-                mNextText.setEnabled(true);
-                mNextText.setTextColor(Color.parseColor("#000000"));
+              notifySelectTxt();
             }
             mMultiImageAdapter.select(image);
         }

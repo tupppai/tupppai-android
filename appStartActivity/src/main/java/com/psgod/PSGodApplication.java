@@ -147,6 +147,9 @@ public class PSGodApplication extends Application {
 
                     switch (type) {
                         case 0:
+                            /**
+                             * isSingle标记是否为通知跳转，为true是finish会跳转回MainActivity                             *
+                             */
                             intent.putExtra("isSingle",true);
                             intent.setClass(getApplicationContext(), MessageSystemActivity.class);
                             break;
