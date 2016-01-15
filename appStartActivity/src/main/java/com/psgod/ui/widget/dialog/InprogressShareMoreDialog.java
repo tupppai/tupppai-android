@@ -257,7 +257,7 @@ public class InprogressShareMoreDialog extends Dialog {
 				if (type == SHARE_TYPE_ASK) {
 					MyInProgressDeleteRequest.Builder builder = new MyInProgressDeleteRequest.Builder()
 							.setType(SHARE_TYPE_ASK)
-							.setId(mPhotoItem.getPid())
+							.setId(mPhotoItem.getPid()).setCategoryId(mPhotoItem.getCategoryId())
 							.setListener(deleteListener)
 							.setErrorListener(errorListener);
 
@@ -269,7 +269,7 @@ public class InprogressShareMoreDialog extends Dialog {
 				}else if (type == SHARE_TYPE_REPLY) {
 					MyInProgressDeleteRequest.Builder builder = new MyInProgressDeleteRequest.Builder()
 							.setType(SHARE_TYPE_REPLY)
-							.setId(mPhotoItem.getPid())
+							.setId(mPhotoItem.getPid()).setCategoryId(mPhotoItem.getCategoryId())
 							.setListener(deleteListener)
 							.setErrorListener(errorListener);
 
@@ -281,7 +281,7 @@ public class InprogressShareMoreDialog extends Dialog {
 				} else {
 					MyInProgressDeleteRequest.Builder builder = new MyInProgressDeleteRequest.Builder()
 							.setType(SHARE_TYPE_COMPLETE)
-							.setId(mPhotoItem.getPid())
+							.setId(mPhotoItem.getPid()).setCategoryId(mPhotoItem.getCategoryId())
 							.setListener(deleteListener)
 							.setErrorListener(errorListener);
 
