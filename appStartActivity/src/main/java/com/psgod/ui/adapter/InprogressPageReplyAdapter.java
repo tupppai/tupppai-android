@@ -247,7 +247,8 @@ public class InprogressPageReplyAdapter extends BaseExpandableListAdapter implem
 
     @Override
     public int getGroupCount() {
-        return goneStartNum >= 0 ? 2 : 1;
+        return mPhotoItems.size() == 0 ? 0 : goneStartNum >= 0 ?
+                mPhotoItems.size() == goneStartNum ? 1 : 2 : 1;
     }
 
     @Override
@@ -361,11 +362,11 @@ public class InprogressPageReplyAdapter extends BaseExpandableListAdapter implem
         }
 //        if (type == TYPE_ITEM && convertView instanceof RelativeLayout) {
         final PhotoItem photoItem = mPhotoItems.get(position + groupPosition * goneStartNum);
-        if (groupPosition == TYPE_SEPARATOR) {
-            mViewHolder.mParent.setBackgroundColor(Color.parseColor("#F0EFF5"));
-        } else {
-            mViewHolder.mParent.setBackgroundColor(Color.parseColor("#FFFFFF"));
-        }
+//        if (groupPosition == TYPE_SEPARATOR) {
+//            mViewHolder.mParent.setBackgroundColor(Color.parseColor("#F0EFF5"));
+//        } else {
+//            mViewHolder.mParent.setBackgroundColor(Color.parseColor("#FFFFFF"));
+//        }
         PsGodImageLoader imageLoader = PsGodImageLoader.getInstance();
         imageLoader.displayImage(photoItem.getAvatarURL(),
                 mViewHolder.avatarIv, mAvatarOptions);

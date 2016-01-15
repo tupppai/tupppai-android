@@ -83,18 +83,23 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
     private View mEnpty;
 
     private MultiImageSelectRecyclerAdapter mAdapter;
+    //图片结果集合
     private List<SelectImage> selectResultImages = new ArrayList<SelectImage>();
+    //图片显示集合
     private List<SelectImage> images = new ArrayList<SelectImage>();
+    //本地图片集合
     private List<SelectImage> originImages = new ArrayList<SelectImage>();
 
     private WeakReferenceHandler mHandler = new WeakReferenceHandler(this);
     private ExecutorService fixedThreadPool = Executors.newFixedThreadPool(1);
 
+    //handler
     public static final int HIDE_INPUT = 1;
     public static final int SHOW_INPUT = 5;
     public static final int AREA_SHOW_BANG = 2;
     public static final int AREA_SHOW_IMG = 3;
     public static final int HIDE_DIALOG = 4;
+
 
     public static final int SHOW_TYPE_ASK = 0;
     public static final int SHOW_TYPE_REPLY = 1;
@@ -136,7 +141,7 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
         getWindow().setSoftInputMode(
                 WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN
                         | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-        if(mImageimg.hasOnClickListeners()) {
+        if (mImageimg.hasOnClickListeners()) {
             mImageimg.callOnClick();
         }
         super.show();
@@ -245,10 +250,10 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
         if (selectResultImages.size() == 0 && mAdapter.getCheckedPhotoItem() == null) {
             mPreviewArea.setVisibility(View.INVISIBLE);
             mImageimg.setImageResource(R.mipmap.bangp_ic_image);
-        }else {
-            if(selectResultImages.size() == 0) {
+        } else {
+            if (selectResultImages.size() == 0) {
                 mImageimg.setImageResource(R.mipmap.bangp_ic_image);
-            }else{
+            } else {
                 mImageimg.setImageResource(R.mipmap.zuopin_ic_image_selected);
             }
             if (mAdapter.getCheckedPhotoItem() != null) {
@@ -306,6 +311,7 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
         }
     };
 
+    //是否初始化本体图片集合，只加载一次
     private boolean isInitImages = false;
 
     View.OnClickListener imageImageClick = new View.OnClickListener() {
@@ -445,14 +451,14 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
         mDoneTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(bangType == MultiImageSelectRecyclerAdapter.TYPE_BANG_NOW){
+                if (bangType == MultiImageSelectRecyclerAdapter.TYPE_BANG_NOW) {
                     bangType = MultiImageSelectRecyclerAdapter.TYPE_BANG_DONE;
                     mDoneTxt.setText("当前任务");
-                }else{
+                } else {
                     bangType = MultiImageSelectRecyclerAdapter.TYPE_BANG_NOW;
                     mDoneTxt.setText("历史任务");
                 }
-                if(mBangpImg.hasOnClickListeners()) {
+                if (mBangpImg.hasOnClickListeners()) {
                     mBangpImg.callOnClick();
                 }
             }
@@ -505,7 +511,7 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
             public void onClick(View view) {
                 UpLoadUtils upLoadUtils = UpLoadUtils.getInstance(mContext);
                 if (selectResultImages.size() <= 0) {
-                    switch (showType){
+                    switch (showType) {
                         case SHOW_TYPE_ASK:
                             CustomToast.show(mContext, "请至少选择一张求P~", Toast.LENGTH_LONG);
                             break;

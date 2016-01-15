@@ -226,16 +226,17 @@ public class RecentActActivity extends PSGodBaseActivity {
             @Override
             public void onClick(View view) {
                 if (mAct != null) {
-//                    loadUtils.upLoad(mActs.get(0).getType(), Long.parseLong(mActs.get(0).getAsk_id()));
-
 //                    Intent intent = new Intent(RecentActActivity.this, MultiImageSelectActivity.class);
 //                    intent.putExtra("AskId", Long.parseLong(mAct.getAsk_id() == null ?
 //                            "0" : mAct.getAsk_id().equals("") ? "0" : mAct.getAsk_id()));
 //                    intent.putExtra("ActivityId", mAct.getId());
 //                    intent.putExtra("SelectType", "TypeReplySelect");
-//                    new LoadUtils(RecentActActivity.this).isSimple(true).
-//                            setCategory_id(Long.parseLong(mAct.getId())).upLoad(1,
-//                            Long.parseLong(mAct.getAsk_id().equals("") ? "0" : mAct.getAsk_id()));
+                    /**
+                     * 点击塞入到进行中
+                     */
+                    new LoadUtils(RecentActActivity.this).isSimple(true).
+                            setCategory_id(Long.parseLong(mAct.getId())).upLoad(1,
+                            Long.parseLong(mAct.getAsk_id().equals("") ? "0" : mAct.getAsk_id()));
 //
 //                    startActivity(intent);
 

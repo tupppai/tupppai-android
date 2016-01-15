@@ -200,10 +200,12 @@ public class InprogressPageReplyFragment extends Fragment {
         canLoadMore = false;
         isDone = false;
         mReplyAdapter.clear();
+        mViewHolder.mListView.getRefreshableView().setEmptyView(null);
 
         if (mLastUpdatedTime == DEFAULT_LAST_REFRESH_TIME) {
             mLastUpdatedTime = System.currentTimeMillis();
         }
+
 
         UserPhotoRequest.Builder builder = new UserPhotoRequest.Builder()
                 .setType(UserPhotoRequest.Builder.MY_INPROGRESS).setPage(mPage)
