@@ -295,10 +295,12 @@ public class MultiImageSelectRecyclerAdapter extends RecyclerView.Adapter<MultiI
         }
     };
 
+    //图片点击时回调
     public interface OnImageClickListener {
         void onImageClick(View view, List<SelectImage> selectImages);
     }
 
+    //任务点击时回调
     public interface OnBangClickListener {
         void onBangClick(View view);
     }

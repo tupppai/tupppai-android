@@ -60,7 +60,9 @@ public class AlbumSelectImageActivity extends PSGodBaseActivity {
 
     private final static int MaxImageOne = 1;
     private final static int MaxImageTwo = 2;
+
     private static int MaxImageSelectCount = MaxImageOne;
+
     public static final String ACTIVITY_ID = "ActivityId";
     public static final String CHANNEL_ID = "channel_id";
     public static final String SELECT_IMAGE = "select_image";
