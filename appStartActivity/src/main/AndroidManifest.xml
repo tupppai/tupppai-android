@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.psgod"
     android:versionCode="37"
-    android:versionName="1.0.5" >
+    android:versionName="1.0.5">
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -42,10 +42,10 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_logo"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
             android:name=".ui.activity.AppStartActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -56,8 +56,7 @@
             android:name=".ui.activity.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="locked"
-            android:windowSoftInputMode="adjustResize" >
-        </activity>
+            android:windowSoftInputMode="adjustResize"></activity>
 
         <!-- 微信分享回调 -->
         <activity
@@ -92,8 +91,7 @@
         <activity
             android:name=".ui.activity.CommentListActivity"
             android:windowSoftInputMode="adjustResize|stateHidden" />
-        <activity android:name=".ui.activity.NewMessageActivity" >
-        </activity>
+        <activity android:name=".ui.activity.NewMessageActivity"></activity>
         <activity android:name=".ui.activity.FollowerListActivity" />
         <activity android:name=".ui.activity.FollowingListActivity" />
         <activity android:name=".ui.activity.OthersFollowerListActivity" />
@@ -132,15 +130,18 @@
         <activity android:name=".ui.activity.ResetPasswordActivity" />
         <activity android:name=".ui.activity.RecommendFocusActivity" />
         <activity android:name=".ui.activity.WebBrowserActivity" />
-        <activity android:name=".ui.activity.MultiImageSelectActivity"
-            android:launchMode="singleTask"/>
-        <activity android:name=".ui.activity.AlbumSelectImageActivity"
-            android:launchMode="singleTask"/>
-        <activity android:name=".ui.activity.RecentAsksActivity"
-            android:launchMode="singleTask"/>
-        <activity android:name=".ui.activity.RecentWorkActivity"
-            android:launchMode="singleTask"
-            />
+        <activity
+            android:name=".ui.activity.MultiImageSelectActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.activity.AlbumSelectImageActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.activity.RecentAsksActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.activity.RecentWorkActivity"
+            android:launchMode="singleTask" />
         <activity
             android:name=".ui.activity.UploadMultiImageActivity"
             android:launchMode="singleTask"
@@ -155,7 +156,8 @@
         <activity android:name=".ui.activity.MessageSystemActivity" />
         <activity android:name=".ui.activity.MessageCommentActivity" />
         <activity android:name=".ui.activity.SearchActivity" />
-        <activity android:name=".ui.activity.NewLoginInputPhoneActivity"
+        <activity
+            android:name=".ui.activity.NewLoginInputPhoneActivity"
             android:launchMode="singleTask" />
         <activity android:name=".ui.activity.NewPhoneLoginActivity" />
         <activity android:name=".ui.activity.NewRegisterPhoneActivity" />
@@ -169,7 +171,7 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:windowSoftInputMode="stateHidden|adjustResize" >
+            android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <data android:scheme="tencent100371282" />
 
@@ -184,11 +186,10 @@
         <receiver
             android:name="com.umeng.message.NotificationProxyBroadcastReceiver"
             android:exported="false"
-            android:process=":push" >
-        </receiver>
+            android:process=":push"></receiver>
         <receiver
             android:name="com.umeng.message.SystemReceiver"
-            android:process=":push" >
+            android:process=":push">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
@@ -203,14 +204,14 @@
         </receiver>
         <receiver
             android:name="com.umeng.message.MessageReceiver"
-            android:process=":push" >
+            android:process=":push">
             <intent-filter>
                 <action android:name="org.agoo.android.intent.action.RECEIVE" />
             </intent-filter>
         </receiver>
         <receiver
             android:name="com.umeng.message.ElectionReceiver"
-            android:process=":push" >
+            android:process=":push">
             <intent-filter>
                 <action android:name="org.agoo.android.intent.action.ELECTION_RESULT_V4" />
 
@@ -219,18 +220,18 @@
         </receiver>
         <receiver
             android:name="com.umeng.message.RegistrationReceiver"
-            android:exported="false" >
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.psgod.intent.action.COMMAND" />
             </intent-filter>
         </receiver>
-        <receiver android:name="com.umeng.message.BootBroadcastReceiver" >
+        <receiver android:name="com.umeng.message.BootBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
 
-        <service android:name=".service.UploadCrashService" >
+        <service android:name=".service.UploadCrashService">
             <intent-filter>
                 <action android:name="com.psgod.service.UploadCrashServiceT" />
             </intent-filter>
@@ -239,7 +240,7 @@
             android:name="com.umeng.message.UmengService"
             android:exported="true"
             android:label="PushService"
-            android:process=":push" >
+            android:process=":push">
             <intent-filter>
                 <action android:name="com.psgod.intent.action.START" />
             </intent-filter>
@@ -258,7 +259,7 @@
         <service
             android:name="com.umeng.message.UmengMessageIntentReceiverService"
             android:exported="true"
-            android:process=":push" >
+            android:process=":push">
             <intent-filter>
                 <action android:name="org.android.agoo.client.MessageReceiverService" />
             </intent-filter>
@@ -269,41 +270,39 @@
 
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="5534c256e0f55aa48c002909" >
-        </meta-data>
+            android:value="5534c256e0f55aa48c002909"></meta-data>
         <meta-data
             android:name="UMENG_MESSAGE_SECRET"
-            android:value="c8f974673fbd1188aa00218f7d3cbac5" >
-        </meta-data>
+            android:value="c8f974673fbd1188aa00218f7d3cbac5"></meta-data>
         <meta-data
             android:name="UMENG_CHANNEL"
-            android:value="${UMENG_CHANNEL_VALUE}" >
-        </meta-data>
+            android:value="${UMENG_CHANNEL_VALUE}"></meta-data>
 
-        <service android:name="com.umeng.message.UmengDownloadResourceService" >
-        </service>
+        <service android:name="com.umeng.message.UmengDownloadResourceService"></service>
 
         <!-- 友盟自动更新 -->
         <service
             android:name="com.umeng.update.net.DownloadingService"
-            android:process=":DownloadingService" >
-        </service>
+            android:process=":DownloadingService"></service>
 
         <activity
             android:name="com.umeng.update.UpdateDialogActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
-        </activity>
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>
         <activity
             android:name=".ui.activity.ChannelActivity"
+            android:label="@string/title_activity_channel"
             android:launchMode="singleTask"
-            android:windowSoftInputMode="adjustResize"
-            android:label="@string/title_activity_channel" >
-        </activity>
+            android:windowSoftInputMode="adjustResize"></activity>
         <activity
             android:name=".ui.activity.RecentActActivity"
-            android:launchMode="singleTask"
-            android:label="@string/title_activity_recent_act" >
-        </activity>
+            android:label="@string/title_activity_recent_act"
+            android:launchMode="singleTask"></activity>
+        <activity
+            android:name=".ui.activity.CourseActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.activity.CourseDetailActivity"
+            android:launchMode="singleTask" />
     </application>
 
 </manifest>

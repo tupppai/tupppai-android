@@ -12,13 +12,11 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -26,7 +24,6 @@ import com.android.volley.VolleyError;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.psgod.Constants;
-import com.psgod.CustomToast;
 import com.psgod.R;
 import com.psgod.Utils;
 import com.psgod.model.ActivitiesAct;
@@ -38,28 +35,27 @@ import com.psgod.network.request.PSGodErrorListener;
 import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.ui.adapter.ChannelHeadAdapter;
 import com.psgod.ui.adapter.ChannelListAdapter;
-import com.psgod.ui.adapter.PhotoListAdapter;
+import com.psgod.ui.adapter.CourseAdapter;
 import com.psgod.ui.view.PhotoItemView;
 import com.psgod.ui.widget.FloatScrollHelper;
-import com.psgod.ui.widget.dialog.CameraPopupwindow;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
 import com.psgod.ui.widget.dialog.ImageSelectDialog;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChannelActivity extends PSGodBaseActivity {
+public class CourseActivity extends PSGodBaseActivity {
 
-    private static final String TAG = ChannelActivity.class
+    private static final String TAG = CourseActivity.class
             .getSimpleName();
 
     public static final String INTENT_ID = "id";
-    public static final String INTENT_TITLE = "title";
+//    public static final String INTENT_TITLE = "title";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_channel);
+        setContentView(R.layout.activity_course);
 
         initView();
         refresh();
@@ -68,18 +64,11 @@ public class ChannelActivity extends PSGodBaseActivity {
 
     private TextView mTitleName;
     private ImageView mTitleFinish;
-    private ImageView mTitleDetail;
     private PullToRefreshListView mList;
     private View mFollowListFooter;
 
-    private TextView mHeadMore;
-    private RecyclerView mHeadList;
-
-    private List<PhotoItem> heads;
-    private ChannelHeadAdapter headAdapter;
-
     private List<PhotoItem> photoItems;
-    private ChannelListAdapter mAdapter;
+    private CourseAdapter mAdapter;
 
     private String id;
     private long mLastUpdatedTime;
@@ -91,33 +80,20 @@ public class ChannelActivity extends PSGodBaseActivity {
     private CustomProgressingDialog progressingDialog;
 
     private RelativeLayout mParent;
-    private LinearLayout mUpload;
-    private TextView mUploadLeft;
-    private TextView mUploadRight;
 
     private ActivitiesAct mAct;
 
     private void initView() {
         progressingDialog = new CustomProgressingDialog(this);
         progressingDialog.show();
-        mParent = (RelativeLayout) findViewById(R.id.activity_channal_parent);
-        mTitleName = (TextView) findViewById(R.id.activity_channal_title_name);
-        mTitleFinish = (ImageView) findViewById(R.id.activity_channal_title_finish);
-        mTitleDetail = (ImageView) findViewById(R.id.activity_channal_title_detail);
-        mList = (PullToRefreshListView) findViewById(R.id.activity_channal_list);
+        mParent = (RelativeLayout) findViewById(R.id.activity_course_parent);
+        mTitleName = (TextView) findViewById(R.id.activity_course_title_name);
+        mTitleFinish = (ImageView) findViewById(R.id.activity_course_title_finish);
+        mList = (PullToRefreshListView) findViewById(R.id.activity_course_list);
         photoItems = new ArrayList<PhotoItem>();
-        mAdapter = new ChannelListAdapter(this, PhotoItemView.PhotoListType.RECENT_REPLY, photoItems);
+        mAdapter = new CourseAdapter(this, photoItems);
         mList.setAdapter(mAdapter);
-        View head = LayoutInflater.from(this).inflate(R.layout.view_activity_channel_head, null);
-        mList.getRefreshableView().addHeaderView(head);
-        mHeadList = (RecyclerView) head.findViewById(R.id.activity_channal_head_list);
-        mHeadMore = (TextView) head.findViewById(R.id.activity_channal_head_more);
 
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        mHeadList.setLayoutManager(layoutManager);
-        heads = new ArrayList<PhotoItem>();
-        headAdapter = new ChannelHeadAdapter(this, heads);
-        mHeadList.setAdapter(headAdapter);
         mFollowListFooter = LayoutInflater.from(this).inflate(
                 R.layout.footer_load_more, null);
         mList.getRefreshableView().addFooterView(
@@ -125,34 +101,6 @@ public class ChannelActivity extends PSGodBaseActivity {
         mFollowListFooter.setVisibility(View.GONE);
         Intent intent = getIntent();
         id = intent.getStringExtra(INTENT_ID);
-        mUpload = new LinearLayout(this);
-        RelativeLayout.LayoutParams uploadParams = new RelativeLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, Utils.dpToPx(this, 44)
-        );
-        mUpload.setLayoutParams(uploadParams);
-        mUploadLeft = new TextView(this);
-        mUploadRight = new TextView(this);
-        LinearLayout.LayoutParams leftRigthParams = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        leftRigthParams.weight = 1;
-        mUploadLeft.setLayoutParams(leftRigthParams);
-        mUploadLeft.setGravity(Gravity.CENTER);
-        mUploadLeft.setTextSize(14);
-        mUploadLeft.setTextColor(Color.parseColor("#ffffff"));
-        mUploadLeft.setText("我要求P");
-        mUploadLeft.setBackgroundColor(Color.parseColor("#e04a4a4a"));
-        mUploadRight.setLayoutParams(leftRigthParams);
-        mUploadRight.setGravity(Gravity.CENTER);
-        mUploadRight.setTextSize(14);
-        mUploadRight.setTextColor(Color.parseColor("#000000"));
-        mUploadRight.setText("发布作品");
-        mUploadRight.setBackgroundColor(Color.parseColor("#e0ffef00"));
-        mUpload.addView(mUploadLeft);
-        mUpload.addView(mUploadRight);
-        FloatScrollHelper helper = new FloatScrollHelper(mList, mParent, mUpload, this);
-        helper.setViewHeight(44);
-        helper.setViewMargins(0);
-        helper.init();
 
         mSpKey = Constants.SharedPreferencesKey.CHANNEL_LIST_LAST_REFRESH_TIME;
 
@@ -171,15 +119,11 @@ public class ChannelActivity extends PSGodBaseActivity {
         ChannelRequest request = new ChannelRequest.Builder().setListener(refreshListener).
                 setErrorListener(errorListener).setPage(page).
                 setLastUpdated(mLastUpdatedTime).setId(id).setTargetType("reply").build();
-        ChannelRequest headRequest = new ChannelRequest.Builder().setListener(refreshHeadListener).
-                setId(id).setTargetType("ask").
-                setLastUpdated(mLastUpdatedTime).build();
         ActivitiesActRequest actRequest = new ActivitiesActRequest.Builder().setCategoryId(id).
                 setListener(actListener).setErrorListener(errorListener).build();
         RequestQueue requestQueue = PSGodRequestQueue.getInstance(
                 this).getRequestQueue();
         requestQueue.add(request);
-        requestQueue.add(headRequest);
         requestQueue.add(actRequest);
 
     }
@@ -192,31 +136,19 @@ public class ChannelActivity extends PSGodBaseActivity {
         }
     };
 
-    Response.Listener<Channel> refreshHeadListener = new Response.Listener<Channel>() {
-        @Override
-        public void onResponse(Channel response) {
-            // 保存本次刷新时间到sp
-            if (heads.size() > 0) {
-                heads.clear();
-            }
-            heads.addAll(response.getData());
-            headAdapter.notifyDataSetChanged();
-        }
-    };
-
     Response.Listener<Channel> refreshListener = new Response.Listener<Channel>() {
         @Override
         public void onResponse(Channel response) {
             // 保存本次刷新时间到sp
             mLastUpdatedTime = System.currentTimeMillis();
-            if (android.os.Build.VERSION.SDK_INT >= 9) {
-                ChannelActivity.this
+            if (Build.VERSION.SDK_INT >= 9) {
+                CourseActivity.this
                         .getSharedPreferences(
                                 Constants.SharedPreferencesKey.NAME,
                                 Context.MODE_PRIVATE).edit()
                         .putLong(mSpKey, mLastUpdatedTime).apply();
             } else {
-                ChannelActivity.this.getSharedPreferences(
+                CourseActivity.this.getSharedPreferences(
                         Constants.SharedPreferencesKey.NAME,
                         Context.MODE_PRIVATE).edit()
                         .putLong(mSpKey, mLastUpdatedTime).commit();
@@ -267,17 +199,6 @@ public class ChannelActivity extends PSGodBaseActivity {
 
 
     private void initListener() {
-        mTitleDetail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mAct != null) {
-                    Intent intent = new Intent(ChannelActivity.this, WebBrowserActivity.class);
-                    intent.putExtra(WebBrowserActivity.KEY_URL, mAct.getUrl());
-                    intent.putExtra(WebBrowserActivity.KEY_DESC, mAct.getName());
-                    startActivity(intent);
-                }
-            }
-        });
 
         mList.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
             @Override
@@ -302,39 +223,12 @@ public class ChannelActivity extends PSGodBaseActivity {
                             setLastUpdated(mLastUpdatedTime).setTargetType("reply").build();
 
                     RequestQueue requestQueue = PSGodRequestQueue.getInstance(
-                            ChannelActivity.this).getRequestQueue();
+                            CourseActivity.this).getRequestQueue();
                     requestQueue.add(request);
                 }
             }
         });
 
-        mHeadMore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ChannelActivity.this, RecentAsksActivity.class);
-                intent.putExtra("channel_id", id);
-                startActivity(intent);
-            }
-        });
-
-        mUploadLeft.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                mImageSelectDialog = new ImageSelectDialog(ChannelActivity.this, id,
-                        ImageSelectDialog.SHOW_TYPE_ASK);
-                mImageSelectDialog.show();
-            }
-        });
-
-        mUploadRight.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mImageSelectDialog = new ImageSelectDialog(ChannelActivity.this, id,
-                        ImageSelectDialog.SHOW_TYPE_REPLY);
-                mImageSelectDialog.show();
-            }
-        });
     }
 
     @Override

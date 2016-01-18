@@ -11,9 +11,6 @@ import java.io.Serializable;
 public class ActivitiesAct implements Serializable {
 
     private String id;
-//    private String display_name;
-//    private String pc_pic;
-//    private String app_pic;
     private String image_url;
     private String banner_pic;
     private String url;
