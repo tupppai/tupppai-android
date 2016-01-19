@@ -7,21 +7,31 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.nineoldandroids.view.ViewHelper;
 import com.psgod.R;
 import com.psgod.Utils;
+import com.psgod.ui.widget.StopGridView;
 
 /**
  * Created by Administrator on 2016/1/18 0018.
  */
 public class CourseWorkActivity extends PSGodBaseActivity {
 
+    private TextView mSureTxt;
+    private EditText mEdit;
+    private StopGridView mGrid;
+
     private ImageView mScrollHandler;
     private LinearLayout mScrollArea;
+    private RelativeLayout mParent;
+
+    private TextView mAlbumTxt;
 
     private int originMarginY = 345;
 
@@ -35,8 +45,8 @@ public class CourseWorkActivity extends PSGodBaseActivity {
     }
 
     private void initView() {
-        originMarginY = Utils.getScreenHeightPx(this) -
-                Utils.getScreenWidthPx(this) / 3 * 2 - Utils.dpToPx(this,45 + 30);
+        originMarginY = Utils.getUnrealScreenHeightPx(this) -
+                Utils.getScreenWidthPx(this) / 3 * 2 - Utils.dpToPx(this, 45 + 30);
         mScrollHandler = (ImageView)
                 findViewById(R.id.activity_course_work_scollhandle);
         mScrollArea = (LinearLayout) findViewById(R.id.activity_course_work_scollarea);
@@ -44,6 +54,7 @@ public class CourseWorkActivity extends PSGodBaseActivity {
                 (RelativeLayout.LayoutParams) mScrollArea.getLayoutParams();
         params.setMargins(0, originMarginY, 0, 0);
         mScrollArea.setLayoutParams(params);
+        mParent = (RelativeLayout) findViewById(R.id.activity_course_work_parent);
     }
 
     private void initListener() {
@@ -78,6 +89,13 @@ public class CourseWorkActivity extends PSGodBaseActivity {
                         break;
                 }
                 return true;
+            }
+        });
+
+        mParent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Utils.hideInputPanel(CourseWorkActivity.this,view);
             }
         });
     }

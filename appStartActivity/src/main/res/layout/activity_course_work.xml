@@ -50,6 +50,7 @@
         android:background="@color/color_e6e6e6" />
 
     <EditText
+        android:id="@+id/activity_course_work_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/activity_course_work_titlearea"
