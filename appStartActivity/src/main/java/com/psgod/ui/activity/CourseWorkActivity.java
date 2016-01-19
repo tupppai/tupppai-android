@@ -3,20 +3,34 @@ package com.psgod.ui.activity;
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ValueAnimator;
+import android.annotation.TargetApi;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nineoldandroids.view.ViewHelper;
+import com.psgod.CustomToast;
 import com.psgod.R;
 import com.psgod.Utils;
+import com.psgod.model.SelectFolder;
+import com.psgod.model.SelectImage;
+import com.psgod.ui.adapter.MultiImageSelectAdapter;
 import com.psgod.ui.widget.StopGridView;
+import com.psgod.ui.widget.dialog.FolderPopupWindow;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Administrator on 2016/1/18 0018.
@@ -26,12 +40,17 @@ public class CourseWorkActivity extends PSGodBaseActivity {
     private TextView mSureTxt;
     private EditText mEdit;
     private StopGridView mGrid;
+    private MultiImageSelectAdapter mImageAdapter;
+    private List<SelectImage> mImages = new ArrayList<>();
+    private List<SelectImage> mResultImages = new ArrayList<>();
 
     private ImageView mScrollHandler;
     private LinearLayout mScrollArea;
     private RelativeLayout mParent;
 
     private TextView mAlbumTxt;
+    private TextView mAlbumSureTxt;
+    private FolderPopupWindow mFolderPopupWindow;
 
     private int originMarginY = 345;
 
@@ -55,6 +74,18 @@ public class CourseWorkActivity extends PSGodBaseActivity {
         params.setMargins(0, originMarginY, 0, 0);
         mScrollArea.setLayoutParams(params);
         mParent = (RelativeLayout) findViewById(R.id.activity_course_work_parent);
+        mFolderPopupWindow = new FolderPopupWindow(this);
+        mFolderPopupWindow.setWidth(-1);
+        mFolderPopupWindow.setHeight(-1);
+        mAlbumTxt = (TextView) findViewById(R.id.activity_course_work_album);
+        mAlbumSureTxt = (TextView) findViewById(R.id.activity_course_work_album_srue);
+        mSureTxt = (TextView) findViewById(R.id.activity_course_work_sure);
+        mEdit = (EditText) findViewById(R.id.activity_course_work_edit);
+        mGrid = (StopGridView) findViewById(R.id.activity_course_work_grid);
+        mImageAdapter = new MultiImageSelectAdapter(this);
+        mImageAdapter.setHasCamera(false);
+        mImageAdapter.setData(mImages);
+        mGrid.setAdapter(mImageAdapter);
     }
 
     private void initListener() {
@@ -95,9 +126,125 @@ public class CourseWorkActivity extends PSGodBaseActivity {
         mParent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Utils.hideInputPanel(CourseWorkActivity.this,view);
+                Utils.hideInputPanel(CourseWorkActivity.this, view);
             }
         });
+
+        mFolderPopupWindow.setOnFolderChangeListener(new FolderPopupWindow.OnFolderChangeListener() {
+            @Override
+            public void onClick(SelectFolder folder) {
+                mAlbumTxt.setText(folder.name);
+            }
+
+            @Override
+            public void onDataChanger(List<SelectImage> data) {
+                mImages.clear();
+                mImages.addAll(mResultImages);
+                mImages.addAll(data);
+                notifyDataTopShow();
+                mImageAdapter.notifyDataSetChanged();
+                mGrid.smoothScrollToPosition(0);
+            }
+        });
+
+        mAlbumTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mFolderPopupWindow.
+                        showAtLocation(mParent, Gravity.CENTER, 0, 0);
+            }
+        });
+
+        mAlbumSureTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                scrollToBottom(0);
+            }
+        });
+
+        mGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView,
+                                    View view, int i, long l) {
+                SelectImage image = (SelectImage) adapterView
+                        .getAdapter().getItem(i);
+                selectImageFromGrid(image);
+            }
+        });
+
+        mGrid.getViewTreeObserver().addOnGlobalLayoutListener(
+                new ViewTreeObserver.OnGlobalLayoutListener() {
+                    @SuppressWarnings("deprecation")
+                    @Override
+                    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+                    public void onGlobalLayout() {
+
+                        final int width = mGrid.getWidth();
+                        final int height = mGrid.getHeight();
+
+                        final int desireSize = getResources()
+                                .getDimensionPixelOffset(
+                                        R.dimen.multi_image_slect_size);
+                        final int numCount = width / desireSize;
+                        mGrid.setNumColumns(numCount);
+                        final int columnSpace = getResources()
+                                .getDimensionPixelOffset(
+                                        R.dimen.multi_image_select_space_size);
+                        int columnWidth = (width - columnSpace * (numCount - 1))
+                                / numCount;
+                        mImageAdapter.setItemSize(columnWidth);
+
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                            mGrid.getViewTreeObserver()
+                                    .removeOnGlobalLayoutListener(this);
+                        } else {
+                            mGrid.getViewTreeObserver()
+                                    .removeGlobalOnLayoutListener(this);
+                        }
+                    }
+                });
+    }
+
+    private void notifyDataTopShow() {
+        int resultLength = mResultImages.size();
+        int dataLenght = mImages.size();
+        mImages.addAll(0,mResultImages);
+        for (int i = 0; i < resultLength; i++) {
+            for (int j = resultLength; j < dataLenght; j++) {
+                if (mImages.get(j).path.equals(mResultImages.get(i).path)) {
+                    mImages.remove(j);
+                    j--;
+                    dataLenght--;
+                }
+            }
+        }
+        mImageAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * 选择图片操作
+     *
+     * @param image
+     */
+    private void selectImageFromGrid(SelectImage image) {
+        if (image != null) {
+            // 多选模式
+            if (mResultImages.contains(image)) {
+                mResultImages.remove(image);
+                // 移除
+            } else {
+                // 判断选择数量问题
+                if (1 == mResultImages.size()) {
+                    CustomToast.show(CourseWorkActivity.this,
+                            "最多选择" + 1 + "张作业",
+                            Toast.LENGTH_SHORT);
+                    return;
+                }
+
+                mResultImages.add(image);
+            }
+            mImageAdapter.select(image);
+        }
     }
 
     private boolean isAnimEnd = true;
@@ -129,6 +276,8 @@ public class CourseWorkActivity extends PSGodBaseActivity {
                 public void onAnimationEnd(Animator animator) {
                     isAnimEnd = true;
                     isScrollTop = true;
+                    mGrid.setCanScroll(true);
+                    mAlbumSureTxt.setVisibility(View.VISIBLE);
                 }
 
                 @Override
@@ -165,7 +314,13 @@ public class CourseWorkActivity extends PSGodBaseActivity {
             yAnim.addListener(new Animator.AnimatorListener() {
                 @Override
                 public void onAnimationStart(Animator animator) {
-
+                    mGrid.setCanScroll(false);
+                    mAlbumSureTxt.setVisibility(View.GONE);
+                    notifyDataTopShow();
+                    mGrid.smoothScrollToPosition(0);
+//                    RelativeLayout.LayoutParams params =
+//                            (RelativeLayout.LayoutParams) mGrid.getLayoutParams();
+//                    params.
                 }
 
                 @Override
