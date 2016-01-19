@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <RelativeLayout
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
+        android:id="@+id/course_detail_work_list_listview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-
-    </RelativeLayout>
+        android:layout_height="match_parent"
+        android:background="#F8F8F8"
+        android:divider="@null"
+        android:scrollbars="none"/>
 
 </RelativeLayout>

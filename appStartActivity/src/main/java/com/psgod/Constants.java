@@ -61,6 +61,8 @@ public class Constants {
 	public static int CURRENT_RECENTPAGE_TAB = 0;
 	// 进行中Tab 求P 帮P 已完成
 	public static int CURRENT_INPROGRESS_TAB = 0;
+	// 教程Tab 详情 作业
+	public static int CURRENT_COURSE_TAB = 0;
 	// 我的Tab 图片 收藏
 	public static int CURRENT_MY_TAB = 0;
 
