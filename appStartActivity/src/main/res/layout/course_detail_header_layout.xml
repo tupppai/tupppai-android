@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/course_detail_top_layout"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:background="#F7F7F7">
+
+        <com.psgod.ui.widget.AvatarImageView
+            android:id="@+id/avatar_image"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="17dp"
+            android:src="@drawable/head_portrait"/>
+
+        <TextView
+            android:id="@+id/nickname_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/avatar_image"
+            android:layout_marginTop="2dp"
+            android:layout_toRightOf="@id/avatar_image"
+            android:layout_marginLeft="9dp"
+            android:text="想画画的猫"
+            android:textSize="14dp"
+            android:textColor="#CC000000"/>
+
+        <TextView
+            android:id="@+id/time_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/nickname_tv"
+            android:layout_below="@id/nickname_tv"
+            android:layout_marginTop="5dp"
+            android:text="1天前"
+            android:textColor="#7F000000"
+            android:textSize="9dp"/>
+
+        <com.psgod.ui.widget.FollowImage
+            android:id="@+id/follow_iamge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/btn_home_follow"/>
+
+    </RelativeLayout>
+
+    <WebView
+        android:id="@+id/course_webview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/course_detail_top_layout"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="#F7F7F7"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="#FFFFFF">
+
+        <TextView
+            android:id="@+id/comment_tv_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@mipmap/ic_comment_new"
+            android:drawablePadding="8dp"
+            android:layout_marginLeft="17dp"
+            android:layout_centerVertical="true"
+            android:text="评论"
+            android:textColor="#000000"
+            android:textSize="14dp"/>
+
+        <TextView
+            android:id="@+id/comment_tv_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/comment_tv_text"
+            android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true"
+            android:text="(190)"
+            android:textColor="#000000"
+            android:textSize="14dp"/>
+
+    </RelativeLayout>
+
+</LinearLayout>
