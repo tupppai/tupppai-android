@@ -3,9 +3,9 @@
     android:id="@+id/activity_course_work_parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_014ae4"
-    android:orientation="vertical"
-    android:fitsSystemWindows="true">
+    android:background="@color/white"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/activity_course_work_titlearea"
@@ -50,6 +50,7 @@
         android:background="@color/color_e6e6e6" />
 
     <EditText
+        android:id="@+id/activity_course_work_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/activity_course_work_titlearea"
@@ -63,7 +64,7 @@
         android:id="@+id/activity_course_work_scollarea"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@+id/activity_course_work_albumarea"
         android:background="@color/black"
         android:orientation="vertical">
 
@@ -79,25 +80,37 @@
             android:id="@+id/activity_course_work_grid"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white"
-            android:numColumns="3"/>
+            android:numColumns="3"
+            android:verticalSpacing="3dp" />
     </LinearLayout>
 
     <RelativeLayout
+        android:id="@+id/activity_course_work_albumarea"
         android:layout_width="match_parent"
+        android:layout_height="45dp"
         android:layout_alignParentBottom="true"
-        android:background="@color/white"
-        android:layout_height="45dp">
-        
+        android:background="@color/white">
+
         <TextView
             android:id="@+id/activity_course_work_album"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="相册"
-            android:textSize="15dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
-            />
-        
+            android:padding="10dp"
+            android:text="相册"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/activity_course_work_album_srue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:text="确定"
+            android:padding="10dp"
+            android:textSize="15dp"
+            android:visibility="gone" />
     </RelativeLayout>
 </RelativeLayout>

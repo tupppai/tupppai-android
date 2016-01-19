@@ -27,9 +27,31 @@ public class StopGridView extends GridView {
         this.canScroll = isScrolled;
     }
 
+    float DownY;
+    float moveY = 0;
+
     @Override
     public boolean onTouchEvent(MotionEvent motionEvent) {
 
-        return canScroll ? super.onTouchEvent(motionEvent) : false;
+        if (!canScroll) {
+            switch (motionEvent.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    moveY = 0;
+                    DownY = motionEvent.getRawY();//float DownY
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    moveY = motionEvent.getRawY() - DownY;//y轴距离
+                    if (Math.abs(moveY) > 10) {
+                        return false;
+                    }
+                    break;
+                case MotionEvent.ACTION_UP:
+                    if (Math.abs(moveY) > 10) {
+                        return false;
+                    }
+                    break;
+            }
+        }
+        return super.onTouchEvent(motionEvent);
     }
 }

@@ -30,6 +30,8 @@ public class MultiImageSelectAdapter extends BaseAdapter {
     private static final int TYPE_CAMERA = 0;
     private static final int TYPE_NORMAL = 1;
 
+    private boolean hasCamera = true;
+
     private Context mContext;
     private LayoutInflater mInflater;
     private List<SelectImage> mImages = new ArrayList<SelectImage>();
@@ -95,7 +97,7 @@ public class MultiImageSelectAdapter extends BaseAdapter {
     public void setData(List<SelectImage> images) {
         mSelectedImages.clear();
 
-        if (images != null && images.size() > 0) {
+        if (images != null) {
             mImages = images;
         } else {
             mImages.clear();
@@ -121,27 +123,32 @@ public class MultiImageSelectAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
+
     @Override
     public int getViewTypeCount() {
-        return 2;
+        return hasCamera ? 2 : 1;
     }
 
     @Override
     public int getItemViewType(int position) {
-        return position == 0 ? TYPE_CAMERA : TYPE_NORMAL;
+        return hasCamera ? position == 0 ? TYPE_CAMERA : TYPE_NORMAL : TYPE_NORMAL;
     }
 
     @Override
     public int getCount() {
-        return mImages.size() + 1;
+        return mImages.size() + (hasCamera ? 1 : 0);
     }
 
     @Override
     public SelectImage getItem(int position) {
-        if (position == 0) {
-            return null;
+        if (hasCamera) {
+            if (position == 0) {
+                return null;
+            } else {
+                return mImages.get(position - 1);
+            }
         } else {
-            return mImages.get(position - 1);
+            return mImages.get(position);
         }
     }
 
@@ -234,4 +241,7 @@ public class MultiImageSelectAdapter extends BaseAdapter {
         }
     }
 
+    public void setHasCamera(boolean hasCamera) {
+        this.hasCamera = hasCamera;
+    }
 }

@@ -305,6 +305,7 @@
             android:launchMode="singleTask" />
         <activity
             android:name=".ui.activity.CourseWorkActivity"
+            android:windowSoftInputMode="adjustNothing|stateHidden"
             android:launchMode="singleTask" />
     </application>
 

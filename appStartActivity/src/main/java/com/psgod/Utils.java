@@ -5,11 +5,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Point;
 import android.net.Uri;
 import android.provider.MediaStore.MediaColumns;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -276,10 +279,24 @@ public final class Utils {
     }
 
     public static int getScreenHeightPx(Context context){
+        Point point = new Point();
+        ((WindowManager) context
+                .getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getRealSize(point);
+        return point.y;
+    }
+
+    public static int getUnrealScreenHeightPx(Context context){
         DisplayMetrics outMetrics = new DisplayMetrics();
         ((WindowManager) context
                 .getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getMetrics(outMetrics);
-        return outMetrics.heightPixels;
+        return outMetrics.heightPixels - getStatusBarHeight(context);
+    }
+
+    public static int getScreenWidthPx(Context context){
+        Point point = new Point();
+        ((WindowManager) context
+                .getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getRealSize(point);
+        return point.x;
     }
 
     public static List<String> selectImageToString(List<SelectImage> images) {
@@ -325,5 +342,13 @@ public final class Utils {
                 }
             }
         }
+    }
+
+    // 隐藏输入法
+    public static void hideInputPanel(Context context,View view) {
+        // 隐藏软键盘
+        InputMethodManager imm = (InputMethodManager) context
+                .getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }
