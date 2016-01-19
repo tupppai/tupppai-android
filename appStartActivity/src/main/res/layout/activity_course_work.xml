@@ -3,8 +3,8 @@
     android:id="@+id/activity_course_work_parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_014ae4"
     android:orientation="vertical"
+    android:background="@color/white"
     android:fitsSystemWindows="true">
 
     <RelativeLayout
@@ -79,7 +79,6 @@
             android:id="@+id/activity_course_work_grid"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white"
             android:numColumns="3"/>
     </LinearLayout>
 

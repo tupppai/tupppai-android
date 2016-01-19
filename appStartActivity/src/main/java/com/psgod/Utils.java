@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Point;
 import android.net.Uri;
 import android.provider.MediaStore.MediaColumns;
 import android.text.TextUtils;
@@ -276,10 +277,17 @@ public final class Utils {
     }
 
     public static int getScreenHeightPx(Context context){
-        DisplayMetrics outMetrics = new DisplayMetrics();
+        Point point = new Point();
         ((WindowManager) context
-                .getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getMetrics(outMetrics);
-        return outMetrics.heightPixels;
+                .getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getRealSize(point);
+        return point.y;
+    }
+
+    public static int getScreenWidthPx(Context context){
+        Point point = new Point();
+        ((WindowManager) context
+                .getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getRealSize(point);
+        return point.x;
     }
 
     public static List<String> selectImageToString(List<SelectImage> images) {

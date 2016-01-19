@@ -120,7 +120,7 @@ public class PSDialog extends Dialog implements Handler.Callback {
 					@Override
 					public void run() {
 						ImageInfo info = PhotoRequest.getImageInfo(mType,
-								mPhotoId);
+								mPhotoId,category_id);
 
 						if (!info.isSuccessful) {
 							mHandler.sendEmptyMessage(MSG_FAILED);
