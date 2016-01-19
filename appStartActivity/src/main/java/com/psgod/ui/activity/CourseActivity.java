@@ -90,6 +90,7 @@ public class CourseActivity extends PSGodBaseActivity {
         mTitleName = (TextView) findViewById(R.id.activity_course_title_name);
         mTitleFinish = (ImageView) findViewById(R.id.activity_course_title_finish);
         mList = (PullToRefreshListView) findViewById(R.id.activity_course_list);
+        mList.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
         photoItems = new ArrayList<PhotoItem>();
         mAdapter = new CourseAdapter(this, photoItems);
         mList.setAdapter(mAdapter);
@@ -102,7 +103,7 @@ public class CourseActivity extends PSGodBaseActivity {
         Intent intent = getIntent();
         id = intent.getStringExtra(INTENT_ID);
 
-        mSpKey = Constants.SharedPreferencesKey.CHANNEL_LIST_LAST_REFRESH_TIME;
+        mSpKey = Constants.SharedPreferencesKey.COURSE_LIST_LAST_REFRESH_TIME;
 
         SharedPreferences sp = getSharedPreferences(
                 Constants.SharedPreferencesKey.NAME, Context.MODE_PRIVATE);
