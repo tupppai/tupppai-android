@@ -275,6 +275,13 @@ public final class Utils {
         return result;
     }
 
+    public static int getScreenHeightPx(Context context){
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        ((WindowManager) context
+                .getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getMetrics(outMetrics);
+        return outMetrics.heightPixels;
+    }
+
     public static List<String> selectImageToString(List<SelectImage> images) {
         List<String> strs = new ArrayList<String>();
         for (SelectImage image : images) {

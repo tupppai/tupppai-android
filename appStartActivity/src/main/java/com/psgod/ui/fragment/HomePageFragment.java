@@ -26,6 +26,7 @@ import com.psgod.Logger;
 import com.psgod.R;
 import com.psgod.Utils;
 import com.psgod.eventbus.RefreshEvent;
+import com.psgod.ui.activity.CourseWorkActivity;
 import com.psgod.ui.activity.MainActivity;
 import com.psgod.ui.activity.SearchActivity;
 import com.psgod.ui.adapter.HomePageAdapter;
@@ -322,7 +323,7 @@ public class HomePageFragment extends Fragment {
 		mViewHolder.mSearchImg.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				Intent intent = new Intent(getActivity(), SearchActivity.class);
+				Intent intent = new Intent(getActivity(), CourseWorkActivity.class);
 				startActivity(intent);
 			}
 		});

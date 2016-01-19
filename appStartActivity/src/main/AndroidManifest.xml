@@ -303,6 +303,9 @@
         <activity
             android:name=".ui.activity.CourseDetailActivity"
             android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.activity.CourseWorkActivity"
+            android:launchMode="singleTask" />
     </application>
 
 </manifest>
