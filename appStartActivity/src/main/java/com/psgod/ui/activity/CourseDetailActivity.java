@@ -1,17 +1,20 @@
 package com.psgod.ui.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Matrix;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import com.psgod.Constants;
 import com.psgod.R;
@@ -33,7 +36,7 @@ public class CourseDetailActivity extends PSGodBaseActivity {
     private final int COUNT_OF_FRAGMENTS = 2;
     private final int[] TAB_RADIO_BUTTONS_ID = {
             R.id.fragment_course_detail_radio_btn,
-            R.id.fragment_course_work_radio_btn };
+            R.id.fragment_course_work_radio_btn};
 
     private HomePageAdapter mCoursePagerAdapter;
     private CourseDetailDetailFragment mDetailFragment;
@@ -45,6 +48,7 @@ public class CourseDetailActivity extends PSGodBaseActivity {
     private RadioButton mCourseDetailBtn;
     private RadioButton mCourseWorkBtn;
     private ViewPager mViewPager;
+    private ImageView mUploadWork;
 
     // 游标偏移距离
     private int mCurSorOffset;
@@ -80,6 +84,7 @@ public class CourseDetailActivity extends PSGodBaseActivity {
         mCourseDetailBtn = (RadioButton) findViewById(R.id.fragment_course_detail_radio_btn);
         mCourseWorkBtn = (RadioButton) findViewById(R.id.fragment_course_work_radio_btn);
         mViewPager = (ViewPager) findViewById(R.id.fragment_course_view_pager);
+        mUploadWork = (ImageView) findViewById(R.id.ic_create_course);
     }
 
     // 初始化顶部RadioGroup游标
@@ -94,6 +99,15 @@ public class CourseDetailActivity extends PSGodBaseActivity {
     }
 
     private void initEvents() {
+        mUploadWork.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(CourseDetailActivity.this, CourseWorkActivity.class);
+                intent.putExtra(CourseWorkActivity.ID,"");
+                startActivity(intent);
+            }
+        });
+
         mTabRadioGroup
                 .setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                     @Override

@@ -119,7 +119,7 @@
         android:layout_marginRight="11.5dp"
         android:src="@color/white" />
 
-    <com.psgod.ui.widget.AvatarImage
+    <com.psgod.ui.widget.AvatarImageView
         android:id="@+id/item_course_avatar"
         android:layout_width="41dp"
         android:layout_height="41dp"

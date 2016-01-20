@@ -53,6 +53,8 @@ public class CourseWorkActivity extends PSGodBaseActivity {
     private FolderPopupWindow mFolderPopupWindow;
 
     private int originMarginY = 345;
+    private String id;
+    public static final String ID = "id";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

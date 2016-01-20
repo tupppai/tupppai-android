@@ -1,3 +1,4 @@
 include ':library'
 include ':waterfall'
 include ':appStartActivity'
+include ':baiduWalletRefactorLib'
