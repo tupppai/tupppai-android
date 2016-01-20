@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import com.psgod.R;
 import com.psgod.model.SelectFolder;
@@ -43,6 +44,7 @@ public class FolderPopupWindow extends PopupWindow {
 
     private ListView mFolderList;
     private SelectFolderAdapter mFolderAdapter;
+    private TextView mCancelTxt;
 
     private int width;
     private int height;
@@ -70,6 +72,7 @@ public class FolderPopupWindow extends PopupWindow {
         mContext.getSupportLoaderManager()
                 .restartLoader(LOADER_ALL, null,
                         mLoaderCallback);
+        mCancelTxt = (TextView) mFolderPopView.findViewById(R.id.image_folder_cancel);
     }
 
     private void initListener() {
@@ -100,6 +103,13 @@ public class FolderPopupWindow extends PopupWindow {
 
                 // 滑动到最初始位置
 //                mImageGridView.smoothScrollToPosition(0);
+            }
+        });
+
+        mCancelTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dismiss();
             }
         });
     }
