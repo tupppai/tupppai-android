@@ -176,6 +176,7 @@ public class Constants {
 		String HOT_PHOTO_LIST_LAST_REFRESH_TIME = "HotPhotoListLastRefreshTime";
 		String RECENT_PHOTO_LIST_LAST_REFRESH_TIME = "RecentPhotoListLastRefreshTime";
 		String CHANNEL_LIST_LAST_REFRESH_TIME = "ChannelListLastRefreshTime";
+		String COURSE_LIST_LAST_REFRESH_TIME = "CourseListLastRefreshTime";
 		String FOCUS_PHOTO_LIST_LAST_REFRESH_TIME = "FocusPhotoListLastResfreshTime";
 		String PHOTO_DETAIL_LIST_LAST_REFRESH_TIME = "PhotoDetailListLastRefreshTime";
 		String RECENT_PHOTO_DETAIL_LIST_LAST_REFRESH_TIME = "RecentPhotoDetailListLastRefreshTime";
