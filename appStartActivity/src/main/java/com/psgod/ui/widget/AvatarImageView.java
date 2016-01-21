@@ -36,7 +36,7 @@ import java.util.List;
 
 public class AvatarImageView extends RelativeLayout implements PsGodImageLoader.ImageArea {
     private boolean isVip = false;
-    private AvatarImage mAvatarImage;
+    private CircleImageView mAvatarImage;
     private ImageView mVipicon;
     private Long mUserId;
 
@@ -59,7 +59,7 @@ public class AvatarImageView extends RelativeLayout implements PsGodImageLoader.
     public void init() {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.widget_avatar_layout, null);
         addView(view);
-        mAvatarImage = (AvatarImage) view.findViewById(R.id.avatar_imgview);
+        mAvatarImage = (CircleImageView) view.findViewById(R.id.avatar_imgview);
         mVipicon = (ImageView) view.findViewById(R.id.avatar_vip_icon);
 
         this.setOnClickListener(new OnClickListener() {

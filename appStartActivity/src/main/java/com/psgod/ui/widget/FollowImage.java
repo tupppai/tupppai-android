@@ -28,7 +28,7 @@ import com.psgod.ui.view.PhotoItemView;
 
 /**
  * 关注和取消关注按钮
- *
+ * 当前准确可用
  * @author Rayal
  */
 public class FollowImage extends ImageView {

@@ -18,12 +18,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -31,8 +27,8 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.psgod.PsGodImageLoader;
 import com.psgod.Constants;
+import com.psgod.PsGodImageLoader;
 import com.psgod.R;
 import com.psgod.UserPreferences;
 import com.psgod.Utils;
@@ -58,9 +54,8 @@ import com.psgod.ui.fragment.HomePageHotFragment;
 import com.psgod.ui.fragment.InprogressPageFragment;
 import com.psgod.ui.fragment.MyPageFragment;
 import com.psgod.ui.fragment.TupppaiFragment;
-import com.psgod.ui.widget.AvatarImage;
+import com.psgod.ui.view.CircleImageView;
 import com.psgod.ui.widget.AvatarImageView;
-import com.psgod.ui.widget.dialog.CameraPopupwindow;
 import com.umeng.message.PushAgent;
 import com.umeng.update.UmengUpdateAgent;
 
@@ -127,7 +122,7 @@ public class MainActivity extends PSGodBaseActivity {
     private RelativeLayout mInprogressLayout;
     private RelativeLayout mMyLayout;
     private AvatarImageView mAvatarImg;
-    private AvatarImage mAvatarCase;
+    private CircleImageView mAvatarCase;
     private RelativeLayout[] mBottomTabLayout = new RelativeLayout[3];
 
     private ImageView mHomeImage;
@@ -172,7 +167,7 @@ public class MainActivity extends PSGodBaseActivity {
         mBottomLayout = (LinearLayout) findViewById(R.id.psgod_linear_tab);
         mAvatarImg = (AvatarImageView) findViewById(R.id.activity_main_tab_user_img);
 
-        mAvatarCase = (AvatarImage) findViewById(R.id.activity_main_tab_user_case);
+        mAvatarCase = (CircleImageView) findViewById(R.id.activity_main_tab_user_case);
 
         mHomeLayout = (RelativeLayout) findViewById(R.id.activity_main_tab_home_page);
         mTupaiLayout = (RelativeLayout) findViewById(R.id.activity_tab_tupai_page);

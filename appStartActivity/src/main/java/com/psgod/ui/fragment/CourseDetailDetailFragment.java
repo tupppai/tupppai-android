@@ -8,7 +8,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.FrameLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -19,6 +22,9 @@ import com.psgod.Constants;
 import com.psgod.R;
 import com.psgod.model.Comment;
 import com.psgod.ui.adapter.CourseDetailCommentAdapter;
+import com.psgod.ui.view.FollowView;
+import com.psgod.ui.widget.AvatarImageView;
+import com.psgod.ui.widget.ChildListView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +45,16 @@ public class CourseDetailDetailFragment extends BaseFragment {
     private View mHeaderView;
     private View mFooterView;
 
-    private TextView mRewardTxt;
+    private ChildListView mHeadContentList;
+    private AvatarImageView mHeadAvatar;
+    private TextView mHeadNickname;
+    private TextView mHeadCommentCount;
+    private FollowView mHeadFollow;
+    private TextView mHeadTime;
+
+    private TextView mReward;
+    private TextView mCommentCount;
+    private TextView mShareCount;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,22 +75,31 @@ public class CourseDetailDetailFragment extends BaseFragment {
         mViewHolder = new ViewHolder();
         mViewHolder.mParentView = parentView;
         mViewHolder.mView = inflater.inflate(R.layout.fragment_course_detail_detail, parentView, true);
-        mViewHolder.mListView = (PullToRefreshListView) mViewHolder.mView.findViewById(R.id.course_comment_list_listview);
-        mViewHolder.mListView.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
+        mViewHolder.mListView = (ListView) mViewHolder.mView.findViewById(R.id.course_comment_list_listview);
+//        mViewHolder.mListView.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
         mAdapter = new CourseDetailCommentAdapter(mContext, mComments);
         mViewHolder.mListView.setAdapter(mAdapter);
 
         mHeaderView = getActivity().getLayoutInflater().inflate(R.layout.course_detail_header_layout, null);
-        mViewHolder.mListView.getRefreshableView().addHeaderView(mHeaderView);
+        mViewHolder.mListView.addHeaderView(mHeaderView);
         mFooterView = LayoutInflater.from(mContext).inflate(R.layout.footer_load_more, null);
         mFooterView.setVisibility(View.INVISIBLE);
-        mViewHolder.mListView.getRefreshableView().addFooterView(mFooterView);
+        mViewHolder.mListView.addFooterView(mFooterView);
 
         mListListner = new CourseDetailListener(mContext);
-        mViewHolder.mListView.setOnRefreshListener(mListListner);
-        mViewHolder.mListView.setOnLastItemVisibleListener(mListListner);
+//        mViewHolder.mListView.setOnRefreshListener(mListListner);
+//        mViewHolder.mListView.setOnLastItemVisibleListener(mListListner);
 
-        mRewardTxt = (TextView) mViewHolder.mView.findViewById(R.id.reward_tv);
+        mReward = (TextView) mViewHolder.mView.findViewById(R.id.reward_tv);
+        mCommentCount = (TextView) mViewHolder.mView.findViewById(R.id.comment_tv);
+        mShareCount = (TextView) mViewHolder.mView.findViewById(R.id.share_tv);
+
+        mHeadAvatar = (AvatarImageView) mHeaderView.findViewById(R.id.avatar_image);
+        mHeadCommentCount = (TextView) mHeaderView.findViewById(R.id.comment_tv_count);
+        mHeadContentList = (ChildListView) mHeaderView.findViewById(R.id.course_content_list);
+        mHeadFollow = (FollowView) mHeaderView.findViewById(R.id.follow_iamge);
+        mHeadNickname = (TextView) mHeaderView.findViewById(R.id.nickname_tv);
+        mHeadTime = (TextView) mHeaderView.findViewById(R.id.time_tv);
 
         initListener();
         return parentView;
@@ -118,7 +142,7 @@ public class CourseDetailDetailFragment extends BaseFragment {
     private static class ViewHolder {
         private View mParentView;
         private View mView;
-        private PullToRefreshListView mListView;
+        private ListView mListView;
     }
 
 }
