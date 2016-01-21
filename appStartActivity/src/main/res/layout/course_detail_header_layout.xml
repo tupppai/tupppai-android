@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
 
     <RelativeLayout
         android:id="@+id/course_detail_top_layout"
@@ -52,11 +53,118 @@
 
     </RelativeLayout>
 
+    <TextView
+        android:id="@+id/course_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginLeft="17dp"
+        android:text="将照片转为手绘作品"
+        android:textColor="#050505"
+        android:textSize="25dp"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp">
+
+        <View
+            android:id="@+id/gray_view"
+            android:layout_width="2dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="45dp"
+            android:background="#7F000000"/>
+
+        <TextView
+            android:id="@+id/course_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/gray_view"
+            android:layout_marginLeft="10dp"
+            android:layout_alignTop="@id/gray_view"
+            android:layout_marginRight="50dp"
+            android:text="这是我编译的第一个教程，希望大家能够喜欢，想要看清晰版的请点击收藏哦"
+            android:textColor="#CC000000"
+            android:textSize="14dp"
+            android:lineSpacingMultiplier="1.6"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="47dp">
+
+        <TextView
+            android:id="@+id/like_count_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="17dp"
+            android:text="38"
+            android:textColor="#99000000"
+            android:textSize="11dp"
+            android:drawableLeft="@mipmap/ic_course_like"
+            android:drawablePadding="5dp"
+            android:layout_centerVertical="true"/>
+
+        <View
+            android:id="@+id/first_point"
+            android:layout_width="3dp"
+            android:layout_height="3dp"
+            android:layout_toRightOf="@id/like_count_tv"
+            android:layout_marginLeft="6dp"
+            android:background="@drawable/shape_course_black_point"
+            android:layout_centerVertical="true"/>
+
+        <TextView
+            android:id="@+id/view_count_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/first_point"
+            android:layout_marginLeft="6dp"
+            android:text="90"
+            android:textColor="#99000000"
+            android:textSize="11dp"
+            android:drawableLeft="@mipmap/ic_course_view"
+            android:drawablePadding="5dp"
+            android:layout_centerVertical="true" />
+
+        <View
+            android:id="@+id/second_point"
+            android:layout_width="3dp"
+            android:layout_height="3dp"
+            android:layout_toRightOf="@id/view_count_tv"
+            android:layout_marginLeft="6dp"
+            android:background="@drawable/shape_course_black_point"
+            android:layout_centerVertical="true"/>
+
+        <TextView
+            android:id="@+id/course_image_count_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/second_point"
+            android:layout_marginLeft="6dp"
+            android:text="18"
+            android:textColor="#99000000"
+            android:textSize="11dp"
+            android:drawableLeft="@mipmap/ic_course_image"
+            android:drawablePadding="5dp"
+            android:layout_centerVertical="true"/>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginLeft="17dp"
+        android:layout_marginRight="17dp"
+        android:layout_marginTop="17dp"
+        android:background="#1A000000"/>
+
     <com.psgod.ui.widget.ChildListView
         android:id="@+id/course_content_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/course_detail_top_layout"/>
+        android:layout_marginTop="17dp"/>
 
     <View
         android:layout_width="match_parent"

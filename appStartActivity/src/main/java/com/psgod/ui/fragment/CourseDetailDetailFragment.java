@@ -21,7 +21,9 @@ import com.pingplusplus.android.PingppLog;
 import com.psgod.Constants;
 import com.psgod.R;
 import com.psgod.model.Comment;
+import com.psgod.model.ImageData;
 import com.psgod.ui.adapter.CourseDetailCommentAdapter;
+import com.psgod.ui.adapter.CourseDetailImageContentAdapter;
 import com.psgod.ui.view.FollowView;
 import com.psgod.ui.widget.AvatarImageView;
 import com.psgod.ui.widget.ChildListView;
@@ -56,6 +58,9 @@ public class CourseDetailDetailFragment extends BaseFragment {
     private TextView mReward;
     private TextView mCommentCount;
     private TextView mShareCount;
+
+    private CourseDetailImageContentAdapter mImageAdapter;
+    private List<ImageData> mImageDatas = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -101,6 +106,9 @@ public class CourseDetailDetailFragment extends BaseFragment {
         mHeadFollow = (FollowImage) mHeaderView.findViewById(R.id.follow_iamge);
         mHeadNickname = (TextView) mHeaderView.findViewById(R.id.nickname_tv);
         mHeadTime = (TextView) mHeaderView.findViewById(R.id.time_tv);
+
+        mImageAdapter = new CourseDetailImageContentAdapter(mContext,mImageDatas);
+        mHeadContentList.setAdapter(mImageAdapter);
 
         initListener();
         return parentView;
