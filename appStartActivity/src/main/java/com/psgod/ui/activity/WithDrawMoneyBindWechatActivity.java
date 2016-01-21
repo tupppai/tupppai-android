@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.psgod.R;
+import com.psgod.Utils;
 
 /**
  * Created by pires on 16/1/21.
@@ -21,6 +22,7 @@ public class WithDrawMoneyBindWechatActivity extends PSGodBaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Utils.addActivity(WithDrawMoneyBindWechatActivity.this);
         setContentView(R.layout.activity_withdraw_money_bind_wechat);
         mContext = this;
 

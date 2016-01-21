@@ -12,7 +12,7 @@
         android:id="@+id/actionbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/actionbar_height"
-        psgod:title="微信绑定"
+        psgod:title="提现成功"
         psgod:rightBtnVisibility="invisible"/>
 
     <ImageView

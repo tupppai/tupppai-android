@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.psgod.R;
+import com.psgod.Utils;
 import com.psgod.ui.widget.ActionBar;
 import com.psgod.ui.widget.dialog.RechargeTypeDialog;
 
@@ -23,6 +24,8 @@ public class SettingChangeActivity extends PSGodBaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Utils.initializeActivity();
+        Utils.addActivity(SettingChangeActivity.this);
         setContentView(R.layout.activity_setting_change);
 
         mActionBar = (ActionBar) this.findViewById(R.id.actionbar);
