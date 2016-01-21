@@ -68,6 +68,8 @@ public class WorkShareDialog extends Dialog {
                 dismiss();
             }
         });
+
+        setCanceledOnTouchOutside(true);
     }
 
     public void setPhotoItem(PhotoItem photoItem) {

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<RelativeLayout
+    android:layout_width="301dp"
+    android:layout_height="294dp"
+    android:background="@drawable/shape_dialog_white_background"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@drawable/shape_dialog_black_background"
+        android:layout_height="67dp">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_course_sorry"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="67dp"
+        >
+        <TextView
+            android:id="@+id/pay_error_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="23dp"
+            android:textColor="#cc000000"
+            android:text="打赏失败"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="35dp"
+            />
+
+        <TextView
+            android:id="@+id/pay_error_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="零钱余额不足"
+            android:layout_marginTop="23dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/pay_error_title"
+            android:textSize="16dp"
+            android:textColor="#80000000"
+            />
+
+        <TextView
+            android:id="@+id/pay_error_go"
+            android:layout_width="262dp"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="33dp"
+            android:text="去充值"
+            android:layout_centerHorizontal="true"
+            android:textSize="14dp"
+            android:background="#ffef04"
+            />
+
+    </RelativeLayout>
+
+</RelativeLayout>
+
+</RelativeLayout>
