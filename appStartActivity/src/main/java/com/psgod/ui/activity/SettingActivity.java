@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.psgod.PsGodImageLoader;
@@ -47,6 +48,8 @@ public class SettingActivity extends PSGodBaseActivity {
 	private View mUpdateBtn;
 	private View mLikedBtn;
 	private View mCommendBtn;
+	private View mChangeBtn;
+	private ImageView mChangeNotificationIv;
 
 	// activity list
 	private List<Activity> mList = new LinkedList<Activity>();
@@ -73,6 +76,8 @@ public class SettingActivity extends PSGodBaseActivity {
 		mUpdateBtn = this.findViewById(R.id.activity_setting_check_new_version);
 		mLikedBtn = this.findViewById(R.id.activity_setting_liked_btn);
 		mCommendBtn = this.findViewById(R.id.activity_setting_commend_btn);
+		mChangeBtn = this.findViewById(R.id.activity_setting_change_btn);
+		mChangeNotificationIv = (ImageView) this.findViewById(R.id.activity_change_notification_btn);
 		initButtonListeners();
 
 		// mRatingBtn.setOnClickListener(new OnClickListener() {
@@ -150,6 +155,14 @@ public class SettingActivity extends PSGodBaseActivity {
 				});
 				UmengUpdateAgent.setUpdateOnlyWifi(false);
 				UmengUpdateAgent.update(SettingActivity.this);
+			}
+		});
+
+		mChangeBtn.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				Intent intent = new Intent(SettingActivity.this,SettingChangeActivity.class);
+				startActivity(intent);
 			}
 		});
 
