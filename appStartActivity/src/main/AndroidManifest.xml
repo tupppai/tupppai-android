@@ -158,6 +158,7 @@
         <activity android:name=".ui.activity.SettingChangeActivity" />
         <activity android:name=".ui.activity.WithDrawMoneyBindWechatActivity" />
         <activity android:name=".ui.activity.WithDrawMoneyActivity" />
+        <activity android:name=".ui.activity.ChangeDetailActivity" />
         <activity android:name=".ui.activity.MessageLikeActivity" />
         <activity android:name=".ui.activity.MessageSystemActivity" />
         <activity android:name=".ui.activity.MessageCommentActivity" />

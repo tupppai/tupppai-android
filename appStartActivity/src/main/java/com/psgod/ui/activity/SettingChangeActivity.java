@@ -8,6 +8,7 @@ import android.widget.Button;
 
 import com.psgod.R;
 import com.psgod.Utils;
+import com.psgod.WeakReferenceHandler;
 import com.psgod.ui.widget.ActionBar;
 import com.psgod.ui.widget.dialog.RechargeTypeDialog;
 
@@ -17,6 +18,7 @@ import com.psgod.ui.widget.dialog.RechargeTypeDialog;
 public class SettingChangeActivity extends PSGodBaseActivity {
     private static final String TAG = SettingChangeActivity.class.getSimpleName();
     private Context mContext;
+    private WeakReferenceHandler mHandler = new WeakReferenceHandler(this);
     private ActionBar mActionBar;
     private Button mChargeBtn;
     private Button mWithDrawBtn;
@@ -35,7 +37,7 @@ public class SettingChangeActivity extends PSGodBaseActivity {
         mChargeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                RechargeTypeDialog dialog = new RechargeTypeDialog(SettingChangeActivity.this);
+                RechargeTypeDialog dialog = new RechargeTypeDialog(SettingChangeActivity.this,mHandler);
                 dialog.show();
             }
         });
@@ -44,6 +46,14 @@ public class SettingChangeActivity extends PSGodBaseActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(SettingChangeActivity.this,WithDrawMoneyBindWechatActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        mActionBar.setRightBtnOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SettingChangeActivity.this,ChangeDetailActivity.class);
                 startActivity(intent);
             }
         });
