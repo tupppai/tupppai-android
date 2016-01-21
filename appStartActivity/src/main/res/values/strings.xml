@@ -46,4 +46,6 @@
     <string name="title_activity_channel">ChannelActivity</string>
     <string name="title_activity_recent_act">RecentActActivity</string>
 
+    <string name="withdraw_bind_weixin">第一步\t\t请绑定微信</string>
+
 </resources>

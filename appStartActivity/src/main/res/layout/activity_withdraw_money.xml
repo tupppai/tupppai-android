@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:psgod="http://schemas.android.com/apk/res/com.psgod"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true">
+
+    <com.psgod.ui.widget.ActionBar
+        android:id="@+id/actionbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/actionbar_height"
+        psgod:title="微信绑定"
+        psgod:rightBtnVisibility="invisible"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:layout_gravity="center_horizontal"
+        android:src="@mipmap/ic_wallet"/>
+
+    <TextView
+        android:id="@+id/withdraw_count_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="26dp"
+        android:layout_gravity="center_horizontal"
+        android:text="￥3.50"
+        android:textColor="#000000"
+        android:textSize="21dp"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp">
+
+        <TextView
+            android:id="@+id/withdraw_ask_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="提现申请已提交，请去微信查看"
+            android:textColor="#7F000000"
+            android:textSize="14dp"/>
+
+        <TextView
+            android:id="@+id/withdraw_weixin_tip_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/withdraw_ask_tv"
+            android:layout_below="@id/withdraw_ask_tv"
+            android:layout_marginTop="14dp"
+            android:text="提现至微信账号:"
+            android:textColor="#7F000000"
+            android:textSize="14dp"/>
+
+        <TextView
+            android:id="@+id/withdraw_weixin_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/withdraw_weixin_tip_tv"
+            android:layout_marginLeft="8dp"
+            android:layout_alignTop="@id/withdraw_weixin_tip_tv"
+            android:text="Remyhuang"
+            android:textColor="#CC000000"
+            android:textSize="14dp"/>
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/withdraw_complete_btn"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="68dp"
+        android:layout_marginLeft="21dp"
+        android:layout_marginRight="21dp"
+        android:text="完成"
+        android:textSize="16dp"
+        android:textColor="#CC000000"
+        android:background="@drawable/selector_exit_background"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center_horizontal"
+        android:text="预计24小时内到账"
+        android:textColor="#7F000000"
+        android:textSize="14dp"/>
+
+</LinearLayout>
