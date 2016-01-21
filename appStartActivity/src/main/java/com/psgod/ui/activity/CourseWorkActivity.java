@@ -28,6 +28,8 @@ import com.psgod.model.SelectImage;
 import com.psgod.ui.adapter.MultiImageSelectAdapter;
 import com.psgod.ui.widget.StopGridView;
 import com.psgod.ui.widget.dialog.FolderPopupWindow;
+import com.psgod.ui.widget.dialog.ShareMoreDialog;
+import com.psgod.ui.widget.dialog.WorkShareDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -205,12 +207,19 @@ public class CourseWorkActivity extends PSGodBaseActivity {
                         }
                     }
                 });
+
+        mSureTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new WorkShareDialog(CourseWorkActivity.this).show();
+            }
+        });
     }
 
     private void notifyDataTopShow() {
         int resultLength = mResultImages.size();
         int dataLenght = mImages.size();
-        mImages.addAll(0,mResultImages);
+        mImages.addAll(0, mResultImages);
         for (int i = 0; i < resultLength; i++) {
             for (int j = resultLength; j < dataLenght; j++) {
                 if (mImages.get(j).path.equals(mResultImages.get(i).path)) {

@@ -1,6 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+    android:paddingBottom="25dp"
+    android:paddingTop="25dp">
 
-</LinearLayout>
+
+    <TextView
+        android:id="@+id/work_share_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="我P了这个图片"
+        android:textColor="#CC000000"
+        android:textSize="23dp" />
+
+    <RelativeLayout
+        android:id="@+id/work_share_imagearea"
+        android:layout_width="269dp"
+        android:layout_height="118dp"
+        android:layout_below="@+id/work_share_title"
+        android:layout_marginTop="25dp"
+        android:background="#f7f7f7"
+        android:padding="12.5dp">
+
+        <ImageView
+            android:id="@+id/work_share_image"
+            android:layout_width="93dp"
+            android:layout_height="93dp"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:id="@+id/work_share_image_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/work_share_image"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/work_share_image"
+            android:textColor="#80000000"
+            android:textSize="16dp" />
+
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/work_share_line"
+        android:layout_width="259dp"
+        android:layout_height="1dp"
+        android:layout_below="@+id/work_share_imagearea"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="25dp"
+        android:background="#f7f7f7" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/work_share_imagearea"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:background="@color/white"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:text="分享到"
+        android:textColor="#4c000000"
+        android:textSize="10dp" />
+
+    <LinearLayout
+        android:id="@+id/work_share_sharearea"
+        android:layout_width="245dp"
+        android:layout_height="24dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="217dp"
+        android:orientation="horizontal">
+
+        <com.psgod.ui.widget.ShareButton
+            android:id="@+id/work_share_weibo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <com.psgod.ui.widget.ShareButton
+            android:id="@+id/work_share_qzone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_weight="1" />
+
+        <com.psgod.ui.widget.ShareButton
+            android:id="@+id/work_share_wechatm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_weight="1" />
+
+        <com.psgod.ui.widget.ShareButton
+            android:id="@+id/work_share_wechatf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_weight="1" />
+
+        <com.psgod.ui.widget.ShareButton
+            android:id="@+id/work_share_qq"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/work_share_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/work_share_sharearea"
+        android:text="算了我很低调"
+        android:textColor="#CC000000"
+        android:layout_centerHorizontal="true"
+        android:textSize="14dp"
+        android:layout_marginTop="60dp"/>
+</RelativeLayout>

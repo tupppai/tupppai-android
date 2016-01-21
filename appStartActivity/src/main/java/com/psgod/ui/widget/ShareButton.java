@@ -1,6 +1,8 @@
 package com.psgod.ui.widget;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
@@ -134,6 +136,7 @@ public class ShareButton extends Button {
     private void setDrawable(Drawable drawable, int drawableType) {
         switch (drawableType) {
             case TYPE_DRAWABLE_TOP:
+                setBackground(new ColorDrawable(Color.parseColor("#00000000")));
                 setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null);
                 break;
             case TYPE_DRAWABLE_BACKGROUND:

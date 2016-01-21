@@ -21,6 +21,7 @@ import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.psgod.Constants;
+import com.psgod.CustomToast;
 import com.psgod.PSGodApplication;
 import com.psgod.R;
 import com.psgod.Utils;
@@ -90,7 +91,6 @@ public class ShareMoreDialog extends Dialog {
         mShareWechatFriend = (ShareButton) findViewById(R.id.dialog_more_share_wechat);
         mShareWechatFriend.
                 setShareType(ShareButton.TYPE_WECHAT_FRIEND, ShareButton.TYPE_DRAWABLE_TOP);
-        mShareWechatFriend.setPhotoItem(mPhotoItem);
         mShareWechatMoments = (ShareButton) findViewById(R.id.dialog_more_share_moments);
         mShareWechatMoments.
                 setShareType(ShareButton.TYPE_WECHAT_MOMENTS, ShareButton.TYPE_DRAWABLE_TOP);
@@ -607,6 +607,11 @@ public class ShareMoreDialog extends Dialog {
 
     public void setPhotoItem(PhotoItem photoItem) {
         mPhotoItem = photoItem;
+        mShareWechatFriend.setPhotoItem(mPhotoItem);
+        mShareWechatMoments.setPhotoItem(mPhotoItem);
+        mShareWeibo.setPhotoItem(mPhotoItem);
+        mShareQQ.setPhotoItem(mPhotoItem);
+        mShareQzone.setPhotoItem(mPhotoItem);
 
         // 初始化与该photoitem相关数据
         updateView();

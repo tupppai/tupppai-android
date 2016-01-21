@@ -25,6 +25,7 @@ import com.psgod.ui.adapter.CourseDetailCommentAdapter;
 import com.psgod.ui.view.FollowView;
 import com.psgod.ui.widget.AvatarImageView;
 import com.psgod.ui.widget.ChildListView;
+import com.psgod.ui.widget.FollowImage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +50,7 @@ public class CourseDetailDetailFragment extends BaseFragment {
     private AvatarImageView mHeadAvatar;
     private TextView mHeadNickname;
     private TextView mHeadCommentCount;
-    private FollowView mHeadFollow;
+    private FollowImage mHeadFollow;
     private TextView mHeadTime;
 
     private TextView mReward;
@@ -97,7 +98,7 @@ public class CourseDetailDetailFragment extends BaseFragment {
         mHeadAvatar = (AvatarImageView) mHeaderView.findViewById(R.id.avatar_image);
         mHeadCommentCount = (TextView) mHeaderView.findViewById(R.id.comment_tv_count);
         mHeadContentList = (ChildListView) mHeaderView.findViewById(R.id.course_content_list);
-        mHeadFollow = (FollowView) mHeaderView.findViewById(R.id.follow_iamge);
+        mHeadFollow = (FollowImage) mHeaderView.findViewById(R.id.follow_iamge);
         mHeadNickname = (TextView) mHeaderView.findViewById(R.id.nickname_tv);
         mHeadTime = (TextView) mHeaderView.findViewById(R.id.time_tv);
 

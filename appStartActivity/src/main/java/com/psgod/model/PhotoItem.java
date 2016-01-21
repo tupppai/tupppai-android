@@ -123,7 +123,16 @@ public class PhotoItem implements Serializable, Cloneable {
     private String mCategoryName = "";
     private String mCategoryType = "";
 
+    private String mTitle;
     private int mLoveCount = 0;
+
+    public String getTitle() {
+        return mTitle;
+    }
+
+    public void setTitle(String title) {
+        this.mTitle = title;
+    }
 
     public void setLoveCount(int upedNum) {
         this.mLoveCount = upedNum;
@@ -180,6 +189,9 @@ public class PhotoItem implements Serializable, Cloneable {
     public static PhotoItem createPhotoItem(JSONObject jsonObj)
             throws JSONException {
         PhotoItem item = new PhotoItem();
+        if (jsonObj.has("title")) {
+            item.mTitle = jsonObj.getString("title");
+        }
         if (jsonObj.has("id")) {
             item.mPid = jsonObj.getLong("id");
         }
