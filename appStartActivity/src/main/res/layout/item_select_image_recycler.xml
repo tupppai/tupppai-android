@@ -38,7 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="17dp">
 
-            <com.psgod.ui.widget.AvatarImage
+            <com.psgod.ui.view.CircleImageView
                 android:id="@+id/item_select_image_bangarea_avatar"
                 android:layout_width="17dp"
                 android:layout_height="17dp" />

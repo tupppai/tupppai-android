@@ -22,31 +22,27 @@
             android:layout_marginTop="40dp"
             android:orientation="horizontal" >
             
-            <Button 
+            <com.psgod.ui.widget.ShareButton
                 android:id="@+id/dialog_more_share_sina"
                 style="@style/share_more_dialog_btn_new"
-                android:drawableTop="@drawable/ic_weibo_new"
                 android:text="新浪微博"
                 />
 			
-            <Button 
+            <com.psgod.ui.widget.ShareButton
                 android:id="@+id/dialog_more_share_qzone"
                 style="@style/share_more_dialog_btn_new"
-                android:drawableTop="@drawable/ic_qzone"
                 android:text="QQ空间 "
                 />
             
-            <Button
+            <com.psgod.ui.widget.ShareButton
                 android:id="@+id/dialog_more_share_moments"
                 style="@style/share_more_dialog_btn_new"
-                android:drawableTop="@drawable/ic_wechat_new"
                 android:drawablePadding="8dp"
                 android:text="朋友圈" />
             
-            <Button
+            <com.psgod.ui.widget.ShareButton
                 android:id="@+id/dialog_more_share_wechat"
                 style="@style/share_more_dialog_btn_new"
-                android:drawableTop="@drawable/ic_weixin_new"
                 android:text="微信"  />
 			
         </LinearLayout>
@@ -58,10 +54,9 @@
             android:gravity="center_vertical"
             android:orientation="horizontal" >
 
-            <Button
+            <com.psgod.ui.widget.ShareButton
                 android:id="@+id/dialog_more_share_qq_friend"
                 style="@style/share_more_dialog_btn_new"
-                android:drawableTop="@drawable/ic_qq_new"
                 android:text="QQ好友" />
 			
             <Button

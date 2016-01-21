@@ -108,7 +108,7 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <com.psgod.ui.widget.AvatarImage
+            <com.psgod.ui.view.CircleImageView
                 android:id="@+id/activity_main_tab_user_case"
                 android:layout_width="24dp"
                 android:layout_height="24dp"

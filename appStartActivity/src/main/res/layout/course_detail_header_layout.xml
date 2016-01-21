@@ -52,8 +52,8 @@
 
     </RelativeLayout>
 
-    <WebView
-        android:id="@+id/course_webview"
+    <com.psgod.ui.widget.ChildListView
+        android:id="@+id/course_content_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/course_detail_top_layout"/>
