@@ -17,6 +17,7 @@ import com.psgod.model.ActivitiesAct;
 import com.psgod.model.PhotoItem;
 import com.psgod.model.Tupppai;
 import com.psgod.ui.activity.ChannelActivity;
+import com.psgod.ui.activity.CourseActivity;
 import com.psgod.ui.activity.RecentActActivity;
 import com.umeng.analytics.MobclickAgent;
 
@@ -59,7 +60,13 @@ public class TupppaiAdapter extends MyBaseAdapter<Tupppai> {
         PsGodImageLoader.getInstance().displayImage(list.get(position).getApp_pic(), holder.headImg, mOptions);
         holder.linear.removeAllViews();
         List<PhotoItem> photoItems = list.get(position).getThreads();
-        for (int i = 0; i < 5; i++) {
+        int itemLength = photoItems.size();
+        if (itemLength == 0) {
+            holder.linear.setVisibility(View.GONE);
+        } else {
+            holder.linear.setVisibility(View.VISIBLE);
+        }
+        for (int i = 0; i < itemLength; i++) {
             ImageView view = new ImageView(context);
             LinearLayout.LayoutParams params = new LinearLayout.
                     LayoutParams(Utils.dpToPx(context, 60), Utils.dpToPx(context, 60));
@@ -68,9 +75,7 @@ public class TupppaiAdapter extends MyBaseAdapter<Tupppai> {
             view.setLayoutParams(params);
             view.setScaleType(ImageView.ScaleType.CENTER_CROP);
             view.setImageDrawable(context.getResources().getDrawable(R.color.transparent));
-            if (i < photoItems.size()) {
-                PsGodImageLoader.getInstance().displayImage(photoItems.get(i).getImageURL(), view, mSmallSmallOptions);
-            }
+            PsGodImageLoader.getInstance().displayImage(photoItems.get(i).getImageURL(), view, mSmallSmallOptions);
             holder.linear.addView(view);
         }
 //        if (list.get(position).getThreads().size() == 0) {
@@ -100,22 +105,23 @@ public class TupppaiAdapter extends MyBaseAdapter<Tupppai> {
 
             Intent intent = new Intent();
             intent.putExtra("id", list.get(position).getId());
-            intent.putExtra("title", list.get(position).getDisplay_name());
+//            intent.putExtra("title", list.get(position).getDisplay_name());
             if (list.get(position).getCategory_type().equals("activity")) {
-                Tupppai tupppai = list.get(position);
+//                Tupppai tupppai = list.get(position);
                 intent.setClass(context, RecentActActivity.class);
-                ActivitiesAct act = new ActivitiesAct();
-                act.setId(tupppai.getId());
-                act.setAsk_id(tupppai.getAsk_id());
-                act.setBanner_pic(tupppai.getBanner_pic());
-                act.setImage_url(tupppai.getApp_pic());
-                act.setUrl(tupppai.getUrl());
-                act.setPost_btn(tupppai.getPost_btn());
-                act.setDisplay_name(tupppai.getDisplay_name());
-                intent.putExtra(RecentActActivity.OBJ_ACTIVITY, act);
-            } else {
+//                ActivitiesAct act = new ActivitiesAct();
+//                act.setId(tupppai.getId());
+//                act.setAsk_id(tupppai.getAsk_id());
+//                act.setBanner_pic(tupppai.getBanner_pic());
+//                act.setImage_url(tupppai.getApp_pic());
+//                act.setUrl(tupppai.getUrl());
+//                act.setPost_btn(tupppai.getPost_btn());
+//                act.setDisplay_name(tupppai.getDisplay_name());
+//                intent.putExtra(RecentActActivity.OBJ_ACTIVITY, act);
+            } else if (list.get(position).getCategory_type().equals("channel")) {
                 intent.setClass(context, ChannelActivity.class);
-
+            } else if (list.get(position).getCategory_type().equals("tutorial")) {
+                intent.setClass(context, CourseActivity.class);
             }
             context.startActivity(intent);
         }

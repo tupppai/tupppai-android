@@ -55,20 +55,27 @@ public class CourseDetailActivity extends PSGodBaseActivity {
     // 游标宽度
     private int mCursorWidth;
 
+    private long id;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_detail);
         mContext = this;
 
+        Intent intent = getIntent();
+        if(intent.hasExtra("id")){
+            id = intent.getLongExtra("id",0);
+        }
+
         initViews();
         initCursor();
         mFragments = new ArrayList<>();
         if (mDetailFragment == null) {
-            mDetailFragment = new CourseDetailDetailFragment();
+            mDetailFragment = new CourseDetailDetailFragment(id);
         }
         if (mWorkFragment == null) {
-            mWorkFragment = new CourseDetailWorkFragment();
+            mWorkFragment = new CourseDetailWorkFragment(id);
         }
         mFragments.add(mDetailFragment);
         mFragments.add(mWorkFragment);

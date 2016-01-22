@@ -124,7 +124,48 @@ public class PhotoItem implements Serializable, Cloneable {
     private String mCategoryType = "";
 
     private String mTitle;
+
+    private String mDescription;
+
+    private int mHasSharedToWechat;
+
+    private int mPaidAmount;
+
     private int mLoveCount = 0;
+
+    private int mClickCount;
+
+    public int getClickCount() {
+        return mClickCount;
+    }
+
+    public void setClickCount(int clickCount) {
+        this.mClickCount = clickCount;
+    }
+
+    public int getHasSharedToWechat() {
+        return mHasSharedToWechat;
+    }
+
+    public void setHasSharedToWechat(int hasSharedToWechat) {
+        this.mHasSharedToWechat = hasSharedToWechat;
+    }
+
+    public int getPaidAmount() {
+        return mPaidAmount;
+    }
+
+    public void setPaidAmount(int paidAmount) {
+        this.mPaidAmount = paidAmount;
+    }
+
+    public String getDescription() {
+        return mDescription;
+    }
+
+    public void setDescription(String description) {
+        this.mDescription = description;
+    }
 
     public String getTitle() {
         return mTitle;
@@ -189,6 +230,20 @@ public class PhotoItem implements Serializable, Cloneable {
     public static PhotoItem createPhotoItem(JSONObject jsonObj)
             throws JSONException {
         PhotoItem item = new PhotoItem();
+
+        if(jsonObj.has("click_count")){
+            item.mClickCount = jsonObj.getInt("click_count");
+        }
+
+        if (jsonObj.has("description")) {
+            item.mDescription = jsonObj.getString("description");
+        }
+        if (jsonObj.has("has_shared_to_wechat")) {
+            item.mHasSharedToWechat = jsonObj.getInt("has_shared_to_wechat");
+        }
+        if (jsonObj.has("paid_amount")) {
+            item.mPaidAmount = jsonObj.getInt("paid_amount");
+        }
         if (jsonObj.has("title")) {
             item.mTitle = jsonObj.getString("title");
         }

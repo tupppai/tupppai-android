@@ -30,6 +30,12 @@ public class CourseDetailWorkFragment extends BaseFragment {
     private List<PhotoItem> mPhotoItems = new ArrayList<>();
     private PhotoListAdapter mAdapter;
 
+    private long id;
+
+    public CourseDetailWorkFragment(long id){
+        this.id = id;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

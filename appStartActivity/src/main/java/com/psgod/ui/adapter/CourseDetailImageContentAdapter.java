@@ -6,9 +6,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.psgod.Constants;
+import com.psgod.PsGodImageLoader;
 import com.psgod.R;
+import com.psgod.Utils;
 import com.psgod.model.ImageData;
 
 import java.util.List;
@@ -23,7 +28,9 @@ public class CourseDetailImageContentAdapter extends BaseAdapter {
     private List<ImageData> mImageDatas;
     private ViewHolder mViewHolder;
 
-    public CourseDetailImageContentAdapter (Context context , List<ImageData> imageDatas) {
+    private boolean isLock = true;
+
+    public CourseDetailImageContentAdapter(Context context, List<ImageData> imageDatas) {
         this.mContext = context;
         this.mImageDatas = imageDatas;
     }
@@ -43,20 +50,54 @@ public class CourseDetailImageContentAdapter extends BaseAdapter {
         return i;
     }
 
+    public boolean isLock() {
+        return isLock;
+    }
+
+    public void setIsLock(boolean isLock) {
+        this.isLock = isLock;
+    }
+
     @Override
-    public View getView(int i, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_course_detail_image_content,parent,false);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_course_detail_image_content, parent, false);
             mViewHolder = new ViewHolder();
             mViewHolder.mImage = (ImageView) convertView.findViewById(R.id.course_image);
+            mViewHolder.mLockArea = (RelativeLayout) convertView.findViewById(R.id.course_detail_image_lockarea);
             convertView.setTag(mViewHolder);
         } else {
             mViewHolder = (ViewHolder) convertView.getTag();
         }
+        ImageData imageData = mImageDatas.get(position);
+        RelativeLayout.LayoutParams params =
+                (RelativeLayout.LayoutParams) mViewHolder.mImage.getLayoutParams();
+        if (params == null) {
+            params = new RelativeLayout.
+                    LayoutParams(Utils.getScreenWidthPx(mContext),
+                    getImageHeight(imageData.mImageWidth, imageData.mImageHeight));
+        } else {
+            params.width = Utils.getScreenWidthPx(mContext);
+            params.height = getImageHeight(imageData.mImageWidth, imageData.mImageHeight);
+        }
+        mViewHolder.mImage.setLayoutParams(params);
+        mViewHolder.mLockArea.setLayoutParams(params);
+        PsGodImageLoader.getInstance().displayImage(imageData.mImageUrl
+                , mViewHolder.mImage, Constants.DISPLAY_IMAGE_OPTIONS);
+        if (isLock && position == getCount() - 1) {
+            mViewHolder.mLockArea.setVisibility(View.VISIBLE);
+        } else {
+            mViewHolder.mLockArea.setVisibility(View.GONE);
+        }
         return convertView;
     }
 
+    private int getImageHeight(int realWidth, int realHeight) {
+        return (int) ((float) realHeight * (float) Utils.getScreenWidthPx(mContext) / (float) realWidth);
+    }
+
     private static class ViewHolder {
-        private ImageView mImage;
+        ImageView mImage;
+        RelativeLayout mLockArea;
     }
 }

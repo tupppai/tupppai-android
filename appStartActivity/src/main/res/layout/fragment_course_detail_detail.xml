@@ -51,7 +51,7 @@
             android:gravity="center"/>
     </RelativeLayout>
 
-    <ListView
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
         android:id="@+id/course_comment_list_listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

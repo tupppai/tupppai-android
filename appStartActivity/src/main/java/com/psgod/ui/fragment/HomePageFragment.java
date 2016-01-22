@@ -324,7 +324,7 @@ public class HomePageFragment extends Fragment {
 		mViewHolder.mSearchImg.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				Intent intent = new Intent(getActivity(), CourseDetailActivity.class);
+				Intent intent = new Intent(getActivity(), SearchActivity.class);
 				startActivity(intent);
 			}
 		});

@@ -1,6 +1,7 @@
 package com.psgod.ui.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,8 +9,12 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.psgod.Constants;
+import com.psgod.PsGodImageLoader;
 import com.psgod.R;
 import com.psgod.model.PhotoItem;
+import com.psgod.model.User;
+import com.psgod.ui.activity.CourseDetailActivity;
 import com.psgod.ui.widget.AvatarImageView;
 
 import java.util.List;
@@ -60,9 +65,31 @@ public class CourseAdapter extends BaseAdapter {
         }else{
             viewHolder = (ViewHolder) convertView.getTag();
         }
-
+        PhotoItem photoItem = mPhotoItems.get(position);
+        PsGodImageLoader.getInstance().displayImage(
+                photoItem.getImageURL(),viewHolder.img, Constants.DISPLAY_IMAGE_OPTIONS);
+        PsGodImageLoader.getInstance().displayImage(
+                photoItem.getAvatarURL(),viewHolder.avatar,Constants.DISPLAY_IMAGE_OPTIONS_AVATAR);
+        viewHolder.avatar.setUser(new User(photoItem));
+        viewHolder.avatarName.setText(photoItem.getNickname());
+        viewHolder.viewNum.setText(String.valueOf(photoItem.getClickCount()));
+        viewHolder.likeNum.setText(String.valueOf(photoItem.getLoveCount()));
+        viewHolder.title.setText(photoItem.getTitle());
+        viewHolder.imageNum.setText(String.valueOf(photoItem.getReplyCount()));
+        convertView.setTag(R.id.tupppai_view_id, photoItem);
+        convertView.setOnClickListener(click);
         return convertView;
     }
+
+    private View.OnClickListener click = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            PhotoItem photoItem = (PhotoItem) view.getTag(R.id.tupppai_view_id);
+            Intent intent = new Intent(mContext, CourseDetailActivity.class);
+            intent.putExtra("id",photoItem.getAskId());
+            mContext.startActivity(intent);
+        }
+    };
 
     private static class ViewHolder{
         ImageView img;

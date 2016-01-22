@@ -8,7 +8,9 @@
     <ImageView
         android:id="@+id/item_course_img"
         android:layout_width="match_parent"
-        android:layout_height="178dp" />
+        android:layout_height="178dp"
+        android:scaleType="fitXY"
+        />
 
 
     <RelativeLayout
@@ -132,6 +134,13 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#16000000"
+        android:layout_below="@+id/item_course_content_area"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="8.5dp"
+        android:background="#f7f7f7"
         android:layout_below="@+id/item_course_content_area"
         />
 

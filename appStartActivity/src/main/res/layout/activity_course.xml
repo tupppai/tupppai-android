@@ -20,6 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
+            android:text="教程"
             android:textSize="18dp" />
 
         <com.psgod.ui.widget.FinishView
@@ -42,6 +43,9 @@
         android:layout_below="@+id/activity_course_title_layout"
         android:layout_marginTop="1dp"
         android:background="#F7F7F7"
+        android:paddingTop="7.5dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
         android:divider="@null" />
 
 </RelativeLayout>

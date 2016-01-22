@@ -14,20 +14,30 @@ import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.pingplusplus.android.PaymentActivity;
 import com.pingplusplus.android.PingppLog;
 import com.psgod.Constants;
+import com.psgod.PsGodImageLoader;
 import com.psgod.R;
 import com.psgod.model.Comment;
 import com.psgod.model.ImageData;
+import com.psgod.model.PhotoItem;
+import com.psgod.model.User;
+import com.psgod.network.request.CourseDetailRequest;
+import com.psgod.network.request.PSGodErrorListener;
+import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.ui.adapter.CourseDetailCommentAdapter;
 import com.psgod.ui.adapter.CourseDetailImageContentAdapter;
 import com.psgod.ui.view.FollowView;
 import com.psgod.ui.widget.AvatarImageView;
 import com.psgod.ui.widget.ChildListView;
 import com.psgod.ui.widget.FollowImage;
+import com.psgod.ui.widget.dialog.CustomProgressingDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +64,11 @@ public class CourseDetailDetailFragment extends BaseFragment {
     private TextView mHeadCommentCount;
     private FollowImage mHeadFollow;
     private TextView mHeadTime;
+    private TextView mHeadLikeCount;
+    private TextView mHeadReplyCount;
+    private TextView mHeadViewCount;
+    private TextView mHeadDesc;
+    private TextView mHeadTitle;
 
     private TextView mReward;
     private TextView mCommentCount;
@@ -61,6 +76,15 @@ public class CourseDetailDetailFragment extends BaseFragment {
 
     private CourseDetailImageContentAdapter mImageAdapter;
     private List<ImageData> mImageDatas = new ArrayList<>();
+
+    private CustomProgressingDialog progressingDialog;
+
+    private long id;
+    private PhotoItem mPhotoItem;
+
+    public CourseDetailDetailFragment(long id) {
+        this.id = id;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -81,20 +105,20 @@ public class CourseDetailDetailFragment extends BaseFragment {
         mViewHolder = new ViewHolder();
         mViewHolder.mParentView = parentView;
         mViewHolder.mView = inflater.inflate(R.layout.fragment_course_detail_detail, parentView, true);
-        mViewHolder.mListView = (ListView) mViewHolder.mView.findViewById(R.id.course_comment_list_listview);
-//        mViewHolder.mListView.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
+        mViewHolder.mListView = (PullToRefreshListView) mViewHolder.mView.findViewById(R.id.course_comment_list_listview);
+        mViewHolder.mListView.setMode(PullToRefreshBase.Mode.DISABLED);
         mAdapter = new CourseDetailCommentAdapter(mContext, mComments);
         mViewHolder.mListView.setAdapter(mAdapter);
 
         mHeaderView = getActivity().getLayoutInflater().inflate(R.layout.course_detail_header_layout, null);
-        mViewHolder.mListView.addHeaderView(mHeaderView);
+        mViewHolder.mListView.getRefreshableView().addHeaderView(mHeaderView);
         mFooterView = LayoutInflater.from(mContext).inflate(R.layout.footer_load_more, null);
         mFooterView.setVisibility(View.INVISIBLE);
-        mViewHolder.mListView.addFooterView(mFooterView);
+        mViewHolder.mListView.getRefreshableView().addFooterView(mFooterView);
 
         mListListner = new CourseDetailListener(mContext);
-//        mViewHolder.mListView.setOnRefreshListener(mListListner);
-//        mViewHolder.mListView.setOnLastItemVisibleListener(mListListner);
+        mViewHolder.mListView.setOnRefreshListener(mListListner);
+        mViewHolder.mListView.setOnLastItemVisibleListener(mListListner);
 
         mReward = (TextView) mViewHolder.mView.findViewById(R.id.reward_tv);
         mCommentCount = (TextView) mViewHolder.mView.findViewById(R.id.comment_tv);
@@ -103,15 +127,58 @@ public class CourseDetailDetailFragment extends BaseFragment {
         mHeadAvatar = (AvatarImageView) mHeaderView.findViewById(R.id.avatar_image);
         mHeadCommentCount = (TextView) mHeaderView.findViewById(R.id.comment_tv_count);
         mHeadContentList = (ChildListView) mHeaderView.findViewById(R.id.course_content_list);
+        mImageAdapter = new CourseDetailImageContentAdapter(mContext, mImageDatas);
+        mHeadContentList.setAdapter(mImageAdapter);
         mHeadFollow = (FollowImage) mHeaderView.findViewById(R.id.follow_iamge);
         mHeadNickname = (TextView) mHeaderView.findViewById(R.id.nickname_tv);
+        mHeadLikeCount = (TextView) mHeaderView.findViewById(R.id.like_count_tv);
+        mHeadViewCount = (TextView) mHeaderView.findViewById(R.id.view_count_tv);
+        mHeadReplyCount = (TextView) mHeaderView.findViewById(R.id.course_image_count_tv);
+        mHeadDesc = (TextView) mHeaderView.findViewById(R.id.course_desc);
+        mHeadTitle = (TextView) mHeaderView.findViewById(R.id.course_title);
+
         mHeadTime = (TextView) mHeaderView.findViewById(R.id.time_tv);
+        if (progressingDialog == null) {
+            progressingDialog = new CustomProgressingDialog(getActivity());
+        }
+        progressingDialog.show();
 
-        mImageAdapter = new CourseDetailImageContentAdapter(mContext,mImageDatas);
-        mHeadContentList.setAdapter(mImageAdapter);
-
+        refresh();
         initListener();
         return parentView;
+    }
+
+    private void initView() {
+        if (mImageDatas.size() > 0) {
+            mImageDatas.clear();
+        }
+        mImageDatas.addAll(mPhotoItem.getUploadImagesList());
+        mImageAdapter.setIsLock(mPhotoItem.getHasSharedToWechat() == 1 ? false : true);
+        mImageAdapter.notifyDataSetChanged();
+        PsGodImageLoader.getInstance().displayImage(mPhotoItem.getAvatarURL(),
+                mHeadAvatar, Constants.DISPLAY_IMAGE_OPTIONS_AVATAR);
+        mHeadCommentCount.setText(String.valueOf("(" + mPhotoItem.getCommentCount() + ")"));
+        mCommentCount.setText(String.valueOf(mPhotoItem.getCommentCount()));
+        mShareCount.setText(String.valueOf(mPhotoItem.getShareCount()));
+        mHeadFollow.setPhotoItem(mPhotoItem);
+        mHeadAvatar.setUser(new User(mPhotoItem));
+        mHeadNickname.setText(mPhotoItem.getNickname());
+        mHeadTime.setText(mPhotoItem.getUpdateTimeStr());
+        mHeadTitle.setText(mPhotoItem.getTitle());
+        mHeadDesc.setText(mPhotoItem.getDescription());
+        mHeadLikeCount.setText(String.valueOf(mPhotoItem.getLoveCount()));
+        mHeadViewCount.setText(String.valueOf(mPhotoItem.getClickCount()));
+        mHeadReplyCount.setText(String.valueOf(mPhotoItem.getReplyCount()));
+
+    }
+
+    private void refresh() {
+        CourseDetailRequest request = new CourseDetailRequest.Builder().
+                setId(String.valueOf(id)).setListener(refreshListener).
+                setErrorListener(errorListener).build();
+        RequestQueue requestQueue = PSGodRequestQueue.getInstance(
+                getActivity()).getRequestQueue();
+        requestQueue.add(request);
     }
 
     private void initListener() {
@@ -144,14 +211,41 @@ public class CourseDetailDetailFragment extends BaseFragment {
 
         @Override
         public void onRefresh(PullToRefreshBase refreshView) {
-            // TODO Auto-generated method stub
+            refresh();
         }
     }
 
     private static class ViewHolder {
         private View mParentView;
         private View mView;
-        private ListView mListView;
+        private PullToRefreshListView mListView;
     }
+
+    Response.Listener<PhotoItem> refreshListener = new Response.Listener<PhotoItem>() {
+        @Override
+        public void onResponse(PhotoItem response) {
+            mViewHolder.mListView.onRefreshComplete();
+            if (progressingDialog != null && progressingDialog.isShowing()) {
+                progressingDialog.dismiss();
+            }
+
+            if (response != null) {
+                mPhotoItem = response;
+            }
+            initView();
+        }
+    };
+
+    PSGodErrorListener errorListener = new PSGodErrorListener() {
+        @Override
+        public void handleError(VolleyError error) {
+            mViewHolder.mListView.onRefreshComplete();
+            if (progressingDialog != null && progressingDialog.isShowing()) {
+                progressingDialog.dismiss();
+            }
+            mFooterView.setVisibility(View.GONE);
+        }
+    };
+
 
 }

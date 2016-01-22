@@ -16,25 +16,19 @@ import java.util.List;
 /**
  * Created by Administrator on 2015/12/7 0007.
  */
-public class CourseRequest extends BaseRequest<List<PhotoItem>> {
-    private final static String TAG = CourseRequest.class.getSimpleName();
+public class CourseDetailRequest extends BaseRequest<PhotoItem> {
+    private final static String TAG = CourseDetailRequest.class.getSimpleName();
 
-    public CourseRequest(int method, String url, Response.Listener<List<PhotoItem>> listener, Response.ErrorListener errorListener) {
+    public CourseDetailRequest(int method, String url, Response.Listener<PhotoItem> listener, Response.ErrorListener errorListener) {
         super(method, url, listener, errorListener);
     }
 
 
     @Override
-    protected List<PhotoItem> doParseNetworkResponse(JSONObject reponse) throws
+    protected PhotoItem doParseNetworkResponse(JSONObject reponse) throws
             UnsupportedEncodingException, JSONException {
-        List<PhotoItem> photoItems = new ArrayList<>();
-        JSONArray data = reponse.getJSONArray("data");
-        int length = data.length();
-        for (int i = 0; i < length; i++) {
-            PhotoItem item = PhotoItem.createPhotoItem(data.getJSONObject(i),getUrl());
-            photoItems.add(item);
-        }
-        return photoItems;
+        PhotoItem photoItem = PhotoItem.createPhotoItem(reponse.getJSONObject("data"), getUrl());
+        return photoItem;
     }
 
     public static class Builder implements IGetRequestBuilder {
@@ -46,12 +40,8 @@ public class CourseRequest extends BaseRequest<List<PhotoItem>> {
         // public static final int TYPE_RECENT_ASK = PhotoItem.TYPE_RECENT_ASK;
         // public static final int TYPE_RECENT_WORK= PhotoItem.TYPE_RECENT_WORK;
 
-        private int page = 1;
-        private int size = 10;
-        private long lastUpdated = -1;
-        private String targetType = "";
         private String id;
-        private Response.Listener<List<PhotoItem>> listener;
+        private Response.Listener<PhotoItem> listener;
         private Response.ErrorListener errorListener;
 
         public Builder setId(String id) {
@@ -59,27 +49,7 @@ public class CourseRequest extends BaseRequest<List<PhotoItem>> {
             return this;
         }
 
-        public Builder setTargetType(String targetType) {
-            this.targetType = targetType;
-            return this;
-        }
-
-        public Builder setLastUpdated(long lastUpdated) {
-            this.lastUpdated = lastUpdated;
-            return this;
-        }
-
-        public Builder setPage(int page) {
-            this.page = page;
-            return this;
-        }
-
-        public Builder setSize(int size) {
-            this.size = size;
-            return this;
-        }
-
-        public Builder setListener(Response.Listener<List<PhotoItem>> listener) {
+        public Builder setListener(Response.Listener<PhotoItem> listener) {
             this.listener = listener;
             return this;
         }
@@ -89,9 +59,9 @@ public class CourseRequest extends BaseRequest<List<PhotoItem>> {
             return this;
         }
 
-        public CourseRequest build() {
+        public CourseDetailRequest build() {
             String url = createUrl();
-            CourseRequest request = new CourseRequest(METHOD, url,
+            CourseDetailRequest request = new CourseDetailRequest(METHOD, url,
                     listener, errorListener);
             return request;
         }
@@ -99,11 +69,8 @@ public class CourseRequest extends BaseRequest<List<PhotoItem>> {
         @Override
         public String createUrl() {
             StringBuilder sb = new StringBuilder(BaseRequest.PSGOD_BASE_URL);
-            sb.append("category/threads");
-            sb.append("?page=").append(page);
-            sb.append("&last_updated=").append(lastUpdated);
-            sb.append("&category_id=").append(id);
-            sb.append("&type=").append(targetType);
+            sb.append("thread/tutorial_details");
+            sb.append("?tutorial_id=").append(id);
 
             String url = sb.toString();
             Logger.log(Logger.LOG_LEVEL_DEBUG, Logger.USER_LEVEL_COLOR, TAG,

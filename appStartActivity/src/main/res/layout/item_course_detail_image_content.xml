@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,11 +10,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="17dp"
-        android:layout_marginRight="17dp"/>
+        android:layout_marginRight="17dp"
+        android:scaleType="fitXY"/>
+
+    <RelativeLayout
+        android:id="@+id/course_detail_image_lockarea"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#99ffffff"
+        >
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_launcher"/>
+    </RelativeLayout>
 
     <View
+        android:layout_below="@+id/course_image"
         android:layout_width="match_parent"
         android:layout_height="5dp"
         android:background="#FFFFFF"/>
 
-</LinearLayout>
+</RelativeLayout>

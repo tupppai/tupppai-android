@@ -17,6 +17,7 @@ import com.psgod.Constants;
 import com.psgod.R;
 import com.psgod.UserPreferences;
 import com.psgod.Utils;
+import com.psgod.eventbus.InitEvent;
 import com.psgod.network.request.BaseRequest;
 import com.psgod.ui.widget.dialog.CustomDialog;
 import com.psgod.ui.widget.dialog.RecommendFriendsDialog;
@@ -27,6 +28,8 @@ import com.umeng.update.UpdateStatus;
 
 import java.util.LinkedList;
 import java.util.List;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * 帐号设置界面
@@ -355,7 +358,13 @@ public class SettingActivity extends PSGodBaseActivity {
 			}
 		});
 	}
-	
+
+	@Override
+	public void finish() {
+		EventBus.getDefault().post(new InitEvent());
+		super.finish();
+	}
+
 	/**
 	 * 获取版本号
 	 * @return 当前应用的版本号

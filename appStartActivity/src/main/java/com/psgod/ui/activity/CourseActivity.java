@@ -31,6 +31,7 @@ import com.psgod.model.Channel;
 import com.psgod.model.PhotoItem;
 import com.psgod.network.request.ActivitiesActRequest;
 import com.psgod.network.request.ChannelRequest;
+import com.psgod.network.request.CourseRequest;
 import com.psgod.network.request.PSGodErrorListener;
 import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.ui.adapter.ChannelHeadAdapter;
@@ -117,29 +118,21 @@ public class CourseActivity extends PSGodBaseActivity {
             mLastUpdatedTime = System.currentTimeMillis();
         }
         page = 1;
-        ChannelRequest request = new ChannelRequest.Builder().setListener(refreshListener).
+        CourseRequest request = new CourseRequest.Builder().setListener(refreshListener).
                 setErrorListener(errorListener).setPage(page).
-                setLastUpdated(mLastUpdatedTime).setId(id).setTargetType("reply").build();
-        ActivitiesActRequest actRequest = new ActivitiesActRequest.Builder().setCategoryId(id).
-                setListener(actListener).setErrorListener(errorListener).build();
+                setLastUpdated(mLastUpdatedTime).setId(id).setTargetType("ask").build();
+//        ActivitiesActRequest actRequest = new ActivitiesActRequest.Builder().setCategoryId(id).
+//                setListener(actListener).setErrorListener(errorListener).build();
         RequestQueue requestQueue = PSGodRequestQueue.getInstance(
                 this).getRequestQueue();
         requestQueue.add(request);
-        requestQueue.add(actRequest);
+//        requestQueue.add(actRequest);
 
     }
 
-    Response.Listener<ActivitiesAct> actListener = new Response.Listener<ActivitiesAct>() {
+    Response.Listener<List<PhotoItem>> refreshListener = new Response.Listener<List<PhotoItem>>() {
         @Override
-        public void onResponse(ActivitiesAct act) {
-            mTitleName.setText(act.getName());
-            mAct = act;
-        }
-    };
-
-    Response.Listener<Channel> refreshListener = new Response.Listener<Channel>() {
-        @Override
-        public void onResponse(Channel response) {
+        public void onResponse(List<PhotoItem> response) {
             // 保存本次刷新时间到sp
             mLastUpdatedTime = System.currentTimeMillis();
             if (Build.VERSION.SDK_INT >= 9) {
@@ -159,9 +152,9 @@ public class CourseActivity extends PSGodBaseActivity {
                 photoItems.clear();
             }
             mAdapter.notifyDataSetChanged();
-            photoItems.addAll(response.getData());
+            photoItems.addAll(response);
             mAdapter.notifyDataSetChanged();
-            if (response.getData().size() < 15) {
+            if (response.size() < 15) {
                 canLoadMore = false;
             } else {
                 canLoadMore = true;
@@ -183,16 +176,16 @@ public class CourseActivity extends PSGodBaseActivity {
         }
     };
 
-    Response.Listener<Channel> loadMoreListener = new Response.Listener<Channel>() {
+    Response.Listener<List<PhotoItem>> loadMoreListener = new Response.Listener<List<PhotoItem>>() {
         @Override
-        public void onResponse(Channel response) {
+        public void onResponse(List<PhotoItem> response) {
 
-            if (response.getData().size() < 15) {
+            if (response.size() < 15) {
                 canLoadMore = false;
             } else {
                 canLoadMore = true;
             }
-            photoItems.addAll(response.getData());
+            photoItems.addAll(response);
             mAdapter.notifyDataSetChanged();
             mFollowListFooter.setVisibility(View.INVISIBLE);
         }
@@ -219,7 +212,7 @@ public class CourseActivity extends PSGodBaseActivity {
                 if (canLoadMore) {
                     mFollowListFooter.setVisibility(View.VISIBLE);
                     page++;
-                    ChannelRequest request = new ChannelRequest.Builder().setListener(loadMoreListener).
+                    CourseRequest request = new CourseRequest.Builder().setListener(loadMoreListener).
                             setErrorListener(errorListener).setPage(page).setId(id).
                             setLastUpdated(mLastUpdatedTime).setTargetType("reply").build();
 
