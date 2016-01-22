@@ -70,6 +70,62 @@ public class UpLoadUtils {
         return upLoadUtils;
     }
 
+    public void upLoad(String dsec, List<String> pathList, long askId,  String uploadType) {
+        descTxt = dsec;
+        this.pathList = pathList;
+        this.mAskId = askId;
+        switch (uploadType) {
+            case TYPE_ASK_UPLOAD:
+                this.uploadType = UploadMultiRequest.TYPE_ASK_UPLOAD;
+                break;
+            case TYPE_REPLY_UPLOAD:
+                this.uploadType = UploadMultiRequest.TYPE_REPLY_UPLOAD;
+                break;
+        }
+        // 显示等待对话框
+        if (!mProgressDialog.isShowing()) {
+            mProgressDialog.show();
+        }
+
+        mUploadIdList.clear();
+        mImageRatioList.clear();
+        mImageScaleList.clear();
+
+        for (int i = 0; i < pathList.size(); i++) {
+            mImageBitmap = BitmapUtils.decodeBitmap(pathList.get(i));
+
+            int imageHeight = mImageBitmap.getHeight();
+            int imageWidth = mImageBitmap.getWidth();
+
+            float mRatio = (float) imageHeight / imageWidth;
+            mImageRatioList.add(mRatio);
+
+            Resources res = mContext.getResources();
+            float mScale = (float) (Constants.WIDTH_OF_SCREEN - 2 * res
+                    .getDimensionPixelSize(R.dimen.photo_margin))
+                    / imageWidth;
+            mImageScaleList.add(mScale);
+
+            // 上传照片
+            UploadImageRequest.Builder builder = new UploadImageRequest.Builder()
+                    .setBitmap(mImageBitmap).setErrorListener(
+                            errorListener);
+            if (i == 1) {
+                builder.setListener(uploadImageListener);
+            } else {
+                builder.setListener(uploadImageListenerId);
+            }
+            UploadImageRequest request = builder.build();
+            request.setTag(mContext.getClass().getSimpleName());
+            RequestQueue reqeustQueue = PSGodRequestQueue
+                    .getInstance(mContext)
+                    .getRequestQueue();
+            reqeustQueue.add(request);
+        }
+
+
+    }
+
 
     public void upLoad(String dsec, List<String> pathList, long askId, String categoryId, String uploadType) {
         descTxt = dsec;

@@ -16,9 +16,11 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.android.volley.RequestQueue;
 import com.psgod.Constants;
 import com.psgod.R;
 import com.psgod.Utils;
+import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.ui.adapter.HomePageAdapter;
 import com.psgod.ui.fragment.CourseDetailDetailFragment;
 import com.psgod.ui.fragment.CourseDetailWorkFragment;
@@ -110,7 +112,7 @@ public class CourseDetailActivity extends PSGodBaseActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(CourseDetailActivity.this, CourseWorkActivity.class);
-                intent.putExtra(CourseWorkActivity.ID,"");
+                intent.putExtra(CourseWorkActivity.ID,id);
                 startActivity(intent);
             }
         });
@@ -175,6 +177,17 @@ public class CourseDetailActivity extends PSGodBaseActivity {
                         Constants.CURRENT_COURSE_TAB = index;
                     }
                 });
+    }
+
+    /**
+     * 暂停所有的下载
+     */
+    @Override
+    public void onStop() {
+        super.onStop();
+        RequestQueue requestQueue = PSGodRequestQueue.getInstance(this)
+                .getRequestQueue();
+        requestQueue.cancelAll(TAG);
     }
 
 }

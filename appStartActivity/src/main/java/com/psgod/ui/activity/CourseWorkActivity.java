@@ -4,12 +4,12 @@ import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ValueAnimator;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -19,17 +19,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.nineoldandroids.view.ViewHelper;
 import com.psgod.CustomToast;
 import com.psgod.R;
+import com.psgod.UpLoadUtils;
 import com.psgod.Utils;
 import com.psgod.model.SelectFolder;
 import com.psgod.model.SelectImage;
 import com.psgod.ui.adapter.MultiImageSelectAdapter;
 import com.psgod.ui.widget.StopGridView;
 import com.psgod.ui.widget.dialog.FolderPopupWindow;
-import com.psgod.ui.widget.dialog.ShareMoreDialog;
-import com.psgod.ui.widget.dialog.WorkShareDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,13 +53,18 @@ public class CourseWorkActivity extends PSGodBaseActivity {
     private FolderPopupWindow mFolderPopupWindow;
 
     private int originMarginY = 345;
-    private String id;
+    private long id;
     public static final String ID = "id";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_work);
+
+        Intent intent = getIntent();
+        if (intent.hasExtra(ID)) {
+            id = intent.getLongExtra(ID, 0);
+        }
 
         initView();
         initListener();
@@ -211,7 +214,19 @@ public class CourseWorkActivity extends PSGodBaseActivity {
         mSureTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new WorkShareDialog(CourseWorkActivity.this).show();
+//                new WorkShareDialog(CourseWorkActivity.this).show();
+                if (mEdit.getText().toString().length() < 3) {
+                    CustomToast.show(CourseWorkActivity.this, "描述请大于三个字", Toast.LENGTH_SHORT);
+                } else if (mResultImages.size() == 0) {
+                    CustomToast.show(CourseWorkActivity.this, "请选择要上传的图片", Toast.LENGTH_SHORT);
+                } else {
+                    List<String> thumb = new ArrayList<String>();
+                    thumb.add(mResultImages.get(0).path);
+                    UpLoadUtils.getInstance(CourseWorkActivity.this).
+                            upLoad(mEdit.getText().toString(), thumb, id,
+                                    UpLoadUtils.TYPE_REPLY_UPLOAD);
+                }
+
             }
         });
     }
