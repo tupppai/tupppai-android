@@ -25,6 +25,7 @@ import com.psgod.CustomToast;
 import com.psgod.R;
 import com.psgod.UpLoadUtils;
 import com.psgod.Utils;
+import com.psgod.eventbus.RefreshEvent;
 import com.psgod.model.PhotoItem;
 import com.psgod.model.SelectFolder;
 import com.psgod.model.SelectImage;
@@ -39,6 +40,8 @@ import com.psgod.ui.widget.dialog.WorkShareDialog;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by Administrator on 2016/1/18 0018.
@@ -250,6 +253,7 @@ public class CourseWorkActivity extends PSGodBaseActivity {
                                             public void onEnd() {
 //                                                CustomToast.show(CourseWorkActivity.this, "上传成功", Toast.LENGTH_SHORT);
                                                 finish();
+                                                EventBus.getDefault().post(new RefreshEvent(CourseDetailActivity.class.getName()));
                                             }
                                         });
                                         workShareDialog.show();
@@ -272,8 +276,8 @@ public class CourseWorkActivity extends PSGodBaseActivity {
 
     private void notifyDataTopShow() {
         int resultLength = mResultImages.size();
-        int dataLenght = mImages.size();
         mImages.addAll(0, mResultImages);
+        int dataLenght = mImages.size();
         for (int i = 0; i < resultLength; i++) {
             for (int j = resultLength; j < dataLenght; j++) {
                 if (mImages.get(j).path.equals(mResultImages.get(i).path)) {

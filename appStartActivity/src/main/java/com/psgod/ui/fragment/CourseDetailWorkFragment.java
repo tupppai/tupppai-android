@@ -16,6 +16,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.psgod.Constants;
 import com.psgod.R;
+import com.psgod.eventbus.RefreshEvent;
 import com.psgod.model.Channel;
 import com.psgod.model.PhotoItem;
 import com.psgod.network.request.ActivitiesActRequest;
@@ -30,6 +31,8 @@ import com.psgod.ui.widget.dialog.CustomProgressingDialog;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by Administrator on 2016/1/18 0018.
@@ -52,6 +55,13 @@ public class CourseDetailWorkFragment extends BaseFragment {
 
     private View mEmptyView;
 
+    public void onEventMainThread(RefreshEvent event) {
+        if(event.className.equals(this.getClass().getName())){
+            mViewHolder.mListView.setRefreshing();
+        }
+    }
+
+
     // 上次刷新时间
     private long mLastUpdatedTime;
 
@@ -61,7 +71,14 @@ public class CourseDetailWorkFragment extends BaseFragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        EventBus.getDefault().register(this);
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
     }
 
     @Override

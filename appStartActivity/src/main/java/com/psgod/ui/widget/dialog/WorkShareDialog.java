@@ -76,13 +76,18 @@ public class WorkShareDialog extends Dialog {
             @Override
             public void onClick(View view) {
                 dismiss();
-                if (onEndListener != null) {
-                    onEndListener.onEnd();
-                }
             }
         });
 
         setCanceledOnTouchOutside(true);
+    }
+
+    @Override
+    public void dismiss() {
+        super.dismiss();
+        if (onEndListener != null) {
+            onEndListener.onEnd();
+        }
     }
 
     public void setPhotoItem(PhotoItem photoItem) {
@@ -113,9 +118,6 @@ public class WorkShareDialog extends Dialog {
         @Override
         public void onComplete(Platform arg0, int arg1, HashMap<String, Object> arg2) {
             dismiss();
-            if (onEndListener != null) {
-                onEndListener.onEnd();
-            }
         }
 
         @Override

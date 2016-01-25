@@ -68,9 +68,23 @@ public class CourseDetailActivity extends PSGodBaseActivity {
         EventBus.getDefault().post(new RefreshEvent(CourseDetailDetailFragment.class.getName()));
     }
 
+    public void onEventMainThread(RefreshEvent event) {
+        if(event.className.equals(this.getClass().getName())){
+            mViewPager.setCurrentItem(1);
+            EventBus.getDefault().post(new RefreshEvent(CourseDetailWorkFragment.class.getName()));
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
         setContentView(R.layout.activity_course_detail);
         mContext = this;
 
