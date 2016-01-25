@@ -1,6 +1,5 @@
 package com.psgod;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -34,7 +33,6 @@ import de.greenrobot.event.EventBus;
  */
 public class UpLoadUtils {
 
-    private static UpLoadUtils upLoadUtils;
 
     private PSGodBaseActivity mContext;
     private String descTxt;
@@ -57,20 +55,26 @@ public class UpLoadUtils {
     private ArrayList<Float> mImageRatioList = new ArrayList<Float>(); // 图片高度/图片宽度
     private ArrayList<Float> mImageScaleList = new ArrayList<Float>(); // 屏幕显示宽度/图片显示宽度
 
+
     protected UpLoadUtils() {
 
     }
 
+    /**
+     *
+     */
     public static UpLoadUtils getInstance(PSGodBaseActivity context) {
-        if (upLoadUtils == null) {
-            upLoadUtils = new UpLoadUtils();
-        }
+//        if (upLoadUtils == null) {
+//            upLoadUtils = new UpLoadUtils();
+//        }
+        UpLoadUtils upLoadUtils = new UpLoadUtils();
         upLoadUtils.mContext = context;
         upLoadUtils.mProgressDialog = new CustomProgressingDialog(context);
         return upLoadUtils;
     }
 
-    public void upLoad(String dsec, List<String> pathList, long askId,  String uploadType) {
+
+    public void upLoad(String dsec, List<String> pathList, long askId, String uploadType) {
         descTxt = dsec;
         this.pathList = pathList;
         this.mAskId = askId;
@@ -111,9 +115,9 @@ public class UpLoadUtils {
                     .setBitmap(mImageBitmap).setErrorListener(
                             errorListener);
             if (i == 1) {
-                builder.setListener(uploadImageListener);
+                builder.setListener(uploadImageListener2);
             } else {
-                builder.setListener(uploadImageListenerId);
+                builder.setListener(uploadImageListener1);
             }
             UploadImageRequest request = builder.build();
             request.setTag(mContext.getClass().getSimpleName());
@@ -126,6 +130,15 @@ public class UpLoadUtils {
 
     }
 
+    public interface OnUploadListener{
+        void onUpload(UploadImageRequest.ImageUploadResult response);
+    }
+
+    private OnUploadListener onUploadListener;
+
+    public void setOnUploadListener(OnUploadListener onUploadListener) {
+        this.onUploadListener = onUploadListener;
+    }
 
     public void upLoad(String dsec, List<String> pathList, long askId, String categoryId, String uploadType) {
         descTxt = dsec;
@@ -174,9 +187,9 @@ public class UpLoadUtils {
                     .setBitmap(mImageBitmap).setErrorListener(
                             errorListener);
             if (i == 1) {
-                builder.setListener(uploadImageListener);
+                builder.setListener(uploadImageListener2);
             } else {
-                builder.setListener(uploadImageListenerId);
+                builder.setListener(uploadImageListener1);
             }
             UploadImageRequest request = builder.build();
             request.setTag(mContext.getClass().getSimpleName());
@@ -198,12 +211,15 @@ public class UpLoadUtils {
         }
     };
 
-    private Response.Listener<UploadImageRequest.ImageUploadResult> uploadImageListenerId = new Response.Listener<UploadImageRequest.ImageUploadResult>() {
+    private Response.Listener<UploadImageRequest.ImageUploadResult> uploadImageListener1 = new Response.Listener<UploadImageRequest.ImageUploadResult>() {
 
         @Override
         public void onResponse(UploadImageRequest.ImageUploadResult response) {
             mUploadIdList.add(response.id);
             if (mUploadIdList.size() == pathList.size()) {
+                if(onUploadListener!= null){
+                    onUploadListener.onUpload(response);
+                }
                 UploadMultiRequest.Builder builder = new UploadMultiRequest.Builder()
                         .setUploadType(uploadType).setContent(descTxt)
                         .setUploadIdList(mUploadIdList)
@@ -221,12 +237,15 @@ public class UpLoadUtils {
 
     };
 
-    private Response.Listener<UploadImageRequest.ImageUploadResult> uploadImageListener = new Response.Listener<UploadImageRequest.ImageUploadResult>() {
+    private Response.Listener<UploadImageRequest.ImageUploadResult> uploadImageListener2 = new Response.Listener<UploadImageRequest.ImageUploadResult>() {
 
         @Override
         public void onResponse(UploadImageRequest.ImageUploadResult response) {
             mUploadIdList.add(response.id);
             if (mUploadIdList.size() == pathList.size()) {
+                if(onUploadListener!= null){
+                    onUploadListener.onUpload(response);
+                }
                 UploadMultiRequest.Builder builder = new UploadMultiRequest.Builder()
                         .setUploadType(uploadType).setContent(descTxt)
                         .setUploadIdList(mUploadIdList)
@@ -243,6 +262,10 @@ public class UpLoadUtils {
         }
 
     };
+
+    public void setUploadListener(Response.Listener<UploadMultiRequest.MultiUploadResult> uploadListener) {
+        this.uploadListener = uploadListener;
+    }
 
     public Response.Listener<UploadMultiRequest.MultiUploadResult> uploadListener = new Response.Listener<UploadMultiRequest.MultiUploadResult>() {
         @Override
@@ -302,5 +325,10 @@ public class UpLoadUtils {
         }
     };
 
+    public void hideProgressDialog(){
+        if(mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.dismiss();
+        }
+    }
 
 }

@@ -57,6 +57,9 @@ public class ShareMoreDialog extends Dialog {
     public static final int STATUS_UNCOLLECTION = 101;
     public static final int STATUS_COLLECTION = 102;
 
+    public static final int TYPE_ALL = 11;
+    public static final int TYPE_SHARE = 12;
+
     private Context mContext;
     // 对应的photoItem
     private PhotoItem mPhotoItem;
@@ -75,6 +78,25 @@ public class ShareMoreDialog extends Dialog {
 
     // 是否被收藏标识
     private Boolean isCollected = false;
+
+    private int showType = TYPE_ALL;
+
+    public void setShowType(int showType) {
+        this.showType = showType;
+
+        switch (showType) {
+            case TYPE_ALL:
+                mShareLink.setVisibility(View.VISIBLE);
+                mCollectionBtn.setVisibility(View.VISIBLE);
+                mReportBtn.setVisibility(View.VISIBLE);
+                break;
+            case TYPE_SHARE:
+                mShareLink.setVisibility(View.INVISIBLE);
+                mCollectionBtn.setVisibility(View.INVISIBLE);
+                mReportBtn.setVisibility(View.INVISIBLE);
+                break;
+        }
+    }
 
     public ShareMoreDialog(Context context) {
         super(context, R.style.ActionSheetDialog);
@@ -161,7 +183,7 @@ public class ShareMoreDialog extends Dialog {
         }
     };
 
-    private ShareButton.OnShareListener onShareListener = new ShareButton.OnShareListener(){
+    private ShareButton.OnShareListener onShareListener = new ShareButton.OnShareListener() {
 
         @Override
         public void onError(Platform platform, int arg1, Throwable arg2) {

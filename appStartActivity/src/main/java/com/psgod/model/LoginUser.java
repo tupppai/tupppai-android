@@ -35,6 +35,7 @@ public class LoginUser {
         String IS_BOUND_MOBILE = "IsBoundMobile";
         String PHONE_NUM = "PhoneNum";
         String IS_STAR = "IsStar";
+        String BALANCE = "balance";
     }
 
     private static LoginUser mInstance = null;
@@ -59,6 +60,7 @@ public class LoginUser {
     protected boolean mIsInitialized;
     protected String mPhoneNum;
     protected boolean mIsStar;
+    protected double mBalance;
 
     public static synchronized LoginUser getInstance() {
         if (mInstance == null) {
@@ -92,6 +94,7 @@ public class LoginUser {
             mInstance.mIsBoundQQ = sp.getBoolean(SPKey.IS_BOUND_QQ, false);
             mInstance.mIsBoundWeibo = sp.getBoolean(SPKey.IS_BOUND_WEIBO, false);
             mInstance.mIsStar = sp.getBoolean(SPKey.IS_STAR, false);
+            mInstance.mBalance = Double.longBitsToDouble(sp.getLong(SPKey.BALANCE, 0));
         }
     }
 
@@ -120,8 +123,17 @@ public class LoginUser {
         user.mIsBoundQQ = sp.getBoolean(SPKey.IS_BOUND_QQ, false);
         user.mIsBoundWeibo = sp.getBoolean(SPKey.IS_BOUND_WEIBO, false);
         user.mIsStar = sp.getBoolean(SPKey.IS_STAR, false);
+        user.mBalance = Double.longBitsToDouble(sp.getLong(SPKey.BALANCE, 0));
         // user.mIsBoundMobile = sp.getBoolean(SPKey.IS_BOUND_MOBILE, false);
         return user;
+    }
+
+    public double getBalance() {
+        return mBalance;
+    }
+
+    public void setBalance(double balance) {
+        this.mBalance = balance;
     }
 
     public String getPhoneNum() {
@@ -182,6 +194,9 @@ public class LoginUser {
 
     public void initFromJSONObject(JSONObject obj) {
         try {
+            if (obj.has("balance")) {
+                mBalance = obj.getDouble("balance");
+            }
             mUid = obj.getLong("uid");
             mNickname = obj.getString("nickname");
             mGender = obj.getInt("sex");
@@ -245,9 +260,10 @@ public class LoginUser {
         editor.putBoolean(SPKey.IS_BOUND_WECHAT, this.mIsBoundWechat);
         editor.putBoolean(SPKey.IS_BOUND_QQ, this.mIsBoundQQ);
         editor.putBoolean(SPKey.IS_BOUND_WEIBO, this.mIsBoundWeibo);
-        editor.putBoolean(SPKey.IS_STAR,this.mIsStar);
+        editor.putBoolean(SPKey.IS_STAR, this.mIsStar);
         // editor.putBoolean(SPKey.IS_BOUND_MOBILE, this.mIsBoundMobile);
         editor.putString(SPKey.PHONE_NUM, this.mPhoneNum);
+        editor.putLong(SPKey.BALANCE, Double.doubleToRawLongBits(this.mBalance));
 
         if (android.os.Build.VERSION.SDK_INT >= 9) {
             editor.apply();

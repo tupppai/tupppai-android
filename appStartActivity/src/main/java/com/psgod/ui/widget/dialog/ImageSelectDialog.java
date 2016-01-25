@@ -257,6 +257,7 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
                 mImageimg.setImageResource(R.mipmap.zuopin_ic_image_selected);
             }
             if (mAdapter.getCheckedPhotoItem() != null) {
+                mBangpImg.setImageResource(R.mipmap.bangplist_selected);
                 ImageView view = new ImageView(mContext);
                 LinearLayout.LayoutParams layoutParams = new LinearLayout.
                         LayoutParams(Utils.dpToPx(mContext, 25), Utils.dpToPx(mContext, 25));
@@ -268,6 +269,8 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
                                 , view, Constants.DISPLAY_IMAGE_OPTIONS_SMALL_SMALL);
                 view.setOnClickListener(previewBangClick);
                 mPreviewArea.addView(view);
+            }else{
+                mBangpImg.setImageResource(R.mipmap.bangplist);
             }
             for (SelectImage image : selectResultImages) {
                 ImageView view = new ImageView(mContext);

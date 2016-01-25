@@ -50,6 +50,8 @@ public class CourseDetailWorkFragment extends BaseFragment {
     private int mPage = 1;
     private boolean canLoadMore = false;
 
+    private View mEmptyView;
+
     // 上次刷新时间
     private long mLastUpdatedTime;
 
@@ -80,9 +82,10 @@ public class CourseDetailWorkFragment extends BaseFragment {
         mViewHolder.mListView.getRefreshableView().addFooterView(mFooterView);
         mFooterView.setVisibility(View.INVISIBLE);
         mSpKey = Constants.SharedPreferencesKey.CHANNEL_LIST_LAST_REFRESH_TIME;
+        mEmptyView = inflater.inflate(R.layout.view_empty, null);
 
         progressingDialog = new CustomProgressingDialog(getActivity());
-
+        mViewHolder.mListView.setRefreshing();
         return mViewHolder.mView;
     }
 
@@ -116,7 +119,7 @@ public class CourseDetailWorkFragment extends BaseFragment {
 
                 PhotoListRequest.Builder builder = new PhotoListRequest.Builder()
                         .setPage(mPage).setLastUpdated(mLastUpdatedTime)
-                        .setType(PhotoItem.TYPE_RECENT_WORK)
+                        .setType(PhotoItem.TYPE_RECENT_WORK).setAskId(id)
                         .setListener(loadMoreListener)
                         .setErrorListener(errorListener);
 
@@ -138,7 +141,7 @@ public class CourseDetailWorkFragment extends BaseFragment {
 
             PhotoListRequest.Builder builder = new PhotoListRequest.Builder()
                     .setPage(mPage).setLastUpdated(mLastUpdatedTime)
-                    .setType(PhotoItem.TYPE_RECENT_WORK)
+                    .setType(PhotoItem.TYPE_RECENT_WORK).setAskId(id)
                     .setListener(refreshListener)
                     .setErrorListener(errorListener);
 
@@ -193,7 +196,6 @@ public class CourseDetailWorkFragment extends BaseFragment {
             mViewHolder.mListView.onRefreshComplete();
 
 
-
             if (items.size() < 15) {
                 canLoadMore = false;
             } else {
@@ -216,6 +218,13 @@ public class CourseDetailWorkFragment extends BaseFragment {
 
             if (progressingDialog.isShowing()) {
                 progressingDialog.dismiss();
+            }
+
+            if(mPhotoItems == null || mPhotoItems.size() == 0){
+                mViewHolder.mListView.setEmptyView(mEmptyView);
+                mEmptyView.setVisibility(View.VISIBLE);
+            }else{
+                mEmptyView.setVisibility(View.GONE);
             }
         }
     };

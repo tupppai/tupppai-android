@@ -11,7 +11,10 @@ import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
@@ -24,13 +27,17 @@ import com.pingplusplus.android.PingppLog;
 import com.psgod.Constants;
 import com.psgod.PsGodImageLoader;
 import com.psgod.R;
+import com.psgod.eventbus.RefreshEvent;
+import com.psgod.eventbus.UserProfileReturn;
 import com.psgod.model.Comment;
 import com.psgod.model.ImageData;
 import com.psgod.model.PhotoItem;
 import com.psgod.model.User;
+import com.psgod.network.request.CommentListRequest;
 import com.psgod.network.request.CourseDetailRequest;
 import com.psgod.network.request.PSGodErrorListener;
 import com.psgod.network.request.PSGodRequestQueue;
+import com.psgod.ui.activity.CommentListActivity;
 import com.psgod.ui.adapter.CourseDetailCommentAdapter;
 import com.psgod.ui.adapter.CourseDetailImageContentAdapter;
 import com.psgod.ui.view.FollowView;
@@ -38,9 +45,12 @@ import com.psgod.ui.widget.AvatarImageView;
 import com.psgod.ui.widget.ChildListView;
 import com.psgod.ui.widget.FollowImage;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
+import com.psgod.ui.widget.dialog.ShareMoreDialog;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by Administrator on 2016/1/18 0018.
@@ -70,14 +80,17 @@ public class CourseDetailDetailFragment extends BaseFragment {
     private TextView mHeadDesc;
     private TextView mHeadTitle;
 
-    private TextView mReward;
-    private TextView mCommentCount;
-    private TextView mShareCount;
+    private LinearLayout mRewardArea;
+    private TextView mRewardTxt;
+    private ImageView mRewardImg;
+    private RelativeLayout mCommentArea;
+    private RelativeLayout mShareArea;
 
     private CourseDetailImageContentAdapter mImageAdapter;
     private List<ImageData> mImageDatas = new ArrayList<>();
 
     private CustomProgressingDialog progressingDialog;
+    private ShareMoreDialog shareMoreDialog;
 
     private long id;
     private PhotoItem mPhotoItem;
@@ -86,9 +99,22 @@ public class CourseDetailDetailFragment extends BaseFragment {
         this.id = id;
     }
 
+    public void onEventMainThread(RefreshEvent event) {
+        if(event.className.equals(this.getClass().getName())){
+            refresh();
+        }
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -120,9 +146,11 @@ public class CourseDetailDetailFragment extends BaseFragment {
         mViewHolder.mListView.setOnRefreshListener(mListListner);
         mViewHolder.mListView.setOnLastItemVisibleListener(mListListner);
 
-        mReward = (TextView) mViewHolder.mView.findViewById(R.id.reward_tv);
-        mCommentCount = (TextView) mViewHolder.mView.findViewById(R.id.comment_tv);
-        mShareCount = (TextView) mViewHolder.mView.findViewById(R.id.share_tv);
+        mRewardArea = (LinearLayout) mViewHolder.mView.findViewById(R.id.reward_area);
+        mRewardTxt = (TextView) mViewHolder.mView.findViewById(R.id.reward_tv);
+        mRewardImg = (ImageView) mViewHolder.mView.findViewById(R.id.reward_img);
+        mCommentArea = (RelativeLayout) mViewHolder.mView.findViewById(R.id.comment_area);
+        mShareArea = (RelativeLayout) mViewHolder.mView.findViewById(R.id.share_area);
 
         mHeadAvatar = (AvatarImageView) mHeaderView.findViewById(R.id.avatar_image);
         mHeadCommentCount = (TextView) mHeaderView.findViewById(R.id.comment_tv_count);
@@ -143,6 +171,8 @@ public class CourseDetailDetailFragment extends BaseFragment {
         }
         progressingDialog.show();
 
+        shareMoreDialog = new ShareMoreDialog(getActivity());
+
         refresh();
         initListener();
         return parentView;
@@ -158,8 +188,6 @@ public class CourseDetailDetailFragment extends BaseFragment {
         PsGodImageLoader.getInstance().displayImage(mPhotoItem.getAvatarURL(),
                 mHeadAvatar, Constants.DISPLAY_IMAGE_OPTIONS_AVATAR);
         mHeadCommentCount.setText(String.valueOf("(" + mPhotoItem.getCommentCount() + ")"));
-        mCommentCount.setText(String.valueOf(mPhotoItem.getCommentCount()));
-        mShareCount.setText(String.valueOf(mPhotoItem.getShareCount()));
         mHeadFollow.setPhotoItem(mPhotoItem);
         mHeadAvatar.setUser(new User(mPhotoItem));
         mHeadNickname.setText(mPhotoItem.getNickname());
@@ -176,6 +204,7 @@ public class CourseDetailDetailFragment extends BaseFragment {
         CourseDetailRequest request = new CourseDetailRequest.Builder().
                 setId(String.valueOf(id)).setListener(refreshListener).
                 setErrorListener(errorListener).build();
+
         RequestQueue requestQueue = PSGodRequestQueue.getInstance(
                 getActivity()).getRequestQueue();
         requestQueue.add(request);
@@ -193,6 +222,27 @@ public class CourseDetailDetailFragment extends BaseFragment {
 //                getActivity().startActivityForResult(intent, REQUEST_CODE_PAYMENT);
 //            }
 //        });
+
+        mShareArea.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (shareMoreDialog == null) {
+                    shareMoreDialog = new ShareMoreDialog(getActivity());
+                }
+                shareMoreDialog.setPhotoItem(mPhotoItem);
+                shareMoreDialog.setShowType(ShareMoreDialog.TYPE_SHARE);
+                shareMoreDialog.show();
+            }
+        });
+
+        mCommentArea.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), CommentListActivity.class);
+                intent.putExtra(Constants.IntentKey.PHOTO_ITEM, mPhotoItem);
+                startActivity(intent);
+            }
+        });
     }
 
     private class CourseDetailListener implements PullToRefreshBase.OnRefreshListener,
@@ -233,6 +283,27 @@ public class CourseDetailDetailFragment extends BaseFragment {
                 mPhotoItem = response;
             }
             initView();
+
+            CommentListRequest commentRequest = new CommentListRequest.Builder()
+                    .setPid(mPhotoItem.getPid()).setType(mPhotoItem.getType())
+                    .setCommentId(id).setListener(commentListener)
+                    .setErrorListener(errorListener).build();
+            RequestQueue requestQueue = PSGodRequestQueue.getInstance(
+                    getActivity()).getRequestQueue();
+            requestQueue.add(commentRequest);
+        }
+    };
+
+    Response.Listener<CommentListRequest.CommentListWrapper> commentListener =
+            new Response.Listener<CommentListRequest.CommentListWrapper>() {
+        @Override
+        public void onResponse(CommentListRequest.CommentListWrapper response) {
+            if (mComments == null) {
+                mComments = new ArrayList<>();
+            }
+            mComments.clear();
+            mComments.addAll(response.recentCommentList);
+            mAdapter.notifyDataSetChanged();
         }
     };
 

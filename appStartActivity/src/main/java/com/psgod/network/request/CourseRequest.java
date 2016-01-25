@@ -28,7 +28,7 @@ public class CourseRequest extends BaseRequest<List<PhotoItem>> {
     protected List<PhotoItem> doParseNetworkResponse(JSONObject reponse) throws
             UnsupportedEncodingException, JSONException {
         List<PhotoItem> photoItems = new ArrayList<>();
-        JSONArray data = reponse.getJSONArray("data");
+        JSONArray data = reponse.getJSONObject("data").getJSONArray("tutorials");
         int length = data.length();
         for (int i = 0; i < length; i++) {
             PhotoItem item = PhotoItem.createPhotoItem(data.getJSONObject(i),getUrl());
@@ -99,7 +99,7 @@ public class CourseRequest extends BaseRequest<List<PhotoItem>> {
         @Override
         public String createUrl() {
             StringBuilder sb = new StringBuilder(BaseRequest.PSGOD_BASE_URL);
-            sb.append("category/threads");
+            sb.append("thread/tutorials_list");
             sb.append("?page=").append(page);
             sb.append("&last_updated=").append(lastUpdated);
             sb.append("&category_id=").append(id);

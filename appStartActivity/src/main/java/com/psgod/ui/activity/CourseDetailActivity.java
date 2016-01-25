@@ -20,6 +20,7 @@ import com.android.volley.RequestQueue;
 import com.psgod.Constants;
 import com.psgod.R;
 import com.psgod.Utils;
+import com.psgod.eventbus.RefreshEvent;
 import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.ui.adapter.HomePageAdapter;
 import com.psgod.ui.fragment.CourseDetailDetailFragment;
@@ -27,6 +28,8 @@ import com.psgod.ui.fragment.CourseDetailWorkFragment;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by Administrator on 2016/1/18 0018.
@@ -58,6 +61,12 @@ public class CourseDetailActivity extends PSGodBaseActivity {
     private int mCursorWidth;
 
     private long id;
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        EventBus.getDefault().post(new RefreshEvent(CourseDetailDetailFragment.class.getName()));
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

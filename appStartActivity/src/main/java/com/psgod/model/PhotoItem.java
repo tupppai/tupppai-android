@@ -129,7 +129,7 @@ public class PhotoItem implements Serializable, Cloneable {
 
     private int mHasSharedToWechat;
 
-    private int mPaidAmount;
+    private double mPaidAmount;
 
     private int mLoveCount = 0;
 
@@ -151,11 +151,11 @@ public class PhotoItem implements Serializable, Cloneable {
         this.mHasSharedToWechat = hasSharedToWechat;
     }
 
-    public int getPaidAmount() {
+    public double getPaidAmount() {
         return mPaidAmount;
     }
 
-    public void setPaidAmount(int paidAmount) {
+    public void setPaidAmount(double paidAmount) {
         this.mPaidAmount = paidAmount;
     }
 
@@ -242,7 +242,7 @@ public class PhotoItem implements Serializable, Cloneable {
             item.mHasSharedToWechat = jsonObj.getInt("has_shared_to_wechat");
         }
         if (jsonObj.has("paid_amount")) {
-            item.mPaidAmount = jsonObj.getInt("paid_amount");
+            item.mPaidAmount = jsonObj.getDouble("paid_amount");
         }
         if (jsonObj.has("title")) {
             item.mTitle = jsonObj.getString("title");

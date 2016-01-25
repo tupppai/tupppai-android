@@ -27,7 +27,6 @@
             android:layout_marginTop="2dp"
             android:layout_toRightOf="@id/avatar_image"
             android:layout_marginLeft="9dp"
-            android:text="想画画的猫"
             android:textSize="14dp"
             android:textColor="#CC000000"/>
 
@@ -38,7 +37,6 @@
             android:layout_alignLeft="@id/nickname_tv"
             android:layout_below="@id/nickname_tv"
             android:layout_marginTop="5dp"
-            android:text="1天前"
             android:textColor="#7F000000"
             android:textSize="9dp"/>
 
@@ -59,7 +57,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:layout_marginLeft="17dp"
-        android:text="将照片转为手绘作品"
         android:textColor="#050505"
         android:textSize="25dp"/>
 
@@ -83,7 +80,6 @@
             android:layout_marginLeft="10dp"
             android:layout_alignTop="@id/gray_view"
             android:layout_marginRight="50dp"
-            android:text="这是我编译的第一个教程，希望大家能够喜欢，想要看清晰版的请点击收藏哦"
             android:textColor="#CC000000"
             android:textSize="14dp"
             android:lineSpacingMultiplier="1.6"/>
@@ -100,7 +96,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="17dp"
-            android:text="38"
             android:textColor="#99000000"
             android:textSize="11dp"
             android:drawableLeft="@mipmap/ic_course_like"
@@ -122,7 +117,6 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/first_point"
             android:layout_marginLeft="6dp"
-            android:text="90"
             android:textColor="#99000000"
             android:textSize="11dp"
             android:drawableLeft="@mipmap/ic_course_view"
@@ -144,7 +138,6 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/second_point"
             android:layout_marginLeft="6dp"
-            android:text="18"
             android:textColor="#99000000"
             android:textSize="11dp"
             android:drawableLeft="@mipmap/ic_course_image"
@@ -197,7 +190,6 @@
             android:layout_toRightOf="@id/comment_tv_text"
             android:layout_marginLeft="10dp"
             android:layout_centerVertical="true"
-            android:text="(190)"
             android:textColor="#000000"
             android:textSize="14dp"/>
 

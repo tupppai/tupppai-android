@@ -13,12 +13,16 @@ import com.psgod.R;
 import com.psgod.model.PhotoItem;
 import com.psgod.ui.widget.ShareButton;
 
+import java.util.HashMap;
+
+import cn.sharesdk.framework.Platform;
+
 /**
  * Created by Administrator on 2016/1/21 0021.
  */
 public class WorkShareDialog extends Dialog {
     public WorkShareDialog(Context context) {
-        super(context,R.style.ActionSheetDialog);
+        super(context, R.style.ActionSheetDialog);
         initView();
     }
 
@@ -45,6 +49,12 @@ public class WorkShareDialog extends Dialog {
 
     private PhotoItem mPhotoItem;
 
+    private OnEndListener onEndListener;
+
+    public void setOnEndListener(OnEndListener onEndListener) {
+        this.onEndListener = onEndListener;
+    }
+
     private void initView() {
         mParent = LayoutInflater.from(getContext()).inflate(R.layout.dialog_work_share, null);
         setContentView(mParent);
@@ -66,6 +76,9 @@ public class WorkShareDialog extends Dialog {
             @Override
             public void onClick(View view) {
                 dismiss();
+                if (onEndListener != null) {
+                    onEndListener.onEnd();
+                }
             }
         });
 
@@ -76,13 +89,42 @@ public class WorkShareDialog extends Dialog {
         this.mPhotoItem = photoItem;
 
         mShareQQ.setPhotoItem(mPhotoItem);
+        mShareQQ.setOnShareListener(onShareListener);
         mShareQZone.setPhotoItem(mPhotoItem);
+        mShareQZone.setOnShareListener(onShareListener);
         mShareWeibo.setPhotoItem(mPhotoItem);
+        mShareWeibo.setOnShareListener(onShareListener);
         mShareWeChatM.setPhotoItem(mPhotoItem);
+        mShareWeChatM.setOnShareListener(onShareListener);
         mShareWeChatF.setPhotoItem(mPhotoItem);
+        mShareWeChatF.setOnShareListener(onShareListener);
 
         PsGodImageLoader.getInstance().displayImage(mPhotoItem.getImageURL(), mImage,
                 Constants.DISPLAY_IMAGE_OPTIONS_SMALL);
         mImageTitle.setText(mPhotoItem.getTitle());
+    }
+
+    private ShareButton.OnShareListener onShareListener = new ShareButton.OnShareListener() {
+        @Override
+        public void onError(Platform platform, int arg1, Throwable arg2) {
+
+        }
+
+        @Override
+        public void onComplete(Platform arg0, int arg1, HashMap<String, Object> arg2) {
+            dismiss();
+            if (onEndListener != null) {
+                onEndListener.onEnd();
+            }
+        }
+
+        @Override
+        public void onCancel(Platform arg0, int arg1) {
+
+        }
+    };
+
+    public interface OnEndListener {
+        void onEnd();
     }
 }

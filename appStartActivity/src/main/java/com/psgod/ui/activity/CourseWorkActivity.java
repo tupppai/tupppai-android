@@ -19,15 +19,23 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
 import com.psgod.CustomToast;
 import com.psgod.R;
 import com.psgod.UpLoadUtils;
 import com.psgod.Utils;
+import com.psgod.model.PhotoItem;
 import com.psgod.model.SelectFolder;
 import com.psgod.model.SelectImage;
+import com.psgod.network.request.CourseDetailRequest;
+import com.psgod.network.request.PSGodRequestQueue;
+import com.psgod.network.request.UploadImageRequest;
+import com.psgod.network.request.UploadMultiRequest;
 import com.psgod.ui.adapter.MultiImageSelectAdapter;
 import com.psgod.ui.widget.StopGridView;
 import com.psgod.ui.widget.dialog.FolderPopupWindow;
+import com.psgod.ui.widget.dialog.WorkShareDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +59,8 @@ public class CourseWorkActivity extends PSGodBaseActivity {
     private TextView mAlbumTxt;
     private TextView mAlbumSureTxt;
     private FolderPopupWindow mFolderPopupWindow;
+
+    private UpLoadUtils upLoadUtils;
 
     private int originMarginY = 345;
     private long id;
@@ -222,9 +232,38 @@ public class CourseWorkActivity extends PSGodBaseActivity {
                 } else {
                     List<String> thumb = new ArrayList<String>();
                     thumb.add(mResultImages.get(0).path);
-                    UpLoadUtils.getInstance(CourseWorkActivity.this).
-                            upLoad(mEdit.getText().toString(), thumb, id,
-                                    UpLoadUtils.TYPE_REPLY_UPLOAD);
+                    if (upLoadUtils == null) {
+                        upLoadUtils = UpLoadUtils.getInstance(CourseWorkActivity.this);
+                        upLoadUtils.setUploadListener(new Response.Listener<UploadMultiRequest.MultiUploadResult>() {
+                            @Override
+                            public void onResponse(UploadMultiRequest.MultiUploadResult response) {
+                                upLoadUtils.hideProgressDialog();
+                                CourseDetailRequest request = new CourseDetailRequest.Builder().
+                                        setId(String.valueOf(id)).setListener(new Response.Listener<PhotoItem>() {
+                                    @Override
+                                    public void onResponse(PhotoItem response) {
+                                        WorkShareDialog workShareDialog = new WorkShareDialog(CourseWorkActivity.this);
+                                        response.setType(PhotoItem.TYPE_ASK);
+                                        workShareDialog.setPhotoItem(response);
+                                        workShareDialog.setOnEndListener(new WorkShareDialog.OnEndListener() {
+                                            @Override
+                                            public void onEnd() {
+//                                                CustomToast.show(CourseWorkActivity.this, "上传成功", Toast.LENGTH_SHORT);
+                                                finish();
+                                            }
+                                        });
+                                        workShareDialog.show();
+                                    }
+                                }).build();
+
+                                RequestQueue requestQueue = PSGodRequestQueue.getInstance(
+                                        CourseWorkActivity.this).getRequestQueue();
+                                requestQueue.add(request);
+                            }
+                        });
+                    }
+                    upLoadUtils.upLoad(mEdit.getText().toString(), thumb, id,
+                            UpLoadUtils.TYPE_REPLY_UPLOAD);
                 }
 
             }
