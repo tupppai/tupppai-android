@@ -18,36 +18,32 @@ import java.io.UnsupportedEncodingException;
 /**
  * thread/reward
  */
-public class ChargeRequest extends BaseRequest<JSONObject> {
-    private final static String TAG = ChargeRequest.class.getSimpleName();
+public class RewardRequest extends BaseRequest<Reward> {
+    private final static String TAG = RewardRequest.class.getSimpleName();
 
-    public ChargeRequest(int method, String url, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
+    public RewardRequest(int method, String url, Response.Listener<Reward> listener, Response.ErrorListener errorListener) {
         super(method, url, listener, errorListener);
     }
 
     @Override
-    protected JSONObject doParseNetworkResponse(JSONObject reponse) throws UnsupportedEncodingException, JSONException {
-        return reponse;
+    protected Reward doParseNetworkResponse(JSONObject reponse) throws UnsupportedEncodingException, JSONException {
+        Reward reward = JSON.parseObject(reponse.getJSONObject("data").toString(),Reward.class);
+        return reward;
     }
 
     public static class Builder implements IGetRequestBuilder {
 
-        private String amount;
-        private String type;
-        private Response.Listener<JSONObject> listener;
+        private String id;
+        private Response.Listener<Reward> listener;
         private Response.ErrorListener errorListener;
 
-        public Builder setAmount(String amount) {
-            this.amount = amount;
+        public Builder setId(String id) {
+            this.id = id;
             return this;
         }
 
-        public Builder setType(String type) {
-            this.type = type;
-            return this;
-        }
 
-        public Builder setListener(Response.Listener<JSONObject> listener) {
+        public Builder setListener(Response.Listener<Reward> listener) {
             this.listener = listener;
             return this;
         }
@@ -57,9 +53,9 @@ public class ChargeRequest extends BaseRequest<JSONObject> {
             return this;
         }
 
-        public ChargeRequest build() {
+        public RewardRequest build() {
             String url = createUrl();
-            ChargeRequest request = new ChargeRequest(METHOD, url,
+            RewardRequest request = new RewardRequest(METHOD, url,
                     listener, errorListener);
             return request;
         }
@@ -67,9 +63,8 @@ public class ChargeRequest extends BaseRequest<JSONObject> {
         @Override
         public String createUrl() {
             StringBuilder sb = new StringBuilder(BaseRequest.PSGOD_BASE_URL);
-            sb.append("money/charge");
-            sb.append("?amount=").append(amount);
-            sb.append("&type=").append(type);
+            sb.append("thread/reward");
+            sb.append("?ask_id=").append(id);
 
             String url = sb.toString();
             Logger.log(Logger.LOG_LEVEL_DEBUG, Logger.USER_LEVEL_COLOR, TAG,

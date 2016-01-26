@@ -1,20 +1,17 @@
 package com.psgod.ui.fragment;
 
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -23,20 +20,20 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
-import com.pingplusplus.android.PaymentActivity;
-import com.pingplusplus.android.PingppLog;
 import com.psgod.Constants;
-import com.psgod.CustomToast;
 import com.psgod.PsGodImageLoader;
 import com.psgod.R;
+import com.psgod.ThreadManager;
+import com.psgod.WeakReferenceHandler;
 import com.psgod.eventbus.RefreshEvent;
-import com.psgod.eventbus.UserProfileReturn;
 import com.psgod.model.Comment;
 import com.psgod.model.ImageData;
+import com.psgod.model.LoginUser;
 import com.psgod.model.PhotoItem;
 import com.psgod.model.Reward;
 import com.psgod.model.User;
-import com.psgod.network.request.ChargeRequest;
+import com.psgod.network.request.PhotoRequest;
+import com.psgod.network.request.RewardRequest;
 import com.psgod.network.request.CommentListRequest;
 import com.psgod.network.request.CourseDetailRequest;
 import com.psgod.network.request.PSGodErrorListener;
@@ -44,7 +41,6 @@ import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.ui.activity.CommentListActivity;
 import com.psgod.ui.adapter.CourseDetailCommentAdapter;
 import com.psgod.ui.adapter.CourseDetailImageContentAdapter;
-import com.psgod.ui.view.FollowView;
 import com.psgod.ui.widget.AvatarImageView;
 import com.psgod.ui.widget.ChildListView;
 import com.psgod.ui.widget.FollowImage;
@@ -55,13 +51,15 @@ import com.psgod.ui.widget.dialog.ShareMoreDialog;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import de.greenrobot.event.EventBus;
 
 /**
  * Created by Administrator on 2016/1/18 0018.
  */
-public class CourseDetailDetailFragment extends BaseFragment {
+public class CourseDetailDetailFragment extends BaseFragment implements Handler.Callback {
 
     public static final int REQUEST_CODE_PAYMENT = 100;
 
@@ -98,8 +96,14 @@ public class CourseDetailDetailFragment extends BaseFragment {
     private CustomProgressingDialog progressingDialog;
     private ShareMoreDialog shareMoreDialog;
 
+    private WeakReferenceHandler mHandler = new WeakReferenceHandler(this);
+    private ExecutorService fixedThreadPool = Executors.newFixedThreadPool(1);
+
     private long id;
     private PhotoItem mPhotoItem;
+
+    private boolean isRewardEnd = true;
+    private double amount = 0;
 
     public CourseDetailDetailFragment(long id) {
         this.id = id;
@@ -184,14 +188,15 @@ public class CourseDetailDetailFragment extends BaseFragment {
         return parentView;
     }
 
-    private void initView() {
-        if (mImageDatas.size() > 0) {
-            mImageDatas.clear();
+    private void initView(boolean isRefresh) {
+        if (isRefresh) {
+            if (mImageDatas.size() > 0) {
+                mImageDatas.clear();
+            }
+            mImageDatas.addAll(mPhotoItem.getUploadImagesList());
+            mImageAdapter.setIsLock(mPhotoItem.getHasBought() == 1 ? false : true);
+            mImageAdapter.notifyDataSetChanged();
         }
-        mImageDatas.addAll(mPhotoItem.getUploadImagesList());
-        mImageAdapter.setIsLock((mPhotoItem.getHasSharedToWechat() == 1) ||
-                (mPhotoItem.getPaidAmount() > 0) ? false : true);
-        mImageAdapter.notifyDataSetChanged();
         if (!mImageAdapter.isLock()) {
             mRewardImg.setImageResource(R.mipmap.like3);
         } else {
@@ -270,10 +275,32 @@ public class CourseDetailDetailFragment extends BaseFragment {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
                         mRewardTxt.setText(String.format("正向对方转入\n打赏随机金额"));
-                        ChargeRequest request = new ChargeRequest.Builder().
+                        isRewardEnd = false;
+                        fixedThreadPool.execute(new Runnable() {
+                            @Override
+                            public void run() {
+                                for (int i = 1; i < 6 || !isRewardEnd; i++) {
+                                    try {
+                                        Thread.sleep(300);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+                                    mHandler.sendEmptyMessage(i % 4);
+                                }
+                                mHandler.sendEmptyMessage(-1);
+                            }
+                        });
+                        mRewardArea.setEnabled(false);
+                        RewardRequest request = new RewardRequest.Builder().
                                 setId(String.valueOf(id)).
                                 setListener(rewardListener).
-                                setErrorListener(errorListener).build();
+                                setErrorListener(new PSGodErrorListener() {
+                                    @Override
+                                    public void handleError(VolleyError error) {
+                                        mRewardArea.setEnabled(true);
+                                        mRewardTxt.setText(String.format("支付出现问题\n请重试"));
+                                    }
+                                }).build();
                         RequestQueue requestQueue = PSGodRequestQueue.getInstance(
                                 getActivity()).getRequestQueue();
                         requestQueue.add(request);
@@ -289,14 +316,35 @@ public class CourseDetailDetailFragment extends BaseFragment {
         @Override
         public void onResponse(Reward response) {
             if (response.getType() == 1) {
-                mRewardTxt.setText(String.format("已向对方转入\n打赏随机金额%s元", response.getAmount()));
-                refresh();
+
+                amount = response.getAmount();
+                isRewardEnd = true;
+//                mRewardArea.setEnabled(true);
+//                refresh();
             } else {
                 PayErrorDialog payErrorDialog = new PayErrorDialog(getActivity());
                 payErrorDialog.show();
             }
         }
     };
+
+    @Override
+    public boolean handleMessage(Message message) {
+        if (message.what >= 0) {
+            StringBuilder sb = new StringBuilder();
+            sb.append("正向对方转入\n打赏随机金额");
+            for (int i = 0; i < message.what; i++) {
+                sb.append(".");
+            }
+            mRewardTxt.setText(sb.toString());
+        } else {
+            mRewardTxt.setText(String.format("已向对方转入\n打赏随机金额%s元",
+                    String.format("%.2f", amount)));
+            mRewardArea.setEnabled(true);
+            refresh();
+        }
+        return true;
+    }
 
     private class CourseDetailListener implements PullToRefreshBase.OnRefreshListener,
             PullToRefreshBase.OnLastItemVisibleListener {
@@ -330,11 +378,11 @@ public class CourseDetailDetailFragment extends BaseFragment {
             if (progressingDialog != null && progressingDialog.isShowing()) {
                 progressingDialog.dismiss();
             }
-
+            boolean isRefresh = mPhotoItem == null ? true : mPhotoItem.getHasBought() != response.getHasBought();
             if (response != null) {
                 mPhotoItem = response;
             }
-            initView();
+            initView(isRefresh);
 
             CommentListRequest commentRequest = new CommentListRequest.Builder()
                     .setPid(mPhotoItem.getPid()).setType(mPhotoItem.getType())

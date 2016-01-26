@@ -19,16 +19,14 @@ import java.util.logging.Handler;
  */
 public class RechargeTypeDialog  extends Dialog {
     private static final String TAG = RechargeTypeDialog.class.getSimpleName();
-    private WeakReferenceHandler mHandler;
     private Context mContext;
     private TextView mAlipayTv;
     private TextView mWeixinTv;
     private TextView mCancelTv;
 
-    public RechargeTypeDialog(Context context, WeakReferenceHandler handler){
+    public RechargeTypeDialog(Context context){
         super(context, R.style.ActionSheetDialog);
         this.mContext = context;
-        this.mHandler = handler;
         setContentView(R.layout.dialog_recharge_type);
 
         mAlipayTv = (TextView) this.findViewById(R.id.recharge_alipay);
@@ -42,7 +40,7 @@ public class RechargeTypeDialog  extends Dialog {
             @Override
             public void onClick(View view) {
                 RechargeTypeDialog.this.dismiss();
-                RechargeDialog dialog = new RechargeDialog(mContext,mHandler);
+                RechargeDialog dialog = new RechargeDialog(mContext,RechargeDialog.CHANNEL_ALIPAY);
                 dialog.show();
             }
         });
@@ -51,7 +49,7 @@ public class RechargeTypeDialog  extends Dialog {
             @Override
             public void onClick(View view) {
                 RechargeTypeDialog.this.dismiss();
-                RechargeDialog dialog = new RechargeDialog(mContext,mHandler);
+                RechargeDialog dialog = new RechargeDialog(mContext,RechargeDialog.CHANNEL_WECHAT);
                 dialog.show();
             }
         });

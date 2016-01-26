@@ -20,7 +20,6 @@ import com.psgod.ui.widget.dialog.RechargeTypeDialog;
 public class SettingChangeActivity extends PSGodBaseActivity {
     private static final String TAG = SettingChangeActivity.class.getSimpleName();
     private Context mContext;
-    private WeakReferenceHandler mHandler = new WeakReferenceHandler(this);
     private ActionBar mActionBar;
     private Button mChargeBtn;
     private Button mWithDrawBtn;
@@ -53,7 +52,7 @@ public class SettingChangeActivity extends PSGodBaseActivity {
         mChargeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                RechargeTypeDialog dialog = new RechargeTypeDialog(SettingChangeActivity.this, mHandler);
+                RechargeTypeDialog dialog = new RechargeTypeDialog(SettingChangeActivity.this);
                 dialog.show();
             }
         });

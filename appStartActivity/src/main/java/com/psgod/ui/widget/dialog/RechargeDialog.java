@@ -2,6 +2,8 @@ package com.psgod.ui.widget.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.os.Handler;
+import android.os.Message;
 import android.text.Editable;
 import android.text.Selection;
 import android.text.TextWatcher;
@@ -11,26 +13,42 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.psgod.Constants;
 import com.psgod.R;
 import com.psgod.WeakReferenceHandler;
+import com.psgod.model.Reward;
+import com.psgod.network.request.ChannelRequest;
+import com.psgod.network.request.ChargeRequest;
+import com.psgod.network.request.CommentListRequest;
+import com.psgod.network.request.PSGodRequestQueue;
+import com.psgod.network.request.RewardRequest;
 
+import org.json.JSONObject;
 
 
 /**
  * Created by pires on 16/1/20.
  */
-public class RechargeDialog extends Dialog {
+public class RechargeDialog extends Dialog implements Handler.Callback {
+
+    public static final String CHANNEL_WECHAT = "wx";
+    public static final String CHANNEL_ALIPAY = "alipay";
+
+    private String mChannelType = CHANNEL_WECHAT;
+
+    private WeakReferenceHandler mHandler = new WeakReferenceHandler(this);
 
     private Context mContext;
     private EditText mRechargeCountEt;
-    private WeakReferenceHandler mHandler ;
     private TextView mCompleteBtn;
 
-    public RechargeDialog(Context context,WeakReferenceHandler handler) {
+    public RechargeDialog(Context context,String channelType) {
         super(context, R.style.ActionSheetDialog);
         this.mContext = context;
-        this.mHandler = handler;
+        this.mChannelType = channelType;
         setContentView(R.layout.dialog_recharge_layout);
 
         mRechargeCountEt = (EditText) findViewById(R.id.recharge_count_edit);
@@ -40,10 +58,31 @@ public class RechargeDialog extends Dialog {
         getWindow().getAttributes().width = Constants.WIDTH_OF_SCREEN;
         setCanceledOnTouchOutside(true);
 
+        initListener();
+    }
+
+    private void initListener(){
         mCompleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 RechargeDialog.this.dismiss();
+                ChargeRequest request = new ChargeRequest.Builder().
+                        setListener(new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+
+                            }
+                        }).
+                        setErrorListener(new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+
+                            }
+                        }).setAmount(mRechargeCountEt.getText().toString())
+                        .setType(mChannelType).build();
+                RequestQueue requestQueue = PSGodRequestQueue.getInstance(
+                       mContext).getRequestQueue();
+                requestQueue.add(request);
             }
         });
     }
@@ -116,5 +155,10 @@ public class RechargeDialog extends Dialog {
 
         });
 
+    }
+
+    @Override
+    public boolean handleMessage(Message message) {
+        return false;
     }
 }

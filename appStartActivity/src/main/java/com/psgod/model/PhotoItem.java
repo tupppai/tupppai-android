@@ -127,9 +127,11 @@ public class PhotoItem implements Serializable, Cloneable {
 
     private String mDescription;
 
-    private int mHasSharedToWechat;
+//    private int mHasSharedToWechat;
 
-    private double mPaidAmount;
+//    private double mPaidAmount;
+
+    private int mHasBought;
 
     private int mLoveCount = 0;
 
@@ -143,21 +145,29 @@ public class PhotoItem implements Serializable, Cloneable {
         this.mClickCount = clickCount;
     }
 
-    public int getHasSharedToWechat() {
-        return mHasSharedToWechat;
+    public int getHasBought() {
+        return mHasBought;
     }
 
-    public void setHasSharedToWechat(int hasSharedToWechat) {
-        this.mHasSharedToWechat = hasSharedToWechat;
+    public void setHasBought(int hasBought) {
+        this.mHasBought = hasBought;
     }
 
-    public double getPaidAmount() {
-        return mPaidAmount;
-    }
-
-    public void setPaidAmount(double paidAmount) {
-        this.mPaidAmount = paidAmount;
-    }
+    //    public int getHasSharedToWechat() {
+//        return mHasSharedToWechat;
+//    }
+//
+//    public void setHasSharedToWechat(int hasSharedToWechat) {
+//        this.mHasSharedToWechat = hasSharedToWechat;
+//    }
+//
+//    public double getPaidAmount() {
+//        return mPaidAmount;
+//    }
+//
+//    public void setPaidAmount(double paidAmount) {
+//        this.mPaidAmount = paidAmount;
+//    }
 
     public String getDescription() {
         return mDescription;
@@ -238,11 +248,14 @@ public class PhotoItem implements Serializable, Cloneable {
         if (jsonObj.has("description")) {
             item.mDescription = jsonObj.getString("description");
         }
-        if (jsonObj.has("has_shared_to_wechat")) {
-            item.mHasSharedToWechat = jsonObj.getInt("has_shared_to_wechat");
-        }
-        if (jsonObj.has("paid_amount")) {
-            item.mPaidAmount = jsonObj.getDouble("paid_amount");
+//        if (jsonObj.has("has_shared_to_wechat")) {
+//            item.mHasSharedToWechat = jsonObj.getInt("has_shared_to_wechat");
+//        }
+//        if (jsonObj.has("paid_amount")) {
+//            item.mPaidAmount = jsonObj.getDouble("paid_amount");
+//        }\
+        if(jsonObj.has("has_bought")){
+            item.mHasBought = jsonObj.getInt("has_bought");
         }
         if (jsonObj.has("title")) {
             item.mTitle = jsonObj.getString("title");
