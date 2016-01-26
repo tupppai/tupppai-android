@@ -15,17 +15,34 @@ import com.psgod.model.Reward;
 public class PayErrorDialog extends Dialog{
     public PayErrorDialog(Context context) {
         super(context, R.style.ActionSheetDialog);
+        this.context =context;
         initView();
+        initListener();
+
     }
 
     public PayErrorDialog(Context context, int theme) {
         super(context, theme);
         initView();
+        initListener();
+
     }
 
     protected PayErrorDialog(Context context, boolean cancelable, OnCancelListener cancelListener) {
         super(context, cancelable, cancelListener);
         initView();
+        initListener();
+    }
+
+    private void initListener() {
+        mGo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dismiss();
+                RechargeTypeDialog rechargeTypeDialog = new RechargeTypeDialog(getContext());
+                rechargeTypeDialog.show();
+            }
+        });
     }
 
     private View mParent;
@@ -33,6 +50,8 @@ public class PayErrorDialog extends Dialog{
     private TextView mtitle;
     private TextView mContent;
     private TextView mGo;
+
+    private Context context;
 
 //    private Reward
 

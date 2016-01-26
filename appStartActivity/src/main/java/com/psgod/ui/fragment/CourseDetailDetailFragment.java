@@ -322,6 +322,7 @@ public class CourseDetailDetailFragment extends BaseFragment implements Handler.
 //                mRewardArea.setEnabled(true);
 //                refresh();
             } else {
+                isRewardEnd = true;
                 PayErrorDialog payErrorDialog = new PayErrorDialog(getActivity());
                 payErrorDialog.show();
             }
@@ -338,10 +339,16 @@ public class CourseDetailDetailFragment extends BaseFragment implements Handler.
             }
             mRewardTxt.setText(sb.toString());
         } else {
-            mRewardTxt.setText(String.format("已向对方转入\n打赏随机金额%s元",
-                    String.format("%.2f", amount)));
-            mRewardArea.setEnabled(true);
-            refresh();
+            if(amount == 0){
+                mRewardTxt.setText(String.format("打赏失败"));
+                mRewardArea.setEnabled(true);
+            }else {
+                mRewardTxt.setText(String.format("已向对方转入\n打赏随机金额%s元",
+                        String.format("%.2f", amount)));
+                amount = 0;
+                mRewardArea.setEnabled(true);
+                refresh();
+            }
         }
         return true;
     }
