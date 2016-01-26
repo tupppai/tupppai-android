@@ -170,7 +170,7 @@ public class PhotoItemView extends RelativeLayout implements Callback {
      * @author brandwang
      */
     public static enum PhotoListType {
-        SINGLE_ASK, SINGLE_REPLY, RECENT_REPLY, HOT_FOCUS_ASK, HOT_FOCUS_REPLY
+        SINGLE_ASK, SINGLE_REPLY, RECENT_REPLY, HOT_FOCUS_ASK, HOT_FOCUS_REPLY,COURSE_DETAIL
     }
 
     public PhotoItemView(Context context) {

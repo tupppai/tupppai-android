@@ -25,6 +25,7 @@ import com.psgod.network.request.PSGodErrorListener;
 import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.network.request.PhotoListRequest;
 import com.psgod.ui.adapter.PhotoListAdapter;
+import com.psgod.ui.adapter.RecentPageActAdapter;
 import com.psgod.ui.view.PhotoItemView;
 import com.psgod.ui.view.PullToRefreshSwipeMenuListView;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
@@ -44,7 +45,7 @@ public class CourseDetailWorkFragment extends BaseFragment {
     private View mFooterView;
 
     private List<PhotoItem> mPhotoItems = new ArrayList<>();
-    private PhotoListAdapter mAdapter;
+    private RecentPageActAdapter mAdapter;
 
     private long id;
 
@@ -93,7 +94,7 @@ public class CourseDetailWorkFragment extends BaseFragment {
         listListener = new PhotoListListener(getActivity());
         mViewHolder.mListView.setOnRefreshListener(listListener);
         mViewHolder.mListView.setOnLastItemVisibleListener(listListener);
-        mAdapter = new PhotoListAdapter(getActivity(), PhotoItemView.PhotoListType.RECENT_REPLY, mPhotoItems);
+        mAdapter = new RecentPageActAdapter(getActivity(), mPhotoItems);
         mViewHolder.mListView.setAdapter(mAdapter);
         mFooterView = LayoutInflater.from(mContext).inflate(R.layout.footer_load_more, null);
         mViewHolder.mListView.getRefreshableView().addFooterView(mFooterView);
