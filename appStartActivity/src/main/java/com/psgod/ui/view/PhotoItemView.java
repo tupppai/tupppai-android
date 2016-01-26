@@ -133,13 +133,13 @@ public class PhotoItemView extends RelativeLayout implements Callback {
     private RelativeLayout mComplexBtnsPanel;
     private ImageView mAllWorksBtn;
     private TextView mComplexShareBtn;
-//    private TextView mComplexFavBtn;
+    //    private TextView mComplexFavBtn;
 //    private ImageView mComplexFavImg;
 //    private ImageView mComplexFavTempImg;
     private TextView mComplexCommentBtn;
 
     private RelativeLayout mReplyLikedArea;
-//    private TextView mLikeCountTv;
+    //    private TextView mLikeCountTv;
 //    private ImageView mLikeBtn;
     private LikeView mLikeView;
 
@@ -1103,20 +1103,13 @@ public class PhotoItemView extends RelativeLayout implements Callback {
     private OnClickListener imageOnClickListener = new OnClickListener() {
         @Override
         public void onClick(View v) {
-//            // 拥有回复作品
-//            boolean havingReplies = (mPhotoItem != null && mPhotoItem
-//                    .getReplyCount() > 0);
-//            // 是否位于作品详情页面
-//            boolean isPhotoDetail = (mType == PhotoListType.SINGLE_ASK)
-//                    || (mType == PhotoListType.SINGLE_REPLY);
-
-            if (mPhotoItem.getType() == 1 && mPhotoItem.getReplyCount() == 0) {
+            if ((mPhotoItem.getType() == 1 && mPhotoItem.getReplyCount() == 0 )|| isRecentAct) {
                 SinglePhotoDetail.startActivity(mContext, mPhotoItem);
                 setEnabled(false);
                 mHandler.postDelayed(mViewEnabledRunnable, 1000);
             } else {
                 new CarouselPhotoDetailDialog(mContext, mPhotoItem.getAskId(), mPhotoItem.getPid()
-                        ,mPhotoItem.getCategoryId()).show();
+                        , mPhotoItem.getCategoryId()).show();
             }
         }
     };

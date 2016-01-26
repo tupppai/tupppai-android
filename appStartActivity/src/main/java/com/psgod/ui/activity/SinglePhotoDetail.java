@@ -262,6 +262,7 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
                     hideInputPanel();
                     // 清空输入框
                     mCommentEditText.setText("");
+                    mCommentEditText.setHint("");
 
                     // 隐藏表情选择窗口
                     ((FaceRelativeLayout) findViewById(R.id.FaceRelativeLayout))
@@ -285,7 +286,8 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
                 .setPid(mPhotoItem.getPid()).setType(mPhotoItem.getType())
                 .setListener(sendCommentListener)
                 .setErrorListener(sendCommentErrorListener);
-
+        atComments.delete(0, atComments.length());
+        replyToCid = 0;
         PostCommentRequest request = builder.build();
         request.setTag(TAG);
         RequestQueue requestQueue = PSGodRequestQueue.getInstance(
