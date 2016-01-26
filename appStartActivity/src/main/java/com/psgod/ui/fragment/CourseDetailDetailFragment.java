@@ -2,6 +2,7 @@ package com.psgod.ui.fragment;
 
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.pingplusplus.android.PaymentActivity;
 import com.pingplusplus.android.PingppLog;
 import com.psgod.Constants;
+import com.psgod.CustomToast;
 import com.psgod.PsGodImageLoader;
 import com.psgod.R;
 import com.psgod.eventbus.RefreshEvent;
@@ -32,7 +34,9 @@ import com.psgod.eventbus.UserProfileReturn;
 import com.psgod.model.Comment;
 import com.psgod.model.ImageData;
 import com.psgod.model.PhotoItem;
+import com.psgod.model.Reward;
 import com.psgod.model.User;
+import com.psgod.network.request.ChargeRequest;
 import com.psgod.network.request.CommentListRequest;
 import com.psgod.network.request.CourseDetailRequest;
 import com.psgod.network.request.PSGodErrorListener;
@@ -44,7 +48,9 @@ import com.psgod.ui.view.FollowView;
 import com.psgod.ui.widget.AvatarImageView;
 import com.psgod.ui.widget.ChildListView;
 import com.psgod.ui.widget.FollowImage;
+import com.psgod.ui.widget.dialog.CustomDialog;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
+import com.psgod.ui.widget.dialog.PayErrorDialog;
 import com.psgod.ui.widget.dialog.ShareMoreDialog;
 
 import java.util.ArrayList;
@@ -100,7 +106,7 @@ public class CourseDetailDetailFragment extends BaseFragment {
     }
 
     public void onEventMainThread(RefreshEvent event) {
-        if(event.className.equals(this.getClass().getName())){
+        if (event.className.equals(this.getClass().getName())) {
             refresh();
         }
     }
@@ -183,8 +189,14 @@ public class CourseDetailDetailFragment extends BaseFragment {
             mImageDatas.clear();
         }
         mImageDatas.addAll(mPhotoItem.getUploadImagesList());
-        mImageAdapter.setIsLock(mPhotoItem.getHasSharedToWechat() == 1 ? false : true);
+        mImageAdapter.setIsLock((mPhotoItem.getHasSharedToWechat() == 1) ||
+                (mPhotoItem.getPaidAmount() > 0) ? false : true);
         mImageAdapter.notifyDataSetChanged();
+        if (!mImageAdapter.isLock()) {
+            mRewardImg.setImageResource(R.mipmap.like3);
+        } else {
+            mRewardImg.setImageResource(R.mipmap.ic_like);
+        }
         PsGodImageLoader.getInstance().displayImage(mPhotoItem.getAvatarURL(),
                 mHeadAvatar, Constants.DISPLAY_IMAGE_OPTIONS_AVATAR);
         mHeadCommentCount.setText(String.valueOf("(" + mPhotoItem.getCommentCount() + ")"));
@@ -243,7 +255,48 @@ public class CourseDetailDetailFragment extends BaseFragment {
                 startActivity(intent);
             }
         });
+
+        mRewardArea.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CustomDialog dialog = new CustomDialog.Builder(getActivity()).
+                        setLeftButton("取消", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.dismiss();
+                            }
+                        }).setRightButton("确认", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                        mRewardTxt.setText(String.format("正向对方转入\n打赏随机金额"));
+                        ChargeRequest request = new ChargeRequest.Builder().
+                                setId(String.valueOf(id)).
+                                setListener(rewardListener).
+                                setErrorListener(errorListener).build();
+                        RequestQueue requestQueue = PSGodRequestQueue.getInstance(
+                                getActivity()).getRequestQueue();
+                        requestQueue.add(request);
+                    }
+                }).setMessage("是否要打赏该教程？").create();
+                dialog.show();
+
+            }
+        });
     }
+
+    Response.Listener<Reward> rewardListener = new Response.Listener<Reward>() {
+        @Override
+        public void onResponse(Reward response) {
+            if (response.getType() == 1) {
+                mRewardTxt.setText(String.format("已向对方转入\n打赏随机金额%s元", response.getAmount()));
+                refresh();
+            } else {
+                PayErrorDialog payErrorDialog = new PayErrorDialog(getActivity());
+                payErrorDialog.show();
+            }
+        }
+    };
 
     private class CourseDetailListener implements PullToRefreshBase.OnRefreshListener,
             PullToRefreshBase.OnLastItemVisibleListener {
@@ -251,7 +304,6 @@ public class CourseDetailDetailFragment extends BaseFragment {
 
         public CourseDetailListener(Context context) {
             mContext = context;
-
         }
 
         @Override
@@ -296,16 +348,16 @@ public class CourseDetailDetailFragment extends BaseFragment {
 
     Response.Listener<CommentListRequest.CommentListWrapper> commentListener =
             new Response.Listener<CommentListRequest.CommentListWrapper>() {
-        @Override
-        public void onResponse(CommentListRequest.CommentListWrapper response) {
-            if (mComments == null) {
-                mComments = new ArrayList<>();
-            }
-            mComments.clear();
-            mComments.addAll(response.recentCommentList);
-            mAdapter.notifyDataSetChanged();
-        }
-    };
+                @Override
+                public void onResponse(CommentListRequest.CommentListWrapper response) {
+                    if (mComments == null) {
+                        mComments = new ArrayList<>();
+                    }
+                    mComments.clear();
+                    mComments.addAll(response.recentCommentList);
+                    mAdapter.notifyDataSetChanged();
+                }
+            };
 
     PSGodErrorListener errorListener = new PSGodErrorListener() {
         @Override

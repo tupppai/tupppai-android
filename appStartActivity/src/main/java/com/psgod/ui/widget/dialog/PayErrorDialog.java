@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.psgod.R;
+import com.psgod.model.Reward;
 
 /**
  * Created by Administrator on 2016/1/21 0021.
@@ -32,6 +33,8 @@ public class PayErrorDialog extends Dialog{
     private TextView mtitle;
     private TextView mContent;
     private TextView mGo;
+
+//    private Reward
 
     private void initView() {
         mParent = LayoutInflater.from(getContext()).inflate(R.layout.dialog_pay_error,null);

@@ -83,7 +83,7 @@ public class CourseDetailImageContentAdapter extends BaseAdapter {
         mViewHolder.mImage.setLayoutParams(params);
         mViewHolder.mLockArea.setLayoutParams(params);
         PsGodImageLoader.getInstance().displayImage(imageData.mImageUrl
-                , mViewHolder.mImage, Constants.DISPLAY_IMAGE_OPTIONS);
+                , mViewHolder.mImage, Constants.DISPLAY_IMAGE_OPTIONS_ORIGIN);
         if (isLock && position == getCount() - 1) {
             mViewHolder.mLockArea.setVisibility(View.VISIBLE);
         } else {

@@ -1,6 +1,9 @@
 package com.psgod.network.request;
 
+import com.alibaba.fastjson.JSON;
 import com.android.volley.Response;
+import com.psgod.Logger;
+import com.psgod.model.Reward;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,20 +18,59 @@ import java.io.UnsupportedEncodingException;
 /**
  * money/charge
  */
-public class ChargeRequest extends BaseRequest {
-    public ChargeRequest(int method, String url, Response.Listener listener, Response.ErrorListener errorListener) {
+public class ChargeRequest extends BaseRequest<Reward> {
+    private final static String TAG = ChargeRequest.class.getSimpleName();
+
+    public ChargeRequest(int method, String url, Response.Listener<Reward> listener, Response.ErrorListener errorListener) {
         super(method, url, listener, errorListener);
     }
 
     @Override
-    protected Object doParseNetworkResponse(JSONObject reponse) throws UnsupportedEncodingException, JSONException {
-        return null;
+    protected Reward doParseNetworkResponse(JSONObject reponse) throws UnsupportedEncodingException, JSONException {
+        Reward reward = JSON.parseObject(reponse.getJSONObject("data").toString(),Reward.class);
+        return reward;
     }
 
+    public static class Builder implements IGetRequestBuilder {
+
+        private String id;
+        private Response.Listener<Reward> listener;
+        private Response.ErrorListener errorListener;
+
+        public Builder setId(String id) {
+            this.id = id;
+            return this;
+        }
 
 
-    @Override
-    public int compareTo(Object o) {
-        return 0;
+        public Builder setListener(Response.Listener<Reward> listener) {
+            this.listener = listener;
+            return this;
+        }
+
+        public Builder setErrorListener(Response.ErrorListener errorListener) {
+            this.errorListener = errorListener;
+            return this;
+        }
+
+        public ChargeRequest build() {
+            String url = createUrl();
+            ChargeRequest request = new ChargeRequest(METHOD, url,
+                    listener, errorListener);
+            return request;
+        }
+
+        @Override
+        public String createUrl() {
+            StringBuilder sb = new StringBuilder(BaseRequest.PSGOD_BASE_URL);
+            sb.append("thread/reward");
+            sb.append("?ask_id=").append(id);
+
+            String url = sb.toString();
+            Logger.log(Logger.LOG_LEVEL_DEBUG, Logger.USER_LEVEL_COLOR, TAG,
+                    "createUrl: " + url);
+            return url;
+        }
     }
+
 }
