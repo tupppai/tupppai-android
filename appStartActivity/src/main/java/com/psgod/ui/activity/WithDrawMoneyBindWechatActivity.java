@@ -15,7 +15,10 @@ import com.psgod.Utils;
 public class WithDrawMoneyBindWechatActivity extends PSGodBaseActivity {
 
     private static final String TAG = WithDrawMoneyBindWechatActivity.class.getSimpleName();
-    private Context mContext;
+
+    public static final String AMOUNT = "amount";
+
+    private double amount;
 
     private Button mBindBtn;
 
@@ -24,14 +27,25 @@ public class WithDrawMoneyBindWechatActivity extends PSGodBaseActivity {
         super.onCreate(savedInstanceState);
         Utils.addActivity(WithDrawMoneyBindWechatActivity.this);
         setContentView(R.layout.activity_withdraw_money_bind_wechat);
-        mContext = this;
 
+        Intent intent = getIntent();
+        amount = intent.getDoubleExtra(AMOUNT, 0);
+
+        initView();
+        initListener();
+
+    }
+
+    private void initView() {
         mBindBtn = (Button) this.findViewById(R.id.bind_weixin_btn);
 
+    }
+
+    private void initListener() {
         mBindBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(WithDrawMoneyBindWechatActivity.this,WithDrawMoneyActivity.class);
+                Intent intent = new Intent(WithDrawMoneyBindWechatActivity.this, WithDrawMoneyActivity.class);
                 startActivity(intent);
             }
         });

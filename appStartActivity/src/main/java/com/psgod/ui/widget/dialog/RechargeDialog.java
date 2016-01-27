@@ -23,6 +23,8 @@ import com.pingplusplus.android.PaymentActivity;
 import com.psgod.Constants;
 import com.psgod.R;
 import com.psgod.WeakReferenceHandler;
+import com.psgod.model.LoginUser;
+import com.psgod.model.MoneyTransfer;
 import com.psgod.model.Reward;
 import com.psgod.network.request.ChannelRequest;
 import com.psgod.network.request.ChargeRequest;
@@ -32,6 +34,8 @@ import com.psgod.network.request.PSGodErrorListener;
 import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.network.request.RewardRequest;
 import com.psgod.ui.activity.PSGodBaseActivity;
+import com.psgod.ui.activity.WithDrawMoneyActivity;
+import com.psgod.ui.activity.WithDrawMoneyBindWechatActivity;
 
 import org.json.JSONObject;
 
@@ -99,21 +103,33 @@ public class RechargeDialog extends Dialog implements Handler.Callback {
             public void onClick(View view) {
                 RechargeDialog.this.dismiss();
                 if (mChannelType.indexOf("transfer") != -1) {
-                    MoneyTransferRequest request = new MoneyTransferRequest.Builder().
-                            setErrorListener(new PSGodErrorListener() {
-                                @Override
-                                public void handleError(VolleyError error) {
-
-                                }
-                            }).setListener(new Response.Listener<JSONObject>() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-
-                        }
-                    }).setAmount(String.valueOf(amount)).build();
-                    RequestQueue requestQueue = PSGodRequestQueue
-                            .getInstance(mContext).getRequestQueue();
-                    requestQueue.add(request);
+                    LoginUser user = LoginUser.getInstance();
+                    if (user.isBoundWechat()) {
+                        MoneyTransferRequest request = new MoneyTransferRequest.Builder().
+                                setErrorListener(new PSGodErrorListener() {
+                                    @Override
+                                    public void handleError(VolleyError error) {
+                                        dismiss();
+                                    }
+                                }).
+                                setListener(new Response.Listener<MoneyTransfer>() {
+                                    @Override
+                                    public void onResponse(MoneyTransfer response) {
+                                        dismiss();
+                                        Intent intent = new Intent(mContext, WithDrawMoneyActivity.class);
+                                        intent.putExtra(WithDrawMoneyActivity.RESULT,response);
+                                        mContext.startActivity(intent);
+                                    }
+                                }).setAmount(String.valueOf(amount)).build();
+                        RequestQueue requestQueue = PSGodRequestQueue
+                                .getInstance(mContext).getRequestQueue();
+                        requestQueue.add(request);
+                    }else{
+                        Intent intent = new Intent(mContext,
+                                WithDrawMoneyBindWechatActivity.class);
+                        intent.putExtra(WithDrawMoneyBindWechatActivity.AMOUNT,amount);
+                        mContext.startActivity(intent);
+                    }
                 } else {
                     ChargeRequest request = new ChargeRequest.Builder().
                             setListener(new Response.Listener<JSONObject>() {

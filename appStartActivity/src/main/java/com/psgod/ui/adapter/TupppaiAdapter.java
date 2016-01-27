@@ -66,7 +66,7 @@ public class TupppaiAdapter extends MyBaseAdapter<Tupppai> {
         } else {
             holder.linear.setVisibility(View.VISIBLE);
         }
-        for (int i = 0; i < itemLength; i++) {
+        for (int i = 0; i < 5 && itemLength != 0; i++) {
             ImageView view = new ImageView(context);
             LinearLayout.LayoutParams params = new LinearLayout.
                     LayoutParams(Utils.dpToPx(context, 60), Utils.dpToPx(context, 60));
@@ -75,7 +75,10 @@ public class TupppaiAdapter extends MyBaseAdapter<Tupppai> {
             view.setLayoutParams(params);
             view.setScaleType(ImageView.ScaleType.CENTER_CROP);
             view.setImageDrawable(context.getResources().getDrawable(R.color.transparent));
-            PsGodImageLoader.getInstance().displayImage(photoItems.get(i).getImageURL(), view, mSmallSmallOptions);
+            if(i < itemLength) {
+                PsGodImageLoader.getInstance().
+                        displayImage(photoItems.get(i).getImageURL(), view, mSmallSmallOptions);
+            }
             holder.linear.addView(view);
         }
 //        if (list.get(position).getThreads().size() == 0) {

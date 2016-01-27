@@ -142,7 +142,6 @@ public final class Utils {
         }
     }
 
-    // TODO
     // 初始化修改密码流程的activity列表 便于一次性关闭
     public static void initializeActivity() {
         if (Constants.activityList == null) {
@@ -152,14 +151,19 @@ public final class Utils {
 
     // 增加一个activity
     public static void addActivity(Activity activity) {
+        initializeActivity();
         Constants.activityList.add(activity);
     }
 
     // finish掉所有activity
     public static void finishActivity() {
+        initializeActivity();
         for (Activity activity : Constants.activityList) {
-            activity.finish();
+            if (activity != null && !activity.isFinishing()) {
+                activity.finish();
+            }
         }
+        Constants.activityList.clear();
     }
 
     static CustomProgressingDialog mProgressDialog = null;
@@ -278,21 +282,21 @@ public final class Utils {
         return result;
     }
 
-    public static int getScreenHeightPx(Context context){
+    public static int getScreenHeightPx(Context context) {
         Point point = new Point();
         ((WindowManager) context
                 .getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getRealSize(point);
         return point.y;
     }
 
-    public static int getUnrealScreenHeightPx(Context context){
+    public static int getUnrealScreenHeightPx(Context context) {
         DisplayMetrics outMetrics = new DisplayMetrics();
         ((WindowManager) context
                 .getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getMetrics(outMetrics);
         return outMetrics.heightPixels - getStatusBarHeight(context);
     }
 
-    public static int getScreenWidthPx(Context context){
+    public static int getScreenWidthPx(Context context) {
         Point point = new Point();
         ((WindowManager) context
                 .getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getRealSize(point);
@@ -345,7 +349,7 @@ public final class Utils {
     }
 
     // 隐藏输入法
-    public static void hideInputPanel(Context context,View view) {
+    public static void hideInputPanel(Context context, View view) {
         // 隐藏软键盘
         InputMethodManager imm = (InputMethodManager) context
                 .getSystemService(Context.INPUT_METHOD_SERVICE);

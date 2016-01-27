@@ -1,7 +1,9 @@
 package com.psgod.network.request;
 
+import com.alibaba.fastjson.JSON;
 import com.android.volley.Response;
 import com.psgod.Logger;
+import com.psgod.model.MoneyTransfer;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -16,23 +18,25 @@ import java.io.UnsupportedEncodingException;
 /**
  * thread/reward
  */
-public class MoneyTransferRequest extends BaseRequest<JSONObject> {
+public class MoneyTransferRequest extends BaseRequest<MoneyTransfer> {
     private final static String TAG = MoneyTransferRequest.class.getSimpleName();
 
-    public MoneyTransferRequest(int method, String url, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
+    public MoneyTransferRequest(int method, String url, Response.Listener<MoneyTransfer> listener, Response.ErrorListener errorListener) {
         super(method, url, listener, errorListener);
     }
 
     @Override
-    protected JSONObject doParseNetworkResponse(JSONObject reponse) throws UnsupportedEncodingException, JSONException {
-        return reponse;
+    protected MoneyTransfer doParseNetworkResponse(JSONObject reponse) throws UnsupportedEncodingException, JSONException {
+        MoneyTransfer transfer = JSON.
+                parseObject(reponse.getJSONObject("data").toString(),MoneyTransfer.class);
+        return transfer;
     }
 
     public static class Builder implements IGetRequestBuilder {
 
         private String amount;
         private String type;
-        private Response.Listener<JSONObject> listener;
+        private Response.Listener<MoneyTransfer> listener;
         private Response.ErrorListener errorListener;
 
         public Builder setAmount(String amount) {
@@ -45,7 +49,7 @@ public class MoneyTransferRequest extends BaseRequest<JSONObject> {
             return this;
         }
 
-        public Builder setListener(Response.Listener<JSONObject> listener) {
+        public Builder setListener(Response.Listener<MoneyTransfer> listener) {
             this.listener = listener;
             return this;
         }

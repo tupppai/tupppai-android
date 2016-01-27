@@ -41,8 +41,6 @@ public class SettingChangeActivity extends PSGodBaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Utils.initializeActivity();
-        Utils.addActivity(SettingChangeActivity.this);
         setContentView(R.layout.activity_setting_change);
 
         initView();
@@ -95,14 +93,9 @@ public class SettingChangeActivity extends PSGodBaseActivity {
             @Override
             public void onClick(View view) {
                 LoginUser user = LoginUser.getInstance();
-                if (user.isBoundWechat()) {
-                    RechargeDialog rechargeDialog = new
-                            RechargeDialog(SettingChangeActivity.this,RechargeDialog.TRANSFER_WECHAT);
-                    rechargeDialog.show();
-                } else {
-                    Intent intent = new Intent(SettingChangeActivity.this, WithDrawMoneyBindWechatActivity.class);
-                    startActivity(intent);
-                }
+                RechargeDialog rechargeDialog = new
+                        RechargeDialog(SettingChangeActivity.this, RechargeDialog.TRANSFER_WECHAT);
+                rechargeDialog.show();
             }
         });
 
