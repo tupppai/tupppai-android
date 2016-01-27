@@ -17,14 +17,25 @@ import java.util.logging.Handler;
 /**
  * Created by pires on 16/1/20.
  */
-public class RechargeTypeDialog  extends Dialog {
+public class RechargeTypeDialog extends Dialog {
     private static final String TAG = RechargeTypeDialog.class.getSimpleName();
     private Context mContext;
     private TextView mAlipayTv;
     private TextView mWeixinTv;
     private TextView mCancelTv;
 
-    public RechargeTypeDialog(Context context){
+    private double amount;
+    private int requestCode;
+
+    public void setRequestCode(int requestCode) {
+        this.requestCode = requestCode;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
+    public RechargeTypeDialog(Context context) {
         super(context, R.style.ActionSheetDialog);
         this.mContext = context;
         setContentView(R.layout.dialog_recharge_type);
@@ -40,7 +51,9 @@ public class RechargeTypeDialog  extends Dialog {
             @Override
             public void onClick(View view) {
                 RechargeTypeDialog.this.dismiss();
-                RechargeDialog dialog = new RechargeDialog(mContext,RechargeDialog.CHANNEL_ALIPAY);
+                RechargeDialog dialog = new RechargeDialog(mContext, RechargeDialog.CHANNEL_ALIPAY);
+                dialog.setRequestCode(requestCode);
+                dialog.setAmount(amount);
                 dialog.show();
             }
         });
@@ -49,7 +62,9 @@ public class RechargeTypeDialog  extends Dialog {
             @Override
             public void onClick(View view) {
                 RechargeTypeDialog.this.dismiss();
-                RechargeDialog dialog = new RechargeDialog(mContext,RechargeDialog.CHANNEL_WECHAT);
+                RechargeDialog dialog = new RechargeDialog(mContext, RechargeDialog.CHANNEL_WECHAT);
+                dialog.setRequestCode(requestCode);
+                dialog.setAmount(amount);
                 dialog.show();
             }
         });

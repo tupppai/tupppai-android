@@ -61,6 +61,7 @@
             android:text="去充值"
             android:layout_centerHorizontal="true"
             android:textSize="14dp"
+            android:textColor="@color/black"
             android:background="#ffef04"
             />
 

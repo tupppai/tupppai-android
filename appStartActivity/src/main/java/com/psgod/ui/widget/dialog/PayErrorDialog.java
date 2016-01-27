@@ -13,6 +13,7 @@ import com.psgod.model.Reward;
  * Created by Administrator on 2016/1/21 0021.
  */
 public class PayErrorDialog extends Dialog{
+
     public PayErrorDialog(Context context) {
         super(context, R.style.ActionSheetDialog);
         this.context =context;
@@ -39,7 +40,11 @@ public class PayErrorDialog extends Dialog{
             @Override
             public void onClick(View view) {
                 dismiss();
-                RechargeTypeDialog rechargeTypeDialog = new RechargeTypeDialog(getContext());
+                RechargeTypeDialog rechargeTypeDialog = new RechargeTypeDialog(context);
+                if(reward != null){
+                    rechargeTypeDialog.setAmount(reward.getAmount() - reward.getBalance());
+                }
+                rechargeTypeDialog.setRequestCode(requestCode);
                 rechargeTypeDialog.show();
             }
         });
@@ -53,7 +58,16 @@ public class PayErrorDialog extends Dialog{
 
     private Context context;
 
-//    private Reward
+    private Reward reward;
+    private int requestCode;
+
+    public void setRequestCode(int requestCode) {
+        this.requestCode = requestCode;
+    }
+
+    public void setReward(Reward reward) {
+        this.reward = reward;
+    }
 
     private void initView() {
         mParent = LayoutInflater.from(getContext()).inflate(R.layout.dialog_pay_error,null);

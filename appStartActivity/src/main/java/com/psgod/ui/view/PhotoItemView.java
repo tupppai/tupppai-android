@@ -13,6 +13,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Handler.Callback;
 import android.os.Message;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -669,7 +670,6 @@ public class PhotoItemView extends RelativeLayout implements Callback {
             mImageArea.addView(mImageViewLeft);
             mImageArea.addView(mImageViewRight);
         }
-
         // 求p原图区域 只有作品才显示
         if (mPhotoItem.getUploadImagesList().size() != 0
                 && (mPhotoType == TYPE_REPLY)
@@ -715,6 +715,8 @@ public class PhotoItemView extends RelativeLayout implements Callback {
             // mUploadImages.addView(uploadImageLeft);
             // mUploadImages.addView(mOriginTipIv);
             // }
+        }else{
+
         }
 
         // 设置操作栏中细节 分simple和complex两种情况

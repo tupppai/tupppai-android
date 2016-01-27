@@ -1,5 +1,6 @@
 package com.psgod.ui.fragment;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -21,6 +23,7 @@ import com.android.volley.VolleyError;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.psgod.Constants;
+import com.psgod.CustomToast;
 import com.psgod.PsGodImageLoader;
 import com.psgod.R;
 import com.psgod.ThreadManager;
@@ -61,7 +64,7 @@ import de.greenrobot.event.EventBus;
  */
 public class CourseDetailDetailFragment extends BaseFragment implements Handler.Callback {
 
-    public static final int REQUEST_CODE_PAYMENT = 100;
+    public static final int REQUEST_CODE_PAYMENT = 118;
 
     private static final String TAG = CourseDetailDetailFragment.class.getSimpleName();
     private List<Comment> mComments = new ArrayList<>();
@@ -104,6 +107,7 @@ public class CourseDetailDetailFragment extends BaseFragment implements Handler.
 
     private boolean isRewardEnd = true;
     private double amount = 0;
+    private Reward reward;
 
     public CourseDetailDetailFragment(long id) {
         this.id = id;
@@ -315,16 +319,20 @@ public class CourseDetailDetailFragment extends BaseFragment implements Handler.
     Response.Listener<Reward> rewardListener = new Response.Listener<Reward>() {
         @Override
         public void onResponse(Reward response) {
-            if (response.getType() == 1) {
-
-                amount = response.getAmount();
-                isRewardEnd = true;
+            if (response != null) {
+                reward = response;
+                if (response.getType() == 1) {
+                    amount = response.getAmount();
+                    isRewardEnd = true;
 //                mRewardArea.setEnabled(true);
 //                refresh();
-            } else {
-                isRewardEnd = true;
-                PayErrorDialog payErrorDialog = new PayErrorDialog(getActivity());
-                payErrorDialog.show();
+                } else {
+                    isRewardEnd = true;
+                    PayErrorDialog payErrorDialog = new PayErrorDialog(getActivity());
+                    payErrorDialog.setReward(response);
+                    payErrorDialog.setRequestCode(REQUEST_CODE_PAYMENT);
+                    payErrorDialog.show();
+                }
             }
         }
     };
@@ -339,10 +347,10 @@ public class CourseDetailDetailFragment extends BaseFragment implements Handler.
             }
             mRewardTxt.setText(sb.toString());
         } else {
-            if(amount == 0){
+            if (amount == 0) {
                 mRewardTxt.setText(String.format("打赏失败"));
                 mRewardArea.setEnabled(true);
-            }else {
+            } else {
                 mRewardTxt.setText(String.format("已向对方转入\n打赏随机金额%s元",
                         String.format("%.2f", amount)));
                 amount = 0;
@@ -425,5 +433,24 @@ public class CourseDetailDetailFragment extends BaseFragment implements Handler.
         }
     };
 
-
+    //支付成功回调
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_PAYMENT) {
+            if (resultCode == Activity.RESULT_OK) {
+                String result = data.getExtras().getString("pay_result");
+                /* 处理返回值
+                 * "success" - payment succeed
+                 * "fail"    - payment failed
+                 * "cancel"  - user canceld
+                 * "invalid" - payment plugin not installed
+                 */
+                CustomToast.show(getActivity(),result, Toast.LENGTH_SHORT);
+                String errorMsg = data.getExtras().getString("error_msg"); // 错误信息
+                String extraMsg = data.getExtras().getString("extra_msg"); // 错误信息
+//                showMsg(result, errorMsg, extraMsg);
+            }
+        }
+    }
 }

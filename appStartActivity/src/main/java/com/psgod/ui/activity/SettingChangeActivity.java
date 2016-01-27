@@ -7,24 +7,36 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.psgod.R;
 import com.psgod.Utils;
 import com.psgod.WeakReferenceHandler;
 import com.psgod.model.LoginUser;
+import com.psgod.network.request.GetUserInfoRequest;
+import com.psgod.network.request.MoneyTransferRequest;
+import com.psgod.network.request.PSGodErrorListener;
+import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.ui.widget.ActionBar;
+import com.psgod.ui.widget.ShareButton;
+import com.psgod.ui.widget.dialog.RechargeDialog;
 import com.psgod.ui.widget.dialog.RechargeTypeDialog;
+
+import org.json.JSONObject;
 
 /**
  * Created by pires on 16/1/20.
  */
 public class SettingChangeActivity extends PSGodBaseActivity {
     private static final String TAG = SettingChangeActivity.class.getSimpleName();
-    private Context mContext;
     private ActionBar mActionBar;
     private Button mChargeBtn;
     private Button mWithDrawBtn;
 
     private TextView mMoneyCount;
+
+    private double amount;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,8 +56,30 @@ public class SettingChangeActivity extends PSGodBaseActivity {
         mWithDrawBtn = (Button) findViewById(R.id.withdraw_money);
         mMoneyCount = (TextView) findViewById(R.id.money_count_tv);
 
-        mMoneyCount.setText(
-                String.format("%.2f", LoginUser.getInstance().getBalance()));
+        GetUserInfoRequest.Builder builder = new GetUserInfoRequest.Builder()
+                .setListener(new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        if (response != null) {
+                            LoginUser.getInstance().initFromJSONObject(response);
+
+                        }
+                        mMoneyCount.setText(
+                                String.format("%.2f", LoginUser.getInstance().getBalance()));
+                    }
+                })
+                .setErrorListener(new PSGodErrorListener() {
+                    @Override
+                    public void handleError(VolleyError error) {
+
+                    }
+                });
+        GetUserInfoRequest request = builder.build();
+        request.setTag(TAG);
+        RequestQueue requestQueue = PSGodRequestQueue
+                .getInstance(this).getRequestQueue();
+        requestQueue.add(request);
+
     }
 
     private void initListener() {
@@ -60,8 +94,15 @@ public class SettingChangeActivity extends PSGodBaseActivity {
         mWithDrawBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(SettingChangeActivity.this, WithDrawMoneyBindWechatActivity.class);
-                startActivity(intent);
+                LoginUser user = LoginUser.getInstance();
+                if (user.isBoundWechat()) {
+                    RechargeDialog rechargeDialog = new
+                            RechargeDialog(SettingChangeActivity.this,RechargeDialog.TRANSFER_WECHAT);
+                    rechargeDialog.show();
+                } else {
+                    Intent intent = new Intent(SettingChangeActivity.this, WithDrawMoneyBindWechatActivity.class);
+                    startActivity(intent);
+                }
             }
         });
 

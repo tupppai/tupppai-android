@@ -1,7 +1,10 @@
 package com.psgod.ui.widget.dialog;
 
+import android.app.Activity;
 import android.app.Dialog;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
@@ -16,6 +19,7 @@ import android.widget.TextView;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.pingplusplus.android.PaymentActivity;
 import com.psgod.Constants;
 import com.psgod.R;
 import com.psgod.WeakReferenceHandler;
@@ -23,8 +27,11 @@ import com.psgod.model.Reward;
 import com.psgod.network.request.ChannelRequest;
 import com.psgod.network.request.ChargeRequest;
 import com.psgod.network.request.CommentListRequest;
+import com.psgod.network.request.MoneyTransferRequest;
+import com.psgod.network.request.PSGodErrorListener;
 import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.network.request.RewardRequest;
+import com.psgod.ui.activity.PSGodBaseActivity;
 
 import org.json.JSONObject;
 
@@ -37,6 +44,9 @@ public class RechargeDialog extends Dialog implements Handler.Callback {
     public static final String CHANNEL_WECHAT = "wx";
     public static final String CHANNEL_ALIPAY = "alipay";
 
+
+    public static final String TRANSFER_WECHAT = "transfer_wx";
+
     private String mChannelType = CHANNEL_WECHAT;
 
     private WeakReferenceHandler mHandler = new WeakReferenceHandler(this);
@@ -44,8 +54,25 @@ public class RechargeDialog extends Dialog implements Handler.Callback {
     private Context mContext;
     private EditText mRechargeCountEt;
     private TextView mCompleteBtn;
+    private TextView mTitle;
 
-    public RechargeDialog(Context context,String channelType) {
+
+    private double amount;
+    private int requestCode;
+
+    public void setRequestCode(int requestCode) {
+        this.requestCode = requestCode;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+        if (amount > 0) {
+            mRechargeCountEt.setText(String.valueOf(amount));
+        }
+    }
+
+
+    public RechargeDialog(Context context, String channelType) {
         super(context, R.style.ActionSheetDialog);
         this.mContext = context;
         this.mChannelType = channelType;
@@ -54,35 +81,66 @@ public class RechargeDialog extends Dialog implements Handler.Callback {
         mRechargeCountEt = (EditText) findViewById(R.id.recharge_count_edit);
         setPricePoint(mRechargeCountEt);
         mCompleteBtn = (TextView) findViewById(R.id.recharge_sure_tv);
-
+        mTitle = (TextView) findViewById(R.id.recharge_title);
+        if (mChannelType.indexOf("transfer") != -1) {
+            mTitle.setText("请输入提现金额 (元)");
+        } else {
+            mTitle.setText("请输入充值金额 (元)");
+        }
         getWindow().getAttributes().width = Constants.WIDTH_OF_SCREEN;
         setCanceledOnTouchOutside(true);
 
         initListener();
     }
 
-    private void initListener(){
+    private void initListener() {
         mCompleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 RechargeDialog.this.dismiss();
-                ChargeRequest request = new ChargeRequest.Builder().
-                        setListener(new Response.Listener<JSONObject>() {
-                            @Override
-                            public void onResponse(JSONObject response) {
+                if (mChannelType.indexOf("transfer") != -1) {
+                    MoneyTransferRequest request = new MoneyTransferRequest.Builder().
+                            setErrorListener(new PSGodErrorListener() {
+                                @Override
+                                public void handleError(VolleyError error) {
 
-                            }
-                        }).
-                        setErrorListener(new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
+                                }
+                            }).setListener(new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
 
-                            }
-                        }).setAmount(mRechargeCountEt.getText().toString())
-                        .setType(mChannelType).build();
-                RequestQueue requestQueue = PSGodRequestQueue.getInstance(
-                       mContext).getRequestQueue();
-                requestQueue.add(request);
+                        }
+                    }).setAmount(String.valueOf(amount)).build();
+                    RequestQueue requestQueue = PSGodRequestQueue
+                            .getInstance(mContext).getRequestQueue();
+                    requestQueue.add(request);
+                } else {
+                    ChargeRequest request = new ChargeRequest.Builder().
+                            setListener(new Response.Listener<JSONObject>() {
+                                @Override
+                                public void onResponse(JSONObject response) {
+                                    if (response != null) {
+                                        Intent intent = new Intent();
+                                        String packageName = mContext.getPackageName();
+                                        ComponentName componentName = new ComponentName(packageName, packageName + ".wxapi.WXPayEntryActivity");
+                                        intent.setComponent(componentName);
+                                        intent.putExtra(PaymentActivity.EXTRA_CHARGE, response.toString());
+                                        ((Activity) mContext)
+                                                .startActivityForResult(intent, requestCode);
+                                    }
+                                }
+                            }).
+                            setErrorListener(new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+
+                                }
+                            }).setAmount(mRechargeCountEt.getText().toString())
+                            .setType(mChannelType).build();
+                    RequestQueue requestQueue = PSGodRequestQueue.getInstance(
+                            mContext).getRequestQueue();
+                    requestQueue.add(request);
+                }
             }
         });
     }
