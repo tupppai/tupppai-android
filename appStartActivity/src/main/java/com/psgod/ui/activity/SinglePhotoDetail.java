@@ -44,6 +44,7 @@ import com.psgod.network.request.CommentListRequest;
 import com.psgod.network.request.CommentListRequest.CommentListWrapper;
 import com.psgod.network.request.PSGodErrorListener;
 import com.psgod.network.request.PSGodRequestQueue;
+import com.psgod.network.request.PhotoItemRequest;
 import com.psgod.network.request.PostCommentRequest;
 import com.psgod.ui.adapter.SinglePhotoDetailAdapter;
 import com.psgod.ui.view.FaceRelativeLayout;
@@ -63,6 +64,9 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
     public static final int MSG_HIDE = 0X551;
     public static final int ITEM_SHOW = 495;
 
+    public static final String TYPE = "type";
+    public static final String ID = "id";
+
     private TextView mCommentBtn;
     private SinglePhotoDetailView mPhotoItemView;
 
@@ -81,6 +85,7 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
     private View mCommentListFooter;
     // 照片的id
     private long mId = -1;
+    private String mType;
     // 是否需要后台返回photoitem
     private int mNeedOriginPhotoItem = 0;
 
@@ -138,17 +143,6 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
             mPhotoItem = (PhotoItem) obj;
             // 获照片 id
             mId = mPhotoItem.getPid();
-        } else if (getIntent().hasExtra(Constants.IntentKey.ASK_ID)) {
-            Long id = getIntent().getLongExtra(Constants.IntentKey.ASK_ID, -1);
-            if (id == -1) {
-                return;
-            }
-            mId = id;
-            mPhotoItem = new PhotoItem();
-            // 设置需要后台返回photoitem
-            mNeedOriginPhotoItem = 1;
-        } else {
-            finish();
         }
 
         mSendCommentBtn = (TextView) this
@@ -217,8 +211,51 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
         // 初始化评论的数据
         refresh();
 
-        initEvents();
+        initPhotoItem();
     }
+
+    private void initPhotoItem() {
+        Intent intent = getIntent();
+        if (intent.hasExtra(TYPE)) {
+            mType = intent.getStringExtra(TYPE);
+        }
+        if (intent.hasExtra(ID)) {
+            mId = intent.getLongExtra(ID, 0);
+        }
+        if (mType != null && (mType.equals(Constants.IntentKey.ASK_ID) ||
+                mType.equals(Constants.IntentKey.REPLY_ID))) {
+            PhotoItemRequest request = new PhotoItemRequest.Builder().
+                    setId(String.valueOf(mId)).setType(mType).
+                    setListener(photoItemListener).build();
+            RequestQueue requestQueue = PSGodRequestQueue.getInstance(
+                    this).getRequestQueue();
+            requestQueue.add(request);
+        } else if (mPhotoItem != null) {
+            PhotoItemRequest request = new PhotoItemRequest.Builder().
+                    setId(String.valueOf(mPhotoItem.getPid())).setType(mPhotoItem.getType() == 1 ?
+                    Constants.IntentKey.ASK_ID : Constants.IntentKey.REPLY_ID).
+                    setListener(photoItemListener).setErrorListener(new PSGodErrorListener() {
+                @Override
+                public void handleError(VolleyError error) {
+                    mListView.onRefreshComplete();
+                }
+
+            }).build();
+            RequestQueue requestQueue = PSGodRequestQueue.getInstance(
+                    this).getRequestQueue();
+            requestQueue.add(request);
+        }
+    }
+
+    Listener<PhotoItem> photoItemListener = new Listener<PhotoItem>() {
+        @Override
+        public void onResponse(PhotoItem response) {
+            mPhotoItem = response;
+            mAdapter.setPhotoItem(mPhotoItem);
+            mAdapter.notifyDataSetChanged();
+            refresh();
+        }
+    };
 
     public void initEvents() {
         // 发送评论
@@ -542,7 +579,7 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
 
         @Override
         public void onRefresh(PullToRefreshBase refreshView) {
-            refresh();
+            initPhotoItem();
         }
 
     }
