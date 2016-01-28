@@ -159,7 +159,8 @@ public class MessageListAdapter extends BaseAdapter {
 
                     @Override
                     public void onClick(View v) {
-                       new CarouselPhotoDetailDialog(mContext,
+
+                        new CarouselPhotoDetailDialog(mContext,
                                 message.getTargetAskId(), message.getTargetId()).show();
                     }
                 });

@@ -2,12 +2,15 @@ package com.psgod.ui.widget.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.psgod.Constants;
+import com.psgod.CustomToast;
 import com.psgod.PsGodImageLoader;
 import com.psgod.R;
 import com.psgod.model.PhotoItem;
@@ -118,6 +121,9 @@ public class WorkShareDialog extends Dialog {
         @Override
         public void onComplete(Platform arg0, int arg1, HashMap<String, Object> arg2) {
             dismiss();
+            Looper.prepare();
+            CustomToast.show(getContext(), "分享成功", Toast.LENGTH_SHORT);
+            Looper.loop();
         }
 
         @Override

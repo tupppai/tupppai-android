@@ -22,7 +22,9 @@ import com.psgod.model.SelectImage;
 import com.psgod.network.request.BaseRequest;
 import com.psgod.ui.activity.ChannelActivity;
 import com.psgod.ui.activity.RecentActActivity;
+import com.psgod.ui.activity.SinglePhotoDetail;
 import com.psgod.ui.activity.WebBrowserActivity;
+import com.psgod.ui.widget.dialog.CarouselPhotoDetailDialog;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
 
 import org.json.JSONException;
@@ -344,6 +346,21 @@ public final class Utils {
                     }
                     context.startActivity(intent);
                 }
+            }
+        }
+    }
+
+    public static void skipByObject(Context context, Object obj){
+        if(obj instanceof PhotoItem){
+            PhotoItem photoItem = (PhotoItem) obj;
+            if(photoItem.getCategoryType().equals("tutorial")){
+                SinglePhotoDetail.startActivity(
+                        context,photoItem);
+            }else {
+                new CarouselPhotoDetailDialog(context,
+                        photoItem.getAskId(),
+                        photoItem.getPid(),
+                        photoItem.getCategoryId()).show();
             }
         }
     }

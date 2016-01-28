@@ -138,9 +138,10 @@ public class UserProfileAsksAdapter extends BaseAdapter {
 				mReplyIv.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						new CarouselPhotoDetailDialog(mContext,
-								replyPhotoItem.getAskId(),
-								replyPhotoItem.getReplyId()).show();
+						Utils.skipByObject(mContext,replyPhotoItem);
+//						new CarouselPhotoDetailDialog(mContext,
+//								replyPhotoItem.getAskId(),
+//								replyPhotoItem.getReplyId()).show();
 					}
 				});
 
@@ -152,8 +153,9 @@ public class UserProfileAsksAdapter extends BaseAdapter {
 			convertView.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					new CarouselPhotoDetailDialog(mContext,
-							photoItem.getAskId(),photoItem.getPid()).show();
+					Utils.skipByObject(mContext,photoItem);
+//					new CarouselPhotoDetailDialog(mContext,
+//							photoItem.getAskId(),photoItem.getPid()).show();
 				}
 			});
 		} else {

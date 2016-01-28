@@ -73,7 +73,7 @@ public class CourseAdapter extends BaseAdapter {
         viewHolder.avatar.setUser(new User(photoItem));
         viewHolder.avatarName.setText(photoItem.getNickname());
         viewHolder.viewNum.setText(String.valueOf(photoItem.getClickCount()));
-        viewHolder.likeNum.setText(String.valueOf(photoItem.getLoveCount()));
+        viewHolder.likeNum.setText(String.valueOf(photoItem.getLikeCount()));
         viewHolder.title.setText(photoItem.getTitle());
         viewHolder.imageNum.setText(String.valueOf(photoItem.getReplyCount()));
         convertView.setTag(R.id.tupppai_view_id, photoItem);

@@ -402,7 +402,8 @@ public class InprogressPageReplyAdapter extends BaseExpandableListAdapter implem
                     if (photoItem.getReplyCount() == 0) {
                         SinglePhotoDetail.startActivity(mContext, photoItem);
                     } else {
-                        new CarouselPhotoDetailDialog(mContext, photoItem.getAskId(), photoItem.getPid()).show();
+                        Utils.skipByObject(mContext,photoItem);
+//                        new CarouselPhotoDetailDialog(mContext, photoItem.getAskId(), photoItem.getPid()).show();
                     }
                 }
 

@@ -215,7 +215,7 @@ public class CourseDetailDetailFragment extends BaseFragment implements Handler.
         mHeadTime.setText(mPhotoItem.getUpdateTimeStr());
         mHeadTitle.setText(mPhotoItem.getTitle());
         mHeadDesc.setText(mPhotoItem.getDescription());
-        mHeadLikeCount.setText(String.valueOf(mPhotoItem.getLoveCount()));
+        mHeadLikeCount.setText(String.valueOf(mPhotoItem.getLikeCount()));
         mHeadViewCount.setText(String.valueOf(mPhotoItem.getClickCount()));
         mHeadReplyCount.setText(String.valueOf(mPhotoItem.getReplyCount()));
 

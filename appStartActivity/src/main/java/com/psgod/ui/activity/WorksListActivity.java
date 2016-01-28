@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageButton;
 
 import com.android.volley.RequestQueue;
@@ -26,7 +24,6 @@ import com.psgod.network.request.UserPhotoRequest;
 import com.psgod.ui.adapter.PhotoWaterFallListAdapter;
 import com.psgod.ui.view.PhotoWaterFallItemView.PhotoWaterFallListType;
 import com.psgod.ui.view.PullToRefreshStaggeredGridView;
-import com.psgod.ui.widget.dialog.CarouselPhotoDetailDialog;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
 
 import java.util.ArrayList;

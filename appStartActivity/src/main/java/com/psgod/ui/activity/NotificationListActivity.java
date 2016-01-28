@@ -336,9 +336,11 @@ public class NotificationListActivity extends PSGodBaseActivity {
 //								NotificationListActivity.this,
 //								mNotificationList.get(position)
 //										.getNotificationPhotoItem());
-						new CarouselPhotoDetailDialog(NotificationListActivity.this,mNotificationList.get(position)
-								.getNotificationPhotoItem().getAskId(),mNotificationList.get(position)
-								.getNotificationPhotoItem().getPid()).show();
+						Utils.skipByObject(NotificationListActivity.this,mNotificationList.get(position)
+								.getNotificationPhotoItem());
+//						new CarouselPhotoDetailDialog(NotificationListActivity.this,mNotificationList.get(position)
+//								.getNotificationPhotoItem().getAskId(),mNotificationList.get(position)
+//								.getNotificationPhotoItem().getPid()).show();
 					}
 				}
 				if (mType == TYPE_SYSTEM_NOTIFICATION) {

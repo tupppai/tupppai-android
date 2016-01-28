@@ -28,7 +28,7 @@
             android:layout_marginTop="35dp"
             android:layout_centerHorizontal="true"
             android:background="@null"
-            android:text="1.00"
+            android:text="0.00"
             android:textColor="#E6FF5B3F"
             android:textSize="30dp"
             android:inputType="numberDecimal"/>

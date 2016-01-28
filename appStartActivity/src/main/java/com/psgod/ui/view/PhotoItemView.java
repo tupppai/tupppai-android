@@ -9,6 +9,7 @@ package com.psgod.ui.view;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Handler.Callback;
 import android.os.Message;
@@ -171,7 +172,7 @@ public class PhotoItemView extends RelativeLayout implements Callback {
      * @author brandwang
      */
     public static enum PhotoListType {
-        SINGLE_ASK, SINGLE_REPLY, RECENT_REPLY, HOT_FOCUS_ASK, HOT_FOCUS_REPLY,COURSE_DETAIL
+        SINGLE_ASK, SINGLE_REPLY, RECENT_REPLY, HOT_FOCUS_ASK, HOT_FOCUS_REPLY, COURSE_DETAIL
     }
 
     public PhotoItemView(Context context) {
@@ -715,7 +716,7 @@ public class PhotoItemView extends RelativeLayout implements Callback {
             // mUploadImages.addView(uploadImageLeft);
             // mUploadImages.addView(mOriginTipIv);
             // }
-        }else{
+        } else {
 
         }
 
@@ -970,8 +971,13 @@ public class PhotoItemView extends RelativeLayout implements Callback {
                 url = url.split("\\?")[0];
                 imageUri = imageUri.split("\\?")[0];
                 if (url.equals(imageUri)) {
-                    mImageArea.setBackground(new BitmapDrawable(getResources(),
-                            BitmapUtils.getBlurBitmap(loadedImage)));
+                    Bitmap bitmap = BitmapUtils.getBlurBitmap(loadedImage, view, imageUri);
+                    if (bitmap == null) {
+                        mImageArea.setBackgroundColor(Color.parseColor("#00000000"));
+                    } else {
+                        mImageArea.setBackground(new BitmapDrawable(getResources(),
+                                bitmap));
+                    }
                 }
             }
         }
@@ -1105,13 +1111,14 @@ public class PhotoItemView extends RelativeLayout implements Callback {
     private OnClickListener imageOnClickListener = new OnClickListener() {
         @Override
         public void onClick(View v) {
-            if ((mPhotoItem.getType() == 1 && mPhotoItem.getReplyCount() == 0 )|| isRecentAct) {
+            if ((mPhotoItem.getType() == 1 && mPhotoItem.getReplyCount() == 0) || isRecentAct) {
                 SinglePhotoDetail.startActivity(mContext, mPhotoItem);
                 setEnabled(false);
                 mHandler.postDelayed(mViewEnabledRunnable, 1000);
             } else {
-                new CarouselPhotoDetailDialog(mContext, mPhotoItem.getAskId(), mPhotoItem.getPid()
-                        , mPhotoItem.getCategoryId()).show();
+                Utils.skipByObject(mContext, mPhotoItem);
+//                new CarouselPhotoDetailDialog(mContext, mPhotoItem.getAskId(), mPhotoItem.getPid()
+//                        , mPhotoItem.getCategoryId()).show();
             }
         }
     };

@@ -318,7 +318,8 @@ public class InprogressPageAskAdapter extends BaseAdapter implements
         public void onClick(View view) {
             PhotoItem photoItem = (PhotoItem) view.getTag(R.id.inprogress_item);
 //			CarouselPhotoDetailActivity.startActivity(mContext, photoItem);
-            new CarouselPhotoDetailDialog(mContext, photoItem.getAskId(), photoItem.getPid()).show();
+            Utils.skipByObject(mContext,photoItem);
+//            new CarouselPhotoDetailDialog(mContext, photoItem.getAskId(), photoItem.getPid()).show();
 //			Intent intent = new Intent(mContext, WorksListActivity.class);
 //			intent.putExtra("ASKID", photoItem.getAskId());
 //			mContext.startActivity(intent);

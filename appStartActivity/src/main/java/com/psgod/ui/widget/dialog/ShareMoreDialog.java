@@ -11,6 +11,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.os.Looper;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -193,6 +194,9 @@ public class ShareMoreDialog extends Dialog {
         @Override
         public void onComplete(Platform arg0, int arg1, HashMap<String, Object> arg2) {
             ShareMoreDialog.this.dismiss();
+            Looper.prepare();
+            CustomToast.show(mContext,"分享成功",Toast.LENGTH_SHORT);
+            Looper.loop();
         }
 
         @Override

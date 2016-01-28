@@ -42,7 +42,7 @@ public class ChannelListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return mPhotoItems.size();
+        return mPhotoItems.size() + 1;
     }
 
     @Override
@@ -97,6 +97,7 @@ public class ChannelListAdapter extends BaseAdapter {
             }
         }
         if (type == 0 && convertView instanceof PhotoItemView) {
+            position -= 1;
             PhotoItem photoItem = (PhotoItem) getItem(position);
             photoItemView.setIsHomePageFocus(isHomePageFouce);
             photoItemView.setIsHomePageHot(isHomePageHot);

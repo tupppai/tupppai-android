@@ -22,6 +22,7 @@ import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.psgod.Constants;
 import com.psgod.R;
+import com.psgod.Utils;
 import com.psgod.model.PhotoItem;
 import com.psgod.model.User;
 import com.psgod.ui.activity.SinglePhotoDetail;
@@ -195,8 +196,9 @@ public class PhotoWaterFallItemView extends RelativeLayout {
 							.getReplyCount() > 0);
 
 					if (havingReplies) {
-						new CarouselPhotoDetailDialog(mContext,mPhotoItem.getAskId(),
-								mPhotoItem.getPid(),mPhotoItem.getCategoryId()).show();
+						Utils.skipByObject(mContext,mPhotoItem);
+//						new CarouselPhotoDetailDialog(mContext,mPhotoItem.getAskId(),
+//								mPhotoItem.getPid(),mPhotoItem.getCategoryId()).show();
 					}
 
 					if (!havingReplies) {
@@ -231,8 +233,9 @@ public class PhotoWaterFallItemView extends RelativeLayout {
 							.getReplyCount() > 0);
 
 //					SinglePhotoDetail.startActivity(mContext, mPhotoItem);
-					new CarouselPhotoDetailDialog(mContext,mPhotoItem.getAskId(),mPhotoItem.getPid()
-					,mPhotoItem.getCategoryId()).show();
+					Utils.skipByObject(mContext,mPhotoItem);
+//					new CarouselPhotoDetailDialog(mContext,mPhotoItem.getAskId(),mPhotoItem.getPid()
+//					,mPhotoItem.getCategoryId()).show();
 				}
 			});
 

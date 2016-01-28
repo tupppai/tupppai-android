@@ -133,6 +133,7 @@ public class PhotoItem implements Serializable, Cloneable {
 
     private int mHasBought;
 
+    //自己点赞次数
     private int mLoveCount = 0;
 
     private int mClickCount;

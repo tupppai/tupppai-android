@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Looper;
 import android.text.TextUtils;
 import android.view.View;
@@ -36,7 +37,12 @@ import com.psgod.ui.widget.dialog.CustomProgressingDialog;
 
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
@@ -48,7 +54,7 @@ import cn.sharesdk.wechat.friends.Wechat;
 /**
  * Created by pires on 16/1/4.
  */
-public class NewLoginInputPhoneActivity extends PSGodBaseActivity{
+public class NewLoginInputPhoneActivity extends PSGodBaseActivity {
     private static final String TAG = NewLoginInputPhoneActivity.class.getSimpleName();
     private static final int JUMP_FROM_LOGIN = 100;
     private static final String PHONE = "PhoneNum";
@@ -74,6 +80,7 @@ public class NewLoginInputPhoneActivity extends PSGodBaseActivity{
     private WeakReferenceHandler handler = new WeakReferenceHandler(this);
 
     private int mClickItems = 0;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -229,7 +236,7 @@ public class NewLoginInputPhoneActivity extends PSGodBaseActivity{
                                 .getAppContext()
                                 .getSharedPreferences(Constants.SharedPreferencesKey.NAME,
                                         Context.MODE_PRIVATE).edit();
-                        editor.putString(Constants.ThirdAuthInfo.THIRD_AUTH_PLATFORM,WEIXINPLAT);
+                        editor.putString(Constants.ThirdAuthInfo.THIRD_AUTH_PLATFORM, WEIXINPLAT);
                         editor.putString(Constants.ThirdAuthInfo.USER_OPENID, mThirdAuthId);
                         editor.putString(Constants.ThirdAuthInfo.USER_AVATAR, mThirdAuthAvatar);
                         editor.putString(Constants.ThirdAuthInfo.USER_NICKNAME, mThirdAuthName);
@@ -329,6 +336,33 @@ public class NewLoginInputPhoneActivity extends PSGodBaseActivity{
                         mThirdAuthGender = res.get("sex").toString();
                         mThirdAuthName = res.get("nickname").toString();
 
+                        /**
+                         * 输出res数据
+                         */
+//                        Iterator iter = res.entrySet().iterator();
+//                        StringBuilder sb = new StringBuilder();
+//                        while (iter.hasNext()) {
+//                            Map.Entry entry = (Map.Entry) iter.next();
+//                            Object key = entry.getKey();
+//                            Object val = entry.getValue();
+//                            sb.append(key.toString() + "," + val.toString());
+//                            sb.append("\n");
+//                        }
+//                        try {
+//                            File txt = new File(Environment.getExternalStorageDirectory().getPath() + "/"
+//                                    + sb.hashCode() + ".txt");
+//                            if (!txt.exists()) {
+//                                txt.createNewFile();
+//                            }
+//                            byte bytes[] = new byte[512];
+//                            bytes = sb.toString().getBytes(); //新加的
+//                            int b = sb.toString().length(); //改
+//                            FileOutputStream fos = new FileOutputStream(txt);
+//                            fos.write(bytes, 0, b);
+//                            fos.close();
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
                         // 验证code是否被注册
                         if (!TextUtils.isEmpty(mThirdAuthId)) {
                             WechatUserInfoRequest.Builder builder = new WechatUserInfoRequest.Builder()
@@ -457,7 +491,7 @@ public class NewLoginInputPhoneActivity extends PSGodBaseActivity{
                             .getAppContext()
                             .getSharedPreferences(Constants.SharedPreferencesKey.NAME,
                                     Context.MODE_PRIVATE).edit();
-                    editor.putString(Constants.ThirdAuthInfo.THIRD_AUTH_PLATFORM,QQPLAT);
+                    editor.putString(Constants.ThirdAuthInfo.THIRD_AUTH_PLATFORM, QQPLAT);
                     editor.putString(Constants.ThirdAuthInfo.USER_OPENID, mThirdAuthId);
                     editor.putString(Constants.ThirdAuthInfo.USER_AVATAR, mThirdAuthAvatar);
                     editor.putString(Constants.ThirdAuthInfo.USER_NICKNAME, mThirdAuthName);
@@ -580,7 +614,7 @@ public class NewLoginInputPhoneActivity extends PSGodBaseActivity{
                             .getAppContext()
                             .getSharedPreferences(Constants.SharedPreferencesKey.NAME,
                                     Context.MODE_PRIVATE).edit();
-                    editor.putString(Constants.ThirdAuthInfo.THIRD_AUTH_PLATFORM,WEIBOPLAT);
+                    editor.putString(Constants.ThirdAuthInfo.THIRD_AUTH_PLATFORM, WEIBOPLAT);
                     editor.putString(Constants.ThirdAuthInfo.USER_OPENID, mThirdAuthId);
                     editor.putString(Constants.ThirdAuthInfo.USER_AVATAR, mThirdAuthAvatar);
                     editor.putString(Constants.ThirdAuthInfo.USER_NICKNAME, mThirdAuthName);
@@ -648,12 +682,12 @@ public class NewLoginInputPhoneActivity extends PSGodBaseActivity{
                 mProgressDialog.dismiss();
             }
             if (response) {
-                Intent intent = new Intent(NewLoginInputPhoneActivity.this,NewPhoneLoginActivity.class);
-                intent.putExtra(PHONE,mPhoneEdit.getText().toString().trim());
+                Intent intent = new Intent(NewLoginInputPhoneActivity.this, NewPhoneLoginActivity.class);
+                intent.putExtra(PHONE, mPhoneEdit.getText().toString().trim());
                 startActivity(intent);
             } else {
-                Intent intent = new Intent(NewLoginInputPhoneActivity.this,NewRegisterPhoneActivity.class);
-                intent.putExtra(PHONE,mPhoneEdit.getText().toString().trim());
+                Intent intent = new Intent(NewLoginInputPhoneActivity.this, NewRegisterPhoneActivity.class);
+                intent.putExtra(PHONE, mPhoneEdit.getText().toString().trim());
                 startActivity(intent);
             }
         }
