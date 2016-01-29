@@ -129,7 +129,7 @@ public class RechargeDialog extends Dialog implements Handler.Callback {
                                         intent.putExtra(WithDrawMoneyActivity.RESULT, response);
                                         mContext.startActivity(intent);
                                     }
-                                }).setAmount(String.valueOf(amount)).build();
+                                }).setAmount(mRechargeCountEt.getText().toString()).build();
                         RequestQueue requestQueue = PSGodRequestQueue
                                 .getInstance(mContext).getRequestQueue();
                         requestQueue.add(request);
