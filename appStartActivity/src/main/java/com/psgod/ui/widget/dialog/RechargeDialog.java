@@ -98,6 +98,15 @@ public class RechargeDialog extends Dialog implements Handler.Callback {
     }
 
     private void initListener() {
+        mRechargeCountEt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mRechargeCountEt.getText().toString().equals("0.00")) {
+                    mRechargeCountEt.setText("");
+                }
+            }
+        });
+
         mCompleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -117,17 +126,17 @@ public class RechargeDialog extends Dialog implements Handler.Callback {
                                     public void onResponse(MoneyTransfer response) {
                                         dismiss();
                                         Intent intent = new Intent(mContext, WithDrawMoneyActivity.class);
-                                        intent.putExtra(WithDrawMoneyActivity.RESULT,response);
+                                        intent.putExtra(WithDrawMoneyActivity.RESULT, response);
                                         mContext.startActivity(intent);
                                     }
                                 }).setAmount(String.valueOf(amount)).build();
                         RequestQueue requestQueue = PSGodRequestQueue
                                 .getInstance(mContext).getRequestQueue();
                         requestQueue.add(request);
-                    }else{
+                    } else {
                         Intent intent = new Intent(mContext,
                                 WithDrawMoneyBindWechatActivity.class);
-                        intent.putExtra(WithDrawMoneyBindWechatActivity.AMOUNT,amount);
+                        intent.putExtra(WithDrawMoneyBindWechatActivity.AMOUNT, amount);
                         mContext.startActivity(intent);
                     }
                 } else {
@@ -146,12 +155,12 @@ public class RechargeDialog extends Dialog implements Handler.Callback {
                                     }
                                 }
                             }).
-                            setErrorListener(new Response.ErrorListener() {
+                            setErrorListener(new PSGodErrorListener(this) {
                                 @Override
-                                public void onErrorResponse(VolleyError error) {
+                                public void handleError(VolleyError error) {
 
                                 }
-                            }).setAmount(mRechargeCountEt.getText().toString())
+                            } ).setAmount(mRechargeCountEt.getText().toString())
                             .setType(mChannelType).build();
                     RequestQueue requestQueue = PSGodRequestQueue.getInstance(
                             mContext).getRequestQueue();

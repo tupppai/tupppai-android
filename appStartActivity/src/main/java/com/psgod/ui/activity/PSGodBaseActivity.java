@@ -97,8 +97,6 @@ public abstract class PSGodBaseActivity extends FragmentActivity implements
         MobclickAgent.onResume(this);
     }
 
-    ;
-
     @Override
     protected void onPause() {
         super.onPause();
