@@ -106,6 +106,7 @@ public class CourseDetailDetailFragment extends BaseFragment implements Handler.
     private PhotoItem mPhotoItem;
 
     private boolean isRewardEnd = true;
+    private boolean isRewardError = false;
     private double amount = 0;
     private Reward reward;
 
@@ -283,7 +284,7 @@ public class CourseDetailDetailFragment extends BaseFragment implements Handler.
                         fixedThreadPool.execute(new Runnable() {
                             @Override
                             public void run() {
-                                for (int i = 1; i < 6 || !isRewardEnd; i++) {
+                                for (int i = 1; (i < 6 || !isRewardEnd) && !isRewardError; i++) {
                                     try {
                                         Thread.sleep(300);
                                     } catch (InterruptedException e) {
@@ -301,8 +302,9 @@ public class CourseDetailDetailFragment extends BaseFragment implements Handler.
                                 setErrorListener(new PSGodErrorListener(this) {
                                     @Override
                                     public void handleError(VolleyError error) {
-                                        mRewardArea.setEnabled(true);
-                                        mRewardTxt.setText(String.format("支付出现问题\n请重试"));
+//                                        mRewardArea.setEnabled(true);
+                                        isRewardError = true;
+//                                      mRewardTxt.setText(String.format("支付出现问题\n请重试"));
                                     }
                                 }).build();
                         RequestQueue requestQueue = PSGodRequestQueue.getInstance(
@@ -440,15 +442,52 @@ public class CourseDetailDetailFragment extends BaseFragment implements Handler.
         if (requestCode == REQUEST_CODE_PAYMENT) {
             if (resultCode == Activity.RESULT_OK) {
                 String result = data.getExtras().getString("pay_result");
-                /* 处理返回值
+                /** 处理返回值
                  * "success" - payment succeed
                  * "fail"    - payment failed
                  * "cancel"  - user canceld
                  * "invalid" - payment plugin not installed
                  */
-                CustomToast.show(getActivity(),result, Toast.LENGTH_SHORT);
-                String errorMsg = data.getExtras().getString("error_msg"); // 错误信息
-                String extraMsg = data.getExtras().getString("extra_msg"); // 错误信息
+                if (result.equals("payment succeed")) {
+//                    RewardRequest request = new RewardRequest.Builder().
+//                            setId(String.valueOf(id)).
+//                            setListener(new Response.Listener<Reward>() {
+//                                @Override
+//                                public void onResponse(Reward response) {
+//                                    if (response != null) {
+//                                        reward = response;
+//                                        if (response.getType() == 1) {
+//                                            mHandler.sendEmptyMessage(-1);
+//                                            CustomToast.show(getActivity(), "支付成功", Toast.LENGTH_SHORT);
+//                                        } else {
+//                                            PayErrorDialog payErrorDialog = new PayErrorDialog(getActivity());
+//                                            payErrorDialog.setReward(response);
+//                                            payErrorDialog.setRequestCode(REQUEST_CODE_PAYMENT);
+//                                            payErrorDialog.show();
+//                                        }
+//                                    }
+//                                }
+//                            }).
+//                            setAmount(amount).
+//                            setErrorListener(new PSGodErrorListener(this) {
+//                                @Override
+//                                public void handleError(VolleyError error) {
+//                                    mRewardArea.setEnabled(true);
+//                                    mRewardTxt.setText(String.format("支付出现问题\n请重试"));
+//                                }
+//                            }).build();
+//                    RequestQueue requestQueue = PSGodRequestQueue.getInstance(
+//                            getActivity()).getRequestQueue();
+//                    requestQueue.add(request);
+                    CustomToast.show(getActivity(), "支付成功", Toast.LENGTH_SHORT);
+                } else if (result.equals("payment failed")) {
+                    CustomToast.show(getActivity(), "支付失败", Toast.LENGTH_SHORT);
+                } else if (result.equals("user canceld")) {
+                    CustomToast.show(getActivity(), "取消支付", Toast.LENGTH_SHORT);
+                }
+//
+//                String errorMsg = data.getExtras().getString("error_msg"); // 错误信息
+//                String extraMsg = data.getExtras().getString("extra_msg"); // 错误信息
 //                showMsg(result, errorMsg, extraMsg);
             }
         }

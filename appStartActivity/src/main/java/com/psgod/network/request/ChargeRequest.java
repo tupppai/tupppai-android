@@ -27,7 +27,7 @@ public class ChargeRequest extends BaseRequest<JSONObject> {
 
     @Override
     protected JSONObject doParseNetworkResponse(JSONObject reponse) throws UnsupportedEncodingException, JSONException {
-        return reponse;
+        return reponse.getJSONObject("data");
     }
 
     public static class Builder implements IGetRequestBuilder {

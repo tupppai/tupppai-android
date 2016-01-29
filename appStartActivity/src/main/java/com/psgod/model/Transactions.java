@@ -16,6 +16,15 @@ public class Transactions implements Serializable{
     private String deleted_at;
     private String created_at;
     private String updated_at;
+    private String avatar;
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
 
     public void setId(String id) {
         this.id = id;

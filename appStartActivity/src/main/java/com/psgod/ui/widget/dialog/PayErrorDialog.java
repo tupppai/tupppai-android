@@ -42,7 +42,7 @@ public class PayErrorDialog extends Dialog{
                 dismiss();
                 RechargeTypeDialog rechargeTypeDialog = new RechargeTypeDialog(context);
                 if(reward != null){
-                    rechargeTypeDialog.setAmount(reward.getAmount() - reward.getBalance());
+                    rechargeTypeDialog.setAmount(1);
                 }
                 rechargeTypeDialog.setRequestCode(requestCode);
                 rechargeTypeDialog.show();

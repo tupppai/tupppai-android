@@ -284,7 +284,6 @@ public class ChannelActivity extends PSGodBaseActivity {
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
                 refresh();
             }
-
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
 

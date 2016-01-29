@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.psgod"
     android:versionCode="38"
-    android:versionName="1.0.6">
+    android:versionName="1.1.0">
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -172,7 +172,8 @@
         <activity android:name=".ui.activity.NewPhoneLoginActivity" />
         <activity android:name=".ui.activity.NewRegisterPhoneActivity" />
         <activity android:name=".ui.activity.NewResetPasswdActivity" />
-        <activity android:name=".ui.activity.BindInputPhoneActivity"
+        <activity
+            android:name=".ui.activity.BindInputPhoneActivity"
             android:launchMode="singleTask" />
         <activity android:name=".ui.activity.BindPhoneActivity" />
 
@@ -319,19 +320,20 @@
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustNothing|stateHidden" />
 
-    <!-- =============== ping++支付相关 start =============== -->
-        <!-- Ping++ sdk -->
+        <!-- =============== ping++支付相关 start =============== -->
         <activity
             android:name="com.pingplusplus.android.PaymentActivity"
             android:configChanges="orientation|screenSize"
             android:launchMode="singleTop"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <!-- 微信支付 sdk ，也是 Ping++ sdk 调用入口 -->
+
+        <!-- 微信支付 -->
         <activity-alias
             android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"
             android:targetActivity="com.pingplusplus.android.PaymentActivity" />
-        <!-- 支付宝 sdk -->
+
+        <!-- 支付宝 -->
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
@@ -343,10 +345,10 @@
             android:exported="false"
             android:screenOrientation="behind"></activity>
 
-        <!-- 银联支付 sdk -->
-        <activity android:name="com.unionpay.uppay.PayActivity"></activity>
+        <!-- 银联支付 -->
+        <activity android:name="com.unionpay.uppay.PayActivity" />
 
-        <!-- 百付宝 sdk -->
+        <!-- 百度钱包 -->
         <activity
             android:name="com.baidu.paysdk.login.LoginActivity"
             android:configChanges="keyboardHidden|navigation|orientation|screenSize"
@@ -485,9 +487,9 @@
             android:exported="@bool/bd_wallet_switch_global_debug"
             android:hardwareAccelerated="false"
             android:theme="@style/EbpayThemeActivit"
-            android:windowSoftInputMode="stateHidden"></activity>
+            android:windowSoftInputMode="stateHidden" />
 
-    <!-- =============== ping++支付相关  end  =============== -->
+        <!-- =============== ping++支付相关  end  =============== -->
     </application>
 
 </manifest>

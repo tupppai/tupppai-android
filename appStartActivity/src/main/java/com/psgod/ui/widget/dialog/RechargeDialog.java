@@ -20,6 +20,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.pingplusplus.android.PaymentActivity;
+import com.pingplusplus.android.PingppLog;
 import com.psgod.Constants;
 import com.psgod.R;
 import com.psgod.WeakReferenceHandler;
@@ -62,7 +63,7 @@ public class RechargeDialog extends Dialog implements Handler.Callback {
 
 
     private double amount;
-    private int requestCode;
+    private int requestCode = 191;
 
     public void setRequestCode(int requestCode) {
         this.requestCode = requestCode;
@@ -71,7 +72,7 @@ public class RechargeDialog extends Dialog implements Handler.Callback {
     public void setAmount(double amount) {
         this.amount = amount;
         if (amount > 0) {
-            mRechargeCountEt.setText(String.valueOf(amount));
+            mRechargeCountEt.setText(String.format("%.2f",amount));
         }
     }
 
@@ -154,13 +155,11 @@ public class RechargeDialog extends Dialog implements Handler.Callback {
                                 @Override
                                 public void onResponse(JSONObject response) {
                                     if (response != null) {
-                                        Intent intent = new Intent();
-                                        String packageName = mContext.getPackageName();
-                                        ComponentName componentName = new ComponentName(packageName, packageName + ".wxapi.WXPayEntryActivity");
-                                        intent.setComponent(componentName);
-                                        intent.putExtra(PaymentActivity.EXTRA_CHARGE, response.toString());
-                                        ((Activity) mContext)
-                                                .startActivityForResult(intent, requestCode);
+                                        PingppLog.DEBUG = true;
+                                        Intent intent = new Intent(mContext, PaymentActivity.class);
+                                        intent.putExtra(PaymentActivity.EXTRA_CHARGE,
+                                                response.toString());
+                                        ((Activity)mContext).startActivityForResult(intent, requestCode);
                                     }
                                 }
                             }).

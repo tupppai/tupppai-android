@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.psgod.Constants;
+import com.psgod.PsGodImageLoader;
 import com.psgod.R;
 import com.psgod.model.Transactions;
 import com.psgod.ui.widget.AvatarImageView;
@@ -60,7 +62,9 @@ public class TransactionsAdatper extends BaseAdapter {
 
         Transactions transactions = list.get(position);
 //        if(transactions.get)
-        if (Integer.parseInt(transactions.getType()) == 1) {
+        PsGodImageLoader.getInstance().displayImage(transactions.getAvatar(), viewHolder.avatar
+                , Constants.DISPLAY_IMAGE_OPTIONS_AVATAR);
+        if (transactions.getType().equals("1")) {
             viewHolder.count.setTextColor(Color.parseColor("#e68dc81b"));
             viewHolder.count.setText(String.format("+%.2f", transactions.getAmount()));
         } else {

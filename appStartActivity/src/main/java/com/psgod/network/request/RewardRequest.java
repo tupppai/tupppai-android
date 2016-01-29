@@ -34,6 +34,7 @@ public class RewardRequest extends BaseRequest<Reward> {
     public static class Builder implements IGetRequestBuilder {
 
         private String id;
+        private double amount;
         private Response.Listener<Reward> listener;
         private Response.ErrorListener errorListener;
 
@@ -42,6 +43,10 @@ public class RewardRequest extends BaseRequest<Reward> {
             return this;
         }
 
+        public Builder setAmount(double amount) {
+            this.amount = amount;
+            return this;
+        }
 
         public Builder setListener(Response.Listener<Reward> listener) {
             this.listener = listener;
@@ -65,6 +70,9 @@ public class RewardRequest extends BaseRequest<Reward> {
             StringBuilder sb = new StringBuilder(BaseRequest.PSGOD_BASE_URL);
             sb.append("thread/reward");
             sb.append("?ask_id=").append(id);
+            if(amount != 0){
+                sb.append("&amount=").append(amount);
+            }
 
             String url = sb.toString();
             Logger.log(Logger.LOG_LEVEL_DEBUG, Logger.USER_LEVEL_COLOR, TAG,
