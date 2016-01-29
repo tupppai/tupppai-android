@@ -112,6 +112,9 @@ public class RechargeDialog extends Dialog implements Handler.Callback {
             public void onClick(View view) {
                 RechargeDialog.this.dismiss();
                 if (mChannelType.indexOf("transfer") != -1) {
+                    /**
+                     * 提现部分
+                     */
                     LoginUser user = LoginUser.getInstance();
                     if (user.isBoundWechat()) {
                         MoneyTransferRequest request = new MoneyTransferRequest.Builder().
@@ -134,12 +137,18 @@ public class RechargeDialog extends Dialog implements Handler.Callback {
                                 .getInstance(mContext).getRequestQueue();
                         requestQueue.add(request);
                     } else {
+                        /**
+                         * 未绑定微信跳转绑定页
+                         */
                         Intent intent = new Intent(mContext,
                                 WithDrawMoneyBindWechatActivity.class);
                         intent.putExtra(WithDrawMoneyBindWechatActivity.AMOUNT, amount);
                         mContext.startActivity(intent);
                     }
                 } else {
+                    /**
+                     * 充值部分
+                     */
                     ChargeRequest request = new ChargeRequest.Builder().
                             setListener(new Response.Listener<JSONObject>() {
                                 @Override
@@ -160,7 +169,7 @@ public class RechargeDialog extends Dialog implements Handler.Callback {
                                 public void handleError(VolleyError error) {
 
                                 }
-                            } ).setAmount(mRechargeCountEt.getText().toString())
+                            }).setAmount(mRechargeCountEt.getText().toString())
                             .setType(mChannelType).build();
                     RequestQueue requestQueue = PSGodRequestQueue.getInstance(
                             mContext).getRequestQueue();
@@ -200,26 +209,31 @@ public class RechargeDialog extends Dialog implements Handler.Callback {
             @Override
             public void onTextChanged(CharSequence s, int start, int before,
                                       int count) {
-                if (s.toString().contains(".")) {
-                    if (s.length() - 1 - s.toString().indexOf(".") > 2) {
-                        s = s.toString().subSequence(0,
-                                s.toString().indexOf(".") + 3);
-                        editText.setText(s);
-                        editText.setSelection(s.length());
+                if (s.toString().indexOf("0.00") == 0) {
+                    editText.setText(s.toString().substring(4,5));
+                    editText.setSelection(1);
+                } else {
+                    if (s.toString().contains(".")) {
+                        if (s.length() - 1 - s.toString().indexOf(".") > 2) {
+                            s = s.toString().subSequence(0,
+                                    s.toString().indexOf(".") + 3);
+                            editText.setText(s);
+                            editText.setSelection(s.length());
+                        }
                     }
-                }
-                if (s.toString().trim().substring(0).equals(".")) {
-                    s = "0" + s;
-                    editText.setText(s);
-                    editText.setSelection(2);
-                }
+                    if (s.toString().trim().substring(0).equals(".")) {
+                        s = "0" + s;
+                        editText.setText(s);
+                        editText.setSelection(2);
+                    }
 
-                if (s.toString().startsWith("0")
-                        && s.toString().trim().length() > 1) {
-                    if (!s.toString().substring(1, 2).equals(".")) {
-                        editText.setText(s.subSequence(0, 1));
-                        editText.setSelection(1);
-                        return;
+                    if (s.toString().startsWith("0")
+                            && s.toString().trim().length() > 1) {
+                        if (!s.toString().substring(1, 2).equals(".")) {
+                            editText.setText(s.subSequence(0, 1));
+                            editText.setSelection(1);
+                            return;
+                        }
                     }
                 }
             }

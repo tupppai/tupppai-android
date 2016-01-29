@@ -48,12 +48,20 @@ public class SettingChangeActivity extends PSGodBaseActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        refresh();
+    }
+
     private void initView() {
         mActionBar = (ActionBar) this.findViewById(R.id.actionbar);
         mChargeBtn = (Button) findViewById(R.id.recharge);
         mWithDrawBtn = (Button) findViewById(R.id.withdraw_money);
         mMoneyCount = (TextView) findViewById(R.id.money_count_tv);
+    }
 
+    private void refresh(){
         GetUserInfoRequest.Builder builder = new GetUserInfoRequest.Builder()
                 .setListener(new Response.Listener<JSONObject>() {
                     @Override
@@ -77,7 +85,6 @@ public class SettingChangeActivity extends PSGodBaseActivity {
         RequestQueue requestQueue = PSGodRequestQueue
                 .getInstance(this).getRequestQueue();
         requestQueue.add(request);
-
     }
 
     private void initListener() {
