@@ -332,7 +332,7 @@ public class NewResetPasswdActivity extends PSGodBaseActivity{
         }
     };
 
-    private PSGodErrorListener errorListener = new PSGodErrorListener() {
+    private PSGodErrorListener errorListener = new PSGodErrorListener(this) {
 
         @Override
         public void handleError(VolleyError error) {

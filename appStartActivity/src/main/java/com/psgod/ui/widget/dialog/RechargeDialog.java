@@ -106,7 +106,7 @@ public class RechargeDialog extends Dialog implements Handler.Callback {
                     LoginUser user = LoginUser.getInstance();
                     if (user.isBoundWechat()) {
                         MoneyTransferRequest request = new MoneyTransferRequest.Builder().
-                                setErrorListener(new PSGodErrorListener() {
+                                setErrorListener(new PSGodErrorListener(this) {
                                     @Override
                                     public void handleError(VolleyError error) {
                                         dismiss();

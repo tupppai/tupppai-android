@@ -48,7 +48,7 @@ import de.greenrobot.event.EventBus;
 
 /**
  * Created by pires on 16/1/7.
- *
+ * <p/>
  * 绑定手机号
  */
 public class BindPhoneActivity extends PSGodBaseActivity {
@@ -307,7 +307,7 @@ public class BindPhoneActivity extends PSGodBaseActivity {
 
     @Override
     public boolean handleMessage(Message msg) {
-        switch(msg.what) {
+        switch (msg.what) {
             case MSG_TIMER:
                 // 重发倒计时
                 if (mLeftTime > 1) {
@@ -323,8 +323,10 @@ public class BindPhoneActivity extends PSGodBaseActivity {
                 }
                 break;
             case MSG_CODE:
-                String codeMsg=msg.getData().getString("messagecode");
-                mCodeText.setText(codeMsg);
+                String codeMsg = msg.getData().getString("messagecode");
+                if (codeMsg != null && codeMsg.length() >= 4 && codeMsg.length() <= 6) {
+                    mCodeText.setText(codeMsg);
+                }
                 mPasswdText.setFocusableInTouchMode(true);
                 mPasswdText.requestFocus();
                 break;
@@ -355,14 +357,14 @@ public class BindPhoneActivity extends PSGodBaseActivity {
         }
     };
 
-    private PSGodErrorListener errorListener = new PSGodErrorListener() {
+    private PSGodErrorListener errorListener = new PSGodErrorListener(this) {
 
         @Override
         public void handleError(VolleyError error) {
             if ((mProgressDialog != null) && mProgressDialog.isShowing()) {
                 mProgressDialog.dismiss();
             }
-            Toast.makeText(mContext,"绑定失败", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, "绑定失败", Toast.LENGTH_SHORT).show();
         }
 
     };

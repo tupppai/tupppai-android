@@ -298,7 +298,7 @@ public class CourseDetailDetailFragment extends BaseFragment implements Handler.
                         RewardRequest request = new RewardRequest.Builder().
                                 setId(String.valueOf(id)).
                                 setListener(rewardListener).
-                                setErrorListener(new PSGodErrorListener() {
+                                setErrorListener(new PSGodErrorListener(this) {
                                     @Override
                                     public void handleError(VolleyError error) {
                                         mRewardArea.setEnabled(true);
@@ -422,7 +422,7 @@ public class CourseDetailDetailFragment extends BaseFragment implements Handler.
                 }
             };
 
-    PSGodErrorListener errorListener = new PSGodErrorListener() {
+    PSGodErrorListener errorListener = new PSGodErrorListener(this) {
         @Override
         public void handleError(VolleyError error) {
             mViewHolder.mListView.onRefreshComplete();

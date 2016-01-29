@@ -761,7 +761,9 @@ public class NewRegisterPhoneActivity extends PSGodBaseActivity{
                 }
             case MSG_CODE:
                 String codeMsg=msg.getData().getString("messagecode");
-                mVerifyText.setText(codeMsg);
+                if(codeMsg != null && codeMsg.length() >= 4 && codeMsg.length() <=6) {
+                    mVerifyText.setText(codeMsg);
+                }
                 Editable etext = mPasswdText.getText();
                 Selection.setSelection(etext, etext.length());
                 break;
@@ -815,7 +817,7 @@ public class NewRegisterPhoneActivity extends PSGodBaseActivity{
         }
     };
 
-    private PSGodErrorListener errorListener = new PSGodErrorListener() {
+    private PSGodErrorListener errorListener = new PSGodErrorListener(this) {
 
         @Override
         public void handleError(VolleyError error) {

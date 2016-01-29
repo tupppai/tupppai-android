@@ -37,6 +37,11 @@ public class BindInputPhoneActivity extends PSGodBaseActivity {
         setContentView(R.layout.activity_bind_input_phone);
         mContext = this;
 
+        if(Utils.isBindInputPhoneShow()){
+            finish();
+        }
+        Utils.setBindInputPhoneShow(true);
+
         initViews();
         initEvents();
 
@@ -54,6 +59,12 @@ public class BindInputPhoneActivity extends PSGodBaseActivity {
         mPhoneText = (EditText) findViewById(R.id.input_phone);
         mNextBtn = (Button) findViewById(R.id.next_btn);
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Utils.setBindInputPhoneShow(false);
     }
 
     private void initEvents() {

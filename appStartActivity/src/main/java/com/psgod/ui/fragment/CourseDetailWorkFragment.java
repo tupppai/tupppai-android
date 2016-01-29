@@ -172,7 +172,7 @@ public class CourseDetailWorkFragment extends BaseFragment {
     }
 
 
-    private Response.ErrorListener errorListener = new PSGodErrorListener() {
+    private Response.ErrorListener errorListener = new PSGodErrorListener(this) {
         @Override
         public void handleError(VolleyError error) {
             // TODO Auto-generated method stub

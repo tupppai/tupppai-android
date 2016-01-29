@@ -283,7 +283,7 @@ public class SinglePhotoView extends RelativeLayout implements
         }
     };
 
-    private PSGodErrorListener sendCommentErrorListener = new PSGodErrorListener() {
+    private PSGodErrorListener sendCommentErrorListener = new PSGodErrorListener(this) {
         @Override
         public void handleError(VolleyError error) {
             Toast.makeText(getContext(), "评论失败，请稍后再试",

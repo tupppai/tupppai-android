@@ -66,7 +66,7 @@ public class SettingChangeActivity extends PSGodBaseActivity {
                                 String.format("%.2f", LoginUser.getInstance().getBalance()));
                     }
                 })
-                .setErrorListener(new PSGodErrorListener() {
+                .setErrorListener(new PSGodErrorListener(this) {
                     @Override
                     public void handleError(VolleyError error) {
 

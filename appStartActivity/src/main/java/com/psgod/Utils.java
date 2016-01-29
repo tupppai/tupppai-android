@@ -365,6 +365,16 @@ public final class Utils {
         }
     }
 
+    private static boolean isBindInputPhoneShow = false;
+
+    public static void setBindInputPhoneShow(boolean isBindInputPhoneShow) {
+        Utils.isBindInputPhoneShow = isBindInputPhoneShow;
+    }
+
+    public static boolean isBindInputPhoneShow() {
+        return isBindInputPhoneShow;
+    }
+
     // 隐藏输入法
     public static void hideInputPanel(Context context, View view) {
         // 隐藏软键盘

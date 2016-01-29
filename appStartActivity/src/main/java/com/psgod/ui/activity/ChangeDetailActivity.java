@@ -132,7 +132,7 @@ public class ChangeDetailActivity extends PSGodBaseActivity {
         }
     };
 
-    PSGodErrorListener errorListener = new PSGodErrorListener() {
+    PSGodErrorListener errorListener = new PSGodErrorListener(this) {
         @Override
         public void handleError(VolleyError error) {
             mListView.onRefreshComplete();

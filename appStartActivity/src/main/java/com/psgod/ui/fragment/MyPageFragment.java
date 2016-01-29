@@ -285,7 +285,7 @@ public class MyPageFragment extends Fragment implements
             // 请求后台用户数据进行更新
             GetUserInfoRequest.Builder builder = new GetUserInfoRequest.Builder()
                     .setListener(getUserInfoListener)
-                    .setErrorListener(new PSGodErrorListener() {
+                    .setErrorListener(new PSGodErrorListener(this) {
                         @Override
                         public void handleError(VolleyError error) {
                             if ((mProgressDialog != null) && (mProgressDialog.isShowing())) {

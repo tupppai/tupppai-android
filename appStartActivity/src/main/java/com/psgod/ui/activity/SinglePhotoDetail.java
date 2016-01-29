@@ -234,7 +234,7 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
             PhotoItemRequest request = new PhotoItemRequest.Builder().
                     setId(String.valueOf(mPhotoItem.getPid())).setType(mPhotoItem.getType() == 1 ?
                     Constants.IntentKey.ASK_ID : Constants.IntentKey.REPLY_ID).
-                    setListener(photoItemListener).setErrorListener(new PSGodErrorListener() {
+                    setListener(photoItemListener).setErrorListener(new PSGodErrorListener(this) {
                 @Override
                 public void handleError(VolleyError error) {
                     mListView.onRefreshComplete();
@@ -343,7 +343,7 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
         }
     };
 
-    private PSGodErrorListener sendCommentErrorListener = new PSGodErrorListener() {
+    private PSGodErrorListener sendCommentErrorListener = new PSGodErrorListener(this) {
         @Override
         public void handleError(VolleyError error) {
             Toast.makeText(SinglePhotoDetail.this, "评论失败，请稍后再试",

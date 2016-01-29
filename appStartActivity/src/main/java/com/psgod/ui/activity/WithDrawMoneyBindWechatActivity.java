@@ -142,7 +142,7 @@ public class WithDrawMoneyBindWechatActivity extends PSGodBaseActivity {
     };
 
     // 微信绑定失败listener
-    private PSGodErrorListener wechatBindErrorListener = new PSGodErrorListener() {
+    private PSGodErrorListener wechatBindErrorListener = new PSGodErrorListener(this) {
         @Override
         public void handleError(VolleyError error) {
         }

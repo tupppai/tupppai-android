@@ -276,7 +276,7 @@ public class WelcomeActivity extends PSGodBaseActivity implements
 		}
 	};
 
-	private PSGodErrorListener errorListener = new PSGodErrorListener() {
+	private PSGodErrorListener errorListener = new PSGodErrorListener(this) {
 		@Override
 		public void handleError(VolleyError error) {
 			if ((mProgressDialog != null) && mProgressDialog.isShowing()) {

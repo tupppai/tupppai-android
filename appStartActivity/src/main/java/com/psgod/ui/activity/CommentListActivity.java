@@ -168,7 +168,7 @@ public class CommentListActivity extends PSGodBaseActivity implements
         }
     };
 
-    private PSGodErrorListener sendCommentErrorListener = new PSGodErrorListener() {
+    private PSGodErrorListener sendCommentErrorListener = new PSGodErrorListener(this) {
         @Override
         public void handleError(VolleyError error) {
             Toast.makeText(CommentListActivity.this, "评论失败，请稍后再试",
