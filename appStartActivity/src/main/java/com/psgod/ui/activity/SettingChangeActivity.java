@@ -33,9 +33,9 @@ import org.json.JSONObject;
  */
 public class SettingChangeActivity extends PSGodBaseActivity {
     private static final String TAG = SettingChangeActivity.class.getSimpleName();
-    private ActionBar mActionBar;
     private Button mChargeBtn;
     private Button mWithDrawBtn;
+    private TextView mMoneyDetail;
 
     public static final int REQUEST_CODE = 120;
 
@@ -60,10 +60,10 @@ public class SettingChangeActivity extends PSGodBaseActivity {
     }
 
     private void initView() {
-        mActionBar = (ActionBar) this.findViewById(R.id.actionbar);
         mChargeBtn = (Button) findViewById(R.id.recharge);
         mWithDrawBtn = (Button) findViewById(R.id.withdraw_money);
         mMoneyCount = (TextView) findViewById(R.id.money_count_tv);
+        mMoneyDetail = (TextView) findViewById(R.id.money_detail);
     }
 
     private void refresh() {
@@ -114,7 +114,7 @@ public class SettingChangeActivity extends PSGodBaseActivity {
             }
         });
 
-        mActionBar.setRightBtnOnClickListener(new View.OnClickListener() {
+        mMoneyDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(SettingChangeActivity.this, ChangeDetailActivity.class);

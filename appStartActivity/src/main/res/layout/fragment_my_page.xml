@@ -74,8 +74,17 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="20dp"
                     android:layout_marginTop="17dp">
+
+                    <ImageView
+                        android:id="@+id/go_setting_change"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="13dp"
+                        android:scaleType="fitXY"
+                        android:src="@mipmap/ic_charge_money"/>
 
                     <RelativeLayout
                         android:id="@+id/layout_followers"
@@ -191,6 +200,8 @@
                 android:layout_height="47dp"
                 android:background="@color/white" />
         </LinearLayout>
+
+
     </RelativeLayout>
 
     <RelativeLayout

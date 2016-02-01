@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:psgod="http://schemas.android.com/apk/res/com.psgod"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F8F8F8"
     android:clipToPadding="true"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -17,28 +17,47 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <com.psgod.ui.widget.ActionBar
-                android:id="@+id/actionbar"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/actionbar_height"
-                psgod:title="我的零钱"
-                psgod:rightBtnText="明细"/>
+                android:background="@color/white"
+                >
+                <com.psgod.ui.widget.FinishView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="2dp"
+                    android:padding="10dp"
+                    android:src="@drawable/selector_back_btn"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="我的钱包"
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="14dp"
+                    android:textColor="@color/black"
+                    />
+
+            </RelativeLayout>
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="45dp"
                 android:layout_gravity="center_horizontal"
-                android:src="@mipmap/ic_money"/>
+                android:layout_marginTop="45dp"
+                android:src="@mipmap/ic_charge_wallet" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="26dp"
                 android:layout_gravity="center_horizontal"
-                android:text="我的零钱"
-                android:textSize="13dp"
-                android:textColor="#E6FF5B3F"/>
+                android:layout_marginTop="15dp"
+                android:text="钱包余额"
+                android:textColor="#E6FF5B3F"
+                android:textSize="13dp" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -50,28 +69,28 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
                     android:textColor="#E6FF5B3F"
-                    android:textSize="45dp"
-                    android:layout_centerVertical="true"/>
+                    android:textSize="45dp" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toLeftOf="@id/money_count_tv"
+                    android:layout_centerVertical="true"
                     android:layout_marginRight="14dp"
-                    android:src="@mipmap/ic_money_count"
-                    android:layout_centerVertical="true"/>
+                    android:layout_toLeftOf="@id/money_count_tv"
+                    android:src="@mipmap/ic_money_count" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/money_count_tv"
-                    android:layout_marginLeft="8dp"
                     android:layout_alignBottom="@id/money_count_tv"
                     android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_toRightOf="@id/money_count_tv"
                     android:text="元"
-                    android:textSize="16dp"
-                    android:textColor="#E6FF5B3F"/>
+                    android:textColor="#E6FF5B3F"
+                    android:textSize="16dp" />
             </RelativeLayout>
 
             <Button
@@ -80,11 +99,11 @@
                 android:layout_height="40dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:layout_marginTop="67dp"
+                android:layout_marginTop="42dp"
+                android:background="@drawable/selector_exit_background"
                 android:text="充值"
-                android:textSize="16dp"
                 android:textColor="#CC000000"
-                android:background="@drawable/selector_exit_background"/>
+                android:textSize="16dp" />
 
             <Button
                 android:id="@+id/withdraw_money"
@@ -93,29 +112,45 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="20dp"
+                android:background="@drawable/selector_white_btn_background"
                 android:text="提现"
-                android:textSize="16dp"
                 android:textColor="#CC000000"
-                android:background="@drawable/selector_white_btn_background"/>
+                android:textSize="16dp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="60dp"
-                android:layout_gravity="center_horizontal"
-                android:text="常见问题"
-                android:textSize="11dp"
-                android:textColor="#77000000"/>
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_gravity="center_horizontal"
-                android:text="紧急疑问请联系QQ2974252463"
-                android:textSize="11dp"
-                android:textColor="#77000000"
-                android:layout_marginBottom="33dp"/>
+                android:layout_marginTop="150dp"
+                android:layout_marginBottom="33dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="常见问题"
+                    android:textColor="#77000000"
+                    android:layout_marginRight="15dp"
+                    android:textSize="11dp" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="12dp"
+                    android:background="@color/color_aa000000"
+                    />
+                
+                <TextView
+                    android:id="@+id/money_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="15dp"
+                    android:text="交易明细"
+                    android:textColor="#77000000"
+                    android:textSize="11dp" />
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 
