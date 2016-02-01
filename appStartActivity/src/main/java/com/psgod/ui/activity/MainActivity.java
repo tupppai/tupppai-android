@@ -730,7 +730,6 @@ public class MainActivity extends PSGodBaseActivity {
         // mHandler.removeCallbacks(runnable);
 
         String version = Utils.getAppVersion(this);
-        Log.e("token",token);
         ReportDeviceInfo.Builder builder = new ReportDeviceInfo.Builder()
                 .setToken(token).setMac(getMacAddress())
                 .setName(android.os.Build.MODEL)
