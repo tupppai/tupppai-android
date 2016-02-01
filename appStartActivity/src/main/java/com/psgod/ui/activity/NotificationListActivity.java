@@ -38,7 +38,6 @@ import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.ui.adapter.NotificationListAdapter;
 import com.psgod.ui.view.PullToRefreshSwipeMenuListView;
 import com.psgod.ui.widget.ActionBar;
-import com.psgod.ui.widget.dialog.CarouselPhotoDetailDialog;
 import com.psgod.ui.widget.dialog.CustomDialog;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
 

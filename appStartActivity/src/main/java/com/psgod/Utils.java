@@ -350,18 +350,24 @@ public final class Utils {
         }
     }
 
-    public static void skipByObject(Context context, Object obj){
-        if(obj instanceof PhotoItem){
+    public static void skipByObject(Context context, Object obj) {
+        if (obj instanceof PhotoItem) {
             PhotoItem photoItem = (PhotoItem) obj;
-            if(photoItem.getCategoryType().equals("tutorial")){
+            if (photoItem.getCategoryType().equals("tutorial")) {
                 SinglePhotoDetail.startActivity(
-                        context,photoItem);
-            }else {
+                        context, photoItem);
+            } else {
                 new CarouselPhotoDetailDialog(context,
                         photoItem.getAskId(),
                         photoItem.getPid(),
                         photoItem.getCategoryId()).show();
             }
+        }
+    }
+
+    public static void skipByObject(Context context, long askId, long id) {
+        if(askId == id){
+//            Intent intent = new Intent(context,Si)
         }
     }
 

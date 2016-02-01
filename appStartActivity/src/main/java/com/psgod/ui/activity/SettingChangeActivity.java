@@ -1,15 +1,18 @@
 package com.psgod.ui.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.psgod.CustomToast;
 import com.psgod.R;
 import com.psgod.Utils;
 import com.psgod.WeakReferenceHandler;
@@ -33,6 +36,8 @@ public class SettingChangeActivity extends PSGodBaseActivity {
     private ActionBar mActionBar;
     private Button mChargeBtn;
     private Button mWithDrawBtn;
+
+    public static final int REQUEST_CODE = 120;
 
     private TextView mMoneyCount;
 
@@ -61,7 +66,7 @@ public class SettingChangeActivity extends PSGodBaseActivity {
         mMoneyCount = (TextView) findViewById(R.id.money_count_tv);
     }
 
-    private void refresh(){
+    private void refresh() {
         GetUserInfoRequest.Builder builder = new GetUserInfoRequest.Builder()
                 .setListener(new Response.Listener<JSONObject>() {
                     @Override
@@ -91,7 +96,9 @@ public class SettingChangeActivity extends PSGodBaseActivity {
         mChargeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Utils.showProgressDialog(SettingChangeActivity.this);
                 RechargeTypeDialog dialog = new RechargeTypeDialog(SettingChangeActivity.this);
+                dialog.setRequestCode(REQUEST_CODE);
                 dialog.show();
             }
         });
@@ -102,6 +109,7 @@ public class SettingChangeActivity extends PSGodBaseActivity {
                 LoginUser user = LoginUser.getInstance();
                 RechargeDialog rechargeDialog = new
                         RechargeDialog(SettingChangeActivity.this, RechargeDialog.TRANSFER_WECHAT);
+                rechargeDialog.setRequestCode(REQUEST_CODE);
                 rechargeDialog.show();
             }
         });
@@ -116,4 +124,13 @@ public class SettingChangeActivity extends PSGodBaseActivity {
     }
 
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+
+        Utils.hideProgressDialog();
+//        CustomToast.show(this, "requsetCode:" + requestCode +
+//                "\nresultCode:" + resultCode +
+//                "\ndata:" + data.toString(), Toast.LENGTH_LONG);
+    }
 }

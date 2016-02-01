@@ -41,6 +41,8 @@ public class RechargeTypeDialog extends Dialog {
         setContentView(R.layout.dialog_recharge_type);
 
         mAlipayTv = (TextView) this.findViewById(R.id.recharge_alipay);
+//        mAlipayTv.setEnabled(false);
+
         mWeixinTv = (TextView) this.findViewById(R.id.recharge_weixin);
         mCancelTv = (TextView) this.findViewById(R.id.cancen_btn);
 
