@@ -30,6 +30,7 @@ public abstract class PSGodErrorListener implements ErrorListener {
 
     @Override
     public void onErrorResponse(VolleyError error) {
+        Utils.hideProgressDialog();
         String msg = error.getMessage();
         if ((msg != null) && (!msg.equals("")) && (msg.startsWith("java.net.UnknownHostException"))) {
             msg = "网络连接不可用，请稍后再试";

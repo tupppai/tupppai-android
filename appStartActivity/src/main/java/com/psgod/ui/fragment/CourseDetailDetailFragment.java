@@ -27,6 +27,7 @@ import com.psgod.CustomToast;
 import com.psgod.PsGodImageLoader;
 import com.psgod.R;
 import com.psgod.ThreadManager;
+import com.psgod.Utils;
 import com.psgod.WeakReferenceHandler;
 import com.psgod.eventbus.RefreshEvent;
 import com.psgod.model.Comment;
@@ -330,6 +331,7 @@ public class CourseDetailDetailFragment extends BaseFragment implements Handler.
 //                refresh();
                 } else {
                     isRewardEnd = true;
+                    Utils.showProgressDialog(getActivity());
                     PayErrorDialog payErrorDialog = new PayErrorDialog(getActivity());
                     payErrorDialog.setReward(response);
                     payErrorDialog.setRequestCode(REQUEST_CODE_PAYMENT);
@@ -438,7 +440,8 @@ public class CourseDetailDetailFragment extends BaseFragment implements Handler.
     //支付成功回调
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+//        super.onActivityResult(requestCode, resultCode, data);
+        Utils.hideProgressDialog();
         if (requestCode == REQUEST_CODE_PAYMENT) {
             if (resultCode == Activity.RESULT_OK) {
                 String result = data.getExtras().getString("pay_result");

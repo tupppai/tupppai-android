@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -22,6 +23,7 @@ import com.android.volley.VolleyError;
 import com.pingplusplus.android.PaymentActivity;
 import com.pingplusplus.android.PingppLog;
 import com.psgod.Constants;
+import com.psgod.CustomToast;
 import com.psgod.R;
 import com.psgod.WeakReferenceHandler;
 import com.psgod.model.LoginUser;
@@ -72,7 +74,7 @@ public class RechargeDialog extends Dialog implements Handler.Callback {
     public void setAmount(double amount) {
         this.amount = amount;
         if (amount > 0) {
-            mRechargeCountEt.setText(String.format("%.2f",amount));
+            mRechargeCountEt.setText(String.format("%.2f", amount));
         }
     }
 
@@ -111,68 +113,74 @@ public class RechargeDialog extends Dialog implements Handler.Callback {
         mCompleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                RechargeDialog.this.dismiss();
-                if (mChannelType.indexOf("transfer") != -1) {
-                    /**
-                     * 提现部分
-                     */
-                    LoginUser user = LoginUser.getInstance();
-                    if (user.isBoundWechat()) {
-                        MoneyTransferRequest request = new MoneyTransferRequest.Builder().
+                if (mRechargeCountEt.getText().toString() == null ||
+                        mRechargeCountEt.getText().toString().trim().equals("") ||
+                        Double.parseDouble(mRechargeCountEt.getText().toString()) <= 0) {
+                    CustomToast.show(mContext, "金额必须大于0", Toast.LENGTH_SHORT);
+                } else {
+                    RechargeDialog.this.dismiss();
+                    if (mChannelType.indexOf("transfer") != -1) {
+                        /**
+                         * 提现部分
+                         */
+                        LoginUser user = LoginUser.getInstance();
+                        if (user.isBoundWechat()) {
+                            MoneyTransferRequest request = new MoneyTransferRequest.Builder().
+                                    setErrorListener(new PSGodErrorListener(this) {
+                                        @Override
+                                        public void handleError(VolleyError error) {
+                                            dismiss();
+                                        }
+                                    }).
+                                    setListener(new Response.Listener<MoneyTransfer>() {
+                                        @Override
+                                        public void onResponse(MoneyTransfer response) {
+                                            dismiss();
+                                            Intent intent = new Intent(mContext, WithDrawMoneyActivity.class);
+                                            intent.putExtra(WithDrawMoneyActivity.RESULT, response);
+                                            mContext.startActivity(intent);
+                                        }
+                                    }).setAmount(mRechargeCountEt.getText().toString()).build();
+                            RequestQueue requestQueue = PSGodRequestQueue
+                                    .getInstance(mContext).getRequestQueue();
+                            requestQueue.add(request);
+                        } else {
+                            /**
+                             * 未绑定微信跳转绑定页
+                             */
+                            Intent intent = new Intent(mContext,
+                                    WithDrawMoneyBindWechatActivity.class);
+                            intent.putExtra(WithDrawMoneyBindWechatActivity.AMOUNT, amount);
+                            mContext.startActivity(intent);
+                        }
+                    } else {
+                        /**
+                         * 充值部分
+                         */
+                        ChargeRequest request = new ChargeRequest.Builder().
+                                setListener(new Response.Listener<JSONObject>() {
+                                    @Override
+                                    public void onResponse(JSONObject response) {
+                                        if (response != null) {
+                                            PingppLog.DEBUG = true;
+                                            Intent intent = new Intent(mContext, PaymentActivity.class);
+                                            intent.putExtra(PaymentActivity.EXTRA_CHARGE,
+                                                    response.toString());
+                                            ((Activity) mContext).startActivityForResult(intent, requestCode);
+                                        }
+                                    }
+                                }).
                                 setErrorListener(new PSGodErrorListener(this) {
                                     @Override
                                     public void handleError(VolleyError error) {
-                                        dismiss();
-                                    }
-                                }).
-                                setListener(new Response.Listener<MoneyTransfer>() {
-                                    @Override
-                                    public void onResponse(MoneyTransfer response) {
-                                        dismiss();
-                                        Intent intent = new Intent(mContext, WithDrawMoneyActivity.class);
-                                        intent.putExtra(WithDrawMoneyActivity.RESULT, response);
-                                        mContext.startActivity(intent);
-                                    }
-                                }).setAmount(mRechargeCountEt.getText().toString()).build();
-                        RequestQueue requestQueue = PSGodRequestQueue
-                                .getInstance(mContext).getRequestQueue();
-                        requestQueue.add(request);
-                    } else {
-                        /**
-                         * 未绑定微信跳转绑定页
-                         */
-                        Intent intent = new Intent(mContext,
-                                WithDrawMoneyBindWechatActivity.class);
-                        intent.putExtra(WithDrawMoneyBindWechatActivity.AMOUNT, amount);
-                        mContext.startActivity(intent);
-                    }
-                } else {
-                    /**
-                     * 充值部分
-                     */
-                    ChargeRequest request = new ChargeRequest.Builder().
-                            setListener(new Response.Listener<JSONObject>() {
-                                @Override
-                                public void onResponse(JSONObject response) {
-                                    if (response != null) {
-                                        PingppLog.DEBUG = true;
-                                        Intent intent = new Intent(mContext, PaymentActivity.class);
-                                        intent.putExtra(PaymentActivity.EXTRA_CHARGE,
-                                                response.toString());
-                                        ((Activity)mContext).startActivityForResult(intent, requestCode);
-                                    }
-                                }
-                            }).
-                            setErrorListener(new PSGodErrorListener(this) {
-                                @Override
-                                public void handleError(VolleyError error) {
 
-                                }
-                            }).setAmount(mRechargeCountEt.getText().toString())
-                            .setType(mChannelType).build();
-                    RequestQueue requestQueue = PSGodRequestQueue.getInstance(
-                            mContext).getRequestQueue();
-                    requestQueue.add(request);
+                                    }
+                                }).setAmount(mRechargeCountEt.getText().toString())
+                                .setType(mChannelType).build();
+                        RequestQueue requestQueue = PSGodRequestQueue.getInstance(
+                                mContext).getRequestQueue();
+                        requestQueue.add(request);
+                    }
                 }
             }
         });
@@ -209,7 +217,7 @@ public class RechargeDialog extends Dialog implements Handler.Callback {
             public void onTextChanged(CharSequence s, int start, int before,
                                       int count) {
                 if (s.toString().indexOf("0.00") == 0) {
-                    editText.setText(s.toString().substring(4,5));
+                    editText.setText(s.toString().substring(4, 5));
                     editText.setSelection(1);
                 } else {
                     if (s.toString().contains(".")) {
