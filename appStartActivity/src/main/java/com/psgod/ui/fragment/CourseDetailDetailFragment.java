@@ -200,10 +200,10 @@ public class CourseDetailDetailFragment extends BaseFragment implements Handler.
                 mImageDatas.clear();
             }
             mImageDatas.addAll(mPhotoItem.getUploadImagesList());
-            mImageAdapter.setIsLock(mPhotoItem.getHasBought() == 1 ? false : true);
+            mImageAdapter.setIsLock(mPhotoItem.getHasUnlocked() == 1 ? false : true);
             mImageAdapter.notifyDataSetChanged();
         }
-        if (!mImageAdapter.isLock()) {
+        if (mPhotoItem.getHasBought() == 1 ? true : false) {
             mRewardImg.setImageResource(R.mipmap.like3);
         } else {
             mRewardImg.setImageResource(R.mipmap.ic_like);
@@ -397,7 +397,8 @@ public class CourseDetailDetailFragment extends BaseFragment implements Handler.
             if (progressingDialog != null && progressingDialog.isShowing()) {
                 progressingDialog.dismiss();
             }
-            boolean isRefresh = mPhotoItem == null ? true : mPhotoItem.getHasBought() != response.getHasBought();
+            boolean isRefresh = mPhotoItem == null ?
+                    true : mPhotoItem.getHasUnlocked() != response.getHasUnlocked();
             if (response != null) {
                 mPhotoItem = response;
             }
