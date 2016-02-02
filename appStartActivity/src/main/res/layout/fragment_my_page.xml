@@ -74,13 +74,14 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="20dp"
-                    android:layout_marginTop="17dp">
+                    android:layout_height="23dp"
+                    android:gravity="bottom"
+                    android:layout_marginTop="14dp">
 
                     <ImageView
                         android:id="@+id/go_setting_change"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="23dp"
+                        android:layout_height="23dp"
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="13dp"
                         android:scaleType="fitXY"
@@ -90,6 +91,7 @@
                         android:id="@+id/layout_followers"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
                         android:layout_centerHorizontal="true">
 
                         <TextView
@@ -127,6 +129,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="9dp"
+                        android:layout_alignParentBottom="true"
                         android:layout_toLeftOf="@id/left_point">
 
                         <TextView
@@ -163,6 +166,7 @@
                         android:id="@+id/layout_like_profile"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
                         android:layout_marginLeft="9dp"
                         android:layout_toRightOf="@id/right_point">
 

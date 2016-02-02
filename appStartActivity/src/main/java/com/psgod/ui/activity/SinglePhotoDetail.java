@@ -253,6 +253,7 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
             mPhotoItem = response;
             mAdapter.setPhotoItem(mPhotoItem);
             mAdapter.notifyDataSetChanged();
+            initEvents();
             refresh();
         }
     };

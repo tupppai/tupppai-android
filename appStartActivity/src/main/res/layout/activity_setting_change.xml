@@ -71,6 +71,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
                     android:textColor="#E6FF5B3F"
+                    android:text="0.00"
                     android:textSize="45dp" />
 
                 <ImageView

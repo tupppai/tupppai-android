@@ -45,12 +45,12 @@ public class WithDrawMoneyActivity extends PSGodBaseActivity {
     }
 
     private void initView() {
-        mCompleteBtn = (Button) this.findViewById(R.id.withdraw_complete_btn);
+//        mCompleteBtn = (Button) this.findViewById(R.id.withdraw_complete_btn);
         mCount = (TextView) findViewById(R.id.withdraw_count_tv);
         mCount.setText(String.format("￥%.2f",(float)moneyTransfer.getAmount()/100f));
-        mWeixin = (TextView) findViewById(R.id.withdraw_weixin_tv);
-        mWeixin.setText(moneyTransfer.getExtra() != null ?
-                moneyTransfer.getExtra().getUser_name() : "");
+//        mWeixin = (TextView) findViewById(R.id.withdraw_weixin_tv);
+//        mWeixin.setText(moneyTransfer.getExtra() != null ?
+//                moneyTransfer.getExtra().getUser_name() : "");
     }
 
     private void initListener() {
