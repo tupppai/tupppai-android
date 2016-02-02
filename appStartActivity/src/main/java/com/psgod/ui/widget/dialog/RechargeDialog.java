@@ -25,6 +25,7 @@ import com.pingplusplus.android.PingppLog;
 import com.psgod.Constants;
 import com.psgod.CustomToast;
 import com.psgod.R;
+import com.psgod.Utils;
 import com.psgod.WeakReferenceHandler;
 import com.psgod.model.LoginUser;
 import com.psgod.model.MoneyTransfer;
@@ -157,6 +158,7 @@ public class RechargeDialog extends Dialog implements Handler.Callback {
                         /**
                          * 充值部分
                          */
+                        Utils.showProgressDialog(mContext);
                         ChargeRequest request = new ChargeRequest.Builder().
                                 setListener(new Response.Listener<JSONObject>() {
                                     @Override
@@ -259,6 +261,12 @@ public class RechargeDialog extends Dialog implements Handler.Callback {
 
         });
 
+    }
+
+    @Override
+    public void dismiss() {
+        super.dismiss();
+//        Utils.hideProgressDialog();
     }
 
     @Override

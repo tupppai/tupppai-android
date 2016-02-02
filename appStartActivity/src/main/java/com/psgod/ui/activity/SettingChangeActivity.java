@@ -96,7 +96,7 @@ public class SettingChangeActivity extends PSGodBaseActivity {
         mChargeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Utils.showProgressDialog(SettingChangeActivity.this);
+//                Utils.showProgressDialog(SettingChangeActivity.this);
                 RechargeTypeDialog dialog = new RechargeTypeDialog(SettingChangeActivity.this);
                 dialog.setRequestCode(REQUEST_CODE);
                 dialog.show();

@@ -87,4 +87,9 @@ public class RechargeTypeDialog extends Dialog {
         getWindow().setWindowAnimations(R.style.popwindow_anim_style);
     }
 
+    @Override
+    public void dismiss() {
+        super.dismiss();
+//        Utils.hideProgressDialog();
+    }
 }

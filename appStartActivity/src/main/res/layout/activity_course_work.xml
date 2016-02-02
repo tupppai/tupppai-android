@@ -55,7 +55,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/activity_course_work_titlearea"
         android:background="@color/transparent"
-        android:hint="请输入你的作品描述"
+        android:hint="上传作业"
         android:maxLines="5"
         android:padding="15dp"
         android:textSize="15dp" />
