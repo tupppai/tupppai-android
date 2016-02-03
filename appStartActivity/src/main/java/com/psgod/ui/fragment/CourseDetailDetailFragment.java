@@ -373,30 +373,6 @@ public class CourseDetailDetailFragment extends BaseFragment implements Handler.
         }
     };
 
-    @Override
-    public boolean handleMessage(Message message) {
-        if (message.what >= 0) {
-            StringBuilder sb = new StringBuilder();
-            sb.append("正向对方转入\n打赏随机金额");
-            for (int i = 0; i < message.what; i++) {
-                sb.append(".");
-            }
-            mRewardTxt.setText(sb.toString());
-        } else {
-            if (amount == 0) {
-                mRewardTxt.setText(String.format("打赏失败"));
-                mRewardArea.setEnabled(true);
-            } else {
-                mRewardTxt.setText(String.format("已向对方转入\n打赏随机金额%s元",
-                        String.format("%.2f", amount)));
-                amount = 0;
-                mRewardArea.setEnabled(true);
-                refresh();
-            }
-        }
-        return true;
-    }
-
     private class CourseDetailListener implements PullToRefreshBase.OnRefreshListener,
             PullToRefreshBase.OnLastItemVisibleListener {
         private Context mContext;
@@ -535,5 +511,81 @@ public class CourseDetailDetailFragment extends BaseFragment implements Handler.
 //                showMsg(result, errorMsg, extraMsg);
             }
         }
+    }
+
+    private boolean startRefresh = false;
+//    private int refreshType = 0;
+
+    private void muitRefresh(){
+        if(startRefresh){
+            refresh();
+        }else {
+            startRefresh = true;
+            for (int i = 0; i < 3; i++) {
+                switch (i){
+                    case 0:
+                        refresh();
+                        break;
+                    case 1:
+                        fixedThreadPool.execute(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    Thread.sleep(1000);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                                mHandler.sendEmptyMessage(0);
+                            }
+                        });
+                        break;
+                    case 2:
+                        fixedThreadPool.execute(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    Thread.sleep(3000);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                                startRefresh = false;
+                                mHandler.sendEmptyMessage(0);
+                            }
+                        });
+                        break;
+                }
+            }
+        }
+    }
+
+
+    @Override
+    public boolean handleMessage(Message message) {
+        if(message.what >= 0 && message.what < 10){
+            switch (message.what){
+                case 0:
+                    refresh();
+                    break;
+            }
+        }else if (message.what >= 10) {
+            StringBuilder sb = new StringBuilder();
+            sb.append("正向对方转入\n打赏随机金额");
+            for (int i = 0; i < message.what; i++) {
+                sb.append(".");
+            }
+            mRewardTxt.setText(sb.toString());
+        } else {
+            if (amount == 0) {
+                mRewardTxt.setText(String.format("打赏失败"));
+                mRewardArea.setEnabled(true);
+            } else {
+                mRewardTxt.setText(String.format("已向对方转入\n打赏随机金额%s元",
+                        String.format("%.2f", amount)));
+                amount = 0;
+                mRewardArea.setEnabled(true);
+                refresh();
+            }
+        }
+        return true;
     }
 }

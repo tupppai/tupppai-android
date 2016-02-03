@@ -69,7 +69,7 @@
 						android:layout_marginLeft="27dp"
 						android:textSize="@dimen/userpage_btn_text"
 						android:textColor="#000000"
-						android:text="我的零钱"
+						android:text="我的钱包"
 						android:includeFontPadding="false"/>
 
 					<ImageView
