@@ -22,6 +22,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.pingplusplus.android.PaymentActivity;
 import com.psgod.Constants;
 import com.psgod.CustomToast;
 import com.psgod.PsGodImageLoader;
@@ -42,6 +43,7 @@ import com.psgod.network.request.CommentListRequest;
 import com.psgod.network.request.CourseDetailRequest;
 import com.psgod.network.request.PSGodErrorListener;
 import com.psgod.network.request.PSGodRequestQueue;
+import com.psgod.network.request.RewardRequest2;
 import com.psgod.ui.activity.CommentListActivity;
 import com.psgod.ui.adapter.CourseDetailCommentAdapter;
 import com.psgod.ui.adapter.CourseDetailImageContentAdapter;
@@ -52,6 +54,8 @@ import com.psgod.ui.widget.dialog.CustomDialog;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
 import com.psgod.ui.widget.dialog.PayErrorDialog;
 import com.psgod.ui.widget.dialog.ShareMoreDialog;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -281,31 +285,47 @@ public class CourseDetailDetailFragment extends BaseFragment implements Handler.
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
                         mRewardTxt.setText(String.format("正向对方转入\n打赏随机金额"));
-                        isRewardEnd = false;
-                        fixedThreadPool.execute(new Runnable() {
-                            @Override
-                            public void run() {
-                                for (int i = 1; (i < 6 || !isRewardEnd) && !isRewardError; i++) {
-                                    try {
-                                        Thread.sleep(300);
-                                    } catch (InterruptedException e) {
-                                        e.printStackTrace();
-                                    }
-                                    mHandler.sendEmptyMessage(i % 4);
-                                }
-                                mHandler.sendEmptyMessage(-1);
-                            }
-                        });
-                        mRewardArea.setEnabled(false);
-                        RewardRequest request = new RewardRequest.Builder().
+//                        isRewardEnd = false;
+//                        fixedThreadPool.execute(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                for (int i = 1; (i < 6 || !isRewardEnd) && !isRewardError; i++) {
+//                                    try {
+//                                        Thread.sleep(300);
+//                                    } catch (InterruptedException e) {
+//                                        e.printStackTrace();
+//                                    }
+//                                    mHandler.sendEmptyMessage(i % 4);
+//                                }
+//                                mHandler.sendEmptyMessage(-1);
+//                            }
+//                        });
+//                        mRewardArea.setEnabled(false);
+//                        RewardRequest request = new RewardRequest.Builder().
+//                                setId(String.valueOf(id)).
+//                                setListener(rewardListener).
+//                                setErrorListener(new PSGodErrorListener(this) {
+//                                    @Override
+//                                    public void handleError(VolleyError error) {
+////                                        mRewardArea.setEnabled(true);
+//                                        isRewardError = true;
+////                                      mRewardTxt.setText(String.format("支付出现问题\n请重试"));
+//                                    }
+//                                }).build();
+//                        RequestQueue requestQueue = PSGodRequestQueue.getInstance(
+//                                getActivity()).getRequestQueue();
+//                        requestQueue.add(request);
+                        Utils.showProgressDialog(getActivity());
+                        RewardRequest2 request = new RewardRequest2.Builder().
                                 setId(String.valueOf(id)).
-                                setListener(rewardListener).
+                                setListener(rewardListener2).
                                 setErrorListener(new PSGodErrorListener(this) {
                                     @Override
                                     public void handleError(VolleyError error) {
+                                        Utils.hideProgressDialog();
 //                                        mRewardArea.setEnabled(true);
-                                        isRewardError = true;
-//                                      mRewardTxt.setText(String.format("支付出现问题\n请重试"));
+//                                        isRewardError = true;
+                                      mRewardTxt.setText(String.format("打赏失败"));
                                     }
                                 }).build();
                         RequestQueue requestQueue = PSGodRequestQueue.getInstance(
@@ -318,6 +338,18 @@ public class CourseDetailDetailFragment extends BaseFragment implements Handler.
             }
         });
     }
+
+    Response.Listener<JSONObject> rewardListener2 = new Response.Listener<JSONObject>() {
+        @Override
+        public void onResponse(JSONObject response) {
+            if (response != null) {
+                Intent intent = new Intent(mContext, PaymentActivity.class);
+                intent.putExtra(PaymentActivity.EXTRA_CHARGE,
+                        response.toString());
+                ((Activity) mContext).startActivityForResult(intent, REQUEST_CODE_PAYMENT);
+            }
+        }
+    };
 
     Response.Listener<Reward> rewardListener = new Response.Listener<Reward>() {
         @Override
@@ -483,10 +515,15 @@ public class CourseDetailDetailFragment extends BaseFragment implements Handler.
 //                    RequestQueue requestQueue = PSGodRequestQueue.getInstance(
 //                            getActivity()).getRequestQueue();
 //                    requestQueue.add(request);
+                    mRewardTxt.setText(String.format("打赏成功"));
+                    refresh();
                     CustomToast.show(getActivity(), "支付成功", Toast.LENGTH_SHORT);
+
                 } else if (result.equals("payment failed")) {
+                    mRewardTxt.setText(String.format("打赏失败"));
                     CustomToast.show(getActivity(), "支付失败", Toast.LENGTH_SHORT);
                 } else if (result.equals("user canceld")) {
+                    mRewardTxt.setText(String.format("取消打赏"));
                     CustomToast.show(getActivity(), "取消支付", Toast.LENGTH_SHORT);
                 }
 //

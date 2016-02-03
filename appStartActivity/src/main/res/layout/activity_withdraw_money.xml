@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF"
     android:clipToPadding="true"
+    android:id="@+id/withdraw_money_parent"
     android:fitsSystemWindows="true">
 
 

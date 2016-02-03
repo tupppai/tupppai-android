@@ -65,7 +65,7 @@ public class WechatUserInfoRequest extends BaseRequest<WechatUserWrapper> {
                     url, listener, errorListener) {
                 @Override
                 public Map<String, String> getParams() {
-                    return createParameters();
+                    return getPackParams(createParameters());
                 }
             };
             return request;

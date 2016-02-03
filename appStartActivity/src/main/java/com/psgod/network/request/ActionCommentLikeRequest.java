@@ -66,7 +66,7 @@ public class ActionCommentLikeRequest extends BaseRequest<Boolean> {
 					METHOD, url, listener, errorListener) {
 				@Override
 				public Map<String, String> getParams() {
-					return createParameters();
+					return getPackParams(createParameters());
 				}
 			};
 			return request;

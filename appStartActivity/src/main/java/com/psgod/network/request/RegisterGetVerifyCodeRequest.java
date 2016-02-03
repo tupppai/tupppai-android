@@ -82,7 +82,7 @@ public class RegisterGetVerifyCodeRequest extends BaseRequest<Long> {
 					METHOD, url, listener, errorListener) {
 				@Override
 				public Map<String, String> getParams() {
-					return createParameters();
+					return getPackParams(createParameters());
 				}
 			};
 			return request;

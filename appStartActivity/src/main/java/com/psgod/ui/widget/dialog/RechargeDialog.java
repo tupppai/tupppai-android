@@ -164,7 +164,6 @@ public class RechargeDialog extends Dialog implements Handler.Callback {
                                     @Override
                                     public void onResponse(JSONObject response) {
                                         if (response != null) {
-                                            PingppLog.DEBUG = true;
                                             Intent intent = new Intent(mContext, PaymentActivity.class);
                                             intent.putExtra(PaymentActivity.EXTRA_CHARGE,
                                                     response.toString());
@@ -218,7 +217,7 @@ public class RechargeDialog extends Dialog implements Handler.Callback {
             @Override
             public void onTextChanged(CharSequence s, int start, int before,
                                       int count) {
-                if (s.toString().indexOf("0.00") == 0) {
+                if (s.toString().indexOf("0.00") == 0 && s.length() > 4) {
                     editText.setText(s.toString().substring(4, 5));
                     editText.setSelection(1);
                 } else {

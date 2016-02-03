@@ -2,6 +2,7 @@ package com.psgod.network.request;
 
 import android.content.Intent;
 import android.os.Looper;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -26,6 +27,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,7 +47,11 @@ public abstract class BaseRequest<T> extends Request<T> {
 
     public BaseRequest(int method, String url, Listener<T> listener,
                        ErrorListener errorListener) {
-        super(method, url, errorListener);
+        super(method, dealStr(url), errorListener);
+        String[] thumb = url.split("\\?");
+        if (thumb.length == 2) {
+
+        }
         mListener = listener;
     }
 
@@ -144,6 +151,28 @@ public abstract class BaseRequest<T> extends Request<T> {
         }
     }
 
+    public static String dealStr(String url) {
+        StringBuilder sb = new StringBuilder();
+        String result = "";
+        if (url.indexOf("?") != -1) {
+            String[] thumb = url.split("\\?");
+            String[] keys = thumb[1].split("&");
+            Arrays.sort(keys);
+            for (String s : keys) {
+                if (s.indexOf("=") != -1) {
+                    sb.append(s.split("=")[1]);
+                }
+            }
+            Calendar cal = Calendar.getInstance();
+            sb.append(Utils.toMd5(Constants.SIGN));
+            sb.append(cal.get(Calendar.DATE));
+            result = String.format("&v=2&verify=%s",
+                    Utils.toMd5(Utils.toMd5(
+                            sb.toString().toLowerCase()).toLowerCase()).toLowerCase());
+        }
+        return url + result;
+    }
+
     /**
      * 保存返回的cookie信息
      *
@@ -162,4 +191,30 @@ public abstract class BaseRequest<T> extends Request<T> {
 
     abstract protected T doParseNetworkResponse(JSONObject reponse)
             throws UnsupportedEncodingException, JSONException;
+
+    public Map<String, String> getPackParams(Map<String, String> map) {
+        if (map != null && map.size() > 0) {
+            StringBuilder sb = new StringBuilder();
+            String[] thumbs = new String[map.size()];
+            String result = "";
+            int i = 0;
+            for (Map.Entry<String, String> entry : map.entrySet()) {
+                thumbs[i] = String.format("%s=%s", entry.getKey(), entry.getValue());
+                i++;
+            }
+            Arrays.sort(thumbs);
+            for (String str : thumbs) {
+                sb.append(str.split("=").length < 2 ? "" : str.split("=")[1]);
+            }
+            Calendar cal = Calendar.getInstance();
+            sb.append(Utils.toMd5(Constants.SIGN));
+            sb.append(cal.get(Calendar.DATE));
+
+            result = Utils.toMd5(Utils.toMd5(
+                            sb.toString().toLowerCase()).toLowerCase()).toLowerCase();
+            map.put("v","2");
+            map.put("verify",result);
+        }
+        return map;
+    }
 }
