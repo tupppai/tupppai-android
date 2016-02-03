@@ -325,7 +325,7 @@ public class CourseDetailDetailFragment extends BaseFragment implements Handler.
                                         Utils.hideProgressDialog();
 //                                        mRewardArea.setEnabled(true);
 //                                        isRewardError = true;
-                                      mRewardTxt.setText(String.format("打赏失败"));
+                                        mRewardTxt.setText(String.format("打赏失败"));
                                     }
                                 }).build();
                         RequestQueue requestQueue = PSGodRequestQueue.getInstance(
@@ -346,7 +346,7 @@ public class CourseDetailDetailFragment extends BaseFragment implements Handler.
                 Intent intent = new Intent(mContext, PaymentActivity.class);
                 intent.putExtra(PaymentActivity.EXTRA_CHARGE,
                         response.toString());
-                ((Activity) mContext).startActivityForResult(intent, REQUEST_CODE_PAYMENT);
+                startActivityForResult(intent, REQUEST_CODE_PAYMENT);
             }
         }
     };
@@ -484,7 +484,7 @@ public class CourseDetailDetailFragment extends BaseFragment implements Handler.
                  * "cancel"  - user canceld
                  * "invalid" - payment plugin not installed
                  */
-                if (result.equals("payment succeed")) {
+                if (result.equals("success")) {
 //                    RewardRequest request = new RewardRequest.Builder().
 //                            setId(String.valueOf(id)).
 //                            setListener(new Response.Listener<Reward>() {
@@ -519,12 +519,15 @@ public class CourseDetailDetailFragment extends BaseFragment implements Handler.
                     refresh();
                     CustomToast.show(getActivity(), "支付成功", Toast.LENGTH_SHORT);
 
-                } else if (result.equals("payment failed")) {
+                } else if (result.equals("fail")) {
                     mRewardTxt.setText(String.format("打赏失败"));
                     CustomToast.show(getActivity(), "支付失败", Toast.LENGTH_SHORT);
-                } else if (result.equals("user canceld")) {
+                } else if (result.equals("cancel")) {
                     mRewardTxt.setText(String.format("取消打赏"));
                     CustomToast.show(getActivity(), "取消支付", Toast.LENGTH_SHORT);
+                } else if (result.equals("invalid")) {
+                    mRewardTxt.setText(String.format("打赏失败"));
+                    CustomToast.show(getActivity(), "未安装微信，无法支付", Toast.LENGTH_SHORT);
                 }
 //
 //                String errorMsg = data.getExtras().getString("error_msg"); // 错误信息
