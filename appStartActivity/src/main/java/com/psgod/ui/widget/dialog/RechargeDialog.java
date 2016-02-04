@@ -2,7 +2,6 @@ package com.psgod.ui.widget.dialog;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
@@ -21,7 +20,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.pingplusplus.android.PaymentActivity;
-import com.pingplusplus.android.PingppLog;
 import com.psgod.Constants;
 import com.psgod.CustomToast;
 import com.psgod.R;
@@ -29,16 +27,11 @@ import com.psgod.Utils;
 import com.psgod.WeakReferenceHandler;
 import com.psgod.model.LoginUser;
 import com.psgod.model.MoneyTransfer;
-import com.psgod.model.Reward;
-import com.psgod.network.request.ChannelRequest;
 import com.psgod.network.request.ChargeRequest;
-import com.psgod.network.request.CommentListRequest;
 import com.psgod.network.request.MoneyTransferRequest;
 import com.psgod.network.request.PSGodErrorListener;
 import com.psgod.network.request.PSGodRequestQueue;
-import com.psgod.network.request.RewardRequest;
-import com.psgod.ui.activity.PSGodBaseActivity;
-import com.psgod.ui.activity.WithDrawMoneyActivity;
+import com.psgod.ui.activity.WithdrawSuccessActivity;
 import com.psgod.ui.activity.WithDrawMoneyBindWechatActivity;
 
 import org.json.JSONObject;
@@ -137,8 +130,8 @@ public class RechargeDialog extends Dialog implements Handler.Callback {
                                         @Override
                                         public void onResponse(MoneyTransfer response) {
                                             dismiss();
-                                            Intent intent = new Intent(mContext, WithDrawMoneyActivity.class);
-                                            intent.putExtra(WithDrawMoneyActivity.RESULT, response);
+                                            Intent intent = new Intent(mContext, WithdrawSuccessActivity.class);
+                                            intent.putExtra(WithdrawSuccessActivity.RESULT, response);
                                             mContext.startActivity(intent);
                                         }
                                     }).setAmount(mRechargeCountEt.getText().toString()).build();

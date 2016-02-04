@@ -134,7 +134,9 @@ public class WithDrawMoneyBindWechatActivity extends PSGodBaseActivity {
                                 Context.MODE_PRIVATE).edit();
                 editor.putBoolean(LoginUser.SPKey.IS_BOUND_WECHAT, true);
                 editor.commit();
-                Intent intent = new Intent(WithDrawMoneyBindWechatActivity.this, WithDrawMoneyActivity.class);
+                Intent intent = new Intent(WithDrawMoneyBindWechatActivity.this,
+                        WithdrawPhoneVerifyActivity.class);
+                intent.putExtra(WithdrawPhoneVerifyActivity.AMOUNT_DOUBLE,amount);
                 startActivity(intent);
             } else {
             }

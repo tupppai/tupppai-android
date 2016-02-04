@@ -36,8 +36,14 @@ public class MoneyTransferRequest extends BaseRequest<MoneyTransfer> {
 
         private String amount;
         private String type;
+        private String code;
         private Response.Listener<MoneyTransfer> listener;
         private Response.ErrorListener errorListener;
+
+        public Builder setCode(String code) {
+            this.code = code;
+            return this;
+        }
 
         public Builder setAmount(String amount) {
             this.amount = amount;
@@ -71,6 +77,7 @@ public class MoneyTransferRequest extends BaseRequest<MoneyTransfer> {
             StringBuilder sb = new StringBuilder(BaseRequest.PSGOD_BASE_URL);
             sb.append("money/transfer");
             sb.append("?amount=").append(amount);
+            sb.append("&code=").append(code);
 
             String url = sb.toString();
             Logger.log(Logger.LOG_LEVEL_DEBUG, Logger.USER_LEVEL_COLOR, TAG,

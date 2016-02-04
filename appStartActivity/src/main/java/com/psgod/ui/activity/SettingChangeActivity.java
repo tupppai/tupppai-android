@@ -67,13 +67,14 @@ public class SettingChangeActivity extends PSGodBaseActivity {
     }
 
     private void refresh() {
+        Utils.showProgressDialog(this);
         GetUserInfoRequest.Builder builder = new GetUserInfoRequest.Builder()
                 .setListener(new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         if (response != null) {
                             LoginUser.getInstance().initFromJSONObject(response);
-
+                            Utils.hideProgressDialog();
                         }
                         mMoneyCount.setText(
                                 String.format("%.2f", LoginUser.getInstance().getBalance()));
@@ -82,7 +83,7 @@ public class SettingChangeActivity extends PSGodBaseActivity {
                 .setErrorListener(new PSGodErrorListener(this) {
                     @Override
                     public void handleError(VolleyError error) {
-
+                        Utils.hideProgressDialog();
                     }
                 });
         GetUserInfoRequest request = builder.build();
@@ -106,11 +107,13 @@ public class SettingChangeActivity extends PSGodBaseActivity {
         mWithDrawBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                LoginUser user = LoginUser.getInstance();
-                RechargeDialog rechargeDialog = new
-                        RechargeDialog(SettingChangeActivity.this, RechargeDialog.TRANSFER_WECHAT);
-                rechargeDialog.setRequestCode(REQUEST_CODE);
-                rechargeDialog.show();
+//                LoginUser user = LoginUser.getInstance();
+//                RechargeDialog rechargeDialog = new
+//                        RechargeDialog(SettingChangeActivity.this, RechargeDialog.TRANSFER_WECHAT);
+//                rechargeDialog.setRequestCode(REQUEST_CODE);
+//                rechargeDialog.show();
+                Intent intent = new Intent(SettingChangeActivity.this,WithdrawDepositActivity.class);
+                startActivity(intent);
             }
         });
 

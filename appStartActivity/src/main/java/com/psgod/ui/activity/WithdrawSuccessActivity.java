@@ -1,10 +1,8 @@
 package com.psgod.ui.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -15,8 +13,8 @@ import com.psgod.model.MoneyTransfer;
 /**
  * Created by pires on 16/1/21.
  */
-public class WithDrawMoneyActivity extends PSGodBaseActivity {
-    private static final String TAG = WithDrawMoneyActivity.class.getSimpleName();
+public class WithdrawSuccessActivity extends PSGodBaseActivity {
+    private static final String TAG = WithdrawSuccessActivity.class.getSimpleName();
     private RelativeLayout mCompleteBtn;
     private TextView mWeixin;
     private TextView mCount;
@@ -28,7 +26,7 @@ public class WithDrawMoneyActivity extends PSGodBaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Utils.addActivity(WithDrawMoneyActivity.this);
+        Utils.addActivity(WithdrawSuccessActivity.this);
         setContentView(R.layout.activity_withdraw_money);
 
         Intent intent = getIntent();

@@ -104,6 +104,7 @@
                 android:background="@drawable/selector_exit_background"
                 android:text="充值"
                 android:textColor="#CC000000"
+                android:visibility="gone"
                 android:textSize="16dp" />
 
             <Button
@@ -113,16 +114,17 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/selector_white_btn_background"
+                android:background="@drawable/selector_exit_background"
                 android:text="提现"
                 android:textColor="#CC000000"
                 android:textSize="16dp" />
+            <!--android:background="@drawable/selector_white_btn_background"-->
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="60dp"
                 android:layout_marginBottom="33dp"
                 android:gravity="center"
                 android:orientation="horizontal">

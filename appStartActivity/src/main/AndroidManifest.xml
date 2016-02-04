@@ -136,6 +136,10 @@
         <activity android:name=".ui.activity.ResetPasswordActivity" />
         <activity android:name=".ui.activity.RecommendFocusActivity" />
         <activity android:name=".ui.activity.WebBrowserActivity" />
+        <activity android:name=".ui.activity.WithdrawDepositActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
+        <activity android:name=".ui.activity.WithdrawPhoneVerifyActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
         <activity
             android:name=".ui.activity.MultiImageSelectActivity"
             android:launchMode="singleTask" />
@@ -160,7 +164,7 @@
         <activity android:name=".ui.activity.SettingAccountSafeActivity" />
         <activity android:name=".ui.activity.SettingChangeActivity" />
         <activity android:name=".ui.activity.WithDrawMoneyBindWechatActivity" />
-        <activity android:name=".ui.activity.WithDrawMoneyActivity" />
+        <activity android:name=".ui.activity.WithdrawSuccessActivity" />
         <activity android:name=".ui.activity.ChangeDetailActivity" />
         <activity android:name=".ui.activity.MessageLikeActivity" />
         <activity android:name=".ui.activity.MessageSystemActivity" />

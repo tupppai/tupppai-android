@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:psgod="http://schemas.android.com/apk/res/com.psgod"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true">
+
+    <com.psgod.ui.widget.ActionBar
+        android:id="@+id/actionbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/actionbar_height"
+        psgod:title="微信"
+        psgod:rightBtnVisibility="invisible"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="请验证手机"
+        android:textColor="@color/black"
+        android:textSize="15dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="21dp"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="21dp"
+        android:layout_marginRight="21dp"
+        android:layout_marginTop="20dp"
+        >
+
+        <TextView
+            android:id="@+id/withdraw_phone_verify_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="14dp"
+            android:textColor="@color/black_alpha40"
+            android:background="@color/white"
+            android:padding="13dp"
+            android:layout_toLeftOf="@+id/withdraw_phone_verify_verify"
+            android:layout_marginRight="5dp"
+            />
+
+        <TextView
+            android:id="@+id/withdraw_phone_verify_verify"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
+            android:paddingTop="13dp"
+            android:paddingBottom="13dp"
+            android:textSize="14dp"
+            android:textColor="@color/black"
+            android:text="验证"
+            android:background="@color/style_yellow"
+            />
+
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/withdraw_phone_verify_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:layout_marginLeft="21dp"
+        android:layout_marginRight="21dp"
+        android:layout_marginTop="10dp"
+        android:padding="13dp"
+        android:textSize="14dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black_alpha40"
+        android:hint="请输入手机验证码"
+        />
+
+    <Button
+        android:id="@+id/withdraw_phone_verify_sure"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="21dp"
+        android:layout_marginRight="21dp"
+        android:layout_marginTop="26dp"
+        android:text="确定"
+        android:textSize="16dp"
+        android:textColor="#CC000000"
+        android:background="@drawable/selector_exit_background"/>
+
+</LinearLayout>
