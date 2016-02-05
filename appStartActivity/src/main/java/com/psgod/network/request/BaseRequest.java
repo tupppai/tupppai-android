@@ -160,7 +160,7 @@ public abstract class BaseRequest<T> extends Request<T> {
             Arrays.sort(keys);
             for (String s : keys) {
                 if (s.indexOf("=") != -1) {
-                    sb.append(s.split("=")[1]);
+                    sb.append(s.split("=").length >= 2?s.split("=")[1]:"");
                 }
             }
             Calendar cal = Calendar.getInstance();

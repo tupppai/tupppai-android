@@ -55,7 +55,7 @@ public class WithdrawPhoneVerifyActivity extends PSGodBaseActivity{
 
         initView();
         initListener();
-
+        mVerifyTxt.callOnClick();
     }
 
     private void initView() {
@@ -102,32 +102,36 @@ public class WithdrawPhoneVerifyActivity extends PSGodBaseActivity{
         mSure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Utils.showProgressDialog(WithdrawPhoneVerifyActivity.this);
-                MoneyTransferRequest request = new MoneyTransferRequest.Builder().
-                        setErrorListener(new PSGodErrorListener(this) {
-                            @Override
-                            public void handleError(VolleyError error) {
+                if(mVerifyEdit.getText().toString().length() > 0) {
+                    Utils.showProgressDialog(WithdrawPhoneVerifyActivity.this);
+                    MoneyTransferRequest request = new MoneyTransferRequest.Builder().
+                            setErrorListener(new PSGodErrorListener(this) {
+                                @Override
+                                public void handleError(VolleyError error) {
 
-                            }
-                        }).
-                        setListener(new Response.Listener<MoneyTransfer>() {
-                            @Override
-                            public void onResponse(MoneyTransfer response) {
-                                Utils.hideProgressDialog();
-                                if(response != null) {
-                                    Intent intent = new Intent(WithdrawPhoneVerifyActivity.this,
-                                            WithdrawSuccessActivity.class);
-                                    intent.putExtra(WithdrawSuccessActivity.RESULT, response);
-                                    WithdrawPhoneVerifyActivity.this.startActivity(intent);
                                 }
-                            }
-                        }).
-                        setAmount(String.valueOf(amount)).
-                        setCode(mVerifyEdit.getText().toString()).
-                        build();
-                RequestQueue requestQueue = PSGodRequestQueue
-                        .getInstance(WithdrawPhoneVerifyActivity.this).getRequestQueue();
-                requestQueue.add(request);
+                            }).
+                            setListener(new Response.Listener<MoneyTransfer>() {
+                                @Override
+                                public void onResponse(MoneyTransfer response) {
+                                    Utils.hideProgressDialog();
+                                    if (response != null) {
+                                        Intent intent = new Intent(WithdrawPhoneVerifyActivity.this,
+                                                WithdrawSuccessActivity.class);
+                                        intent.putExtra(WithdrawSuccessActivity.RESULT, response);
+                                        WithdrawPhoneVerifyActivity.this.startActivity(intent);
+                                    }
+                                }
+                            }).
+                            setAmount(String.valueOf(amount)).
+                            setCode(mVerifyEdit.getText().toString()).
+                            build();
+                    RequestQueue requestQueue = PSGodRequestQueue
+                            .getInstance(WithdrawPhoneVerifyActivity.this).getRequestQueue();
+                    requestQueue.add(request);
+                }else{
+                    CustomToast.show(WithdrawPhoneVerifyActivity.this,"验证不能为空",Toast.LENGTH_LONG);
+                }
             }
         });
     }
