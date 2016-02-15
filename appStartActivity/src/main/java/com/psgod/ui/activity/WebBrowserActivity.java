@@ -8,6 +8,7 @@ package com.psgod.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.view.Window;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -30,6 +31,7 @@ public class WebBrowserActivity extends PSGodBaseActivity {
     public static final String KEY_URL = "target_url";
     public static final String KEY_DESC = "desc";
     private ActionBar mActionBar;
+    private View mEmpty;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,7 +42,7 @@ public class WebBrowserActivity extends PSGodBaseActivity {
         setProgressBarVisibility(true);
 
         mWebView = (PsgodWebView) findViewById(R.id.web_browser_webview);
-
+        mEmpty = findViewById(R.id.web_browser_empty);
         mActionBar = (ActionBar) findViewById(R.id.web_browser_actionbar);
         String desc = getIntent().getStringExtra(KEY_DESC);
         if (desc != null && !desc.equals("")) {
@@ -48,12 +50,20 @@ public class WebBrowserActivity extends PSGodBaseActivity {
         }
         Intent intent = getIntent();
         String url = intent.getStringExtra(KEY_URL);
-        if (url != null && url.indexOf("?") == -1) {
-            url += "?from=android&v=2.0&token="
-                    + UserPreferences.TokenVerify.getToken();
-        } else {
-            url += "&from=android&v=2.0&token="
-                    + UserPreferences.TokenVerify.getToken();
+        if (url != null && !url.trim().equals("")) {
+            mEmpty.setVisibility(View.GONE);
+            mWebView.setVisibility(View.VISIBLE);
+            if (url.indexOf("?") == -1) {
+                url += "?from=android&v=2.0&token="
+                        + UserPreferences.TokenVerify.getToken();
+
+            } else {
+                url += "&from=android&v=2.0&token="
+                        + UserPreferences.TokenVerify.getToken();
+            }
+        }else{
+            mEmpty.setVisibility(View.VISIBLE);
+            mWebView.setVisibility(View.GONE);
         }
 
         mWebView.loadUrl(url);

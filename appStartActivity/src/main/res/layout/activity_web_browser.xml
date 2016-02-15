@@ -19,11 +19,18 @@
             psgod:rightBtnVisibility="gone"
             psgod:title="图派" />
 
+        <include
+            android:id="@+id/web_browser_empty"
+            layout="@layout/view_empty"
+            />
+
         <com.psgod.ui.widget.PsgodWebView
             android:id="@+id/web_browser_webview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/web_browser_actionbar" />
+            android:layout_below="@id/web_browser_actionbar"
+            android:visibility="visible"/>
+
     </RelativeLayout>
 
 </RelativeLayout>

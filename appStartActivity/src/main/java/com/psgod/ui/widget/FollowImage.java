@@ -243,9 +243,9 @@ public class FollowImage extends ImageView {
             }
         } else {
             FollowButtonAttribute attr = mBtnAttrs.get(state);
-            if(state == FollowState.UnFollow) {
+            if (state == FollowState.UnFollow) {
                 this.setImageResource(R.mipmap.btn_home_follow);
-            }else {
+            } else {
                 this.setImageDrawable(attr.srcDrawable);
             }
         }
