@@ -128,6 +128,12 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
     }
 
     @Override
+    protected void onRestart() {
+        super.onRestart();
+        initPhotoItem();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_photo_detail);
@@ -135,10 +141,10 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
         if (getIntent().hasExtra(Constants.IntentKey.PHOTO_ITEM)) {
             Object obj = getIntent().getSerializableExtra(
                     Constants.IntentKey.PHOTO_ITEM);
-            if (!(obj instanceof PhotoItem)) {
-                // TODO error
-                return;
-            }
+//            if (!(obj instanceof PhotoItem)) {
+//                // TODO error
+//                return;
+//            }
 
             mPhotoItem = (PhotoItem) obj;
             // 获照片 id
@@ -251,6 +257,9 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
         @Override
         public void onResponse(PhotoItem response) {
             mPhotoItem = response;
+            if(mPhotoItemView != null) {
+                mPhotoItemView.refreshPhotoItem(mPhotoItem);
+            }
             mAdapter.setPhotoItem(mPhotoItem);
             mAdapter.notifyDataSetChanged();
             initEvents();
@@ -307,6 +316,7 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
                             .hideFaceView();
 
                     mPhotoItem.setCommentCount(mPhotoItem.getCommentCount() + 1);
+                    mPhotoItemView.setPhotoItem(mPhotoItem);
                     mPhotoItemView.updateCommentView();
 
                     // 后台发送评论
@@ -416,6 +426,7 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
             mListView.onRefreshComplete();
 
             mPhotoItemView = mAdapter.getPhotoItemView();
+//            mPhotoItemView.updateCommentView();
             // 获得头部中评论Tv
             mCommentBtn = mPhotoItemView.getRecentPhotoDetailCommentBtn();
 

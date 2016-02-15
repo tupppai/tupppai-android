@@ -122,17 +122,20 @@ public class MainActivity extends PSGodBaseActivity {
     private RelativeLayout mTupaiLayout;
     private RelativeLayout mInprogressLayout;
     private RelativeLayout mMyLayout;
-    private AvatarImageView mAvatarImg;
-    private CircleImageView mAvatarCase;
+    private ImageView mAvatarImg;
+//    private CircleImageView mAvatarCase;
     private RelativeLayout[] mBottomTabLayout = new RelativeLayout[3];
 
     private ImageView mHomeImage;
     private ImageView mTupaiImage;
     private ImageView mInprogressImage;
     private ImageView[] mBottomTabImage = new ImageView[3];
-    private Integer[] mTabDrawableIds = {R.mipmap.tab_home_normal, R.mipmap.tab_tupai_normal,
-            R.mipmap.tab_jingxingzhong_normal, R.mipmap.tab_home_selected,
-            R.mipmap.tab_tupai_selected, R.mipmap.tab_jingxingzhong_selected};
+//    private Integer[] mTabDrawableIds = {R.mipmap.tab_home_normal, R.mipmap.tab_tupai_normal,
+//            R.mipmap.tab_jingxingzhong_normal, R.mipmap.tab_home_selected,
+//            R.mipmap.tab_tupai_selected, R.mipmap.tab_jingxingzhong_selected};
+    private Integer[] mTabDrawableIds = {R.mipmap.tab_feed_nor, R.mipmap.tab_channel_nor,
+            R.mipmap.tab_jinxing_nor, R.mipmap.tab_feed_sel,
+            R.mipmap.tab_channel_sel, R.mipmap.tab_jinxing_sel};
 
     // 小红点区域
     private LinearLayout mTabTipsMessage;
@@ -166,9 +169,9 @@ public class MainActivity extends PSGodBaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mBottomLayout = (LinearLayout) findViewById(R.id.psgod_linear_tab);
-        mAvatarImg = (AvatarImageView) findViewById(R.id.activity_main_tab_user_img);
+        mAvatarImg = (ImageView) findViewById(R.id.activity_main_tab_user_img);
 
-        mAvatarCase = (CircleImageView) findViewById(R.id.activity_main_tab_user_case);
+//        mAvatarCase = (CircleImageView) findViewById(R.id.activity_main_tab_user_case);
 
         mHomeLayout = (RelativeLayout) findViewById(R.id.activity_main_tab_home_page);
         mTupaiLayout = (RelativeLayout) findViewById(R.id.activity_tab_tupai_page);
@@ -227,9 +230,9 @@ public class MainActivity extends PSGodBaseActivity {
         // 初始化广播监听
         initReceiver();
 
-        if (!LoginUser.getInstance().getPhoneNum().equals("0")) {
-            initAvatar();
-        }
+//        if (!LoginUser.getInstance().getPhoneNum().equals("0")) {
+//            initAvatar();
+//        }
 
         // umeng应用自动更新
         UmengUpdateAgent.update(this);
@@ -254,16 +257,16 @@ public class MainActivity extends PSGodBaseActivity {
         }
     }
 
-    private void initAvatar() {
-        GetUserInfoRequest.Builder builder = new GetUserInfoRequest.Builder()
-                .setListener(getUserInfoListener);
-
-        GetUserInfoRequest request = builder.build();
-        request.setTag(TAG);
-        RequestQueue requestQueue = PSGodRequestQueue
-                .getInstance(this).getRequestQueue();
-        requestQueue.add(request);
-    }
+//    private void initAvatar() {
+//        GetUserInfoRequest.Builder builder = new GetUserInfoRequest.Builder()
+//                .setListener(getUserInfoListener);
+//
+//        GetUserInfoRequest request = builder.build();
+//        request.setTag(TAG);
+//        RequestQueue requestQueue = PSGodRequestQueue
+//                .getInstance(this).getRequestQueue();
+//        requestQueue.add(request);
+//    }
 
     // 获取用户后台信息之后回调
     private Listener<JSONObject> getUserInfoListener = new Listener<JSONObject>() {
@@ -355,9 +358,9 @@ public class MainActivity extends PSGodBaseActivity {
         registerReceiver(mNetReceiver, netIntentFilter);
     }
 
-    public void onEventMainThread(AvatarEvent event) {
-        initAvatar();
-    }
+//    public void onEventMainThread(AvatarEvent event) {
+//        initAvatar();
+//    }
 
     // EventBus 接收网络变化事件
     public void onEventMainThread(NetEvent event) {
@@ -486,9 +489,10 @@ public class MainActivity extends PSGodBaseActivity {
                 mBottomTabImage[i].setImageDrawable(res.getDrawable(mTabDrawableIds[i]));
             }
 
-            if (mAvatarCase.getVisibility() == View.GONE) {
-                mAvatarCase.setVisibility(View.VISIBLE);
-            }
+//            if (mAvatarCase.getVisibility() == View.GONE) {
+//                mAvatarCase.setVisibility(View.VISIBLE);
+//            }
+            mAvatarImg.setImageResource(R.mipmap.tab_my_sel);
 
             mTabTipsMessage.setVisibility(View.INVISIBLE);
             EventBus.getDefault().post(new MyInfoRefreshEvent(MyPageFragment.class.getSimpleName()));
@@ -520,9 +524,10 @@ public class MainActivity extends PSGodBaseActivity {
                 public void onClick(View view) {
                     setBottomTabImageDrawable(view.getId());
                     showFragment(view.getId());
-                    if (mAvatarCase.getVisibility() == View.VISIBLE) {
-                        mAvatarCase.setVisibility(View.GONE);
-                    }
+                    mAvatarImg.setImageResource(R.mipmap.tab_my_nor);
+//                    if (mAvatarCase.getVisibility() == View.VISIBLE) {
+//                        mAvatarCase.setVisibility(View.GONE);
+//                    }
                 }
             });
         }

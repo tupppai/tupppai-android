@@ -27,7 +27,12 @@ public class PhotoItemRequest extends BaseRequest<PhotoItem> {
     @Override
     protected PhotoItem doParseNetworkResponse(JSONObject reponse) throws
             UnsupportedEncodingException, JSONException {
-        PhotoItem item = PhotoItem.createPhotoItem(reponse.getJSONObject("data"), getUrl());
+        PhotoItem item;
+        if (getUrl().indexOf("ask/show/") != -1) {
+            item = PhotoItem.createPhotoItem(reponse.getJSONObject("data").getJSONObject("ask"), getUrl());
+        } else {
+            item = PhotoItem.createPhotoItem(reponse.getJSONObject("data"), getUrl());
+        }
         return item;
     }
 
