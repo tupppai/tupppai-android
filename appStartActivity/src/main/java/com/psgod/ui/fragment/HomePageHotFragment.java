@@ -144,7 +144,8 @@ public class HomePageHotFragment extends BaseFragment implements Callback {
         mHotPhotoItems = new ArrayList<PhotoItem>();
         mAdapter = new PhotoListAdapter(mContext,
                 PhotoItemView.PhotoListType.HOT_FOCUS_ASK, mHotPhotoItems);
-        mAdapter.setIsHomePageHot(true);
+        //去掉时间
+//        mAdapter.setIsHomePageHot(true);
         mViewHolder.mPhotoListView.getRefreshableView().setAdapter(mAdapter);
 
         mListener = new PhotoListListener(mContext);
