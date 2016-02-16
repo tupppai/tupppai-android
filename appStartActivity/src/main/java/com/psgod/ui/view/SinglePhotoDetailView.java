@@ -3,6 +3,9 @@ package com.psgod.ui.view;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Rect;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,17 +23,24 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.psgod.BitmapUtils;
 import com.psgod.Constants;
 import com.psgod.R;
+import com.psgod.Utils;
+import com.psgod.model.ImageData;
 import com.psgod.model.PhotoItem;
+import com.psgod.model.SinglePhotoItem;
 import com.psgod.model.User;
 import com.psgod.ui.activity.PhotoBrowserActivity;
+import com.psgod.ui.adapter.SingleImgListAdapter;
 import com.psgod.ui.widget.AvatarImageView;
 
 import com.psgod.ui.widget.FollowImage;
 import com.psgod.ui.widget.dialog.PSDialog;
 import com.psgod.ui.widget.dialog.ShareMoreDialog;
 
+import java.util.List;
+
 /**
  * Created by Administrator on 2015/12/2 0002.
+ * SinglePhotoDetail使用
  */
 public class SinglePhotoDetailView extends RelativeLayout {
     public SinglePhotoDetailView(Context context, AttributeSet attrs) {
@@ -49,12 +59,22 @@ public class SinglePhotoDetailView extends RelativeLayout {
         init();
     }
 
+    public SinglePhotoDetailView(Context context, SinglePhotoItem singlePhotoItem) {
+        super(context);
+        this.mPhotoItem = singlePhotoItem.getPhotoItem();
+        this.mAskPhotoItems = singlePhotoItem.getAskPhotoItems();
+        this.mReplyPhotoItems = singlePhotoItem.getReplyPhotoItems();
+        init();
+    }
+
 
     public void setPhotoItem(PhotoItem photoItem) {
         this.mPhotoItem = photoItem;
     }
 
     private PhotoItem mPhotoItem;
+    PhotoItem mAskPhotoItems;
+    List<PhotoItem> mReplyPhotoItems;
     private DisplayImageOptions mOptions = Constants.DISPLAY_IMAGE_OPTIONS;
     private DisplayImageOptions mAvatarOptions = Constants.DISPLAY_IMAGE_OPTIONS_AVATAR;
 
@@ -65,27 +85,33 @@ public class SinglePhotoDetailView extends RelativeLayout {
         addView(view);
     }
 
-    FollowImage follow;
-    AvatarImageView avatar;
-    TextView name;
-    TextView time;
-    LinearLayout imgMutl;
-    ImageView imgLeft;
-    ImageView imgRight;
-    FrameLayout imgSingle;
-    ImageView imgBack;
-    TextView desc;
-    ImageView shareImg;
-    TextView shareTxt;
-    ImageView commentImg;
-    TextView commentTxt;
-    ImageView bang;
-    LikeView like;
+    private FollowImage follow;
+    private AvatarImageView avatar;
+    private TextView name;
+    private TextView time;
+    private LinearLayout imgMutl;
+    private ImageView imgLeft;
+    private ImageView imgRight;
+    private FrameLayout imgSingle;
+    private ImageView imgBack;
+    private TextView desc;
+    private ImageView shareImg;
+    private TextView shareTxt;
+    private ImageView commentImg;
+    private TextView commentTxt;
+    private ImageView bang;
+    private LikeView like;
+
+    private RelativeLayout imgListArea;
+    private LinearLayout imgListAsk;
+    private RecyclerView imgListReply;
+    private SingleImgListAdapter imgListAdapter;
+
     private FollowImage.OnFollowChangeListener onFollowChangeListener;
 
     public void setOnFollowChangeListener(FollowImage.OnFollowChangeListener onFollowChangeListener) {
         this.onFollowChangeListener = onFollowChangeListener;
-        if(follow != null) {
+        if (follow != null) {
             follow.setOnFollowChangeListener(onFollowChangeListener);
         }
     }
@@ -108,24 +134,59 @@ public class SinglePhotoDetailView extends RelativeLayout {
         bang = (ImageView) view.findViewById(R.id.single_photo_detail_bang);
         like = (LikeView) view.findViewById(R.id.single_photo_detail_like);
 
-        avatar.setUser(new User(mPhotoItem));
-        PsGodImageLoader.getInstance().displayImage(mPhotoItem.getAvatarURL(), avatar, mAvatarOptions);
-        name.setText(mPhotoItem.getNickname());
-        time.setText(mPhotoItem.getUpdateTimeStr());
-        initImg();
-        desc.setText(mPhotoItem.getDesc());
-        initVariable();
-        like.updateLikeView();
-        if (mPhotoItem.getType() == 1) {
-            bang.setVisibility(VISIBLE);
-            like.setVisibility(GONE);
-        } else {
-            bang.setVisibility(GONE);
-            like.setVisibility(VISIBLE);
+        imgListArea = (RelativeLayout) view.findViewById(R.id.single_photo_detail_imglist_area);
+        imgListAsk = (LinearLayout) view.findViewById(R.id.single_photo_detail_imglist_ask);
+        imgListReply = (RecyclerView) view.findViewById(R.id.single_photo_detail_imglist_reply);
+        imgListReply.setLayoutManager(new LinearLayoutManager(getContext(),
+                LinearLayoutManager.HORIZONTAL, false));
+        imgListReply.addItemDecoration(new SpaceItemDecoration(
+                Utils.dpToPx(getContext(),5)));
+        initImgListArea();
+
+        if (mPhotoItem != null) {
+            avatar.setUser(new User(mPhotoItem));
+            PsGodImageLoader.getInstance().displayImage(mPhotoItem.getAvatarURL(), avatar, mAvatarOptions);
+            name.setText(mPhotoItem.getNickname());
+            time.setText(mPhotoItem.getUpdateTimeStr());
+            initImg();
+            desc.setText(mPhotoItem.getDesc());
+            initVariable();
+            like.updateLikeView();
+            if (mPhotoItem.getType() == 1) {
+                bang.setVisibility(VISIBLE);
+                like.setVisibility(GONE);
+            } else {
+                bang.setVisibility(GONE);
+                like.setVisibility(VISIBLE);
+            }
         }
     }
 
-    public void refreshPhotoItem(PhotoItem photoItem){
+    private void initImgListArea() {
+        if (mAskPhotoItems != null && mAskPhotoItems.getUploadImagesList().size() > 0
+                && mReplyPhotoItems != null && mReplyPhotoItems.size() > 0) {
+            imgListArea.setVisibility(VISIBLE);
+            imgListAsk.removeAllViews();
+            for (ImageData image : mAskPhotoItems.getUploadImagesList()) {
+                ImageView imageView = new ImageView(getContext());
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                        Utils.dpToPx(getContext(), 45), ViewGroup.LayoutParams.MATCH_PARENT
+                );
+                params.weight = 1;
+                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                imageView.setLayoutParams(params);
+                PsGodImageLoader.getInstance().displayImage(image.mImageUrl, imageView,
+                        Constants.DISPLAY_IMAGE_OPTIONS_SMALL_SMALL);
+                imgListAsk.addView(imageView);
+            }
+            imgListAdapter = new SingleImgListAdapter(getContext(), mReplyPhotoItems);
+            imgListReply.setAdapter(imgListAdapter);
+        } else {
+            imgListArea.setVisibility(GONE);
+        }
+    }
+
+    public void refreshPhotoItem(PhotoItem photoItem) {
         mPhotoItem = photoItem;
         initVariable();
     }
@@ -178,7 +239,7 @@ public class SinglePhotoDetailView extends RelativeLayout {
 
     private void initImg() {
         if (mPhotoItem.getUploadImagesList().size() == 1 || mPhotoItem.getType() == PhotoItem.TYPE_REPLY) {
-            imgMutl.setVisibility(INVISIBLE);
+            imgMutl.setVisibility(GONE);
             imgSingle.setVisibility(VISIBLE);
             imgBack.setTag(mPhotoItem.getImageURL());
             imgBack.setOnClickListener(imgClick);
@@ -187,10 +248,12 @@ public class SinglePhotoDetailView extends RelativeLayout {
             imgCover.setOnClickListener(imgClick);
             imgCover.setOnLongClickListener(imageOnLongClickListener);
             imgCover.setTag(mPhotoItem.getImageURL());
-            LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT
+                    , ViewGroup.LayoutParams.MATCH_PARENT);
             imgCover.setLayoutParams(params);
             imgSingle.addView(imgCover);
-            PsGodImageLoader.getInstance().displayImage(mPhotoItem.getImageURL(), imgCover, mOptions, new ImageLoadingListener() {
+            PsGodImageLoader.getInstance().displayImage(mPhotoItem.getImageURL()
+                    , imgCover, mOptions, new ImageLoadingListener() {
                 @Override
                 public void onLoadingStarted(String s, View view) {
 
@@ -213,9 +276,11 @@ public class SinglePhotoDetailView extends RelativeLayout {
             });
         } else if (mPhotoItem.getUploadImagesList().size() == 2) {
             imgMutl.setVisibility(VISIBLE);
-            imgSingle.setVisibility(INVISIBLE);
-            PsGodImageLoader.getInstance().displayImage(mPhotoItem.getUploadImagesList().get(0).mImageUrl, imgLeft, mOptions);
-            PsGodImageLoader.getInstance().displayImage(mPhotoItem.getUploadImagesList().get(1).mImageUrl, imgRight, mOptions);
+            imgSingle.setVisibility(GONE);
+            PsGodImageLoader.getInstance().
+                    displayImage(mPhotoItem.getUploadImagesList().get(0).mImageUrl, imgLeft, mOptions);
+            PsGodImageLoader.getInstance().
+                    displayImage(mPhotoItem.getUploadImagesList().get(1).mImageUrl, imgRight, mOptions);
             imgLeft.setTag(mPhotoItem.getUploadImagesList().get(0).mImageUrl);
             imgRight.setTag(mPhotoItem.getUploadImagesList().get(1).mImageUrl);
             imgRight.setOnClickListener(imgClick);
@@ -255,5 +320,21 @@ public class SinglePhotoDetailView extends RelativeLayout {
 
     public TextView getRecentPhotoDetailCommentBtn() {
         return commentTxt;
+    }
+
+    public class SpaceItemDecoration extends RecyclerView.ItemDecoration{
+
+        private int space;
+
+        public SpaceItemDecoration(int space) {
+            this.space = space;
+        }
+
+        @Override
+        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+
+            if(parent.getChildPosition(view) != 0)
+                outRect.left = space;
+        }
     }
 }

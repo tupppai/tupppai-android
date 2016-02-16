@@ -30,6 +30,7 @@ import com.psgod.Utils;
 import com.psgod.emoji.FaceConversionUtil;
 import com.psgod.model.Comment;
 import com.psgod.model.PhotoItem;
+import com.psgod.model.SinglePhotoItem;
 import com.psgod.model.User;
 import com.psgod.network.request.ActionCommentLikeRequest;
 import com.psgod.network.request.PSGodErrorListener;
@@ -53,6 +54,7 @@ public class SinglePhotoDetailAdapter extends BaseExpandableListAdapter {
 
 	private Context mContext;
 	private PhotoItem mPhotoItem;
+	private SinglePhotoItem mSinglePhotoItem;
 	private List<Comment> mCommentList;
 
 	private String mCreateTimeStr = null;
@@ -71,8 +73,23 @@ public class SinglePhotoDetailAdapter extends BaseExpandableListAdapter {
 		mHandler = handler;
 	}
 
+	public SinglePhotoDetailAdapter(Context context, SinglePhotoItem singlePhotoItem,
+									List<Comment> commentList, Handler handler) {
+		mContext = context;
+		mSinglePhotoItem = singlePhotoItem;
+		mPhotoItem = singlePhotoItem.getPhotoItem();
+		mCommentList = commentList;
+		mHandler = handler;
+	}
+
 	public void setPhotoItem(PhotoItem photoItem) {
 		this.mPhotoItem = photoItem;
+	}
+
+	public SinglePhotoDetailView setSinglePhotoItem(SinglePhotoItem singlePhotoItem) {
+		this.mSinglePhotoItem = singlePhotoItem;
+		singlePhoto = new SinglePhotoDetailView(mContext,singlePhotoItem);
+		return singlePhoto;
 	}
 
 	@Override
@@ -257,7 +274,7 @@ public class SinglePhotoDetailAdapter extends BaseExpandableListAdapter {
 	/**
 	 * 根据点赞状态，更新视图
 	 * 
-	 * @param isLiked
+	 * @param comment
 	 * @param viewHolder
 	 */
 	private void updateLikeView(Comment comment, ViewHolder viewHolder) {
@@ -377,7 +394,11 @@ public class SinglePhotoDetailAdapter extends BaseExpandableListAdapter {
 
 	public SinglePhotoDetailView getPhotoItemView() {
 		if(singlePhoto == null){
-			singlePhoto = new SinglePhotoDetailView(mContext,mPhotoItem);
+			if(mSinglePhotoItem == null) {
+				singlePhoto = new SinglePhotoDetailView(mContext, mPhotoItem);
+			}else{
+				singlePhoto = new SinglePhotoDetailView(mContext, mSinglePhotoItem);
+			}
 		}
 		return singlePhoto;
 	}

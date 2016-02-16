@@ -40,11 +40,13 @@ import com.psgod.model.Comment;
 import com.psgod.model.Comment.ReplyComment;
 import com.psgod.model.LoginUser;
 import com.psgod.model.PhotoItem;
+import com.psgod.model.SinglePhotoItem;
 import com.psgod.network.request.CommentListRequest;
 import com.psgod.network.request.CommentListRequest.CommentListWrapper;
 import com.psgod.network.request.PSGodErrorListener;
 import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.network.request.PhotoItemRequest;
+import com.psgod.network.request.PhotoSingleItemRequest;
 import com.psgod.network.request.PostCommentRequest;
 import com.psgod.ui.adapter.SinglePhotoDetailAdapter;
 import com.psgod.ui.view.FaceRelativeLayout;
@@ -73,6 +75,7 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
     private PullToRefreshExpandableListView mListView;
     private SinglePhotoDetailAdapter mAdapter;
     private PhotoItem mPhotoItem;
+    private SinglePhotoItem mSinglePhotoItem;
     private CommentListListener mListViewListener;
     private TextView mSendCommentBtn;
     private EditText mCommentEditText;
@@ -82,7 +85,7 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
     private ExecutorService fixedThreadPool = Executors.newFixedThreadPool(1);
 
     // 加载更多footer
-    private View mCommentListFooter;
+//    private View mCommentListFooter;
     // 照片的id
     private long mId = -1;
     private String mType;
@@ -171,10 +174,10 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
         mListView.setMode(Mode.PULL_FROM_START);
         mListView.getRefreshableView().setAdapter(mAdapter);
         // loadmore footer
-        mCommentListFooter = LayoutInflater.from(SinglePhotoDetail.this)
-                .inflate(R.layout.footer_load_more, null);
-        mListView.getRefreshableView().addFooterView(mCommentListFooter);
-        mCommentListFooter.setVisibility(View.GONE);
+//        mCommentListFooter = LayoutInflater.from(SinglePhotoDetail.this)
+//                .inflate(R.layout.footer_load_more, null);
+//        mListView.getRefreshableView().addFooterView(mCommentListFooter);
+//        mCommentListFooter.setVisibility(View.GONE);
 
         mListViewListener = new CommentListListener(this, mId);
         mListView.setOnLastItemVisibleListener(mListViewListener);
@@ -230,14 +233,14 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
         }
         if (mType != null && (mType.equals(Constants.IntentKey.ASK_ID) ||
                 mType.equals(Constants.IntentKey.REPLY_ID))) {
-            PhotoItemRequest request = new PhotoItemRequest.Builder().
+            PhotoSingleItemRequest request = new PhotoSingleItemRequest.Builder().
                     setId(String.valueOf(mId)).setType(mType).
                     setListener(photoItemListener).build();
             RequestQueue requestQueue = PSGodRequestQueue.getInstance(
                     this).getRequestQueue();
             requestQueue.add(request);
         } else if (mPhotoItem != null) {
-            PhotoItemRequest request = new PhotoItemRequest.Builder().
+            PhotoSingleItemRequest request = new PhotoSingleItemRequest.Builder().
                     setId(String.valueOf(mPhotoItem.getPid())).setType(mPhotoItem.getType() == 1 ?
                     Constants.IntentKey.ASK_ID : Constants.IntentKey.REPLY_ID).
                     setListener(photoItemListener).setErrorListener(new PSGodErrorListener(this) {
@@ -253,14 +256,37 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
         }
     }
 
-    Listener<PhotoItem> photoItemListener = new Listener<PhotoItem>() {
+    Listener<SinglePhotoItem> photoItemListener = new Listener<SinglePhotoItem>() {
         @Override
-        public void onResponse(PhotoItem response) {
-            mPhotoItem = response;
-            if(mPhotoItemView != null) {
+        public void onResponse(SinglePhotoItem response) {
+            mPhotoItem = response.getPhotoItem();
+            mSinglePhotoItem = response;
+            if (mPhotoItemView != null) {
                 mPhotoItemView.refreshPhotoItem(mPhotoItem);
             }
             mAdapter.setPhotoItem(mPhotoItem);
+            if (response.getReplyPhotoItems() != null && response.getAskPhotoItems() != null) {
+                mPhotoItemView = mAdapter.setSinglePhotoItem(mSinglePhotoItem);
+                mAdapter.notifyDataSetChanged();
+                initEvents();
+                refresh();
+            } else {
+                PhotoSingleItemRequest request = new PhotoSingleItemRequest.Builder().
+                        setId(String.valueOf(mPhotoItem.getAskId())).setType(Constants.IntentKey.ASK_ID).
+                        setListener(photoItemListener2).build();
+                RequestQueue requestQueue = PSGodRequestQueue.getInstance(
+                        SinglePhotoDetail.this).getRequestQueue();
+                requestQueue.add(request);
+            }
+        }
+    };
+
+    Listener<SinglePhotoItem> photoItemListener2 = new Listener<SinglePhotoItem>() {
+        @Override
+        public void onResponse(SinglePhotoItem response) {
+            mSinglePhotoItem.setAskPhotoItems(response.getAskPhotoItems());
+            mSinglePhotoItem.setReplyPhotoItems(response.getReplyPhotoItems());
+            mPhotoItemView = mAdapter.setSinglePhotoItem(mSinglePhotoItem);
             mAdapter.notifyDataSetChanged();
             initEvents();
             refresh();
@@ -468,7 +494,7 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
                 mListView.onRefreshComplete();
             }
 
-            mCommentListFooter.setVisibility(View.INVISIBLE);
+//            mCommentListFooter.setVisibility(View.INVISIBLE);
 
             if (response.recentCommentList.size() < 10) {
                 canLoadMore = false;
@@ -573,7 +599,7 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
         @Override
         public void onLastItemVisible() {
             if (canLoadMore) {
-                mCommentListFooter.setVisibility(View.VISIBLE);
+//                mCommentListFooter.setVisibility(View.VISIBLE);
                 ++mPage;
                 CommentListRequest.Builder builder = new CommentListRequest.Builder()
                         .setPid(mId).setPage(mPage)
