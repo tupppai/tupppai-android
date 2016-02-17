@@ -47,6 +47,7 @@ public class WithdrawDepositActivity extends PSGodBaseActivity {
         mMoneyEdit = (EditText) findViewById(R.id.withdraw_deposit_money_edit);
         mBalanceTxt = (TextView) findViewById(R.id.withdraw_deposit_money_balance);
         mSure = (Button) findViewById(R.id.withdraw_deposit_sure);
+        mSure.setEnabled(false);
     }
 
     private void initListener() {
@@ -54,17 +55,21 @@ public class WithdrawDepositActivity extends PSGodBaseActivity {
         mSure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.putExtra(WithdrawPhoneVerifyActivity.AMOUNT_DOUBLE,
-                        Double.parseDouble(mMoneyEdit.getText().toString()));
-                if(LoginUser.getInstance().isBoundWechat()){
-                    intent.setClass(WithdrawDepositActivity.this,
-                            WithdrawPhoneVerifyActivity.class);
-                }else{
-                    intent.setClass(WithdrawDepositActivity.this,
-                            WithDrawMoneyBindWechatActivity.class);
+                if (mMoneyEdit.getText().equals("")) {
+
+                } else {
+                    Intent intent = new Intent();
+                    intent.putExtra(WithdrawPhoneVerifyActivity.AMOUNT_DOUBLE,
+                            Double.parseDouble(mMoneyEdit.getText().toString()));
+                    if (LoginUser.getInstance().isBoundWechat()) {
+                        intent.setClass(WithdrawDepositActivity.this,
+                                WithdrawPhoneVerifyActivity.class);
+                    } else {
+                        intent.setClass(WithdrawDepositActivity.this,
+                                WithDrawMoneyBindWechatActivity.class);
+                    }
+                    startActivity(intent);
                 }
-                startActivity(intent);
             }
         });
 
@@ -95,13 +100,13 @@ public class WithdrawDepositActivity extends PSGodBaseActivity {
                         return;
                     }
                 }
-                if(s.length()>= 1){
+                if (s.length() >= 1) {
                     double money = Double.parseDouble(s.toString());
-                    if(money >= 1 && money <= LoginUser.getInstance().getBalance()){
+                    if (money >= 1 && money <= LoginUser.getInstance().getBalance()) {
                         mSure.setBackgroundColor(Color.parseColor("#FFEF04"));
                         mSure.setTextColor(Color.parseColor("#000000"));
                         mSure.setEnabled(true);
-                    }else{
+                    } else {
                         mSure.setBackgroundColor(Color.parseColor("#70FFEF04"));
                         mSure.setTextColor(Color.parseColor("#70000000"));
                         mSure.setEnabled(false);
