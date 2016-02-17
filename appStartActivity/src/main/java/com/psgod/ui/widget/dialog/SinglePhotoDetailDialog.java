@@ -204,13 +204,10 @@ public class SinglePhotoDetailDialog extends Dialog implements Handler.Callback 
                     @Override
                     public void run() {
                         String s = mPhotoItem.getImageURL();
-                        String[] thumbs = s.split("/");
+                        String[] thumbs = s.indexOf("?") != -1 ?
+                                s.split("\\?")[0].split("/") : s.split("/");
                         String name;
-                        if (thumbs.length > 0) {
-                            name = thumbs[thumbs.length - 1];
-                        } else {
-                            name = s;
-                        }
+                        name = thumbs[thumbs.length - 1];
                         Bitmap image = PhotoRequest.downloadImage(s);
                         String path = ImageIOManager.getInstance()
                                 .saveImage(name, image);
@@ -236,22 +233,22 @@ public class SinglePhotoDetailDialog extends Dialog implements Handler.Callback 
 
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                    switch (motionEvent.getAction()) {
-                        case MotionEvent.ACTION_DOWN:
-                            downY = motionEvent.getRawY();
-                            moveY = 0;
-                            break;
-                        case MotionEvent.ACTION_MOVE:
-                            moveY = motionEvent.getRawY() - downY;
-                            ViewHelper.setTranslationY(view, moveY);
-                            break;
-                        case MotionEvent.ACTION_UP:
-                            if (Math.abs(moveY) > Utils.dpToPx(mContext,50)) {
-                                dismiss();
-                            } else {
-                                ViewHelper.setTranslationY(view, 0);
-                            }
-                            break;
+                switch (motionEvent.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        downY = motionEvent.getRawY();
+                        moveY = 0;
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        moveY = motionEvent.getRawY() - downY;
+                        ViewHelper.setTranslationY(view, moveY);
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        if (Math.abs(moveY) > Utils.dpToPx(mContext, 50)) {
+                            dismiss();
+                        } else {
+                            ViewHelper.setTranslationY(view, 0);
+                        }
+                        break;
                 }
                 return true;
             }
