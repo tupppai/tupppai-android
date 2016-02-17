@@ -14,9 +14,9 @@
             android:id="@+id/detail_cover_head"
             android:layout_width="match_parent"
             android:layout_height="55dp"
+            android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true">
+            android:layout_alignParentStart="true">
 
             <ImageView
                 android:id="@+id/view_single_photo_detail_cover_tag"
@@ -44,7 +44,7 @@
                 android:layout_marginRight="6dp"
                 android:layout_toLeftOf="@+id/view_single_photo_detail_cover_avatar"
                 android:layout_toStartOf="@+id/view_single_photo_detail_cover_avatar"
-                android:text="咩咩"
+                android:text=""
                 android:textColor="@color/black"
                 android:textSize="13dp" />
 

@@ -221,7 +221,6 @@ public class FollowImage extends ImageView {
                             @Override
                             public void onAnimationUpdate(ValueAnimator valueAnimator) {
                                 Integer value = (Integer) valueAnimator.getAnimatedValue();
-                                Log.e("alpha", value + "");
                                 setAlpha((float) value / 100);
                             }
                         });

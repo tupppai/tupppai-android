@@ -263,8 +263,9 @@ public class OriginImageLayout extends RelativeLayout {
                 android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
         originTipParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
         originTipParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+        originTipParams.setMargins(0,Utils.dpToPx(mContext,4),0,0);
         thumbTipImage.setLayoutParams(originTipParams);
-        thumbTipImage.setBackgroundResource(R.drawable.ic_yuantu);
+        thumbTipImage.setBackgroundResource(R.mipmap.tag_single_ori);
         uploadLayout.addView(thumbTipImage);
     }
 
