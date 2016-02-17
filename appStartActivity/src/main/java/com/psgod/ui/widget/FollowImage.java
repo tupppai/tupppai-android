@@ -3,23 +3,32 @@ package com.psgod.ui.widget;
 import java.util.HashMap;
 import java.util.Map;
 
+import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
+import android.widget.ViewAnimator;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.psgod.Constants;
 import com.psgod.R;
+import com.psgod.Utils;
 import com.psgod.model.LoginUser;
 import com.psgod.model.PhotoItem;
 import com.psgod.model.User;
@@ -190,6 +199,7 @@ public class FollowImage extends ImageView {
     private Listener<Boolean> actionFollowListener = new Listener<Boolean>() {
         @Override
         public void onResponse(Boolean response) {
+            FollowImage.this.setClickable(true);
             if (response == true) {
                 if (onFollowChangeListener != null) {
                     onFollowChangeListener.onFocusChange(mUid, ((state == FollowState.Following
@@ -203,17 +213,39 @@ public class FollowImage extends ImageView {
                     Toast.makeText(mContext, "取消关注成功", Toast.LENGTH_SHORT)
                             .show();
                 } else if (state == FollowState.UnFollow) {
-                    if (mIsFan == 1) {
-                        state = FollowState.FollowingEach;
+                    if (isHideFollow) {
+                        final AnimatorSet anim = new AnimatorSet();
+                        anim.setDuration(1300);
+                        ValueAnimator xAnim = ValueAnimator.ofInt(100, 1);
+                        xAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                            @Override
+                            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                                Integer value = (Integer) valueAnimator.getAnimatedValue();
+                                Log.e("alpha", value + "");
+                                setAlpha((float) value / 100);
+                            }
+                        });
+                        setClickable(false);
+                        xAnim.addListener(animListener);
+                        anim.playTogether(xAnim);
+                        anim.start();
+                        if (mIsFan == 1) {
+                            state = FollowState.FollowingEach;
+                        } else {
+                            state = FollowState.Following;
+                        }
+                        Toast.makeText(mContext, "关注成功", Toast.LENGTH_SHORT).show();
                     } else {
-                        state = FollowState.Following;
+                        if (mIsFan == 1) {
+                            state = FollowState.FollowingEach;
+                        } else {
+                            state = FollowState.Following;
+                        }
+                        setFollowButtonState(state);
+                        Toast.makeText(mContext, "关注成功", Toast.LENGTH_SHORT).show();
                     }
-
-                    setFollowButtonState(state);
-                    Toast.makeText(mContext, "关注成功", Toast.LENGTH_SHORT).show();
                 }
 
-                FollowImage.this.setClickable(true);
 
                 // 关注用户有变化 需要自动刷新我的关注页面
                 Constants.IS_FOLLOW_NEW_USER = true;
@@ -238,8 +270,8 @@ public class FollowImage extends ImageView {
                 FollowButtonAttribute attr = mBtnAttrs.get(state);
                 this.setImageDrawable(attr.srcDrawable);
             } else {
-                this.setImageDrawable(new ColorDrawable(Color.parseColor("#00000000")));
-                this.setVisibility(GONE);
+                setImageDrawable(new ColorDrawable(Color.parseColor("#00000000")));
+                setVisibility(GONE);
             }
         } else {
             FollowButtonAttribute attr = mBtnAttrs.get(state);
@@ -280,4 +312,27 @@ public class FollowImage extends ImageView {
     public void setIsHideFollow(boolean isHideFollow) {
         this.isHideFollow = isHideFollow;
     }
+
+    Animator.AnimatorListener animListener = new Animator.AnimatorListener() {
+        @Override
+        public void onAnimationStart(Animator animator) {
+
+        }
+
+        @Override
+        public void onAnimationEnd(Animator animator) {
+            setClickable(true);
+            setFollowButtonState(state);
+        }
+
+        @Override
+        public void onAnimationCancel(Animator animator) {
+
+        }
+
+        @Override
+        public void onAnimationRepeat(Animator animator) {
+
+        }
+    };
 }
