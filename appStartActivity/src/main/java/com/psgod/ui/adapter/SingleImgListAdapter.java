@@ -17,6 +17,7 @@ import com.psgod.R;
 import com.psgod.Utils;
 import com.psgod.model.PhotoItem;
 import com.psgod.ui.activity.SinglePhotoDetail;
+import com.psgod.ui.widget.dialog.SinglePhotoDetailDialog;
 
 import java.util.List;
 
@@ -59,6 +60,7 @@ public class SingleImgListAdapter extends RecyclerView.Adapter<SingleImgListAdap
         public void onClick(View view) {
             Integer position = (Integer) view.getTag(R.id.tupppai_view_id);
             PhotoItem photoItem = list.get(position);
+            new SinglePhotoDetailDialog(context,photoItem).show();
         }
     };
 

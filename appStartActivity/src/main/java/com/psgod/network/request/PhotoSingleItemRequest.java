@@ -45,9 +45,8 @@ public class PhotoSingleItemRequest extends BaseRequest<SinglePhotoItem> {
                 item.setReplyPhotoItems(photoItems);
             }
         } else {
-            item.setAskPhotoItems(PhotoItem.createPhotoItem(
+            item.setPhotoItem(PhotoItem.createPhotoItem(
                     reponse.getJSONObject("data"), getUrl()));
-            item.setPhotoItem(item.getAskPhotoItems());
         }
         return item;
     }

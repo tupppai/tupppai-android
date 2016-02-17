@@ -5,8 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.net.Uri;
+import android.os.Message;
 import android.provider.MediaStore.MediaColumns;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
@@ -20,6 +22,7 @@ import com.alibaba.fastjson.JSON;
 import com.psgod.model.PhotoItem;
 import com.psgod.model.SelectImage;
 import com.psgod.network.request.BaseRequest;
+import com.psgod.network.request.PhotoRequest;
 import com.psgod.ui.activity.ChannelActivity;
 import com.psgod.ui.activity.RecentActActivity;
 import com.psgod.ui.activity.SinglePhotoDetail;
@@ -30,6 +33,7 @@ import com.psgod.ui.widget.dialog.CustomProgressingDialog;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.lang.reflect.Field;
 import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
@@ -354,22 +358,20 @@ public final class Utils {
     public static void skipByObject(Context context, Object obj) {
         if (obj instanceof PhotoItem) {
             PhotoItem photoItem = (PhotoItem) obj;
-            if (photoItem.getCategoryType().equals("tutorial")) {
-                SinglePhotoDetail.startActivity(
-                        context, photoItem);
-            } else {
-                new CarouselPhotoDetailDialog(context,
-                        photoItem.getAskId(),
-                        photoItem.getPid(),
-                        photoItem.getCategoryId()).show();
-            }
+//            if (photoItem.getCategoryType().equals("tutorial")) {
+            SinglePhotoDetail.startActivity(
+                    context, photoItem);
+//            } else {
+//                new CarouselPhotoDetailDialog(context,
+//                        photoItem.getAskId(),
+//                        photoItem.getPid(),
+//                        photoItem.getCategoryId()).show();
+//            }
         }
     }
 
-    public static void skipByObject(Context context, long askId, long id) {
-        if (askId == id) {
-//            Intent intent = new Intent(context,Si)
-        }
+    public static void skipByObject(Context context, String type, long id) {
+        SinglePhotoDetail.startActivity(context, id, type);
     }
 
     private static boolean isBindInputPhoneShow = false;
@@ -441,4 +443,5 @@ public final class Utils {
         }
         return md5str.toString().toUpperCase();
     }
+
 }

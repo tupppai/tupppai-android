@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.psgod.PsGodImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -35,6 +36,10 @@ import com.psgod.ui.widget.AvatarImageView;
 import com.psgod.ui.widget.FollowImage;
 import com.psgod.ui.widget.dialog.PSDialog;
 import com.psgod.ui.widget.dialog.ShareMoreDialog;
+import com.psgod.ui.widget.dialog.SinglePhotoDetailDialog;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -140,7 +145,7 @@ public class SinglePhotoDetailView extends RelativeLayout {
         imgListReply.setLayoutManager(new LinearLayoutManager(getContext(),
                 LinearLayoutManager.HORIZONTAL, false));
         imgListReply.addItemDecoration(new SpaceItemDecoration(
-                Utils.dpToPx(getContext(),5)));
+                Utils.dpToPx(getContext(), 5)));
         initImgListArea();
 
         if (mPhotoItem != null) {
@@ -173,10 +178,13 @@ public class SinglePhotoDetailView extends RelativeLayout {
                         Utils.dpToPx(getContext(), 45), ViewGroup.LayoutParams.MATCH_PARENT
                 );
                 params.weight = 1;
+
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 imageView.setLayoutParams(params);
                 PsGodImageLoader.getInstance().displayImage(image.mImageUrl, imageView,
                         Constants.DISPLAY_IMAGE_OPTIONS_SMALL_SMALL);
+                imageView.setTag(R.id.image_url, image.mImageUrl);
+                imageView.setOnClickListener(askImgClick);
                 imgListAsk.addView(imageView);
             }
             imgListAdapter = new SingleImgListAdapter(getContext(), mReplyPhotoItems);
@@ -185,6 +193,15 @@ public class SinglePhotoDetailView extends RelativeLayout {
             imgListArea.setVisibility(GONE);
         }
     }
+
+    OnClickListener askImgClick = new OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            String url = view.getTag(R.id.image_url).toString();
+            mAskPhotoItems.setImageURL(url);
+            new SinglePhotoDetailDialog(getContext(), mAskPhotoItems).show();
+        }
+    };
 
     public void refreshPhotoItem(PhotoItem photoItem) {
         mPhotoItem = photoItem;
@@ -322,7 +339,7 @@ public class SinglePhotoDetailView extends RelativeLayout {
         return commentTxt;
     }
 
-    public class SpaceItemDecoration extends RecyclerView.ItemDecoration{
+    public class SpaceItemDecoration extends RecyclerView.ItemDecoration {
 
         private int space;
 
@@ -333,7 +350,7 @@ public class SinglePhotoDetailView extends RelativeLayout {
         @Override
         public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
 
-            if(parent.getChildPosition(view) != 0)
+            if (parent.getChildPosition(view) != 0)
                 outRect.left = space;
         }
     }

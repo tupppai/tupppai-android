@@ -36,6 +36,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshExpandableListView;
 import com.psgod.Constants;
 import com.psgod.R;
 import com.psgod.WeakReferenceHandler;
+import com.psgod.eventbus.RefreshEvent;
 import com.psgod.model.Comment;
 import com.psgod.model.Comment.ReplyComment;
 import com.psgod.model.LoginUser;
@@ -57,6 +58,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import de.greenrobot.event.EventBus;
 
 public class SinglePhotoDetail extends PSGodBaseActivity implements
         Handler.Callback {
@@ -121,10 +124,11 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
     }
 
     // 传photo item id的启动函数
-    public static void startActivity(Context context, Long askId) {
-        if (askId != null) {
+    public static void startActivity(Context context, Long id,String type) {
+        if (id != null) {
             Intent intent = new Intent(context, SinglePhotoDetail.class);
-            intent.putExtra(Constants.IntentKey.ASK_ID, askId);
+            intent.putExtra(ID, id);
+            intent.putExtra(TYPE, type);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
         }
@@ -136,10 +140,27 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
         initPhotoItem();
     }
 
+    public void onEventMainThread(RefreshEvent event) {
+        if(event.className.equals(this.getClass().getName())){
+            try {
+                initPhotoItem();
+            } catch (NullPointerException nu) {
+            } catch (Exception e) {
+            }
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_photo_detail);
+        EventBus.getDefault().register(this);
 
         if (getIntent().hasExtra(Constants.IntentKey.PHOTO_ITEM)) {
             Object obj = getIntent().getSerializableExtra(
@@ -152,6 +173,8 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
             mPhotoItem = (PhotoItem) obj;
             // 获照片 id
             mId = mPhotoItem.getPid();
+        }else{
+            mPhotoItem = new PhotoItem();
         }
 
         mSendCommentBtn = (TextView) this
@@ -218,7 +241,7 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
         }
 
         // 初始化评论的数据
-        refresh();
+//        refresh();
 
         initPhotoItem();
     }
