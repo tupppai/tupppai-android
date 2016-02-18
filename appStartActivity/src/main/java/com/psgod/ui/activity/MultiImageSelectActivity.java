@@ -67,6 +67,7 @@ public class MultiImageSelectActivity extends PSGodBaseActivity {
 
     public final static String TYPE_ASK_SELECT = "TypeAskSelect";
     public final static String TYPE_REPLY_SELECT = "TypeReplySelect";
+    public final static String TYPE_TIMELINE_SELECT = "TypeTimelineSelect";
     public static String IMAGE_SELECT_TYPE = TYPE_ASK_SELECT;
 
     // 选择全部图片
@@ -80,6 +81,7 @@ public class MultiImageSelectActivity extends PSGodBaseActivity {
     private TextView mNextText;
     private TextView mSelectCountText;
     private TextView mSelectFolderText;
+    private TextView mActionTitle;
     private ImageButton mBackBtn;
     private GridView mImageGridView;
     private MultiImageSelectAdapter mMultiImageAdapter;
@@ -149,6 +151,12 @@ public class MultiImageSelectActivity extends PSGodBaseActivity {
             MaxImageSelectCount = MaxImageOne;
         }
 
+        if(IMAGE_SELECT_TYPE.equals(TYPE_TIMELINE_SELECT)){
+            mActionTitle.setVisibility(View.VISIBLE);
+        }else{
+            mActionTitle.setVisibility(View.GONE);
+        }
+
         if (intent.hasExtra("resultList")) {
             resultList = intent.getStringArrayListExtra("resultList");
             mSelectCountText.setText(Integer.toString(resultList.size()));
@@ -178,6 +186,7 @@ public class MultiImageSelectActivity extends PSGodBaseActivity {
         mNextText = (TextView) findViewById(R.id.text_next);
         mSelectCountText = (TextView) findViewById(R.id.select_count);
         mSelectFolderText = (TextView) findViewById(R.id.select_folder);
+        mActionTitle = (TextView) findViewById(R.id.action_title);
         mNextText.setEnabled(false);
 
         mImageGridView.getViewTreeObserver().addOnGlobalLayoutListener(
