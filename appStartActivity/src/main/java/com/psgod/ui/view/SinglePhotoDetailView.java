@@ -178,7 +178,7 @@ public class SinglePhotoDetailView extends RelativeLayout {
                         Utils.dpToPx(getContext(), 45), ViewGroup.LayoutParams.MATCH_PARENT
                 );
                 params.weight = 1;
-
+                params.setMargins(0,0,Utils.dpToPx(getContext(),5),0);
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 imageView.setLayoutParams(params);
                 PsGodImageLoader.getInstance().displayImage(image.mImageUrl, imageView,

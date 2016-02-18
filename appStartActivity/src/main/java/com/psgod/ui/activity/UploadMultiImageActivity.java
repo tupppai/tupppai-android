@@ -83,6 +83,7 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
     public final static String MULTIIMAGESELECTRESULT = "MultiImageSelectResult";
     public final static String TYPE_ASK_SELECT = "TypeAskSelect";
     public final static String TYPE_REPLY_SELECT = "TypeReplySelect";
+    public final static String TYPE_TIMELINE_SELECT = "TypeTimelineSelect";
 
     private Context mContext;
     private ArrayList<String> pathList = new ArrayList<String>();
@@ -102,6 +103,7 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
 
     public final static String TYPE_ASK_UPLOAD = "TypeAskUpload";
     public final static String TYPE_REPLY_UPLOAD = "TypeReplyUpload";
+    public final static String TYPE_TIMELINE_UPLOAD = "TypeTimelineUpload";
     public static String IMAGE_UPLOAD_TYPE = TYPE_ASK_UPLOAD;
     private static final int JUMP_FROM_UPLOAD_ASK = 1000;
 
@@ -137,6 +139,8 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
         isAsk = bundle.getBoolean("isAsk", false);
         if (type.equals(TYPE_ASK_SELECT)) {
             IMAGE_UPLOAD_TYPE = TYPE_ASK_UPLOAD;
+        } else if(type.equals(TYPE_TIMELINE_SELECT)){
+            IMAGE_UPLOAD_TYPE = TYPE_TIMELINE_UPLOAD;
         } else {
             IMAGE_UPLOAD_TYPE = TYPE_REPLY_UPLOAD;
         }
@@ -227,7 +231,7 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
                     UploadMultiImageActivity.this);
         }
 
-        if ((pathList.size() == 1) && (IMAGE_UPLOAD_TYPE == TYPE_ASK_UPLOAD)) {
+        if ((pathList.size() == 1) && (IMAGE_UPLOAD_TYPE.equals(TYPE_ASK_UPLOAD))) {
             ImageView mImage = new ImageView(this);
             LinearLayout.LayoutParams lpLayoutParams = new LinearLayout.LayoutParams(
                     Utils.dpToPx(mContext, 82), Utils.dpToPx(mContext, 82));
@@ -273,7 +277,7 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
                 }
             });
         } else if ((pathList.size() == 1)
-                && (IMAGE_UPLOAD_TYPE == TYPE_REPLY_UPLOAD)) {
+                && (IMAGE_UPLOAD_TYPE.equals(TYPE_REPLY_UPLOAD)) || IMAGE_UPLOAD_TYPE.equals(TYPE_TIMELINE_SELECT)) {
             ImageView mImage = new ImageView(this);
             LinearLayout.LayoutParams lpLayoutParams = new LinearLayout.LayoutParams(
                     Utils.dpToPx(mContext, 82), Utils.dpToPx(mContext, 82));

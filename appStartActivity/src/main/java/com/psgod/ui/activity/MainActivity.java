@@ -42,6 +42,7 @@ import com.psgod.eventbus.PushEvent;
 import com.psgod.eventbus.RefreshEvent;
 import com.psgod.eventbus.UpdateTabStatusEvent;
 import com.psgod.model.LoginUser;
+import com.psgod.model.PhotoItem;
 import com.psgod.network.request.BaseRequest;
 import com.psgod.network.request.GetUserInfoRequest;
 import com.psgod.network.request.PSGodErrorListener;
@@ -124,7 +125,7 @@ public class MainActivity extends PSGodBaseActivity {
     private RelativeLayout mInprogressLayout;
     private RelativeLayout mMyLayout;
     private ImageView mAvatarImg;
-//    private CircleImageView mAvatarCase;
+    //    private CircleImageView mAvatarCase;
     private RelativeLayout[] mBottomTabLayout = new RelativeLayout[3];
 
     private ImageView mHomeImage;
@@ -133,7 +134,7 @@ public class MainActivity extends PSGodBaseActivity {
     private ImageView mReleaseImage;
 
     private ImageView[] mBottomTabImage = new ImageView[3];
-//    private Integer[] mTabDrawableIds = {R.mipmap.tab_home_normal, R.mipmap.tab_tupai_normal,
+    //    private Integer[] mTabDrawableIds = {R.mipmap.tab_home_normal, R.mipmap.tab_tupai_normal,
 //            R.mipmap.tab_jingxingzhong_normal, R.mipmap.tab_home_selected,
 //            R.mipmap.tab_tupai_selected, R.mipmap.tab_jingxingzhong_selected};
     private Integer[] mTabDrawableIds = {R.mipmap.tab_feed_nor, R.mipmap.tab_channel_nor,
@@ -526,7 +527,13 @@ public class MainActivity extends PSGodBaseActivity {
         mReleaseImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(MainActivity.this,
+                        MultiImageSelectActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("SelectType",
+                        UploadMultiImageActivity.TYPE_TIMELINE_SELECT);
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         });
 

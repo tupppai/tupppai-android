@@ -288,7 +288,8 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
                 mPhotoItemView.refreshPhotoItem(mPhotoItem);
             }
             mAdapter.setPhotoItem(mPhotoItem);
-            if (response.getReplyPhotoItems() != null && response.getAskPhotoItems() != null) {
+            if ((response.getReplyPhotoItems() != null && response.getAskPhotoItems() != null)
+                    || mPhotoItem.getAskId() == 0) {
                 mPhotoItemView = mAdapter.setSinglePhotoItem(mSinglePhotoItem);
                 mAdapter.notifyDataSetChanged();
                 initEvents();

@@ -26,6 +26,7 @@ public class UploadMultiRequest extends BaseRequest<MultiUploadResult> {
     private static final String TAG = UploadMultiRequest.class.getSimpleName();
     public final static String TYPE_ASK_UPLOAD = "TypeAskUpload";
     public final static String TYPE_REPLY_UPLOAD = "TypeReplyUpload";
+    public final static String TYPE_TIMELINE_UPLOAD = "TypeTimelineUpload";
 
     public UploadMultiRequest(int method, String url,
                               Listener<MultiUploadResult> listener, ErrorListener errorListener) {
@@ -135,6 +136,8 @@ public class UploadMultiRequest extends BaseRequest<MultiUploadResult> {
             } else if (upload_type
                     .equals(TYPE_REPLY_UPLOAD)) {
                 sb.append("reply/multi");
+            } else if (upload_type.equals(TYPE_TIMELINE_UPLOAD)){
+                sb.append("timeline/multi");
             }
             String url = sb.toString();
             return url;
