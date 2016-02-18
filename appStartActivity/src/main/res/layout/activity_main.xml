@@ -74,6 +74,15 @@
 
         </RelativeLayout>
 
+        <ImageView
+            android:id="@+id/activity_dynamic_release"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@mipmap/tab_post"
+            android:layout_gravity="center"
+            />
+
         <RelativeLayout
             android:id="@+id/activity_inprogress_tab_page"
             android:layout_width="0dp"
@@ -218,7 +227,7 @@
             <View
                 android:layout_width="8dp"
                 android:layout_height="8dp"
-                android:layout_marginLeft="3dp"
+                android:layout_marginLeft="13dp"
                 android:background="@drawable/shape_bottom_tab_tip" />
         </LinearLayout>
     </LinearLayout>

@@ -1017,7 +1017,7 @@ public class PhotoItemView extends RelativeLayout implements Callback {
                     if (bitmap == null) {
                         mImageArea.setBackgroundColor(Color.parseColor("#00000000"));
                     } else {
-                        mImageArea.setBackground(new BitmapDrawable(getResources(),
+                        mImageArea.setBackgroundDrawable(new BitmapDrawable(getResources(),
                                 bitmap));
                     }
                 }

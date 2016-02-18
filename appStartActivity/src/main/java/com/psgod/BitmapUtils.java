@@ -152,6 +152,9 @@ public final class BitmapUtils {
     // 对图片进行处理，得到毛玻璃效果
     public static Bitmap getBlurBitmap(Bitmap bitmap) {
         Bitmap bluredBitmap = null;
+        if (bitmap == null) {
+            return bitmap;
+        }
         if (lruCache.get(bitmap.toString()) == null) {
 
             // 图片缩放比例 TODO 做成参数可配置
@@ -181,6 +184,9 @@ public final class BitmapUtils {
     // 对图片进行处理，得到毛玻璃效果
     public static Bitmap getBlurBitmap(Bitmap bitmap, View view, String url) {
         Bitmap bluredBitmap = null;
+        if (bitmap == null) {
+            return bitmap;
+        }
         if (lruCache.get(bitmap.toString()) == null) {
 
             // 图片缩放比例 TODO 做成参数可配置

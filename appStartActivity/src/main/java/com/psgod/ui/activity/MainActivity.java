@@ -58,6 +58,7 @@ import com.psgod.ui.fragment.TupppaiFragment;
 import com.psgod.ui.view.CircleImageView;
 import com.psgod.ui.widget.AvatarImageView;
 import com.umeng.message.PushAgent;
+import com.umeng.message.UmengRegistrar;
 import com.umeng.update.UmengUpdateAgent;
 
 import org.android.agoo.client.BaseRegistrar;
@@ -129,6 +130,8 @@ public class MainActivity extends PSGodBaseActivity {
     private ImageView mHomeImage;
     private ImageView mTupaiImage;
     private ImageView mInprogressImage;
+    private ImageView mReleaseImage;
+
     private ImageView[] mBottomTabImage = new ImageView[3];
 //    private Integer[] mTabDrawableIds = {R.mipmap.tab_home_normal, R.mipmap.tab_tupai_normal,
 //            R.mipmap.tab_jingxingzhong_normal, R.mipmap.tab_home_selected,
@@ -185,6 +188,7 @@ public class MainActivity extends PSGodBaseActivity {
         mHomeImage = (ImageView) findViewById(R.id.activity_main_tab_image);
         mTupaiImage = (ImageView) findViewById(R.id.activity_tupai_tab_image);
         mInprogressImage = (ImageView) findViewById(R.id.activity_inprogress_tab_image);
+        mReleaseImage = (ImageView) findViewById(R.id.activity_dynamic_release);
 
         mBottomTabImage[0] = mHomeImage;
         mBottomTabImage[1] = mTupaiImage;
@@ -209,7 +213,7 @@ public class MainActivity extends PSGodBaseActivity {
         mPushAgent = PushAgent.getInstance(this);
         mPushAgent.onAppStart();
         mPushAgent.enable();
-        mDeviceToken = BaseRegistrar.getRegistrationId(this);
+        mDeviceToken = UmengRegistrar.getRegistrationId(this);
 
         Intent intent = getIntent();
         // 判断从哪里跳过来 重新登录 才发送umeng deviceToken
@@ -518,6 +522,14 @@ public class MainActivity extends PSGodBaseActivity {
     private void initEvents() {
         mMyLayout.setOnClickListener(myClick);
         mAvatarImg.setOnClickListener(myClick);
+
+        mReleaseImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
         for (int i = 0; i < 3; i++) {
             mBottomTabLayout[i].setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -759,7 +771,6 @@ public class MainActivity extends PSGodBaseActivity {
     private PSGodErrorListener errorListener = new PSGodErrorListener(this) {
         @Override
         public void handleError(VolleyError error) {
-            // TODO Auto-generated method stub
         }
     };
 

@@ -66,6 +66,11 @@ public class InprogressPageFragment extends Fragment implements
         super.onCreate(savedInstanceState);
         mContext = getActivity();
 
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         FrameLayout parentview = new FrameLayout(getActivity());
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
                 android.view.ViewGroup.LayoutParams.MATCH_PARENT, android.view.ViewGroup.LayoutParams.MATCH_PARENT);
@@ -111,20 +116,8 @@ public class InprogressPageFragment extends Fragment implements
         mViewHolder.tabRadioGroup.check(TAB_RADIO_BUTTONS_ID[0]);
 
         initListeners();
-    }
+//        parentview.addView(mViewHolder.mView);
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        FrameLayout parentview = new FrameLayout(getActivity());
-        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
-                android.view.ViewGroup.LayoutParams.MATCH_PARENT, android.view.ViewGroup.LayoutParams.MATCH_PARENT);
-        parentview.setLayoutParams(params);
-
-        mViewHolder.mParentView.removeView(mViewHolder.mView);
-        parentview.addView(mViewHolder.mView);
-
-        mViewHolder.mParentView = parentview;
         return parentview;
     }
 
