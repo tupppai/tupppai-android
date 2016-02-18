@@ -139,7 +139,7 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
         isAsk = bundle.getBoolean("isAsk", false);
         if (type.equals(TYPE_ASK_SELECT)) {
             IMAGE_UPLOAD_TYPE = TYPE_ASK_UPLOAD;
-        } else if(type.equals(TYPE_TIMELINE_SELECT)){
+        } else if (type.equals(TYPE_TIMELINE_SELECT)) {
             IMAGE_UPLOAD_TYPE = TYPE_TIMELINE_UPLOAD;
         } else {
             IMAGE_UPLOAD_TYPE = TYPE_REPLY_UPLOAD;
@@ -487,7 +487,7 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
         @Override
         public void onResponse(ImageUploadResult response) {
             mUploadIdList.add(response.id);
-            if(mUploadIdList.size() == pathList.size()) {
+            if (mUploadIdList.size() == pathList.size()) {
                 UploadMultiRequest.Builder builder = new UploadMultiRequest.Builder()
                         .setUploadType(IMAGE_UPLOAD_TYPE).setContent(contentString)
                         .setUploadIdList(mUploadIdList)
@@ -511,7 +511,7 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
         @Override
         public void onResponse(ImageUploadResult response) {
             mUploadIdList.add(response.id);
-            if(mUploadIdList.size() == pathList.size()) {
+            if (mUploadIdList.size() == pathList.size()) {
                 UploadMultiRequest.Builder builder = new UploadMultiRequest.Builder()
                         .setUploadType(IMAGE_UPLOAD_TYPE).setContent(contentString)
                         .setUploadIdList(mUploadIdList)
@@ -604,6 +604,13 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
                 if (mChannelId != null && !mChannelId.equals("")) {
                     intent.putExtra("id", mChannelId);
                 }
+                startActivity(intent);
+            } else if (IMAGE_UPLOAD_TYPE.equals(TYPE_TIMELINE_UPLOAD)) {
+                Intent intent = new Intent(UploadMultiImageActivity.this,MainActivity.class);
+                intent.putExtra(MainActivity.IntentParams.KEY_FRAGMENT_ID,
+                        MainActivity.IntentParams.VALUE_FRAGMENT_ID_HOMEPAGE);
+                intent.putExtra(MainActivity.IntentParams.KEY_HOMEPAGE_ID,
+                        MainActivity.IntentParams.VALUE_HOMEPAGE_ID_FOCUS);
                 startActivity(intent);
             } else {
                 // 新建作品成功后跳转最新作品 页面

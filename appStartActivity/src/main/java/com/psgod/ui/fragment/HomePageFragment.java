@@ -85,11 +85,11 @@ public class HomePageFragment extends Fragment {
 		// 触发自动下拉刷新
 		switch (id) {
 		case MainActivity.IntentParams.VALUE_HOMEPAGE_ID_HOT:
-			EventBus.getDefault().post(HomePageHotFragment.class.getName());
+			EventBus.getDefault().post(new RefreshEvent(HomePageHotFragment.class.getName()));
 			break;
 
 		case MainActivity.IntentParams.VALUE_HOMEPAGE_ID_FOCUS:
-			EventBus.getDefault().post(HomePageFocusFragment.class.getName());
+			EventBus.getDefault().post(new RefreshEvent(HomePageFocusFragment.class.getName()));
 			break;
 
 		default:

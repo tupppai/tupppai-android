@@ -705,6 +705,22 @@ public class MainActivity extends PSGodBaseActivity {
                 inprogressFragment.onNewIntent(mIntent);
             }
         }
+        switch (fragmentId) {
+            case IntentParams.VALUE_FRAGMENT_ID_HOMEPAGE:
+                mBottomTabLayout[0].callOnClick();
+                break;
+            case IntentParams.VALUE_FRAGMENT_ID_RECENT:
+                mBottomTabLayout[1].callOnClick();
+                break;
+            case IntentParams.VALUE_FRAGMENT_ID_INPROGRESSING:
+                mBottomTabLayout[2].callOnClick();
+                break;
+            case IntentParams.VALUE_FRAGMENT_ID_USER:
+                mMyLayout.callOnClick();
+            default:
+                mBottomTabLayout[0].callOnClick();
+                break;
+        }
         boolean isFinishActivity = mIntent.getBooleanExtra(
                 Constants.IntentKey.IS_FINISH_ACTIVITY, false);
         mIntent.removeExtra(Constants.IntentKey.IS_FINISH_ACTIVITY);
