@@ -46,7 +46,7 @@ public class WithdrawSuccessActivity extends PSGodBaseActivity {
     private void initView() {
         mCompleteBtn = (RelativeLayout) this.findViewById(R.id.withdraw_money_parent);
         mCount = (TextView) findViewById(R.id.withdraw_count_tv);
-        mCount.setText(String.format("￥%.2f",(float)moneyTransfer.getAmount()/100f));
+        mCount.setText(String.format("%.2f",(float)moneyTransfer.getAmount()/100f));
 //        mWeixin = (TextView) findViewById(R.id.withdraw_weixin_tv);
 //        mWeixin.setText(moneyTransfer.getExtra() != null ?
 //                moneyTransfer.getExtra().getUser_name() : "");

@@ -32,6 +32,7 @@ public class ChangeDetailActivity extends PSGodBaseActivity {
     private TransactionsAdatper mAdatper;
 
     private View mFootView;
+    private View mEmptyView;
 
     private int page = 1;
     private boolean canLoadMore = true;
@@ -112,6 +113,9 @@ public class ChangeDetailActivity extends PSGodBaseActivity {
             if (transactionses != null && transactionses.size() > 0) {
                 transactionses.clear();
             }
+            mEmptyView = ChangeDetailActivity.this.findViewById(R.id.activity_change_detail_list_empty_view);
+            mListView.setEmptyView(mEmptyView);
+
             transactionses.addAll(response);
             mAdatper.notifyDataSetChanged();
             mListView.onRefreshComplete();
