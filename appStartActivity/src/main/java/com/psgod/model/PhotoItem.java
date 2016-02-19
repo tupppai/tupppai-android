@@ -139,6 +139,16 @@ public class PhotoItem implements Serializable, Cloneable {
 
     private int mClickCount;
 
+    private boolean mIsHomework;
+
+    public boolean getIsHomework() {
+        return mIsHomework;
+    }
+
+    public void setIsHomework(boolean isHomework) {
+        this.mIsHomework = isHomework;
+    }
+
     public int getClickCount() {
         return mClickCount;
     }
@@ -257,6 +267,10 @@ public class PhotoItem implements Serializable, Cloneable {
 
         if (jsonObj.has("description")) {
             item.mDescription = jsonObj.getString("description");
+        }
+
+        if(jsonObj.has("is_homework")){
+            item.mIsHomework = jsonObj.getBoolean("is_homework");
         }
 //        if (jsonObj.has("has_shared_to_wechat")) {
 //            item.mHasSharedToWechat = jsonObj.getInt("has_shared_to_wechat");

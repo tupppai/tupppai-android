@@ -29,6 +29,7 @@ import com.psgod.model.ImageData;
 import com.psgod.model.PhotoItem;
 import com.psgod.model.SinglePhotoItem;
 import com.psgod.model.User;
+import com.psgod.ui.activity.CourseDetailActivity;
 import com.psgod.ui.activity.PhotoBrowserActivity;
 import com.psgod.ui.adapter.SingleImgListAdapter;
 import com.psgod.ui.widget.AvatarImageView;
@@ -185,7 +186,8 @@ public class SinglePhotoDetailView extends RelativeLayout {
                 && mReplyPhotoItems != null && mReplyPhotoItems.size() > 0) {
             imgListArea.setVisibility(VISIBLE);
             imgListAsk.removeAllViews();
-            for (ImageData image : mAskPhotoItems.getUploadImagesList()) {
+            if (mPhotoItem.getIsHomework()) {
+                ImageData image = mAskPhotoItems.getUploadImagesList().get(0);
                 ImageView imageView = new ImageView(getContext());
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                         Utils.dpToPx(getContext(), 45), ViewGroup.LayoutParams.MATCH_PARENT
@@ -197,8 +199,24 @@ public class SinglePhotoDetailView extends RelativeLayout {
                 PsGodImageLoader.getInstance().displayImage(image.mImageUrl, imageView,
                         Constants.DISPLAY_IMAGE_OPTIONS_SMALL_SMALL);
                 imageView.setTag(R.id.image_url, image.mImageUrl);
-                imageView.setOnClickListener(askImgClick);
+                imageView.setOnClickListener(homeworkImgClick);
                 imgListAsk.addView(imageView);
+            } else {
+                for (ImageData image : mAskPhotoItems.getUploadImagesList()) {
+                    ImageView imageView = new ImageView(getContext());
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                            Utils.dpToPx(getContext(), 45), ViewGroup.LayoutParams.MATCH_PARENT
+                    );
+                    params.weight = 1;
+                    params.setMargins(0, 0, Utils.dpToPx(getContext(), 5), 0);
+                    imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    imageView.setLayoutParams(params);
+                    PsGodImageLoader.getInstance().displayImage(image.mImageUrl, imageView,
+                            Constants.DISPLAY_IMAGE_OPTIONS_SMALL_SMALL);
+                    imageView.setTag(R.id.image_url, image.mImageUrl);
+                    imageView.setOnClickListener(askImgClick);
+                    imgListAsk.addView(imageView);
+                }
             }
             imgListAdapter = new SingleImgListAdapter(getContext(), mReplyPhotoItems);
             imgListAdapter.setOwnUrl(mPhotoItem.getImageURL());
@@ -216,6 +234,15 @@ public class SinglePhotoDetailView extends RelativeLayout {
             mAskPhotoItems.setImageURL(url);
             new SinglePhotoDetailDialog(getContext(), mAskPhotoItems)
                     .setIsOwn(isOwn).show();
+        }
+    };
+
+    OnClickListener homeworkImgClick = new OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(getContext(), CourseDetailActivity.class);
+            intent.putExtra("id", mPhotoItem.getAskId());
+            getContext().startActivity(intent);
         }
     };
 
