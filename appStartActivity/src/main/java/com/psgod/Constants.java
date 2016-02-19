@@ -182,6 +182,7 @@ public class Constants {
 		String ACTIVITY_JUMP_FROM = "ActivityJumpFrom";
 		String DEST_ACTIVITY_NAME = "DestActivityName";
 		String IS_FINISH_ACTIVITY = "IsFinishActivity";
+		String IS_SETTING_CHANGE_CLICK = "IsSettingChangeClick";
 	}
 
 	public static interface SharedPreferencesKey {

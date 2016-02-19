@@ -1,10 +1,13 @@
 package com.psgod.ui.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -54,6 +57,9 @@ public class SettingActivity extends PSGodBaseActivity {
 	private View mChangeBtn;
 	private ImageView mChangeNotificationIv;
 
+	private String mChangeSpKey;
+	private boolean mHasChangeBtnClick;
+
 	// activity list
 	private List<Activity> mList = new LinkedList<Activity>();
 	private RecommendFriendsDialog mRecommendFriendDialog;
@@ -81,6 +87,16 @@ public class SettingActivity extends PSGodBaseActivity {
 		mCommendBtn = this.findViewById(R.id.activity_setting_commend_btn);
 		mChangeBtn = this.findViewById(R.id.activity_setting_change_btn);
 		mChangeNotificationIv = (ImageView) this.findViewById(R.id.activity_change_notification_btn);
+
+		SharedPreferences sp = this.getSharedPreferences(
+				Constants.SharedPreferencesKey.NAME, Context.MODE_PRIVATE);
+		mChangeSpKey = Constants.IntentKey.IS_SETTING_CHANGE_CLICK;
+		mHasChangeBtnClick = sp.getBoolean(mChangeSpKey,false);
+		if (mHasChangeBtnClick) {
+			mChangeNotificationIv.setVisibility(View.GONE);
+		} else {
+			mChangeNotificationIv.setVisibility(View.VISIBLE);
+		}
 		initButtonListeners();
 
 		// mRatingBtn.setOnClickListener(new OnClickListener() {
@@ -164,6 +180,21 @@ public class SettingActivity extends PSGodBaseActivity {
 		mChangeBtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View view) {
+				if (android.os.Build.VERSION.SDK_INT >= 9) {
+					getApplicationContext()
+							.getSharedPreferences(
+									Constants.SharedPreferencesKey.NAME,
+									Context.MODE_PRIVATE).edit()
+							.putBoolean(mChangeSpKey, true).apply();
+				} else {
+					getApplicationContext()
+							.getSharedPreferences(
+									Constants.SharedPreferencesKey.NAME,
+									Context.MODE_PRIVATE).edit()
+							.putBoolean(mChangeSpKey, true).commit();
+				}
+				mChangeNotificationIv.setVisibility(View.GONE);
+
 				Intent intent = new Intent(SettingActivity.this,SettingChangeActivity.class);
 				startActivity(intent);
 			}
