@@ -56,7 +56,7 @@ public class ValidateTokenRequest extends BaseRequest<Void> {
 					url, listener, errorListener) {
 				@Override
 				public Map<String, String> getParams() {
-					return createParameters();
+					return getPackParams(createParameters());
 				}
 			};
 			return request;

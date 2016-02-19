@@ -71,5 +71,17 @@
     <color name="color_f6f6f6">#F6F6F6</color>
     <color name="color_4d4e50">#4d4e50</color>
     <color name="color_9fc25b">#9fc25b</color>
+    <color name="black_alpha10">#19000000</color>
+    <color name="black_alpha20">#33000000</color>
+    <color name="black_alpha30">#4c000000</color>
+    <color name="black_alpha40">#66000000</color>
+    <color name="black_alpha50">#80000000</color>
+    <color name="black_alpha60">#99000000</color>
+    <color name="black_alpha70">#B3000000</color>
+    <color name="black_alpha80">#CC000000</color>
+    <color name="black_alpha90">#E6000000</color>
+    <color name="background">#f7f7f7</color>
+    <color name="style_yellow">#FFEF04</color>
+
 
 </resources>

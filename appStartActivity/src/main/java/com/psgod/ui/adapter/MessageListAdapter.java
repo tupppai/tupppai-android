@@ -11,9 +11,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.psgod.PsGodImageLoader;
 import com.psgod.Constants;
+import com.psgod.PsGodImageLoader;
 import com.psgod.R;
+import com.psgod.Utils;
 import com.psgod.model.PhotoItem;
 import com.psgod.model.User;
 import com.psgod.model.notification.NotificationMessage;
@@ -21,7 +22,6 @@ import com.psgod.ui.activity.CommentListActivity;
 import com.psgod.ui.activity.UserProfileActivity;
 import com.psgod.ui.activity.WebBrowserActivity;
 import com.psgod.ui.widget.AvatarImageView;
-import com.psgod.ui.widget.dialog.CarouselPhotoDetailDialog;
 
 import java.util.List;
 
@@ -159,8 +159,11 @@ public class MessageListAdapter extends BaseAdapter {
 
                     @Override
                     public void onClick(View v) {
-                       new CarouselPhotoDetailDialog(mContext,
-                                message.getTargetAskId(), message.getTargetId()).show();
+                        Utils.skipByObject(mContext, message.getTargetAskId() == message.getTargetId() ?
+                                Constants.IntentKey.ASK_ID : Constants.IntentKey.REPLY_ID,
+                                message.getTargetId());
+//                        new CarouselPhotoDetailDialog(mContext,
+//                                message.getTargetAskId(), message.getTargetId()).show();
                     }
                 });
                 break;
@@ -184,8 +187,11 @@ public class MessageListAdapter extends BaseAdapter {
                 convertView.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        new CarouselPhotoDetailDialog(mContext,
-                                message.getAskId(), message.getReplyId()).show();
+//                        new CarouselPhotoDetailDialog(mContext,
+//                                message.getAskId(), message.getReplyId()).show();
+                        Utils.skipByObject(mContext, message.getTargetAskId() == message.getReplyId() ?
+                                        Constants.IntentKey.ASK_ID : Constants.IntentKey.REPLY_ID,
+                                message.getReplyId());
                     }
                 });
                 break;

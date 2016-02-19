@@ -6,6 +6,7 @@ package com.psgod.ui.activity;
  * @author brandwang
  */
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -36,14 +37,18 @@ import com.handmark.pulltorefresh.library.PullToRefreshExpandableListView;
 import com.psgod.Constants;
 import com.psgod.R;
 import com.psgod.WeakReferenceHandler;
+import com.psgod.eventbus.RefreshEvent;
 import com.psgod.model.Comment;
 import com.psgod.model.Comment.ReplyComment;
 import com.psgod.model.LoginUser;
 import com.psgod.model.PhotoItem;
+import com.psgod.model.SinglePhotoItem;
 import com.psgod.network.request.CommentListRequest;
 import com.psgod.network.request.CommentListRequest.CommentListWrapper;
 import com.psgod.network.request.PSGodErrorListener;
 import com.psgod.network.request.PSGodRequestQueue;
+import com.psgod.network.request.PhotoItemRequest;
+import com.psgod.network.request.PhotoSingleItemRequest;
 import com.psgod.network.request.PostCommentRequest;
 import com.psgod.ui.adapter.SinglePhotoDetailAdapter;
 import com.psgod.ui.view.FaceRelativeLayout;
@@ -55,6 +60,8 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import de.greenrobot.event.EventBus;
+
 public class SinglePhotoDetail extends PSGodBaseActivity implements
         Handler.Callback {
     private static final String TAG = SinglePhotoDetail.class.getSimpleName();
@@ -63,12 +70,16 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
     public static final int MSG_HIDE = 0X551;
     public static final int ITEM_SHOW = 495;
 
+    public static final String TYPE = "type";
+    public static final String ID = "id";
+
     private TextView mCommentBtn;
     private SinglePhotoDetailView mPhotoItemView;
 
     private PullToRefreshExpandableListView mListView;
     private SinglePhotoDetailAdapter mAdapter;
     private PhotoItem mPhotoItem;
+    private SinglePhotoItem mSinglePhotoItem;
     private CommentListListener mListViewListener;
     private TextView mSendCommentBtn;
     private EditText mCommentEditText;
@@ -78,9 +89,10 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
     private ExecutorService fixedThreadPool = Executors.newFixedThreadPool(1);
 
     // 加载更多footer
-    private View mCommentListFooter;
+//    private View mCommentListFooter;
     // 照片的id
     private long mId = -1;
+    private String mType;
     // 是否需要后台返回photoitem
     private int mNeedOriginPhotoItem = 0;
 
@@ -91,6 +103,9 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
     private int mPage = 1;
 
     private long replyToCid;
+
+    private static List<Activity> showList = new ArrayList<Activity>();
+    private static final int SHOWLIST_LENGTH = 2;
 
     // 评论内容
     String commentContent = "";
@@ -113,42 +128,58 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
     }
 
     // 传photo item id的启动函数
-    public static void startActivity(Context context, Long askId) {
-        if (askId != null) {
+    public static void startActivity(Context context, Long id, String type) {
+        if (id != null) {
             Intent intent = new Intent(context, SinglePhotoDetail.class);
-            intent.putExtra(Constants.IntentKey.ASK_ID, askId);
+            intent.putExtra(ID, id);
+            intent.putExtra(TYPE, type);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
         }
     }
 
     @Override
+    protected void onRestart() {
+        super.onRestart();
+        initPhotoItem();
+    }
+
+    public void onEventMainThread(RefreshEvent event) {
+        if (event.className.equals(this.getClass().getName())) {
+            try {
+                initPhotoItem();
+            } catch (NullPointerException nu) {
+            } catch (Exception e) {
+            }
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        addShowList();
         setContentView(R.layout.activity_single_photo_detail);
+        EventBus.getDefault().register(this);
 
         if (getIntent().hasExtra(Constants.IntentKey.PHOTO_ITEM)) {
             Object obj = getIntent().getSerializableExtra(
                     Constants.IntentKey.PHOTO_ITEM);
-            if (!(obj instanceof PhotoItem)) {
-                // TODO error
-                return;
-            }
+//            if (!(obj instanceof PhotoItem)) {
+//                // TODO error
+//                return;
+//            }
 
             mPhotoItem = (PhotoItem) obj;
             // 获照片 id
             mId = mPhotoItem.getPid();
-        } else if (getIntent().hasExtra(Constants.IntentKey.ASK_ID)) {
-            Long id = getIntent().getLongExtra(Constants.IntentKey.ASK_ID, -1);
-            if (id == -1) {
-                return;
-            }
-            mId = id;
-            mPhotoItem = new PhotoItem();
-            // 设置需要后台返回photoitem
-            mNeedOriginPhotoItem = 1;
         } else {
-            finish();
+            mPhotoItem = new PhotoItem();
         }
 
         mSendCommentBtn = (TextView) this
@@ -171,10 +202,10 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
         mListView.setMode(Mode.PULL_FROM_START);
         mListView.getRefreshableView().setAdapter(mAdapter);
         // loadmore footer
-        mCommentListFooter = LayoutInflater.from(SinglePhotoDetail.this)
-                .inflate(R.layout.footer_load_more, null);
-        mListView.getRefreshableView().addFooterView(mCommentListFooter);
-        mCommentListFooter.setVisibility(View.GONE);
+//        mCommentListFooter = LayoutInflater.from(SinglePhotoDetail.this)
+//                .inflate(R.layout.footer_load_more, null);
+//        mListView.getRefreshableView().addFooterView(mCommentListFooter);
+//        mCommentListFooter.setVisibility(View.GONE);
 
         mListViewListener = new CommentListListener(this, mId);
         mListView.setOnLastItemVisibleListener(mListViewListener);
@@ -215,10 +246,93 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
         }
 
         // 初始化评论的数据
-        refresh();
+//        refresh();
 
-        initEvents();
+        initPhotoItem();
     }
+
+    private void addShowList() {
+        if (showList.size() == SHOWLIST_LENGTH) {
+            showList.get(0).finish();
+            showList.remove(0);
+        }
+        showList.add(this);
+    }
+
+    private void initPhotoItem() {
+        Intent intent = getIntent();
+        if (intent.hasExtra(TYPE)) {
+            mType = intent.getStringExtra(TYPE);
+        }
+        if (intent.hasExtra(ID)) {
+            mId = intent.getLongExtra(ID, 0);
+        }
+        if (mType != null && (mType.equals(Constants.IntentKey.ASK_ID) ||
+                mType.equals(Constants.IntentKey.REPLY_ID))) {
+            PhotoSingleItemRequest request = new PhotoSingleItemRequest.Builder().
+                    setId(String.valueOf(mId)).setType(mType).
+                    setListener(photoItemListener).build();
+            RequestQueue requestQueue = PSGodRequestQueue.getInstance(
+                    this).getRequestQueue();
+            requestQueue.add(request);
+        } else if (mPhotoItem != null) {
+            PhotoSingleItemRequest request = new PhotoSingleItemRequest.Builder().
+                    setId(String.valueOf(mPhotoItem.getPid())).setType(mPhotoItem.getType() == 1 ?
+                    Constants.IntentKey.ASK_ID : Constants.IntentKey.REPLY_ID).
+                    setListener(photoItemListener).setErrorListener(new PSGodErrorListener(this) {
+                @Override
+                public void handleError(VolleyError error) {
+                    mListView.onRefreshComplete();
+                }
+
+            }).build();
+            RequestQueue requestQueue = PSGodRequestQueue.getInstance(
+                    this).getRequestQueue();
+            requestQueue.add(request);
+        }
+    }
+
+    Listener<SinglePhotoItem> photoItemListener = new Listener<SinglePhotoItem>() {
+        @Override
+        public void onResponse(SinglePhotoItem response) {
+            if ((mProgressDialog != null) && mProgressDialog.isShowing()) {
+                mProgressDialog.dismiss();
+            }
+            mPhotoItem = response.getPhotoItem();
+            mSinglePhotoItem = response;
+            if (mPhotoItemView != null) {
+                mPhotoItemView.refreshPhotoItem(mPhotoItem);
+            }
+            mAdapter.setPhotoItem(mPhotoItem);
+            if ((response.getReplyPhotoItems() != null && response.getAskPhotoItems() != null)
+                    || mPhotoItem.getAskId() == 0) {
+                mPhotoItemView = mAdapter.setSinglePhotoItem(mSinglePhotoItem);
+                mAdapter.notifyDataSetChanged();
+                initEvents();
+                refresh();
+            } else {
+                PhotoSingleItemRequest request = new PhotoSingleItemRequest.Builder().
+                        setId(String.valueOf(mPhotoItem.getAskId())).setType(Constants.IntentKey.ASK_ID).
+                        setListener(photoItemListener2).build();
+                RequestQueue requestQueue = PSGodRequestQueue.getInstance(
+                        SinglePhotoDetail.this).getRequestQueue();
+                requestQueue.add(request);
+            }
+        }
+    };
+
+    Listener<SinglePhotoItem> photoItemListener2 = new Listener<SinglePhotoItem>() {
+        @Override
+        public void onResponse(SinglePhotoItem response) {
+
+            mSinglePhotoItem.setAskPhotoItems(response.getAskPhotoItems());
+            mSinglePhotoItem.setReplyPhotoItems(response.getReplyPhotoItems());
+            mPhotoItemView = mAdapter.setSinglePhotoItem(mSinglePhotoItem);
+            mAdapter.notifyDataSetChanged();
+            initEvents();
+            refresh();
+        }
+    };
 
     public void initEvents() {
         // 发送评论
@@ -262,12 +376,14 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
                     hideInputPanel();
                     // 清空输入框
                     mCommentEditText.setText("");
+                    mCommentEditText.setHint("");
 
                     // 隐藏表情选择窗口
                     ((FaceRelativeLayout) findViewById(R.id.FaceRelativeLayout))
                             .hideFaceView();
 
                     mPhotoItem.setCommentCount(mPhotoItem.getCommentCount() + 1);
+                    mPhotoItemView.setPhotoItem(mPhotoItem);
                     mPhotoItemView.updateCommentView();
 
                     // 后台发送评论
@@ -285,7 +401,8 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
                 .setPid(mPhotoItem.getPid()).setType(mPhotoItem.getType())
                 .setListener(sendCommentListener)
                 .setErrorListener(sendCommentErrorListener);
-
+        atComments.delete(0, atComments.length());
+        replyToCid = 0;
         PostCommentRequest request = builder.build();
         request.setTag(TAG);
         RequestQueue requestQueue = PSGodRequestQueue.getInstance(
@@ -304,7 +421,7 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
         }
     };
 
-    private PSGodErrorListener sendCommentErrorListener = new PSGodErrorListener() {
+    private PSGodErrorListener sendCommentErrorListener = new PSGodErrorListener(this) {
         @Override
         public void handleError(VolleyError error) {
             Toast.makeText(SinglePhotoDetail.this, "评论失败，请稍后再试",
@@ -357,12 +474,18 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
         @Override
         public void handleError(VolleyError error) {
             mListView.onRefreshComplete();
+            if ((mProgressDialog != null) && mProgressDialog.isShowing()) {
+                mProgressDialog.dismiss();
+            }
         }
     };
 
     private Listener<CommentListWrapper> refreshListener = new Listener<CommentListWrapper>() {
         @Override
         public void onResponse(CommentListWrapper response) {
+            if ((mProgressDialog != null) && mProgressDialog.isShowing()) {
+                mProgressDialog.dismiss();
+            }
             if (mNeedOriginPhotoItem == 1) {
                 mPhotoItem = response.photoItem;
                 mAdapter.setPhotoItem(response.photoItem);
@@ -376,6 +499,7 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
             mListView.onRefreshComplete();
 
             mPhotoItemView = mAdapter.getPhotoItemView();
+//            mPhotoItemView.updateCommentView();
             // 获得头部中评论Tv
             mCommentBtn = mPhotoItemView.getRecentPhotoDetailCommentBtn();
 
@@ -385,10 +509,6 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
                     callInputPanel();
                 }
             });
-
-            if ((mProgressDialog != null) && mProgressDialog.isShowing()) {
-                mProgressDialog.dismiss();
-            }
 
             // 展开所有分组
             int groupCount = mAdapter.getGroupCount();
@@ -408,6 +528,9 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
     private Listener<CommentListWrapper> loadMoreListener = new Listener<CommentListWrapper>() {
         @Override
         public void onResponse(CommentListWrapper response) {
+            if ((mProgressDialog != null) && mProgressDialog.isShowing()) {
+                mProgressDialog.dismiss();
+            }
             if (response.recentCommentList.size() > 0) {
                 mHotCommentList.clear();
                 mHotCommentList.addAll(response.hotCommentList);
@@ -417,7 +540,7 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
                 mListView.onRefreshComplete();
             }
 
-            mCommentListFooter.setVisibility(View.INVISIBLE);
+//            mCommentListFooter.setVisibility(View.INVISIBLE);
 
             if (response.recentCommentList.size() < 10) {
                 canLoadMore = false;
@@ -522,7 +645,7 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
         @Override
         public void onLastItemVisible() {
             if (canLoadMore) {
-                mCommentListFooter.setVisibility(View.VISIBLE);
+//                mCommentListFooter.setVisibility(View.VISIBLE);
                 ++mPage;
                 CommentListRequest.Builder builder = new CommentListRequest.Builder()
                         .setPid(mId).setPage(mPage)
@@ -540,7 +663,7 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
 
         @Override
         public void onRefresh(PullToRefreshBase refreshView) {
-            refresh();
+            initPhotoItem();
         }
 
     }

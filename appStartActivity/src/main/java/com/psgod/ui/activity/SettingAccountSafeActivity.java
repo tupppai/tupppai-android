@@ -346,7 +346,7 @@ public class SettingAccountSafeActivity extends PSGodBaseActivity implements
 	};
 
 	// 微博绑定失败listener
-	private PSGodErrorListener weiboBindErrorListener = new PSGodErrorListener() {
+	private PSGodErrorListener weiboBindErrorListener = new PSGodErrorListener(this) {
 		@Override
 		public void handleError(VolleyError error) {
 			mHandler.sendEmptyMessage(BIND_WEIBO_ERROR);
@@ -436,7 +436,7 @@ public class SettingAccountSafeActivity extends PSGodBaseActivity implements
 	};
 
 	// 微信绑定失败listener
-	private PSGodErrorListener wechatBindErrorListener = new PSGodErrorListener() {
+	private PSGodErrorListener wechatBindErrorListener = new PSGodErrorListener(this) {
 		@Override
 		public void handleError(VolleyError error) {
 			mHandler.sendEmptyMessage(BIND_WECHAT_ERROR);
@@ -470,7 +470,7 @@ public class SettingAccountSafeActivity extends PSGodBaseActivity implements
 	};
 
 	// 取消绑定微信失败
-	private PSGodErrorListener wechatUnbindErrorListener = new PSGodErrorListener() {
+	private PSGodErrorListener wechatUnbindErrorListener = new PSGodErrorListener(this) {
 		@Override
 		public void handleError(VolleyError error) {
 			mHandler.sendEmptyMessage(BIND_WECHAT_SUCCESS);
@@ -478,7 +478,7 @@ public class SettingAccountSafeActivity extends PSGodBaseActivity implements
 	};
 
 	// 取消绑定微博失败
-	private PSGodErrorListener weiboUnbindErrorListener = new PSGodErrorListener() {
+	private PSGodErrorListener weiboUnbindErrorListener = new PSGodErrorListener(this) {
 		@Override
 		public void handleError(VolleyError error) {
 			mHandler.sendEmptyMessage(BIND_WEIBO_SUCCESS);
@@ -543,7 +543,7 @@ public class SettingAccountSafeActivity extends PSGodBaseActivity implements
 	};
 
 	// QQ绑定失败listener
-	private PSGodErrorListener qqBindErrorListener = new PSGodErrorListener() {
+	private PSGodErrorListener qqBindErrorListener = new PSGodErrorListener(this) {
 		@Override
 		public void handleError(VolleyError error) {
 			mHandler.sendEmptyMessage(BIND_QQ_ERROR);
@@ -577,7 +577,7 @@ public class SettingAccountSafeActivity extends PSGodBaseActivity implements
 	};
 
 	// 取消绑定qq失败
-	private PSGodErrorListener qqUnbindErrorListener = new PSGodErrorListener() {
+	private PSGodErrorListener qqUnbindErrorListener = new PSGodErrorListener(this) {
 		@Override
 		public void handleError(VolleyError error) {
 			mHandler.sendEmptyMessage(BIND_QQ_SUCCESS);

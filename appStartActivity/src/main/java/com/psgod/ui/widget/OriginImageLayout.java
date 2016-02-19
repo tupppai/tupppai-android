@@ -32,10 +32,10 @@ public class OriginImageLayout extends RelativeLayout {
     private ImageView mBackground;
 
     private PsGodImageLoader imageLoader = PsGodImageLoader.getInstance();
-//    private DisplayImageOptions mSmallSmallOptions = Constants.DISPLAY_IMAGE_OPTIONS_SMALL_SMALL;
+    //    private DisplayImageOptions mSmallSmallOptions = Constants.DISPLAY_IMAGE_OPTIONS_SMALL_SMALL;
     private DisplayImageOptions mOptions = Constants.DISPLAY_IMAGE_OPTIONS;
 
-//    private ObjectAnimator scaleWidthAnimator = null;
+    //    private ObjectAnimator scaleWidthAnimator = null;
 //    private ObjectAnimator scaleHeightAnimator = null;
     private ObjectAnimator alphaAnimator = null;
     private ObjectAnimator alphaIvAnimator = null;
@@ -94,9 +94,13 @@ public class OriginImageLayout extends RelativeLayout {
         uploadLayout.setLayoutParams(layoutParams);
 
         if (images.size() == 1) {
+            this.setVisibility(VISIBLE);
             initSingleImage(images.get(0));
         } else if (images.size() == 2) {
+            this.setVisibility(VISIBLE);
             initOverlapImage(images.get(0), images.get(1));
+        } else {
+            this.setVisibility(GONE);
         }
 
         uploadLayout.setOnClickListener(new OnClickListener() {
@@ -259,8 +263,9 @@ public class OriginImageLayout extends RelativeLayout {
                 android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
         originTipParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
         originTipParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+        originTipParams.setMargins(0,Utils.dpToPx(mContext,4),0,0);
         thumbTipImage.setLayoutParams(originTipParams);
-        thumbTipImage.setBackgroundResource(R.drawable.ic_yuantu);
+        thumbTipImage.setBackgroundResource(R.mipmap.tag_single_ori);
         uploadLayout.addView(thumbTipImage);
     }
 

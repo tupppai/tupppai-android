@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="#FFFFFF"
+    android:clipToPadding="true">
+
+    <FrameLayout
+        android:id="@+id/header_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/actionbar_height" >
+
+        <RadioGroup
+            android:id="@+id/fragment_course_tab_radio_group"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FFFFFF"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/fragment_course_detail_radio_btn"
+                style="@style/homepage_top_tabbar"
+                android:layout_marginRight="32dp"
+                android:checked="true"
+                android:gravity="center"
+                android:padding="0dp"
+                android:text="详情"
+                android:textColor="#000000" />
+
+            <RadioButton
+                android:id="@+id/fragment_course_work_radio_btn"
+                style="@style/homepage_top_tabbar"
+                android:layout_marginLeft="32dp"
+                android:padding="0dp"
+                android:text="作业"
+                android:textColor="#000000" />
+        </RadioGroup>
+
+        <com.psgod.ui.widget.FinishView
+            android:id="@+id/back_image"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:src="@drawable/ic_back_gray"/>
+
+        <ImageView
+            android:id="@+id/ic_create_course"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:paddingLeft="17dp"
+            android:paddingRight="17dp"
+            android:src="@mipmap/ic_create"/>
+
+    </FrameLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#1A000000" />
+
+    <ImageView
+        android:id="@+id/fragment_course_cursor"
+        android:layout_width="match_parent"
+        android:layout_height="4.5dp"
+        android:layout_marginTop="-4.5dp"
+        android:padding="0dp"
+        android:scaleType="matrix"
+        android:src="@drawable/shape_homepage_fragment_cursor" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/fragment_course_view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

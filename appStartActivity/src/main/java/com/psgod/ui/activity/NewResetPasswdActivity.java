@@ -1,11 +1,18 @@
 package com.psgod.ui.activity;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Message;
+import android.telephony.SmsMessage;
+import android.text.Editable;
+import android.text.Selection;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -31,6 +38,9 @@ import com.psgod.ui.widget.dialog.CustomProgressingDialog;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * Created by pires on 16/1/5.
  */
@@ -41,6 +51,7 @@ public class NewResetPasswdActivity extends PSGodBaseActivity{
     private static final int JUMP_FROM_LOGIN_ACTIVITY = 100;
     private static final int RESEND_TIME_IN_SEC = 60; // 重新发送验证时间（秒）
     private static final int MSG_TIMER = 0x3312;
+    private static final int MSG_CODE = 0x3333;
     private Context mContext;
 
     private EditText mPhoneText;
@@ -55,6 +66,10 @@ public class NewResetPasswdActivity extends PSGodBaseActivity{
     private CustomProgressingDialog mProgressDialog;
 
     private String mPhoneNum;
+
+    private BroadcastReceiver smsReceiver;
+    private IntentFilter filter;
+    private String patternCoder = "(?<!\\d)\\d{4}(?!\\d)";
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -72,6 +87,52 @@ public class NewResetPasswdActivity extends PSGodBaseActivity{
                 callInputPanel();
             }
         }, 200);
+
+        codeReceiver();
+    }
+
+    // BroadcastReceiver拦截短信验证码
+    private void codeReceiver() {
+        filter = new IntentFilter();
+        //设置短信拦截参数
+        filter.addAction("android.provider.Telephony.SMS_RECEIVED");
+        filter.setPriority(Integer.MAX_VALUE);
+        smsReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                Object[] objs = (Object[]) intent.getExtras().get("pdus");
+                for (Object obj : objs) {
+                    byte[] pdu = (byte[]) obj;
+                    SmsMessage sms = SmsMessage.createFromPdu(pdu);
+                    String message = sms.getMessageBody();
+                    String from = sms.getOriginatingAddress();
+                    if (!TextUtils.isEmpty(from)) {
+                        String code = patternCode(message);
+                        if (!TextUtils.isEmpty(code)) {
+                            Message msg = mHandler.obtainMessage();
+                            msg.what = MSG_CODE;
+                            Bundle bundle = new Bundle();
+                            bundle.putString("messagecode", code);
+                            msg.setData(bundle);
+                            mHandler.sendMessage(msg);
+                        }
+                    }
+                }
+            }
+        };
+        registerReceiver(smsReceiver, filter);
+    }
+
+    private String patternCode(String patternContent) {
+        if (TextUtils.isEmpty(patternContent)) {
+            return null;
+        }
+        Pattern p = Pattern.compile(patternCoder);
+        Matcher matcher = p.matcher(patternContent);
+        if (matcher.find()) {
+            return matcher.group();
+        }
+        return null;
     }
 
     private void initViews() {
@@ -232,19 +293,31 @@ public class NewResetPasswdActivity extends PSGodBaseActivity{
 
     @Override
     public boolean handleMessage(Message msg) {
-        if (msg.what == MSG_TIMER) {
-            // 重发倒计时
-            if (mLeftTime > 1) {
-                mLeftTime--;
-                mResendButton.setEnabled(false);
-                mResendButton.setText(mLeftTime + "s后重发");
-                mHandler.sendEmptyMessageDelayed(MSG_TIMER, 1000);
-            } else {
-                mLeftTime = RESEND_TIME_IN_SEC;
-                mResendButton.setEnabled(true);
-                mResendButton.setText("获取验证码");
-                mResendButton.setTextColor(Color.parseColor("#090909"));
-            }
+        switch(msg.what) {
+            case MSG_TIMER:
+                // 重发倒计时
+                if (mLeftTime > 1) {
+                    mLeftTime--;
+                    mResendButton.setEnabled(false);
+                    mResendButton.setText(mLeftTime + "s后重发");
+                    mHandler.sendEmptyMessageDelayed(MSG_TIMER, 1000);
+                } else {
+                    mLeftTime = RESEND_TIME_IN_SEC;
+                    mResendButton.setEnabled(true);
+                    mResendButton.setText("获取验证码");
+                    mResendButton.setTextColor(Color.parseColor("#090909"));
+                }
+                break;
+            case MSG_CODE:
+                String codeMsg=msg.getData().getString("messagecode");
+                mVerifyText.setText(codeMsg);
+                mPasswdText.setFocusableInTouchMode(true);
+                mPasswdText.requestFocus();
+                break;
+
+            default:
+                break;
+
         }
         return true;
     }
@@ -259,7 +332,7 @@ public class NewResetPasswdActivity extends PSGodBaseActivity{
         }
     };
 
-    private PSGodErrorListener errorListener = new PSGodErrorListener() {
+    private PSGodErrorListener errorListener = new PSGodErrorListener(this) {
 
         @Override
         public void handleError(VolleyError error) {

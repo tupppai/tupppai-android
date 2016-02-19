@@ -141,6 +141,8 @@ public class PsGodImageLoader {
                         String.valueOf((int) (300 * Utils.getWidthScale(context))));
             } else if (options.equals(Constants.DISPLAY_IMAGE_OPTIONS_LOCAL)) {
                 ruleImageUrl = "file://" + originImageUrl;
+            } else if (options.equals(Constants.DISPLAY_IMAGE_OPTIONS_ORIGIN)) {
+                ruleImageUrl = thumbs[0];
             } else {
                 ruleImageUrl = originImageUrl;
             }

@@ -5,11 +5,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.Point;
 import android.net.Uri;
+import android.os.Message;
 import android.provider.MediaStore.MediaColumns;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -17,15 +22,20 @@ import com.alibaba.fastjson.JSON;
 import com.psgod.model.PhotoItem;
 import com.psgod.model.SelectImage;
 import com.psgod.network.request.BaseRequest;
+import com.psgod.network.request.PhotoRequest;
 import com.psgod.ui.activity.ChannelActivity;
 import com.psgod.ui.activity.RecentActActivity;
+import com.psgod.ui.activity.SinglePhotoDetail;
 import com.psgod.ui.activity.WebBrowserActivity;
+import com.psgod.ui.widget.dialog.CarouselPhotoDetailDialog;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.lang.reflect.Field;
+import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -139,7 +149,6 @@ public final class Utils {
         }
     }
 
-    // TODO
     // 初始化修改密码流程的activity列表 便于一次性关闭
     public static void initializeActivity() {
         if (Constants.activityList == null) {
@@ -149,13 +158,26 @@ public final class Utils {
 
     // 增加一个activity
     public static void addActivity(Activity activity) {
+        initializeActivity();
         Constants.activityList.add(activity);
     }
 
     // finish掉所有activity
     public static void finishActivity() {
+        initializeActivity();
         for (Activity activity : Constants.activityList) {
-            activity.finish();
+            if (activity != null && !activity.isFinishing()) {
+                activity.finish();
+            }
+        }
+        Constants.activityList.clear();
+    }
+
+    public static void removeActivity(Activity activity){
+        try {
+            Constants.activityList.remove(activity);
+        }catch (Exception e){
+
         }
     }
 
@@ -164,9 +186,9 @@ public final class Utils {
     // 显示等待对话框
     public static void showProgressDialog(Context context) {
         // 显示等待对话框
-        if (mProgressDialog == null) {
-            mProgressDialog = new CustomProgressingDialog(context);
-        }
+//        if (mProgressDialog == null) {
+        mProgressDialog = new CustomProgressingDialog(context);
+//        }
         if (!mProgressDialog.isShowing()) {
             mProgressDialog.show();
         }
@@ -275,6 +297,27 @@ public final class Utils {
         return result;
     }
 
+    public static int getScreenHeightPx(Context context) {
+        Point point = new Point();
+        ((WindowManager) context
+                .getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getRealSize(point);
+        return point.y;
+    }
+
+    public static int getUnrealScreenHeightPx(Context context) {
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        ((WindowManager) context
+                .getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getMetrics(outMetrics);
+        return outMetrics.heightPixels - getStatusBarHeight(context);
+    }
+
+    public static int getScreenWidthPx(Context context) {
+        Point point = new Point();
+        ((WindowManager) context
+                .getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getRealSize(point);
+        return point.x;
+    }
+
     public static List<String> selectImageToString(List<SelectImage> images) {
         List<String> strs = new ArrayList<String>();
         for (SelectImage image : images) {
@@ -319,4 +362,94 @@ public final class Utils {
             }
         }
     }
+
+    public static void skipByObject(Context context, Object obj) {
+        if (obj instanceof PhotoItem) {
+            PhotoItem photoItem = (PhotoItem) obj;
+//            if (photoItem.getCategoryType().equals("tutorial")) {
+            SinglePhotoDetail.startActivity(
+                    context, photoItem);
+//            } else {
+//                new CarouselPhotoDetailDialog(context,
+//                        photoItem.getAskId(),
+//                        photoItem.getPid(),
+//                        photoItem.getCategoryId()).show();
+//            }
+        }
+    }
+
+    public static void skipByObject(Context context, String type, long id) {
+        SinglePhotoDetail.startActivity(context, id, type);
+    }
+
+    private static boolean isBindInputPhoneShow = false;
+
+    public static void setBindInputPhoneShow(boolean isBindInputPhoneShow) {
+        Utils.isBindInputPhoneShow = isBindInputPhoneShow;
+    }
+
+    public static boolean isBindInputPhoneShow() {
+        return isBindInputPhoneShow;
+    }
+
+    // 隐藏输入法
+    public static void hideInputPanel(Context context, View view) {
+        // 隐藏软键盘
+        InputMethodManager imm = (InputMethodManager) context
+                .getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    /**
+     * 生成md5
+     *
+     * @param str
+     * @return
+     */
+    public static String toMd5(String str) {
+
+        String md5str = "";
+        try {
+            //1 创建一个提供信息摘要算法的对象，初始化为md5算法对象
+            MessageDigest md = MessageDigest.getInstance("MD5");
+
+            //2 将消息变成byte数组
+            byte[] input = str.getBytes();
+
+            //3 计算后获得字节数组,这就是那128位了
+            byte[] buff = md.digest(input);
+
+            //4 把数组每一字节（一个字节占八位）换成16进制连成md5字符串
+            md5str = bytesToHex(buff);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return md5str;
+    }
+
+    /**
+     * 二进制转十六进制
+     *
+     * @param bytes
+     * @return
+     */
+    public static String bytesToHex(byte[] bytes) {
+        StringBuffer md5str = new StringBuffer();
+        //把数组每一字节换成16进制连成md5字符串
+        int digital;
+        for (int i = 0; i < bytes.length; i++) {
+            digital = bytes[i];
+
+            if (digital < 0) {
+                digital += 256;
+            }
+            if (digital < 16) {
+                md5str.append("0");
+            }
+            md5str.append(Integer.toHexString(digital));
+        }
+        return md5str.toString().toUpperCase();
+    }
+
 }

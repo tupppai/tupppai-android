@@ -40,6 +40,7 @@ import com.psgod.Constants;
 import com.psgod.Logger;
 import com.psgod.PSGodApplication;
 import com.psgod.R;
+import com.psgod.Utils;
 import com.psgod.WeakReferenceHandler;
 import com.psgod.eventbus.AvatarEvent;
 import com.psgod.model.LoginUser;
@@ -216,6 +217,13 @@ public class EditProfileActivity extends PSGodBaseActivity implements
 	}
 
 	protected void initEvents() {
+		mPopLayout.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				Utils.hideInputPanel(EditProfileActivity.this,view);
+			}
+		});
+
 		// 点击按钮 保存并退出
 		mCompleteBtn.setOnClickListener(new OnClickListener() {
 			@Override
@@ -363,6 +371,7 @@ public class EditProfileActivity extends PSGodBaseActivity implements
 		mGenderLayout.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				Utils.hideInputPanel(EditProfileActivity.this,v);
 				backgroundAlpha(0.6f); // 设置背景屏幕透明度0.6
 				PopupWindow genderWindow = GenderSelector.getGenderPopupWindow(
 						EditProfileActivity.this, mHandler);

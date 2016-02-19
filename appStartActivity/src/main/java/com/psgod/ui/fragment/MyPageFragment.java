@@ -53,6 +53,7 @@ import com.psgod.ui.activity.FollowerListActivity;
 import com.psgod.ui.activity.FollowingListActivity;
 import com.psgod.ui.activity.NewMessageActivity;
 import com.psgod.ui.activity.SettingActivity;
+import com.psgod.ui.activity.SettingChangeActivity;
 import com.psgod.ui.adapter.SlidingPageMyAdapter;
 import com.psgod.ui.view.PagerSlidingTabStrip;
 import com.psgod.ui.widget.AvatarImageView;
@@ -205,6 +206,8 @@ public class MyPageFragment extends Fragment implements
                 .findViewById(R.id.my_profile_avatar);
         mMessageTipView = mViewHolder.mView
                 .findViewById(R.id.fragment_my_page_message_tip);
+        mViewHolder.mGOSettingChange = (ImageView) mViewHolder.mView.
+                findViewById(R.id.go_setting_change);
 
     }
 
@@ -285,7 +288,7 @@ public class MyPageFragment extends Fragment implements
             // 请求后台用户数据进行更新
             GetUserInfoRequest.Builder builder = new GetUserInfoRequest.Builder()
                     .setListener(getUserInfoListener)
-                    .setErrorListener(new PSGodErrorListener() {
+                    .setErrorListener(new PSGodErrorListener(this) {
                         @Override
                         public void handleError(VolleyError error) {
                             if ((mProgressDialog != null) && (mProgressDialog.isShowing())) {
@@ -609,6 +612,14 @@ public class MyPageFragment extends Fragment implements
 
     private void initListeners() {
 
+        mViewHolder.mGOSettingChange.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), SettingChangeActivity.class);
+                startActivity(intent);
+            }
+        });
+
         mViewHolder.mSettingButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -721,6 +732,7 @@ public class MyPageFragment extends Fragment implements
     private static class ViewHolder {
         ViewGroup mParentView;
         View mView;
+        ImageView mGOSettingChange;
         ImageButton mSettingButton;
         ImageButton mMessageButton;
         TextView mNickNameText;

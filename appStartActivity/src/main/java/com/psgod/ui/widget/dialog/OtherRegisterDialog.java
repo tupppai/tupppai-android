@@ -1,5 +1,6 @@
 package com.psgod.ui.widget.dialog;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -224,7 +225,7 @@ public class OtherRegisterDialog extends Dialog {
 				});
 	}
 
-	private PSGodErrorListener errorListener = new PSGodErrorListener() {
+	private PSGodErrorListener errorListener = new PSGodErrorListener(this) {
 		@Override
 		public void handleError(VolleyError error) {
 			com.psgod.Utils.hideProgressDialog();

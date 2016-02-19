@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:padding="7.5dp"
         android:layout_centerVertical="true"
-        android:src="@mipmap/bangplist_selected"/>
+        android:src="@mipmap/bangplist"/>
 
     <ImageView
         android:id="@+id/widge_image_select_image_img"

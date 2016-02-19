@@ -72,6 +72,7 @@ public class FollowerListAdapter extends BaseAdapter {
 					.findViewById(R.id.item_user_list_name_textview);
 			viewHolder.followBtn = (FollowImage) convertView
 					.findViewById(R.id.item_user_list_follow_btn);
+			viewHolder.followBtn.setIsHideFollow(false);
 			viewHolder.followerCountTv = (TextView) convertView
 					.findViewById(R.id.item_user_list_follower_num_tag);
 			viewHolder.askCountTv = (TextView) convertView

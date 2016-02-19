@@ -13,6 +13,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.psgod.PsGodImageLoader;
 import com.psgod.Constants;
 import com.psgod.R;
+import com.psgod.Utils;
 import com.psgod.model.PhotoItem;
 import com.psgod.ui.widget.dialog.CarouselPhotoDetailDialog;
 
@@ -90,7 +91,8 @@ public class WorksGridAdapter extends BaseAdapter {
 		convertView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				new CarouselPhotoDetailDialog(mContext, mPhotoItem.getAskId(),mPhotoItem.getPid()).show();
+				Utils.skipByObject(mContext,mPhotoItem);
+//				new CarouselPhotoDetailDialog(mContext, mPhotoItem.getAskId(),mPhotoItem.getPid()).show();
 			}
 		});
 

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="36dp"
+    android:layout_marginRight="36dp">
+
+    <TextView
+        android:id="@+id/recharge_title"
+        android:layout_width="match_parent"
+        android:layout_height="62dp"
+        android:background="@drawable/shape_recharge_yellow_background"
+        android:gravity="center"
+        android:text="请输入充值金额 (元)"
+        android:textColor="#CC000000"
+        android:textSize="16dp"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_recharge_white_background">
+
+        <EditText
+            android:id="@+id/recharge_count_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:layout_centerHorizontal="true"
+            android:background="@null"
+            android:text="0.00"
+            android:textColor="#E6FF5B3F"
+            android:textSize="30dp"
+            android:inputType="numberDecimal"/>
+
+        <ImageView
+            android:id="@+id/recharge_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/recharge_count_edit"
+            android:layout_marginRight="14dp"
+            android:src="@mipmap/ic_money_count"
+            android:layout_alignTop="@id/recharge_count_edit"
+            android:layout_alignBottom="@id/recharge_count_edit"/>
+
+        <TextView
+            android:id="@+id/recharge_sure_tv"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@id/recharge_image"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            android:text="确定"
+            android:textColor="#CC000000"
+            android:textSize="16dp"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

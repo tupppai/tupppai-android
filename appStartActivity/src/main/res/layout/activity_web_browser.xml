@@ -3,27 +3,34 @@
     xmlns:psgod="http://schemas.android.com/apk/res/com.psgod"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF" 
+    android:background="#FFFFFF"
     android:clipToPadding="true"
-	android:fitsSystemWindows="true">
-	
-    <RelativeLayout 
+    android:fitsSystemWindows="true">
+
+    <RelativeLayout
         android:layout_width="match_parent"
-    	android:layout_height="match_parent"
-    	android:background="#FFFFFF" >
-        
-	    <com.psgod.ui.widget.ActionBar
-	        android:id="@+id/web_browser_actionbar"
-	        android:layout_width="match_parent"
-	        android:layout_height="@dimen/actionbar_height"
-	        psgod:rightBtnVisibility="gone"
-	        psgod:title="图派" />
-		
-		<WebView 
-		    android:id="@+id/web_browser_webview"
-		    android:layout_below="@id/web_browser_actionbar"
-		    android:layout_width="match_parent"
-		    android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:background="#FFFFFF">
+
+        <com.psgod.ui.widget.ActionBar
+            android:id="@+id/web_browser_actionbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/actionbar_height"
+            psgod:rightBtnVisibility="gone"
+            psgod:title="图派" />
+
+        <include
+            android:id="@+id/web_browser_empty"
+            layout="@layout/view_empty"
+            />
+
+        <com.psgod.ui.widget.PsgodWebView
+            android:id="@+id/web_browser_webview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/web_browser_actionbar"
+            android:visibility="visible"/>
+
     </RelativeLayout>
-    
+
 </RelativeLayout>

@@ -9,6 +9,7 @@ package com.psgod.ui.view;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Handler.Callback;
 import android.os.Message;
@@ -26,13 +27,13 @@ import android.widget.TextView;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.psgod.PsGodImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.psgod.BitmapUtils;
 import com.psgod.Constants;
+import com.psgod.PsGodImageLoader;
 import com.psgod.R;
 import com.psgod.Utils;
 import com.psgod.WeakReferenceHandler;
@@ -46,10 +47,8 @@ import com.psgod.ui.activity.SinglePhotoDetail;
 import com.psgod.ui.activity.WorksListActivity;
 import com.psgod.ui.adapter.HotCommentListAdapter;
 import com.psgod.ui.widget.AvatarImageView;
-import com.psgod.ui.widget.AvatarImage;
 import com.psgod.ui.widget.FollowImage;
 import com.psgod.ui.widget.OriginImageLayout;
-import com.psgod.ui.widget.dialog.CarouselPhotoDetailDialog;
 import com.psgod.ui.widget.dialog.PSDialog;
 import com.psgod.ui.widget.dialog.ShareMoreDialog;
 
@@ -116,6 +115,7 @@ public class PhotoItemView extends RelativeLayout implements Callback {
     // 单条作品类型操作栏
     private RelativeLayout mSingleReplyBtnsPanel;
     private ImageView mSingleReplyAllWorksBtn;
+    private TextView mSingleAllWorksTxt;
     private TextView mSingleReplyCommentTv;
     private TextView mSingleReplyShareTv;
 
@@ -133,14 +133,15 @@ public class PhotoItemView extends RelativeLayout implements Callback {
     // 关注 热门 作品类型操作栏
     private RelativeLayout mComplexBtnsPanel;
     private ImageView mAllWorksBtn;
+    private TextView mAllWorksTxt;
     private TextView mComplexShareBtn;
-//    private TextView mComplexFavBtn;
+    //    private TextView mComplexFavBtn;
 //    private ImageView mComplexFavImg;
 //    private ImageView mComplexFavTempImg;
     private TextView mComplexCommentBtn;
 
     private RelativeLayout mReplyLikedArea;
-//    private TextView mLikeCountTv;
+    //    private TextView mLikeCountTv;
 //    private ImageView mLikeBtn;
     private LikeView mLikeView;
 
@@ -171,7 +172,7 @@ public class PhotoItemView extends RelativeLayout implements Callback {
      * @author brandwang
      */
     public static enum PhotoListType {
-        SINGLE_ASK, SINGLE_REPLY, RECENT_REPLY, HOT_FOCUS_ASK, HOT_FOCUS_REPLY
+        SINGLE_ASK, SINGLE_REPLY, RECENT_REPLY, HOT_FOCUS_ASK, HOT_FOCUS_REPLY, COURSE_DETAIL
     }
 
     public PhotoItemView(Context context) {
@@ -244,6 +245,8 @@ public class PhotoItemView extends RelativeLayout implements Callback {
                 .findViewById(R.id.single_photoitem_reply);
         mSingleReplyAllWorksBtn = (ImageView) this
                 .findViewById(R.id.single_photoitem_works_tv);
+        mSingleAllWorksTxt = (TextView) this
+                .findViewById(R.id.single_photoitem_works_txt);
         mSingleReplyCommentTv = (TextView) this
                 .findViewById(R.id.single_photoitem_comment_tv);
         mSingleReplyShareTv = (TextView) this
@@ -271,6 +274,7 @@ public class PhotoItemView extends RelativeLayout implements Callback {
         mComplexBtnsPanel = (RelativeLayout) this
                 .findViewById(R.id.focus_reply_item_btns);
         mAllWorksBtn = (ImageView) this.findViewById(R.id.photo_item_works_tv);
+        mAllWorksTxt = (TextView) this.findViewById(R.id.simple_type_photo_item_works_txt);
         mComplexShareBtn = (TextView) this
                 .findViewById(R.id.photo_item_share_tv);
 //        mComplexFavBtn = (TextView) this.findViewById(R.id.photo_item_fav_tv);
@@ -292,6 +296,8 @@ public class PhotoItemView extends RelativeLayout implements Callback {
                 .findViewById(R.id.photo_item_hot_comments_lv);
         mCommentsPanel = (RelativeLayout) this
                 .findViewById(R.id.photo_item_hot_comments_panel);
+
+
     }
 
     /**
@@ -350,31 +356,11 @@ public class PhotoItemView extends RelativeLayout implements Callback {
         // }
         // });
         // 其他作品按钮
-
-        if (isRecentAct) {
-            mAllWorksBtn.setVisibility(GONE);
-            mHotReplyAllWorksBtn.setVisibility(GONE);
-            mSingleReplyAllWorksBtn.setVisibility(GONE);
-            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mSingleAskShareBtn.getLayoutParams();
-            params.setMargins(0, 0, 0, 0);
-            mSingleAskShareBtn.setLayoutParams(params);
-            params = (RelativeLayout.LayoutParams) mSingleReplyShareTv.getLayoutParams();
-            params.setMargins(0, 0, 0, 0);
-            mSingleReplyShareTv.setLayoutParams(params);
-            params = (RelativeLayout.LayoutParams) mHotReplyShareTv.getLayoutParams();
-            params.setMargins(0, 0, 0, 0);
-            mHotReplyShareTv.setLayoutParams(params);
-            params = (RelativeLayout.LayoutParams) mFocusAskShareTv.getLayoutParams();
-            params.setMargins(0, 0, 0, 0);
-            mFocusAskShareTv.setLayoutParams(params);
-            params = (RelativeLayout.LayoutParams) mComplexShareBtn.getLayoutParams();
-            params.setMargins(0, 0, 0, 0);
-            mComplexShareBtn.setLayoutParams(params);
-        } else {
-            mAllWorksBtn.setOnClickListener(allWorkListener);
-            mHotReplyAllWorksBtn.setOnClickListener(allWorkListener);
-            mSingleReplyAllWorksBtn.setOnClickListener(allWorkListener);
-        }
+        mAllWorksBtn.setOnClickListener(allWorkListener);
+        mAllWorksTxt.setOnClickListener(allWorkListener);
+        mHotReplyAllWorksBtn.setOnClickListener(allWorkListener);
+        mSingleReplyAllWorksBtn.setOnClickListener(allWorkListener);
+        mSingleAllWorksTxt.setOnClickListener(allWorkListener);
         // bang 按钮点击浮层
         mHelpPSBtn.setOnClickListener(helpPsListener);
 
@@ -533,14 +519,24 @@ public class PhotoItemView extends RelativeLayout implements Callback {
 
         mNameTv.setText(mPhotoItem.getNickname());
         mTimeTv.setText(mPhotoItem.getUpdateTimeStr());
+        mAllWorksTxt.setText(String.format("已有%s个作品", mPhotoItem.getReplyCount()));
+        mSingleAllWorksTxt.setText(String.format("已有%s个作品", mPhotoItem.getReplyCount()));
+        if (mPhotoItem.getReplyCount() == 0) {
+            mAllWorksTxt.setEnabled(false);
+            mSingleAllWorksTxt.setEnabled(false);
+        } else {
+            mAllWorksTxt.setEnabled(true);
+            mSingleAllWorksTxt.setEnabled(true);
+        }
 
         if (isHomePageHot) {
-            mTimeTv.setVisibility(GONE);
-            mNameTv.setTextSize(15);
-            LayoutParams params = (LayoutParams) mNameTv.getLayoutParams();
-            params.addRule(CENTER_VERTICAL);
-            params.addRule(ALIGN_TOP, 0);
-            mNameTv.setLayoutParams(params);
+//            mTimeTv.setVisibility(GONE);
+//            mNameTv.setTextSize(15);
+//            LayoutParams params = (LayoutParams) mNameTv.getLayoutParams();
+//            params.addRule(CENTER_VERTICAL);
+//            params.addRule(ALIGN_TOP, 0);
+//            mNameTv.setLayoutParams(params);
+
         }
 
         mDescTv.setHtmlFromString(mPhotoItem.getDesc(), true);
@@ -554,14 +550,14 @@ public class PhotoItemView extends RelativeLayout implements Callback {
 
         mImageArea.removeAllViews();
 
-        mFollowBtn.setPhotoItem(mPhotoItem);
         if ((LoginUser.getInstance().getUid() == mPhotoItem.getUid()) || isHomePageFocus) {
-            mFollowBtn.setVisibility(INVISIBLE);
+            mFollowBtn.setVisibility(GONE);
         } else {
             mFollowBtn.setVisibility(VISIBLE);
+            mFollowBtn.setPhotoItem(mPhotoItem);
         }
         mFollowBtn.setOnFollowChangeListener(onFollowChangeListener);
-
+        mFollowBtn.setIsHideFollow(true);
         // 作品情况 展示外面image_url
         if (mPhotoType == PhotoItem.TYPE_REPLY) {
             mImageIv = new ImageView(mContext);
@@ -585,6 +581,10 @@ public class PhotoItemView extends RelativeLayout implements Callback {
             } else {
                 mImageIv.setOnClickListener(imageOnClickListener);
             }
+
+            if (isHomePageFocus || isHomePageHot) {
+                mImageIv.setOnClickListener(imageOnClickListener2);
+            }
 //            mImageIv.setOnTouchListener(
 //                    new OnTouchListener() {
 //
@@ -594,83 +594,94 @@ public class PhotoItemView extends RelativeLayout implements Callback {
 
         // 求助情况 展示asks_uploads数组中图片
         // 一张求助
-        else if (mPhotoItem.getUploadImagesList().size() == 1
-                && mPhotoType == PhotoItem.TYPE_ASK) {
-            mImageIv = new ImageView(mContext);
+        else if (mPhotoType == PhotoItem.TYPE_ASK) {
 
-            ViewGroup.LayoutParams singleAskParams = new ViewGroup.LayoutParams(
-                    Constants.WIDTH_OF_SCREEN, Constants.WIDTH_OF_SCREEN);
-            mImageIv.setLayoutParams(singleAskParams);
+            if (mPhotoItem.getUploadImagesList().size() == 1
+                    ) {
+                mImageIv = new ImageView(mContext);
 
-            // 图片回调中将图片毛玻璃化之后作为背景图
-            mImageIv.setTag(R.id.image_url, mPhotoItem.getUploadImagesList().get(0).mImageUrl);
-            imageLoader.displayImage(
-                    mPhotoItem.getUploadImagesList().get(0).mImageUrl,
-                    mImageIv, mOptions, imageLoadingListener);
-            mImageArea.addView(mImageIv);
+                ViewGroup.LayoutParams singleAskParams = new ViewGroup.LayoutParams(
+                        Constants.WIDTH_OF_SCREEN, Constants.WIDTH_OF_SCREEN);
+                mImageIv.setLayoutParams(singleAskParams);
 
-            if (mType == PhotoListType.SINGLE_ASK
-                    || mType == PhotoListType.SINGLE_REPLY) {
-                mImageIv.setOnClickListener(imageBrowserListener);
+                // 图片回调中将图片毛玻璃化之后作为背景图
+                mImageIv.setTag(R.id.image_url, mPhotoItem.getUploadImagesList().get(0).mImageUrl);
+                imageLoader.displayImage(
+                        mPhotoItem.getUploadImagesList().get(0).mImageUrl,
+                        mImageIv, mOptions, imageLoadingListener);
+                mImageArea.addView(mImageIv);
 
-            } else {
-                mImageIv.setOnClickListener(imageOnClickListener);
+                if (mType == PhotoListType.SINGLE_ASK
+                        || mType == PhotoListType.SINGLE_REPLY) {
+                    mImageIv.setOnClickListener(imageBrowserListener);
+
+                } else {
+                    mImageIv.setOnClickListener(imageOnClickListener);
+                }
+
+                if (isHomePageFocus || isHomePageHot) {
+                    mImageIv.setOnClickListener(imageOnClickListener2);
+                }
+                mImageIv.setOnLongClickListener(imageOnLongClickListener);
             }
 
-            mImageIv.setOnLongClickListener(imageOnLongClickListener);
+            // 两张求助
+            else if (mPhotoItem.getUploadImagesList().size() == 2) {
+                mImageViewLeft = new ImageView(mContext);
+                RelativeLayout.LayoutParams leftParams = new RelativeLayout.LayoutParams(
+                        Constants.WIDTH_OF_SCREEN / 2, Constants.WIDTH_OF_SCREEN);
+                leftParams.addRule(ALIGN_PARENT_LEFT, TRUE);
+                mImageViewLeft.setLayoutParams(leftParams);
+                mImageViewLeft.setScaleType(ScaleType.CENTER_CROP);
+
+                mImageViewRight = new ImageView(mContext);
+                RelativeLayout.LayoutParams rightParams = new RelativeLayout.LayoutParams(
+                        Constants.WIDTH_OF_SCREEN / 2, Constants.WIDTH_OF_SCREEN);
+                rightParams.addRule(ALIGN_PARENT_RIGHT, TRUE);
+                mImageViewRight.setLayoutParams(rightParams);
+                mImageViewRight.setScaleType(ScaleType.CENTER_CROP);
+
+                imageLoader.displayImage(
+                        mPhotoItem.getUploadImagesList().get(0).mImageUrl,
+                        mImageViewLeft, mOptions, imageLoadingListener);
+                imageLoader.displayImage(
+                        mPhotoItem.getUploadImagesList().get(1).mImageUrl,
+                        mImageViewRight, mOptions);
+
+                mImageViewLeft.setOnClickListener(imageBrowserListener2);
+
+                if (isHomePageFocus || isHomePageHot) {
+                    mImageViewLeft.setOnClickListener(imageOnClickListener2);
+                }
+
+                mImageViewLeft
+                        .setTag(mPhotoItem.getUploadImagesList().get(0).mImageUrl);
+
+                mImageViewLeft.setOnLongClickListener(imageOnLongClickListener);
+
+                mImageViewRight.setOnClickListener(imageBrowserListener2);
+
+                if (isHomePageFocus || isHomePageHot) {
+                    mImageViewRight.setOnClickListener(imageOnClickListener2);
+                }
+
+                mImageViewRight
+                        .setTag(mPhotoItem.getUploadImagesList().get(1).mImageUrl);
+
+                mImageViewRight.setOnLongClickListener(imageOnLongClickListener);
+
+
+                mImageArea.addView(mImageViewLeft);
+                mImageArea.addView(mImageViewRight);
+            }
+            ImageView view = new ImageView(mContext);
+            view.setImageResource(R.mipmap.tag_imgarea_ori);
+            RelativeLayout.LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT);
+            params.setMargins(Utils.dpToPx(mContext, 10), Utils.dpToPx(mContext, 10), 0, 0);
+            view.setLayoutParams(params);
+            mImageArea.addView(view);
         }
-
-        // 两张求助
-        else if (mPhotoItem.getUploadImagesList().size() == 2
-                && mPhotoType == PhotoItem.TYPE_ASK) {
-            mImageViewLeft = new ImageView(mContext);
-            RelativeLayout.LayoutParams leftParams = new RelativeLayout.LayoutParams(
-                    Constants.WIDTH_OF_SCREEN / 2, Constants.WIDTH_OF_SCREEN);
-            leftParams.addRule(ALIGN_PARENT_LEFT, TRUE);
-            mImageViewLeft.setLayoutParams(leftParams);
-            mImageViewLeft.setScaleType(ScaleType.CENTER_CROP);
-
-            mImageViewRight = new ImageView(mContext);
-            RelativeLayout.LayoutParams rightParams = new RelativeLayout.LayoutParams(
-                    Constants.WIDTH_OF_SCREEN / 2, Constants.WIDTH_OF_SCREEN);
-            rightParams.addRule(ALIGN_PARENT_RIGHT, TRUE);
-            mImageViewRight.setLayoutParams(rightParams);
-            mImageViewRight.setScaleType(ScaleType.CENTER_CROP);
-
-            imageLoader.displayImage(
-                    mPhotoItem.getUploadImagesList().get(0).mImageUrl,
-                    mImageViewLeft, mOptions, imageLoadingListener);
-            imageLoader.displayImage(
-                    mPhotoItem.getUploadImagesList().get(1).mImageUrl,
-                    mImageViewRight, mOptions);
-
-            mImageViewLeft.setOnClickListener(imageBrowserListener2);
-
-            if (isHomePageFocus || isHomePageHot) {
-                mImageViewLeft.setOnClickListener(imageOnClickListener);
-            }
-
-            mImageViewLeft
-                    .setTag(mPhotoItem.getUploadImagesList().get(0).mImageUrl);
-
-            mImageViewLeft.setOnLongClickListener(imageOnLongClickListener);
-
-            mImageViewRight.setOnClickListener(imageBrowserListener2);
-
-            if (isHomePageFocus || isHomePageHot) {
-                mImageViewRight.setOnClickListener(imageOnClickListener);
-            }
-
-            mImageViewRight
-                    .setTag(mPhotoItem.getUploadImagesList().get(1).mImageUrl);
-
-            mImageViewRight.setOnLongClickListener(imageOnLongClickListener);
-
-
-            mImageArea.addView(mImageViewLeft);
-            mImageArea.addView(mImageViewRight);
-        }
-
         // 求p原图区域 只有作品才显示
         if (mPhotoItem.getUploadImagesList().size() != 0
                 && (mPhotoType == TYPE_REPLY)
@@ -716,6 +727,8 @@ public class PhotoItemView extends RelativeLayout implements Callback {
             // mUploadImages.addView(uploadImageLeft);
             // mUploadImages.addView(mOriginTipIv);
             // }
+        } else {
+
         }
 
         // 设置操作栏中细节 分simple和complex两种情况
@@ -741,6 +754,46 @@ public class PhotoItemView extends RelativeLayout implements Callback {
             mCommentsPanel.setVisibility(View.GONE);
         }
 
+        // 根据是否是活动页面，求P或是作品判断其他作品tab的显示
+        if (isRecentAct) {
+            mAllWorksBtn.setVisibility(GONE);
+            mAllWorksTxt.setVisibility(GONE);
+            mHotReplyAllWorksBtn.setVisibility(GONE);
+            mSingleReplyAllWorksBtn.setVisibility(GONE);
+            mSingleAllWorksTxt.setVisibility(GONE);
+//            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mSingleAskShareBtn.getLayoutParams();
+//            params.setMargins(0, 0, 0, 0);
+//            mSingleAskShareBtn.setLayoutParams(params);
+//            params = (RelativeLayout.LayoutParams) mSingleReplyShareTv.getLayoutParams();
+//            params.setMargins(0, 0, 0, 0);
+//            mSingleReplyShareTv.setLayoutParams(params);
+//            params = (RelativeLayout.LayoutParams) mHotReplyShareTv.getLayoutParams();
+//            params.setMargins(0, 0, 0, 0);
+//            mHotReplyShareTv.setLayoutParams(params);
+//            params = (RelativeLayout.LayoutParams) mFocusAskShareTv.getLayoutParams();
+//            params.setMargins(0, 0, 0, 0);
+//            mFocusAskShareTv.setLayoutParams(params);
+//            params = (RelativeLayout.LayoutParams) mComplexShareBtn.getLayoutParams();
+//            params.setMargins(0, 0, 0, 0);
+//            mComplexShareBtn.setLayoutParams(params);
+        } else {
+            if(mPhotoItem.getType() == PhotoItem.TYPE_ASK){
+                mAllWorksTxt.setVisibility(VISIBLE);
+                mSingleAllWorksTxt.setVisibility(VISIBLE);
+            }else{
+                mAllWorksTxt.setVisibility(GONE);
+                mSingleAllWorksTxt.setVisibility(GONE);
+            }
+            if (mPhotoItem.getReplyCount() >= 2) {
+                mAllWorksBtn.setVisibility(VISIBLE);
+                mHotReplyAllWorksBtn.setVisibility(VISIBLE);
+                mSingleReplyAllWorksBtn.setVisibility(VISIBLE);
+            }else{
+                mAllWorksBtn.setVisibility(GONE);
+                mHotReplyAllWorksBtn.setVisibility(GONE);
+                mSingleReplyAllWorksBtn.setVisibility(GONE);
+            }
+        }
     }
 
     // 在listview 里嵌套listview无法自动计算大小 只能显示第一行 需要重新计算listview的高度
@@ -856,7 +909,6 @@ public class PhotoItemView extends RelativeLayout implements Callback {
                 mComplexBtnsPanel.setVisibility(View.GONE);
                 mHotReplyBtnsPanel.setVisibility(View.GONE);
                 mFocusAskBtnsPanel.setVisibility(View.GONE);
-                mFollowBtn.setVisibility(View.VISIBLE);
                 mCommentsPanel.setVisibility(View.GONE);
                 break;
 
@@ -866,7 +918,6 @@ public class PhotoItemView extends RelativeLayout implements Callback {
                 mComplexBtnsPanel.setVisibility(View.GONE);
                 mHotReplyBtnsPanel.setVisibility(View.GONE);
                 mFocusAskBtnsPanel.setVisibility(View.GONE);
-                mFollowBtn.setVisibility(View.VISIBLE);
                 mCommentsPanel.setVisibility(View.GONE);
                 break;
 
@@ -876,7 +927,6 @@ public class PhotoItemView extends RelativeLayout implements Callback {
                 mComplexBtnsPanel.setVisibility(View.GONE);
                 mHotReplyBtnsPanel.setVisibility(View.VISIBLE);
                 mFocusAskBtnsPanel.setVisibility(View.GONE);
-                mFollowBtn.setVisibility(View.VISIBLE);
                 mCommentsPanel.setVisibility(View.GONE);
                 break;
 
@@ -886,7 +936,6 @@ public class PhotoItemView extends RelativeLayout implements Callback {
                 mComplexBtnsPanel.setVisibility(View.GONE);
                 mHotReplyBtnsPanel.setVisibility(View.GONE);
                 mFocusAskBtnsPanel.setVisibility(View.VISIBLE);
-                mFollowBtn.setVisibility(View.VISIBLE);
                 break;
 
             case HOT_FOCUS_REPLY:
@@ -895,7 +944,6 @@ public class PhotoItemView extends RelativeLayout implements Callback {
                 mComplexBtnsPanel.setVisibility(View.VISIBLE);
                 mHotReplyBtnsPanel.setVisibility(View.GONE);
                 mFocusAskBtnsPanel.setVisibility(View.GONE);
-                mFollowBtn.setVisibility(View.VISIBLE);
                 break;
 
             default:
@@ -969,8 +1017,13 @@ public class PhotoItemView extends RelativeLayout implements Callback {
                 url = url.split("\\?")[0];
                 imageUri = imageUri.split("\\?")[0];
                 if (url.equals(imageUri)) {
-                    mImageArea.setBackground(new BitmapDrawable(getResources(),
-                            BitmapUtils.getBlurBitmap(loadedImage)));
+                    Bitmap bitmap = BitmapUtils.getBlurBitmap(loadedImage, view, imageUri);
+                    if (bitmap == null) {
+                        mImageArea.setBackgroundColor(Color.parseColor("#00000000"));
+                    } else {
+                        mImageArea.setBackgroundDrawable(new BitmapDrawable(getResources(),
+                                bitmap));
+                    }
                 }
             }
         }
@@ -1104,21 +1157,25 @@ public class PhotoItemView extends RelativeLayout implements Callback {
     private OnClickListener imageOnClickListener = new OnClickListener() {
         @Override
         public void onClick(View v) {
-//            // 拥有回复作品
-//            boolean havingReplies = (mPhotoItem != null && mPhotoItem
-//                    .getReplyCount() > 0);
-//            // 是否位于作品详情页面
-//            boolean isPhotoDetail = (mType == PhotoListType.SINGLE_ASK)
-//                    || (mType == PhotoListType.SINGLE_REPLY);
-
-            if (mPhotoItem.getType() == 1 && mPhotoItem.getReplyCount() == 0) {
+            if ((mPhotoItem.getType() == 1 && mPhotoItem.getReplyCount() == 0) || isRecentAct) {
                 SinglePhotoDetail.startActivity(mContext, mPhotoItem);
                 setEnabled(false);
                 mHandler.postDelayed(mViewEnabledRunnable, 1000);
             } else {
-                new CarouselPhotoDetailDialog(mContext, mPhotoItem.getAskId(), mPhotoItem.getPid()
-                        ,mPhotoItem.getCategoryId()).show();
+                Utils.skipByObject(mContext, mPhotoItem);
+//                new CarouselPhotoDetailDialog(mContext, mPhotoItem.getAskId(), mPhotoItem.getPid()
+//                        , mPhotoItem.getCategoryId()).show();
             }
+        }
+    };
+
+    //动态页面只跳转到详情
+    private OnClickListener imageOnClickListener2 = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            SinglePhotoDetail.startActivity(mContext, mPhotoItem);
+            setEnabled(false);
+            mHandler.postDelayed(mViewEnabledRunnable, 1000);
         }
     };
 

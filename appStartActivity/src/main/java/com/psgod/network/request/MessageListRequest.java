@@ -126,7 +126,7 @@ public class MessageListRequest extends BaseRequest<List<NotificationMessage>> {
 			}
 			
 			sb.append("&width=").append(mWidth);
-			sb.append("&last_updated=").append(mLastUpdated);
+//			sb.append("&last_updated=").append(mLastUpdated);
 			sb.append("&page=").append(mPage);
 			sb.append("&size=").append(mSize);
 

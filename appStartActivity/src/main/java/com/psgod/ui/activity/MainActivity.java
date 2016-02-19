@@ -18,12 +18,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -31,8 +27,9 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.psgod.PsGodImageLoader;
 import com.psgod.Constants;
+import com.psgod.CustomToast;
+import com.psgod.PsGodImageLoader;
 import com.psgod.R;
 import com.psgod.UserPreferences;
 import com.psgod.Utils;
@@ -45,6 +42,7 @@ import com.psgod.eventbus.PushEvent;
 import com.psgod.eventbus.RefreshEvent;
 import com.psgod.eventbus.UpdateTabStatusEvent;
 import com.psgod.model.LoginUser;
+import com.psgod.model.PhotoItem;
 import com.psgod.network.request.BaseRequest;
 import com.psgod.network.request.GetUserInfoRequest;
 import com.psgod.network.request.PSGodErrorListener;
@@ -58,10 +56,10 @@ import com.psgod.ui.fragment.HomePageHotFragment;
 import com.psgod.ui.fragment.InprogressPageFragment;
 import com.psgod.ui.fragment.MyPageFragment;
 import com.psgod.ui.fragment.TupppaiFragment;
-import com.psgod.ui.widget.AvatarImage;
+import com.psgod.ui.view.CircleImageView;
 import com.psgod.ui.widget.AvatarImageView;
-import com.psgod.ui.widget.dialog.CameraPopupwindow;
 import com.umeng.message.PushAgent;
+import com.umeng.message.UmengRegistrar;
 import com.umeng.update.UmengUpdateAgent;
 
 import org.android.agoo.client.BaseRegistrar;
@@ -126,17 +124,22 @@ public class MainActivity extends PSGodBaseActivity {
     private RelativeLayout mTupaiLayout;
     private RelativeLayout mInprogressLayout;
     private RelativeLayout mMyLayout;
-    private AvatarImageView mAvatarImg;
-    private AvatarImage mAvatarCase;
+    private ImageView mAvatarImg;
+    //    private CircleImageView mAvatarCase;
     private RelativeLayout[] mBottomTabLayout = new RelativeLayout[3];
 
     private ImageView mHomeImage;
     private ImageView mTupaiImage;
     private ImageView mInprogressImage;
+    private ImageView mReleaseImage;
+
     private ImageView[] mBottomTabImage = new ImageView[3];
-    private Integer[] mTabDrawableIds = {R.mipmap.tab_home_normal, R.mipmap.tab_tupai_normal,
-            R.mipmap.tab_jingxingzhong_normal, R.mipmap.tab_home_selected,
-            R.mipmap.tab_tupai_selected, R.mipmap.tab_jingxingzhong_selected};
+    //    private Integer[] mTabDrawableIds = {R.mipmap.tab_home_normal, R.mipmap.tab_tupai_normal,
+//            R.mipmap.tab_jingxingzhong_normal, R.mipmap.tab_home_selected,
+//            R.mipmap.tab_tupai_selected, R.mipmap.tab_jingxingzhong_selected};
+    private Integer[] mTabDrawableIds = {R.mipmap.tab_feed_nor, R.mipmap.tab_channel_nor,
+            R.mipmap.tab_jinxing_nor, R.mipmap.tab_feed_sel,
+            R.mipmap.tab_channel_sel, R.mipmap.tab_jinxing_sel};
 
     // 小红点区域
     private LinearLayout mTabTipsMessage;
@@ -170,9 +173,9 @@ public class MainActivity extends PSGodBaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mBottomLayout = (LinearLayout) findViewById(R.id.psgod_linear_tab);
-        mAvatarImg = (AvatarImageView) findViewById(R.id.activity_main_tab_user_img);
+        mAvatarImg = (ImageView) findViewById(R.id.activity_main_tab_user_img);
 
-        mAvatarCase = (AvatarImage) findViewById(R.id.activity_main_tab_user_case);
+//        mAvatarCase = (CircleImageView) findViewById(R.id.activity_main_tab_user_case);
 
         mHomeLayout = (RelativeLayout) findViewById(R.id.activity_main_tab_home_page);
         mTupaiLayout = (RelativeLayout) findViewById(R.id.activity_tab_tupai_page);
@@ -186,6 +189,7 @@ public class MainActivity extends PSGodBaseActivity {
         mHomeImage = (ImageView) findViewById(R.id.activity_main_tab_image);
         mTupaiImage = (ImageView) findViewById(R.id.activity_tupai_tab_image);
         mInprogressImage = (ImageView) findViewById(R.id.activity_inprogress_tab_image);
+        mReleaseImage = (ImageView) findViewById(R.id.activity_dynamic_release);
 
         mBottomTabImage[0] = mHomeImage;
         mBottomTabImage[1] = mTupaiImage;
@@ -210,7 +214,7 @@ public class MainActivity extends PSGodBaseActivity {
         mPushAgent = PushAgent.getInstance(this);
         mPushAgent.onAppStart();
         mPushAgent.enable();
-        mDeviceToken = BaseRegistrar.getRegistrationId(this);
+        mDeviceToken = UmengRegistrar.getRegistrationId(this);
 
         Intent intent = getIntent();
         // 判断从哪里跳过来 重新登录 才发送umeng deviceToken
@@ -231,9 +235,9 @@ public class MainActivity extends PSGodBaseActivity {
         // 初始化广播监听
         initReceiver();
 
-        if (!LoginUser.getInstance().getPhoneNum().equals("0")) {
-            initAvatar();
-        }
+//        if (!LoginUser.getInstance().getPhoneNum().equals("0")) {
+//            initAvatar();
+//        }
 
         // umeng应用自动更新
         UmengUpdateAgent.update(this);
@@ -258,16 +262,16 @@ public class MainActivity extends PSGodBaseActivity {
         }
     }
 
-    private void initAvatar() {
-        GetUserInfoRequest.Builder builder = new GetUserInfoRequest.Builder()
-                .setListener(getUserInfoListener);
-
-        GetUserInfoRequest request = builder.build();
-        request.setTag(TAG);
-        RequestQueue requestQueue = PSGodRequestQueue
-                .getInstance(this).getRequestQueue();
-        requestQueue.add(request);
-    }
+//    private void initAvatar() {
+//        GetUserInfoRequest.Builder builder = new GetUserInfoRequest.Builder()
+//                .setListener(getUserInfoListener);
+//
+//        GetUserInfoRequest request = builder.build();
+//        request.setTag(TAG);
+//        RequestQueue requestQueue = PSGodRequestQueue
+//                .getInstance(this).getRequestQueue();
+//        requestQueue.add(request);
+//    }
 
     // 获取用户后台信息之后回调
     private Listener<JSONObject> getUserInfoListener = new Listener<JSONObject>() {
@@ -359,9 +363,9 @@ public class MainActivity extends PSGodBaseActivity {
         registerReceiver(mNetReceiver, netIntentFilter);
     }
 
-    public void onEventMainThread(AvatarEvent event) {
-        initAvatar();
-    }
+//    public void onEventMainThread(AvatarEvent event) {
+//        initAvatar();
+//    }
 
     // EventBus 接收网络变化事件
     public void onEventMainThread(NetEvent event) {
@@ -490,9 +494,10 @@ public class MainActivity extends PSGodBaseActivity {
                 mBottomTabImage[i].setImageDrawable(res.getDrawable(mTabDrawableIds[i]));
             }
 
-            if (mAvatarCase.getVisibility() == View.GONE) {
-                mAvatarCase.setVisibility(View.VISIBLE);
-            }
+//            if (mAvatarCase.getVisibility() == View.GONE) {
+//                mAvatarCase.setVisibility(View.VISIBLE);
+//            }
+            mAvatarImg.setImageResource(R.mipmap.tab_my_sel);
 
             mTabTipsMessage.setVisibility(View.INVISIBLE);
             EventBus.getDefault().post(new MyInfoRefreshEvent(MyPageFragment.class.getSimpleName()));
@@ -518,15 +523,30 @@ public class MainActivity extends PSGodBaseActivity {
     private void initEvents() {
         mMyLayout.setOnClickListener(myClick);
         mAvatarImg.setOnClickListener(myClick);
+
+        mReleaseImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this,
+                        MultiImageSelectActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("SelectType",
+                        UploadMultiImageActivity.TYPE_TIMELINE_SELECT);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+
         for (int i = 0; i < 3; i++) {
             mBottomTabLayout[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     setBottomTabImageDrawable(view.getId());
                     showFragment(view.getId());
-                    if (mAvatarCase.getVisibility() == View.VISIBLE) {
-                        mAvatarCase.setVisibility(View.GONE);
-                    }
+                    mAvatarImg.setImageResource(R.mipmap.tab_my_nor);
+//                    if (mAvatarCase.getVisibility() == View.VISIBLE) {
+//                        mAvatarCase.setVisibility(View.GONE);
+//                    }
                 }
             });
         }
@@ -685,6 +705,22 @@ public class MainActivity extends PSGodBaseActivity {
                 inprogressFragment.onNewIntent(mIntent);
             }
         }
+        switch (fragmentId) {
+            case IntentParams.VALUE_FRAGMENT_ID_HOMEPAGE:
+                mBottomTabLayout[0].callOnClick();
+                break;
+            case IntentParams.VALUE_FRAGMENT_ID_RECENT:
+                mBottomTabLayout[1].callOnClick();
+                break;
+            case IntentParams.VALUE_FRAGMENT_ID_INPROGRESSING:
+                mBottomTabLayout[2].callOnClick();
+                break;
+            case IntentParams.VALUE_FRAGMENT_ID_USER:
+                mMyLayout.callOnClick();
+            default:
+                mBottomTabLayout[0].callOnClick();
+                break;
+        }
         boolean isFinishActivity = mIntent.getBooleanExtra(
                 Constants.IntentKey.IS_FINISH_ACTIVITY, false);
         mIntent.removeExtra(Constants.IntentKey.IS_FINISH_ACTIVITY);
@@ -734,7 +770,6 @@ public class MainActivity extends PSGodBaseActivity {
         // mHandler.removeCallbacks(runnable);
 
         String version = Utils.getAppVersion(this);
-
         ReportDeviceInfo.Builder builder = new ReportDeviceInfo.Builder()
                 .setToken(token).setMac(getMacAddress())
                 .setName(android.os.Build.MODEL)
@@ -756,10 +791,9 @@ public class MainActivity extends PSGodBaseActivity {
         }
     };
 
-    private PSGodErrorListener errorListener = new PSGodErrorListener() {
+    private PSGodErrorListener errorListener = new PSGodErrorListener(this) {
         @Override
         public void handleError(VolleyError error) {
-            // TODO Auto-generated method stub
         }
     };
 

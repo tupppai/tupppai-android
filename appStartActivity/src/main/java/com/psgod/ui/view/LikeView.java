@@ -181,12 +181,12 @@ public class LikeView extends RelativeLayout {
 //                        R.drawable.shape_unlike_count));
 //            }
 //        }
-        likeImg.setImageResource(LIKE_IMAGE_ID[mPhotoItem.getLoveCount()]);
+        likeImg.setImageResource(LIKE_IMAGE_ID[mPhotoItem.getLoveCount()>3?0:mPhotoItem.getLoveCount()]);
         String textLikeCount = Utils.getCountDisplayText(mPhotoItem
                 .getLikeCount());
         likeTxt.setText(textLikeCount);
-        likeTxt.setBackgroundResource(LIKE_TXT_BACK_COLOR[mPhotoItem.getLoveCount()]);
-        likeTxt.setTextColor(Color.parseColor(LIKE_TXT_COLOR[mPhotoItem.getLoveCount()]));
+        likeTxt.setBackgroundResource(LIKE_TXT_BACK_COLOR[mPhotoItem.getLoveCount()>3?0:mPhotoItem.getLoveCount()]);
+        likeTxt.setTextColor(Color.parseColor(LIKE_TXT_COLOR[mPhotoItem.getLoveCount()>3?0:mPhotoItem.getLoveCount()]));
     }
 
     private OnLikeCheckListener onLikeCheckListener;

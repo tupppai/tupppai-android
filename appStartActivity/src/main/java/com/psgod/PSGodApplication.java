@@ -6,19 +6,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Handler;
-import android.util.Log;
 import android.view.WindowManager;
 
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.psgod.PsGodImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.psgod.emoji.FaceConversionUtil;
 import com.psgod.model.NotificationBean;
 import com.psgod.ui.activity.AppStartActivity;
-import com.psgod.ui.activity.FollowingListActivity;
+import com.psgod.ui.activity.FollowerListActivity;
 import com.psgod.ui.activity.MainActivity;
 import com.psgod.ui.activity.MessageCommentActivity;
 import com.psgod.ui.activity.MessageLikeActivity;
@@ -168,7 +165,7 @@ public class PSGodApplication extends Application {
                             return;
                         case 3:
                             intent.putExtra("isSingle",true);
-                            intent.setClass(getApplicationContext(), FollowingListActivity.class);
+                            intent.setClass(getApplicationContext(), FollowerListActivity.class);
                             break;
 //                        case 4:
 //                            intent.setClass(getApplicationContext(), MessageSystemActivity.class);

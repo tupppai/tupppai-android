@@ -56,9 +56,8 @@ public class SearchWaterFallItemView extends RelativeLayout {
 
     /**
      * photowaterfallitemview类型：
-     *
+     * <p/>
      * INPROGRESS_ASK 进行中—求P INPROGRESS_COMPLETE 进行中-已完成
-     *
      */
     // TODO 根据功能区分
     public static enum PhotoWaterFallListType {
@@ -92,13 +91,17 @@ public class SearchWaterFallItemView extends RelativeLayout {
 
             @Override
             public void onClick(View arg0) {
-				if (mData.getType() == 1) {
-					SinglePhotoDetail.startActivity(mContext,
-							Utils.dataToPhoto(mData));
-				} else {
-                    new CarouselPhotoDetailDialog(mContext, Long.parseLong(mData.getAsk_id()),
-                            Long.parseLong(mData.getId())).show();
-				}
+                if (mData.getType() == 1) {
+                    SinglePhotoDetail.startActivity(mContext,
+                            Utils.dataToPhoto(mData));
+                } else {
+//                    new CarouselPhotoDetailDialog(mContext, Long.parseLong(mData.getAsk_id()),
+//                            Long.parseLong(mData.getId())).show();
+                    Utils.skipByObject(mContext, Long.parseLong(mData.getAsk_id()) ==
+                                    Long.parseLong(mData.getId()) ?
+                                    Constants.IntentKey.ASK_ID : Constants.IntentKey.REPLY_ID,
+                            Long.parseLong(mData.getId()));
+                }
 
             }
         });

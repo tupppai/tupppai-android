@@ -53,6 +53,44 @@
 		            android:layout_height="9dp"
 		            android:background="#F7F7F7"
 		            />
+
+				<RelativeLayout
+					android:id="@+id/activity_setting_change_btn"
+					android:layout_width="match_parent"
+					android:layout_height="45dp"
+					android:background="@drawable/selector_userpage_btn_bg"
+					android:clickable="true">
+
+					<TextView
+						android:id="@+id/setting_change_tv"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_centerVertical="true"
+						android:layout_marginLeft="27dp"
+						android:textSize="@dimen/userpage_btn_text"
+						android:textColor="#000000"
+						android:text="我的钱包"
+						android:includeFontPadding="false"/>
+
+					<ImageView
+						android:id="@+id/activity_change_notification_btn"
+						android:layout_width="5dp"
+						android:layout_height="5dp"
+						android:layout_toRightOf="@id/setting_change_tv"
+						android:layout_marginLeft="5dp"
+						android:layout_alignTop="@id/setting_change_tv"
+						android:layout_marginTop="1dp"
+						android:background="@drawable/shape_bottom_tab_tip"/>
+
+				</RelativeLayout>
+
+				<View
+					android:layout_width="match_parent"
+					android:layout_height="0.5dp"
+					android:layout_marginLeft="27dp"
+					android:layout_marginRight="27dp"
+					android:background="#1A000000"
+					/>
 				
 	            <TextView 
 	                android:id="@+id/activity_setting_notification_btn"

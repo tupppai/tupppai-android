@@ -1,14 +1,18 @@
 package com.psgod.ui.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.psgod.PsGodImageLoader;
@@ -16,6 +20,7 @@ import com.psgod.Constants;
 import com.psgod.R;
 import com.psgod.UserPreferences;
 import com.psgod.Utils;
+import com.psgod.eventbus.InitEvent;
 import com.psgod.network.request.BaseRequest;
 import com.psgod.ui.widget.dialog.CustomDialog;
 import com.psgod.ui.widget.dialog.RecommendFriendsDialog;
@@ -26,6 +31,8 @@ import com.umeng.update.UpdateStatus;
 
 import java.util.LinkedList;
 import java.util.List;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * 帐号设置界面
@@ -47,6 +54,11 @@ public class SettingActivity extends PSGodBaseActivity {
 	private View mUpdateBtn;
 	private View mLikedBtn;
 	private View mCommendBtn;
+	private View mChangeBtn;
+	private ImageView mChangeNotificationIv;
+
+	private String mChangeSpKey;
+	private boolean mHasChangeBtnClick;
 
 	// activity list
 	private List<Activity> mList = new LinkedList<Activity>();
@@ -73,6 +85,18 @@ public class SettingActivity extends PSGodBaseActivity {
 		mUpdateBtn = this.findViewById(R.id.activity_setting_check_new_version);
 		mLikedBtn = this.findViewById(R.id.activity_setting_liked_btn);
 		mCommendBtn = this.findViewById(R.id.activity_setting_commend_btn);
+		mChangeBtn = this.findViewById(R.id.activity_setting_change_btn);
+		mChangeNotificationIv = (ImageView) this.findViewById(R.id.activity_change_notification_btn);
+
+		SharedPreferences sp = this.getSharedPreferences(
+				Constants.SharedPreferencesKey.NAME, Context.MODE_PRIVATE);
+		mChangeSpKey = Constants.IntentKey.IS_SETTING_CHANGE_CLICK;
+		mHasChangeBtnClick = sp.getBoolean(mChangeSpKey,false);
+		if (mHasChangeBtnClick) {
+			mChangeNotificationIv.setVisibility(View.GONE);
+		} else {
+			mChangeNotificationIv.setVisibility(View.VISIBLE);
+		}
 		initButtonListeners();
 
 		// mRatingBtn.setOnClickListener(new OnClickListener() {
@@ -150,6 +174,29 @@ public class SettingActivity extends PSGodBaseActivity {
 				});
 				UmengUpdateAgent.setUpdateOnlyWifi(false);
 				UmengUpdateAgent.update(SettingActivity.this);
+			}
+		});
+
+		mChangeBtn.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				if (android.os.Build.VERSION.SDK_INT >= 9) {
+					getApplicationContext()
+							.getSharedPreferences(
+									Constants.SharedPreferencesKey.NAME,
+									Context.MODE_PRIVATE).edit()
+							.putBoolean(mChangeSpKey, true).apply();
+				} else {
+					getApplicationContext()
+							.getSharedPreferences(
+									Constants.SharedPreferencesKey.NAME,
+									Context.MODE_PRIVATE).edit()
+							.putBoolean(mChangeSpKey, true).commit();
+				}
+				mChangeNotificationIv.setVisibility(View.GONE);
+
+				Intent intent = new Intent(SettingActivity.this,SettingChangeActivity.class);
+				startActivity(intent);
 			}
 		});
 
@@ -342,7 +389,13 @@ public class SettingActivity extends PSGodBaseActivity {
 			}
 		});
 	}
-	
+
+	@Override
+	public void finish() {
+		EventBus.getDefault().post(new InitEvent());
+		super.finish();
+	}
+
 	/**
 	 * 获取版本号
 	 * @return 当前应用的版本号

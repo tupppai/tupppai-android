@@ -144,6 +144,7 @@ public class HomePageHotFragment extends BaseFragment implements Callback {
         mHotPhotoItems = new ArrayList<PhotoItem>();
         mAdapter = new PhotoListAdapter(mContext,
                 PhotoItemView.PhotoListType.HOT_FOCUS_ASK, mHotPhotoItems);
+        //去掉时间
         mAdapter.setIsHomePageHot(true);
         mViewHolder.mPhotoListView.getRefreshableView().setAdapter(mAdapter);
 
@@ -321,7 +322,7 @@ public class HomePageHotFragment extends BaseFragment implements Callback {
         }
     };
 
-    private ErrorListener bannerErrorListener = new PSGodErrorListener() {
+    private ErrorListener bannerErrorListener = new PSGodErrorListener(this) {
         @Override
         public void handleError(VolleyError error) {
             // TODO Auto-generated method stub
@@ -506,7 +507,7 @@ public class HomePageHotFragment extends BaseFragment implements Callback {
         }
     }
 
-    private ErrorListener errorListener = new PSGodErrorListener() {
+    private ErrorListener errorListener = new PSGodErrorListener(this) {
         @Override
         public void handleError(VolleyError error) {
             // TODO Auto-generated method stub

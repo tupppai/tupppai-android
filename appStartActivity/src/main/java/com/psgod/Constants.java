@@ -30,6 +30,8 @@ public class Constants {
 	public static final boolean IS_COLOR_USER = true; // 是否染色用户
 	public static final boolean LOG_TO_FILE = true; // 全局开关，是否把日志写到文件
 
+	public static final String SIGN = "tupppaisignmd5";
+
 	// 六种消息类型
 	public static final int PUSH_MESSAGE_SYSTEM = 0;
 	public static final int PUSH_MESSAGE_COMMENT = 1;
@@ -61,6 +63,8 @@ public class Constants {
 	public static int CURRENT_RECENTPAGE_TAB = 0;
 	// 进行中Tab 求P 帮P 已完成
 	public static int CURRENT_INPROGRESS_TAB = 0;
+	// 教程Tab 详情 作业
+	public static int CURRENT_COURSE_TAB = 0;
 	// 我的Tab 图片 收藏
 	public static int CURRENT_MY_TAB = 0;
 
@@ -78,6 +82,17 @@ public class Constants {
 			.imageScaleType(ImageScaleType.IN_SAMPLE_INT).cacheOnDisk(true)
 			.considerExifParams(true).displayer(new FadeInBitmapDisplayer(100))
 			.displayer(new SimpleBitmapDisplayer()).build();
+
+	// UIL 图片加载默认配置
+	public static final DisplayImageOptions DISPLAY_IMAGE_OPTIONS_ORIGIN = new DisplayImageOptions.Builder()
+			.showImageForEmptyUri(R.drawable.ic_lietu)
+			.showImageOnFail(R.drawable.ic_lietu)
+			.showImageOnLoading(R.drawable.ic_zhanwei).cacheInMemory(true)
+			.bitmapConfig(Config.RGB_565)
+			.imageScaleType(ImageScaleType.IN_SAMPLE_INT).cacheOnDisk(true)
+			.considerExifParams(true).displayer(new FadeInBitmapDisplayer(100))
+			.displayer(new SimpleBitmapDisplayer()).build();
+
 
 	// UIL 图片加载默认配置
 	public static final DisplayImageOptions DISPLAY_IMAGE_OPTIONS_LOCAL = new DisplayImageOptions.Builder()
@@ -167,6 +182,7 @@ public class Constants {
 		String ACTIVITY_JUMP_FROM = "ActivityJumpFrom";
 		String DEST_ACTIVITY_NAME = "DestActivityName";
 		String IS_FINISH_ACTIVITY = "IsFinishActivity";
+		String IS_SETTING_CHANGE_CLICK = "IsSettingChangeClick";
 	}
 
 	public static interface SharedPreferencesKey {
@@ -174,6 +190,7 @@ public class Constants {
 		String HOT_PHOTO_LIST_LAST_REFRESH_TIME = "HotPhotoListLastRefreshTime";
 		String RECENT_PHOTO_LIST_LAST_REFRESH_TIME = "RecentPhotoListLastRefreshTime";
 		String CHANNEL_LIST_LAST_REFRESH_TIME = "ChannelListLastRefreshTime";
+		String COURSE_LIST_LAST_REFRESH_TIME = "CourseListLastRefreshTime";
 		String FOCUS_PHOTO_LIST_LAST_REFRESH_TIME = "FocusPhotoListLastResfreshTime";
 		String PHOTO_DETAIL_LIST_LAST_REFRESH_TIME = "PhotoDetailListLastRefreshTime";
 		String RECENT_PHOTO_DETAIL_LIST_LAST_REFRESH_TIME = "RecentPhotoDetailListLastRefreshTime";

@@ -49,493 +49,495 @@ import java.util.concurrent.Executors;
 
 /**
  * 评论列表界面
- * 
+ *
  * @author Rayal
  */
 public class CommentListActivity extends PSGodBaseActivity implements
-		Handler.Callback {
-	private final static String TAG = CommentListActivity.class.getSimpleName();
+        Handler.Callback {
+    private final static String TAG = CommentListActivity.class.getSimpleName();
 
-	private PullToRefreshExpandableListView mCommentLv;
-	private CommentExpandableListAdapter mAdapter;
-	private PhotoItem mPhotoItem;
-	private View mEmptyView;
-	private View mCommentListFooter;
-	private View faceView; // 表情页
+    private PullToRefreshExpandableListView mCommentLv;
+    private CommentExpandableListAdapter mAdapter;
+    private PhotoItem mPhotoItem;
+    private View mEmptyView;
+    private View mCommentListFooter;
+    private View faceView; // 表情页
 
-	private List<Comment> mHotComments;
-	private List<Comment> mRecentComments;
-	private TextView mSendCommentBtn;
-	private EditText mCommentEditText;
+    private List<Comment> mHotComments;
+    private List<Comment> mRecentComments;
+    private TextView mSendCommentBtn;
+    private EditText mCommentEditText;
 
-	private CustomProgressingDialog mProgressDialog;
+    private CustomProgressingDialog mProgressDialog;
 
-	private RelativeLayout mParent;
+    private RelativeLayout mParent;
 
-	// 控制是否可以加载下一页
-	private boolean canLoadMore = true;
-	private long mLastUpdateTime;
-	private int mPage;
+    // 控制是否可以加载下一页
+    private boolean canLoadMore = true;
+    private long mLastUpdateTime;
+    private int mPage;
 
-	private long replyToCid = 0;
+    private long replyToCid = 0;
 
-	private WeakReferenceHandler mHandler = new WeakReferenceHandler(this);
-	private ExecutorService fixedThreadPool = Executors.newFixedThreadPool(1);
+    public static final String COMMENT_ID = "comment_id";
 
-	CommentListListener mCommentListListener;
+    private WeakReferenceHandler mHandler = new WeakReferenceHandler(this);
+    private ExecutorService fixedThreadPool = Executors.newFixedThreadPool(1);
 
-	// 评论内容
-	String commentContent = "";
-	// @的信息 若有
-	String atComments ;
-	// @的用户名
-	String atNickName = "";
+    CommentListListener mCommentListListener;
 
-	private Listener<CommentListWrapper> refreshListener = new Listener<CommentListWrapper>() {
-		@Override
-		public void onResponse(CommentListWrapper response) {
-			mHotComments.clear();
-			mHotComments.addAll(response.hotCommentList);
-			mRecentComments.clear();
-			mRecentComments.addAll(response.recentCommentList);
-			mAdapter.notifyDataSetChanged();
-			mCommentLv.onRefreshComplete();
+    // 评论内容
+    String commentContent = "";
+    // @的信息 若有
+    String atComments;
+    // @的用户名
+    String atNickName = "";
 
-			if ((mProgressDialog != null) && mProgressDialog.isShowing()) {
-				mProgressDialog.dismiss();
-			}
+    private Listener<CommentListWrapper> refreshListener = new Listener<CommentListWrapper>() {
+        @Override
+        public void onResponse(CommentListWrapper response) {
+            mHotComments.clear();
+            mHotComments.addAll(response.hotCommentList);
+            mRecentComments.clear();
+            mRecentComments.addAll(response.recentCommentList);
+            mAdapter.notifyDataSetChanged();
+            mCommentLv.onRefreshComplete();
 
-			// 展开所有分组
-			int groupCount = mAdapter.getGroupCount();
-			for (int ix = 0; ix < groupCount; ++ix) {
-				mCommentLv.getRefreshableView().expandGroup(ix);
-			}
+            if ((mProgressDialog != null) && mProgressDialog.isShowing()) {
+                mProgressDialog.dismiss();
+            }
 
-			if (response.recentCommentList.size() < 10) {
-				canLoadMore = false;
-			} else {
-				canLoadMore = true;
-			}
+            // 展开所有分组
+            int groupCount = mAdapter.getGroupCount();
+            for (int ix = 0; ix < groupCount; ++ix) {
+                mCommentLv.getRefreshableView().expandGroup(ix);
+            }
 
-			mEmptyView = LayoutInflater.from(CommentListActivity.this).inflate(
-					R.layout.empty_comment_image_list_view, null);
-			mCommentLv.getRefreshableView().setEmptyView(mEmptyView);
+            if (response.recentCommentList.size() < 10) {
+                canLoadMore = false;
+            } else {
+                canLoadMore = true;
+            }
 
-			if (isJump) {
-				mCommentListListener.onChildClick(
-						mCommentLv.getRefreshableView(), null, 0, 0, 0L);
-				isJump = false;
-			}
+            mEmptyView = LayoutInflater.from(CommentListActivity.this).inflate(
+                    R.layout.empty_comment_image_list_view, null);
+            mCommentLv.getRefreshableView().setEmptyView(mEmptyView);
 
-		}
-	};
+            if (isJump) {
+                mCommentListListener.onChildClick(
+                        mCommentLv.getRefreshableView(), null, 0, 0, 0L);
+                isJump = false;
+            }
 
-	boolean isJump = false;
+        }
+    };
 
-	private Listener<CommentListWrapper> loadMoreListener = new Listener<CommentListWrapper>() {
-		@Override
-		public void onResponse(CommentListWrapper response) {
-			if (response.recentCommentList.size() > 0) {
-				mHotComments.clear();
-				mHotComments.addAll(response.hotCommentList);
-				mRecentComments.addAll(response.recentCommentList);
-				mAdapter.notifyDataSetChanged();
-			}
+    boolean isJump = false;
 
-			mCommentListFooter.setVisibility(View.INVISIBLE);
+    private Listener<CommentListWrapper> loadMoreListener = new Listener<CommentListWrapper>() {
+        @Override
+        public void onResponse(CommentListWrapper response) {
+            if (response.recentCommentList.size() > 0) {
+                mHotComments.clear();
+                mHotComments.addAll(response.hotCommentList);
+                mRecentComments.addAll(response.recentCommentList);
+                mAdapter.notifyDataSetChanged();
+            }
 
-			if (response.recentCommentList.size() < 10) {
-				canLoadMore = false;
-			} else {
-				canLoadMore = true;
-			}
+            mCommentListFooter.setVisibility(View.INVISIBLE);
 
-			// 展开所有分组
-			int groupCount = mAdapter.getGroupCount();
-			for (int ix = 0; ix < groupCount; ++ix) {
-				mCommentLv.getRefreshableView().expandGroup(ix);
-			}
-		}
-	};
+            if (response.recentCommentList.size() < 10) {
+                canLoadMore = false;
+            } else {
+                canLoadMore = true;
+            }
 
-	private PSGodErrorListener errorListener = new PSGodErrorListener(
-			CommentListRequest.class.getSimpleName()) {
-		@Override
-		public void handleError(VolleyError error) {
-			mCommentLv.onRefreshComplete();
-		}
-	};
+            // 展开所有分组
+            int groupCount = mAdapter.getGroupCount();
+            for (int ix = 0; ix < groupCount; ++ix) {
+                mCommentLv.getRefreshableView().expandGroup(ix);
+            }
+        }
+    };
 
-	private PSGodErrorListener sendCommentErrorListener = new PSGodErrorListener() {
-		@Override
-		public void handleError(VolleyError error) {
-			Toast.makeText(CommentListActivity.this, "评论失败，请稍后再试",
-					Toast.LENGTH_SHORT).show();
-		}
-	};
+    private PSGodErrorListener errorListener = new PSGodErrorListener(
+            CommentListRequest.class.getSimpleName()) {
+        @Override
+        public void handleError(VolleyError error) {
+            mCommentLv.onRefreshComplete();
+        }
+    };
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		this.setContentView(R.layout.activity_comment_list);
+    private PSGodErrorListener sendCommentErrorListener = new PSGodErrorListener(this) {
+        @Override
+        public void handleError(VolleyError error) {
+            Toast.makeText(CommentListActivity.this, "评论失败，请稍后再试",
+                    Toast.LENGTH_SHORT).show();
+        }
+    };
 
-		Object obj = getIntent().getSerializableExtra(
-				Constants.IntentKey.PHOTO_ITEM);
-		if (!(obj instanceof PhotoItem)) {
-			// TODO error
-			return;
-		}
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        this.setContentView(R.layout.activity_comment_list);
 
-		faceView = this.findViewById(R.id.activity_comment_face_choose_panel);
-		mParent = (RelativeLayout) findViewById(R.id.activity_comment_list_parent);
-		mPhotoItem = (PhotoItem) obj;
-		mCommentLv = (PullToRefreshExpandableListView) this
-				.findViewById(R.id.activity_comment_list_lv);
-		mCommentLv.setMode(Mode.PULL_FROM_START);
-		mCommentLv.getRefreshableView().setDivider(null); // 去除listview的边框
+        Object obj = getIntent().getSerializableExtra(
+                Constants.IntentKey.PHOTO_ITEM);
+        if (obj == null || !(obj instanceof PhotoItem)) {
+            // TODO error
+            finish();
+        }
 
-		mCommentListFooter = LayoutInflater.from(CommentListActivity.this)
-				.inflate(R.layout.footer_load_more, null);
+        faceView = this.findViewById(R.id.activity_comment_face_choose_panel);
+        mParent = (RelativeLayout) findViewById(R.id.activity_comment_list_parent);
+        mPhotoItem = (PhotoItem) obj;
+        mCommentLv = (PullToRefreshExpandableListView) this
+                .findViewById(R.id.activity_comment_list_lv);
+        mCommentLv.setMode(Mode.PULL_FROM_START);
+        mCommentLv.getRefreshableView().setDivider(null); // 去除listview的边框
 
-		mCommentLv.getRefreshableView().addFooterView(mCommentListFooter);
-		mCommentListFooter.setVisibility(View.GONE);
+        mCommentListFooter = LayoutInflater.from(CommentListActivity.this)
+                .inflate(R.layout.footer_load_more, null);
 
-		mHotComments = mPhotoItem.getHotCommentList();
-		if (mHotComments == null) {
-			mHotComments = new ArrayList<Comment>();
-		}
-		mRecentComments = mPhotoItem.getCommentList();
-		if (mRecentComments == null) {
-			mRecentComments = new ArrayList<Comment>();
-		}
-		mAdapter = new CommentExpandableListAdapter(this, mHotComments,
-				mRecentComments);
-		mCommentLv.getRefreshableView().setAdapter(mAdapter);
+        mCommentLv.getRefreshableView().addFooterView(mCommentListFooter);
+        mCommentListFooter.setVisibility(View.GONE);
 
-		mCommentListListener = new CommentListListener(this, mPhotoItem);
-		mCommentLv.setOnLastItemVisibleListener(mCommentListListener);
-		mCommentLv.setOnRefreshListener(mCommentListListener);
-		mCommentLv.setScrollingWhileRefreshingEnabled(true);
-		// 点击评论添加@内容
-		mCommentLv.getRefreshableView().setOnChildClickListener(
-				mCommentListListener);
+        mHotComments = mPhotoItem.getHotCommentList();
+        if (mHotComments == null) {
+            mHotComments = new ArrayList<Comment>();
+        }
+        mRecentComments = mPhotoItem.getCommentList();
+        if (mRecentComments == null) {
+            mRecentComments = new ArrayList<Comment>();
+        }
+        mAdapter = new CommentExpandableListAdapter(this, mHotComments,
+                mRecentComments);
+        mCommentLv.getRefreshableView().setAdapter(mAdapter);
 
-		mSendCommentBtn = (TextView) this
-				.findViewById(R.id.activity_comment_list_post_btn);
-		mCommentEditText = (EditText) this
-				.findViewById(R.id.activity_comment_list_input_panel);
+        mCommentListListener = new CommentListListener(this, mPhotoItem);
+        mCommentLv.setOnLastItemVisibleListener(mCommentListListener);
+        mCommentLv.setOnRefreshListener(mCommentListListener);
+        mCommentLv.setScrollingWhileRefreshingEnabled(true);
+        // 点击评论添加@内容
+        mCommentLv.getRefreshableView().setOnChildClickListener(
+                mCommentListListener);
 
-		// 显示等待对话框
-		if (mProgressDialog == null) {
-			mProgressDialog = new CustomProgressingDialog(
-					CommentListActivity.this);
-		}
-		if (!mProgressDialog.isShowing()) {
-			mProgressDialog.show();
-		}
+        mSendCommentBtn = (TextView) this
+                .findViewById(R.id.activity_comment_list_post_btn);
+        mCommentEditText = (EditText) this
+                .findViewById(R.id.activity_comment_list_input_panel);
 
-		Intent intent = getIntent();
-		long commentId = intent.getLongExtra("comment_id", -1);
-		if (commentId != -1) {
-			refresh(commentId);
-		} else {
-			refresh();
-		}
+        // 显示等待对话框
+        if (mProgressDialog == null) {
+            mProgressDialog = new CustomProgressingDialog(
+                    CommentListActivity.this);
+        }
+        if (!mProgressDialog.isShowing()) {
+            mProgressDialog.show();
+        }
 
-		// 初始化事件监听
-		initEvents();
-	}
+        Intent intent = getIntent();
+        long commentId = intent.getLongExtra(COMMENT_ID, -1);
+        if (commentId != -1) {
+            refresh(commentId);
+        } else {
+            refresh();
+        }
 
-	// 回退键关闭表情框
-	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if (keyCode == KeyEvent.KEYCODE_BACK
-				&& ((FaceRelativeLayout) findViewById(R.id.FaceRelativeLayout))
-						.hideFaceView()) {
-			return true;
-		}
-		if ((keyCode == KeyEvent.KEYCODE_BACK) && (replyToCid != 0)) {
-			mCommentEditText.setText("");
-			mCommentEditText.setHint("添加评论");
-			replyToCid = 0;
-			mAdapter.setSelectItem(-1);
-			mAdapter.notifyDataSetChanged();
-			return true;
-		}
-		return super.onKeyDown(keyCode, event);
-	}
+        // 初始化事件监听
+        initEvents();
+    }
 
-	private void hideInputPanel() {
-		// 隐藏软键盘
-		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-		imm.hideSoftInputFromWindow(mSendCommentBtn.getWindowToken(), 0);
-	}
+    // 回退键关闭表情框
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK
+                && ((FaceRelativeLayout) findViewById(R.id.FaceRelativeLayout))
+                .hideFaceView()) {
+            return true;
+        }
+        if ((keyCode == KeyEvent.KEYCODE_BACK) && (replyToCid != 0)) {
+            mCommentEditText.setText("");
+            mCommentEditText.setHint("添加评论");
+            replyToCid = 0;
+            mAdapter.setSelectItem(-1);
+            mAdapter.notifyDataSetChanged();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 
-	private void callInputPanel() {
-		// 唤起输入键盘 并输入框取得焦点
-		mCommentEditText.setFocusableInTouchMode(true);
-		mCommentEditText.requestFocus();
+    private void hideInputPanel() {
+        // 隐藏软键盘
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(mSendCommentBtn.getWindowToken(), 0);
+    }
 
-		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-		imm.showSoftInput(mCommentEditText, 0);
-	}
+    private void callInputPanel() {
+        // 唤起输入键盘 并输入框取得焦点
+        mCommentEditText.setFocusableInTouchMode(true);
+        mCommentEditText.requestFocus();
 
-	public void initEvents() {
-		// 发送评论
-		// 发送逻辑 首先本地数据填充展示 后台发送
-		mSendCommentBtn.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				commentContent = mCommentEditText.getText().toString();
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(mCommentEditText, 0);
+    }
 
-				if (TextUtils.isEmpty(commentContent)) {
-					Toast.makeText(CommentListActivity.this, "请输入评论内容",
-							Toast.LENGTH_SHORT).show();
-					mCommentEditText.requestFocus();
-				} else {
-					// 构造新的评论数据 本地展示
-					Comment comment = new Comment();
+    public void initEvents() {
+        // 发送评论
+        // 发送逻辑 首先本地数据填充展示 后台发送
+        mSendCommentBtn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                commentContent = mCommentEditText.getText().toString();
 
-					// 本地用户数据
-					LoginUser user = LoginUser.getInstance();
-					// 用户无法回复自己 comment id暂为0
-					comment.setCid(0);
-					comment.setUid(user.getUid());
-					comment.setContent(commentContent);
-					if (!TextUtils.isEmpty(atNickName)) {
-						comment.mReplyComments.add(new ReplyComment(0, 0, atComments, atNickName));
-					}
-					comment.setPid(mPhotoItem.getPid());
-					comment.setAvatarURL(user.getAvatarImageUrl());
-					comment.setCreatedTime(System.currentTimeMillis());
+                if (TextUtils.isEmpty(commentContent)) {
+                    Toast.makeText(CommentListActivity.this, "请输入评论内容",
+                            Toast.LENGTH_SHORT).show();
+                    mCommentEditText.requestFocus();
+                } else {
+                    // 构造新的评论数据 本地展示
+                    Comment comment = new Comment();
 
-					// 该条评论点赞数
-					comment.setLikeCount(0);
-					comment.setGender(user.getGender());
-					comment.setNickName(user.getNickname());
+                    // 本地用户数据
+                    LoginUser user = LoginUser.getInstance();
+                    // 用户无法回复自己 comment id暂为0
+                    comment.setCid(0);
+                    comment.setUid(user.getUid());
+                    comment.setContent(commentContent);
+                    if (!TextUtils.isEmpty(atNickName)) {
+                        comment.mReplyComments.add(new ReplyComment(0, 0, atComments, atNickName));
+                    }
+                    comment.setPid(mPhotoItem.getPid());
+                    comment.setAvatarURL(user.getAvatarImageUrl());
+                    comment.setCreatedTime(System.currentTimeMillis());
 
-					mRecentComments.add(0, comment);
-					mAdapter.notifyDataSetChanged();
-					mCommentLv.getRefreshableView().setSelection(
-							mHotComments.size() + 1);
+                    // 该条评论点赞数
+                    comment.setLikeCount(0);
+                    comment.setGender(user.getGender());
+                    comment.setNickName(user.getNickname());
 
-					mPhotoItem.setCommentCount(mPhotoItem.getCommentCount() + 1);
-					// TODO即时更新评论的数量
+                    mRecentComments.add(0, comment);
+                    mAdapter.notifyDataSetChanged();
+                    mCommentLv.getRefreshableView().setSelection(
+                            mHotComments.size() + 1);
 
-					// 展开所有分组
-					int groupCount = mAdapter.getGroupCount();
-					for (int ix = 0; ix < groupCount; ++ix) {
-						mCommentLv.getRefreshableView().expandGroup(ix);
-					}
+                    mPhotoItem.setCommentCount(mPhotoItem.getCommentCount() + 1);
+                    // TODO即时更新评论的数量
 
-					hideInputPanel();
+                    // 展开所有分组
+                    int groupCount = mAdapter.getGroupCount();
+                    for (int ix = 0; ix < groupCount; ++ix) {
+                        mCommentLv.getRefreshableView().expandGroup(ix);
+                    }
 
-					// 隐藏表情选择窗口
-					((FaceRelativeLayout) findViewById(R.id.FaceRelativeLayout))
-							.hideFaceView();
+                    hideInputPanel();
 
-					// 后台发送评论
-					sendCommentBackEnd();
-					mCommentLv.getRefreshableView().setSelection(0);
-				}
-			}
-		});
+                    // 隐藏表情选择窗口
+                    ((FaceRelativeLayout) findViewById(R.id.FaceRelativeLayout))
+                            .hideFaceView();
 
-		mParent.setOnClickListener(new OnClickListener() {
+                    // 后台发送评论
+                    sendCommentBackEnd();
+                    mCommentLv.getRefreshableView().setSelection(0);
+                }
+            }
+        });
 
-			@Override
-			public void onClick(View arg0) {
-				hideInputPanel();
-			}
-		});
-	}
+        mParent.setOnClickListener(new OnClickListener() {
 
-	// 后台发送评论
-	public void sendCommentBackEnd() {
-		PostCommentRequest.Builder builder = new PostCommentRequest.Builder()
-				.setContent(commentContent).setCid(replyToCid)
-				.setPid(mPhotoItem.getPid()).setType(mPhotoItem.getType())
-				.setListener(sendCommentListener)
-				.setErrorListener(sendCommentErrorListener);
+            @Override
+            public void onClick(View arg0) {
+                hideInputPanel();
+            }
+        });
+    }
 
-		PostCommentRequest request = builder.build();
-		request.setTag(TAG);
-		RequestQueue requestQueue = PSGodRequestQueue.getInstance(
-				CommentListActivity.this).getRequestQueue();
-		requestQueue.add(request);
+    // 后台发送评论
+    public void sendCommentBackEnd() {
+        PostCommentRequest.Builder builder = new PostCommentRequest.Builder()
+                .setContent(commentContent).setCid(replyToCid)
+                .setPid(mPhotoItem.getPid()).setType(mPhotoItem.getType())
+                .setListener(sendCommentListener)
+                .setErrorListener(sendCommentErrorListener);
 
-		mAdapter.setSelectItem(-1);
-	}
+        PostCommentRequest request = builder.build();
+        request.setTag(TAG);
+        RequestQueue requestQueue = PSGodRequestQueue.getInstance(
+                CommentListActivity.this).getRequestQueue();
+        requestQueue.add(request);
 
-	// 发送成功后 将返回的comment_id 填充进本地数据首条中
-	private Listener<Long> sendCommentListener = new Listener<Long>() {
-		@Override
-		public void onResponse(Long response) {
-			if (response != null) {
+        mAdapter.setSelectItem(-1);
+    }
+
+    // 发送成功后 将返回的comment_id 填充进本地数据首条中
+    private Listener<Long> sendCommentListener = new Listener<Long>() {
+        @Override
+        public void onResponse(Long response) {
+            if (response != null) {
 //				mRecentComments.get(0).setCid(response);
-				refresh();
-				atNickName = "";
-				// 清空输入框
-				mCommentEditText.setText("");
-				mCommentEditText.setHint("添加评论");
-				replyToCid = 0;
-				mAdapter.setSelectItem(-1);
-				mAdapter.notifyDataSetChanged();
-			}
-		}
+                refresh();
+                atNickName = "";
+                // 清空输入框
+                mCommentEditText.setText("");
+                mCommentEditText.setHint("添加评论");
+                replyToCid = 0;
+                mAdapter.setSelectItem(-1);
+                mAdapter.notifyDataSetChanged();
+            }
+        }
 
-	};
+    };
 
-	// @Override
-	// public void onStop() {
-	// super.onStop();
-	// RequestQueue requestQueue = PSGodRequestQueue.getInstance(this)
-	// .getRequestQueue();
-	// requestQueue.cancelAll(TAG);
-	// }
+    // @Override
+    // public void onStop() {
+    // super.onStop();
+    // RequestQueue requestQueue = PSGodRequestQueue.getInstance(this)
+    // .getRequestQueue();
+    // requestQueue.cancelAll(TAG);
+    // }
 
-	private void refresh(long commentId) {
-		canLoadMore = false;
+    private void refresh(long commentId) {
+        canLoadMore = false;
 
-		mLastUpdateTime = System.currentTimeMillis();
-		mPage = 1;
-		isJump = true;
-		CommentListRequest.Builder builder = new CommentListRequest.Builder()
-				.setPid(mPhotoItem.getPid()).setPage(mPage)
-				.setLastUpdated(mLastUpdateTime).setType(mPhotoItem.getType())
-				.setCommentId(commentId).setListener(refreshListener)
-				.setErrorListener(errorListener);
-		CommentListRequest request = builder.build();
-		request.setTag(TAG);
-		RequestQueue requestQueue = PSGodRequestQueue.getInstance(this)
-				.getRequestQueue();
-		requestQueue.add(request);
-	}
+        mLastUpdateTime = System.currentTimeMillis();
+        mPage = 1;
+        isJump = true;
+        CommentListRequest.Builder builder = new CommentListRequest.Builder()
+                .setPid(mPhotoItem.getPid()).setPage(mPage)
+                .setLastUpdated(mLastUpdateTime).setType(mPhotoItem.getType())
+                .setCommentId(commentId).setListener(refreshListener)
+                .setErrorListener(errorListener);
+        CommentListRequest request = builder.build();
+        request.setTag(TAG);
+        RequestQueue requestQueue = PSGodRequestQueue.getInstance(this)
+                .getRequestQueue();
+        requestQueue.add(request);
+    }
 
-	private void refresh() {
-		canLoadMore = false;
+    private void refresh() {
+        canLoadMore = false;
 
-		mLastUpdateTime = System.currentTimeMillis();
-		mPage = 1;
-		CommentListRequest.Builder builder = new CommentListRequest.Builder()
-				.setPid(mPhotoItem.getPid()).setPage(mPage)
-				.setLastUpdated(mLastUpdateTime).setType(mPhotoItem.getType())
-				.setListener(refreshListener).setErrorListener(errorListener);
-		CommentListRequest request = builder.build();
-		request.setTag(TAG);
-		RequestQueue requestQueue = PSGodRequestQueue.getInstance(this)
-				.getRequestQueue();
-		requestQueue.add(request);
-	}
+        mLastUpdateTime = System.currentTimeMillis();
+        mPage = 1;
+        CommentListRequest.Builder builder = new CommentListRequest.Builder()
+                .setPid(mPhotoItem.getPid()).setPage(mPage)
+                .setLastUpdated(mLastUpdateTime).setType(mPhotoItem.getType())
+                .setListener(refreshListener).setErrorListener(errorListener);
+        CommentListRequest request = builder.build();
+        request.setTag(TAG);
+        RequestQueue requestQueue = PSGodRequestQueue.getInstance(this)
+                .getRequestQueue();
+        requestQueue.add(request);
+    }
 
-	private class CommentListListener implements OnRefreshListener,
-			OnLastItemVisibleListener, OnChildClickListener {
-		private Context mContext;
-		private PhotoItem mPhotoItem;
+    private class CommentListListener implements OnRefreshListener,
+            OnLastItemVisibleListener, OnChildClickListener {
+        private Context mContext;
+        private PhotoItem mPhotoItem;
 
-		public CommentListListener(Context context, PhotoItem photoItem) {
-			mContext = context;
-			mPhotoItem = photoItem;
-		}
+        public CommentListListener(Context context, PhotoItem photoItem) {
+            mContext = context;
+            mPhotoItem = photoItem;
+        }
 
-		@Override
-		public void onLastItemVisible() {
-			if (canLoadMore) {
-				mCommentListFooter.setVisibility(View.VISIBLE);
-				++mPage;
-				CommentListRequest.Builder builder = new CommentListRequest.Builder()
-						.setPid(mPhotoItem.getPid()).setPage(mPage)
-						.setLastUpdated(mLastUpdateTime)
-						.setType(mPhotoItem.getType())
-						.setListener(loadMoreListener)
-						.setErrorListener(errorListener);
-				CommentListRequest request = builder.build();
-				request.setTag(TAG);
-				RequestQueue requestQueue = PSGodRequestQueue.getInstance(
-						mContext).getRequestQueue();
-				requestQueue.add(request);
-			}
-		}
+        @Override
+        public void onLastItemVisible() {
+            if (canLoadMore) {
+                mCommentListFooter.setVisibility(View.VISIBLE);
+                ++mPage;
+                CommentListRequest.Builder builder = new CommentListRequest.Builder()
+                        .setPid(mPhotoItem.getPid()).setPage(mPage)
+                        .setLastUpdated(mLastUpdateTime)
+                        .setType(mPhotoItem.getType())
+                        .setListener(loadMoreListener)
+                        .setErrorListener(errorListener);
+                CommentListRequest request = builder.build();
+                request.setTag(TAG);
+                RequestQueue requestQueue = PSGodRequestQueue.getInstance(
+                        mContext).getRequestQueue();
+                requestQueue.add(request);
+            }
+        }
 
-		@Override
-		public void onRefresh(PullToRefreshBase refreshView) {
-			refresh();
-		}
+        @Override
+        public void onRefresh(PullToRefreshBase refreshView) {
+            refresh();
+        }
 
-		// 点击评论项 若非本人回复，则自动添加@选项
-		@Override
-		public boolean onChildClick(ExpandableListView lv, View view,
-				final int groupPosition, final int childPosition, long id) {
-			Comment comment = (Comment) mAdapter.getChild(groupPosition,
-					childPosition);
+        // 点击评论项 若非本人回复，则自动添加@选项
+        @Override
+        public boolean onChildClick(ExpandableListView lv, View view,
+                                    final int groupPosition, final int childPosition, long id) {
+            Comment comment = (Comment) mAdapter.getChild(groupPosition,
+                    childPosition);
 
-			String authorName = comment.getNickname();
-			// 评论人id
-			Long authorId = comment.getUid();
-			// 评论id
-			Long cid = comment.getCid();
+            String authorName = comment.getNickname();
+            // 评论人id
+            Long authorId = comment.getUid();
+            // 评论id
+            Long cid = comment.getCid();
 
-			LoginUser user = LoginUser.getInstance();
-			// 和自己的id做比较
-			if (authorId != user.getUid()) {
-				mCommentEditText.setHint("回复@" + authorName + ":");
-				replyToCid = cid;
+            LoginUser user = LoginUser.getInstance();
+            // 和自己的id做比较
+            if (authorId != user.getUid()) {
+                mCommentEditText.setHint("回复@" + authorName + ":");
+                replyToCid = cid;
 
-				atComments = comment.getContent();
-				atNickName = comment.getNickname();
-			} else {
-				atNickName = "";
-				mCommentEditText.setHint("添加评论");
-				replyToCid = 0;
-			}
+                atComments = comment.getContent();
+                atNickName = comment.getNickname();
+            } else {
+                atNickName = "";
+                mCommentEditText.setHint("添加评论");
+                replyToCid = 0;
+            }
 
-			// 隐藏表情页
-			faceView.setVisibility(View.GONE);
+            // 隐藏表情页
+            faceView.setVisibility(View.GONE);
 
-			fixedThreadPool.execute(new Runnable() {
-				@Override
-				public void run() {
-					try {
-						Thread.sleep(200);
-						Message msg = new Message();
-						Bundle bundle = new Bundle();
-						bundle.putInt("group", groupPosition);
-						bundle.putInt("child", childPosition);
-						msg.setData(bundle);
-						mHandler.sendMessage(msg);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-			});
+            fixedThreadPool.execute(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(200);
+                        Message msg = new Message();
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("group", groupPosition);
+                        bundle.putInt("child", childPosition);
+                        msg.setData(bundle);
+                        mHandler.sendMessage(msg);
+                    } catch (InterruptedException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
+            });
 
-			// 唤起软键盘 并获得焦点
-			callInputPanel();
+            // 唤起软键盘 并获得焦点
+            callInputPanel();
 
-			return false;
-		}
-	}
+            return false;
+        }
+    }
 
-	@Override
-	public boolean handleMessage(Message msg) {
-		int group = msg.getData().getInt("group");
-		int child = msg.getData().getInt("child");
-		mCommentLv.getRefreshableView().smoothScrollToPosition(child + 3);
-		mAdapter.setSelectItem(child);
-		return false;
-	}
+    @Override
+    public boolean handleMessage(Message msg) {
+        int group = msg.getData().getInt("group");
+        int child = msg.getData().getInt("child");
+        mCommentLv.getRefreshableView().smoothScrollToPosition(child + 3);
+        mAdapter.setSelectItem(child);
+        return false;
+    }
 
-	@Override
-	protected void onPause() {
-		// TODO Auto-generated method stub
-		super.onPause();
-		try {
-			hideInputPanel();
-		}catch (NullPointerException ne){
+    @Override
+    protected void onPause() {
+        // TODO Auto-generated method stub
+        super.onPause();
+        try {
+            hideInputPanel();
+        } catch (NullPointerException ne) {
 
-		}catch (Exception e){
+        } catch (Exception e) {
 
-		}
-	}
+        }
+    }
 }

@@ -154,10 +154,10 @@ public class CarouselPhotoDetailDialog extends Dialog {
             //统一相同用户的关注关系
             FollowImage.OnFollowChangeListener onFollowChangeListener =  new FollowImage.OnFollowChangeListener() {
                 @Override
-                public void onFocusChange(long uid, boolean focusStatus) {
+                public void onFocusChange(long uid, boolean focusStatus,long pid) {
                     int length = items.size();
                     for (int i = 0; i < length; i++) {
-                        if (items.get(i).getUid() == uid) {
+                        if (items.get(i).getUid() == uid && items.get(i).getPid() != pid) {
                             items.get(i).setIsFollowed(focusStatus);
                         }
                     }

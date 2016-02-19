@@ -12,6 +12,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.psgod.PsGodImageLoader;
 import com.psgod.Constants;
 import com.psgod.R;
+import com.psgod.Utils;
 import com.psgod.model.PhotoItem;
 import com.psgod.ui.activity.SinglePhotoDetail;
 import com.psgod.ui.widget.dialog.CarouselPhotoDetailDialog;
@@ -55,8 +56,9 @@ public class ChannelHeadAdapter extends RecyclerView.Adapter<ChannelHeadAdapter.
             if (photoItem.getType() == 1 && photoItem.getReplyCount() == 0) {
                 SinglePhotoDetail.startActivity(context, photoItem);
             } else {
-                new CarouselPhotoDetailDialog(context, photoItem.getAskId(), photoItem.getPid()
-                ,photoItem.getCategoryId()).show();
+                Utils.skipByObject(context,photoItem);
+//                new CarouselPhotoDetailDialog(context, photoItem.getAskId(), photoItem.getPid()
+//                ,photoItem.getCategoryId()).show();
             }
         }
     };

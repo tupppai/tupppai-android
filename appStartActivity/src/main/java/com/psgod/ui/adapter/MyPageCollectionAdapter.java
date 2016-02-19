@@ -13,6 +13,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.psgod.PsGodImageLoader;
 import com.psgod.Constants;
 import com.psgod.R;
+import com.psgod.Utils;
 import com.psgod.model.PhotoItem;
 import com.psgod.model.User;
 import com.psgod.ui.activity.SinglePhotoDetail;
@@ -108,12 +109,14 @@ public class MyPageCollectionAdapter extends BaseAdapter {
 			@Override
 			public void onClick(View v) {
 				if (photoItem.getType() == PhotoItem.TYPE_REPLY) {
-					new CarouselPhotoDetailDialog(mContext,
-							photoItem.getAskId(), photoItem.getReplyId()).show();
+					Utils.skipByObject(mContext,photoItem);
+//					new CarouselPhotoDetailDialog(mContext,
+//							photoItem.getAskId(), photoItem.getReplyId()).show();
 				} else {
 					if (photoItem.getReplyCount() > 0) {
-						new CarouselPhotoDetailDialog(mContext,
-								photoItem.getAskId(),photoItem.getPid()).show();
+						Utils.skipByObject(mContext,photoItem);
+//						new CarouselPhotoDetailDialog(mContext,
+//								photoItem.getAskId(),photoItem.getPid()).show();
 					} else {
 						SinglePhotoDetail.startActivity(mContext, photoItem);
 					}

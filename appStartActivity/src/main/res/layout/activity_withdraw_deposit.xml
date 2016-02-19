@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:psgod="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <com.psgod.ui.widget.ActionBar
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/actionbar_height"
+        psgod:rightBtnVisibility="gone"
+        psgod:title="提现" />
+
+    <ScrollView
+        android:id="@+id/withdraw_deposit_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/actionbar_height">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/withdraw_deposit_txt1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:padding="10dp"
+                android:text="提现方式"
+                android:textColor="@color/black_alpha70"
+                android:textSize="14dp" />
+
+            <RelativeLayout
+                android:id="@+id/withdraw_deposit_channelarea"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/withdraw_deposit_txt1"
+                android:background="@color/white"
+                android:paddingBottom="17dp"
+                android:paddingLeft="21dp"
+                android:paddingRight="20dp"
+                android:paddingTop="17dp">
+
+                <ImageView
+                    android:id="@+id/withdraw_deposit_channel_img1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/withdraw_wechat" />
+
+                <TextView
+                    android:id="@+id/withdraw_deposit_channel_txt1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/withdraw_deposit_channel_img1"
+                    android:text="关注图派公众号领取"
+                    android:textColor="@color/black"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/withdraw_deposit_channel_txt1"
+                    android:layout_below="@+id/withdraw_deposit_channel_txt1"
+                    android:layout_marginTop="10dp"
+                    android:text="在公众号搜索图派，关注服务号即可提现"
+                    android:textColor="@color/black_alpha40"
+                    android:textSize="12dp" />
+
+                <RadioButton
+                    android:id="@+id/radioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:button="@drawable/selector_withdraw_channel"
+                    android:checked="true" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/withdraw_deposit_txt2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/withdraw_deposit_channelarea"
+                android:layout_marginLeft="12dp"
+                android:padding="10dp"
+                android:text="转出金额"
+                android:textColor="@color/black_alpha70"
+                android:textSize="14dp" />
+
+            <RelativeLayout
+                android:id="@+id/withdraw_deposit_moneyarea"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/withdraw_deposit_txt2"
+                android:layout_marginLeft="21dp"
+                android:layout_marginRight="21dp"
+                android:background="@color/white"
+                android:padding="15dp">
+
+                <TextView
+                    android:id="@+id/withdraw_deposit_money_txt1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="满¥10.00即可提现"
+                    android:textColor="@color/black_alpha40"
+                    android:textSize="14dp" />
+
+                <ImageView
+                    android:id="@+id/withdraw_deposit_money_img1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/withdraw_deposit_money_txt1"
+                    android:layout_marginTop="30dp"
+                    android:src="@mipmap/withdraw_yang" />
+
+                <EditText
+                    android:id="@+id/withdraw_deposit_money_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/withdraw_deposit_money_img1"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="-10dp"
+                    android:layout_toRightOf="@+id/withdraw_deposit_money_img1"
+                    android:background="@color/transparent"
+                    android:hint="输入金额"
+                    android:inputType="numberDecimal"
+                    android:textColor="@color/black"
+                    android:textSize="45dp" />
+
+                <View
+                    android:id="@+id/withdraw_deposit_money_line1"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_below="@+id/withdraw_deposit_money_edit"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/black_alpha20" />
+
+                <TextView
+                    android:id="@+id/withdraw_deposit_money_txt2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/withdraw_deposit_money_line1"
+                    android:layout_marginTop="15dp"
+                    android:text="可提现金额："
+                    android:textColor="@color/black_alpha40"
+                    android:textSize="14dp" />
+
+                <TextView
+                    android:id="@+id/withdraw_deposit_money_balance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/withdraw_deposit_money_txt2"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/withdraw_deposit_money_txt2"
+                    android:text="¥ 元"
+                    android:textColor="#fe6a51"
+                    android:textSize="14dp" />
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/withdraw_deposit_sure"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="21dp"
+                android:layout_marginRight="21dp"
+                android:text="确认提现"
+                android:textSize="15dp"
+                android:textColor="#70000000"
+                android:background="#70FFEF04"
+                android:layout_below="@+id/withdraw_deposit_moneyarea"
+                android:layout_marginTop="35dp"
+                />
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

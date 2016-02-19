@@ -63,7 +63,7 @@ public class QQLoginRequest extends BaseRequest<QQLoginWrapper> {
 					errorListener) {
 				@Override
 				public Map<String, String> getParams() {
-					return createParameters();
+					return getPackParams(createParameters());
 				}
 			};
 			return request;

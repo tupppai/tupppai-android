@@ -38,7 +38,6 @@ import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.ui.adapter.NotificationListAdapter;
 import com.psgod.ui.view.PullToRefreshSwipeMenuListView;
 import com.psgod.ui.widget.ActionBar;
-import com.psgod.ui.widget.dialog.CarouselPhotoDetailDialog;
 import com.psgod.ui.widget.dialog.CustomDialog;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
 
@@ -282,7 +281,7 @@ public class NotificationListActivity extends PSGodBaseActivity {
 		}
 	};
 
-	private PSGodErrorListener errorListener = new PSGodErrorListener() {
+	private PSGodErrorListener errorListener = new PSGodErrorListener(this) {
 		@Override
 		public void handleError(VolleyError error) {
 			// TODO
@@ -336,9 +335,11 @@ public class NotificationListActivity extends PSGodBaseActivity {
 //								NotificationListActivity.this,
 //								mNotificationList.get(position)
 //										.getNotificationPhotoItem());
-						new CarouselPhotoDetailDialog(NotificationListActivity.this,mNotificationList.get(position)
-								.getNotificationPhotoItem().getAskId(),mNotificationList.get(position)
-								.getNotificationPhotoItem().getPid()).show();
+						Utils.skipByObject(NotificationListActivity.this,mNotificationList.get(position)
+								.getNotificationPhotoItem());
+//						new CarouselPhotoDetailDialog(NotificationListActivity.this,mNotificationList.get(position)
+//								.getNotificationPhotoItem().getAskId(),mNotificationList.get(position)
+//								.getNotificationPhotoItem().getPid()).show();
 					}
 				}
 				if (mType == TYPE_SYSTEM_NOTIFICATION) {

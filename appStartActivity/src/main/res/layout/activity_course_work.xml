@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_course_work_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/activity_course_work_titlearea"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+
+        <com.psgod.ui.widget.FinishView
+            android:id="@+id/view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:src="@drawable/ic_back_gray" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="上传作业"
+            android:textColor="@color/black"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/activity_course_work_sure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:text="发布"
+            android:textColor="#99000000"
+            android:textSize="15dp" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@+id/activity_course_work_titlearea"
+        android:background="@color/color_e6e6e6" />
+
+    <EditText
+        android:id="@+id/activity_course_work_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/activity_course_work_titlearea"
+        android:background="@color/transparent"
+        android:hint="上传作业"
+        android:maxLines="5"
+        android:padding="15dp"
+        android:textSize="15dp" />
+
+    <LinearLayout
+        android:id="@+id/activity_course_work_scollarea"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/activity_course_work_albumarea"
+        android:background="@color/black"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/activity_course_work_scollhandle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:padding="13dp"
+            android:src="@drawable/shape_scroll_handle" />
+
+        <com.psgod.ui.widget.StopGridView
+            android:id="@+id/activity_course_work_grid"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:numColumns="3"
+            android:verticalSpacing="3dp" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/activity_course_work_albumarea"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/activity_course_work_album"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:padding="10dp"
+            android:text="相册"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/activity_course_work_album_srue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:text="确定"
+            android:padding="10dp"
+            android:textSize="15dp"
+            android:visibility="gone" />
+    </RelativeLayout>
+</RelativeLayout>

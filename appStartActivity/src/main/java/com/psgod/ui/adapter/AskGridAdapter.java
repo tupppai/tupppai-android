@@ -13,6 +13,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.psgod.PsGodImageLoader;
 import com.psgod.Constants;
 import com.psgod.R;
+import com.psgod.Utils;
 import com.psgod.model.PhotoItem;
 import com.psgod.ui.activity.SinglePhotoDetail;
 import com.psgod.ui.widget.dialog.CarouselPhotoDetailDialog;
@@ -98,10 +99,13 @@ public class AskGridAdapter extends BaseAdapter {
 					if (photoItem.getReplyCount() == 0) {
 						SinglePhotoDetail.startActivity(mContext, photoItem);
 					} else {
-						new CarouselPhotoDetailDialog(mContext,photoItem.getAskId(), photoItem.getPid()).show();
+						Utils.skipByObject(mContext,photoItem);
+//						new CarouselPhotoDetailDialog(mContext,photoItem.getAskId(), photoItem.getPid()).show();
 					}
 				} else if (photoItem.getType() == PhotoItem.TYPE_REPLY) {
-					new CarouselPhotoDetailDialog(mContext,photoItem.getAskId(), photoItem.getPid()).show();
+					Utils.skipByObject(mContext,photoItem);
+
+//					new CarouselPhotoDetailDialog(mContext,photoItem.getAskId(), photoItem.getPid()).show();
 				}
 			}
 		});

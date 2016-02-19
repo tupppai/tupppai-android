@@ -37,6 +37,7 @@ import com.psgod.network.request.ChannelRequest;
 import com.psgod.network.request.PSGodErrorListener;
 import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.ui.adapter.ChannelHeadAdapter;
+import com.psgod.ui.adapter.ChannelListAdapter;
 import com.psgod.ui.adapter.PhotoListAdapter;
 import com.psgod.ui.view.PhotoItemView;
 import com.psgod.ui.widget.FloatScrollHelper;
@@ -67,6 +68,7 @@ public class ChannelActivity extends PSGodBaseActivity {
 
     private TextView mTitleName;
     private ImageView mTitleFinish;
+    private ImageView mTitleDetail;
     private PullToRefreshListView mList;
     private View mFollowListFooter;
 
@@ -77,7 +79,7 @@ public class ChannelActivity extends PSGodBaseActivity {
     private ChannelHeadAdapter headAdapter;
 
     private List<PhotoItem> photoItems;
-    private PhotoListAdapter mAdapter;
+    private ChannelListAdapter mAdapter;
 
     private String id;
     private long mLastUpdatedTime;
@@ -88,12 +90,12 @@ public class ChannelActivity extends PSGodBaseActivity {
 
     private CustomProgressingDialog progressingDialog;
 
-    //    private LinearLayout mEmptyView;
-//    private TextView mEmptyTxt;
     private RelativeLayout mParent;
     private LinearLayout mUpload;
     private TextView mUploadLeft;
     private TextView mUploadRight;
+
+    private ActivitiesAct mAct;
 
     private void initView() {
         progressingDialog = new CustomProgressingDialog(this);
@@ -101,9 +103,10 @@ public class ChannelActivity extends PSGodBaseActivity {
         mParent = (RelativeLayout) findViewById(R.id.activity_channal_parent);
         mTitleName = (TextView) findViewById(R.id.activity_channal_title_name);
         mTitleFinish = (ImageView) findViewById(R.id.activity_channal_title_finish);
+        mTitleDetail = (ImageView) findViewById(R.id.activity_channal_title_detail);
         mList = (PullToRefreshListView) findViewById(R.id.activity_channal_list);
         photoItems = new ArrayList<PhotoItem>();
-        mAdapter = new PhotoListAdapter(this, PhotoItemView.PhotoListType.RECENT_REPLY, photoItems);
+        mAdapter = new ChannelListAdapter(this, PhotoItemView.PhotoListType.RECENT_REPLY, photoItems);
         mList.setAdapter(mAdapter);
         View head = LayoutInflater.from(this).inflate(R.layout.view_activity_channel_head, null);
         mList.getRefreshableView().addHeaderView(head);
@@ -120,16 +123,11 @@ public class ChannelActivity extends PSGodBaseActivity {
         mList.getRefreshableView().addFooterView(
                 mFollowListFooter);
         mFollowListFooter.setVisibility(View.GONE);
-//        mEmptyTxt = (TextView) findViewById(R.id.activity_channal_empty_text);
-//        mEmptyView = (LinearLayout) findViewById(R.id.activity_channal_empty_view);
         Intent intent = getIntent();
         id = intent.getStringExtra(INTENT_ID);
-//        mUpload = new ImageView(this);
-//        mUpload.setScaleType(ImageView.ScaleType.CENTER_CROP);
-//        mUpload.setImageDrawable(getResources().getDrawable(R.mipmap.floating_btn));
         mUpload = new LinearLayout(this);
         RelativeLayout.LayoutParams uploadParams = new RelativeLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,Utils.dpToPx(this,44)
+                ViewGroup.LayoutParams.MATCH_PARENT, Utils.dpToPx(this, 44)
         );
         mUpload.setLayoutParams(uploadParams);
         mUploadLeft = new TextView(this);
@@ -153,11 +151,7 @@ public class ChannelActivity extends PSGodBaseActivity {
         mUpload.addView(mUploadRight);
         FloatScrollHelper helper = new FloatScrollHelper(mList, mParent, mUpload, this);
         helper.setViewHeight(44);
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-//            helper.setViewMarginsV19(12);
-//        } else {
         helper.setViewMargins(0);
-//        }
         helper.init();
 
         mSpKey = Constants.SharedPreferencesKey.CHANNEL_LIST_LAST_REFRESH_TIME;
@@ -194,6 +188,7 @@ public class ChannelActivity extends PSGodBaseActivity {
         @Override
         public void onResponse(ActivitiesAct act) {
             mTitleName.setText(act.getName());
+            mAct = act;
         }
     };
 
@@ -201,7 +196,7 @@ public class ChannelActivity extends PSGodBaseActivity {
         @Override
         public void onResponse(Channel response) {
             // 保存本次刷新时间到sp
-            if(heads.size() > 0){
+            if (heads.size() > 0) {
                 heads.clear();
             }
             heads.addAll(response.getData());
@@ -238,14 +233,13 @@ public class ChannelActivity extends PSGodBaseActivity {
             } else {
                 canLoadMore = true;
             }
-//            initEmpty(photoItems.size());
             if (progressingDialog != null && progressingDialog.isShowing()) {
                 progressingDialog.dismiss();
             }
         }
     };
 
-    PSGodErrorListener errorListener = new PSGodErrorListener() {
+    PSGodErrorListener errorListener = new PSGodErrorListener(this) {
         @Override
         public void handleError(VolleyError error) {
             mList.onRefreshComplete();
@@ -268,27 +262,28 @@ public class ChannelActivity extends PSGodBaseActivity {
             photoItems.addAll(response.getData());
             mAdapter.notifyDataSetChanged();
             mFollowListFooter.setVisibility(View.INVISIBLE);
-//            initEmpty(photoItems.size());
         }
     };
 
-//    private void initEmpty(int length) {
-//        if (length == 0) {
-//            mEmptyView.setVisibility(View.VISIBLE);
-//            mEmptyTxt.setText("敬请期待");
-//        } else {
-//            mEmptyView.setVisibility(View.GONE);
-//        }
-//    }
-
 
     private void initListener() {
+        mTitleDetail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mAct != null) {
+                    Intent intent = new Intent(ChannelActivity.this, WebBrowserActivity.class);
+                    intent.putExtra(WebBrowserActivity.KEY_URL, mAct.getUrl());
+                    intent.putExtra(WebBrowserActivity.KEY_DESC, mAct.getName());
+                    startActivity(intent);
+                }
+            }
+        });
+
         mList.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
                 refresh();
             }
-
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
 
@@ -324,23 +319,17 @@ public class ChannelActivity extends PSGodBaseActivity {
         mUploadLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                CameraPopupwindow popupwindow = new CameraPopupwindow(ChannelActivity.this, id);
-//                popupwindow.showCameraPopupwindow(mParent);
 
-                mImageSelectDialog = new ImageSelectDialog(ChannelActivity.this,id,
+                mImageSelectDialog = new ImageSelectDialog(ChannelActivity.this, id,
                         ImageSelectDialog.SHOW_TYPE_ASK);
                 mImageSelectDialog.show();
-//                Intent intent = new Intent(ChannelActivity.this,
-//                        UploadSelectReplyListActivity.class);
-//                intent.putExtra("channel_id" , id);
-//                startActivity(intent);
             }
         });
 
         mUploadRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mImageSelectDialog = new ImageSelectDialog(ChannelActivity.this,id,
+                mImageSelectDialog = new ImageSelectDialog(ChannelActivity.this, id,
                         ImageSelectDialog.SHOW_TYPE_REPLY);
                 mImageSelectDialog.show();
             }

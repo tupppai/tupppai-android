@@ -66,7 +66,7 @@ public class ResetPasswordRequest extends BaseRequest<JSONObject> {
 					url, listener, errorListener) {
 				@Override
 				public Map<String, String> getParams() {
-					return createParameters();
+					return getPackParams(createParameters());
 				}
 			};
 			Logger.log(Logger.LOG_LEVEL_DEBUG, Logger.USER_LEVEL_COLOR, TAG,

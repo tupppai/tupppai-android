@@ -6,11 +6,15 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Looper;
 import android.text.TextUtils;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -55,15 +59,17 @@ public class NewPhoneLoginActivity extends PSGodBaseActivity {
     private static final String WEIXINPLAT = "weixin";
     private Context mContext;
 
-    private EditText mPhoneText;
+    private TextView mPhoneText;
     private EditText mPasswdText;
     private Button mLoginBtn;
     private ImageView mResetBtn;
     private ImageView mWeiboLoginBtn;
     private ImageView mWechatLoginBtn;
     private ImageView mQQLoginBtn;
+    private ScrollView mParent;
 
     private String mThirdAuthId = "";
+    private String mThirdToken = "";
     private String mThirdAuthName = "";
     private String mThirdAuthGender = "";
     private String mThirdAuthAvatar = "";
@@ -92,11 +98,12 @@ public class NewPhoneLoginActivity extends PSGodBaseActivity {
     }
 
     private void initViews() {
-        mPhoneText = (EditText) findViewById(R.id.input_phone);
+        mPhoneText = (TextView) findViewById(R.id.input_phone);
         mPhoneText.setText(mPhoneNum);
         mPasswdText = (EditText) findViewById(R.id.input_passwd);
         mLoginBtn = (Button) findViewById(R.id.login_btn);
         mResetBtn = (ImageView) findViewById(R.id.forget_passwd);
+        mParent = (ScrollView) findViewById(R.id.parent);
 
         mWeiboLoginBtn = (ImageView) findViewById(R.id.weibo_login);
         mWechatLoginBtn = (ImageView) findViewById(R.id.weixin_login);
@@ -105,6 +112,18 @@ public class NewPhoneLoginActivity extends PSGodBaseActivity {
     }
 
     private void initEvents() {
+        mParent.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                Utils.hideInputPanel(NewPhoneLoginActivity.this, view);
+                return false;
+            }
+        });
+//        mParent.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//            }
+//        });
         // QQ登录
         mQQLoginBtn.setOnClickListener(new View.OnClickListener() {
 
@@ -184,7 +203,7 @@ public class NewPhoneLoginActivity extends PSGodBaseActivity {
                                 .getAppContext()
                                 .getSharedPreferences(Constants.SharedPreferencesKey.NAME,
                                         Context.MODE_PRIVATE).edit();
-                        editor.putString(Constants.ThirdAuthInfo.THIRD_AUTH_PLATFORM,WEIXINPLAT);
+                        editor.putString(Constants.ThirdAuthInfo.THIRD_AUTH_PLATFORM, WEIXINPLAT);
                         editor.putString(Constants.ThirdAuthInfo.USER_OPENID, mThirdAuthId);
                         editor.putString(Constants.ThirdAuthInfo.USER_AVATAR, mThirdAuthAvatar);
                         editor.putString(Constants.ThirdAuthInfo.USER_NICKNAME, mThirdAuthName);
@@ -280,6 +299,8 @@ public class NewPhoneLoginActivity extends PSGodBaseActivity {
                     public void onComplete(Platform platform, int action,
                                            HashMap<String, Object> res) {
                         mThirdAuthId = res.get("openid").toString();
+//                        mThirdToken = platform.getDb().getToken();
+//                        Toast.makeText(NewPhoneLoginActivity.this, mThirdAuthId, Toast.LENGTH_LONG);
                         mThirdAuthAvatar = res.get("headimgurl").toString();
                         mThirdAuthGender = res.get("sex").toString();
                         mThirdAuthName = res.get("nickname").toString();
@@ -289,6 +310,7 @@ public class NewPhoneLoginActivity extends PSGodBaseActivity {
                             WechatUserInfoRequest.Builder builder = new WechatUserInfoRequest.Builder()
                                     .setCode(mThirdAuthId)
                                     .setListener(wechatAuthListener)
+//                                    .setToken(mThirdToken)
                                     .setErrorListener(errorListener);
 
                             WechatUserInfoRequest request = builder.build();
@@ -346,8 +368,8 @@ public class NewPhoneLoginActivity extends PSGodBaseActivity {
         mResetBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(NewPhoneLoginActivity.this,NewResetPasswdActivity.class);
-                intent.putExtra(PHONE,mPhoneNum);
+                Intent intent = new Intent(NewPhoneLoginActivity.this, NewResetPasswdActivity.class);
+                intent.putExtra(PHONE, mPhoneNum);
                 startActivity(intent);
             }
         });
@@ -421,7 +443,7 @@ public class NewPhoneLoginActivity extends PSGodBaseActivity {
                             .getAppContext()
                             .getSharedPreferences(Constants.SharedPreferencesKey.NAME,
                                     Context.MODE_PRIVATE).edit();
-                    editor.putString(Constants.ThirdAuthInfo.THIRD_AUTH_PLATFORM,QQPLAT);
+                    editor.putString(Constants.ThirdAuthInfo.THIRD_AUTH_PLATFORM, QQPLAT);
                     editor.putString(Constants.ThirdAuthInfo.USER_OPENID, mThirdAuthId);
                     editor.putString(Constants.ThirdAuthInfo.USER_AVATAR, mThirdAuthAvatar);
                     editor.putString(Constants.ThirdAuthInfo.USER_NICKNAME, mThirdAuthName);
@@ -544,7 +566,7 @@ public class NewPhoneLoginActivity extends PSGodBaseActivity {
                             .getAppContext()
                             .getSharedPreferences(Constants.SharedPreferencesKey.NAME,
                                     Context.MODE_PRIVATE).edit();
-                    editor.putString(Constants.ThirdAuthInfo.THIRD_AUTH_PLATFORM,WEIBOPLAT);
+                    editor.putString(Constants.ThirdAuthInfo.THIRD_AUTH_PLATFORM, WEIBOPLAT);
                     editor.putString(Constants.ThirdAuthInfo.USER_OPENID, mThirdAuthId);
                     editor.putString(Constants.ThirdAuthInfo.USER_AVATAR, mThirdAuthAvatar);
                     editor.putString(Constants.ThirdAuthInfo.USER_NICKNAME, mThirdAuthName);
@@ -650,7 +672,7 @@ public class NewPhoneLoginActivity extends PSGodBaseActivity {
         imm.showSoftInput(mPasswdText, 0);
     }
 
-    private PSGodErrorListener errorListener = new PSGodErrorListener() {
+    private PSGodErrorListener errorListener = new PSGodErrorListener(this) {
         @Override
         public void handleError(VolleyError error) {
             // TODO Auto-generated method stub
@@ -662,12 +684,12 @@ public class NewPhoneLoginActivity extends PSGodBaseActivity {
 
     private boolean validate() {
         // 手机号校验
-        if (Utils.isNull(mPhoneText)) {
-            Toast.makeText(NewPhoneLoginActivity.this, "请填写手机号码", Toast.LENGTH_SHORT)
-                    .show();
-            mPhoneText.requestFocus();
-            return false;
-        }
+//        if (Utils.isNull(mPhoneText)) {
+//            Toast.makeText(NewPhoneLoginActivity.this, "请填写手机号码", Toast.LENGTH_SHORT)
+//                    .show();
+//            mPhoneText.requestFocus();
+//            return false;
+//        }
         String phoneNum = mPhoneText.getText().toString().trim();
         if (!Utils.matchPhoneNum(phoneNum)) {
             Toast.makeText(NewPhoneLoginActivity.this, "电话格式不正确", Toast.LENGTH_SHORT)

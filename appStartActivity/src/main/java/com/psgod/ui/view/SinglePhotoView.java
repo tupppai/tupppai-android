@@ -41,6 +41,7 @@ import java.util.concurrent.Executors;
 
 /**
  * Created by Administrator on 2015/11/28 0028.
+ * CarouselPhotoDetailView
  */
 public class SinglePhotoView extends RelativeLayout implements
         Handler.Callback {
@@ -89,7 +90,7 @@ public class SinglePhotoView extends RelativeLayout implements
     // 照片的id
     private long mId = -1;
     // 是否需要后台返回photoitem
-    private int mNeedOriginPhotoItem = 0;
+    private int mNeedOriginPhotoItem = 1;
 
     private List<Comment> mHotCommentList;
     private List<Comment> mCommentList;
@@ -283,7 +284,7 @@ public class SinglePhotoView extends RelativeLayout implements
         }
     };
 
-    private PSGodErrorListener sendCommentErrorListener = new PSGodErrorListener() {
+    private PSGodErrorListener sendCommentErrorListener = new PSGodErrorListener(this) {
         @Override
         public void handleError(VolleyError error) {
             Toast.makeText(getContext(), "评论失败，请稍后再试",
@@ -342,10 +343,10 @@ public class SinglePhotoView extends RelativeLayout implements
     private Response.Listener<CommentListRequest.CommentListWrapper> refreshListener = new Response.Listener<CommentListRequest.CommentListWrapper>() {
         @Override
         public void onResponse(CommentListRequest.CommentListWrapper response) {
-            if (mNeedOriginPhotoItem == 1) {
-                mPhotoItem = response.photoItem;
-                mAdapter.setPhotoItem(response.photoItem);
-            }
+//            if (mNeedOriginPhotoItem == 1) {
+//                mPhotoItem = response.photoItem;
+//                mAdapter.setPhotoItem(response.photoItem);
+//            }
             mHotCommentList.clear();
             mHotCommentList.addAll(response.hotCommentList);
 
@@ -353,8 +354,13 @@ public class SinglePhotoView extends RelativeLayout implements
             mCommentList.addAll(response.recentCommentList);
             mAdapter.notifyDataSetChanged();
             mListView.onRefreshComplete();
-
-            mPhotoItemView = mAdapter.getPhotoItemView();
+            if(mPhotoItemView != null){
+//                mPhotoItemView.refreshPhotoItem(response.photoItem);
+            }else {
+                mPhotoItemView = mAdapter.getPhotoItemView();
+            }
+            mPhotoItem.setCommentCount(response.photoItem.getCommentCount());
+            mPhotoItemView.updateCommentView();
             if (onFollowChangeListener != null) {
                 mPhotoItemView.setOnFollowChangeListener(onFollowChangeListener);
             }
@@ -383,7 +389,6 @@ public class SinglePhotoView extends RelativeLayout implements
             } else {
                 canLoadMore = true;
             }
-
         }
     };
 

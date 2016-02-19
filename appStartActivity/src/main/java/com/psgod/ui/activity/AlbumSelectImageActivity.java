@@ -165,12 +165,12 @@ public class AlbumSelectImageActivity extends PSGodBaseActivity {
 
     }
 
-    private void notifySelectTxt(){
-        if(resultList.size() > 0){
+    private void notifySelectTxt() {
+        if (resultList.size() > 0) {
             mSelectCountText.setText(Integer.toString(resultList.size()));
             mNextText.setEnabled(true);
             mNextText.setTextColor(Color.parseColor("#000000"));
-        }else{
+        } else {
             mSelectCountText.setText(Integer.toString(resultList.size()));
             mNextText.setEnabled(false);
             mNextText.setTextColor(Color.parseColor("#7a000000"));
@@ -468,7 +468,7 @@ public class AlbumSelectImageActivity extends PSGodBaseActivity {
                 // 调用相机拍照后，再次扫描手机内的图片
                 getSupportLoaderManager().initLoader(0, null, mLoaderCallback);
 //                getSupportLoaderManager().initLoader(0, null, mFolderCallback);
-               notifySelectTxt();
+                notifySelectTxt();
 //                Intent intent = new Intent(AlbumImageSelectActivity.this,
 //                        UploadMultiImageActivity.class);
 //                Bundle bundle = new Bundle();
@@ -498,7 +498,7 @@ public class AlbumSelectImageActivity extends PSGodBaseActivity {
                 resultList.remove(image.path);
                 // 移除
 
-               notifySelectTxt();
+                notifySelectTxt();
             } else {
                 // 添加
                 View view = new View(this);
@@ -512,7 +512,7 @@ public class AlbumSelectImageActivity extends PSGodBaseActivity {
                 }
 
                 resultList.add(image.path);
-              notifySelectTxt();
+                notifySelectTxt();
             }
             mMultiImageAdapter.select(image);
         }

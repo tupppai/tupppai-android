@@ -1,3 +1,4 @@
-include ':library'
+include ':library', ':pingpp', ':PushSDK'
 include ':waterfall'
 include ':appStartActivity'
+include ':baiduWalletRefactorLib'

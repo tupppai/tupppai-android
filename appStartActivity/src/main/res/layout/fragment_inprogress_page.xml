@@ -39,7 +39,7 @@
                 style="@style/homepage_inprogress_top_tabbar"
                 android:checked="true"
                 android:gravity="center"
-                android:text="我的帮P"
+                android:text="我的任务"
                 android:textColor="#99000000" />
 
             <!--<RadioButton-->
