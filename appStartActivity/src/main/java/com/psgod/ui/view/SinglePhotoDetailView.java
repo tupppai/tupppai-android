@@ -153,6 +153,13 @@ public class SinglePhotoDetailView extends RelativeLayout {
         ViewGroup.LayoutParams backParams = headArea.getLayoutParams();
         backParams.width = Utils.getScreenWidthPx(getContext());
         headArea.setLayoutParams(backParams);
+        // 同时设置margin和padding才有效果，不知为何
+//        RelativeLayout.LayoutParams followLayoutParams = (RelativeLayout.LayoutParams) follow.getLayoutParams();
+//        followLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+//        followLayoutParams.addRule(RelativeLayout.CENTER_VERTICAL);
+//        followLayoutParams.setMargins(0, 0, Utils.dpToPx(getContext(), 10), 0);
+//        follow.setLayoutParams(followLayoutParams);
+//        follow.setPadding(0,0,Utils.dpToPx(getContext(),10),0);
 
         if (mPhotoItem != null) {
             avatar.setUser(new User(mPhotoItem));

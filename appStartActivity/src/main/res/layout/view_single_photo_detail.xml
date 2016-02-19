@@ -9,49 +9,45 @@
         android:id="@+id/single_photo_detail_head"
         android:layout_width="match_parent"
         android:layout_height="55dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true">
+        android:layout_marginLeft="10dp">
 
         <com.psgod.ui.widget.AvatarImageView
             android:id="@+id/single_photo_detail_avatar"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="6dp"
-            android:layout_marginRight="11dp"
             android:src="@drawable/shape_set_info_avatar_background" />
-
-        <com.psgod.ui.widget.FollowImage
-            android:id="@+id/single_photo_detail_follow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="5dp"
-            android:padding="10dp" />
 
         <TextView
             android:id="@+id/single_photo_detail_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/single_photo_detail_avatar"
-            android:layout_toLeftOf="@+id/single_photo_detail_avatar"
-            android:layout_toStartOf="@+id/single_photo_detail_avatar"
-            android:textColor="@color/black"
+            android:layout_toRightOf="@+id/single_photo_detail_avatar"
+            android:layout_marginLeft="10dp"
+            android:textColor="#4A4A4A"
             android:textSize="13dp" />
 
         <TextView
             android:id="@+id/single_photo_detail_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/single_photo_detail_avatar"
-            android:layout_toLeftOf="@+id/single_photo_detail_avatar"
-            android:layout_toStartOf="@+id/single_photo_detail_avatar"
-            android:textColor="@color/color_7f000000"
-            android:textSize="10dp" />
+            android:layout_alignLeft="@id/single_photo_detail_name"
+            android:layout_below="@id/single_photo_detail_name"
+            android:layout_marginTop="3dp"
+            android:textColor="#4C000000"
+            android:textSize="10dp"/>
+
+        <!-- 同时设置margin和padding才有效果，不知为何-->
+        <com.psgod.ui.widget.FollowImage
+            android:id="@+id/single_photo_detail_follow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:paddingRight="10dp"/>
+
     </RelativeLayout>
 
     <LinearLayout
