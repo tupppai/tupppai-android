@@ -163,11 +163,14 @@ public class SinglePhotoDetailDialog extends Dialog implements Handler.Callback 
         if (mPhotoItem.getType() == 1) {
             coverLike.setVisibility(View.GONE);
             coverBang.setVisibility(View.VISIBLE);
-            detailTxt.setVisibility(View.VISIBLE);
         } else {
             coverLike.setVisibility(View.VISIBLE);
             coverBang.setVisibility(View.GONE);
+        }
+        if(isOwn){
             detailTxt.setVisibility(View.GONE);
+        }else{
+            detailTxt.setVisibility(View.VISIBLE);
         }
     }
 
@@ -284,5 +287,12 @@ public class SinglePhotoDetailDialog extends Dialog implements Handler.Callback 
                 break;
         }
         return true;
+    }
+
+    private boolean isOwn = false;
+
+    public SinglePhotoDetailDialog setIsOwn(boolean isOwn){
+        this.isOwn = isOwn;
+        return this;
     }
 }

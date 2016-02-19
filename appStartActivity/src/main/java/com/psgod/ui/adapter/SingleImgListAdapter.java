@@ -28,12 +28,17 @@ public class SingleImgListAdapter extends RecyclerView.Adapter<SingleImgListAdap
 
     private Context context;
     private List<PhotoItem> list;
+    private String ownUrl;
 
     private DisplayImageOptions mSmallSmallOptions = Constants.DISPLAY_IMAGE_OPTIONS_SMALL_SMALL;
 
     public SingleImgListAdapter(Context context, List<PhotoItem> list) {
         this.context = context;
         this.list = list;
+    }
+
+    public void setOwnUrl(String ownUrl) {
+        this.ownUrl = ownUrl;
     }
 
     @Override
@@ -60,7 +65,8 @@ public class SingleImgListAdapter extends RecyclerView.Adapter<SingleImgListAdap
         public void onClick(View view) {
             Integer position = (Integer) view.getTag(R.id.tupppai_view_id);
             PhotoItem photoItem = list.get(position);
-            new SinglePhotoDetailDialog(context,photoItem).show();
+            new SinglePhotoDetailDialog(context,photoItem).
+                    setIsOwn(photoItem.getImageURL().equals(ownUrl)).show();
         }
     };
 

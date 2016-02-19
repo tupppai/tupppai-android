@@ -777,12 +777,21 @@ public class PhotoItemView extends RelativeLayout implements Callback {
 //            params.setMargins(0, 0, 0, 0);
 //            mComplexShareBtn.setLayoutParams(params);
         } else {
-            mAllWorksTxt.setVisibility(VISIBLE);
-            mSingleAllWorksTxt.setVisibility(VISIBLE);
+            if(mPhotoItem.getType() == PhotoItem.TYPE_ASK){
+                mAllWorksTxt.setVisibility(VISIBLE);
+                mSingleAllWorksTxt.setVisibility(VISIBLE);
+            }else{
+                mAllWorksTxt.setVisibility(GONE);
+                mSingleAllWorksTxt.setVisibility(GONE);
+            }
             if (mPhotoItem.getReplyCount() >= 2) {
                 mAllWorksBtn.setVisibility(VISIBLE);
                 mHotReplyAllWorksBtn.setVisibility(VISIBLE);
                 mSingleReplyAllWorksBtn.setVisibility(VISIBLE);
+            }else{
+                mAllWorksBtn.setVisibility(GONE);
+                mHotReplyAllWorksBtn.setVisibility(GONE);
+                mSingleReplyAllWorksBtn.setVisibility(GONE);
             }
         }
     }
