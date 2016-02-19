@@ -184,7 +184,7 @@ public class SinglePhotoDetailView extends RelativeLayout {
                         Utils.dpToPx(getContext(), 45), ViewGroup.LayoutParams.MATCH_PARENT
                 );
                 params.weight = 1;
-                params.setMargins(0,0,Utils.dpToPx(getContext(),5),0);
+                params.setMargins(0, 0, Utils.dpToPx(getContext(), 5), 0);
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 imageView.setLayoutParams(params);
                 PsGodImageLoader.getInstance().displayImage(image.mImageUrl, imageView,
@@ -194,6 +194,7 @@ public class SinglePhotoDetailView extends RelativeLayout {
                 imgListAsk.addView(imageView);
             }
             imgListAdapter = new SingleImgListAdapter(getContext(), mReplyPhotoItems);
+            imgListAdapter.setOwnUrl(mPhotoItem.getImageURL());
             imgListReply.setAdapter(imgListAdapter);
         } else {
             imgListArea.setVisibility(GONE);
@@ -204,8 +205,10 @@ public class SinglePhotoDetailView extends RelativeLayout {
         @Override
         public void onClick(View view) {
             String url = view.getTag(R.id.image_url).toString();
+            boolean isOwn = mPhotoItem.getType() == PhotoItem.TYPE_ASK;
             mAskPhotoItems.setImageURL(url);
-            new SinglePhotoDetailDialog(getContext(), mAskPhotoItems).show();
+            new SinglePhotoDetailDialog(getContext(), mAskPhotoItems)
+                    .setIsOwn(isOwn).show();
         }
     };
 

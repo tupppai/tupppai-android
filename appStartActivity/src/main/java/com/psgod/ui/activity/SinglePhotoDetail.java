@@ -6,6 +6,7 @@ package com.psgod.ui.activity;
  * @author brandwang
  */
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -103,6 +104,9 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
 
     private long replyToCid;
 
+    private static List<Activity> showList = new ArrayList<Activity>();
+    private static final int SHOWLIST_LENGTH = 2;
+
     // 评论内容
     String commentContent = "";
     // @的信息 若有
@@ -124,7 +128,7 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
     }
 
     // 传photo item id的启动函数
-    public static void startActivity(Context context, Long id,String type) {
+    public static void startActivity(Context context, Long id, String type) {
         if (id != null) {
             Intent intent = new Intent(context, SinglePhotoDetail.class);
             intent.putExtra(ID, id);
@@ -141,7 +145,7 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
     }
 
     public void onEventMainThread(RefreshEvent event) {
-        if(event.className.equals(this.getClass().getName())){
+        if (event.className.equals(this.getClass().getName())) {
             try {
                 initPhotoItem();
             } catch (NullPointerException nu) {
@@ -159,6 +163,7 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        addShowList();
         setContentView(R.layout.activity_single_photo_detail);
         EventBus.getDefault().register(this);
 
@@ -173,7 +178,7 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
             mPhotoItem = (PhotoItem) obj;
             // 获照片 id
             mId = mPhotoItem.getPid();
-        }else{
+        } else {
             mPhotoItem = new PhotoItem();
         }
 
@@ -246,6 +251,14 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
         initPhotoItem();
     }
 
+    private void addShowList() {
+        if (showList.size() == SHOWLIST_LENGTH) {
+            showList.get(0).finish();
+            showList.remove(0);
+        }
+        showList.add(this);
+    }
+
     private void initPhotoItem() {
         Intent intent = getIntent();
         if (intent.hasExtra(TYPE)) {
@@ -282,6 +295,9 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
     Listener<SinglePhotoItem> photoItemListener = new Listener<SinglePhotoItem>() {
         @Override
         public void onResponse(SinglePhotoItem response) {
+            if ((mProgressDialog != null) && mProgressDialog.isShowing()) {
+                mProgressDialog.dismiss();
+            }
             mPhotoItem = response.getPhotoItem();
             mSinglePhotoItem = response;
             if (mPhotoItemView != null) {
@@ -308,6 +324,7 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
     Listener<SinglePhotoItem> photoItemListener2 = new Listener<SinglePhotoItem>() {
         @Override
         public void onResponse(SinglePhotoItem response) {
+
             mSinglePhotoItem.setAskPhotoItems(response.getAskPhotoItems());
             mSinglePhotoItem.setReplyPhotoItems(response.getReplyPhotoItems());
             mPhotoItemView = mAdapter.setSinglePhotoItem(mSinglePhotoItem);
@@ -457,12 +474,18 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
         @Override
         public void handleError(VolleyError error) {
             mListView.onRefreshComplete();
+            if ((mProgressDialog != null) && mProgressDialog.isShowing()) {
+                mProgressDialog.dismiss();
+            }
         }
     };
 
     private Listener<CommentListWrapper> refreshListener = new Listener<CommentListWrapper>() {
         @Override
         public void onResponse(CommentListWrapper response) {
+            if ((mProgressDialog != null) && mProgressDialog.isShowing()) {
+                mProgressDialog.dismiss();
+            }
             if (mNeedOriginPhotoItem == 1) {
                 mPhotoItem = response.photoItem;
                 mAdapter.setPhotoItem(response.photoItem);
@@ -487,10 +510,6 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
                 }
             });
 
-            if ((mProgressDialog != null) && mProgressDialog.isShowing()) {
-                mProgressDialog.dismiss();
-            }
-
             // 展开所有分组
             int groupCount = mAdapter.getGroupCount();
             for (int ix = 0; ix < groupCount; ++ix) {
@@ -509,6 +528,9 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
     private Listener<CommentListWrapper> loadMoreListener = new Listener<CommentListWrapper>() {
         @Override
         public void onResponse(CommentListWrapper response) {
+            if ((mProgressDialog != null) && mProgressDialog.isShowing()) {
+                mProgressDialog.dismiss();
+            }
             if (response.recentCommentList.size() > 0) {
                 mHotCommentList.clear();
                 mHotCommentList.addAll(response.hotCommentList);
