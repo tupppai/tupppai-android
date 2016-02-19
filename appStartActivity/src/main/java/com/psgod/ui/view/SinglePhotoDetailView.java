@@ -107,6 +107,7 @@ public class SinglePhotoDetailView extends RelativeLayout {
     private ImageView bang;
     private LikeView like;
 
+    private RelativeLayout headArea;
     private RelativeLayout imgListArea;
     private LinearLayout imgListAsk;
     private RecyclerView imgListReply;
@@ -147,6 +148,11 @@ public class SinglePhotoDetailView extends RelativeLayout {
         imgListReply.addItemDecoration(new SpaceItemDecoration(
                 Utils.dpToPx(getContext(), 5)));
         initImgListArea();
+
+        headArea = (RelativeLayout) view.findViewById(R.id.single_photo_detail_head);
+        ViewGroup.LayoutParams backParams = headArea.getLayoutParams();
+        backParams.width = Utils.getScreenWidthPx(getContext());
+        headArea.setLayoutParams(backParams);
 
         if (mPhotoItem != null) {
             avatar.setUser(new User(mPhotoItem));

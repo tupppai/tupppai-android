@@ -173,6 +173,14 @@ public final class Utils {
         Constants.activityList.clear();
     }
 
+    public static void removeActivity(Activity activity){
+        try {
+            Constants.activityList.remove(activity);
+        }catch (Exception e){
+
+        }
+    }
+
     static CustomProgressingDialog mProgressDialog = null;
 
     // 显示等待对话框

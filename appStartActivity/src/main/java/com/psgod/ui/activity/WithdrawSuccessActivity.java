@@ -60,4 +60,11 @@ public class WithdrawSuccessActivity extends PSGodBaseActivity {
             }
         });
     }
+
+    @Override
+    public void finish() {
+        Utils.removeActivity(this);
+        Utils.finishActivity();
+        super.finish();
+    }
 }

@@ -131,7 +131,7 @@
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/single_photo_detail_imglist_reply"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
             android:layout_marginTop="1dp"
