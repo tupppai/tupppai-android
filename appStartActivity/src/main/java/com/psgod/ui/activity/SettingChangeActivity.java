@@ -33,12 +33,14 @@ import org.json.JSONObject;
  */
 public class SettingChangeActivity extends PSGodBaseActivity {
     private static final String TAG = SettingChangeActivity.class.getSimpleName();
+    private static final String KEY_URL = "target_url";
     private Button mChargeBtn;
     private Button mWithDrawBtn;
     private TextView mMoneyDetail;
 
     public static final int REQUEST_CODE = 120;
 
+    private TextView mCommonProblem;
     private TextView mMoneyCount;
 
     private double amount;
@@ -63,6 +65,7 @@ public class SettingChangeActivity extends PSGodBaseActivity {
         mChargeBtn = (Button) findViewById(R.id.recharge);
         mWithDrawBtn = (Button) findViewById(R.id.withdraw_money);
         mMoneyCount = (TextView) findViewById(R.id.money_count_tv);
+        mCommonProblem = (TextView) findViewById(R.id.commom_problem);
         mMoneyDetail = (TextView) findViewById(R.id.money_detail);
     }
 
@@ -113,6 +116,15 @@ public class SettingChangeActivity extends PSGodBaseActivity {
 //                rechargeDialog.setRequestCode(REQUEST_CODE);
 //                rechargeDialog.show();
                 Intent intent = new Intent(SettingChangeActivity.this,WithdrawDepositActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        mCommonProblem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SettingChangeActivity.this, WebBrowserActivity.class);
+                intent.putExtra(KEY_URL,"http://tapi.tupppai.com/mobile/wallet.html");
                 startActivity(intent);
             }
         });
