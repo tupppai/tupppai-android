@@ -102,9 +102,9 @@ public class PhotoListAdapter extends BaseAdapter {
 
     FollowImage.OnFollowChangeListener onFollowChangeListener = new FollowImage.OnFollowChangeListener() {
         @Override
-        public void onFocusChange(long uid, boolean focusStatus) {
+        public void onFocusChange(long uid, boolean focusStatus, long pid) {
             for (int i = 0; i < mPhotoItems.size(); i++) {
-                if (mPhotoItems.get(i).getUid() == uid) {
+                if (mPhotoItems.get(i).getUid() == uid && mPhotoItems.get(i).getPid() != pid) {
                     mPhotoItems.get(i).setmIsFollow(focusStatus);
                 }
             }

@@ -201,38 +201,39 @@ public class FollowImage extends ImageView {
         public void onResponse(Boolean response) {
             FollowImage.this.setClickable(true);
             if (response == true) {
-                if (onFollowChangeListener != null) {
-                    onFollowChangeListener.onFocusChange(mUid, ((state == FollowState.Following
-                            || state == FollowState.FollowingEach) ? false : true));
-                }
-
                 if (state == FollowState.Following
                         || state == FollowState.FollowingEach) {
                     state = FollowState.UnFollow;
                     setFollowButtonState(state);
                     Toast.makeText(mContext, "取消关注成功", Toast.LENGTH_SHORT)
                             .show();
+                    if (onFollowChangeListener != null) {
+                        onFollowChangeListener.onFocusChange(mUid, ((state == FollowState.Following
+                                || state == FollowState.FollowingEach) ? false : true), mPhotoItem.getPid());
+                    }
+
                 } else if (state == FollowState.UnFollow) {
                     if (isHideFollow) {
+                        if (mIsFan == 1) {
+                            state = FollowState.FollowingEach;
+                        } else {
+                            state = FollowState.Following;
+                        }
                         final AnimatorSet anim = new AnimatorSet();
                         anim.setDuration(1300);
-                        ValueAnimator xAnim = ValueAnimator.ofInt(100, 1);
+                        ValueAnimator xAnim = ValueAnimator.ofInt(100, 0);
                         xAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                             @Override
                             public void onAnimationUpdate(ValueAnimator valueAnimator) {
                                 Integer value = (Integer) valueAnimator.getAnimatedValue();
-                                setAlpha((float) value / 100);
+                                setAlpha((float) value / 100f);
                             }
                         });
                         setClickable(false);
                         xAnim.addListener(animListener);
                         anim.playTogether(xAnim);
                         anim.start();
-                        if (mIsFan == 1) {
-                            state = FollowState.FollowingEach;
-                        } else {
-                            state = FollowState.Following;
-                        }
+
                         Toast.makeText(mContext, "关注成功", Toast.LENGTH_SHORT).show();
                     } else {
                         if (mIsFan == 1) {
@@ -242,9 +243,16 @@ public class FollowImage extends ImageView {
                         }
                         setFollowButtonState(state);
                         Toast.makeText(mContext, "关注成功", Toast.LENGTH_SHORT).show();
+                        if (onFollowChangeListener != null) {
+                            onFollowChangeListener.onFocusChange(mUid, ((state == FollowState.Following
+                                    || state == FollowState.FollowingEach) ? false : true), mPhotoItem.getPid());
+                        }
+
                     }
                 }
-
+                if(mPhotoItem != null) {
+                    mPhotoItem.setmIsFollow(!state.equals(FollowState.UnFollow));
+                }
 
                 // 关注用户有变化 需要自动刷新我的关注页面
                 Constants.IS_FOLLOW_NEW_USER = true;
@@ -266,10 +274,11 @@ public class FollowImage extends ImageView {
         if (isHideFollow) {
             if (state == FollowState.UnFollow) {
                 this.setVisibility(VISIBLE);
+                setAlpha(1f);
                 FollowButtonAttribute attr = mBtnAttrs.get(state);
                 this.setImageDrawable(attr.srcDrawable);
             } else {
-                setImageDrawable(new ColorDrawable(Color.parseColor("#00000000")));
+                setAlpha(1f);
                 setVisibility(GONE);
             }
         } else {
@@ -305,7 +314,7 @@ public class FollowImage extends ImageView {
 
     // 关注接口回调
     public interface OnFollowChangeListener {
-        void onFocusChange(long uid, boolean focusStatus);
+        void onFocusChange(long uid, boolean focusStatus, long pid);
     }
 
     public void setIsHideFollow(boolean isHideFollow) {
@@ -322,6 +331,11 @@ public class FollowImage extends ImageView {
         public void onAnimationEnd(Animator animator) {
             setClickable(true);
             setFollowButtonState(state);
+            if (onFollowChangeListener != null) {
+                onFollowChangeListener.onFocusChange(mUid, ((state == FollowState.Following
+                        || state == FollowState.FollowingEach) ? false : true), mPhotoItem.getPid());
+            }
+
         }
 
         @Override

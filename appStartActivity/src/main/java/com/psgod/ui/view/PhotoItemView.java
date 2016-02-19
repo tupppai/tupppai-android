@@ -550,14 +550,14 @@ public class PhotoItemView extends RelativeLayout implements Callback {
 
         mImageArea.removeAllViews();
 
-        mFollowBtn.setPhotoItem(mPhotoItem);
         if ((LoginUser.getInstance().getUid() == mPhotoItem.getUid()) || isHomePageFocus) {
-            mFollowBtn.setVisibility(INVISIBLE);
+            mFollowBtn.setVisibility(GONE);
         } else {
             mFollowBtn.setVisibility(VISIBLE);
+            mFollowBtn.setPhotoItem(mPhotoItem);
         }
         mFollowBtn.setOnFollowChangeListener(onFollowChangeListener);
-
+        mFollowBtn.setIsHideFollow(true);
         // 作品情况 展示外面image_url
         if (mPhotoType == PhotoItem.TYPE_REPLY) {
             mImageIv = new ImageView(mContext);
@@ -909,7 +909,6 @@ public class PhotoItemView extends RelativeLayout implements Callback {
                 mComplexBtnsPanel.setVisibility(View.GONE);
                 mHotReplyBtnsPanel.setVisibility(View.GONE);
                 mFocusAskBtnsPanel.setVisibility(View.GONE);
-                mFollowBtn.setVisibility(View.VISIBLE);
                 mCommentsPanel.setVisibility(View.GONE);
                 break;
 
@@ -919,7 +918,6 @@ public class PhotoItemView extends RelativeLayout implements Callback {
                 mComplexBtnsPanel.setVisibility(View.GONE);
                 mHotReplyBtnsPanel.setVisibility(View.GONE);
                 mFocusAskBtnsPanel.setVisibility(View.GONE);
-                mFollowBtn.setVisibility(View.VISIBLE);
                 mCommentsPanel.setVisibility(View.GONE);
                 break;
 
@@ -929,7 +927,6 @@ public class PhotoItemView extends RelativeLayout implements Callback {
                 mComplexBtnsPanel.setVisibility(View.GONE);
                 mHotReplyBtnsPanel.setVisibility(View.VISIBLE);
                 mFocusAskBtnsPanel.setVisibility(View.GONE);
-                mFollowBtn.setVisibility(View.VISIBLE);
                 mCommentsPanel.setVisibility(View.GONE);
                 break;
 
@@ -939,7 +936,6 @@ public class PhotoItemView extends RelativeLayout implements Callback {
                 mComplexBtnsPanel.setVisibility(View.GONE);
                 mHotReplyBtnsPanel.setVisibility(View.GONE);
                 mFocusAskBtnsPanel.setVisibility(View.VISIBLE);
-                mFollowBtn.setVisibility(View.VISIBLE);
                 break;
 
             case HOT_FOCUS_REPLY:
@@ -948,7 +944,6 @@ public class PhotoItemView extends RelativeLayout implements Callback {
                 mComplexBtnsPanel.setVisibility(View.VISIBLE);
                 mHotReplyBtnsPanel.setVisibility(View.GONE);
                 mFocusAskBtnsPanel.setVisibility(View.GONE);
-                mFollowBtn.setVisibility(View.VISIBLE);
                 break;
 
             default:
