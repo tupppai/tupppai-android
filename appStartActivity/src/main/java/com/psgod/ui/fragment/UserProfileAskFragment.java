@@ -1,6 +1,7 @@
 package com.psgod.ui.fragment;
 
 import android.annotation.SuppressLint;
+import android.content.ContentProvider;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,6 +42,7 @@ public class UserProfileAskFragment extends ScrollTabHolderFragment {
 
     private PullToRefreshListView listView;
     private View placeHolderView;
+    private View emptyView;
 
     private UserProfileAsksAdapter adapter;
     private List<PhotoItem> mItems;
@@ -100,7 +102,8 @@ public class UserProfileAskFragment extends ScrollTabHolderFragment {
                 R.layout.footer_load_more, null);
         listView.getRefreshableView().addFooterView(mFooterView);
         mFooterView.setVisibility(View.GONE);
-
+        emptyView = getView().findViewById(
+                R.id.fragment_fprofile_ask_list_empty_view);
         // 设置listView监听器
         setListViewListener();
         // 添加listview header
@@ -214,8 +217,6 @@ public class UserProfileAskFragment extends ScrollTabHolderFragment {
             adapter.notifyDataSetChanged();
             listView.onRefreshComplete();
 
-            View emptyView = getView().findViewById(
-                    R.id.fragment_fprofile_ask_list_empty_view);
             listView.setEmptyView(emptyView);
 
             if (items.size() > 0) {
