@@ -66,6 +66,7 @@ public class WithDrawMoneyBindWechatActivity extends PSGodBaseActivity {
         mBindBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Utils.showProgressDialog(WithDrawMoneyBindWechatActivity.this);
                 Platform wechat = ShareSDK.getPlatform(Wechat.NAME);
                 if (wechat.isValid()) {
                     wechat.removeAccount();
@@ -82,6 +83,7 @@ public class WithDrawMoneyBindWechatActivity extends PSGodBaseActivity {
     private PlatformActionListener wechatBindListener = new PlatformActionListener() {
         @Override
         public void onError(Platform arg0, int arg1, Throwable arg2) {
+            Utils.hideProgressDialog();
             Looper.prepare();
             CustomToast.
                     show(WithDrawMoneyBindWechatActivity.this,
@@ -92,6 +94,7 @@ public class WithDrawMoneyBindWechatActivity extends PSGodBaseActivity {
         @Override
         public void onComplete(Platform arg0, int arg1,
                                HashMap<String, Object> res) {
+            Utils.hideProgressDialog();
             String wechatOpenId = res.get("openid").toString();
 
             if (!TextUtils.isEmpty(wechatOpenId)) {
@@ -110,6 +113,7 @@ public class WithDrawMoneyBindWechatActivity extends PSGodBaseActivity {
 
         @Override
         public void onCancel(Platform arg0, int arg1) {
+            Utils.hideProgressDialog();
             Looper.prepare();
             CustomToast.
                     show(WithDrawMoneyBindWechatActivity.this,
@@ -138,6 +142,7 @@ public class WithDrawMoneyBindWechatActivity extends PSGodBaseActivity {
                         WithdrawPhoneVerifyActivity.class);
                 intent.putExtra(WithdrawPhoneVerifyActivity.AMOUNT_DOUBLE,amount);
                 startActivity(intent);
+                finish();
             } else {
             }
         }
