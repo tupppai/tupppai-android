@@ -187,7 +187,7 @@ public class SinglePhotoDetailView extends RelativeLayout {
             imgListArea.setVisibility(VISIBLE);
             imgListAsk.removeAllViews();
             if (mPhotoItem.getIsHomework()) {
-                ImageData image = mAskPhotoItems.getUploadImagesList().get(0);
+                String image = mAskPhotoItems.getImageURL();
                 ImageView imageView = new ImageView(getContext());
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                         Utils.dpToPx(getContext(), 45), ViewGroup.LayoutParams.MATCH_PARENT
@@ -196,9 +196,9 @@ public class SinglePhotoDetailView extends RelativeLayout {
                 params.setMargins(0, 0, Utils.dpToPx(getContext(), 5), 0);
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 imageView.setLayoutParams(params);
-                PsGodImageLoader.getInstance().displayImage(image.mImageUrl, imageView,
+                PsGodImageLoader.getInstance().displayImage(image, imageView,
                         Constants.DISPLAY_IMAGE_OPTIONS_SMALL_SMALL);
-                imageView.setTag(R.id.image_url, image.mImageUrl);
+                imageView.setTag(R.id.image_url, image);
                 imageView.setOnClickListener(homeworkImgClick);
                 imgListAsk.addView(imageView);
             } else {
