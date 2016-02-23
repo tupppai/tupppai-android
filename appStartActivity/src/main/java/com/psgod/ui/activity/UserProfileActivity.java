@@ -673,8 +673,7 @@ public class UserProfileActivity extends PSGodBaseActivity implements
         @Override
         public void onLoadingComplete(String imageUri, View view,
                                       Bitmap loadedImage) {
-            mLinerHeaderOut.setBackground(new BitmapDrawable(getResources(),
-                    BitmapUtils.getBlurBitmap(loadedImage)));
+            BitmapUtils.setBlurBitmap(loadedImage, mLinerHeaderOut, imageUri);
         }
 
         @Override

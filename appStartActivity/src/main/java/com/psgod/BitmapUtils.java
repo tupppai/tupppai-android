@@ -4,9 +4,18 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.util.LruCache;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+
+import java.io.ByteArrayOutputStream;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Bitmap 图片操作类
@@ -14,9 +23,12 @@ import android.widget.ImageView;
  * @author brandwang
  */
 
-public final class BitmapUtils {
+public final class BitmapUtils implements Handler.Callback {
     private static final String TAG = BitmapUtils.class.getSimpleName();
     public static LruCache<String, Bitmap> lruCache;
+    private static Handler mHandler = new Handler(new BitmapUtils());
+    private static ExecutorService fixedThreadPool = Executors.newFixedThreadPool(2);
+
 
     static {
 //		int maxMemory = (int) Runtime.getRuntime().maxMemory();
@@ -149,75 +161,111 @@ public final class BitmapUtils {
         public void onDecodeError();
     }
 
+//    // 对图片进行处理，得到毛玻璃效果
+//    public static Bitmap getBlurBitmap(Bitmap bitmap) {
+//        Bitmap bluredBitmap = null;
+//        if (bitmap == null) {
+//            return bitmap;
+//        }
+//        if (lruCache.get(bitmap.toString()) == null) {
+//
+//            // 图片缩放比例 TODO 做成参数可配置
+//            float scaleFactor = 8;
+//            // 模糊程度
+//            float radius = 10;
+//
+//            int width = bitmap.getWidth();
+//            int height = bitmap.getHeight();
+//
+//            bluredBitmap = Bitmap.createBitmap((int) (width / scaleFactor),
+//                    (int) (height / scaleFactor), Bitmap.Config.ARGB_8888);
+//            Canvas canvas = new Canvas(bluredBitmap);
+//            canvas.scale(1 / scaleFactor, 1 / scaleFactor);
+//
+//            Paint paint = new Paint();
+//            paint.setFlags(Paint.FILTER_BITMAP_FLAG);
+//            canvas.drawBitmap(bitmap, 0, 0, paint);
+//
+//            bluredBitmap = FastBlur.doBlur(bluredBitmap, (int) radius, true);
+//
+//            lruCache.put(bitmap.toString(), bluredBitmap);
+//        }
+//        return lruCache.get(bitmap.toString());
+//    }
+
     // 对图片进行处理，得到毛玻璃效果
-    public static Bitmap getBlurBitmap(Bitmap bitmap) {
-        Bitmap bluredBitmap = null;
-        if (bitmap == null) {
-            return bitmap;
+    public static void setBlurBitmap(final Bitmap bitmap, final View view, final String url) {
+        if (bitmap == null || view == null || url == null) {
+            Log.e("bitmap", bitmap.toString() + "=====" + url + "=====" + view.toString());
+            return;
         }
+        view.setTag(R.id.image_url, url);
         if (lruCache.get(bitmap.toString()) == null) {
+            fixedThreadPool.execute(new Runnable() {
+                @Override
+                public void run() {
+                    // 图片缩放比例 TODO 做成参数可配置
+                    float scaleFactor = 8;
+                    // 模糊程度
+                    float radius = 10;
 
-            // 图片缩放比例 TODO 做成参数可配置
-            float scaleFactor = 8;
-            // 模糊程度
-            float radius = 10;
+                    int width = bitmap.getWidth();
+                    int height = bitmap.getHeight();
 
-            int width = bitmap.getWidth();
-            int height = bitmap.getHeight();
+                    Bitmap bluredBitmap = Bitmap.createBitmap((int) (width / scaleFactor),
+                            (int) (height / scaleFactor), Bitmap.Config.ARGB_8888);
+                    Canvas canvas = new Canvas(bluredBitmap);
+                    canvas.scale(1 / scaleFactor, 1 / scaleFactor);
+//                Log.e("bitmap", lruCache.maxSize() + "======" + lruCache.size());
+                    Paint paint = new Paint();
+                    paint.setFlags(Paint.FILTER_BITMAP_FLAG);
+                    canvas.drawBitmap(bitmap, 0, 0, paint);
 
-            bluredBitmap = Bitmap.createBitmap((int) (width / scaleFactor),
-                    (int) (height / scaleFactor), Bitmap.Config.ARGB_8888);
-            Canvas canvas = new Canvas(bluredBitmap);
-            canvas.scale(1 / scaleFactor, 1 / scaleFactor);
+                    bluredBitmap = FastBlur.doBlur(bluredBitmap, (int) radius, true);
 
-            Paint paint = new Paint();
-            paint.setFlags(Paint.FILTER_BITMAP_FLAG);
-            canvas.drawBitmap(bitmap, 0, 0, paint);
+                    lruCache.put(bitmap.toString(), bluredBitmap);
 
-            bluredBitmap = FastBlur.doBlur(bluredBitmap, (int) radius, true);
-
-            lruCache.put(bitmap.toString(), bluredBitmap);
-        }
-        return lruCache.get(bitmap.toString());
-    }
-
-    // 对图片进行处理，得到毛玻璃效果
-    public static Bitmap getBlurBitmap(Bitmap bitmap, View view, String url) {
-        Bitmap bluredBitmap = null;
-        if (bitmap == null) {
-            return bitmap;
-        }
-        if (lruCache.get(bitmap.toString()) == null) {
-
-            // 图片缩放比例 TODO 做成参数可配置
-            float scaleFactor = 8;
-            // 模糊程度
-            float radius = 10;
-
-            int width = bitmap.getWidth();
-            int height = bitmap.getHeight();
-
-            bluredBitmap = Bitmap.createBitmap((int) (width / scaleFactor),
-                    (int) (height / scaleFactor), Bitmap.Config.ARGB_8888);
-            Canvas canvas = new Canvas(bluredBitmap);
-            canvas.scale(1 / scaleFactor, 1 / scaleFactor);
-
-            Paint paint = new Paint();
-            paint.setFlags(Paint.FILTER_BITMAP_FLAG);
-            canvas.drawBitmap(bitmap, 0, 0, paint);
-
-            bluredBitmap = FastBlur.doBlur(bluredBitmap, (int) radius, true);
-
-            lruCache.put(bitmap.toString(), bluredBitmap);
-        }
-        if (
-                view.getTag(R.id.image_url).toString().split("\\?")[0].equals(url.split("\\?")[0])
-                ) {
-            return lruCache.get(bitmap.toString());
+                    Message message = new Message();
+                    message.what = 1;
+                    message.obj = view;
+                    Bundle bundle = new Bundle();
+                    bundle.putString("url", url);
+                    bundle.putString("key", bitmap.toString());
+                    bundle.putParcelable("bitmap", bitmap);
+                    message.setData(bundle);
+                    mHandler.sendMessage(message);
+                }
+            });
         } else {
-            return null;
+            if (view.getTag(R.id.image_url).toString().split("\\?")[0]
+                    .equals(url.split("\\?")[0])) {
+                view.setBackgroundDrawable(new BitmapDrawable(lruCache.get(bitmap.toString())));
+            }
         }
+
     }
 
+    @Override
+    public boolean handleMessage(Message message) {
+        switch (message.what) {
+            case 1:
+                View view = (View) message.obj;
+                String url = message.getData().getString("url");
+                String key = message.getData().getString("key");
+                Bitmap oriBitmap = message.getData().getParcelable("bitmap");
+                Bitmap bitmap = lruCache.get(key);
+                if (view.getTag(R.id.image_url).toString().split("\\?")[0].
+                        equals(url.split("\\?")[0])) {
+                    if (bitmap != null) {
+                        view.setBackgroundDrawable(new BitmapDrawable(bitmap));
+                    } else {
+                        setBlurBitmap(oriBitmap, view, url);
+                    }
+                } else {
+                }
+                break;
+        }
+        return true;
+    }
 
 }

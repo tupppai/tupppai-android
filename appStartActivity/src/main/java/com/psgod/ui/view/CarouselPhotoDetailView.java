@@ -205,7 +205,7 @@ public class CarouselPhotoDetailView extends RelativeLayout {
 
             @Override
             public void onLoadingComplete(String s, View view, Bitmap bitmap) {
-                coverBack.setImageBitmap(BitmapUtils.getBlurBitmap(bitmap));
+//                coverBack.setImageBitmap(BitmapUtils.getBlurBitmap(bitmap));
 //                if(bitmap.getHeight()>bitmap.getWidth()){
 //                }else{
 //                    ViewGroup.LayoutParams params = view.getLayoutParams();

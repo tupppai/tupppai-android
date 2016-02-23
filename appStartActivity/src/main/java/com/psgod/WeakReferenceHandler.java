@@ -8,7 +8,7 @@ import java.lang.ref.WeakReference;
 
 /**
  * 使用匿名内部类Handler有可能会导致内存泄漏， 凡是使用匿名内部类Handler的地方， 都尽量使用WeakReferenceHandler
- * 
+ * 不适用于高强度请求环境
  * @author Rayal
  * 
  */

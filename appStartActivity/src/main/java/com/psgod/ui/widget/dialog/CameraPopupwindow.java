@@ -85,7 +85,7 @@ public class CameraPopupwindow extends PopupWindow implements OnClickListener {
 	}
 
 	// 截屏并获得毛玻璃化的图片
-	private Bitmap getBlurPic() {
+	private void getBlurPic() {
 		mOverlayBitmap = null;
 
 		View view = mActivity.getWindow().getDecorView();
@@ -93,8 +93,8 @@ public class CameraPopupwindow extends PopupWindow implements OnClickListener {
 		view.buildDrawingCache(true);
 		mScreenShotBitmap = view.getDrawingCache();
 
-		mOverlayBitmap = BitmapUtils.getBlurBitmap(mScreenShotBitmap);
-		return mOverlayBitmap;
+		BitmapUtils.setBlurBitmap(mScreenShotBitmap,this.getContentView(),mScreenShotBitmap.toString());
+//		return mOverlayBitmap;
 	}
 
 	// 显示弹出框
@@ -118,9 +118,9 @@ public class CameraPopupwindow extends PopupWindow implements OnClickListener {
 		setContentView(layout);
 
 		showAnimation(layout);
-
-		setBackgroundDrawable(new BitmapDrawable(mActivity.getResources(),
-				getBlurPic()));
+		getBlurPic();
+//		setBackgroundDrawable(new BitmapDrawable(mActivity.getResources(),
+//				getBlurPic()));
 		setOutsideTouchable(true);
 		setFocusable(true);
 		showAtLocation(anchor, Gravity.BOTTOM, 0, statusBarHeight);

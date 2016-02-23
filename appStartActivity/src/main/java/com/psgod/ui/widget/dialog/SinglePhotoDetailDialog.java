@@ -149,7 +149,8 @@ public class SinglePhotoDetailDialog extends Dialog implements Handler.Callback 
 
                     @Override
                     public void onLoadingComplete(String s, View view, Bitmap bitmap) {
-                        coverBack.setImageBitmap(BitmapUtils.getBlurBitmap(bitmap));
+//                        coverBack.setImageBitmap();
+                        BitmapUtils.setBlurBitmap(bitmap, coverBack, s);
                     }
 
                     @Override
@@ -167,9 +168,9 @@ public class SinglePhotoDetailDialog extends Dialog implements Handler.Callback 
             coverLike.setVisibility(View.VISIBLE);
             coverBang.setVisibility(View.GONE);
         }
-        if(isOwn){
+        if (isOwn) {
             detailTxt.setVisibility(View.GONE);
-        }else{
+        } else {
             detailTxt.setVisibility(View.VISIBLE);
         }
     }
@@ -291,7 +292,7 @@ public class SinglePhotoDetailDialog extends Dialog implements Handler.Callback 
 
     private boolean isOwn = false;
 
-    public SinglePhotoDetailDialog setIsOwn(boolean isOwn){
+    public SinglePhotoDetailDialog setIsOwn(boolean isOwn) {
         this.isOwn = isOwn;
         return this;
     }

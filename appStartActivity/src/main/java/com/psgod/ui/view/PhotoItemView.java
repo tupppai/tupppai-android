@@ -1017,13 +1017,13 @@ public class PhotoItemView extends RelativeLayout implements Callback {
                 url = url.split("\\?")[0];
                 imageUri = imageUri.split("\\?")[0];
                 if (url.equals(imageUri)) {
-                    Bitmap bitmap = BitmapUtils.getBlurBitmap(loadedImage, view, imageUri);
-                    if (bitmap == null) {
-                        mImageArea.setBackgroundColor(Color.parseColor("#00000000"));
-                    } else {
-                        mImageArea.setBackgroundDrawable(new BitmapDrawable(getResources(),
-                                bitmap));
-                    }
+                    BitmapUtils.setBlurBitmap(loadedImage, view, imageUri);
+//                    if (bitmap == null) {
+//                        mImageArea.setBackgroundColor(Color.parseColor("#00000000"));
+//                    } else {
+//                        mImageArea.setBackgroundDrawable(new BitmapDrawable(getResources(),
+//                                bitmap));
+//                    }
                 }
             }
         }

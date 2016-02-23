@@ -16,8 +16,10 @@ import com.psgod.PsGodImageLoader;
 import com.psgod.R;
 import com.psgod.Utils;
 import com.psgod.model.PhotoItem;
+import com.psgod.model.SinglePhotoItem;
 import com.psgod.ui.activity.SinglePhotoDetail;
 import com.psgod.ui.widget.dialog.SinglePhotoDetailDialog;
+import com.psgod.ui.widget.dialog.SinglePhotoDetailDialog2;
 
 import java.util.List;
 
@@ -29,12 +31,14 @@ public class SingleImgListAdapter extends RecyclerView.Adapter<SingleImgListAdap
     private Context context;
     private List<PhotoItem> list;
     private String ownUrl;
+    private SinglePhotoItem singlePhotoItem;
 
     private DisplayImageOptions mSmallSmallOptions = Constants.DISPLAY_IMAGE_OPTIONS_SMALL_SMALL;
 
-    public SingleImgListAdapter(Context context, List<PhotoItem> list) {
+    public SingleImgListAdapter(Context context, SinglePhotoItem singlePhotoItem) {
         this.context = context;
-        this.list = list;
+        this.singlePhotoItem = singlePhotoItem;
+        this.list = singlePhotoItem.getReplyPhotoItems();
     }
 
     public void setOwnUrl(String ownUrl) {
@@ -65,8 +69,9 @@ public class SingleImgListAdapter extends RecyclerView.Adapter<SingleImgListAdap
         public void onClick(View view) {
             Integer position = (Integer) view.getTag(R.id.tupppai_view_id);
             PhotoItem photoItem = list.get(position);
-            new SinglePhotoDetailDialog(context,photoItem).
-                    setIsOwn(photoItem.getImageURL().equals(ownUrl)).show();
+//            new SinglePhotoDetailDialog(context,photoItem).
+//                    setIsOwn(photoItem.getImageURL().equals(ownUrl)).show();
+            new SinglePhotoDetailDialog2(context,singlePhotoItem,photoItem.getPid()).show();
         }
     };
 

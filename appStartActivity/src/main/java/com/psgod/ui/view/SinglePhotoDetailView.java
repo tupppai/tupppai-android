@@ -38,6 +38,7 @@ import com.psgod.ui.widget.FollowImage;
 import com.psgod.ui.widget.dialog.PSDialog;
 import com.psgod.ui.widget.dialog.ShareMoreDialog;
 import com.psgod.ui.widget.dialog.SinglePhotoDetailDialog;
+import com.psgod.ui.widget.dialog.SinglePhotoDetailDialog2;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -67,6 +68,7 @@ public class SinglePhotoDetailView extends RelativeLayout {
 
     public SinglePhotoDetailView(Context context, SinglePhotoItem singlePhotoItem) {
         super(context);
+        this.mSinglePhotoItem = singlePhotoItem;
         this.mPhotoItem = singlePhotoItem.getPhotoItem();
         this.mAskPhotoItems = singlePhotoItem.getAskPhotoItems();
         this.mReplyPhotoItems = singlePhotoItem.getReplyPhotoItems();
@@ -78,6 +80,7 @@ public class SinglePhotoDetailView extends RelativeLayout {
         this.mPhotoItem = photoItem;
     }
 
+    private SinglePhotoItem mSinglePhotoItem;
     private PhotoItem mPhotoItem;
     PhotoItem mAskPhotoItems;
     List<PhotoItem> mReplyPhotoItems;
@@ -202,7 +205,8 @@ public class SinglePhotoDetailView extends RelativeLayout {
                 imageView.setOnClickListener(homeworkImgClick);
                 imgListAsk.addView(imageView);
             } else {
-                for (ImageData image : mAskPhotoItems.getUploadImagesList()) {
+                for (int i = 0 ; i < mAskPhotoItems.getUploadImagesList().size() ; i ++ ) {
+                    ImageData image = mAskPhotoItems.getUploadImagesList().get(i);
                     ImageView imageView = new ImageView(getContext());
                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                             Utils.dpToPx(getContext(), 45), ViewGroup.LayoutParams.MATCH_PARENT
@@ -213,12 +217,12 @@ public class SinglePhotoDetailView extends RelativeLayout {
                     imageView.setLayoutParams(params);
                     PsGodImageLoader.getInstance().displayImage(image.mImageUrl, imageView,
                             Constants.DISPLAY_IMAGE_OPTIONS_SMALL_SMALL);
-                    imageView.setTag(R.id.image_url, image.mImageUrl);
+                    imageView.setTag(R.id.image_url, i);
                     imageView.setOnClickListener(askImgClick);
                     imgListAsk.addView(imageView);
                 }
             }
-            imgListAdapter = new SingleImgListAdapter(getContext(), mReplyPhotoItems);
+            imgListAdapter = new SingleImgListAdapter(getContext(), mSinglePhotoItem);
             imgListAdapter.setOwnUrl(mPhotoItem.getImageURL());
             imgListReply.setAdapter(imgListAdapter);
         } else {
@@ -229,11 +233,12 @@ public class SinglePhotoDetailView extends RelativeLayout {
     OnClickListener askImgClick = new OnClickListener() {
         @Override
         public void onClick(View view) {
-            String url = view.getTag(R.id.image_url).toString();
-            boolean isOwn = mPhotoItem.getType() == PhotoItem.TYPE_ASK;
-            mAskPhotoItems.setImageURL(url);
-            new SinglePhotoDetailDialog(getContext(), mAskPhotoItems)
-                    .setIsOwn(isOwn).show();
+            Integer i = (Integer) view.getTag(R.id.image_url);
+//            boolean isOwn = mPhotoItem.getType() == PhotoItem.TYPE_ASK;
+//            mAskPhotoItems.setImageURL(url);
+//            new SinglePhotoDetailDialog(getContext(), mAskPhotoItems)
+//                    .setIsOwn(isOwn).show();
+            new SinglePhotoDetailDialog2(getContext(),mSinglePhotoItem,i).show();
         }
     };
 
@@ -326,7 +331,7 @@ public class SinglePhotoDetailView extends RelativeLayout {
 
                 @Override
                 public void onLoadingComplete(String s, View view, Bitmap bitmap) {
-                    imgBack.setImageBitmap(BitmapUtils.getBlurBitmap(bitmap));
+                    BitmapUtils.setBlurBitmap(bitmap, imgBack, s);
                 }
 
                 @Override

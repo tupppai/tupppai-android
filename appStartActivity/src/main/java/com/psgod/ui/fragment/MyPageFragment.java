@@ -681,8 +681,7 @@ public class MyPageFragment extends Fragment implements
         @Override
         public void onLoadingComplete(String imageUri, View view,
                                       Bitmap loadedImage) {
-            mViewHolder.mLinearHeader.setBackground(new BitmapDrawable(
-                    getResources(), BitmapUtils.getBlurBitmap(loadedImage)));
+                    BitmapUtils.setBlurBitmap(loadedImage, mViewHolder.mLinearHeader,imageUri);
         }
 
         @Override
