@@ -1,9 +1,14 @@
 package com.psgod.ui.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Message;
+import android.telephony.SmsMessage;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,6 +29,9 @@ import com.psgod.network.request.MoneyTransferRequest;
 import com.psgod.network.request.PSGodErrorListener;
 import com.psgod.network.request.PSGodRequestQueue;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * Created by pires on 16/1/21.
  */
@@ -34,6 +42,7 @@ public class WithdrawPhoneVerifyActivity extends PSGodBaseActivity{
     public static final int RESEND_TIME_IN_SEC = 60;
     private int mLeftTime = RESEND_TIME_IN_SEC;
     private static final int MSG_TIMER = 0x3315;
+    private static final int MSG_CODE = 0x3321;
 
     private WeakReferenceHandler mHandler = new WeakReferenceHandler(this);
 
@@ -43,6 +52,10 @@ public class WithdrawPhoneVerifyActivity extends PSGodBaseActivity{
     private TextView mVerifyTxt;
     private EditText mVerifyEdit;
     private Button mSure;
+
+    private BroadcastReceiver smsReceiver;
+    private IntentFilter filter;
+    private String patternCoder = "(?<!\\d)\\d{4}(?!\\d)";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,6 +69,51 @@ public class WithdrawPhoneVerifyActivity extends PSGodBaseActivity{
         initView();
         initListener();
         mVerifyTxt.callOnClick();
+        codeReceiver();
+    }
+
+    // BroadcastReceiver拦截短信验证码
+    private void codeReceiver() {
+        filter = new IntentFilter();
+        //设置短信拦截参数
+        filter.addAction("android.provider.Telephony.SMS_RECEIVED");
+        filter.setPriority(Integer.MAX_VALUE);
+        smsReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                Object[] objs = (Object[]) intent.getExtras().get("pdus");
+                for (Object obj : objs) {
+                    byte[] pdu = (byte[]) obj;
+                    SmsMessage sms = SmsMessage.createFromPdu(pdu);
+                    String message = sms.getMessageBody();
+                    String from = sms.getOriginatingAddress();
+                    if (!TextUtils.isEmpty(from)) {
+                        String code = patternCode(message);
+                        if (!TextUtils.isEmpty(code)) {
+                            Message msg = mHandler.obtainMessage();
+                            msg.what = MSG_CODE;
+                            Bundle bundle = new Bundle();
+                            bundle.putString("messagecode", code);
+                            msg.setData(bundle);
+                            mHandler.sendMessage(msg);
+                        }
+                    }
+                }
+            }
+        };
+        registerReceiver(smsReceiver, filter);
+    }
+
+    private String patternCode(String patternContent) {
+        if (TextUtils.isEmpty(patternContent)) {
+            return null;
+        }
+        Pattern p = Pattern.compile(patternCoder);
+        Matcher matcher = p.matcher(patternContent);
+        if (matcher.find()) {
+            return matcher.group();
+        }
+        return null;
     }
 
     private void initView() {
@@ -167,6 +225,12 @@ public class WithdrawPhoneVerifyActivity extends PSGodBaseActivity{
                     mVerifyTxt.setTextColor(Color.parseColor("#090909"));
                 }
                 break;
+            case MSG_CODE:
+                String codeMsg = msg.getData().getString("messagecode");
+                if (codeMsg != null && codeMsg.length() >= 4 && codeMsg.length() <= 6) {
+                    mVerifyEdit.setText(codeMsg);
+                }
+
             default:
                 break;
 
