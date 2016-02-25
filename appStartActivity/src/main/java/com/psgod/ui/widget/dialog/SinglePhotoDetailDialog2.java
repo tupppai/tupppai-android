@@ -342,12 +342,13 @@ public class SinglePhotoDetailDialog2 extends Dialog implements Handler.Callback
                         case MotionEvent.ACTION_MOVE:
                             moveY = motionEvent.getRawY() - downY;
                             moveX = motionEvent.getRawX() - leftX;
-                            if (Math.abs(moveX) < Utils.dpToPx(mContext, 10)
-                                    || (Math.abs(moveX) > Utils.dpToPx(mContext, 7) &&
-                                    Math.abs(moveY) < Utils.dpToPx(mContext, 13))) {
-                                ViewHelper.setTranslationY(ContentView.this, moveY);
-                            } else {
+                            if (Math.abs(moveX) > Utils.dpToPx(mContext, 7) &&
+                                    Math.abs(moveY) < Utils.dpToPx(mContext, 13)) {
                                 ViewHelper.setTranslationY(ContentView.this, 0);
+
+                            } else {
+                                ViewHelper.setTranslationY(ContentView.this, moveY);
+
                             }
                             break;
                         case MotionEvent.ACTION_UP:
