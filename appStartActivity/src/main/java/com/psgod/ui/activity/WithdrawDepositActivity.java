@@ -111,6 +111,10 @@ public class WithdrawDepositActivity extends PSGodBaseActivity {
                         mSure.setTextColor(Color.parseColor("#70000000"));
                         mSure.setEnabled(false);
                     }
+                }else{
+                    mSure.setBackgroundColor(Color.parseColor("#70FFEF04"));
+                    mSure.setTextColor(Color.parseColor("#70000000"));
+                    mSure.setEnabled(false);
                 }
             }
 
