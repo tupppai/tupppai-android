@@ -139,7 +139,9 @@ public class SinglePhotoDetailDialog2 extends Dialog implements Handler.Callback
                     == pid) {
                 view.setIsOwn(true);
                 showNum = i + askLength;
-            }else if(num!= -1 && i == num - askLength){
+            }
+            if(mSinglePhotoItem.getPhotoItem().getPid() ==
+                    mSinglePhotoItem.getReplyPhotoItems().get(i).getPid()){
                 view.setIsOwn(true);
             }
             views.add(view);
