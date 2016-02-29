@@ -23,6 +23,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
@@ -63,6 +64,7 @@ import com.umeng.message.UmengRegistrar;
 import com.umeng.update.UmengUpdateAgent;
 
 import org.android.agoo.client.BaseRegistrar;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -172,6 +174,7 @@ public class MainActivity extends PSGodBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         mBottomLayout = (LinearLayout) findViewById(R.id.psgod_linear_tab);
         mAvatarImg = (ImageView) findViewById(R.id.activity_main_tab_user_img);
 

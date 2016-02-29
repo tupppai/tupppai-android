@@ -137,11 +137,11 @@ public class SinglePhotoDetailDialog2 extends Dialog implements Handler.Callback
             view.setGravity(Gravity.CENTER);
             if (mSinglePhotoItem.getReplyPhotoItems().get(i).getPid()
                     == pid) {
-                view.setIsOwn(true);
-                showNum = i + askLength;
+//                view.setIsOwn(true);
+                showNum = i + (mSinglePhotoItem.getPhotoItem().getIsHomework() ? 0 : askLength);
             }
-            if(mSinglePhotoItem.getPhotoItem().getPid() ==
-                    mSinglePhotoItem.getReplyPhotoItems().get(i).getPid()){
+            if (mSinglePhotoItem.getPhotoItem().getPid() ==
+                    mSinglePhotoItem.getReplyPhotoItems().get(i).getPid()) {
                 view.setIsOwn(true);
             }
             views.add(view);
