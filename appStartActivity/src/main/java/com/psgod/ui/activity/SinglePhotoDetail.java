@@ -83,6 +83,8 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
     private CommentListListener mListViewListener;
     private TextView mSendCommentBtn;
     private EditText mCommentEditText;
+    private View mInputArea;
+
 
     private RelativeLayout mParent;
 
@@ -186,6 +188,8 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
                 .findViewById(R.id.activity_comment_list_post_btn);
         mCommentEditText = (EditText) this
                 .findViewById(R.id.activity_comment_list_input_panel);
+        mInputArea = findViewById(R.id.rl_bottom);
+
         mHotCommentList = mPhotoItem.getHotCommentList();
         if (mHotCommentList == null) {
             mHotCommentList = new ArrayList<Comment>();
@@ -261,6 +265,12 @@ public class SinglePhotoDetail extends PSGodBaseActivity implements
 
     private void initPhotoItem() {
         Intent intent = getIntent();
+        LoginUser user = LoginUser.getInstance();
+        if (user.isBoundPhone()) {
+            mInputArea.setVisibility(View.VISIBLE);
+        } else {
+            mInputArea.setVisibility(View.GONE);
+        }
         if (intent.hasExtra(TYPE)) {
             mType = intent.getStringExtra(TYPE);
         }

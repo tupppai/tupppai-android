@@ -69,6 +69,12 @@ public class LoginUser {
         return mInstance;
     }
 
+    public boolean isBoundPhone(){
+        return getPhoneNum() != null &&
+                !getPhoneNum().trim().equals("") &&
+                !getPhoneNum().trim().equals("0");
+    }
+
     //更改资料后，刷新数据
     public void refreshData() {
         if (mInstance != null) {

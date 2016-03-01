@@ -30,6 +30,7 @@ import com.android.volley.VolleyError;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.psgod.Constants;
 import com.psgod.CustomToast;
+import com.psgod.PSGodApplication;
 import com.psgod.PsGodImageLoader;
 import com.psgod.R;
 import com.psgod.UserPreferences;
@@ -530,13 +531,19 @@ public class MainActivity extends PSGodBaseActivity {
         mReleaseImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this,
-                        MultiImageSelectActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("SelectType",
-                        UploadMultiImageActivity.TYPE_TIMELINE_SELECT);
-                intent.putExtras(bundle);
-                startActivity(intent);
+                if(LoginUser.getInstance().isBoundPhone()) {
+                    Intent intent = new Intent(MainActivity.this,
+                            MultiImageSelectActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("SelectType",
+                            UploadMultiImageActivity.TYPE_TIMELINE_SELECT);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }else{
+                    Intent intent = new Intent(MainActivity.this,
+                            BindInputPhoneActivity.class);
+                    startActivity(intent);
+                }
             }
         });
 

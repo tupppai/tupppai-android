@@ -38,10 +38,12 @@ import com.psgod.UpLoadUtils;
 import com.psgod.Utils;
 import com.psgod.WeakReferenceHandler;
 import com.psgod.model.FileUtils;
+import com.psgod.model.LoginUser;
 import com.psgod.model.PhotoItem;
 import com.psgod.model.SelectImage;
 import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.network.request.UserPhotoRequest;
+import com.psgod.ui.activity.BindInputPhoneActivity;
 import com.psgod.ui.activity.MultiImageSelectActivity;
 import com.psgod.ui.activity.PSGodBaseActivity;
 import com.psgod.ui.adapter.MultiImageSelectRecyclerAdapter;
@@ -133,18 +135,24 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
 
     @Override
     public void show() {
-        initView();
-        initListener();
-        getWindow().getAttributes().width = -1;
-        getWindow().setGravity(Gravity.BOTTOM);
-        getWindow().setWindowAnimations(R.style.popwindow_anim_style);
-        getWindow().setSoftInputMode(
-                WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN
-                        | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-        if (mImageimg.hasOnClickListeners()) {
-            mImageimg.callOnClick();
+        if(LoginUser.getInstance().isBoundPhone()) {
+            initView();
+            initListener();
+            getWindow().getAttributes().width = -1;
+            getWindow().setGravity(Gravity.BOTTOM);
+            getWindow().setWindowAnimations(R.style.popwindow_anim_style);
+            getWindow().setSoftInputMode(
+                    WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN
+                            | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+            if (mImageimg.hasOnClickListeners()) {
+                mImageimg.callOnClick();
+            }
+            super.show();
+        }else{
+            Intent intent = new Intent(mContext,
+                    BindInputPhoneActivity.class);
+            mContext.startActivity(intent);
         }
-        super.show();
     }
 
     //设置头部默认选择图片,用于相册选择图片后的回调
