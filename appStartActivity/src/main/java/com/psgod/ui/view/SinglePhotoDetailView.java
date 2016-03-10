@@ -47,7 +47,7 @@ import java.util.List;
 
 /**
  * Created by Administrator on 2015/12/2 0002.
- * SinglePhotoDetail使用
+ * SinglePhotoDetail（Acticity）使用的单图区域
  */
 public class SinglePhotoDetailView extends RelativeLayout {
     public SinglePhotoDetailView(Context context, AttributeSet attrs) {

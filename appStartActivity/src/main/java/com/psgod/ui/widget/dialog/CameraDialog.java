@@ -35,7 +35,6 @@ public class CameraDialog extends Dialog {
 
 		// 初始化组件
 		mContext = context;
-		// mTakePhotoBtn = (Button) findViewById(R.id.dialog_camera_take_photo);
 		mChoosePhotoBtn = (Button) findViewById(R.id.dialog_camera_choose_photo);
 		mUploadPhotoBtn = (Button) findViewById(R.id.dialog_camera_upload_photo);
 		mCancelBtn = (Button) findViewById(R.id.dialog_camera_cancel);
@@ -43,27 +42,6 @@ public class CameraDialog extends Dialog {
 	}
 
 	private void initListeners() {
-		// 设置拍照按钮的动作监听器
-		// mTakePhotoBtn.setOnClickListener(new View.OnClickListener() {
-		// @Override
-		// public void onClick(View v) {
-		// dismiss();
-		// ChoosePhotoActivity.startActivity((Activity)mContext,
-		// ChoosePhotoActivity.FROM_CAMERA,
-//		 UploadImageActivity.class.getName());
-		// }
-		// });
-
-		// 设置本地上传按钮的动作监听器
-		// mChoosePhotoBtn.setOnClickListener(new View.OnClickListener() {
-		// @Override
-		// public void onClick(View v) {
-		// dismiss();
-		// ChoosePhotoActivity.startActivity((Activity)mContext,
-		// ChoosePhotoActivity.FROM_ALBUM, UploadImageActivity.class.getName());
-		// }
-		// });
-
 		// 设置上传作品按钮的动作监听器
 		mUploadPhotoBtn.setOnClickListener(new View.OnClickListener() {
 			@Override

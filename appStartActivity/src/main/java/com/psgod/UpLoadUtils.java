@@ -276,15 +276,6 @@ public class UpLoadUtils {
 
             if (uploadType == UploadMultiRequest.TYPE_ASK_UPLOAD) {
                 // 新建求P成功后跳转最新求p 页面
-//                Intent intent = new Intent(UploadMultiImageActivity.this,
-//                        MainActivity.class);
-//                intent.putExtra(MainActivity.IntentParams.KEY_FRAGMENT_ID,
-//                        MainActivity.IntentParams.VALUE_FRAGMENT_ID_RECENT);
-//                intent.putExtra(
-//                        MainActivity.IntentParams.KEY_RECENTPAGE_ID,
-//                        MainActivity.IntentParams.VALUE_RECENTPAGE_ID_ASKS);
-//                intent.putExtra(MainActivity.IntentParams.KEY_NEED_REFRESH,
-//                        true);
                 EventBus.getDefault().post(new MyPageRefreshEvent(MyPageRefreshEvent.ASK));
                 Intent intent = new Intent();
                 intent.putExtra("isRefresh", true);
@@ -297,15 +288,6 @@ public class UpLoadUtils {
                 mContext.startActivity(intent);
             } else {
                 // 新建作品成功后跳转最新作品 页面
-//                Intent intent = new Intent(UploadMultiImageActivity.this,
-//                        MainActivity.class);
-//                intent.putExtra(MainActivity.IntentParams.KEY_FRAGMENT_ID,
-//                        MainActivity.IntentParams.VALUE_FRAGMENT_ID_RECENT);
-//                intent.putExtra(
-//                        MainActivity.IntentParams.KEY_RECENTPAGE_ID,
-//                        MainActivity.IntentParams.VALUE_RECENTPAGE_ID_WORKS);
-//                intent.putExtra(MainActivity.IntentParams.KEY_NEED_REFRESH,
-//                        true);
                 EventBus.getDefault().post(new MyPageRefreshEvent(MyPageRefreshEvent.WORK));
                 Intent intent = new Intent();
                 intent.putExtra("isRefresh", true);

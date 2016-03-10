@@ -51,8 +51,8 @@ import java.util.List;
 import de.greenrobot.event.EventBus;
 
 /**
- * Created by Administrator on 2015/11/26 0026.
- * ViewPager版
+ * Created by Administrator
+ * 单图详情弹窗ViewPager版
  */
 public class SinglePhotoDetailDialog2 extends Dialog implements Handler.Callback {
 

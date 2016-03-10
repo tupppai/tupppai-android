@@ -11,6 +11,7 @@ import com.psgod.model.Reward;
 
 /**
  * Created by Administrator on 2016/1/21 0021.
+ * 支付失败时弹窗
  */
 public class PayErrorDialog extends Dialog{
 
@@ -57,7 +58,7 @@ public class PayErrorDialog extends Dialog{
     private TextView mGo;
 
     private Context context;
-
+    // 金额对象
     private Reward reward;
     private int requestCode;
 

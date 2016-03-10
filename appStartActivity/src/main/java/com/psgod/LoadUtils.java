@@ -17,6 +17,7 @@ import de.greenrobot.event.EventBus;
 
 /**
  * Created by remilia on 2015/11/18.
+ * 用于添加到进行中
  */
 public class LoadUtils implements Handler.Callback {
 
@@ -90,23 +91,6 @@ public class LoadUtils implements Handler.Callback {
             TextView belowText = (TextView) toastView
                     .findViewById(R.id.toast_text_below);
             switch (msg.what) {
-//            case MSG_SUCCESSFUL:
-//                String path = (String) msg.obj;
-//                Toast toast = Toast.makeText(mContext, "素材保存到" + path,
-//                        Toast.LENGTH_SHORT);
-//                aboveText.setText("下载成功,");
-//                belowText.setText("我猜你会用美图秀秀来P?");
-//                toast.setView(toastView);
-//                toast.setGravity(Gravity.CENTER, 0, 0);
-//                toast.show();
-//                if (!isFromPhotoBroswer) {
-//                    mPhotoItem.setIsDownloaded(true);
-//                }
-//                break;
-//            case MSG_FAILED:
-//                // TODO 获取图片信息失败
-//                Toast.makeText(mContext, "下载素材失败", Toast.LENGTH_SHORT).show();
-//                break;
                 case MSG_RECORD_SUCCESS:
                     Toast toast2 = Toast.makeText(mContext, "已塞入进行中",
                             Toast.LENGTH_SHORT);

@@ -34,7 +34,8 @@ import com.psgod.ui.activity.UploadSelectReplyListActivity;
  * 选择上传求P 上传作品 PopupWindow (新版v2.0)
  * 
  * @author ZouMengyuan
- * 
+ *
+ * 暂时废置
  */
 public class CameraPopupwindow extends PopupWindow implements OnClickListener {
 	private static final String TAG = CameraPopupwindow.class.getSimpleName();
@@ -101,26 +102,10 @@ public class CameraPopupwindow extends PopupWindow implements OnClickListener {
 	public void showCameraPopupwindow(View anchor) {
 		final RelativeLayout layout = (RelativeLayout) LayoutInflater.from(
 				mActivity).inflate(R.layout.popupwindow_select_ask_reply, null);
-//		int length = layout.getChildCount();
-//		for(int i= 0; i < length ; i++){
-//			if(mode == MODE_ASK){
-//				if(layout.getChildAt(i).getId() == R.id.ask_view){
-//					layout.removeViewAt(i);
-//					continue;
-//				}
-//			}else if(mode == MODE_REPLY){
-//				if(layout.getChildAt(i).getId() == R.id.reply_view){
-//					layout.removeViewAt(i);
-//					continue;
-//				}
-//			}
-//		}
 		setContentView(layout);
 
 		showAnimation(layout);
 		getBlurPic();
-//		setBackgroundDrawable(new BitmapDrawable(mActivity.getResources(),
-//				getBlurPic()));
 		setOutsideTouchable(true);
 		setFocusable(true);
 		showAtLocation(anchor, Gravity.BOTTOM, 0, statusBarHeight);

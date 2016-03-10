@@ -16,6 +16,7 @@ import java.util.Map;
 
 /**
  * Created by Administrator on 2016/1/20 0020.
+ * 支持平铺的Webview
  */
 public class PsgodWebView extends WebView {
 

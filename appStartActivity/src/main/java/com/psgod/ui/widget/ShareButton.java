@@ -38,6 +38,7 @@ import cn.sharesdk.wechat.moments.WechatMoments;
 
 /**
  * Created by Administrator on 2016/1/21 0021.
+ * 封装的分享按钮，根据参数转换类型
  */
 public class ShareButton extends Button {
     private static final String TAG = ShareButton.class.getSimpleName();

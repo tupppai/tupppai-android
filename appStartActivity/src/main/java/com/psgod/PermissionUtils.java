@@ -20,12 +20,6 @@ public final class PermissionUtils {
 	private static final int OP_CEMARE_IN_ANDROID_SDK_API19 = 26;
 	private static final int OP_CEMARE_BEFORE_MEIZU_API19 = 35;
 	private static final int MODE_ALLOWED = 0;
-	// private static final int OP_RECORD_AUDIO_IN_ANDROID_SDK_API19 = 27;
-	// private static final int[] OP_IN_ANDROID_SDK_API19 =
-	// {OP_CEMARE_IN_ANDROID_SDK_API19, OP_RECORD_AUDIO_IN_ANDROID_SDK_API19};
-	// private static final int OP_RECORD_AUDIO_BEFORE_MEIZU_API19 = 36;
-	// private static final int[] OP_IN_ANDROID_SDK_BEFORE_API19 =
-	// {OP_CEMARE_BEFORE_MEIZU_API19, OP_RECORD_AUDIO_BEFORE_MEIZU_API19};
 
 	public static final int ALLOW = 0x3300;
 	public static final int FORBIDDEN = 0x3301;

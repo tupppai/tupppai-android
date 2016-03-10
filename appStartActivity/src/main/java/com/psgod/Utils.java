@@ -76,6 +76,12 @@ public final class Utils {
         return (int) (dpValue * scale + 0.5f);
     }
 
+    /**
+     * px转dp
+     * @param context
+     * @param pxValue
+     * @return
+     */
     public static float pxToDpFloat(Context context, float pxValue) {
         final float scale = context.getResources().getDisplayMetrics().density;
         return pxValue / scale + 0.5f;
@@ -86,6 +92,12 @@ public final class Utils {
         return (int) (pxValue / scale + 0.5f);
     }
 
+    /**
+     * 以xxhdpi为基准，将px转化为dp
+     * @param context
+     * @param dpValue
+     * @return
+     */
     public static float pxToDpOrigin(Context context, float dpValue) {
 //        final float scale = context.getResources().getDisplayMetrics().density;
         return dpValue / 3 + 0.5f;
@@ -93,7 +105,6 @@ public final class Utils {
 
     /**
      * 判断两浮点数是否相等
-     *
      * @param a
      * @param b
      * @return
@@ -108,7 +119,6 @@ public final class Utils {
 
     /**
      * 把毫秒转化成yyyy-MM-dd的格式
-     *
      * @param time
      * @return
      */
@@ -120,7 +130,6 @@ public final class Utils {
 
     /**
      * 判断EditText 内是否为空
-     *
      * @param editText
      * @return
      */
@@ -131,7 +140,6 @@ public final class Utils {
 
     /**
      * 校验手机格式是否符合要求
-     *
      * @param text
      * @return
      */
@@ -186,9 +194,7 @@ public final class Utils {
     // 显示等待对话框
     public static void showProgressDialog(Context context) {
         // 显示等待对话框
-//        if (mProgressDialog == null) {
         mProgressDialog = new CustomProgressingDialog(context);
-//        }
         if (!mProgressDialog.isShowing()) {
             mProgressDialog.show();
         }
@@ -239,7 +245,6 @@ public final class Utils {
 
     /**
      * 获取点赞数、评论数和分享数显示的文字 目前的显示逻辑是少于1万显示具体的数字，大于1万显示X万
-     *
      * @return
      */
     public static String getCountDisplayText(int count) {
@@ -253,7 +258,6 @@ public final class Utils {
 
     /**
      * 获取应用当前版本号
-     *
      * @return
      */
     public static String getAppVersion(Context context) {
@@ -267,6 +271,11 @@ public final class Utils {
         return version;
     }
 
+    /**
+     * 任意Object转换PhotoItem对象
+     * @param data
+     * @return
+     */
     public static PhotoItem dataToPhoto(Object data) {
         PhotoItem item = null;
         try {
@@ -279,6 +288,11 @@ public final class Utils {
         return item;
     }
 
+    /**
+     * 获得基于xxhdpi的屏幕宽比
+     * @param context
+     * @return
+     */
     public static float getWidthScale(Context context) {
         float result;
         DisplayMetrics outMetrics = new DisplayMetrics();
@@ -288,6 +302,11 @@ public final class Utils {
         return result;
     }
 
+    /**
+     * 获得基于xxhdpi的屏幕高比
+     * @param context
+     * @return
+     */
     public static float getHeightScale(Context context) {
         float result;
         DisplayMetrics outMetrics = new DisplayMetrics();
@@ -297,6 +316,11 @@ public final class Utils {
         return result;
     }
 
+    /**
+     * 获得真实屏幕高
+     * @param context
+     * @return
+     */
     public static int getScreenHeightPx(Context context) {
         Point point = new Point();
         ((WindowManager) context
@@ -304,6 +328,11 @@ public final class Utils {
         return point.y;
     }
 
+    /**
+     * 获得内容部分屏幕高
+     * @param context
+     * @return
+     */
     public static int getUnrealScreenHeightPx(Context context) {
         DisplayMetrics outMetrics = new DisplayMetrics();
         ((WindowManager) context
@@ -311,6 +340,11 @@ public final class Utils {
         return outMetrics.heightPixels - getStatusBarHeight(context);
     }
 
+    /**
+     * 获得屏幕宽度
+     * @param context
+     * @return
+     */
     public static int getScreenWidthPx(Context context) {
         Point point = new Point();
         ((WindowManager) context
@@ -318,6 +352,11 @@ public final class Utils {
         return point.x;
     }
 
+    /**
+     * 将SelectImage对象容器转化为String
+     * @param images
+     * @return
+     */
     public static List<String> selectImageToString(List<SelectImage> images) {
         List<String> strs = new ArrayList<String>();
         for (SelectImage image : images) {
@@ -326,6 +365,12 @@ public final class Utils {
         return strs;
     }
 
+    /**
+     * 根据url跳转指定页面，配合jsbrige使用
+     * @param context
+     * @param url
+     * @param title
+     */
     public static void skipByUrl(Context context, String url, String title) {
         if (url.indexOf("http") != -1) {
             Intent intent = new Intent(context,
@@ -363,6 +408,11 @@ public final class Utils {
         }
     }
 
+    /**
+     * 根据对象类型进行跳转，封装跳转
+     * @param context
+     * @param obj
+     */
     public static void skipByObject(Context context, Object obj) {
         if (obj instanceof PhotoItem) {
             PhotoItem photoItem = (PhotoItem) obj;
@@ -402,7 +452,6 @@ public final class Utils {
 
     /**
      * 生成md5
-     *
      * @param str
      * @return
      */
@@ -430,7 +479,6 @@ public final class Utils {
 
     /**
      * 二进制转十六进制
-     *
      * @param bytes
      * @return
      */

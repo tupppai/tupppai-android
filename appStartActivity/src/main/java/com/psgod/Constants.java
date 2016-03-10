@@ -24,8 +24,6 @@ public class Constants {
 	public static int WIDTH_OF_SCREEN; // 手机屏幕宽度
 	public static int HEIGHT_OF_SCREEN; // 手机屏幕高度
 	public static final int MAX_LABEL_COUNT = 3;
-	// public static boolean IS_LOGIN = false; //判断用户登录状态
-	// public static final int PS_AVATAR_IMAGEVIEW_SIZE = 58;
 
 	public static final boolean IS_COLOR_USER = true; // 是否染色用户
 	public static final boolean LOG_TO_FILE = true; // 全局开关，是否把日志写到文件

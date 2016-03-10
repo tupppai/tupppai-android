@@ -60,13 +60,6 @@ public class PSGodApplication extends Application {
     @SuppressLint("NewApi")
     @Override
     public void onCreate() {
-        // if (Constants.Config.DEVELOPER_MODE && Build.VERSION.SDK_INT >=
-        // Build.VERSION_CODES.GINGERBREAD) {
-        // StrictMode.setThreadPolicy(new
-        // StrictMode.ThreadPolicy.Builder().detectAll().penaltyDialog().build());
-        // StrictMode.setVmPolicy(new
-        // StrictMode.VmPolicy.Builder().detectAll().penaltyDeath().build());
-        // }
         mAppContext = this.getApplicationContext();
 
         // 注册crash捕捉上报系统
@@ -133,12 +126,6 @@ public class PSGodApplication extends Application {
                             .toString());
                     int type = jsonObject.getInt("type");
                     int count = jsonObject.getInt("count");
-//                    Long targetId = jsonObject.getLong("target_id");
-//                    Long targetAskId = jsonObject.getLong("target_ask_id");
-//                    int targetType = jsonObject.getInt("target_type");
-//                    Log.e("target_id",String.valueOf(targetId));
-//                    Log.e("target_ask_id",String.valueOf(targetAskId));
-//                    Log.e("target_type",String.valueOf(targetType));
 
                     Intent intent = new Intent();
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -154,22 +141,13 @@ public class PSGodApplication extends Application {
                         case 1:
                             intent.putExtra("isSingle",true);
                             intent.setClass(getApplicationContext(), MessageCommentActivity.class);
-//                            PhotoItem item = new PhotoItem();
-////                            item.setPid(targetId);
-////                            item.setType(targetType);
-//                            intent.putExtra("Constants.IntentKey.PHOTO_ITEM",item);
-//                            break;
                         case 2:
                             intent.setClass(getApplicationContext(), MainActivity.class);
-//                            CarouselPhotoDetailActivity.startActivity(getApplicationContext(),targetAskId,targetId);
                             return;
                         case 3:
                             intent.putExtra("isSingle",true);
                             intent.setClass(getApplicationContext(), FollowerListActivity.class);
                             break;
-//                        case 4:
-//                            intent.setClass(getApplicationContext(), MessageSystemActivity.class);
-//                            break;
                         case 5:
                             intent.putExtra("isSingle",true);
                             intent.setClass(getApplicationContext(), MessageLikeActivity.class);
@@ -183,14 +161,6 @@ public class PSGodApplication extends Application {
                     e.printStackTrace();
                 }
 
-
-                // TODO 打开MainActivity
-                // Intent intent = new Intent(Intent.ACTION_MAIN);
-                // intent.addCategory(Intent.CATEGORY_LAUNCHER);
-                // ComponentName cn = new ComponentName("com.psgod",
-                // "com.psgod.ui.activity.AppStartActivity");
-                // intent.setComponent(cn);
-                // startActivity(intent);
             }
         };
         mPushAgent.setNotificationClickHandler(notificationClickHandler);

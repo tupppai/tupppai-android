@@ -32,6 +32,7 @@ import cn.sharesdk.wechat.friends.Wechat;
 
 /**
  * Created by pires on 16/1/21.
+ * 提现微信绑定
  */
 public class WithDrawMoneyBindWechatActivity extends PSGodBaseActivity {
 

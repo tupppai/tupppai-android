@@ -15,6 +15,7 @@ import com.psgod.Utils;
 
 /**
  * Created by Administrator on 2015/12/8 0008.
+ * 滑动时下沉的浮标类
  */
 public class FloatScrollHelper {
 
@@ -81,8 +82,9 @@ public class FloatScrollHelper {
             }
         });
     }
-
+    //是否正在上升
     private boolean isUpAnim = false;
+    //是否正在下降
     private boolean isDownAnim = false;
 
     private AnimatorSet upAnimSet = new AnimatorSet();
@@ -191,41 +193,6 @@ public class FloatScrollHelper {
             downAnimSet.start();
         }
     }
-
-//    private List<AnimQueue> queue = new ArrayList<AnimQueue>();
-//    private boolean isAnimEmpty = true;
-//
-//    private void startAnimQueue(){
-//
-//        while (!isAnimEmpty){
-//
-//        }
-//
-//    }
-//
-//    private class AnimQueue{
-//
-//        AnimatorSet anim;
-//
-//        AnimQueue startAnim(){
-//            if(anim != null) {
-//                anim.start();
-//            }
-//            return this;
-//        }
-//
-//        AnimQueue startDelay(int time){
-//            if(anim != null) {
-//                anim.setStartDelay(time);
-//            }
-//            return this;
-//        }
-//
-//        public AnimQueue(AnimatorSet anim) {
-//            this.anim = anim;
-//        }
-//
-//    }
 
     public void setListView(PullToRefreshAdapterViewBase listView) {
         this.listView = listView;

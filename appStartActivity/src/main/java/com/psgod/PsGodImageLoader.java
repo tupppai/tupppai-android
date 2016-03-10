@@ -14,6 +14,7 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingProgressListe
 
 /**
  * Created by Administrator on 2015/12/14 0014.
+ *
  */
 public class PsGodImageLoader {
 
@@ -109,11 +110,6 @@ public class PsGodImageLoader {
                              ImageLoadingListener listener, ImageLoadingProgressListener progressListener) {
         imgLoader.displayImage(getRuleImageUrl(url, options), imageArea.getImage(), options, listener, progressListener);
     }
-
-    public void displayLocaleImage() {
-//        imgLoader.
-    }
-
 
     public Bitmap loadImageSync(String url) {
         return imgLoader.loadImageSync(url);

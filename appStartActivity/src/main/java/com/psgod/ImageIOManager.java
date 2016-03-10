@@ -100,53 +100,6 @@ public final class ImageIOManager {
 		return null;
 	}
 
-	// public String createFileName() {
-	// FileNameGenerator generator = new Md5FileNameGenerator();
-	// generator.generate();
-	// }
-
-	// public synchronized File getImageFile(String url) {
-	// String fileName = hashKeyForDisk(url);
-	// String path = new StringBuilder(CACHE_PATH).append(fileName)
-	// .append(".jpeg").toString();
-	// File file = new File(path);
-	// return file;
-	// }
-
-	// private CompressFormat getBitmapFormat(String fileName) {
-	// int index = fileName.lastIndexOf(".");
-	// String format = fileName.substring(index + 1).toLowerCase();
-	// if (format.equals("png")) {
-	// return CompressFormat.PNG;
-	// } else {
-	// return CompressFormat.JPEG;
-	// }
-	// }
-
-	// public synchronized void clear() {
-	// if (CACHE_DIR.exists()) {
-	// File[] files = CACHE_DIR.listFiles();
-	// for (File file : files) {
-	// deleteFileRecursively(file);
-	// }
-	// }
-	// currentSize = 0;
-	// lruCache.clear();
-	// sizeOfImage.clear();
-	// }
-	//
-	// private void deleteFileRecursively(File file) {
-	// if (file.isDirectory()) {
-	// File[] files = file.listFiles();
-	// for (File f : files) {
-	// deleteFileRecursively(f);
-	// }
-	// file.delete();
-	// } else {
-	// file.delete();
-	// }
-	// }
-
 	/**
 	 * A hashing method that changes a string (like a URL) into a hash suitable
 	 * for using as a disk filename.

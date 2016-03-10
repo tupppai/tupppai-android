@@ -34,6 +34,7 @@ import java.util.regex.Pattern;
 
 /**
  * Created by pires on 16/1/21.
+ * 提现手机验证
  */
 public class WithdrawPhoneVerifyActivity extends PSGodBaseActivity{
     private static final String TAG = WithdrawPhoneVerifyActivity.class.getSimpleName();

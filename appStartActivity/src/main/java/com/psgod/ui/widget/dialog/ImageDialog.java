@@ -8,6 +8,10 @@ import android.widget.ImageView;
 
 import com.psgod.R;
 
+/**
+ * 放大用户头像弹窗
+ */
+
 public class ImageDialog extends Dialog {
 
 	public ImageDialog(Context context, ImageView view) {

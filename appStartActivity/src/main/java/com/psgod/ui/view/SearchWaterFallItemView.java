@@ -1,9 +1,7 @@
 package com.psgod.ui.view;
 
 /**
- * 瀑布流图片展示 v2.0
- *
- * @author ZouMengyuan
+ * 瀑布流图片展示 用于搜索
  */
 
 import android.content.Context;

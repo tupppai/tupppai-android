@@ -34,6 +34,10 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * 封装的用户头像视图
+ */
+
 public class AvatarImageView extends RelativeLayout implements PsGodImageLoader.ImageArea {
     private boolean isVip = false;
     private CircleImageView mAvatarImage;

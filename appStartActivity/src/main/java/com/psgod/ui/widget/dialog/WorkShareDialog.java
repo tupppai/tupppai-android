@@ -22,6 +22,7 @@ import cn.sharesdk.framework.Platform;
 
 /**
  * Created by Administrator on 2016/1/21 0021.
+ * 发布教程作业后的分享弹窗
  */
 public class WorkShareDialog extends Dialog {
     public WorkShareDialog(Context context) {

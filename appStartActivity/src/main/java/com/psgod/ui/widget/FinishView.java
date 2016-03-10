@@ -9,6 +9,7 @@ import com.psgod.ui.activity.PSGodBaseActivity;
 
 /**
  * Created by Administrator on 2015/12/8 0008.
+ * 回退键封装
  */
 public class FinishView extends ImageView {
     public FinishView(Context context) {

@@ -1,6 +1,6 @@
 package com.psgod.ui.widget.dialog;
 
-/*
+/**
  * 自定义转菊花对话框
  * @author brandwang
  */

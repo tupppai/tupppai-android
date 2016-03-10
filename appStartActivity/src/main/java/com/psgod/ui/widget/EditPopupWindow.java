@@ -36,6 +36,10 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * 输入框弹窗,用于评论回复
+ */
+
 public class EditPopupWindow implements Callback {
 
 	private Context mContext;

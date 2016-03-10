@@ -16,6 +16,7 @@ import java.util.logging.Handler;
 
 /**
  * Created by pires on 16/1/20.
+ * 充值类型弹窗
  */
 public class RechargeTypeDialog extends Dialog {
     private static final String TAG = RechargeTypeDialog.class.getSimpleName();

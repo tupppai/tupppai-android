@@ -39,6 +39,7 @@ import org.json.JSONObject;
 
 /**
  * Created by pires on 16/1/20.
+ * 充值弹窗
  */
 public class RechargeDialog extends Dialog implements Handler.Callback {
 

@@ -22,6 +22,9 @@ import cn.sharesdk.tencent.qzone.QZone;
 import cn.sharesdk.wechat.friends.Wechat;
 import cn.sharesdk.wechat.moments.WechatMoments;
 
+/**
+ * 分享弹窗
+ */
 public class RecommendFriendsDialog extends Dialog {
 	private static final String TAG = RecommendFriendsDialog.class.getSimpleName();
 

@@ -7,6 +7,7 @@ import android.widget.ScrollView;
 
 /**
  * Created by remilia on 2015/11/17.
+ * 已废置
  */
 public class CustomScrollView extends ScrollView {
     private float xDistance, yDistance, lastX, lastY;

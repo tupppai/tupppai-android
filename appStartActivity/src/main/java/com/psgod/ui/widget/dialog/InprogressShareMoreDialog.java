@@ -41,7 +41,6 @@ import de.greenrobot.event.EventBus;
 
 /**
  * 长按进行中时 出现更多分享选择按钮
- * 
  * @author ZouMengyuan
  */
 public class InprogressShareMoreDialog extends Dialog {

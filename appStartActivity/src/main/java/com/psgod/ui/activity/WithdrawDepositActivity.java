@@ -24,6 +24,7 @@ import org.json.JSONObject;
 
 /**
  * Created by Administrator on 2016/2/4 0004.
+ * 提现页
  */
 public class WithdrawDepositActivity extends PSGodBaseActivity {
     private static final String TAG = WithdrawDepositActivity.class.getSimpleName();

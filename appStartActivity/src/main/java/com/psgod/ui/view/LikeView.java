@@ -22,6 +22,7 @@ import com.psgod.network.request.PSGodRequestQueue;
 
 /**
  * Created by Administrator on 2015/12/1 0001.
+ * 封装的点赞视图
  */
 public class LikeView extends RelativeLayout {
     public LikeView(Context context) {

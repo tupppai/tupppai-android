@@ -44,6 +44,7 @@ import java.util.List;
 
 /**
  * Created by Administrator on 2015/11/27 0027.
+ * 搭配老多图详情弹窗使用，先已废置
  */
 public class CarouselPhotoDetailView extends RelativeLayout {
 
@@ -172,10 +173,6 @@ public class CarouselPhotoDetailView extends RelativeLayout {
         LayoutParams descParams = (LayoutParams) descLayout.getLayoutParams();
         descParams.height = (int) (descParams.height * Utils.getHeightScale(getContext()));
         descLayout.setLayoutParams(descParams);
-
-//        LayoutParams likeParams = (LayoutParams) coverLike.getLayoutParams();
-//        likeParams.height = (int) (likeParams.height*Utils.getHeightScale(getContext()));
-//        coverLike.setLayoutParams(likeParams);
 
         if (mPhotoItem.getType() == 1) {
             coverTag.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.tag));

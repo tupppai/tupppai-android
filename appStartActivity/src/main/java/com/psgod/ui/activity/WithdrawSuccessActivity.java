@@ -12,6 +12,7 @@ import com.psgod.model.MoneyTransfer;
 
 /**
  * Created by pires on 16/1/21.
+ * 提现成功页
  */
 public class WithdrawSuccessActivity extends PSGodBaseActivity {
     private static final String TAG = WithdrawSuccessActivity.class.getSimpleName();

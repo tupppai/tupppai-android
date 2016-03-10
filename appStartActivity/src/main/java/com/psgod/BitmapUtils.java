@@ -61,24 +61,6 @@ public final class BitmapUtils implements Handler.Callback {
             inSampleSize <<= 1;
         }
         return inSampleSize;
-        // if (height > reqHeight || width > reqWidth) {
-        // // 计算出实际宽高和目标宽高的比率
-        // //final int halfHeight = height / 2;
-        // //final int halfWidth = width / 2;
-        // //while ((halfHeight / inSampleSize) > reqHeight && (halfWidth /
-        // inSampleSize) > reqWidth) {
-        // //inSampleSize *= 2;
-        // //}
-        //
-        // // 计算出实际宽高和目标宽高的比率
-        // final int heightRatio = Math.round((float) height / (float)
-        // reqHeight);
-        // final int widthRatio = Math.round((float) width / (float) reqWidth);
-        // // 选择宽和高中最小的比率作为inSampleSize的值，这样可以保证最终图片的宽和高
-        // // 一定都会大于等于目标的宽和高。
-        // inSampleSize = heightRatio < widthRatio ? heightRatio : widthRatio;
-        // }
-        // return inSampleSize;
     }
 
     /**
@@ -160,38 +142,6 @@ public final class BitmapUtils implements Handler.Callback {
     public static interface DecodeErrorListener {
         public void onDecodeError();
     }
-
-//    // 对图片进行处理，得到毛玻璃效果
-//    public static Bitmap getBlurBitmap(Bitmap bitmap) {
-//        Bitmap bluredBitmap = null;
-//        if (bitmap == null) {
-//            return bitmap;
-//        }
-//        if (lruCache.get(bitmap.toString()) == null) {
-//
-//            // 图片缩放比例 TODO 做成参数可配置
-//            float scaleFactor = 8;
-//            // 模糊程度
-//            float radius = 10;
-//
-//            int width = bitmap.getWidth();
-//            int height = bitmap.getHeight();
-//
-//            bluredBitmap = Bitmap.createBitmap((int) (width / scaleFactor),
-//                    (int) (height / scaleFactor), Bitmap.Config.ARGB_8888);
-//            Canvas canvas = new Canvas(bluredBitmap);
-//            canvas.scale(1 / scaleFactor, 1 / scaleFactor);
-//
-//            Paint paint = new Paint();
-//            paint.setFlags(Paint.FILTER_BITMAP_FLAG);
-//            canvas.drawBitmap(bitmap, 0, 0, paint);
-//
-//            bluredBitmap = FastBlur.doBlur(bluredBitmap, (int) radius, true);
-//
-//            lruCache.put(bitmap.toString(), bluredBitmap);
-//        }
-//        return lruCache.get(bitmap.toString());
-//    }
 
     // 对图片进行处理，得到毛玻璃效果
     public static void setBlurBitmap(final Bitmap bitmap, final View view, final String url) {

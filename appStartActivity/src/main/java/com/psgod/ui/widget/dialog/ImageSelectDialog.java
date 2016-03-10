@@ -57,6 +57,7 @@ import java.util.concurrent.Executors;
 
 /**
  * Created by Administrator on 2016/1/4 0004.
+ * 当前正在使用的发布页弹窗
  */
 public class ImageSelectDialog extends Dialog implements Handler.Callback {
 
@@ -363,28 +364,11 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
     };
 
     private void initListener() {
-//        mEdit.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                mArea.setVisibility(View.GONE);
-//            }
-//        });
 
         mEdit.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 mArea.setVisibility(View.GONE);
-//                fixedThreadPool.execute(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        try {
-//                            Thread.sleep(150);
-//                            mHandler.handleMessage(mHandler.obtainMessage(SHOW_INPUT));
-//                        } catch (InterruptedException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                });
                 return false;
             }
         });
@@ -399,11 +383,6 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
                 mPhotoTxt.setVisibility(View.INVISIBLE);
                 mAlbumTxt.setVisibility(View.INVISIBLE);
                 mDoneTxt.setVisibility(View.VISIBLE);
-//                if (mPhotoItems.size() == 0) {
-//                    mEnpty.setVisibility(View.VISIBLE);
-//                } else {
-//                    mEnpty.setVisibility(View.GONE);
-//                }
                 mSureTxt.setVisibility(View.GONE);
                 UserPhotoRequest.Builder builder = new UserPhotoRequest.Builder()
                         .setType(UserPhotoRequest.Builder.MY_INPROGRESS).setPage(0).setSize(20)
@@ -648,12 +627,6 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
             mPhotoItems.addAll(items);
             mImageArea.setEmptyView(mEnpty);
             mAdapter.notifyDataSetChanged();
-//            if (mPhotoItems.size() == 0 &&
-//                    bangType == MultiImageSelectRecyclerAdapter.TYPE_BANG_NOW) {
-//                mEnpty.setVisibility(View.VISIBLE);
-//            } else {
-//                mEnpty.setVisibility(View.GONE);
-//            }
         }
     };
 
@@ -664,13 +637,6 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
             mDonePhotoItems.addAll(items);
             mImageArea.setEmptyView(mEnpty);
             mAdapter.notifyDataSetChanged();
-//            if(bangType == MultiImageSelectRecyclerAdapter.TYPE_BANG_DONE) {
-//                if (mDonePhotoItems.size() == 0) {
-//                    mEnpty.setVisibility(View.VISIBLE);
-//                } else {
-//                    mEnpty.setVisibility(View.GONE);
-//                }
-//            }
         }
     };
 

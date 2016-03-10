@@ -41,7 +41,7 @@ import java.util.concurrent.Executors;
 
 /**
  * Created by Administrator on 2015/11/28 0028.
- * CarouselPhotoDetailView
+ * CarouselPhotoDetailView使用的单图区域
  */
 public class SinglePhotoView extends RelativeLayout implements
         Handler.Callback {
@@ -354,9 +354,9 @@ public class SinglePhotoView extends RelativeLayout implements
             mCommentList.addAll(response.recentCommentList);
             mAdapter.notifyDataSetChanged();
             mListView.onRefreshComplete();
-            if(mPhotoItemView != null){
+            if (mPhotoItemView != null) {
 //                mPhotoItemView.refreshPhotoItem(response.photoItem);
-            }else {
+            } else {
                 mPhotoItemView = mAdapter.getPhotoItemView();
             }
             mPhotoItem.setCommentCount(response.photoItem.getCommentCount());

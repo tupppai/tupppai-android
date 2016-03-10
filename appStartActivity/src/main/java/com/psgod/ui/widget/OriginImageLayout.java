@@ -27,16 +27,17 @@ import com.psgod.model.ImageData;
 
 import java.util.List;
 
+/**
+ * 原图区域视图
+ */
+
 public class OriginImageLayout extends RelativeLayout {
     private Context mContext;
     private ImageView mBackground;
 
     private PsGodImageLoader imageLoader = PsGodImageLoader.getInstance();
-    //    private DisplayImageOptions mSmallSmallOptions = Constants.DISPLAY_IMAGE_OPTIONS_SMALL_SMALL;
     private DisplayImageOptions mOptions = Constants.DISPLAY_IMAGE_OPTIONS;
 
-    //    private ObjectAnimator scaleWidthAnimator = null;
-//    private ObjectAnimator scaleHeightAnimator = null;
     private ObjectAnimator alphaAnimator = null;
     private ObjectAnimator alphaIvAnimator = null;
     private ValueAnimator zoomWidthAnimator = null;
@@ -149,11 +150,8 @@ public class OriginImageLayout extends RelativeLayout {
         mImageViewLeft.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                // mImageViewRight.setVisibility(INVISIBLE);
                 if (mBackground.getVisibility() == View.VISIBLE) {
-//					uploadLayout.removeAllViews();
                     clickNum = 0;
-//					initSingleImage(originImage1);
                     mActionZoomOut();
                 } else {
                     mActionZoomIn();
@@ -164,9 +162,7 @@ public class OriginImageLayout extends RelativeLayout {
             @Override
             public void onClick(View arg0) {
                 if (mBackground.getVisibility() == View.VISIBLE) {
-//					uploadLayout.removeAllViews();
                     clickNum = 1;
-//					initSingleImage(originImage2);
                     mActionZoomOut();
                 } else {
                     mActionZoomIn();
@@ -220,7 +216,6 @@ public class OriginImageLayout extends RelativeLayout {
         initThumb(originImage);
         // image view
         thumbImageView = new ImageView(mContext);
-//         uploadImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         RelativeLayout.LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT);
         params.addRule(CENTER_IN_PARENT);
@@ -263,13 +258,17 @@ public class OriginImageLayout extends RelativeLayout {
                 android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
         originTipParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
         originTipParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-        originTipParams.setMargins(0,Utils.dpToPx(mContext,4),0,0);
+        originTipParams.setMargins(0, Utils.dpToPx(mContext, 4), 0, 0);
         thumbTipImage.setLayoutParams(originTipParams);
         thumbTipImage.setBackgroundResource(R.mipmap.tag_single_ori);
         uploadLayout.addView(thumbTipImage);
     }
 
+    //动画开始标记
     boolean animStart = false;
+
+    // 是否恢复
+    boolean isRestore = true;
 
     private void mActionZoomIn() {
 
@@ -314,10 +313,6 @@ public class OriginImageLayout extends RelativeLayout {
                 uploadLayout.setLayoutParams(params);
             }
         });
-//        scaleWidthAnimator = ObjectAnimator.ofFloat(scaleImage, "scaleX",
-//                imageScaleValue, 1f);
-//        scaleHeightAnimator = ObjectAnimator.ofFloat(scaleImage, "scaleY",
-//                imageScaleValue, 1f);
 
         animatorSet.addListener(new AnimatorListener() {
             @Override
@@ -334,8 +329,6 @@ public class OriginImageLayout extends RelativeLayout {
                 scaleImage.setLayoutParams(params);
                 // 当size为2 的时候，展示两个
                 if (images.size() == 2) {
-//                    uploadLayout.removeAllViews();
-//                    initOverlapImage(images.get(0), images.get(1), clickNum == 0 ? true : false);
                     mActionZoomInIn();
                 }
             }
@@ -352,12 +345,8 @@ public class OriginImageLayout extends RelativeLayout {
         });
         animatorSet.playTogether(zoomWidthAnimator, zoomHeightAnimator,
                 alphaAnimator, alphaIvAnimator);
-//                , scaleWidthAnimator,
-//                scaleHeightAnimator);
         animatorSet.start();
     }
-
-    boolean isRestore = true;
 
     private void mActionZoomInIn() {
         AnimatorSet animatorSet = new AnimatorSet();
@@ -507,11 +496,6 @@ public class OriginImageLayout extends RelativeLayout {
         scaleImage.setLayoutParams(uploadImageParams);
         scaleImage.setScaleType(ScaleType.FIT_CENTER);
 
-//        scaleWidthAnimator = ObjectAnimator.ofFloat(scaleImage, "scaleX",
-//                1f, imageScaleValue);
-//        scaleHeightAnimator = ObjectAnimator.ofFloat(scaleImage, "scaleY",
-//                1f, imageScaleValue);
-
         // 缩略图放大
         alphaIvAnimator = ObjectAnimator.ofFloat(mBackground, "alpha", 1f, 0);
         alphaAnimator = ObjectAnimator
@@ -525,16 +509,6 @@ public class OriginImageLayout extends RelativeLayout {
 
             @Override
             public void onAnimationEnd(Animator arg0) {
-//                if (images.size() == 2) {
-//                    initThumb(clickNum == 0 ? images.get(0) : images.get(1));
-//                    if (clickNum == 0) {
-//                        imageLoader.displayImage(images.get(0).mImageUrl, mImageViewLeft, mOptions);
-//                    } else {
-//                        imageLoader.displayImage(images.get(1).mImageUrl, mImageViewRight, mOptions);
-//                    }
-//                } else {
-//                    imageLoader.displayImage(images.get(0).mImageUrl, thumbImageView, mOptions);
-//                }
                 uploadLayout.setEnabled(true);
                 mBackground.setVisibility(INVISIBLE);
                 animStart = false;
@@ -547,32 +521,11 @@ public class OriginImageLayout extends RelativeLayout {
 
             @Override
             public void onAnimationStart(Animator arg0) {
-//                if (images.size() == 2) {
-//                    initThumb(clickNum == 0 ? images.get(0) : images.get(1));
-//                    if (clickNum == 0) {
-//                        LayoutParams params = (LayoutParams) mImageViewLeft.getLayoutParams();
-//                        params.height = thumbImageHeight;
-//                        params.width = thumbImageWidth;
-//                        mImageViewLeft.setLayoutParams(params);
-//                    } else {
-//                        LayoutParams params = (LayoutParams) mImageViewRight.getLayoutParams();
-//                        params.height = thumbImageHeight;
-//                        params.width = thumbImageWidth;
-//                        mImageViewRight.setLayoutParams(params);
-//                    }
-//                } else {
-//                    LayoutParams params = (LayoutParams) thumbImageView.getLayoutParams();
-//                    params.height = thumbImageHeight;
-//                    params.width = thumbImageWidth;
-//                    thumbImageView.setLayoutParams(params);
-//                }
 
             }
         });
         animatorSet.playTogether(zoomWidthAnimator, zoomHeightAnimator,
                 alphaAnimator, alphaIvAnimator);
-//                , scaleWidthAnimator,
-//                scaleHeightAnimator);
         animatorSet.start();
     }
 }

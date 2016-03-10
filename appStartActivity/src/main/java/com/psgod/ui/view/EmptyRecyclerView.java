@@ -7,6 +7,7 @@ import android.view.View;
 
 /**
  * Created by Administrator on 2016/1/12 0012.
+ * 配合RecyclerView使用的空白视图
  */
 public class EmptyRecyclerView extends RecyclerView {
     private View emptyView;
@@ -48,6 +49,5 @@ public class EmptyRecyclerView extends RecyclerView {
         if(adapter != null) {
             adapter.registerAdapterDataObserver(emptyObserver);
         }
-//        emptyObserver.onChanged();
     }
 }

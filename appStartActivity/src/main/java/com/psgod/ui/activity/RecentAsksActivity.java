@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler.Callback;
 import android.os.Message;
@@ -41,15 +40,12 @@ import com.psgod.ui.adapter.PhotoWaterFallListAdapter;
 import com.psgod.ui.view.PhotoWaterFallItemView.PhotoWaterFallListType;
 import com.psgod.ui.view.PullToRefreshStaggeredGridView;
 import com.psgod.ui.widget.FloatScrollHelper;
-import com.psgod.ui.widget.dialog.CameraPopupwindow;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
 import com.psgod.ui.widget.dialog.ImageSelectDialog;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import de.greenrobot.event.EventBus;
 
 /**
  *  求P区

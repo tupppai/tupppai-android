@@ -23,6 +23,8 @@ import com.psgod.ui.adapter.UploadSelectReplyAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
 public class UploadSelectReplyListActivity extends PSGodBaseActivity {
 	private Context mContext;
 	private PullToRefreshListView mReplyList;
