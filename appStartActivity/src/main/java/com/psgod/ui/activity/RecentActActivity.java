@@ -38,6 +38,10 @@ import java.util.List;
 
 import de.greenrobot.event.EventBus;
 
+/**
+ *  活动页
+ */
+
 public class RecentActActivity extends PSGodBaseActivity {
     private static final String TAG = RecentActActivity.class
             .getSimpleName();

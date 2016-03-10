@@ -49,6 +49,7 @@ import cn.sharesdk.wechat.friends.Wechat;
 
 /**
  * Created by pires on 16/1/4.
+ * 登录第二步，输入密码页
  */
 public class NewPhoneLoginActivity extends PSGodBaseActivity {
     private static final String TAG = NewPhoneLoginActivity.class.getSimpleName();

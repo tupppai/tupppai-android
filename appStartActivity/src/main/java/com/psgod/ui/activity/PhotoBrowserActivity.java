@@ -25,6 +25,10 @@ import com.psgod.ui.widget.dialog.PSDialog;
 import uk.co.senab.photoview.PhotoViewAttacher;
 import uk.co.senab.photoview.PhotoViewAttacher.OnPhotoTapListener;
 
+/**
+ * 图片查看详情页
+ */
+
 public class PhotoBrowserActivity extends PSGodBaseActivity implements Handler.Callback{
 	private static final String TAG = PhotoBrowserActivity.class
 			.getSimpleName();

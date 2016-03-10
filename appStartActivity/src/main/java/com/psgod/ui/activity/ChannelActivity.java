@@ -48,6 +48,11 @@ import com.psgod.ui.widget.dialog.ImageSelectDialog;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 频道页
+ * 接口:category/threads
+ */
+
 public class ChannelActivity extends PSGodBaseActivity {
 
     private static final String TAG = ChannelActivity.class

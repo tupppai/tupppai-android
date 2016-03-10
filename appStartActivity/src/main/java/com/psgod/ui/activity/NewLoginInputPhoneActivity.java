@@ -53,6 +53,7 @@ import cn.sharesdk.wechat.friends.Wechat;
 
 /**
  * Created by pires on 16/1/4.
+ * 新的登录页
  */
 public class NewLoginInputPhoneActivity extends PSGodBaseActivity {
     private static final String TAG = NewLoginInputPhoneActivity.class.getSimpleName();

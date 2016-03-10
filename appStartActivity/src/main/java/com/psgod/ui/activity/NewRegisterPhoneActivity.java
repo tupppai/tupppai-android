@@ -56,6 +56,7 @@ import cn.sharesdk.wechat.friends.Wechat;
 
 /**
  * Created by pires on 16/1/4.
+ * 第二步，注册页
  */
 public class NewRegisterPhoneActivity extends PSGodBaseActivity{
     private static final String TAG = NewRegisterPhoneActivity.class.getSimpleName();

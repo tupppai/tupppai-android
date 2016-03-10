@@ -33,6 +33,7 @@ import de.greenrobot.event.EventBus;
 
 /**
  * Created by Administrator on 2016/1/18 0018.
+ * 教程详情
  */
 public class CourseDetailActivity extends PSGodBaseActivity {
     private static final String TAG = CourseDetailActivity.class.getSimpleName();

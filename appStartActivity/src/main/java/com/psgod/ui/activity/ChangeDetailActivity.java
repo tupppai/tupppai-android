@@ -24,6 +24,7 @@ import java.util.List;
 
 /**
  * Created by pires on 16/1/21.
+ * 对应接口profile/transactions
  */
 public class ChangeDetailActivity extends PSGodBaseActivity {
     private static final String TAG = ChangeDetailActivity.class.getSimpleName();

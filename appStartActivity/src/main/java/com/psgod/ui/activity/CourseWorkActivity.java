@@ -45,6 +45,7 @@ import de.greenrobot.event.EventBus;
 
 /**
  * Created by Administrator on 2016/1/18 0018.
+ * 教程作业发布页
  */
 public class CourseWorkActivity extends PSGodBaseActivity {
 

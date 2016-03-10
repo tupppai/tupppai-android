@@ -45,6 +45,10 @@ import com.psgod.ui.widget.dialog.ImageSelectDialog;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 教程列表
+ */
+
 public class CourseActivity extends PSGodBaseActivity {
 
     private static final String TAG = CourseActivity.class

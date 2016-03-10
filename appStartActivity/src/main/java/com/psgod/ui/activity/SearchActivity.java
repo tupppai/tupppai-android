@@ -37,6 +37,10 @@ import java.util.List;
 
 import de.greenrobot.event.EventBus;
 
+/**
+ * 搜索页
+ */
+
 public class SearchActivity extends PSGodBaseActivity {
 
 	private EditText mSearchEdit;

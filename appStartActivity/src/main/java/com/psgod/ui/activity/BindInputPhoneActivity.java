@@ -16,7 +16,6 @@ import com.psgod.WeakReferenceHandler;
 
 /**
  * Created by pires on 16/1/7.
- *
  * 绑定手机号，输入手机号
  */
 public class BindInputPhoneActivity extends PSGodBaseActivity {

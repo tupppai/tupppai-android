@@ -51,6 +51,10 @@ import java.util.List;
 
 import de.greenrobot.event.EventBus;
 
+/**
+ *  求P区
+ */
+
 public class RecentAsksActivity extends PSGodBaseActivity implements Callback {
     private static final String TAG = RecentAsksActivity.class
             .getSimpleName();
