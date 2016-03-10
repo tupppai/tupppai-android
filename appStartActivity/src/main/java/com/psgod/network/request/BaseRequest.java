@@ -91,6 +91,7 @@ public abstract class BaseRequest<T> extends Request<T> {
             int ret = jsonObj.getInt("ret");
             String info = jsonObj.getString("info");
             if (ret == 2) {
+                // 判断用户是否绑定手机，没绑定则弹出绑定框
                 if (LoginUser.getInstance().getPhoneNum().equals("0")) {
                     Intent intent = new Intent(PSGodApplication.getAppContext(),
                             BindInputPhoneActivity.class);
@@ -106,7 +107,6 @@ public abstract class BaseRequest<T> extends Request<T> {
                     Constants.IS_USER_FRAGMENT_CREATED = false;
                     Constants.IS_INPROGRESS_FRAGMENT_CREATED = false;
 
-                    // TODO
                     // WelcomeActivity.startNewActivityAndFinishAllBefore(
                     // PSGodApplication.getAppContext(),
                     // WelcomeActivity.class.getName(), null);
@@ -151,6 +151,7 @@ public abstract class BaseRequest<T> extends Request<T> {
         }
     }
 
+    //根据url参数配置验证信息
     public static String dealStr(String url) {
         StringBuilder sb = new StringBuilder();
         String result = "";
@@ -192,6 +193,7 @@ public abstract class BaseRequest<T> extends Request<T> {
     abstract protected T doParseNetworkResponse(JSONObject reponse)
             throws UnsupportedEncodingException, JSONException;
 
+    //post请求添加验证信息参数
     public Map<String, String> getPackParams(Map<String, String> map) {
         if (map != null && map.size() > 0) {
             StringBuilder sb = new StringBuilder();

@@ -126,12 +126,9 @@ public class PhotoItem implements Serializable, Cloneable {
     private String mTitle;
 
     private String mDescription;
-
-//    private int mHasSharedToWechat;
-
-//    private double mPaidAmount;
-
+    // 是否购买教程
     private int mHasBought;
+    // 是否解锁教程
     private int mHasUnlocked;
 
     //自己点赞次数
@@ -139,6 +136,7 @@ public class PhotoItem implements Serializable, Cloneable {
 
     private int mClickCount;
 
+    // 是否是教程作业
     private boolean mIsHomework;
 
     public boolean getIsHomework() {
@@ -234,6 +232,7 @@ public class PhotoItem implements Serializable, Cloneable {
         // needed by ormlite
     }
 
+    //根据传入url存储category_id(频道id)
     public static PhotoItem createPhotoItem(JSONObject jsonObj, String url)
             throws JSONException {
         PhotoItem photoItem = createPhotoItem(jsonObj);
@@ -462,7 +461,6 @@ public class PhotoItem implements Serializable, Cloneable {
 
     /**
      * 获取热门评论列表
-     *
      * @return
      */
     public List<Comment> getHotCommentList() {

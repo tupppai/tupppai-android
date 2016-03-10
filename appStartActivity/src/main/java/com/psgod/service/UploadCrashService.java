@@ -13,9 +13,7 @@ import com.psgod.network.request.UploadCrashRequest;
 
 /**
  * 上传crash 信息
- * 
  * @author ZouMengyuan
- * 
  *
  */
 public class UploadCrashService extends Service{

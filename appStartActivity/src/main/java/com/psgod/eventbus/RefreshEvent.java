@@ -1,7 +1,8 @@
 package com.psgod.eventbus;
 
 /**
- * Created by remilia on 2015/11/19.
+ * Created by remilia on 2015/11/19
+ * 刷新用对象
  */
 public class RefreshEvent {
 
