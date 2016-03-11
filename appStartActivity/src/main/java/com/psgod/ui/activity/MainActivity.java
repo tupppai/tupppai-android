@@ -531,7 +531,7 @@ public class MainActivity extends PSGodBaseActivity {
         mReleaseImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(LoginUser.getInstance().isBoundPhone()) {
+//                if(LoginUser.getInstance().isBoundPhone()) {
                     Intent intent = new Intent(MainActivity.this,
                             MultiImageSelectActivity.class);
                     Bundle bundle = new Bundle();
@@ -539,11 +539,11 @@ public class MainActivity extends PSGodBaseActivity {
                             UploadMultiImageActivity.TYPE_TIMELINE_SELECT);
                     intent.putExtras(bundle);
                     startActivity(intent);
-                }else{
-                    Intent intent = new Intent(MainActivity.this,
-                            BindInputPhoneActivity.class);
-                    startActivity(intent);
-                }
+//                }else{
+//                    Intent intent = new Intent(MainActivity.this,
+//                            BindInputPhoneActivity.class);
+//                    startActivity(intent);
+//                }
             }
         });
 

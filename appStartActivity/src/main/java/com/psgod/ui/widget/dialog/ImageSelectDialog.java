@@ -136,7 +136,7 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
 
     @Override
     public void show() {
-        if(LoginUser.getInstance().isBoundPhone()) {
+//        if(LoginUser.getInstance().isBoundPhone()) {
             initView();
             initListener();
             getWindow().getAttributes().width = -1;
@@ -149,11 +149,11 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
                 mImageimg.callOnClick();
             }
             super.show();
-        }else{
-            Intent intent = new Intent(mContext,
-                    BindInputPhoneActivity.class);
-            mContext.startActivity(intent);
-        }
+//        }else{
+//            Intent intent = new Intent(mContext,
+//                    BindInputPhoneActivity.class);
+//            mContext.startActivity(intent);
+//        }
     }
 
     //设置头部默认选择图片,用于相册选择图片后的回调
