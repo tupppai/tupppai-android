@@ -37,7 +37,7 @@ public abstract class BaseRequest<T> extends Request<T> {
 
     public static final String PSGOD_BASE_RELEASE_URL = "http://api.qiupsdashen.com/"; // 正式环境
 
-    public static String PSGOD_BASE_URL = PSGOD_BASE_TEST_URL;
+    public static String PSGOD_BASE_URL = PSGOD_BASE_RELEASE_URL;
 
     protected static final String PROTOCOL_CHARSET = "utf-8";
 
@@ -92,7 +92,8 @@ public abstract class BaseRequest<T> extends Request<T> {
             String info = jsonObj.getString("info");
             if (ret == 2) {
                 // 判断用户是否绑定手机，没绑定则弹出绑定框
-                if (LoginUser.getInstance().getPhoneNum().equals("0")) {
+                if (LoginUser.getInstance().getPhoneNum().equals("0") ||
+                        LoginUser.getInstance().getPhoneNum().trim().equals("")) {
                     Intent intent = new Intent(PSGodApplication.getAppContext(),
                             BindInputPhoneActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

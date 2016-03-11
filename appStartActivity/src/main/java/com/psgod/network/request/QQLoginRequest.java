@@ -39,8 +39,20 @@ public class QQLoginRequest extends BaseRequest<QQLoginWrapper> {
 
 	public static class Builder implements IPostRequestBuilder {
 		private String openid;
+		private String nickname;
+		private String avatar;
 		private Listener<QQLoginWrapper> listener;
 		private ErrorListener errorListener;
+
+		public Builder setNickname(String nickname) {
+			this.nickname = nickname;
+			return this;
+		}
+
+		public Builder setAvatar(String avatar) {
+			this.avatar = avatar;
+			return this;
+		}
 
 		public Builder setCode(String id) {
 			this.openid = id;
@@ -83,7 +95,8 @@ public class QQLoginRequest extends BaseRequest<QQLoginWrapper> {
 		public Map<String, String> createParameters() {
 			Map<String, String> params = new HashMap<String, String>();
 			params.put("openid", openid);
-
+			params.put("avatar",avatar);
+			params.put("nickname",nickname);
 			return params;
 		}
 	}

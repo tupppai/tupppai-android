@@ -22,6 +22,8 @@ import com.psgod.CustomToast;
 import com.psgod.R;
 import com.psgod.Utils;
 import com.psgod.WeakReferenceHandler;
+import com.psgod.eventbus.BindEvent;
+import com.psgod.eventbus.MyPageRefreshEvent;
 import com.psgod.model.LoginUser;
 import com.psgod.model.MoneyTransfer;
 import com.psgod.network.request.GetVerifyCodeRequest;
@@ -32,11 +34,13 @@ import com.psgod.network.request.PSGodRequestQueue;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import de.greenrobot.event.EventBus;
+
 /**
  * Created by pires on 16/1/21.
  * 提现手机验证
  */
-public class WithdrawPhoneVerifyActivity extends PSGodBaseActivity{
+public class WithdrawPhoneVerifyActivity extends PSGodBaseActivity {
     private static final String TAG = WithdrawPhoneVerifyActivity.class.getSimpleName();
 
     public static final String AMOUNT_DOUBLE = "amount";
@@ -61,6 +65,7 @@ public class WithdrawPhoneVerifyActivity extends PSGodBaseActivity{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
         Utils.addActivity(this);
         setContentView(R.layout.activity_withdraw_phone_verify);
 
@@ -69,8 +74,27 @@ public class WithdrawPhoneVerifyActivity extends PSGodBaseActivity{
 
         initView();
         initListener();
-        mVerifyTxt.callOnClick();
-        codeReceiver();
+//        mVerifyTxt.callOnClick();
+        mSure.callOnClick();
+//        codeReceiver();
+    }
+
+    public void onEventMainThread(BindEvent event) {
+        switch (event.state){
+            case OK:
+                Utils.showProgressDialog(this);
+                mSure.callOnClick();
+                break;
+            case FINISH:
+                finish();
+                break;
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     // BroadcastReceiver拦截短信验证码
@@ -122,7 +146,7 @@ public class WithdrawPhoneVerifyActivity extends PSGodBaseActivity{
         mVerifyTxt = (TextView) findViewById(R.id.withdraw_phone_verify_verify);
         mVerifyEdit = (EditText) findViewById(R.id.withdraw_phone_verify_edit);
         mSure = (Button) findViewById(R.id.withdraw_phone_verify_sure);
-        
+
         mPhoneTxt.setText(LoginUser.getInstance().getPhoneNum());
     }
 
@@ -161,36 +185,39 @@ public class WithdrawPhoneVerifyActivity extends PSGodBaseActivity{
         mSure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mVerifyEdit.getText().toString().length() > 0) {
-                    Utils.showProgressDialog(WithdrawPhoneVerifyActivity.this);
-                    MoneyTransferRequest request = new MoneyTransferRequest.Builder().
-                            setErrorListener(new PSGodErrorListener(this) {
-                                @Override
-                                public void handleError(VolleyError error) {
+                /**
+                 * 暂时去掉验证，需要时解除注释
+                 */
+//                if(mVerifyEdit.getText().toString().length() > 0) {
+                Utils.showProgressDialog(WithdrawPhoneVerifyActivity.this);
+                MoneyTransferRequest request = new MoneyTransferRequest.Builder().
+                        setErrorListener(new PSGodErrorListener(this) {
+                            @Override
+                            public void handleError(VolleyError error) {
 
+                            }
+                        }).
+                        setListener(new Response.Listener<MoneyTransfer>() {
+                            @Override
+                            public void onResponse(MoneyTransfer response) {
+                                Utils.hideProgressDialog();
+                                if (response != null) {
+                                    Intent intent = new Intent(WithdrawPhoneVerifyActivity.this,
+                                            WithdrawSuccessActivity.class);
+                                    intent.putExtra(WithdrawSuccessActivity.RESULT, response);
+                                    WithdrawPhoneVerifyActivity.this.startActivity(intent);
                                 }
-                            }).
-                            setListener(new Response.Listener<MoneyTransfer>() {
-                                @Override
-                                public void onResponse(MoneyTransfer response) {
-                                    Utils.hideProgressDialog();
-                                    if (response != null) {
-                                        Intent intent = new Intent(WithdrawPhoneVerifyActivity.this,
-                                                WithdrawSuccessActivity.class);
-                                        intent.putExtra(WithdrawSuccessActivity.RESULT, response);
-                                        WithdrawPhoneVerifyActivity.this.startActivity(intent);
-                                    }
-                                }
-                            }).
-                            setAmount(String.valueOf(amount)).
-                            setCode(mVerifyEdit.getText().toString()).
-                            build();
-                    RequestQueue requestQueue = PSGodRequestQueue
-                            .getInstance(WithdrawPhoneVerifyActivity.this).getRequestQueue();
-                    requestQueue.add(request);
-                }else{
-                    CustomToast.show(WithdrawPhoneVerifyActivity.this,"验证不能为空",Toast.LENGTH_LONG);
-                }
+                            }
+                        }).
+                        setAmount(String.valueOf(amount)).
+                        setCode(mVerifyEdit.getText().toString()).
+                        build();
+                RequestQueue requestQueue = PSGodRequestQueue
+                        .getInstance(WithdrawPhoneVerifyActivity.this).getRequestQueue();
+                requestQueue.add(request);
+//                }else{
+//                    CustomToast.show(WithdrawPhoneVerifyActivity.this,"验证不能为空",Toast.LENGTH_LONG);
+//                }
             }
         });
     }

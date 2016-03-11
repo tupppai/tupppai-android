@@ -38,9 +38,21 @@ public class WeiboLoginRequest extends BaseRequest<WeiboLoginWrapper> {
 	}
 
 	public static class Builder implements IPostRequestBuilder {
+		private String nickname;
+		private String avatar;
 		private String openid;
 		private Listener<WeiboLoginWrapper> listener;
 		private ErrorListener errorListener;
+
+		public Builder setNickname(String nickname) {
+			this.nickname = nickname;
+			return this;
+		}
+
+		public Builder setAvatar(String avatar) {
+			this.avatar = avatar;
+			return this;
+		}
 
 		public Builder setCode(String id) {
 			this.openid = id;
@@ -83,7 +95,8 @@ public class WeiboLoginRequest extends BaseRequest<WeiboLoginWrapper> {
 		public Map<String, String> createParameters() {
 			Map<String, String> params = new HashMap<String, String>();
 			params.put("openid", openid);
-
+			params.put("nickname",nickname);
+			params.put("avatar",avatar);
 			return params;
 		}
 	}

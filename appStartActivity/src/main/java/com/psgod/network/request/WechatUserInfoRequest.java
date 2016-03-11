@@ -36,8 +36,27 @@ public class WechatUserInfoRequest extends BaseRequest<WechatUserWrapper> {
     public static class Builder implements IPostRequestBuilder {
         private String mCode;
         private String mToken;
+        private String mNickname;
+        private String mSex;
+        private String mAvatar;
+
         private Listener<WechatUserWrapper> listener;
         private ErrorListener errorListener;
+
+        public Builder setNickname(String mNickname) {
+            this.mNickname = mNickname;
+            return this;
+        }
+
+        public Builder setSex(String mSex) {
+            this.mSex = mSex;
+            return this;
+        }
+
+        public Builder setAvatar(String mAvatar) {
+            this.mAvatar = mAvatar;
+            return this;
+        }
 
         public Builder setCode(String code) {
             this.mCode = code;
@@ -88,6 +107,9 @@ public class WechatUserInfoRequest extends BaseRequest<WechatUserWrapper> {
             if (mToken != null && mToken.length() > 0) {
                 params.put("access_token", mToken);
             }
+            params.put("nickname",mNickname);
+            params.put("sex",mSex);
+            params.put("avatar",mAvatar);
 
             return params;
         }

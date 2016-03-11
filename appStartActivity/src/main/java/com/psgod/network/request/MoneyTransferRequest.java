@@ -77,7 +77,7 @@ public class MoneyTransferRequest extends BaseRequest<MoneyTransfer> {
             StringBuilder sb = new StringBuilder(BaseRequest.PSGOD_BASE_URL);
             sb.append("money/transfer");
             sb.append("?amount=").append(amount);
-            sb.append("&code=").append(code);
+//            sb.append("&code=").append(code);
 
             String url = sb.toString();
             Logger.log(Logger.LOG_LEVEL_DEBUG, Logger.USER_LEVEL_COLOR, TAG,

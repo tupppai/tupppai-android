@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Looper;
 import android.text.TextUtils;
 import android.view.View;
@@ -37,12 +36,7 @@ import com.psgod.ui.widget.dialog.CustomProgressingDialog;
 
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
@@ -218,6 +212,19 @@ public class NewLoginInputPhoneActivity extends PSGodBaseActivity {
 
                 try {
                     int isRegistered = response.isRegistered;
+                    SharedPreferences.Editor editor = PSGodApplication
+                            .getAppContext()
+                            .getSharedPreferences(Constants.SharedPreferencesKey.NAME,
+                                    Context.MODE_PRIVATE).edit();
+                    editor.putString(Constants.ThirdAuthInfo.THIRD_AUTH_PLATFORM, WEIXINPLAT);
+                    editor.putString(Constants.ThirdAuthInfo.USER_OPENID, mThirdAuthId);
+                    editor.putString(Constants.ThirdAuthInfo.USER_AVATAR, mThirdAuthAvatar);
+                    editor.putString(Constants.ThirdAuthInfo.USER_NICKNAME, mThirdAuthName);
+                    if (android.os.Build.VERSION.SDK_INT >= 9) {
+                        editor.apply();
+                    } else {
+                        editor.commit();
+                    }
                     // 已注册
                     if (isRegistered == 1) {
                         JSONObject userInfoData = response.UserObject;
@@ -233,19 +240,7 @@ public class NewLoginInputPhoneActivity extends PSGodBaseActivity {
                     }
                     // 未注册
                     if (isRegistered == 0) {
-                        SharedPreferences.Editor editor = PSGodApplication
-                                .getAppContext()
-                                .getSharedPreferences(Constants.SharedPreferencesKey.NAME,
-                                        Context.MODE_PRIVATE).edit();
-                        editor.putString(Constants.ThirdAuthInfo.THIRD_AUTH_PLATFORM, WEIXINPLAT);
-                        editor.putString(Constants.ThirdAuthInfo.USER_OPENID, mThirdAuthId);
-                        editor.putString(Constants.ThirdAuthInfo.USER_AVATAR, mThirdAuthAvatar);
-                        editor.putString(Constants.ThirdAuthInfo.USER_NICKNAME, mThirdAuthName);
-                        if (android.os.Build.VERSION.SDK_INT >= 9) {
-                            editor.apply();
-                        } else {
-                            editor.commit();
-                        }
+
 
                         JSONObject userInfoData = new JSONObject();
                         userInfoData.put("uid", 0l);
@@ -368,6 +363,9 @@ public class NewLoginInputPhoneActivity extends PSGodBaseActivity {
                         if (!TextUtils.isEmpty(mThirdAuthId)) {
                             WechatUserInfoRequest.Builder builder = new WechatUserInfoRequest.Builder()
                                     .setCode(mThirdAuthId)
+                                    .setAvatar(mThirdAuthAvatar)
+                                    .setNickname(mThirdAuthName)
+                                    .setSex(mThirdAuthGender)
                                     .setListener(wechatAuthListener)
                                     .setErrorListener(errorListener);
 
@@ -443,7 +441,10 @@ public class NewLoginInputPhoneActivity extends PSGodBaseActivity {
 
             if (!TextUtils.isEmpty(mThirdAuthId)) {
                 QQLoginRequest.Builder builder = new QQLoginRequest.Builder()
-                        .setCode(mThirdAuthId).setListener(qqAuthListener)
+                        .setCode(mThirdAuthId)
+                        .setNickname(mThirdAuthName)
+                        .setAvatar(mThirdAuthAvatar)
+                        .setListener(qqAuthListener)
                         .setErrorListener(errorListener);
 
                 QQLoginRequest request = builder.build();
@@ -472,6 +473,19 @@ public class NewLoginInputPhoneActivity extends PSGodBaseActivity {
 
             try {
                 int isRegistered = response.isRegistered;
+                SharedPreferences.Editor editor = PSGodApplication
+                        .getAppContext()
+                        .getSharedPreferences(Constants.SharedPreferencesKey.NAME,
+                                Context.MODE_PRIVATE).edit();
+                editor.putString(Constants.ThirdAuthInfo.THIRD_AUTH_PLATFORM, QQPLAT);
+                editor.putString(Constants.ThirdAuthInfo.USER_OPENID, mThirdAuthId);
+                editor.putString(Constants.ThirdAuthInfo.USER_AVATAR, mThirdAuthAvatar);
+                editor.putString(Constants.ThirdAuthInfo.USER_NICKNAME, mThirdAuthName);
+                if (android.os.Build.VERSION.SDK_INT >= 9) {
+                    editor.apply();
+                } else {
+                    editor.commit();
+                }
                 // 已注册
                 if (isRegistered == 1) {
                     JSONObject userInfoData = response.UserObject;
@@ -488,19 +502,6 @@ public class NewLoginInputPhoneActivity extends PSGodBaseActivity {
                 }
                 // 未注册
                 if (isRegistered == 0) {
-                    SharedPreferences.Editor editor = PSGodApplication
-                            .getAppContext()
-                            .getSharedPreferences(Constants.SharedPreferencesKey.NAME,
-                                    Context.MODE_PRIVATE).edit();
-                    editor.putString(Constants.ThirdAuthInfo.THIRD_AUTH_PLATFORM, QQPLAT);
-                    editor.putString(Constants.ThirdAuthInfo.USER_OPENID, mThirdAuthId);
-                    editor.putString(Constants.ThirdAuthInfo.USER_AVATAR, mThirdAuthAvatar);
-                    editor.putString(Constants.ThirdAuthInfo.USER_NICKNAME, mThirdAuthName);
-                    if (android.os.Build.VERSION.SDK_INT >= 9) {
-                        editor.apply();
-                    } else {
-                        editor.commit();
-                    }
 
                     JSONObject userInfoData = new JSONObject();
                     userInfoData.put("uid", 0l);
@@ -567,7 +568,10 @@ public class NewLoginInputPhoneActivity extends PSGodBaseActivity {
 
             if (!TextUtils.isEmpty(mThirdAuthId)) {
                 WeiboLoginRequest.Builder builder = new WeiboLoginRequest.Builder()
-                        .setCode(mThirdAuthId).setListener(weiboAuthListener)
+                        .setCode(mThirdAuthId)
+                        .setNickname(mThirdAuthName)
+                        .setAvatar(mThirdAuthAvatar)
+                        .setListener(weiboAuthListener)
                         .setErrorListener(errorListener);
 
                 WeiboLoginRequest request = builder.build();
@@ -596,6 +600,19 @@ public class NewLoginInputPhoneActivity extends PSGodBaseActivity {
 
             try {
                 int isRegistered = response.isRegistered;
+                SharedPreferences.Editor editor = PSGodApplication
+                        .getAppContext()
+                        .getSharedPreferences(Constants.SharedPreferencesKey.NAME,
+                                Context.MODE_PRIVATE).edit();
+                editor.putString(Constants.ThirdAuthInfo.THIRD_AUTH_PLATFORM, WEIBOPLAT);
+                editor.putString(Constants.ThirdAuthInfo.USER_OPENID, mThirdAuthId);
+                editor.putString(Constants.ThirdAuthInfo.USER_AVATAR, mThirdAuthAvatar);
+                editor.putString(Constants.ThirdAuthInfo.USER_NICKNAME, mThirdAuthName);
+                if (android.os.Build.VERSION.SDK_INT >= 9) {
+                    editor.apply();
+                } else {
+                    editor.commit();
+                }
                 // 已注册
                 if (isRegistered == 1) {
                     JSONObject userInfoData = response.UserObject;
@@ -610,20 +627,6 @@ public class NewLoginInputPhoneActivity extends PSGodBaseActivity {
                 }
                 // 未注册
                 if (isRegistered == 0) {
-
-                    SharedPreferences.Editor editor = PSGodApplication
-                            .getAppContext()
-                            .getSharedPreferences(Constants.SharedPreferencesKey.NAME,
-                                    Context.MODE_PRIVATE).edit();
-                    editor.putString(Constants.ThirdAuthInfo.THIRD_AUTH_PLATFORM, WEIBOPLAT);
-                    editor.putString(Constants.ThirdAuthInfo.USER_OPENID, mThirdAuthId);
-                    editor.putString(Constants.ThirdAuthInfo.USER_AVATAR, mThirdAuthAvatar);
-                    editor.putString(Constants.ThirdAuthInfo.USER_NICKNAME, mThirdAuthName);
-                    if (android.os.Build.VERSION.SDK_INT >= 9) {
-                        editor.apply();
-                    } else {
-                        editor.commit();
-                    }
 
                     JSONObject userInfoData = new JSONObject();
                     userInfoData.put("uid", 0l);

@@ -27,6 +27,7 @@ import com.psgod.R;
 import com.psgod.Utils;
 import com.psgod.WeakReferenceHandler;
 import com.psgod.eventbus.AvatarEvent;
+import com.psgod.eventbus.BindEvent;
 import com.psgod.eventbus.InitEvent;
 import com.psgod.eventbus.MyPageRefreshEvent;
 import com.psgod.eventbus.RefreshEvent;
@@ -221,7 +222,6 @@ public class BindPhoneActivity extends PSGodBaseActivity {
                                     @Override
                                     public void onResponse(JSONObject data) {
                                         showToast(new PSGodToast("绑定成功"));
-
                                         if (data != null) {
                                             // 存储服务端返回的用户信息到sp
                                             LoginUser.getInstance().initFromJSONObject(data);
@@ -234,6 +234,7 @@ public class BindPhoneActivity extends PSGodBaseActivity {
                                         EventBus.getDefault().post(new MyPageRefreshEvent(MyPageRefreshEvent.WORK));
                                         EventBus.getDefault().post(new MyPageRefreshEvent(MyPageRefreshEvent.COLLECTION));
                                         EventBus.getDefault().post(new InitEvent());
+                                        EventBus.getDefault().post(new BindEvent(BindEvent.State.OK));
 
                                         if ((mProgressDialog != null) && (mProgressDialog.isShowing())) {
                                             mProgressDialog.dismiss();
@@ -372,6 +373,12 @@ public class BindPhoneActivity extends PSGodBaseActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
+    }
+
+    @Override
+    public void finish() {
+        EventBus.getDefault().post(new BindEvent(BindEvent.State.FINISH));
+        super.finish();
     }
 
     /**
