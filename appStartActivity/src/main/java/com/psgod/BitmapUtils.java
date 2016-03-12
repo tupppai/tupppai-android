@@ -146,7 +146,6 @@ public final class BitmapUtils implements Handler.Callback {
     // 对图片进行处理，得到毛玻璃效果
     public static void setBlurBitmap(final Bitmap bitmap, final View view, final String url) {
         if (bitmap == null || view == null || url == null) {
-            Log.e("bitmap", bitmap.toString() + "=====" + url + "=====" + view.toString());
             return;
         }
         view.setTag(R.id.image_url, url);
