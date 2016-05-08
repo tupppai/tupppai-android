@@ -60,6 +60,7 @@ import com.psgod.ui.fragment.MyPageFragment;
 import com.psgod.ui.fragment.TupppaiFragment;
 import com.psgod.ui.view.CircleImageView;
 import com.psgod.ui.widget.AvatarImageView;
+import com.psgod.ui.widget.dialog.CameraPopupwindow;
 import com.umeng.message.PushAgent;
 import com.umeng.message.UmengRegistrar;
 import com.umeng.update.UmengUpdateAgent;
@@ -135,6 +136,7 @@ public class MainActivity extends PSGodBaseActivity {
     private ImageView mTupaiImage;
     private ImageView mInprogressImage;
     private ImageView mReleaseImage;
+    private CameraPopupwindow cameraPopupwindow;
 
     private ImageView[] mBottomTabImage = new ImageView[3];
     //    private Integer[] mTabDrawableIds = {R.mipmap.tab_home_normal, R.mipmap.tab_tupai_normal,
@@ -528,24 +530,34 @@ public class MainActivity extends PSGodBaseActivity {
         mMyLayout.setOnClickListener(myClick);
         mAvatarImg.setOnClickListener(myClick);
 
+
+        // 修改回弹起选择框
         mReleaseImage.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-//                if(LoginUser.getInstance().isBoundPhone()) {
-                    Intent intent = new Intent(MainActivity.this,
-                            MultiImageSelectActivity.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putString("SelectType",
-                            UploadMultiImageActivity.TYPE_TIMELINE_SELECT);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
-//                }else{
-//                    Intent intent = new Intent(MainActivity.this,
-//                            BindInputPhoneActivity.class);
-//                    startActivity(intent);
-//                }
+            public void onClick(View v) {
+                showCameraPopupwindow(v); // 弹出选择上传求P还是作品的PopupWindow
             }
         });
+
+//        mReleaseImage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+
+////                if(LoginUser.getInstance().isBoundPhone()) {
+//                    Intent intent = new Intent(MainActivity.this,
+//                            MultiImageSelectActivity.class);
+//                    Bundle bundle = new Bundle();
+//                    bundle.putString("SelectType",
+//                            UploadMultiImageActivity.TYPE_TIMELINE_SELECT);
+//                    intent.putExtras(bundle);
+//                    startActivity(intent);
+////                }else{
+////                    Intent intent = new Intent(MainActivity.this,
+////                            BindInputPhoneActivity.class);
+////                    startActivity(intent);
+////                }
+//            }
+//        });
 
         for (int i = 0; i < 3; i++) {
             mBottomTabLayout[i].setOnClickListener(new View.OnClickListener() {
@@ -683,6 +695,14 @@ public class MainActivity extends PSGodBaseActivity {
                 return false;
             }
         });
+    }
+
+    private void showCameraPopupwindow(View view) {
+        if (null == cameraPopupwindow) {
+            cameraPopupwindow = new CameraPopupwindow(this);
+        }
+
+        cameraPopupwindow.showCameraPopupwindow(view);
     }
 
     @Override
