@@ -24,6 +24,7 @@ import com.umeng.message.PushAgent;
 import com.umeng.message.UmengMessageHandler;
 import com.umeng.message.UmengNotificationClickHandler;
 import com.umeng.message.entity.UMessage;
+import com.youzan.sdk.YouzanSDK;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -60,6 +61,9 @@ public class PSGodApplication extends Application {
     @SuppressLint("NewApi")
     @Override
     public void onCreate() {
+        super.onCreate();
+        YouzanSDK.init(this, "d1362c1b2c6f7a83a11463623085612");
+
         mAppContext = this.getApplicationContext();
 
         // 注册crash捕捉上报系统
