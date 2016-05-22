@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     >
 
+
     <com.handmark.pulltorefresh.library.PullToRefreshListView
         android:id="@+id/fragment_homepage_hot_lv"
         android:layout_width="match_parent"

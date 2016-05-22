@@ -107,4 +107,5 @@ dependencies {
     compile project(':baiduWalletRefactorLib')
     compile project(':pingpp')
     compile project(':PushSDK')
+    compile files('libs/youzan-sdk-v2.1.6.jar')
 }

@@ -24,6 +24,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
@@ -46,17 +47,20 @@ import com.psgod.eventbus.RefreshEvent;
 import com.psgod.model.BannerData;
 import com.psgod.model.Comment;
 import com.psgod.model.PhotoItem;
+import com.psgod.model.Tupppai;
 import com.psgod.network.NetworkUtil;
 import com.psgod.network.request.BaseRequest;
 import com.psgod.network.request.HomePageGetBannerRequest;
 import com.psgod.network.request.PSGodErrorListener;
 import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.network.request.PhotoListRequest;
+import com.psgod.network.request.TupppaiRequest;
 import com.psgod.ui.activity.ChannelActivity;
 import com.psgod.ui.activity.CommentListActivity;
 import com.psgod.ui.activity.RecentActActivity;
 import com.psgod.ui.activity.WebBrowserActivity;
 import com.psgod.ui.adapter.PhotoListAdapter;
+import com.psgod.ui.adapter.UserProfileAsksAdapter;
 import com.psgod.ui.view.PhotoItemView;
 import com.psgod.ui.widget.EditPopupWindow;
 import com.psgod.ui.widget.EditPopupWindow.OnResponseListener;
@@ -73,6 +77,10 @@ import m.framework.utils.Utils;
 
 public class HomePageHotFragment extends BaseFragment implements Callback {
     private static final String TAG = HomePageHotFragment.class.getSimpleName();
+
+    private int page = 1;
+    private List<Tupppai> tupppais;
+    LinearLayout channelPanel;
 
     private Context mContext;
     private ViewHolder mViewHolder;
@@ -101,6 +109,7 @@ public class HomePageHotFragment extends BaseFragment implements Callback {
     //  显示的banner
     private List<BannerData> mBannerItems = new ArrayList<BannerData>();
     private View bannerView;
+    private View channelView;
     private AutoScrollViewPager mBannerViewPager;
     private BannerOnPageChangeListener bannerListener = new BannerOnPageChangeListener();
     private List<ImageView> mScrollImages = new ArrayList<ImageView> ();
@@ -109,6 +118,8 @@ public class HomePageHotFragment extends BaseFragment implements Callback {
     private DisplayImageOptions mOptions = Constants.DISPLAY_BANNER_OPTIONS;
 
     private Boolean HasAddBanner = false;
+    private Boolean HasAddChannel = false;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -122,11 +133,14 @@ public class HomePageHotFragment extends BaseFragment implements Callback {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         Logger.logMethod(TAG, "onCreateView");
+
         mContext = getActivity();
         FrameLayout parentView = new FrameLayout(mContext);
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
                 LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         parentView.setLayoutParams(params);
+
+        tupppais = new ArrayList<Tupppai>();
 
         mViewHolder = new ViewHolder();
         mViewHolder.mParentView = parentView;
@@ -185,6 +199,7 @@ public class HomePageHotFragment extends BaseFragment implements Callback {
     public View getBannerView () {
         bannerView = LayoutInflater.from(mContext).inflate(
                 R.layout.homepage_hot_banner_view, null);
+        channelPanel = (LinearLayout) bannerView.findViewById(R.id.chanel_item);
 
         mScrollLayout = (LinearLayout) bannerView.findViewById(R.id.scroll_layout);
 
@@ -218,6 +233,31 @@ public class HomePageHotFragment extends BaseFragment implements Callback {
         mBannerViewPager.setOnPageChangeListener(bannerListener);
         mBannerViewPager.setInterval(3000);  // 设置自动滚动的间隔时间，单位为毫秒
         mBannerViewPager.startAutoScroll();  // 启动自动滚动
+
+
+        PsGodImageLoader imageLoader = PsGodImageLoader.getInstance();
+        channelPanel.removeAllViews();
+        int mSize = tupppais.size();
+        System.out.println("数据" + tupppais.size());
+        if (mSize > 0) {
+            for (int i = 0; i < mSize; i++) {
+
+                ImageView mchannelIv = new ImageView(mContext);
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                        com.psgod.Utils.dpToPx(mContext, 84), com.psgod.Utils.dpToPx(mContext, 84));
+                params.setMargins(com.psgod.Utils.dpToPx(mContext, 10), 0, 0, 0);
+                mchannelIv.setLayoutParams(params);
+                mchannelIv.setScaleType(ImageView.ScaleType.CENTER);
+
+//                imageLoader.displayImage(mReplyItems.get(i).getImageURL(),
+//                        mReplyIv, mOptions);
+                channelPanel.addView(mchannelIv);
+            }
+
+        }
+
+
+
 
         return bannerView;
     }
@@ -493,8 +533,9 @@ public class HomePageHotFragment extends BaseFragment implements Callback {
 
         @Override
         public void onRefresh(PullToRefreshBase refreshView) {
+            loadchannelData();
             loadBannerData();         // 下拉刷新时，加载banner
-            //loadpindao();
+
             mPage = 1;
             // 上次刷新时间
             if (mLastUpdatedTime == DEFAULT_LAST_REFRESH_TIME) {
@@ -514,6 +555,44 @@ public class HomePageHotFragment extends BaseFragment implements Callback {
             requestQueue.add(request);
         }
     }
+
+    private void loadchannelData() {
+        System.out.print("请求"+"/n");
+        page = 1;
+        TupppaiRequest request = new TupppaiRequest.Builder().setListener(channelListener).
+                setErrorListener(errorListener).setPage(page).build();
+
+        RequestQueue requestQueue = PSGodRequestQueue.getInstance(
+                getActivity()).getRequestQueue();
+        requestQueue.add(request);
+    }
+
+    Response.Listener<List<Tupppai>> channelListener = new Response.Listener<List<Tupppai>>() {
+        @Override
+        public void onResponse(List<Tupppai> response) {
+            System.out.print("response");
+
+            if(tupppais.size() > 0){
+                tupppais.clear();
+            }
+            if(response.size() < 10){
+                canLoadMore = false;
+            }else{
+                canLoadMore = true;
+            }
+            tupppais.addAll(response);
+            System.out.print("tupppais" + tupppais.size());
+            System.out.print("response" + response);
+
+//            if ((tupppais.size() > 0) && HasAddChannel == false ) {
+//                mViewHolder.mPhotoListView.getRefreshableView().addHeaderView(getChannelView());
+//                HasAddChannel = true;
+//            }
+        }
+    };
+
+
+
 
     private ErrorListener errorListener = new PSGodErrorListener(this) {
         @Override

@@ -75,7 +75,9 @@ public class MovieFragment extends BaseFragment implements OnClickListener{
                 getActivity().findViewById(R.id.middle).setVisibility(View.GONE);
             } else {
                 back.setVisibility(View.GONE);
-                //getActivity().findViewById(R.id.psgod_linear_tab).setVisibility(View.VISIBLE);
+                getActivity().findViewById(R.id.psgod_linear_tab).setVisibility(View.VISIBLE);
+                getActivity().findViewById(R.id.psgod_rg_tab_tips).setVisibility(View.VISIBLE);
+                getActivity().findViewById(R.id.middle).setVisibility(View.VISIBLE);
             }
             System.out.print("OK");
         }
