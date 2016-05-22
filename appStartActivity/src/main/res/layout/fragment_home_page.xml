@@ -37,7 +37,7 @@
                 style="@style/homepage_top_tabbar"
                 android:layout_marginLeft="32dp"
                 android:padding="0dp"
-                android:text="关注"
+                android:text="动态"
                 android:textColor="#000000" />
         </RadioGroup>
 

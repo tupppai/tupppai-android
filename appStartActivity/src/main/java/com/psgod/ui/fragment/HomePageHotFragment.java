@@ -130,6 +130,7 @@ public class HomePageHotFragment extends BaseFragment implements Callback {
 
         mViewHolder = new ViewHolder();
         mViewHolder.mParentView = parentView;
+        //中间下拉刷新界面
         mViewHolder.mView = LayoutInflater.from(mContext).inflate(
                 R.layout.fragment_homepage_hot, parentView, true);
         mViewHolder.mPhotoListView = (PullToRefreshListView) mViewHolder.mView
@@ -137,10 +138,12 @@ public class HomePageHotFragment extends BaseFragment implements Callback {
 
         mFollowListFooter = LayoutInflater.from(mContext).inflate(
                 R.layout.footer_load_more, null);
+        //添加底部上拉刷新界面
         mViewHolder.mPhotoListView.getRefreshableView().addFooterView(
                 mFollowListFooter);
         mFollowListFooter.setVisibility(View.GONE);
 
+        //照片列表适配
         mHotPhotoItems = new ArrayList<PhotoItem>();
         mAdapter = new PhotoListAdapter(mContext,
                 PhotoItemView.PhotoListType.HOT_FOCUS_ASK, mHotPhotoItems);
@@ -148,6 +151,7 @@ public class HomePageHotFragment extends BaseFragment implements Callback {
         mAdapter.setIsHomePageHot(true);
         mViewHolder.mPhotoListView.getRefreshableView().setAdapter(mAdapter);
 
+        //照片列表监听器
         mListener = new PhotoListListener(mContext);
         mViewHolder.mPhotoListView.setOnRefreshListener(mListener);
         mViewHolder.mPhotoListView.setOnLastItemVisibleListener(mListener);
@@ -158,7 +162,7 @@ public class HomePageHotFragment extends BaseFragment implements Callback {
         if (NetworkUtil.getNetworkType() != NetworkUtil.NetworkType.NONE) {
             mViewHolder.mPhotoListView.setRefreshing(true);
         }
-
+        // 在刷新时允许继续滑动
         mViewHolder.mPhotoListView.setScrollingWhileRefreshingEnabled(true);
 
         // TODO 检测耗时
@@ -218,6 +222,7 @@ public class HomePageHotFragment extends BaseFragment implements Callback {
         return bannerView;
     }
 
+    // banner下方的小圆点
     public class BannerOnPageChangeListener implements ViewPager.OnPageChangeListener {
         @Override
         public void onPageSelected(int page) {
@@ -299,6 +304,7 @@ public class HomePageHotFragment extends BaseFragment implements Callback {
         mBannerViewPager.setAdapter(mPagerAdapter);
     }
 
+    // 更新上方滚动banner
     private void loadBannerData() {
         HomePageGetBannerRequest.Builder builder = new HomePageGetBannerRequest.Builder()
                 .setListener(mBannerListener).setErrorListener(
@@ -451,6 +457,7 @@ public class HomePageHotFragment extends BaseFragment implements Callback {
         return true;
     }
 
+    // 照片列表监听
     private class PhotoListListener implements OnLastItemVisibleListener,
             OnRefreshListener {
         private Context mContext;
@@ -487,6 +494,7 @@ public class HomePageHotFragment extends BaseFragment implements Callback {
         @Override
         public void onRefresh(PullToRefreshBase refreshView) {
             loadBannerData();         // 下拉刷新时，加载banner
+            //loadpindao();
             mPage = 1;
             // 上次刷新时间
             if (mLastUpdatedTime == DEFAULT_LAST_REFRESH_TIME) {
@@ -515,6 +523,7 @@ public class HomePageHotFragment extends BaseFragment implements Callback {
         }
     };
 
+    // 上拉加载监听
     private Listener<List<PhotoItem>> loadMoreListener = new Listener<List<PhotoItem>>() {
         @Override
         public void onResponse(final List<PhotoItem> items) {
@@ -530,6 +539,7 @@ public class HomePageHotFragment extends BaseFragment implements Callback {
         }
     };
 
+    // 下拉刷新监听
     private Listener<List<PhotoItem>> refreshListener = new Listener<List<PhotoItem>>() {
         @Override
         public void onResponse(List<PhotoItem> items) {

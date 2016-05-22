@@ -56,6 +56,8 @@ import com.psgod.ui.fragment.HomePageFocusFragment;
 import com.psgod.ui.fragment.HomePageFragment;
 import com.psgod.ui.fragment.HomePageHotFragment;
 import com.psgod.ui.fragment.InprogressPageFragment;
+import com.psgod.ui.fragment.MallFragment;
+import com.psgod.ui.fragment.MovieFragment;
 import com.psgod.ui.fragment.MyPageFragment;
 import com.psgod.ui.fragment.TupppaiFragment;
 import com.psgod.ui.view.CircleImageView;
@@ -647,6 +649,7 @@ public class MainActivity extends PSGodBaseActivity {
             }
         });
 
+        /**
         // 双击进行中tab刷新
         mInprogressLayout.setOnTouchListener(new OnTouchListener() {
             int count = 0;
@@ -695,6 +698,7 @@ public class MainActivity extends PSGodBaseActivity {
                 return false;
             }
         });
+            **/
     }
 
     private void showCameraPopupwindow(View view) {
@@ -869,10 +873,10 @@ public class MainActivity extends PSGodBaseActivity {
                     fragment = new HomePageFragment();
                     break;
                 case R.id.activity_tab_tupai_page:
-                    fragment = new TupppaiFragment();
+                    fragment = new MovieFragment();
                     break;
                 case R.id.activity_inprogress_tab_page:
-                    fragment = new InprogressPageFragment();
+                    fragment = new MallFragment();
                     break;
                 case R.id.activity_main_tab_user:
                     fragment = new MyPageFragment();

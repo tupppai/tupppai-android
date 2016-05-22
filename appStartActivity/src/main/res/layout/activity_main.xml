@@ -68,7 +68,7 @@
                 android:layout_below="@id/activity_tupai_tab_image"
                 android:layout_marginTop="3.5dp"
                 android:layout_centerHorizontal="true"
-                android:text="图派"
+                android:text="影视"
                 android:textSize="10dp"
                 android:textColor="#4A4A4A"/>
 
@@ -104,7 +104,7 @@
                 android:layout_below="@id/activity_inprogress_tab_image"
                 android:layout_marginTop="3.5dp"
                 android:layout_centerHorizontal="true"
-                android:text="进行中"
+                android:text="商城"
                 android:textSize="10dp"
                 android:textColor="#4A4A4A"/>
 
