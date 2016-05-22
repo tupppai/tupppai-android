@@ -556,14 +556,25 @@ public class HomePageHotFragment extends BaseFragment implements Callback {
         }
     }
 
-    private void loadchannelData() {
-        System.out.print("请求"+"/n");
-        page = 1;
-        TupppaiRequest request = new TupppaiRequest.Builder().setListener(channelListener).
-                setErrorListener(errorListener).setPage(page).build();
+//    private void loadBannerData() {
+//        HomePageGetBannerRequest.Builder builder = new HomePageGetBannerRequest.Builder()
+//                .setListener(mBannerListener).setErrorListener(
+//                        bannerErrorListener);
+//        HomePageGetBannerRequest request = builder.build();
+//        request.setTag(TAG);
+//        RequestQueue requestQueue = PSGodRequestQueue.getInstance(mContext)
+//                .getRequestQueue();
+//        requestQueue.add(request);
+//    }
 
-        RequestQueue requestQueue = PSGodRequestQueue.getInstance(
-                getActivity()).getRequestQueue();
+    private void loadchannelData() {
+        System.out.print("请求"+"\n");
+        page = 1;
+        TupppaiRequest.Builder builder = new TupppaiRequest.Builder()
+                .setListener(channelListener).setErrorListener(errorListener);
+        TupppaiRequest request = builder.build();
+
+        RequestQueue requestQueue = PSGodRequestQueue.getInstance(mContext).getRequestQueue();
         requestQueue.add(request);
     }
 
