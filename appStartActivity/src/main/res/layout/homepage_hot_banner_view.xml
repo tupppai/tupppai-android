@@ -44,6 +44,7 @@
         android:layout_height="110dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
         android:visibility="visible" >
         <TextView
             android:id="@+id/foryou"
@@ -57,7 +58,6 @@
             android:id="@+id/channel_linear"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
             android:layout_below="@id/foryou"
             android:scrollbars="none"
             android:layout_marginTop="4dp"

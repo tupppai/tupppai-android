@@ -8,6 +8,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
+import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
@@ -94,8 +98,17 @@ public class CameraPopupwindow extends PopupWindow implements OnClickListener {
 		view.buildDrawingCache(true);
 		mScreenShotBitmap = view.getDrawingCache();
 
-		BitmapUtils.setBlurBitmap(mScreenShotBitmap,this.getContentView(),mScreenShotBitmap.toString());
-//		return mOverlayBitmap;
+		// 将截图亮度调低
+		Bitmap mFinalBitmap = Bitmap.createBitmap(mScreenShotBitmap.getWidth(), mScreenShotBitmap.getHeight(), Bitmap.Config.ARGB_8888);
+		ColorMatrix cMatrix = new ColorMatrix();
+		cMatrix.set(new float[] {1,0,0,0,-150,0,1,0,0,-150,0,0,1,0,-150,0,0,0,1,0});
+		Paint paint = new Paint();
+		paint.setColorFilter(new ColorMatrixColorFilter(cMatrix));
+		Canvas canvas = new Canvas(mFinalBitmap);
+		canvas.drawBitmap(mScreenShotBitmap,0,0,paint);
+
+		BitmapUtils.setBlurBitmap(mFinalBitmap,this.getContentView(),mFinalBitmap.toString());
+		//		return mOverlayBitmap;
 	}
 
 	// 显示弹出框

@@ -831,7 +831,7 @@ public class MainActivity extends PSGodBaseActivity {
         }
     };
 
-    private void showFragment(int id) {
+    public void showFragment(int id) {
         if (mCurrentFragmentID == id) {
             return;
         }
@@ -880,6 +880,9 @@ public class MainActivity extends PSGodBaseActivity {
                     break;
                 case R.id.activity_main_tab_user:
                     fragment = new MyPageFragment();
+                    break;
+                case R.id.middle:
+                    fragment = new TupppaiFragment();
                     break;
             }
             MAIN_ACTIVITY_FRAGMENTS.put(id, fragment);

@@ -224,8 +224,8 @@ public class PhotoItemView extends RelativeLayout implements Callback {
         mTimeTv = (TextView) this.findViewById(R.id.photo_item_time_tv);
 
         mFollowBtn = (FollowImage) this.findViewById(R.id.photo_item_follow_btn);
-        mSingleItemPsBtn = (ImageButton) this
-                .findViewById(R.id.single_photo_item_ps_btn);
+        //mSingleItemPsBtn = (ImageButton) this
+          //      .findViewById(R.id.single_photo_item_ps_btn);
 
         mImageArea = (RelativeLayout) this
                 .findViewById(R.id.photo_item_image_area);

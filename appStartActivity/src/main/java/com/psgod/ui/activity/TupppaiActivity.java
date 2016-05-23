@@ -1,16 +1,14 @@
-package com.psgod.ui.fragment;
+package com.psgod.ui.activity;
 
-
-import android.app.Fragment;
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -23,9 +21,6 @@ import com.psgod.model.Tupppai;
 import com.psgod.network.request.PSGodErrorListener;
 import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.network.request.TupppaiRequest;
-import com.psgod.ui.activity.MainActivity;
-import com.psgod.ui.activity.RecentAsksActivity;
-import com.psgod.ui.activity.RecentWorkActivity;
 import com.psgod.ui.adapter.TupppaiAdapter;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
 import com.umeng.analytics.MobclickAgent;
@@ -36,21 +31,17 @@ import java.util.List;
 import de.greenrobot.event.EventBus;
 
 /**
- * A simple {@link Fragment} subclass.
+ * Created by Administrator on 2016/5/23.
  */
-public class TupppaiFragment extends BaseFragment {
+public class TupppaiActivity extends Activity{
 
-
-    public TupppaiFragment() {
-    }
-
+    private Context mContext;
     private PullToRefreshListView mListView;
     private TupppaiAdapter mAdapter;
     private List<Tupppai> tupppais;
     private ImageView askImg;
     private ImageView workImg;
     private int page = 1;
-    private ImageView back;
 
     private CustomProgressingDialog progressingDialog;
 
@@ -59,6 +50,12 @@ public class TupppaiFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_tupppai);
+        initView();
+        initListener();
+        refresh();
+
+
         EventBus.getDefault().register(this);
     }
 
@@ -76,17 +73,7 @@ public class TupppaiFragment extends BaseFragment {
         }
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_tupppai, container, false);
 
-        initView(view);
-        initListener();
-        refresh();
-
-        return view;
-    }
 
     private void refresh() {
         page = 1;
@@ -94,57 +81,41 @@ public class TupppaiFragment extends BaseFragment {
                 setErrorListener(errorListener).setPage(page).build();
 
         RequestQueue requestQueue = PSGodRequestQueue.getInstance(
-                getActivity()).getRequestQueue();
+                this).getRequestQueue();
         requestQueue.add(request);
     }
 
-    private void initView(View view) {
-
-        progressingDialog = new CustomProgressingDialog(getActivity());
+    private void initView() {
+        progressingDialog = new CustomProgressingDialog(this);
         progressingDialog.show();
-        View head = LayoutInflater.from(getActivity()).inflate(R.layout.view_tupppai_head, null);
+        View head = LayoutInflater.from(this).inflate(R.layout.view_tupppai_head, null);
         askImg = (ImageView) head.findViewById(R.id.view_tupppai_head_ask);
         workImg = (ImageView) head.findViewById(R.id.view_tupppai_head_work);
-        mListView = (PullToRefreshListView) view.findViewById(R.id.fragment_tupppai_list);
+        mListView = (PullToRefreshListView) findViewById(R.id.fragment_tupppai_list);
         mListView.getRefreshableView().addHeaderView(head);
         tupppais = new ArrayList<Tupppai>();
-        mAdapter = new TupppaiAdapter(getActivity(),tupppais);
+        mAdapter = new TupppaiAdapter(this,tupppais);
         mListView.setAdapter(mAdapter);
         mListView.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
-        back = (ImageView) view.findViewById(R.id.back_tupppai);
     }
 
     private void initListener() {
         askImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MobclickAgent.onEvent(getActivity(), "Tupppai_Ask_Click");         //统计求P的点击次数
-                Intent intent = new Intent(getActivity(),RecentAsksActivity.class);
+                MobclickAgent.onEvent(mContext, "Tupppai_Ask_Click");         //统计求P的点击次数
+                Intent intent = new Intent(TupppaiActivity.this,RecentAsksActivity.class);
                 startActivity(intent);
             }
         });
         workImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MobclickAgent.onEvent(getActivity(), "Tupppai_Work_Click");        //统计作品的点击次数
-                Intent intent = new Intent(getActivity(), RecentWorkActivity.class);
+                MobclickAgent.onEvent(mContext, "Tupppai_Work_Click");        //统计作品的点击次数
+                Intent intent = new Intent(TupppaiActivity.this, RecentWorkActivity.class);
                 startActivity(intent);
             }
         });
-
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (getActivity() instanceof MainActivity) {
-                    MainActivity fca = (MainActivity) getActivity();
-                    fca.showFragment(R.id.activity_main_tab_home_page);
-                }
-                getActivity().findViewById(R.id.psgod_linear_tab).setVisibility(View.VISIBLE);
-                getActivity().findViewById(R.id.psgod_rg_tab_tips).setVisibility(View.VISIBLE);
-                getActivity().findViewById(R.id.middle).setVisibility(View.VISIBLE);
-            }
-        });
-
 
         mListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
             @Override
@@ -166,8 +137,7 @@ public class TupppaiFragment extends BaseFragment {
                     TupppaiRequest request = new TupppaiRequest.Builder().setListener(moreListener).
                             setErrorListener(errorListener).setPage(page).build();
 
-                    RequestQueue requestQueue = PSGodRequestQueue.getInstance(
-                            getActivity()).getRequestQueue();
+                    RequestQueue requestQueue = PSGodRequestQueue.getInstance(mContext).getRequestQueue();
                     requestQueue.add(request);
                 }
             }
@@ -219,5 +189,6 @@ public class TupppaiFragment extends BaseFragment {
             mAdapter.notifyDataSetChanged();
         }
     };
+
 
 }

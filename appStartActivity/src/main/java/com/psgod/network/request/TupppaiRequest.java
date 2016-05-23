@@ -91,7 +91,6 @@ public class TupppaiRequest extends BaseRequest<List<Tupppai>> {
             String url = sb.toString();
             Logger.log(Logger.LOG_LEVEL_DEBUG, Logger.USER_LEVEL_COLOR, TAG,
                     "createUrl: " + url);
-            System.out.print(url);
             return url;
         }
     }

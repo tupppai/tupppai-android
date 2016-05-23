@@ -12,6 +12,9 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler.Callback;
 import android.os.Message;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -22,12 +25,14 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
+import com.etsy.android.grid.StaggeredGridView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnLastItemVisibleListener;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
@@ -57,11 +62,16 @@ import com.psgod.network.request.PhotoListRequest;
 import com.psgod.network.request.TupppaiRequest;
 import com.psgod.ui.activity.ChannelActivity;
 import com.psgod.ui.activity.CommentListActivity;
+import com.psgod.ui.activity.MainActivity;
 import com.psgod.ui.activity.RecentActActivity;
+import com.psgod.ui.activity.TupppaiActivity;
 import com.psgod.ui.activity.WebBrowserActivity;
 import com.psgod.ui.adapter.PhotoListAdapter;
+import com.psgod.ui.adapter.PhotoWaterFallListAdapter;
 import com.psgod.ui.adapter.UserProfileAsksAdapter;
 import com.psgod.ui.view.PhotoItemView;
+import com.psgod.ui.view.PhotoWaterFallItemView;
+import com.psgod.ui.view.PullToRefreshStaggeredGridView;
 import com.psgod.ui.widget.EditPopupWindow;
 import com.psgod.ui.widget.EditPopupWindow.OnResponseListener;
 
@@ -79,8 +89,10 @@ public class HomePageHotFragment extends BaseFragment implements Callback {
     private static final String TAG = HomePageHotFragment.class.getSimpleName();
 
     private int page = 1;
-    private List<Tupppai> tupppais;
-    LinearLayout channelPanel;
+    private List<Tupppai> mtupppais;
+    private LinearLayout channelPanel;
+    private FragmentManager mFragmentManager;
+
 
     private Context mContext;
     private ViewHolder mViewHolder;
@@ -91,7 +103,7 @@ public class HomePageHotFragment extends BaseFragment implements Callback {
     private ExecutorService fixedThreadPool = Executors.newFixedThreadPool(1);
 
     // 带评论
-    private PhotoListAdapter mAdapter;
+    //private PhotoListAdapter mAdapter;
     private PhotoListListener mListener;
     private View mFollowListFooter;
     private int mPage = 1;
@@ -108,18 +120,20 @@ public class HomePageHotFragment extends BaseFragment implements Callback {
 
     //  显示的banner
     private List<BannerData> mBannerItems = new ArrayList<BannerData>();
-    private View bannerView;
+    private View headerView;
     private View channelView;
     private AutoScrollViewPager mBannerViewPager;
     private BannerOnPageChangeListener bannerListener = new BannerOnPageChangeListener();
     private List<ImageView> mScrollImages = new ArrayList<ImageView> ();
 
     private LinearLayout mScrollLayout;
+
     private DisplayImageOptions mOptions = Constants.DISPLAY_BANNER_OPTIONS;
 
     private Boolean HasAddBanner = false;
     private Boolean HasAddChannel = false;
-
+    private TextView mChannel;
+    private PhotoWaterFallListAdapter mAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -140,15 +154,16 @@ public class HomePageHotFragment extends BaseFragment implements Callback {
                 LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         parentView.setLayoutParams(params);
 
-        tupppais = new ArrayList<Tupppai>();
+        mtupppais = new ArrayList<Tupppai>();
 
         mViewHolder = new ViewHolder();
         mViewHolder.mParentView = parentView;
         //中间下拉刷新界面
         mViewHolder.mView = LayoutInflater.from(mContext).inflate(
                 R.layout.fragment_homepage_hot, parentView, true);
-        mViewHolder.mPhotoListView = (PullToRefreshListView) mViewHolder.mView
+        mViewHolder.mPhotoListView = (PullToRefreshStaggeredGridView) mViewHolder.mView
                 .findViewById(R.id.fragment_homepage_hot_lv);
+        mViewHolder.mPhotoListView.setMode(PullToRefreshBase.Mode.BOTH);
 
         mFollowListFooter = LayoutInflater.from(mContext).inflate(
                 R.layout.footer_load_more, null);
@@ -159,10 +174,12 @@ public class HomePageHotFragment extends BaseFragment implements Callback {
 
         //照片列表适配
         mHotPhotoItems = new ArrayList<PhotoItem>();
-        mAdapter = new PhotoListAdapter(mContext,
-                PhotoItemView.PhotoListType.HOT_FOCUS_ASK, mHotPhotoItems);
+//        mAdapter = new PhotoListAdapter(mContext,
+//                PhotoItemView.PhotoListType.HOT_FOCUS_ASK, mHotPhotoItems);
+        mAdapter = new PhotoWaterFallListAdapter(mContext, mHotPhotoItems,
+                PhotoWaterFallItemView.PhotoWaterFallListType.USER_PROFILE_WORKS);
         //去掉时间
-        mAdapter.setIsHomePageHot(true);
+        //mAdapter.setIsHomePageHot(true);
         mViewHolder.mPhotoListView.getRefreshableView().setAdapter(mAdapter);
 
         //照片列表监听器
@@ -193,20 +210,42 @@ public class HomePageHotFragment extends BaseFragment implements Callback {
 
         loadDataAsync();
 
+
         return parentView;
     }
 
-    public View getBannerView () {
-        bannerView = LayoutInflater.from(mContext).inflate(
+    public View getHeaderView () {
+        headerView = LayoutInflater.from(mContext).inflate(
                 R.layout.homepage_hot_banner_view, null);
-        channelPanel = (LinearLayout) bannerView.findViewById(R.id.chanel_item);
+        channelPanel = (LinearLayout) headerView.findViewById(R.id.chanel_item);
+        mChannel = (TextView) headerView.findViewById(R.id.foryou);
+        mScrollLayout = (LinearLayout) headerView.findViewById(R.id.scroll_layout);
 
-        mScrollLayout = (LinearLayout) bannerView.findViewById(R.id.scroll_layout);
-
-        mBannerViewPager = (AutoScrollViewPager) bannerView
+        mBannerViewPager = (AutoScrollViewPager) headerView
                 .findViewById(R.id.hot_banner_viewpager);
         LinearLayout.LayoutParams scrollLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
+
+
+
+        mChannel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Intent intent = new Intent();
+//                intent.setClass(mContext, TupppaiActivity.class);
+//                mContext.startActivity(intent);
+                getActivity().findViewById(R.id.psgod_linear_tab).setVisibility(View.GONE);
+                getActivity().findViewById(R.id.psgod_rg_tab_tips).setVisibility(View.GONE);
+                getActivity().findViewById(R.id.middle).setVisibility(View.GONE);
+
+                if (getActivity() instanceof MainActivity) {
+                    MainActivity fca = (MainActivity) getActivity();
+                    fca.showFragment(R.id.middle);
+                }
+
+
+            }
+        });
 
         for (int i = 0,length = mBannerItems.size(); i < length ; i++) {
             ImageView scrollImage = new ImageView(mContext);
@@ -235,13 +274,14 @@ public class HomePageHotFragment extends BaseFragment implements Callback {
         mBannerViewPager.startAutoScroll();  // 启动自动滚动
 
 
+
         PsGodImageLoader imageLoader = PsGodImageLoader.getInstance();
+
         channelPanel.removeAllViews();
-        int mSize = tupppais.size();
-        System.out.println("数据" + tupppais.size());
+        int mSize = mtupppais.size();
+        System.out.println("mtupppais.size " + mtupppais.size());
         if (mSize > 0) {
             for (int i = 0; i < mSize; i++) {
-
                 ImageView mchannelIv = new ImageView(mContext);
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                         com.psgod.Utils.dpToPx(mContext, 84), com.psgod.Utils.dpToPx(mContext, 84));
@@ -249,17 +289,25 @@ public class HomePageHotFragment extends BaseFragment implements Callback {
                 mchannelIv.setLayoutParams(params);
                 mchannelIv.setScaleType(ImageView.ScaleType.CENTER);
 
-//                imageLoader.displayImage(mReplyItems.get(i).getImageURL(),
-//                        mReplyIv, mOptions);
+                imageLoader.displayImage(mtupppais.get(i).getUrl(),
+                        mchannelIv, mOptions);
+                imageLoader.displayImage(mtupppais.get(i).getApp_pic(),mchannelIv,mOptions);
                 channelPanel.addView(mchannelIv);
+
+                final Intent intent = new Intent();
+                intent.putExtra("id", mtupppais.get(i).getId());
+                mchannelIv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        intent.setClass(mContext, ChannelActivity.class);
+                        mContext.startActivity(intent);
+                    }
+                });
+
             }
-
         }
-
-
-
-
-        return bannerView;
+        return headerView;
     }
 
     // banner下方的小圆点
@@ -361,10 +409,10 @@ public class HomePageHotFragment extends BaseFragment implements Callback {
         public void onResponse(List<BannerData> bannerItems) {
             mBannerItems.clear();
             mBannerItems.addAll(bannerItems);
-            if ((bannerItems.size() > 0) && HasAddBanner == false ) {
-                mViewHolder.mPhotoListView.getRefreshableView().addHeaderView(getBannerView());
-                HasAddBanner = true;
-            }
+//            if ((bannerItems.size() > 0) && HasAddBanner == false ) {
+//                mViewHolder.mPhotoListView.getRefreshableView().addHeaderView(getHeaderView());
+//                HasAddBanner = true;
+//            }
         }
     };
 
@@ -533,7 +581,7 @@ public class HomePageHotFragment extends BaseFragment implements Callback {
 
         @Override
         public void onRefresh(PullToRefreshBase refreshView) {
-            loadchannelData();
+            loadChannelData();
             loadBannerData();         // 下拉刷新时，加载banner
 
             mPage = 1;
@@ -556,19 +604,9 @@ public class HomePageHotFragment extends BaseFragment implements Callback {
         }
     }
 
-//    private void loadBannerData() {
-//        HomePageGetBannerRequest.Builder builder = new HomePageGetBannerRequest.Builder()
-//                .setListener(mBannerListener).setErrorListener(
-//                        bannerErrorListener);
-//        HomePageGetBannerRequest request = builder.build();
-//        request.setTag(TAG);
-//        RequestQueue requestQueue = PSGodRequestQueue.getInstance(mContext)
-//                .getRequestQueue();
-//        requestQueue.add(request);
-//    }
 
-    private void loadchannelData() {
-        System.out.print("请求"+"\n");
+
+    private void loadChannelData() {
         page = 1;
         TupppaiRequest.Builder builder = new TupppaiRequest.Builder()
                 .setListener(channelListener).setErrorListener(errorListener);
@@ -578,27 +616,25 @@ public class HomePageHotFragment extends BaseFragment implements Callback {
         requestQueue.add(request);
     }
 
-    Response.Listener<List<Tupppai>> channelListener = new Response.Listener<List<Tupppai>>() {
+    private Listener<List<Tupppai>> channelListener = new Response.Listener<List<Tupppai>>() {
         @Override
         public void onResponse(List<Tupppai> response) {
-            System.out.print("response");
 
-            if(tupppais.size() > 0){
-                tupppais.clear();
+            if(mtupppais.size() > 0){
+                mtupppais.clear();
             }
             if(response.size() < 10){
                 canLoadMore = false;
             }else{
                 canLoadMore = true;
             }
-            tupppais.addAll(response);
-            System.out.print("tupppais" + tupppais.size());
-            System.out.print("response" + response);
+            mtupppais.addAll(response);
+            System.out.println("tupppais " + mtupppais.size());
 
-//            if ((tupppais.size() > 0) && HasAddChannel == false ) {
-//                mViewHolder.mPhotoListView.getRefreshableView().addHeaderView(getChannelView());
-//                HasAddChannel = true;
-//            }
+            if ((mtupppais.size() > 0) && HasAddChannel == false ) {
+                mViewHolder.mPhotoListView.getRefreshableView().addHeaderView(getHeaderView());
+                HasAddChannel = true;
+            }
         }
     };
 
@@ -672,7 +708,7 @@ public class HomePageHotFragment extends BaseFragment implements Callback {
     private static class ViewHolder {
         ViewGroup mParentView;
         View mView;
-        PullToRefreshListView mPhotoListView;
+        PullToRefreshStaggeredGridView mPhotoListView;
         RelativeLayout mParent;
     }
 
