@@ -17,6 +17,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,10 +48,8 @@ import com.psgod.R;
 import com.psgod.ThreadManager;
 import com.psgod.WeakReferenceHandler;
 import com.psgod.db.DatabaseHelper;
-import com.psgod.eventbus.CommentEvent;
 import com.psgod.eventbus.RefreshEvent;
 import com.psgod.model.BannerData;
-import com.psgod.model.Comment;
 import com.psgod.model.PhotoItem;
 import com.psgod.model.Tupppai;
 import com.psgod.network.NetworkUtil;
@@ -61,7 +60,6 @@ import com.psgod.network.request.PSGodRequestQueue;
 import com.psgod.network.request.PhotoListRequest;
 import com.psgod.network.request.TupppaiRequest;
 import com.psgod.ui.activity.ChannelActivity;
-import com.psgod.ui.activity.CommentListActivity;
 import com.psgod.ui.activity.MainActivity;
 import com.psgod.ui.activity.RecentActActivity;
 import com.psgod.ui.activity.TupppaiActivity;
@@ -87,12 +85,12 @@ import m.framework.utils.Utils;
 
 public class HomePageHotFragment extends BaseFragment implements Callback {
     private static final String TAG = HomePageHotFragment.class.getSimpleName();
+    private static final long DEFAULT_LAST_REFRESH_TIME = -1;
 
     private int page = 1;
-    private List<Tupppai> mtupppais;
+    private List<Tupppai> mtupppais = new ArrayList<Tupppai>();
     private LinearLayout channelPanel;
     private FragmentManager mFragmentManager;
-
 
     private Context mContext;
     private ViewHolder mViewHolder;
@@ -115,8 +113,6 @@ public class HomePageHotFragment extends BaseFragment implements Callback {
 
     // 控制是否可以加载下一页
     private boolean canLoadMore = true;
-
-    private EditPopupWindow editWindow;
 
     //  显示的banner
     private List<BannerData> mBannerItems = new ArrayList<BannerData>();
@@ -154,8 +150,6 @@ public class HomePageHotFragment extends BaseFragment implements Callback {
                 LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         parentView.setLayoutParams(params);
 
-        mtupppais = new ArrayList<Tupppai>();
-
         mViewHolder = new ViewHolder();
         mViewHolder.mParentView = parentView;
         //中间下拉刷新界面
@@ -190,9 +184,13 @@ public class HomePageHotFragment extends BaseFragment implements Callback {
         mViewHolder.mParent = (RelativeLayout) mViewHolder.mView
                 .findViewById(R.id.fragment_homepage_hot_parent);
 
-        if (NetworkUtil.getNetworkType() != NetworkUtil.NetworkType.NONE) {
-            mViewHolder.mPhotoListView.setRefreshing(true);
-        }
+//        if (NetworkUtil.getNetworkType() != NetworkUtil.NetworkType.NONE) {
+//            mViewHolder.mPhotoListView.setRefreshing(true);
+//        }
+
+        // 加载首页数据
+        refresh();
+
         // 在刷新时允许继续滑动
         mViewHolder.mPhotoListView.setScrollingWhileRefreshingEnabled(true);
 
@@ -205,11 +203,7 @@ public class HomePageHotFragment extends BaseFragment implements Callback {
             e.printStackTrace();
         }
 
-        editWindow = new EditPopupWindow(mComment, getActivity(), mPhotoItem,
-                mViewHolder.mParent);
-
-        loadDataAsync();
-
+//        loadDataAsync();
 
         return parentView;
     }
@@ -409,10 +403,10 @@ public class HomePageHotFragment extends BaseFragment implements Callback {
         public void onResponse(List<BannerData> bannerItems) {
             mBannerItems.clear();
             mBannerItems.addAll(bannerItems);
-//            if ((bannerItems.size() > 0) && HasAddBanner == false ) {
-//                mViewHolder.mPhotoListView.getRefreshableView().addHeaderView(getHeaderView());
-//                HasAddBanner = true;
-//            }
+            if ((mtupppais.size() > 0) && (mBannerItems.size() > 0) && HasAddBanner == false && HasAddChannel == false ) {
+                mViewHolder.mPhotoListView.getRefreshableView().addHeaderView(getHeaderView());
+                HasAddBanner = true;
+            }
         }
     };
 
@@ -452,43 +446,6 @@ public class HomePageHotFragment extends BaseFragment implements Callback {
         mPhotoItemDao = null;
         EventBus.getDefault().unregister(this);
     }
-
-    private Comment mComment;
-    private PhotoItem mPhotoItem;
-
-
-    // =============== 需重构 ===================
-    public void onEventMainThread(CommentEvent event) {
-
-        if (event != null) {
-            mComment = event.comment;
-            mPhotoItem = event.photoItem;
-            editWindow.setComment(mComment);
-            editWindow.setPhotoItem(mPhotoItem);
-        }
-        editWindow.setOnResponseListener(onResponseListener);
-        editWindow.show(-2);
-    }
-
-    private OnResponseListener onResponseListener = new OnResponseListener() {
-
-        @Override
-        public void onResponse(Long response, EditPopupWindow window) {
-            Intent intent = new Intent(getActivity(), CommentListActivity.class);
-            intent.putExtra(Constants.IntentKey.PHOTO_ITEM,
-                    window.getPhotoItem());
-            mContext.startActivity(intent);
-
-        }
-
-        @Override
-        public void onErrorResponse(VolleyError error, EditPopupWindow window) {
-            Intent intent = new Intent(getActivity(), CommentListActivity.class);
-            intent.putExtra(Constants.IntentKey.PHOTO_ITEM,
-                    window.getPhotoItem());
-            mContext.startActivity(intent);
-        }
-    };
 
     // 触发自动下拉刷新
     private void setRefreshing() {
@@ -581,29 +538,34 @@ public class HomePageHotFragment extends BaseFragment implements Callback {
 
         @Override
         public void onRefresh(PullToRefreshBase refreshView) {
-            loadChannelData();
-            loadBannerData();         // 下拉刷新时，加载banner
-
-            mPage = 1;
-            // 上次刷新时间
-            if (mLastUpdatedTime == DEFAULT_LAST_REFRESH_TIME) {
-                mLastUpdatedTime = System.currentTimeMillis();
-            }
-
-            PhotoListRequest.Builder builder = new PhotoListRequest.Builder()
-                    .setPage(mPage).setLastUpdated(mLastUpdatedTime)
-                    .setType(PhotoItem.TYPE_HOME_HOT)
-                    .setListener(refreshListener)
-                    .setErrorListener(errorListener);
-
-            PhotoListRequest request = builder.build();
-            request.setTag(TAG);
-            RequestQueue requestQueue = PSGodRequestQueue.getInstance(mContext)
-                    .getRequestQueue();
-            requestQueue.add(request);
+            refresh();
         }
     }
 
+    // 刷新方法
+    private void refresh() {
+
+        loadChannelData();
+        loadBannerData();         // 下拉刷新时，加载banner
+
+        mPage = 1;
+        // 上次刷新时间
+        if (mLastUpdatedTime == DEFAULT_LAST_REFRESH_TIME) {
+            mLastUpdatedTime = System.currentTimeMillis();
+        }
+
+        PhotoListRequest.Builder builder = new PhotoListRequest.Builder()
+                .setPage(mPage).setLastUpdated(mLastUpdatedTime)
+                .setType(PhotoItem.TYPE_HOME_HOT)
+                .setListener(refreshListener)
+                .setErrorListener(errorListener);
+
+        PhotoListRequest request = builder.build();
+        request.setTag(TAG);
+        RequestQueue requestQueue = PSGodRequestQueue.getInstance(mContext)
+                .getRequestQueue();
+        requestQueue.add(request);
+    }
 
 
     private void loadChannelData() {
@@ -631,7 +593,7 @@ public class HomePageHotFragment extends BaseFragment implements Callback {
             mtupppais.addAll(response);
             System.out.println("tupppais " + mtupppais.size());
 
-            if ((mtupppais.size() > 0) && HasAddChannel == false ) {
+            if ((mtupppais.size() > 0) && (mBannerItems.size() > 0) && HasAddBanner == false && HasAddChannel == false ) {
                 mViewHolder.mPhotoListView.getRefreshableView().addHeaderView(getHeaderView());
                 HasAddChannel = true;
             }
@@ -675,8 +637,8 @@ public class HomePageHotFragment extends BaseFragment implements Callback {
 
             mViewHolder.mPhotoListView.onRefreshComplete();
 
-            PhotoItem.savePhotoList(getActivity(), mPhotoItemDao, items,
-                    PhotoItem.TYPE_HOME_HOT);
+//            PhotoItem.savePhotoList(getActivity(), mPhotoItemDao, items,
+//                    PhotoItem.TYPE_HOME_HOT);
 
             if (items.size() < 15) {
                 canLoadMore = false;
