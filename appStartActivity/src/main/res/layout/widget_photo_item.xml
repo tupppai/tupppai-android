@@ -92,12 +92,56 @@
             android:textColor="#CC000000"
             android:textSize="14dp" />
 
+        <!-- 首页瀑布流 -->
+        <RelativeLayout
+            android:id="@+id/water_fall_photo_item_action_bar"
+            android:layout_width="match_parent"
+            android:layout_height="57dp">
+            <RelativeLayout
+                android:id="@+id/water_fall_focus_ask_photo_item_btns"
+                android:layout_width="wrap_content"
+                android:layout_height="57dp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="5dp"
+                android:visibility="visible">
+
+                <TextView
+                    android:id="@+id/water_fall_simple_type_photo_item_comment_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:drawableLeft="@mipmap/ic_comment"
+                    android:drawablePadding="5dp"
+                    android:layout_alignParentRight="true"
+                    android:padding="5dp"
+                    android:text="22"
+                    android:textColor="#4A4A4A"
+                    android:textSize="12dp" />
+
+                <TextView
+                    android:id="@+id/like_count_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:drawableLeft="@mipmap/like"
+                    android:drawablePadding="5dp"
+                    android:text="22"
+                    android:textColor="#4A4A4A"
+                    android:textSize="12dp"
+                    android:padding="5dp"
+                    android:layout_toLeftOf="@id/water_fall_simple_type_photo_item_comment_tv"/>
+
+
+            </RelativeLayout>
+        </RelativeLayout>
         <!-- 操作栏区域 -->
 
         <RelativeLayout
             android:id="@+id/photo_item_action_bar"
             android:layout_width="match_parent"
-            android:layout_height="57dp">
+            android:layout_height="57dp"
+            android:visibility="gone">
 
             <!-- 关注求p 热门求p 类型操作栏 -->
 
@@ -382,7 +426,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="5dp"
 
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <!--<TextView-->
                 <!--android:id="@+id/photo_item_like_count_tv"-->
@@ -409,7 +453,8 @@
                     android:id="@+id/photo_item_like_view"
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="10dp" />
+                    android:paddingBottom="10dp"
+                    android:visibility="gone"/>
             </RelativeLayout>
 
             <ImageView
@@ -443,7 +488,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="9dp"
-                android:src="@mipmap/ic_hot_comment" />
+                android:src="@mipmap/ic_hot_comment"
+                android:visibility="gone"/>
 
             <com.psgod.ui.widget.ChildListView
                 android:id="@+id/photo_item_hot_comments_lv"

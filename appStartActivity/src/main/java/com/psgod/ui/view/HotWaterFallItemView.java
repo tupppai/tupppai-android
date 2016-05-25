@@ -111,7 +111,7 @@ public class HotWaterFallItemView extends RelativeLayout {
                 .findViewById(R.id.user_info_layout);
         imageView = (ScaleImageView) this
                 .findViewById(R.id.inprogress_ask_item_image);
-        likeTextView = (TextView) this.findViewById(R.id.like_count_text);
+        //likeTextView = (TextView) this.findViewById(R.id.like_count_text);
         askDescTv = (TextView) this.findViewById(R.id.ask_desc_tv);
         mDescLayout = (RelativeLayout) this.findViewById(R.id.desc_layout);
         replyImage = (ImageView) this.findViewById(R.id.reply_image);

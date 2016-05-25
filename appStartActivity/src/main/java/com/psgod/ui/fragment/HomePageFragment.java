@@ -134,12 +134,16 @@ public class HomePageFragment extends Fragment {
 		if (mViewHolder.mHomePageHotFragment == null) {
 			mViewHolder.mHomePageHotFragment = new HomePageHotFragment();
 		}
-		if (mViewHolder.mHomePageFocusFragment == null) {
-			mViewHolder.mHomePageFocusFragment = new HomePageFocusFragment();
+//		if (mViewHolder.mHomePageFocusFragment == null) {
+//			mViewHolder.mHomePageFocusFragment = new HomePageFocusFragment();
+//		}
+		if (mViewHolder.mHomePageDynamicFragement == null) {
+			mViewHolder.mHomePageDynamicFragement = new HomePageDynamicFragement();
 		}
 
 		fragments.add(mViewHolder.mHomePageHotFragment);
-		fragments.add(mViewHolder.mHomePageFocusFragment);
+//		fragments.add(mViewHolder.mHomePageFocusFragment);
+		fragments.add(mViewHolder.mHomePageDynamicFragement);
 		mPhotoListPagerAdapter = new HomePageAdapter(getActivity()
 				.getSupportFragmentManager(), fragments);
 
@@ -230,7 +234,8 @@ public class HomePageFragment extends Fragment {
 //											MainActivity.IntentParams.KEY_NEED_REFRESH,
 //											true);
 //									startActivity(intent);
-									EventBus.getDefault().post(new RefreshEvent(HomePageFocusFragment.class.getName()));
+									//EventBus.getDefault().post(new RefreshEvent(HomePageFocusFragment.class.getName()));
+									EventBus.getDefault().post(new RefreshEvent(HomePageDynamicFragment.class.getName()));
 								}
 								count = 0;
 								firClick = 0;
@@ -341,6 +346,7 @@ public class HomePageFragment extends Fragment {
 		View mView;
 		HomePageHotFragment mHomePageHotFragment;
 		HomePageFocusFragment mHomePageFocusFragment;
+		HomePageDynamicFragement mHomePageDynamicFragement;
 
 		// 选择发表作品或求助的弹出框
 		CameraPopupwindow cameraPopupwindow;

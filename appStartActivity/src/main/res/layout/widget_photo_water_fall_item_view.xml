@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="#FFFFFF"
-        android:visibility="gone" >
+        android:visibility="visible" >
 
         <com.psgod.ui.widget.AvatarImageView
             android:id="@+id/item_avatar_imageview"
@@ -26,10 +26,10 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="4dp"
             android:layout_toRightOf="@id/item_avatar_imageview"
-            android:text="不长脸人"
+            android:text="昵称"
             android:textColor="#000000"
             android:textSize="11dp"
-            android:visibility="gone" />
+            android:visibility="visible" />
 
         <TextView
             android:id="@+id/nickname_tv_recent"
@@ -38,7 +38,7 @@
             android:layout_alignTop="@id/item_avatar_imageview"
             android:layout_marginLeft="4dp"
             android:layout_toRightOf="@id/item_avatar_imageview"
-            android:text="不长脸人"
+            android:text="昵称"
             android:textColor="#000000"
             android:textSize="11dp"
             android:visibility="gone" />
@@ -49,27 +49,37 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/item_avatar_imageview"
             android:layout_marginLeft="4dp"
+            android:layout_marginTop="4dp"
             android:layout_toRightOf="@id/item_avatar_imageview"
             android:text="1小时前"
             android:textColor="#7F000000"
             android:textSize="9dp"
-            android:visibility="gone" />
+            android:visibility="visible" />
     </RelativeLayout>
 
     <!-- <com.psgod.ui.view.ScaleImageView -->
 
-    <com.dodowaterfall.widget.ScaleImageView
-        android:id="@+id/inprogress_ask_item_image"
+    <RelativeLayout
+        android:id="@+id/photo_item_image_area"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/user_info_layout"
-        android:src="@null" />
+        android:layout_below="@id/user_info_layout">
+        <com.dodowaterfall.widget.ScaleImageView
+            android:id="@+id/inprogress_ask_item_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@null" />
+    </RelativeLayout>
+
+
+
+
 
     <RelativeLayout
         android:id="@+id/like_count_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/inprogress_ask_item_image"
+        android:layout_alignBottom="@id/photo_item_image_area"
         android:background="@drawable/shape_background_gradient"
         android:paddingBottom="8dp"
         android:visibility="gone" >
@@ -92,7 +102,7 @@
         android:id="@+id/recent_multi_image_sign"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/inprogress_ask_item_image"
+        android:layout_alignBottom="@id/photo_item_image_area"
         android:layout_marginBottom="6dp"
         android:layout_alignRight="@id/inprogress_ask_item_image"
         android:layout_marginRight="6dp"
@@ -103,19 +113,19 @@
         android:id="@+id/desc_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/inprogress_ask_item_image"
+        android:layout_below="@id/photo_item_image_area"
         android:background="#FFFFFF"
-        android:visibility="gone" >
+        android:visibility="visible" >
 
         <TextView
             android:id="@+id/ask_desc_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="7dp"
-            android:layout_marginRight="16dp"
+            android:layout_marginRight="7dp"
             android:layout_marginTop="7dp"
             android:maxLines="2"
-            android:paddingBottom="19dp"
+            android:paddingBottom="1dp"
             android:text="这里是求P描述,最多显示两行，最多显示两行，最多显示。。。"
             android:textColor="#000000"
             android:textSize="14dp" />
@@ -141,23 +151,36 @@
         android:id="@+id/work_like_layout"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_below="@id/inprogress_ask_item_image"
+        android:layout_below="@id/desc_layout"
         android:background="#FFFFFF"
-        android:visibility="gone" >
+        android:visibility="visible" >
 
+        <TextView
+            android:id="@+id/water_fall_simple_type_photo_item_comment_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:drawableLeft="@mipmap/ic_comment"
+            android:drawablePadding="5dp"
+            android:layout_alignParentRight="true"
+            android:padding="5dp"
+            android:text="22"
+            android:textColor="#4A4A4A"
+            android:textSize="12dp" />
         <TextView
             android:id="@+id/like_count_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="13dp"
+            android:layout_marginRight="5dp"
             android:drawableLeft="@mipmap/like"
-            android:drawablePadding="4dp"
+            android:drawablePadding="5dp"
             android:gravity="center"
             android:text="12"
-            android:textColor="#6F000000"
-            android:textSize="11dp" />
+            android:textColor="#4A4A4A"
+            android:textSize="12dp"
+            android:layout_toLeftOf="@id/water_fall_simple_type_photo_item_comment_tv"/>
     </RelativeLayout>
 
 </com.psgod.ui.view.PhotoWaterFallItemView>

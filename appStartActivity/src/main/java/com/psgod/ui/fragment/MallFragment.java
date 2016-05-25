@@ -11,10 +11,12 @@ import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.psgod.R;
 import com.psgod.model.LoginUser;
+import com.psgod.ui.widget.dialog.CustomProgressingDialog;
 import com.youzan.sdk.YouzanBridge;
 import com.youzan.sdk.YouzanSDK;
 import com.youzan.sdk.YouzanUser;
@@ -32,6 +34,7 @@ public class MallFragment extends BaseFragment implements OnClickListener{
     private TextView exit;
     private TextView webtitle;
     private String MALL = "https://wap.koudaitong.com/v2/showcase/homepage?alias=5q58ne2k";
+    private CustomProgressingDialog progressingDialog;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -68,6 +71,8 @@ public class MallFragment extends BaseFragment implements OnClickListener{
     }
 
     private void initView(View view) {
+        progressingDialog = new CustomProgressingDialog(getActivity());
+        progressingDialog.show();
         webview = (WebView) view.findViewById(R.id.fragment_mall_webview);
         back = (TextView) view.findViewById(R.id.webview_back);
         webtitle = (TextView) view.findViewById(R.id.webview_title);
@@ -80,6 +85,7 @@ public class MallFragment extends BaseFragment implements OnClickListener{
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             super.shouldOverrideUrlLoading(view, url);
+            progressingDialog.show();
             view.loadUrl(url);
             return true;
         }
@@ -99,6 +105,9 @@ public class MallFragment extends BaseFragment implements OnClickListener{
                 //getActivity().findViewById(R.id.psgod_linear_tab).setVisibility(View.VISIBLE);
                 //getActivity().findViewById(R.id.psgod_rg_tab_tips).setVisibility(View.VISIBLE);
                 //getActivity().findViewById(R.id.middle).setVisibility(View.VISIBLE);
+            }
+            if(progressingDialog != null && progressingDialog.isShowing()){
+                progressingDialog.dismiss();
             }
         }
         public void onPageStarted(WebView view, String url, Bitmap favicon) {

@@ -107,6 +107,11 @@ public class PhotoItemView extends RelativeLayout implements Callback {
 
     private HtmlTextView mDescTv;
 
+    //首页瀑布流操作栏
+    private RelativeLayout mWaterFallPanel;
+    private TextView mWaterFalllike;
+    private TextView mWaterFallComment;
+
     // 单条求助类型操作栏
     private RelativeLayout mSingleAskBtnsPanel;
     private TextView mSingleAskCommentBtn;
@@ -229,8 +234,13 @@ public class PhotoItemView extends RelativeLayout implements Callback {
 
         mImageArea = (RelativeLayout) this
                 .findViewById(R.id.photo_item_image_area);
-
+        //图片描述
         mDescTv = (HtmlTextView) this.findViewById(R.id.photo_item_desc_tv);
+
+        //首页瀑布流操作栏
+        mWaterFallPanel = (RelativeLayout) this.findViewById(R.id.water_fall_photo_item_action_bar);
+        mWaterFalllike = (TextView) this.findViewById(R.id.like_count_tv);
+        mWaterFallComment = (TextView) this.findViewById(R.id.water_fall_simple_type_photo_item_comment_tv);
 
         // 单条求助类型操作栏
         mSingleAskBtnsPanel = (RelativeLayout) this
@@ -376,6 +386,8 @@ public class PhotoItemView extends RelativeLayout implements Callback {
         mFocusAskCommentTv.setOnClickListener(commentListener);
         mComplexCommentBtn.setOnClickListener(commentListener);
 
+        //瀑布流评论
+        mWaterFallComment.setOnClickListener(commentListener);
 //        // 作品点赞
 //        mLikeBtn.setOnClickListener(new OnClickListener() {
 //            @Override
@@ -851,6 +863,7 @@ public class PhotoItemView extends RelativeLayout implements Callback {
         mHotReplyCommentTv.setText(textCommentCount);
         mFocusAskCommentTv.setText(textCommentCount);
         mComplexCommentBtn.setText(textCommentCount);
+        mWaterFallComment.setText(textCommentCount);
     }
 
 //    /**

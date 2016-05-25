@@ -273,15 +273,17 @@ public class HomePageHotFragment extends BaseFragment implements Callback {
 
         channelPanel.removeAllViews();
         int mSize = mtupppais.size();
+
         System.out.println("mtupppais.size " + mtupppais.size());
         if (mSize > 0) {
             for (int i = 0; i < mSize; i++) {
                 ImageView mchannelIv = new ImageView(mContext);
+                mchannelIv.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                         com.psgod.Utils.dpToPx(mContext, 84), com.psgod.Utils.dpToPx(mContext, 84));
                 params.setMargins(com.psgod.Utils.dpToPx(mContext, 10), 0, 0, 0);
                 mchannelIv.setLayoutParams(params);
-                mchannelIv.setScaleType(ImageView.ScaleType.CENTER);
+                mchannelIv.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
                 imageLoader.displayImage(mtupppais.get(i).getUrl(),
                         mchannelIv, mOptions);
@@ -520,6 +522,7 @@ public class HomePageHotFragment extends BaseFragment implements Callback {
         @Override
         public void onLastItemVisible() {
             if (canLoadMore) {
+                refresh();  //强制刷新
                 mPage += 1;
                 mFollowListFooter.setVisibility(View.VISIBLE);
                 PhotoListRequest.Builder builder = new PhotoListRequest.Builder()
@@ -620,7 +623,7 @@ public class HomePageHotFragment extends BaseFragment implements Callback {
             mFollowListFooter.setVisibility(View.INVISIBLE);
 
             if (items.size() < 15) {
-                canLoadMore = false;
+                canLoadMore = true;
             } else {
                 canLoadMore = true;
             }

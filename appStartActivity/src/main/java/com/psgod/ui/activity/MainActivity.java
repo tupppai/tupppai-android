@@ -534,32 +534,32 @@ public class MainActivity extends PSGodBaseActivity {
 
 
         // 修改回弹起选择框
-        mReleaseImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showCameraPopupwindow(v); // 弹出选择上传求P还是作品的PopupWindow
-            }
-        });
-
 //        mReleaseImage.setOnClickListener(new View.OnClickListener() {
 //            @Override
-//            public void onClick(View view) {
-
-////                if(LoginUser.getInstance().isBoundPhone()) {
-//                    Intent intent = new Intent(MainActivity.this,
-//                            MultiImageSelectActivity.class);
-//                    Bundle bundle = new Bundle();
-//                    bundle.putString("SelectType",
-//                            UploadMultiImageActivity.TYPE_TIMELINE_SELECT);
-//                    intent.putExtras(bundle);
-//                    startActivity(intent);
-////                }else{
-////                    Intent intent = new Intent(MainActivity.this,
-////                            BindInputPhoneActivity.class);
-////                    startActivity(intent);
-////                }
+//            public void onClick(View v) {
+//                showCameraPopupwindow(v); // 弹出选择上传求P还是作品的PopupWindow
 //            }
 //        });
+
+        mReleaseImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+//                if(LoginUser.getInstance().isBoundPhone()) {
+                    Intent intent = new Intent(MainActivity.this,
+                            MultiImageSelectActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("SelectType",
+                            UploadMultiImageActivity.TYPE_TIMELINE_SELECT);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+//                }else{
+//                    Intent intent = new Intent(MainActivity.this,
+//                            BindInputPhoneActivity.class);
+//                    startActivity(intent);
+//                }
+            }
+        });
 
         for (int i = 0; i < 3; i++) {
             mBottomTabLayout[i].setOnClickListener(new View.OnClickListener() {
