@@ -13,6 +13,7 @@ import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,15 +31,15 @@ import java.util.regex.Pattern;
 public class MovieFragment extends BaseFragment implements OnClickListener{
 
     public Context mContext;
-    private WebView webview;
-    private TextView webtitle;
-    private TextView back;
-    private TextView exit;
+    private WebView mWebview;
+    private TextView mWebtitle;
+    private TextView mBack;
+    private TextView mExit;
     private String MOVIE = "http://wechupin.com/index-app.html#app/playcategory";
-    private String cookieMOVIE = null;
-    private CustomProgressingDialog progressingDialog;
+    private String mCookieMOVIE = null;
+    private CustomProgressingDialog mProgressingDialog;
     private String mUrl = null;
-    private String token;
+    private String mToken;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -48,47 +49,48 @@ public class MovieFragment extends BaseFragment implements OnClickListener{
         getCookie();
         initView(view);
         // 载入网址
-        webview.loadUrl(cookieMOVIE);
-
+        mWebview.loadUrl(mCookieMOVIE);
         return view;
     }
 
     private void getCookie() {
-        token = UserPreferences.TokenVerify.getToken();
-        cookieMOVIE = "http://wechupin.com/index-app.html?c=" + token +"&s=android#app/playcategory";
-        System.out.println("cookieurl" + cookieMOVIE + "\n");
+        mToken = UserPreferences.TokenVerify.getToken();
+        mCookieMOVIE = "http://wechupin.com/index-app.html?c=" + mToken +"&s=android#app/playcategory";
+        System.out.println("cookieurl" + mCookieMOVIE + "\n");
     }
 
     private void initView(View view) {
-        progressingDialog = new CustomProgressingDialog(getActivity());
-        progressingDialog.show();
-        webview = new WebView(getActivity());
-        webview = (WebView) view.findViewById(R.id.fragment_movie_webview);
-        webtitle = (TextView) view.findViewById(R.id.webview_title);
-        back = (TextView) view.findViewById(R.id.webview_back);
-        back.setOnClickListener(this);
-        webview.getSettings().setJavaScriptEnabled(true);
-        webview.setWebViewClient(new MovieWebViewClient());
-        webview.setWebChromeClient(new MovieChromeClient());
+        mProgressingDialog = new CustomProgressingDialog(getActivity());
+        mProgressingDialog.show();
+
+        mWebview = new WebView(getActivity());
+        mWebview = (WebView) view.findViewById(R.id.fragment_movie_webview);
+        mWebtitle = (TextView) view.findViewById(R.id.webview_title);
+        mBack = (TextView) view.findViewById(R.id.webview_back);
+        mBack.setOnClickListener(this);
+
+        mWebview.getSettings().setJavaScriptEnabled(true);
+        mWebview.setWebViewClient(new MovieWebViewClient());
+        mWebview.setWebChromeClient(new MovieChromeClient());
     }
 
     private class MovieChromeClient extends WebChromeClient {
         @Override
         public boolean onJsPrompt(WebView view, String url, String message,
                                   String defaultValue, JsPromptResult result) {
-            System.out.println("JsPrompt url  " + url + "\n");
-            System.out.print("message" + message + "\n");
-            System.out.print("defaultValue" + defaultValue + "\n");
-            System.out.print("JsPrompResult" + result + "\n");
+//            System.out.println("JsPrompt url  " + url + "\n");
+//            System.out.print("message" + message + "\n");
+//            System.out.print("defaultValue" + defaultValue + "\n");
+//            System.out.print("JsPrompResult" + result + "\n");
             if (!TextUtils.isEmpty(url) && url.startsWith("http://")) {
                 Intent intent = new Intent();
-                intent.setClass(view.getContext(), MovieActivity.class);
+                intent.setClass(mContext, MovieActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("Url", defaultValue);
                 intent.putExtras(bundle);
-                view.getContext().startActivity(intent);
+                mContext.startActivity(intent);
                 }
-            //result.confirm();
+            result.confirm();
             return true;
             }
 
@@ -102,7 +104,7 @@ public class MovieFragment extends BaseFragment implements OnClickListener{
         Pattern p = Pattern.compile(insertStr);
         Matcher m = p.matcher(newUrl.toString());
         if (m.find()) {
-            newUrl.insert((m.start()+1), "?c=" + token);
+            newUrl.insert((m.start()+1), "?c=" + mToken);
         }
         return newUrl.toString();
     }
@@ -112,7 +114,8 @@ public class MovieFragment extends BaseFragment implements OnClickListener{
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             super.shouldOverrideUrlLoading(view, url);
-            progressingDialog.show();
+            mProgressingDialog.show();
+            System.out.println("\n" + "原界面的shouldOverrideUrl  " + url);
 //            System.out.println("testtessssssssssssssssssssssssssssssssssssssssssssss");
 //            Intent intent = new Intent();
 //            intent.setClass(view.getContext(), MovieActivity.class);
@@ -124,20 +127,21 @@ public class MovieFragment extends BaseFragment implements OnClickListener{
             return true;
         }
         public void onPageFinished(WebView view, String url) {
-            webtitle.setText(view.getTitle());
-            if (!url.equals(cookieMOVIE)) {
+            System.out.println("\n" + "原界面的onPageFinish " + url);
+            mWebtitle.setText(view.getTitle());
+            if (!url.equals(mCookieMOVIE)) {
                // back.setVisibility(View.VISIBLE);
 //                getActivity().findViewById(R.id.psgod_linear_tab).setVisibility(View.GONE);
 //                getActivity().findViewById(R.id.psgod_rg_tab_tips).setVisibility(View.GONE);
 //                getActivity().findViewById(R.id.middle).setVisibility(View.GONE);
             } else {
-                back.setVisibility(View.GONE);
+                mBack.setVisibility(View.GONE);
 //                getActivity().findViewById(R.id.psgod_linear_tab).setVisibility(View.VISIBLE);
 //                getActivity().findViewById(R.id.psgod_rg_tab_tips).setVisibility(View.VISIBLE);
 //                getActivity().findViewById(R.id.middle).setVisibility(View.VISIBLE);
             }
-            if(progressingDialog != null && progressingDialog.isShowing()){
-                progressingDialog.dismiss();
+            if(mProgressingDialog != null && mProgressingDialog.isShowing()){
+                mProgressingDialog.dismiss();
             }
         }
     }
@@ -145,11 +149,11 @@ public class MovieFragment extends BaseFragment implements OnClickListener{
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.webview_back:
-                webview.goBack();   //后退
+                mWebview.goBack();   //后退
                 break;
             case R.id.activity_tab_tupai_page:
                 System.out.print("底部tab");
-                webview.reload();
+                mWebview.reload();
                 break;
             default:
                 break;

@@ -446,7 +446,7 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
                     mDoneTxt.setText("当前任务");
                 } else {
                     bangType = MultiImageSelectRecyclerAdapter.TYPE_BANG_NOW;
-                    mDoneTxt.setText("历史任务");
+                    mDoneTxt.setText("");
                 }
                 if (mBangpImg.hasOnClickListeners()) {
                     mBangpImg.callOnClick();
@@ -475,12 +475,12 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
             public void onClick(View view) {
                 if (showType == SHOW_TYPE_ASK) {
                     if (selectResultImages.size() >= 2) {
-                        CustomToast.show(mContext, "求p最多只可以发2张~", Toast.LENGTH_LONG);
+                        CustomToast.show(mContext, "动态最多只可以发2张~", Toast.LENGTH_LONG);
                         return;
                     }
                 } else {
                     if (selectResultImages.size() >= 1) {
-                        CustomToast.show(mContext, "作品最多只可以发1张~", Toast.LENGTH_LONG);
+                        CustomToast.show(mContext, "跟帖最多只可以发1张~", Toast.LENGTH_LONG);
                         return;
                     }
                 }
@@ -503,11 +503,11 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
                 if (selectResultImages.size() <= 0) {
                     switch (showType) {
                         case SHOW_TYPE_ASK:
-                            CustomToast.show(mContext, "请至少选择一张求P~", Toast.LENGTH_LONG);
+                            CustomToast.show(mContext, "请至少选择一张图片~", Toast.LENGTH_LONG);
                             break;
                         case SHOW_TYPE_ACTIVITY:
                         case SHOW_TYPE_REPLY:
-                            CustomToast.show(mContext, "最少选择一张作品~", Toast.LENGTH_LONG);
+                            CustomToast.show(mContext, "最少选择一条动态~", Toast.LENGTH_LONG);
                             break;
                     }
                 } else if (mEdit.getText().toString().trim().length() < 3) {
@@ -533,7 +533,7 @@ public class ImageSelectDialog extends Dialog implements Handler.Callback {
                             break;
                         case SHOW_TYPE_REPLY:
                             if (mAdapter.getCheckedPhotoItemNum() == -1) {
-                                CustomToast.show(mContext, "请选择对应的帮P任务~", Toast.LENGTH_LONG);
+                                CustomToast.show(mContext, "请选择对应的动态~", Toast.LENGTH_LONG);
                             } else {
                                 upLoadUtils.upLoad(mEdit.getText().toString(),
                                         Utils.selectImageToString(selectResultImages),

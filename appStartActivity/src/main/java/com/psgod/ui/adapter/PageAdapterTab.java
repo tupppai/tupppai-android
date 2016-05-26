@@ -6,8 +6,8 @@ import com.psgod.ui.fragment.UserProfileAskFragment;
 import com.psgod.ui.fragment.UserProfileWorkFragment;
 
 public enum PageAdapterTab {
-	PAGE_TAB1(0, UserProfileWorkFragment.class, "作品"), PAGE_TAB2(1,
-			UserProfileAskFragment.class, "ta的求P");
+	PAGE_TAB1(0, UserProfileWorkFragment.class, "跟帖"), PAGE_TAB2(1,
+			UserProfileAskFragment.class, "ta的动态");
 
 	public final int tabIndex;
 	public final Class<? extends Fragment> clazz;

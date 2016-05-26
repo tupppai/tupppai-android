@@ -1,10 +1,14 @@
 package com.psgod.ui.fragment;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.JsPromptResult;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
@@ -15,6 +19,7 @@ import com.psgod.R;
 import com.psgod.UserPreferences;
 import com.psgod.eventbus.RefreshEvent;
 import com.psgod.model.LoginUser;
+import com.psgod.ui.activity.MovieActivity;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
 import com.youzan.sdk.YouzanBridge;
 import com.youzan.sdk.YouzanSDK;
@@ -53,26 +58,40 @@ public class HomePageDynamicFragment extends BaseFragment implements View.OnClic
     }
     private void getCookie() {
         String token = UserPreferences.TokenVerify.getToken();
-        cookieDYNAMIC = "http://wechupin.com/index-app.html?c=" + token +"#app/dynamic";
+        cookieDYNAMIC = "http://wechupin.com/index-app.html?c=" + token +"&s=android#app/dynamic";
     }
 
 
     private void initView(View view) {
         progressingDialog = new CustomProgressingDialog(getActivity());
         progressingDialog.show();
+
         webview = new WebView(getActivity());
         webview = (WebView) view.findViewById(R.id.fragment_dynamic_webview);
         //webtitle = (TextView) view.findViewById(R.id.webview_title);
         //back = (TextView) view.findViewById(R.id.webview_back);
         //back.setOnClickListener(this);
         webview.getSettings().setJavaScriptEnabled(true);
-        webview.setWebViewClient(new MovieWebViewClient());
+
+        webview.setWebViewClient(new DynamicWebViewClient());
+        webview.setWebChromeClient(new DynamicChromeClient());
     }
 
-    private class MovieWebViewClient extends WebViewClient {
+    private class DynamicChromeClient extends WebChromeClient {
+        @Override
+        public boolean onJsPrompt(WebView view, String url, String message,
+                                  String defaultValue, JsPromptResult result) {
+        System.out.println("\n + 动态页用户头像点击" + defaultValue + "\n");
+
+            return true;
+        }
+    }
+
+    private class DynamicWebViewClient extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             progressingDialog.show();
+            System.out.println("有反应了" + url);
             view.loadUrl(url);
             return true;
         }
@@ -124,4 +143,6 @@ public class HomePageDynamicFragment extends BaseFragment implements View.OnClic
         EventBus.getDefault().unregister(this);
 
     }
+
+
 }

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,36 +37,49 @@ public class MovieActivity extends Activity implements View.OnClickListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie);
-        initView();
+
         Intent intent = this.getIntent();
         Bundle bundle = intent.getExtras();
         mUrl = bundle.getString("Url");
 
+        initView();
+
         System.out.println("\n" + "第三界面"+"\n" + mUrl);
 
-        webview.loadUrl(mUrl);
+        //webview.loadUrl(mUrl);
         //webview.loadUrl("wwww.baidu.com");
 
     }
     private void initView() {
         progressingDialog = new CustomProgressingDialog(this);
         progressingDialog.show();
-        //webview = new WebView(this);
-        webview = (WebView) findViewById(R.id.activity_movie_webview);
-        webtitle = (TextView) findViewById(R.id.webview_title);
+
         back = (ImageButton) findViewById(R.id.activity_webview_back);
         back.setOnClickListener(this);
-        webview.getSettings().setJavaScriptEnabled(true);
 
+        //webview = new WebView(this);
+        webview = (WebView) this.findViewById(R.id.activity_movie_webview);
+        webtitle = (TextView) findViewById(R.id.webview_title);
+
+        webview.getSettings().setJavaScriptEnabled(true);
         webview.setWebViewClient(new MovieWebViewClient());
+        webview.loadUrl("www.baidu.com");
     }
 
     private class MovieWebViewClient extends WebViewClient {
+
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             progressingDialog.show();
+            System.out.println("\n" + "第三界面的shouldOverrideUrl  " + url);
             view.loadUrl(url);
             return true;
+        }
+
+        @Override
+        public void onPageStarted(WebView view, String url, Bitmap favicon) {
+            super.onPageStarted(view, url, favicon);
+             //view.loadUrl("www.baidu.com");
         }
 
         public void onPageFinished(WebView view, String url) {
