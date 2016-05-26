@@ -37,7 +37,7 @@
     </RelativeLayout>
 
 
-    <WebView
+    <com.psgod.ui.widget.JsBridgeWebView
         android:id="@+id/activity_movie_webview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

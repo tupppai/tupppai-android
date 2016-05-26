@@ -5,13 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.psgod.R;
-import com.psgod.ui.widget.dialog.CustomProgressingDialog;
+import com.psgod.ui.widget.JsBridgeWebView;
 
 /**
  * Created by Administrator on 2016/5/25.
@@ -19,78 +17,29 @@ import com.psgod.ui.widget.dialog.CustomProgressingDialog;
 public class MovieActivity extends Activity implements View.OnClickListener {
 
     public Context mContext;
-    private WebView webview;
+    private JsBridgeWebView webview;
     private TextView webtitle;
     private ImageButton back;
     private String mUrl;
-    private String mtoken;
     private TextView exit;
     private String MOVIE = "http://wechupin.com/index-app.html#app/playcategory";
-    private String cookieMOVIE = null;
-    private CustomProgressingDialog progressingDialog;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie);
         initView();
 
-
-        //webview.loadUrl("wwww.baidu.com");
-
     }
     private void initView() {
-//        progressingDialog = new CustomProgressingDialog(this);
-//        progressingDialog.show();
-        //webview = new WebView(this);
-        webview = null;
-        webview = (WebView) findViewById(R.id.activity_movie_webview);
+        webview = (JsBridgeWebView) findViewById(R.id.activity_movie_webview);
         webtitle = (TextView) findViewById(R.id.webview_title);
         back = (ImageButton) findViewById(R.id.activity_webview_back);
         back.setOnClickListener(this);
-        webview.getSettings().setJavaScriptEnabled(true);
-
-        webview.setWebViewClient(new MovieWebViewClient());
-        webview.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 
         Intent intent = this.getIntent();
         Bundle bundle = intent.getExtras();
         mUrl = bundle.getString("Url");
-
-        System.out.println("\n" + "第三界面"+"\n" + mUrl);
-
         webview.loadUrl(mUrl);
-
-
-
-    }
-
-    private class MovieWebViewClient extends WebViewClient {
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-//            progressingDialog.show();
-            view.loadUrl(url);
-            return true;
-        }
-
-//        public void onPageFinished(WebView view, String url) {
-//            webtitle.setText(view.getTitle());
-//
-//            if (!url.equals(cookieMOVIE)) {
-//                back.setVisibility(View.VISIBLE);
-////                getActivity().findViewById(R.id.psgod_linear_tab).setVisibility(View.GONE);
-////                getActivity().findViewById(R.id.psgod_rg_tab_tips).setVisibility(View.GONE);
-////                getActivity().findViewById(R.id.middle).setVisibility(View.GONE);
-//            } else {
-//                back.setVisibility(View.GONE);
-////                getActivity().findViewById(R.id.psgod_linear_tab).setVisibility(View.VISIBLE);
-////                getActivity().findViewById(R.id.psgod_rg_tab_tips).setVisibility(View.VISIBLE);
-////                getActivity().findViewById(R.id.middle).setVisibility(View.VISIBLE);
-//            }
-//
-//            if(progressingDialog != null && progressingDialog.isShowing()){
-//                progressingDialog.dismiss();
-//            }
-//        }
     }
 
     public void onClick(View v) {
