@@ -28,7 +28,7 @@ import de.greenrobot.event.EventBus;
 /**
  * Created by Administrator on 2016/5/24.
  */
-public class HomePageDynamicFragement extends BaseFragment implements View.OnClickListener {
+public class HomePageDynamicFragment extends BaseFragment implements View.OnClickListener {
 
     private WebView webview;
     private TextView webtitle;
@@ -72,7 +72,6 @@ public class HomePageDynamicFragement extends BaseFragment implements View.OnCli
     private class MovieWebViewClient extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            progressingDialog = new CustomProgressingDialog(getActivity());
             progressingDialog.show();
             view.loadUrl(url);
             return true;

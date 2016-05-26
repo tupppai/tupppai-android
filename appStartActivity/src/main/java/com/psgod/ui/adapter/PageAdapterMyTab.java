@@ -12,7 +12,7 @@ public enum PageAdapterMyTab {
 //			MyPageWorkFragment.class, "作品"), PAGE_TAB3(2,
 //			MyPageCollectionFragment.class, "收藏");
 
-	PAGE_TAB2(0, MyPageWorkFragment.class, "作品"),
+	PAGE_TAB2(0, MyPageWorkFragment.class, "动态"),
 	PAGE_TAB3(1, MyPageCollectionFragment.class, "收藏");
 
 	public final int tabIndex;

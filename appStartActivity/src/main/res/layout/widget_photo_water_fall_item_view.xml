@@ -47,9 +47,10 @@
             android:id="@+id/time_tv_recent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/item_avatar_imageview"
+
+            android:layout_below="@id/nickname_tv"
             android:layout_marginLeft="4dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="0dp"
             android:layout_toRightOf="@id/item_avatar_imageview"
             android:text="1小时前"
             android:textColor="#7F000000"

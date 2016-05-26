@@ -278,16 +278,16 @@ public class HomePageHotFragment extends BaseFragment implements Callback {
         if (mSize > 0) {
             for (int i = 0; i < mSize; i++) {
                 ImageView mchannelIv = new ImageView(mContext);
-                mchannelIv.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                mchannelIv.setScaleType(ImageView.ScaleType.CENTER);
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                         com.psgod.Utils.dpToPx(mContext, 84), com.psgod.Utils.dpToPx(mContext, 84));
                 params.setMargins(com.psgod.Utils.dpToPx(mContext, 10), 0, 0, 0);
                 mchannelIv.setLayoutParams(params);
-                mchannelIv.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                mchannelIv.setScaleType(ImageView.ScaleType.CENTER);
 
                 imageLoader.displayImage(mtupppais.get(i).getUrl(),
                         mchannelIv, mOptions);
-                imageLoader.displayImage(mtupppais.get(i).getApp_pic(),mchannelIv,mOptions);
+                imageLoader.displayImage(mtupppais.get(i).getIcon(),mchannelIv,mOptions);
                 channelPanel.addView(mchannelIv);
 
                 final Intent intent = new Intent();
@@ -522,7 +522,6 @@ public class HomePageHotFragment extends BaseFragment implements Callback {
         @Override
         public void onLastItemVisible() {
             if (canLoadMore) {
-                refresh();  //强制刷新
                 mPage += 1;
                 mFollowListFooter.setVisibility(View.VISIBLE);
                 PhotoListRequest.Builder builder = new PhotoListRequest.Builder()
@@ -588,11 +587,7 @@ public class HomePageHotFragment extends BaseFragment implements Callback {
             if(mtupppais.size() > 0){
                 mtupppais.clear();
             }
-            if(response.size() < 10){
-                canLoadMore = false;
-            }else{
-                canLoadMore = true;
-            }
+
             mtupppais.addAll(response);
             System.out.println("tupppais " + mtupppais.size());
 

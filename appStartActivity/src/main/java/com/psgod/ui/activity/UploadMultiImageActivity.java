@@ -49,6 +49,7 @@ import com.psgod.network.request.UploadImageRequest;
 import com.psgod.network.request.UploadImageRequest.ImageUploadResult;
 import com.psgod.network.request.UploadMultiRequest;
 import com.psgod.network.request.UploadMultiRequest.MultiUploadResult;
+import com.psgod.ui.fragment.HomePageDynamicFragment;
 import com.psgod.ui.fragment.TupppaiFragment;
 import com.psgod.ui.view.LabelFlowLayout;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
@@ -536,6 +537,7 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
             mProgressDialog.dismiss();
 
             Toast.makeText(mContext, "上传成功", Toast.LENGTH_SHORT).show();
+            EventBus.getDefault().post(new RefreshEvent(HomePageDynamicFragment.class.getName()));
 
             switch (mCheckedShareBtnId) {
                 case R.id.activity_upload_image_share_weibo:

@@ -80,6 +80,8 @@
         <activity android:name=".ui.activity.SetInfoActivity" />
         <activity android:name=".ui.activity.RegisterPhoneActivity" />
         <activity android:name=".ui.activity.RegisterVerifyActivity" />
+        <activity android:name=".ui.activity.MovieActivity"/>
+        <activity android:name=".ui.activity.MallActivity"/>
         <activity
             android:name=".ui.activity.LoginActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />

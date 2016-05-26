@@ -26,7 +26,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="6dp"
-            android:text="作品区"
+            android:text="最新回复"
             android:textColor="#000000"
             android:textSize="14dp" />
 

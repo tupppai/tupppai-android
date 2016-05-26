@@ -125,7 +125,7 @@ public class RecentAsksActivity extends PSGodBaseActivity implements Callback {
         mUpload.setGravity(Gravity.CENTER);
         mUpload.setTextSize(14);
         mUpload.setTextColor(Color.parseColor("#ffffff"));
-        mUpload.setText("我要求P");
+        mUpload.setText("发布动态");
         mUpload.setBackgroundColor(Color.parseColor("#e04a4a4a"));
 //        mUpload.setScaleType(ImageView.ScaleType.CENTER_CROP);
 //        mUpload.setImageDrawable(getResources().getDrawable(R.mipmap.floating_btn));

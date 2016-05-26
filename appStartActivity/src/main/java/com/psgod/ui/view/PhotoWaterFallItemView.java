@@ -76,6 +76,7 @@ public class PhotoWaterFallItemView extends RelativeLayout implements Handler.Ca
 	private RelativeLayout mReplyLayout;
 	private RelativeLayout mLikeLayout;
 	private RelativeLayout mLikeWhitelayout;
+	private RelativeLayout mHotlayout;
 
 	private PSDialog mPsDialog;
 
@@ -148,6 +149,7 @@ public class PhotoWaterFallItemView extends RelativeLayout implements Handler.Ca
 		mReplyLayout = (RelativeLayout) this.findViewById(R.id.reply_layout);
 		workLikeTextView = (TextView) this.findViewById(R.id.like_count_tv);
 		mLikeLayout = (RelativeLayout) this.findViewById(R.id.work_like_layout);
+		//mHotlayout = (RelativeLayout) this.findViewById(R.id.work_like_layout);
 		mLikeWhitelayout = (RelativeLayout) this
 				.findViewById(R.id.like_count_layout);
 		mRecentAskMultiSignImage = (ImageView) this.findViewById(R.id.recent_multi_image_sign);
@@ -201,22 +203,26 @@ public class PhotoWaterFallItemView extends RelativeLayout implements Handler.Ca
 	private void setViewByListType(PhotoWaterFallListType type) {
 		switch (type) {
 		case INPROGRESS_COMPLETE:
-			mLikeWhitelayout.setVisibility(View.VISIBLE);
+			mLikeWhitelayout.setVisibility(View.GONE);
+			mLikeLayout.setVisibility(View.GONE);
+			mNameRecentTv.setVisibility(View.GONE);
 			break;
 		case USER_PROFILE_WORKS:
-			mLikeWhitelayout.setVisibility(View.VISIBLE);
+			mLikeWhitelayout.setVisibility(View.GONE);
+			mNameRecentTv.setVisibility(View.GONE);
 			break;
 		case RECENT_ASK:
 			mUserInfoLayout.setVisibility(View.VISIBLE);
-			mNameRecentTv.setVisibility(View.VISIBLE);
+			mNameRecentTv.setVisibility(View.GONE);
 			mTimeRecentTv.setVisibility(View.VISIBLE);
 			mDescLayout.setVisibility(View.VISIBLE);
 			mReplyLayout.setVisibility(View.VISIBLE);
+			mLikeLayout.setVisibility(View.GONE);
 			break;
 		case ALL_WORK:
 			mUserInfoLayout.setVisibility(View.VISIBLE);
 			mNameTv.setVisibility(View.VISIBLE);
-			mLikeLayout.setVisibility(View.VISIBLE);
+			mLikeLayout.setVisibility(View.GONE);
 			break;
 		case USER_PROFILE_ASK:
 			break;

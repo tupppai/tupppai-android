@@ -28,7 +28,7 @@
             android:layout_alignBottom="@+id/activity_channal_head_img1"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="5dp"
-            android:text="求P区"
+            android:text="动态"
             android:textColor="#000000"
             android:textSize="14dp" />
 

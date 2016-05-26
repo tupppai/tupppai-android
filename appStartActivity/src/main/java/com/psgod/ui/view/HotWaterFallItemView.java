@@ -105,7 +105,7 @@ public class HotWaterFallItemView extends RelativeLayout {
         mAvatarIv = (AvatarImageView) this
                 .findViewById(R.id.item_avatar_imageview);
         mNameTv = (TextView) this.findViewById(R.id.nickname_tv);
-        mNameRecentTv = (TextView) this.findViewById(R.id.nickname_tv_recent);
+        mNameRecentTv = (TextView) this.findViewById(R.id.nickname_tv);
         mTimeRecentTv = (TextView) this.findViewById(R.id.time_tv_recent);
         mUserInfoLayout = (RelativeLayout) this
                 .findViewById(R.id.user_info_layout);

@@ -1,19 +1,19 @@
-package com.psgod.ui.fragment;
+package com.psgod.ui.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.TextView;
 
 import com.psgod.R;
 import com.psgod.model.LoginUser;
-import com.psgod.ui.activity.MallActivity;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
 import com.youzan.sdk.YouzanBridge;
 import com.youzan.sdk.YouzanSDK;
@@ -23,11 +23,11 @@ import com.youzan.sdk.http.engine.QueryError;
 import com.youzan.sdk.web.plugin.YouzanWebClient;
 
 /**
- * Created by Administrator on 2016/5/20.
+ * Created by Administrator on 2016/5/25.
  */
-public class MallFragment extends BaseFragment implements OnClickListener{
+public class MallActivity extends Activity implements View.OnClickListener {
 
-    public Context mContext;
+    private Context mContext;
     private String mUrl;
     private WebView webview;
     private TextView back;
@@ -36,15 +36,18 @@ public class MallFragment extends BaseFragment implements OnClickListener{
     private String MALL = "https://wap.koudaitong.com/v2/showcase/homepage?alias=5q58ne2k";
     private CustomProgressingDialog progressingDialog;
 
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_mall, container, false);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_mall);
 
-        mContext = getActivity();
-        initView(view);
+        Intent intent = this.getIntent();
+        Bundle bundle = intent.getExtras();
+        mUrl = bundle.getString("mUrl");
+        System.out.println("第二界面mUrl " + mUrl + "\n");
+        webview.loadUrl(mUrl);
+        initView();
         setWeb();
 
-        return view;
     }
 
     private void setWeb() {
@@ -52,7 +55,7 @@ public class MallFragment extends BaseFragment implements OnClickListener{
         LoginUser myUser = LoginUser.getInstance();
         user.setUserId(myUser.getUid() + "");
         // 参数初始化
-        YouzanBridge.build(getActivity(),webview).create();
+        YouzanBridge.build(this,webview).create();
 
         webview.setWebViewClient(new MallWebViewClient());
 
@@ -65,18 +68,18 @@ public class MallFragment extends BaseFragment implements OnClickListener{
             @Override
             public void onSuccess()
             {
-                webview.loadUrl(MALL);
+                webview.loadUrl(mUrl);
 
             }
         });
     }
 
-    private void initView(View view) {
-        progressingDialog = new CustomProgressingDialog(getActivity());
+    private void initView() {
+        progressingDialog = new CustomProgressingDialog(this);
         progressingDialog.show();
-        webview = (WebView) view.findViewById(R.id.fragment_mall_webview);
-        back = (TextView) view.findViewById(R.id.webview_back);
-        webtitle = (TextView) view.findViewById(R.id.webview_title);
+        webview = (WebView) findViewById(R.id.activity_mall_webview);
+        back = (TextView) findViewById(R.id.activity_webview_back);
+        webtitle = (TextView) findViewById(R.id.activity_mall_title);
         back.setOnClickListener(this);
 
         webview.getSettings().setJavaScriptEnabled(true);
@@ -87,24 +90,7 @@ public class MallFragment extends BaseFragment implements OnClickListener{
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             super.shouldOverrideUrlLoading(view, url);
             progressingDialog.show();
-//            Intent intent = new Intent();
-//            intent.setClass(view.getContext(), MallActivity.class);
-//            Bundle bundle = new Bundle();
-//            bundle.putString("mUrl", url);
-//            intent.putExtras(bundle);
-//            mContext.startActivity(intent);
             view.loadUrl(url);
-
-
-//            if (!url.equals(cookieMOVIE)) {
-//                mUrl = url;
-//                Intent intent = new Intent();
-//                intent.setClass(getActivity(), MovieActivity.class);
-//                Bundle bundle = new Bundle();
-//                bundle.putString("mUrl", mUrl);
-//                intent.putExtras(bundle);
-//                getActivity().startActivity(intent);
-//            }
             return true;
         }
         public void onPageFinished(WebView view, String url) {
@@ -152,4 +138,3 @@ public class MallFragment extends BaseFragment implements OnClickListener{
     }
 
 }
-

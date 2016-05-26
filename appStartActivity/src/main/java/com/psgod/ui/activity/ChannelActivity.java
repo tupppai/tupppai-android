@@ -138,13 +138,13 @@ public class ChannelActivity extends PSGodBaseActivity {
         mUploadLeft.setGravity(Gravity.CENTER);
         mUploadLeft.setTextSize(14);
         mUploadLeft.setTextColor(Color.parseColor("#ffffff"));
-        mUploadLeft.setText("我要求P");
+        mUploadLeft.setText("发布动态");
         mUploadLeft.setBackgroundColor(Color.parseColor("#e04a4a4a"));
         mUploadRight.setLayoutParams(leftRigthParams);
         mUploadRight.setGravity(Gravity.CENTER);
         mUploadRight.setTextSize(14);
         mUploadRight.setTextColor(Color.parseColor("#000000"));
-        mUploadRight.setText("发布作品");
+        mUploadRight.setText("回复动态");
         mUploadRight.setBackgroundColor(Color.parseColor("#e0ffef00"));
         mUpload.addView(mUploadLeft);
         mUpload.addView(mUploadRight);

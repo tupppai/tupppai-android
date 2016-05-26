@@ -20,7 +20,7 @@
         <Button
             android:id="@+id/dialog_ps_download"
             style="@style/action_sheet_dialog_blue_btn"
-            android:text="下载图片帮P" />
+            android:text="下载图片" />
         
 		<View 
 		    android:layout_width="match_parent"
@@ -31,7 +31,7 @@
         <Button
             android:id="@+id/dialog_ps_upload"
             style="@style/action_sheet_dialog_blue_btn"
-            android:text="添加至进行中" />
+            android:text="收藏此动态" />
         
         <View 
 		    android:layout_width="match_parent"

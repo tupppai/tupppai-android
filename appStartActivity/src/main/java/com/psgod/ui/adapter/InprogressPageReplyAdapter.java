@@ -300,7 +300,7 @@ public class InprogressPageReplyAdapter extends BaseExpandableListAdapter implem
             case TYPE_SEPARATOR:
                 view.setPadding(Utils.dpToPx(mContext, 10),
                         Utils.dpToPx(mContext, 10), 0, Utils.dpToPx(mContext, 10));
-                goneViewHolder.textView.setText("历史任务");
+                goneViewHolder.textView.setText("");
                 break;
         }
         return view;

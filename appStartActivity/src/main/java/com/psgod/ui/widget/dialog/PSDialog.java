@@ -212,8 +212,8 @@ public class PSDialog extends Dialog implements Handler.Callback {
 			String path = (String) msg.obj;
 			Toast toast = Toast.makeText(mContext, "素材保存到" + path,
 					Toast.LENGTH_SHORT);
-			aboveText.setText("下载成功,");
-			belowText.setText("我猜你会用美图秀秀来P?");
+			aboveText.setText("下载成功");
+			//belowText.setText("我猜你会用来P?");
 			toast.setView(toastView);
 			toast.setGravity(Gravity.CENTER, 0, 0);
 			toast.show();
@@ -228,8 +228,8 @@ public class PSDialog extends Dialog implements Handler.Callback {
 		case MSG_RECORD_SUCCESS:
 			Toast toast2 = Toast.makeText(mContext, "已塞入进行中",
 					Toast.LENGTH_SHORT);
-			aboveText.setText("添加成功,");
-			belowText.setText("在“进行中”等你下载喽!");
+			aboveText.setText("收藏成功");
+			//belowText.setText("在“进行中”等你下载喽!");
 			toast2.setView(toastView);
 			toast2.setGravity(Gravity.CENTER, 0, 0);
 			toast2.show();

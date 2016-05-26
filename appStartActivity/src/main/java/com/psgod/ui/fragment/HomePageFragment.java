@@ -26,8 +26,6 @@ import com.psgod.Logger;
 import com.psgod.R;
 import com.psgod.Utils;
 import com.psgod.eventbus.RefreshEvent;
-import com.psgod.ui.activity.CourseDetailActivity;
-import com.psgod.ui.activity.CourseWorkActivity;
 import com.psgod.ui.activity.MainActivity;
 import com.psgod.ui.activity.SearchActivity;
 import com.psgod.ui.adapter.HomePageAdapter;
@@ -138,7 +136,7 @@ public class HomePageFragment extends Fragment {
 //			mViewHolder.mHomePageFocusFragment = new HomePageFocusFragment();
 //		}
 		if (mViewHolder.mHomePageDynamicFragement == null) {
-			mViewHolder.mHomePageDynamicFragement = new HomePageDynamicFragement();
+			mViewHolder.mHomePageDynamicFragement = new HomePageDynamicFragment();
 		}
 
 		fragments.add(mViewHolder.mHomePageHotFragment);
@@ -346,7 +344,7 @@ public class HomePageFragment extends Fragment {
 		View mView;
 		HomePageHotFragment mHomePageHotFragment;
 		HomePageFocusFragment mHomePageFocusFragment;
-		HomePageDynamicFragement mHomePageDynamicFragement;
+		HomePageDynamicFragment mHomePageDynamicFragement;
 
 		// 选择发表作品或求助的弹出框
 		CameraPopupwindow cameraPopupwindow;
