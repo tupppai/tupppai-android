@@ -2,19 +2,15 @@ package com.psgod.ui.activity;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.psgod.R;
-import com.psgod.UserPreferences;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
 
 /**
@@ -37,20 +33,16 @@ public class MovieActivity extends Activity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie);
         initView();
-        Intent intent = this.getIntent();
-        Bundle bundle = intent.getExtras();
-        mUrl = bundle.getString("Url");
 
-        System.out.println("\n" + "第三界面"+"\n" + mUrl);
 
-        webview.loadUrl(mUrl);
         //webview.loadUrl("wwww.baidu.com");
 
     }
     private void initView() {
-        progressingDialog = new CustomProgressingDialog(this);
-        progressingDialog.show();
+//        progressingDialog = new CustomProgressingDialog(this);
+//        progressingDialog.show();
         //webview = new WebView(this);
+        webview = null;
         webview = (WebView) findViewById(R.id.activity_movie_webview);
         webtitle = (TextView) findViewById(R.id.webview_title);
         back = (ImageButton) findViewById(R.id.activity_webview_back);
@@ -58,35 +50,47 @@ public class MovieActivity extends Activity implements View.OnClickListener {
         webview.getSettings().setJavaScriptEnabled(true);
 
         webview.setWebViewClient(new MovieWebViewClient());
+        webview.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+
+        Intent intent = this.getIntent();
+        Bundle bundle = intent.getExtras();
+        mUrl = bundle.getString("Url");
+
+        System.out.println("\n" + "第三界面"+"\n" + mUrl);
+
+        webview.loadUrl(mUrl);
+
+
+
     }
 
     private class MovieWebViewClient extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            progressingDialog.show();
+//            progressingDialog.show();
             view.loadUrl(url);
             return true;
         }
 
-        public void onPageFinished(WebView view, String url) {
-            webtitle.setText(view.getTitle());
-
-            if (!url.equals(cookieMOVIE)) {
-                back.setVisibility(View.VISIBLE);
-//                getActivity().findViewById(R.id.psgod_linear_tab).setVisibility(View.GONE);
-//                getActivity().findViewById(R.id.psgod_rg_tab_tips).setVisibility(View.GONE);
-//                getActivity().findViewById(R.id.middle).setVisibility(View.GONE);
-            } else {
-                back.setVisibility(View.GONE);
-//                getActivity().findViewById(R.id.psgod_linear_tab).setVisibility(View.VISIBLE);
-//                getActivity().findViewById(R.id.psgod_rg_tab_tips).setVisibility(View.VISIBLE);
-//                getActivity().findViewById(R.id.middle).setVisibility(View.VISIBLE);
-            }
-
-            if(progressingDialog != null && progressingDialog.isShowing()){
-                progressingDialog.dismiss();
-            }
-        }
+//        public void onPageFinished(WebView view, String url) {
+//            webtitle.setText(view.getTitle());
+//
+//            if (!url.equals(cookieMOVIE)) {
+//                back.setVisibility(View.VISIBLE);
+////                getActivity().findViewById(R.id.psgod_linear_tab).setVisibility(View.GONE);
+////                getActivity().findViewById(R.id.psgod_rg_tab_tips).setVisibility(View.GONE);
+////                getActivity().findViewById(R.id.middle).setVisibility(View.GONE);
+//            } else {
+//                back.setVisibility(View.GONE);
+////                getActivity().findViewById(R.id.psgod_linear_tab).setVisibility(View.VISIBLE);
+////                getActivity().findViewById(R.id.psgod_rg_tab_tips).setVisibility(View.VISIBLE);
+////                getActivity().findViewById(R.id.middle).setVisibility(View.VISIBLE);
+//            }
+//
+//            if(progressingDialog != null && progressingDialog.isShowing()){
+//                progressingDialog.dismiss();
+//            }
+//        }
     }
 
     public void onClick(View v) {

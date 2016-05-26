@@ -1,14 +1,12 @@
 package com.psgod.ui.widget;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.AttributeSet;
+import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.psgod.R;
-import com.psgod.UserPreferences;
 import com.psgod.ui.view.TupppaiWebViewChrome;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
 
@@ -60,6 +58,7 @@ public class PsgodWebView extends WebView {
 
         dialog = new CustomProgressingDialog(getContext());
 
+        setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         // 设置内嵌浏览器的属性
         WebSettings websettings = getSettings();
         websettings.setJavaScriptEnabled(true);

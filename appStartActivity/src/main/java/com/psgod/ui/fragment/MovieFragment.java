@@ -9,12 +9,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.webkit.JsPromptResult;
-import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.psgod.R;
 import com.psgod.UserPreferences;
@@ -66,6 +64,19 @@ public class MovieFragment extends BaseFragment implements OnClickListener{
         webview = (WebView) view.findViewById(R.id.fragment_movie_webview);
         webtitle = (TextView) view.findViewById(R.id.webview_title);
         back = (TextView) view.findViewById(R.id.webview_back);
+
+        webtitle.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(mContext, MovieActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("Url", "http://wechupin.com/index-app.html?c=f94737dd4f9b10737e0f72cf32d3b1e16174a9f6&s=android#app/playdetail/197");
+                intent.putExtras(bundle);
+                mContext.startActivity(intent);
+            }
+        });
+
         back.setOnClickListener(this);
         webview.getSettings().setJavaScriptEnabled(true);
         webview.setWebViewClient(new MovieWebViewClient());
@@ -76,22 +87,22 @@ public class MovieFragment extends BaseFragment implements OnClickListener{
         @Override
         public boolean onJsPrompt(WebView view, String url, String message,
                                   String defaultValue, JsPromptResult result) {
-            System.out.println("JsPrompt url  " + url + "\n");
-            System.out.print("message" + message + "\n");
-            System.out.print("defaultValue" + defaultValue + "\n");
-            System.out.print("JsPrompResult" + result + "\n");
+
             if (!TextUtils.isEmpty(url) && url.startsWith("http://")) {
                 Intent intent = new Intent();
-                intent.setClass(view.getContext(), MovieActivity.class);
+                intent.setClass(mContext, MovieActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("Url", defaultValue);
                 intent.putExtras(bundle);
-                view.getContext().startActivity(intent);
-                }
-            //result.confirm();
-            return true;
-            }
 
+                mContext.startActivity(intent);
+
+                result.confirm();
+                return true;
+            } else {
+                return super.onJsPrompt(view, url, message, defaultValue, result);
+            }
+        }
 
 
     }
@@ -111,17 +122,20 @@ public class MovieFragment extends BaseFragment implements OnClickListener{
     private class MovieWebViewClient extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            super.shouldOverrideUrlLoading(view, url);
-            progressingDialog.show();
-//            System.out.println("testtessssssssssssssssssssssssssssssssssssssssssssss");
-//            Intent intent = new Intent();
-//            intent.setClass(view.getContext(), MovieActivity.class);
-//            Bundle bundle = new Bundle();
-//            bundle.putString("mUrl", url);
-//            intent.putExtras(bundle);
-//            view.getContext().startActivity(intent);
-            view.loadUrl(url);
             return true;
+//                super.shouldOverrideUrlLoading(view, url);
+//                progressingDialog.show();
+//                //            System.out.println("testtessssssssssssssssssssssssssssssssssssssssssssss");
+//                //            Intent intent = new Intent();
+//                //            intent.setClass(view.getContext(), MovieActivity.class);
+//                //            Bundle bundle = new Bundle();
+//                //            bundle.putString("mUrl", url);
+//                //            intent.putExtras(bundle);
+//                //            view.getContext().startActivity(intent);
+//                view.loadUrl(url);
+//
+//                return true;
+
         }
         public void onPageFinished(WebView view, String url) {
             webtitle.setText(view.getTitle());
@@ -145,7 +159,8 @@ public class MovieFragment extends BaseFragment implements OnClickListener{
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.webview_back:
-                webview.goBack();   //后退
+//                webview.goBack();   //后退
+
                 break;
             case R.id.activity_tab_tupai_page:
                 System.out.print("底部tab");
