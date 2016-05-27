@@ -144,9 +144,9 @@ public class MainActivity extends PSGodBaseActivity {
     //    private Integer[] mTabDrawableIds = {R.mipmap.tab_home_normal, R.mipmap.tab_tupai_normal,
 //            R.mipmap.tab_jingxingzhong_normal, R.mipmap.tab_home_selected,
 //            R.mipmap.tab_tupai_selected, R.mipmap.tab_jingxingzhong_selected};
-    private Integer[] mTabDrawableIds = {R.mipmap.tab_feed_nor, R.mipmap.tab_channel_nor,
-            R.mipmap.tab_jinxing_nor, R.mipmap.tab_feed_sel,
-            R.mipmap.tab_channel_sel, R.mipmap.tab_jinxing_sel};
+    private Integer[] mTabDrawableIds = {R.mipmap.dt, R.mipmap.ys,
+            R.mipmap.sc, R.mipmap.dt_fill,
+            R.mipmap.ys_fill, R.mipmap.sc_fill};
 
     // 小红点区域
     private LinearLayout mTabTipsMessage;
@@ -505,7 +505,7 @@ public class MainActivity extends PSGodBaseActivity {
 //            if (mAvatarCase.getVisibility() == View.GONE) {
 //                mAvatarCase.setVisibility(View.VISIBLE);
 //            }
-            mAvatarImg.setImageResource(R.mipmap.tab_my_sel);
+            mAvatarImg.setImageResource(R.mipmap.w_fill);
 
             mTabTipsMessage.setVisibility(View.INVISIBLE);
             EventBus.getDefault().post(new MyInfoRefreshEvent(MyPageFragment.class.getSimpleName()));
@@ -567,7 +567,7 @@ public class MainActivity extends PSGodBaseActivity {
                 public void onClick(View view) {
                     setBottomTabImageDrawable(view.getId());
                     showFragment(view.getId());
-                    mAvatarImg.setImageResource(R.mipmap.tab_my_nor);
+                    mAvatarImg.setImageResource(R.mipmap.w);
 //                    if (mAvatarCase.getVisibility() == View.VISIBLE) {
 //                        mAvatarCase.setVisibility(View.GONE);
 //                    }
