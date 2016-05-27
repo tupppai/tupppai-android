@@ -42,122 +42,70 @@ import de.greenrobot.event.EventBus;
  */
 public class HomePageDynamicFragment extends BaseFragment implements View.OnClickListener {
 
-    private WebView webview;
-    private TextView webtitle;
-    private TextView back;
-    private TextView exit;
-    private String DYNAMIC = "http://wechupin.com/index-app.html#app/dynamic";
+    private WebView mWebview;
     private String cookieDYNAMIC = null;
     private Context mContext;
     private CustomProgressingDialog progressingDialog;
-    private int mCount = 1;
+
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dynamic, container, false);
-        mContext = getActivity();
         EventBus.getDefault().register(this);
+        mContext = getActivity();
         initView(view);
 
-        getCookie();
-        // 载入网址
-        webview.loadUrl(cookieDYNAMIC);
         return view;
     }
     private void getCookie() {
         String token = UserPreferences.TokenVerify.getToken();
-        cookieDYNAMIC = "http://wechupin.com/index-app.html?c=" + token +"&s=android#app/dynamic";
+        cookieDYNAMIC = "http://wechupin.com/index-app.html?c=" + token +"&from=android#app/dynamic";
     }
-
 
     private void initView(View view) {
-        progressingDialog = new CustomProgressingDialog(getActivity());
-        progressingDialog.show();
+//        progressingDialog = new CustomProgressingDialog(getActivity());
+//        progressingDialog.show();
 
-        webview = new WebView(getActivity());
-        webview = (WebView) view.findViewById(R.id.fragment_dynamic_webview);
-        //webtitle = (TextView) view.findViewById(R.id.webview_title);
-        //back = (TextView) view.findViewById(R.id.webview_back);
-        //back.setOnClickListener(this);
-        webview.getSettings().setJavaScriptEnabled(true);
+        mWebview = new WebView(getActivity());
+        mWebview = (WebView) view.findViewById(R.id.fragment_dynamic_webview);
 
-        webview.setWebViewClient(new DynamicWebViewClient());
-        webview.setWebChromeClient(new DynamicChromeClient());
+        mWebview.getSettings().setJavaScriptEnabled(true);
+        mWebview.setWebViewClient(new DynamicWebViewClient());
+        getCookie();
+        mWebview.loadUrl(cookieDYNAMIC);
     }
 
-    private class DynamicChromeClient extends WebChromeClient {
-        @Override
-        public boolean onJsPrompt(WebView view, String url, String message,
-                                  String defaultValue, JsPromptResult result) {
-            System.out.println("\n" + "defaultValue " + defaultValue);
-            if (!TextUtils.isEmpty(url) && url.startsWith("http://")) {
-                Intent intent = new Intent();
-                intent.setClass(mContext, UserProfileActivity.class);
-                Bundle bundle = new Bundle();
-                int i = 13;
-
-                if(defaultValue.indexOf("user-profile/") > 0) {
-                    String mUserId = defaultValue.substring(defaultValue.indexOf("user-profile/") + i, defaultValue.length());
-                    System.out.println("\n" + "UserId  " + mUserId);
-                    Long mLongId = Long.parseLong(mUserId);
-                    System.out.println("\n" + "Id  " + mLongId);
-                    intent.putExtra(Constants.IntentKey.USER_ID, mLongId);
-                    mContext.startActivity(intent);
-//                } else if(defaultValue != cookieDYNAMIC) {
-                } else if (defaultValue != cookieDYNAMIC){
-                    intent.setClass(mContext, MovieActivity.class);
-
-                    bundle.putString("Url", defaultValue);
-                    intent.putExtras(bundle);
-
-                    mContext.startActivity(intent);
-
-                }
-                result.confirm();
-                webview.goBack();
-                return true;
-            } else {
-                return super.onJsPrompt(view, url, message, defaultValue, result);
-            }
-        }
-    }
-    private String getUseerId(String url) {
-        String insertStr = "html";
-        StringBuffer newUrl = new StringBuffer(url);
-        Pattern p = Pattern.compile("user-profile/");
-        Matcher m = p.matcher(newUrl.toString());
-        if (m.find()) {
-            newUrl.insert((m.start()+1), "?c=" );
-        }
-        return newUrl.toString();
-    }
 
     private class DynamicWebViewClient extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            progressingDialog.show();
-            System.out.println("有反应了" + url);
-            view.loadUrl(url);
+
+            Intent intent = new Intent();
+            intent.setClass(mContext, UserProfileActivity.class);
+            Bundle bundle = new Bundle();
+            String mStr = url.substring(url.length() - 7, url.length());
+            if (!mStr.equals("dynamic")) {
+                if (url.indexOf("user-profile/") > 0) {
+                    //取用户ID，转到用户界面
+                    String mUserId = url.substring(url.indexOf("user-profile/") + 13, url.length());
+                    Long mLongId = Long.parseLong(mUserId);
+                    intent.putExtra(Constants.IntentKey.USER_ID, mLongId);
+                    mContext.startActivity(intent);
+
+                } else if (url != cookieDYNAMIC) {
+                    //点的是电影头像，转到电影界面
+                    intent.setClass(mContext, MovieActivity.class);
+                    String StrUrl = url.substring(url.indexOf("#") + 1, url.length());
+                    String mUrl = "http://wechupin.com/index-app.html#" + StrUrl;
+                    bundle.putString("Url", mUrl);
+                    intent.putExtras(bundle);
+                    mContext.startActivity(intent);
+                }
+            }
             return true;
         }
 
         public void onPageFinished(WebView view, String url) {
-          //  webtitle.setText(view.getTitle());
-            webview.goBack();
-
-            System.out.print(url);
-            if (!url.equals(cookieDYNAMIC)) {
-                //back.setVisibility(View.VISIBLE);
-//                getActivity().findViewById(R.id.psgod_linear_tab).setVisibility(View.GONE);
-//                getActivity().findViewById(R.id.psgod_rg_tab_tips).setVisibility(View.GONE);
-//                getActivity().findViewById(R.id.middle).setVisibility(View.GONE);
-            } else {
-              //  back.setVisibility(View.GONE);
-//                getActivity().findViewById(R.id.psgod_linear_tab).setVisibility(View.VISIBLE);
-//                getActivity().findViewById(R.id.psgod_rg_tab_tips).setVisibility(View.VISIBLE);
-//                getActivity().findViewById(R.id.middle).setVisibility(View.VISIBLE);
-            }
-            System.out.print("OK");
             if(progressingDialog != null && progressingDialog.isShowing()){
                 progressingDialog.dismiss();
             }
@@ -166,22 +114,12 @@ public class HomePageDynamicFragment extends BaseFragment implements View.OnClic
 
     public void onEventMainThread(RefreshEvent event) {
         if(event.className.equals(this.getClass().getName())){
-            webview.loadUrl(cookieDYNAMIC);
+            mWebview.loadUrl(cookieDYNAMIC);
         }
     }
 
     public void onClick(View v) {
-        switch (v.getId()) {
-//            case R.id.webview_back:
-//                webview.goBack();   //后退
-//                break;
-            case R.id.activity_tab_tupai_page:
-                System.out.print("底部tab");
-                webview.reload();
-                break;
-            default:
-                break;
-        }
+
     }
 
     @Override
@@ -190,6 +128,4 @@ public class HomePageDynamicFragment extends BaseFragment implements View.OnClic
         EventBus.getDefault().unregister(this);
 
     }
-
-
 }

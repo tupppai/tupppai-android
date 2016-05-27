@@ -25,7 +25,8 @@
             android:textSize="16dp"
             android:scaleType="center"
             android:layout_marginLeft="10dp"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -36,7 +37,7 @@
             android:layout_centerHorizontal="true"/>
     </RelativeLayout>
 
-    <WebView
+    <com.psgod.ui.widget.JsBridgeWebView
         android:id="@+id/fragment_movie_webview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

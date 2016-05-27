@@ -25,7 +25,7 @@
             android:textSize="16dp"
             android:scaleType="center"
             android:layout_marginLeft="10dp"
-            android:visibility="visible"/>
+            android:visibility="gone"/>
 
         <TextView
             android:layout_width="wrap_content"

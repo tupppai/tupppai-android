@@ -20,6 +20,7 @@ import com.psgod.UserPreferences;
 import com.psgod.model.LoginUser;
 import com.psgod.ui.activity.MallActivity;
 import com.psgod.ui.activity.MovieActivity;
+import com.psgod.ui.widget.JsBridgeWebView;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
 import com.youzan.sdk.YouzanBridge;
 import com.youzan.sdk.YouzanSDK;
@@ -39,10 +40,11 @@ public class MallFragment extends BaseFragment implements OnClickListener{
 
     public Context mContext;
     private String mUrl;
-    private WebView webview;
-    private TextView back;
+    private WebView mWebview;
+    //private  mWebview;
+    private TextView mBack;
     private TextView exit;
-    private TextView webtitle;
+    private TextView mWebtitle;
     private String mToken;
     private String MALL = "https://wap.koudaitong.com/v2/showcase/homepage?alias=5q58ne2k";
     private CustomProgressingDialog progressingDialog;
@@ -64,9 +66,9 @@ public class MallFragment extends BaseFragment implements OnClickListener{
         myUser = LoginUser.getInstance();
         user.setUserId(myUser.getUid() + "");
         // 参数初始化
-        YouzanBridge.build(getActivity(),webview).create();
+        YouzanBridge.build(getActivity(),mWebview).create();
 
-        webview.setWebViewClient(new MallWebViewClient());
+        mWebview.setWebViewClient(new MallWebViewClient());
 
 
         YouzanSDK.asyncRegisterUser(user, new OnRegister() {
@@ -78,7 +80,7 @@ public class MallFragment extends BaseFragment implements OnClickListener{
             @Override
             public void onSuccess()
             {
-                webview.loadUrl(MALL);
+                mWebview.loadUrl(MALL);
 
             }
         });
@@ -88,12 +90,12 @@ public class MallFragment extends BaseFragment implements OnClickListener{
         mToken = UserPreferences.TokenVerify.getToken();
         progressingDialog = new CustomProgressingDialog(getActivity());
         progressingDialog.show();
-        webview = (WebView) view.findViewById(R.id.fragment_mall_webview);
-        back = (TextView) view.findViewById(R.id.webview_back);
-        webtitle = (TextView) view.findViewById(R.id.webview_title);
-        back.setOnClickListener(this);
+        mWebview = (WebView) view.findViewById(R.id.fragment_mall_webview);
+        mBack = (TextView) view.findViewById(R.id.webview_back);
+        mWebtitle = (TextView) view.findViewById(R.id.webview_title);
+        mBack.setOnClickListener(this);
 
-        webview.getSettings().setJavaScriptEnabled(true);
+        //mWebview.getSettings().setJavaScriptEnabled(true);
     }
 
     private class MallChromeClient extends YouzanChromeClient {
@@ -142,27 +144,27 @@ public class MallFragment extends BaseFragment implements OnClickListener{
             super.shouldOverrideUrlLoading(view, url);
             System.out.println("\n" + "YouzanUrl " + url);
             Intent intent = new Intent();
-            intent.setClass(mContext, MovieActivity.class);
+            intent.setClass(mContext, MallActivity.class);
             Bundle bundle = new Bundle();
             bundle.putString("Url", url);
             intent.putExtras(bundle);
             mContext.startActivity(intent);
-            webview.goBack();
+            //mWebview.goBack();
 
             return true;
         }
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
-            webtitle.setText(view.getTitle());
+            mWebtitle.setText(view.getTitle());
             if (!url.equals(MALL)) {
-                back.setVisibility(View.VISIBLE);
+                mBack.setVisibility(View.GONE);
 
 
                 //getActivity().findViewById(R.id.psgod_linear_tab).setVisibility(View.INVISIBLE);
                 //getActivity().findViewById(R.id.psgod_rg_tab_tips).setVisibility(View.GONE);
                 //getActivity().findViewById(R.id.middle).setVisibility(View.GONE);
             } else {
-                back.setVisibility(View.GONE);
+                mBack.setVisibility(View.GONE);
                 //getActivity().findViewById(R.id.psgod_linear_tab).setVisibility(View.VISIBLE);
                 //getActivity().findViewById(R.id.psgod_rg_tab_tips).setVisibility(View.VISIBLE);
                 //getActivity().findViewById(R.id.middle).setVisibility(View.VISIBLE);
@@ -173,7 +175,7 @@ public class MallFragment extends BaseFragment implements OnClickListener{
         }
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
             super.onPageStarted(view, url, favicon);
-            webtitle.setText(view.getTitle());
+            mWebtitle.setText(view.getTitle());
 
 
         }
@@ -183,11 +185,11 @@ public class MallFragment extends BaseFragment implements OnClickListener{
 
         switch (v.getId()) {
             case R.id.webview_back:
-                webview.goBack();   //后退
+                mWebview.goBack();   //后退
 
                 break;
             case R.id.activity_inprogress_tab_page:
-                webview.loadUrl(MALL);
+                mWebview.loadUrl(MALL);
                 break;
             default:
                 break;

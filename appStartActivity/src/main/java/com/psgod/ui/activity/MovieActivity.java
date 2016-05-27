@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -12,7 +13,13 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.psgod.R;
-import com.psgod.ui.widget.dialog.CustomProgressingDialog;
+import com.psgod.eventbus.RefreshEvent;
+import com.psgod.ui.fragment.HomePageDynamicFragment;
+import com.psgod.ui.fragment.HomePageFocusFragment;
+import com.psgod.ui.fragment.MovieFragment;
+import com.psgod.ui.widget.JsBridgeWebView;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by Administrator on 2016/5/25.
@@ -20,15 +27,13 @@ import com.psgod.ui.widget.dialog.CustomProgressingDialog;
 public class MovieActivity extends Activity implements View.OnClickListener {
 
     public Context mContext;
-    private WebView webview;
-    private TextView webtitle;
-    private ImageButton back;
+    private WebView mWebview;
+    private TextView mWebtitle;
+    private TextView mBack;
     private String mUrl;
-    private String mtoken;
-    private TextView exit;
+    private TextView mExit;
+    private String mCurrentUrl;
     private String MOVIE = "http://wechupin.com/index-app.html#app/playcategory";
-    private String cookieMOVIE = null;
-    private CustomProgressingDialog progressingDialog;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,57 +43,64 @@ public class MovieActivity extends Activity implements View.OnClickListener {
         Intent intent = this.getIntent();
         Bundle bundle = intent.getExtras();
         mUrl = bundle.getString("Url");
-
+        mCurrentUrl = mUrl;
         initView();
 
-        System.out.println("\n" + "第三界面"+"\n" + mUrl);
+        System.out.println("\n" + "第三界面" + "\n" + mUrl);
 
         //webview.loadUrl(mUrl);
 
         initView();
 
-
-
-        //webview.loadUrl("wwww.baidu.com");
-
     }
+
     private void initView() {
+        mWebview = (WebView) findViewById(R.id.activity_movie_webview);
 
-//        progressingDialog = new CustomProgressingDialog(this);
-//        progressingDialog.show();
+        mWebtitle = (TextView) findViewById(R.id.webview_title);
+
+        mBack = (TextView) findViewById(R.id.activity_webview_back);
+        mExit = (TextView) findViewById(R.id.activity_webview_exit);
+        mBack.setOnClickListener(this);
+        mExit.setOnClickListener(this);
 
 
-//        progressingDialog = new CustomProgressingDialog(this);
-//        progressingDialog.show();
-        //webview = new WebView(this);
-        webview = null;
-        webview = (WebView) findViewById(R.id.activity_movie_webview);
-        webtitle = (TextView) findViewById(R.id.webview_title);
+        mWebview.getSettings().setJavaScriptEnabled(true);
+        mWebview.setWebViewClient(new MovieWebViewClient());
 
-        back = (ImageButton) findViewById(R.id.activity_webview_back);
-        back.setOnClickListener(this);
+        //webview.loadUrl("www.baidu.com");
 
-        //webview = new WebView(this);
-        webview = (WebView) this.findViewById(R.id.activity_movie_webview);
-        webtitle = (TextView) findViewById(R.id.webview_title);
+        mWebview.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 
-        webview.getSettings().setJavaScriptEnabled(true);
-        webview.setWebViewClient(new MovieWebViewClient());
-
-        webview.loadUrl("www.baidu.com");
-
-        webview.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 
         Intent intent = this.getIntent();
         Bundle bundle = intent.getExtras();
         mUrl = bundle.getString("Url");
-
-        System.out.println("\n" + "第三界面"+"\n" + mUrl);
-
-        webview.loadUrl(mUrl);
+        mWebview.loadUrl(mUrl);
 
 
+    }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.activity_webview_back:
+                EventBus.getDefault().post(new RefreshEvent(MovieFragment.class.getName()));
+                EventBus.getDefault().post(new RefreshEvent(HomePageDynamicFragment.class.getName()));
+                if (mCurrentUrl.equals(mUrl)) {
+                    finish();
+                } else {
+                    mWebview.goBack();   //后退
+                }
+                break;
+            case R.id.activity_webview_exit:
+                EventBus.getDefault().post(new RefreshEvent(MovieFragment.class.getName()));
+                EventBus.getDefault().post(new RefreshEvent(HomePageDynamicFragment.class.getName()));
+                finish();
+                break;
+            default:
+                break;
+        }
 
     }
 
@@ -96,12 +108,6 @@ public class MovieActivity extends Activity implements View.OnClickListener {
 
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-
-            progressingDialog.show();
-            System.out.println("\n" + "第三界面的shouldOverrideUrl  " + url);
-
-//            progressingDialog.show();
-
             view.loadUrl(url);
             return true;
         }
@@ -110,43 +116,30 @@ public class MovieActivity extends Activity implements View.OnClickListener {
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
             super.onPageStarted(view, url, favicon);
-             //view.loadUrl("www.baidu.com");
+            //view.loadUrl("www.baidu.com");
         }
 
         public void onPageFinished(WebView view, String url) {
-            webtitle.setText(view.getTitle());
+            //mWebtitle.setText(view.getTitle());
+            mCurrentUrl = url;
 
-            if (!url.equals(cookieMOVIE)) {
-                back.setVisibility(View.VISIBLE);
-//                getActivity().findViewById(R.id.psgod_linear_tab).setVisibility(View.GONE);
-//                getActivity().findViewById(R.id.psgod_rg_tab_tips).setVisibility(View.GONE);
-//                getActivity().findViewById(R.id.middle).setVisibility(View.GONE);
-            } else {
-                back.setVisibility(View.GONE);
-//                getActivity().findViewById(R.id.psgod_linear_tab).setVisibility(View.VISIBLE);
-//                getActivity().findViewById(R.id.psgod_rg_tab_tips).setVisibility(View.VISIBLE);
-//                getActivity().findViewById(R.id.middle).setVisibility(View.VISIBLE);
-            }
-
-            if(progressingDialog != null && progressingDialog.isShowing()){
-                progressingDialog.dismiss();
-            }
         }
-
     }
 
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.activity_webview_back:
-                webview.goBack();   //后退
-                break;
-            case R.id.activity_tab_tupai_page:
-                System.out.print("底部tab");
-                webview.reload();
-                break;
-            default:
-                break;
-        }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+
+            if (mCurrentUrl.equals(mUrl)) {
+                EventBus.getDefault().post(new RefreshEvent(MovieFragment.class.getName()));
+                EventBus.getDefault().post(new RefreshEvent(HomePageDynamicFragment.class.getName()));
+                finish();
+            } else {
+                mWebview.goBack();   //后退
+            }
+            return true;
+        } else
+            return super.onKeyDown(keyCode, event);
     }
 }
 

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,10 +30,11 @@ public class MallActivity extends Activity implements View.OnClickListener {
 
     private Context mContext;
     private String mUrl;
-    private WebView webview;
-    private TextView back;
-    private TextView exit;
-    private TextView webtitle;
+    private WebView mWebview;
+    private TextView mBack;
+    private TextView mExit;
+    private TextView mWebtitle;
+    private String mCurrentUrl;
     private String MALL = "https://wap.koudaitong.com/v2/showcase/homepage?alias=5q58ne2k";
     private CustomProgressingDialog progressingDialog;
 
@@ -43,8 +45,9 @@ public class MallActivity extends Activity implements View.OnClickListener {
         Intent intent = this.getIntent();
         Bundle bundle = intent.getExtras();
         mUrl = bundle.getString("Url");
+        mCurrentUrl = mUrl;
         System.out.println("第二界面mUrl " + mUrl + "\n");
-        webview.loadUrl(mUrl);
+        //webview.loadUrl(mUrl);
         initView();
         setWeb();
 
@@ -55,9 +58,9 @@ public class MallActivity extends Activity implements View.OnClickListener {
         LoginUser myUser = LoginUser.getInstance();
         user.setUserId(myUser.getUid() + "");
         // 参数初始化
-        YouzanBridge.build(this,webview).create();
+        YouzanBridge.build(this,mWebview).create();
 
-        webview.setWebViewClient(new MallWebViewClient());
+        mWebview.setWebViewClient(new MallWebViewClient());
 
         YouzanSDK.asyncRegisterUser(user, new OnRegister() {
             @Override
@@ -68,7 +71,7 @@ public class MallActivity extends Activity implements View.OnClickListener {
             @Override
             public void onSuccess()
             {
-                webview.loadUrl(mUrl);
+                mWebview.loadUrl(mUrl);
 
             }
         });
@@ -77,12 +80,14 @@ public class MallActivity extends Activity implements View.OnClickListener {
     private void initView() {
         progressingDialog = new CustomProgressingDialog(this);
         progressingDialog.show();
-        webview = (WebView) findViewById(R.id.activity_mall_webview);
-        back = (TextView) findViewById(R.id.activity_webview_back);
-        webtitle = (TextView) findViewById(R.id.activity_mall_title);
-        back.setOnClickListener(this);
+        mWebview = (WebView) findViewById(R.id.activity_mall_webview);
+        mBack = (TextView) findViewById(R.id.activity_webview_back);
+        mExit = (TextView) findViewById(R.id.activity_webview_exit);
+        mWebtitle = (TextView) findViewById(R.id.webview_title);
+        mBack.setOnClickListener(this);
+        mExit.setOnClickListener(this);
 
-        webview.getSettings().setJavaScriptEnabled(true);
+        mWebview.getSettings().setJavaScriptEnabled(true);
     }
 
     private class MallWebViewClient extends YouzanWebClient {
@@ -95,17 +100,18 @@ public class MallActivity extends Activity implements View.OnClickListener {
         }
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
+            mCurrentUrl = url;
             System.out.print("aaa");
-            webtitle.setText(view.getTitle());
+            //mWebtitle.setText(view.getTitle());
             if (!url.equals(MALL)) {
-                back.setVisibility(View.VISIBLE);
+                mBack.setVisibility(View.VISIBLE);
 
 
                 //getActivity().findViewById(R.id.psgod_linear_tab).setVisibility(View.INVISIBLE);
                 //getActivity().findViewById(R.id.psgod_rg_tab_tips).setVisibility(View.GONE);
                 //getActivity().findViewById(R.id.middle).setVisibility(View.GONE);
             } else {
-                back.setVisibility(View.GONE);
+                mBack.setVisibility(View.GONE);
                 //getActivity().findViewById(R.id.psgod_linear_tab).setVisibility(View.VISIBLE);
                 //getActivity().findViewById(R.id.psgod_rg_tab_tips).setVisibility(View.VISIBLE);
                 //getActivity().findViewById(R.id.middle).setVisibility(View.VISIBLE);
@@ -114,27 +120,37 @@ public class MallActivity extends Activity implements View.OnClickListener {
                 progressingDialog.dismiss();
             }
         }
-        public void onPageStarted(WebView view, String url, Bitmap favicon) {
-            super.onPageStarted(view, url, favicon);
-            webtitle.setText(view.getTitle());
 
-
-        }
     }
 
     public void onClick(View v) {
 
         switch (v.getId()) {
-            case R.id.webview_back:
-                webview.goBack();   //后退
-
+            case R.id.activity_webview_back:
+                if (mCurrentUrl.equals(mUrl)) {
+                    finish();
+                } else {
+                    mWebview.goBack();   //后退
+                }
                 break;
-            case R.id.activity_inprogress_tab_page:
-                webview.loadUrl(MALL);
+            case R.id.activity_webview_exit:
+                finish();
                 break;
             default:
                 break;
         }
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            if (mCurrentUrl.equals(mUrl)) {
+                finish();
+            } else {
+                mWebview.goBack();   //后退
+            }
+            return true;
+        } else
+            return super.onKeyDown(keyCode, event);
+    }
 }
