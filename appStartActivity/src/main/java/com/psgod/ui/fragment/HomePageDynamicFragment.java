@@ -2,57 +2,36 @@ package com.psgod.ui.fragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.JsPromptResult;
-import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.TextView;
 
-import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.psgod.Constants;
-import com.psgod.Logger;
 import com.psgod.R;
 import com.psgod.UserPreferences;
 import com.psgod.eventbus.RefreshEvent;
-import com.psgod.model.LoginUser;
-import com.psgod.model.User;
 import com.psgod.ui.activity.MovieActivity;
 import com.psgod.ui.activity.UserProfileActivity;
-import com.psgod.ui.widget.dialog.CustomProgressingDialog;
-import com.youzan.sdk.YouzanBridge;
-import com.youzan.sdk.YouzanSDK;
-import com.youzan.sdk.YouzanUser;
-import com.youzan.sdk.http.engine.OnRegister;
-import com.youzan.sdk.http.engine.QueryError;
-import com.youzan.sdk.web.plugin.YouzanWebClient;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import de.greenrobot.event.EventBus;
 
 /**
- * Created by Administrator on 2016/5/24.
+ * 新版动态页面
  */
-public class HomePageDynamicFragment extends BaseFragment implements View.OnClickListener {
+public class HomePageDynamicFragment extends BaseFragment {
 
     private WebView mWebview;
     private String cookieDYNAMIC = null;
     private Context mContext;
-    private CustomProgressingDialog progressingDialog;
-
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        mContext = getActivity();
         View view = inflater.inflate(R.layout.fragment_dynamic, container, false);
         EventBus.getDefault().register(this);
-        mContext = getActivity();
         initView(view);
 
         return view;
@@ -63,9 +42,6 @@ public class HomePageDynamicFragment extends BaseFragment implements View.OnClic
     }
 
     private void initView(View view) {
-//        progressingDialog = new CustomProgressingDialog(getActivity());
-//        progressingDialog.show();
-
         mWebview = new WebView(getActivity());
         mWebview = (WebView) view.findViewById(R.id.fragment_dynamic_webview);
 
@@ -104,22 +80,12 @@ public class HomePageDynamicFragment extends BaseFragment implements View.OnClic
             }
             return true;
         }
-
-        public void onPageFinished(WebView view, String url) {
-            if(progressingDialog != null && progressingDialog.isShowing()){
-                progressingDialog.dismiss();
-            }
-        }
     }
 
     public void onEventMainThread(RefreshEvent event) {
         if(event.className.equals(this.getClass().getName())){
             mWebview.loadUrl(cookieDYNAMIC);
         }
-    }
-
-    public void onClick(View v) {
-
     }
 
     @Override

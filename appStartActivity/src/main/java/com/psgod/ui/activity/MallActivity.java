@@ -3,19 +3,14 @@ package com.psgod.ui.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.TextView;
 
 import com.psgod.R;
 import com.psgod.model.LoginUser;
-import com.psgod.ui.widget.dialog.CustomProgressingDialog;
 import com.youzan.sdk.YouzanBridge;
 import com.youzan.sdk.YouzanSDK;
 import com.youzan.sdk.YouzanUser;
@@ -36,7 +31,6 @@ public class MallActivity extends Activity implements View.OnClickListener {
     private TextView mWebtitle;
     private String mCurrentUrl;
     private String MALL = "https://wap.koudaitong.com/v2/showcase/homepage?alias=5q58ne2k";
-    private CustomProgressingDialog progressingDialog;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,8 +72,7 @@ public class MallActivity extends Activity implements View.OnClickListener {
     }
 
     private void initView() {
-        progressingDialog = new CustomProgressingDialog(this);
-        progressingDialog.show();
+
         mWebview = (WebView) findViewById(R.id.activity_mall_webview);
         mBack = (TextView) findViewById(R.id.activity_webview_back);
         mExit = (TextView) findViewById(R.id.activity_webview_exit);
@@ -94,7 +87,7 @@ public class MallActivity extends Activity implements View.OnClickListener {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             super.shouldOverrideUrlLoading(view, url);
-            progressingDialog.show();
+
             view.loadUrl(url);
             return true;
         }
@@ -115,9 +108,6 @@ public class MallActivity extends Activity implements View.OnClickListener {
                 //getActivity().findViewById(R.id.psgod_linear_tab).setVisibility(View.VISIBLE);
                 //getActivity().findViewById(R.id.psgod_rg_tab_tips).setVisibility(View.VISIBLE);
                 //getActivity().findViewById(R.id.middle).setVisibility(View.VISIBLE);
-            }
-            if(progressingDialog != null && progressingDialog.isShowing()){
-                progressingDialog.dismiss();
             }
         }
 
