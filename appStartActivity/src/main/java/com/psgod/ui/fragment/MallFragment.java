@@ -4,24 +4,33 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.webkit.JsPromptResult;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.psgod.R;
+import com.psgod.UserPreferences;
 import com.psgod.model.LoginUser;
 import com.psgod.ui.activity.MallActivity;
+import com.psgod.ui.activity.MovieActivity;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
 import com.youzan.sdk.YouzanBridge;
 import com.youzan.sdk.YouzanSDK;
 import com.youzan.sdk.YouzanUser;
 import com.youzan.sdk.http.engine.OnRegister;
 import com.youzan.sdk.http.engine.QueryError;
+import com.youzan.sdk.web.plugin.YouzanChromeClient;
 import com.youzan.sdk.web.plugin.YouzanWebClient;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by Administrator on 2016/5/20.
@@ -34,8 +43,10 @@ public class MallFragment extends BaseFragment implements OnClickListener{
     private TextView back;
     private TextView exit;
     private TextView webtitle;
+    private String mToken;
     private String MALL = "https://wap.koudaitong.com/v2/showcase/homepage?alias=5q58ne2k";
     private CustomProgressingDialog progressingDialog;
+    private LoginUser myUser;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -50,12 +61,13 @@ public class MallFragment extends BaseFragment implements OnClickListener{
 
     private void setWeb() {
         YouzanUser user = new YouzanUser();
-        LoginUser myUser = LoginUser.getInstance();
+        myUser = LoginUser.getInstance();
         user.setUserId(myUser.getUid() + "");
         // 参数初始化
         YouzanBridge.build(getActivity(),webview).create();
 
         webview.setWebViewClient(new MallWebViewClient());
+
 
         YouzanSDK.asyncRegisterUser(user, new OnRegister() {
             @Override
@@ -73,6 +85,7 @@ public class MallFragment extends BaseFragment implements OnClickListener{
     }
 
     private void initView(View view) {
+        mToken = UserPreferences.TokenVerify.getToken();
         progressingDialog = new CustomProgressingDialog(getActivity());
         progressingDialog.show();
         webview = (WebView) view.findViewById(R.id.fragment_mall_webview);
@@ -83,34 +96,63 @@ public class MallFragment extends BaseFragment implements OnClickListener{
         webview.getSettings().setJavaScriptEnabled(true);
     }
 
+    private class MallChromeClient extends YouzanChromeClient {
+        public boolean onJsPrompt(WebView view, String url, String message,
+                                  String defaultValue, JsPromptResult result) {
+            super.onJsPrompt(view, url, message, defaultValue, result);
+//            System.out.println("JsPrompt url  " + url + "\n");
+//            System.out.print("message" + message + "\n");
+//            System.out.print("defaultValue" + defaultValue + "\n");
+//            System.out.print("JsPrompResult" + result + "\n");
+            System.out.println("\n" + "url  " + url);
+            System.out.println("\n" + "message " + message );
+            System.out.println("\n" + "YouzanUrl  " + defaultValue);
+            if (!TextUtils.isEmpty(url) && url.startsWith("http://")) {
+                Intent intent = new Intent();
+                intent.setClass(mContext, MallActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("Url", defaultValue);
+                bundle.putString("Token", myUser.getUid() + "");
+                intent.putExtras(bundle);
+
+                mContext.startActivity(intent);
+
+                result.confirm();
+                return true;
+            } else {
+                return super.onJsPrompt(view, url, message, defaultValue, result);
+            }
+        }
+    }
+
+    private String tokenUrl(String url) {
+        String insertStr = "html";
+        StringBuffer newUrl = new StringBuffer(url);
+        Pattern p = Pattern.compile(insertStr);
+        Matcher m = p.matcher(newUrl.toString());
+        if (m.find()) {
+            newUrl.insert((m.start()+1), "?c=" + mToken);
+        }
+        return newUrl.toString();
+    }
+
     private class MallWebViewClient extends YouzanWebClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             super.shouldOverrideUrlLoading(view, url);
-            progressingDialog.show();
-//            Intent intent = new Intent();
-//            intent.setClass(view.getContext(), MallActivity.class);
-//            Bundle bundle = new Bundle();
-//            bundle.putString("mUrl", url);
-//            intent.putExtras(bundle);
-//            mContext.startActivity(intent);
-            view.loadUrl(url);
+            System.out.println("\n" + "YouzanUrl " + url);
+            Intent intent = new Intent();
+            intent.setClass(mContext, MovieActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("Url", url);
+            intent.putExtras(bundle);
+            mContext.startActivity(intent);
+            webview.goBack();
 
-
-//            if (!url.equals(cookieMOVIE)) {
-//                mUrl = url;
-//                Intent intent = new Intent();
-//                intent.setClass(getActivity(), MovieActivity.class);
-//                Bundle bundle = new Bundle();
-//                bundle.putString("mUrl", mUrl);
-//                intent.putExtras(bundle);
-//                getActivity().startActivity(intent);
-//            }
             return true;
         }
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
-            System.out.print("aaa");
             webtitle.setText(view.getTitle());
             if (!url.equals(MALL)) {
                 back.setVisibility(View.VISIBLE);
@@ -151,6 +193,7 @@ public class MallFragment extends BaseFragment implements OnClickListener{
                 break;
         }
     }
+
 
 }
 

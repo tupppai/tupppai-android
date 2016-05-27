@@ -1,5 +1,6 @@
 package com.psgod.ui.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -14,12 +15,15 @@ import android.webkit.WebViewClient;
 import android.widget.TextView;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
+import com.psgod.Constants;
 import com.psgod.Logger;
 import com.psgod.R;
 import com.psgod.UserPreferences;
 import com.psgod.eventbus.RefreshEvent;
 import com.psgod.model.LoginUser;
+import com.psgod.model.User;
 import com.psgod.ui.activity.MovieActivity;
+import com.psgod.ui.activity.UserProfileActivity;
 import com.psgod.ui.widget.dialog.CustomProgressingDialog;
 import com.youzan.sdk.YouzanBridge;
 import com.youzan.sdk.YouzanSDK;
@@ -27,6 +31,9 @@ import com.youzan.sdk.YouzanUser;
 import com.youzan.sdk.http.engine.OnRegister;
 import com.youzan.sdk.http.engine.QueryError;
 import com.youzan.sdk.web.plugin.YouzanWebClient;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import de.greenrobot.event.EventBus;
 
@@ -41,13 +48,14 @@ public class HomePageDynamicFragment extends BaseFragment implements View.OnClic
     private TextView exit;
     private String DYNAMIC = "http://wechupin.com/index-app.html#app/dynamic";
     private String cookieDYNAMIC = null;
-
+    private Context mContext;
     private CustomProgressingDialog progressingDialog;
+    private int mCount = 1;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dynamic, container, false);
-
+        mContext = getActivity();
         EventBus.getDefault().register(this);
         initView(view);
 
@@ -81,10 +89,47 @@ public class HomePageDynamicFragment extends BaseFragment implements View.OnClic
         @Override
         public boolean onJsPrompt(WebView view, String url, String message,
                                   String defaultValue, JsPromptResult result) {
-        System.out.println("\n + 动态页用户头像点击" + defaultValue + "\n");
+            System.out.println("\n" + "defaultValue " + defaultValue);
+            if (!TextUtils.isEmpty(url) && url.startsWith("http://")) {
+                Intent intent = new Intent();
+                intent.setClass(mContext, UserProfileActivity.class);
+                Bundle bundle = new Bundle();
+                int i = 13;
 
-            return true;
+                if(defaultValue.indexOf("user-profile/") > 0) {
+                    String mUserId = defaultValue.substring(defaultValue.indexOf("user-profile/") + i, defaultValue.length());
+                    System.out.println("\n" + "UserId  " + mUserId);
+                    Long mLongId = Long.parseLong(mUserId);
+                    System.out.println("\n" + "Id  " + mLongId);
+                    intent.putExtra(Constants.IntentKey.USER_ID, mLongId);
+                    mContext.startActivity(intent);
+//                } else if(defaultValue != cookieDYNAMIC) {
+                } else if (defaultValue != cookieDYNAMIC){
+                    intent.setClass(mContext, MovieActivity.class);
+
+                    bundle.putString("Url", defaultValue);
+                    intent.putExtras(bundle);
+
+                    mContext.startActivity(intent);
+
+                }
+                result.confirm();
+                webview.goBack();
+                return true;
+            } else {
+                return super.onJsPrompt(view, url, message, defaultValue, result);
+            }
         }
+    }
+    private String getUseerId(String url) {
+        String insertStr = "html";
+        StringBuffer newUrl = new StringBuffer(url);
+        Pattern p = Pattern.compile("user-profile/");
+        Matcher m = p.matcher(newUrl.toString());
+        if (m.find()) {
+            newUrl.insert((m.start()+1), "?c=" );
+        }
+        return newUrl.toString();
     }
 
     private class DynamicWebViewClient extends WebViewClient {
@@ -98,6 +143,8 @@ public class HomePageDynamicFragment extends BaseFragment implements View.OnClic
 
         public void onPageFinished(WebView view, String url) {
           //  webtitle.setText(view.getTitle());
+            webview.goBack();
+
             System.out.print(url);
             if (!url.equals(cookieDYNAMIC)) {
                 //back.setVisibility(View.VISIBLE);

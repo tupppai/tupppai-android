@@ -42,7 +42,7 @@ public class MallActivity extends Activity implements View.OnClickListener {
 
         Intent intent = this.getIntent();
         Bundle bundle = intent.getExtras();
-        mUrl = bundle.getString("mUrl");
+        mUrl = bundle.getString("Url");
         System.out.println("第二界面mUrl " + mUrl + "\n");
         webview.loadUrl(mUrl);
         initView();

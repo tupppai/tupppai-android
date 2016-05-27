@@ -43,6 +43,7 @@
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:layerType="software"
         android:layout_below="@+id/activity_movie_title"
         android:divider="@null" />
 
