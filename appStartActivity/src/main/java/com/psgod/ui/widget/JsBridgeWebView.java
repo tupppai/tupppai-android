@@ -129,9 +129,9 @@ public class JsBridgeWebView extends WebView {
 
     @Override
     public void loadUrl(String url) {
-        if (dialog != null && !dialog.isShowing()) {
-            dialog.show();
-        }
+//        if (dialog != null && !dialog.isShowing()) {
+//            dialog.show();
+//        }
 
         mOriginUrl = url;
         super.loadUrl(url);

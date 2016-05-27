@@ -69,21 +69,21 @@ public class AppStartActivity extends PSGodBaseActivity implements
 						Context.MODE_PRIVATE).edit();
 
 		// 判断是否为第一次启动
-		if (isFirstRun) {
-			Logger.log(Logger.LOG_LEVEL_DEBUG, Logger.USER_LEVEL_COLOR, TAG,
-					"isFirstRun:" + true);
-			editor.putBoolean(Constants.SharedPreferencesKey.IS_FIRST_RUN,
-					false);
-			if (android.os.Build.VERSION.SDK_INT >= 9) {
-				editor.apply();
-			} else {
-				editor.commit();
-			}
-			Intent intent = getIntent();
-			intent.setClass(AppStartActivity.this, WelcomeScrollActivity.class);
-			startActivity(intent);
-			finish();
-		} else {
+//		if (isFirstRun) {
+//			Logger.log(Logger.LOG_LEVEL_DEBUG, Logger.USER_LEVEL_COLOR, TAG,
+//					"isFirstRun:" + true);
+//			editor.putBoolean(Constants.SharedPreferencesKey.IS_FIRST_RUN,
+//					false);
+//			if (android.os.Build.VERSION.SDK_INT >= 9) {
+//				editor.apply();
+//			} else {
+//				editor.commit();
+//			}
+//			Intent intent = getIntent();
+//			intent.setClass(AppStartActivity.this, WelcomeScrollActivity.class);
+//			startActivity(intent);
+//			finish();
+//		} else {
 			Logger.log(Logger.LOG_LEVEL_DEBUG, Logger.USER_LEVEL_COLOR, TAG,
 					"isFirstRun:" + false);
 			ThreadManager.executeOnNetWorkThread(new Thread() {
@@ -106,7 +106,7 @@ public class AppStartActivity extends PSGodBaseActivity implements
 					handleTokenResult(tokenResult);
 				}
 			});
-		}
+//		}
 
 	}
 
