@@ -10,18 +10,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.webkit.JsPromptResult;
-import android.webkit.WebChromeClient;
 import android.webkit.WebView;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.psgod.R;
 import com.psgod.UserPreferences;
 import com.psgod.model.LoginUser;
 import com.psgod.ui.activity.MallActivity;
-import com.psgod.ui.activity.MovieActivity;
-import com.psgod.ui.widget.JsBridgeWebView;
-import com.psgod.ui.widget.dialog.CustomProgressingDialog;
 import com.youzan.sdk.YouzanBridge;
 import com.youzan.sdk.YouzanSDK;
 import com.youzan.sdk.YouzanUser;
@@ -47,7 +42,6 @@ public class MallFragment extends BaseFragment implements OnClickListener{
     private TextView mWebtitle;
     private String mToken;
     private String MALL = "https://wap.koudaitong.com/v2/showcase/homepage?alias=5q58ne2k";
-    private CustomProgressingDialog progressingDialog;
     private LoginUser myUser;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -88,8 +82,6 @@ public class MallFragment extends BaseFragment implements OnClickListener{
 
     private void initView(View view) {
         mToken = UserPreferences.TokenVerify.getToken();
-        progressingDialog = new CustomProgressingDialog(getActivity());
-        progressingDialog.show();
         mWebview = (WebView) view.findViewById(R.id.fragment_mall_webview);
         mBack = (TextView) view.findViewById(R.id.webview_back);
         mWebtitle = (TextView) view.findViewById(R.id.webview_title);
@@ -102,13 +94,7 @@ public class MallFragment extends BaseFragment implements OnClickListener{
         public boolean onJsPrompt(WebView view, String url, String message,
                                   String defaultValue, JsPromptResult result) {
             super.onJsPrompt(view, url, message, defaultValue, result);
-//            System.out.println("JsPrompt url  " + url + "\n");
-//            System.out.print("message" + message + "\n");
-//            System.out.print("defaultValue" + defaultValue + "\n");
-//            System.out.print("JsPrompResult" + result + "\n");
-            System.out.println("\n" + "url  " + url);
-            System.out.println("\n" + "message " + message );
-            System.out.println("\n" + "YouzanUrl  " + defaultValue);
+
             if (!TextUtils.isEmpty(url) && url.startsWith("http://")) {
                 Intent intent = new Intent();
                 intent.setClass(mContext, MallActivity.class);
@@ -158,8 +144,6 @@ public class MallFragment extends BaseFragment implements OnClickListener{
             mWebtitle.setText(view.getTitle());
             if (!url.equals(MALL)) {
                 mBack.setVisibility(View.GONE);
-
-
                 //getActivity().findViewById(R.id.psgod_linear_tab).setVisibility(View.INVISIBLE);
                 //getActivity().findViewById(R.id.psgod_rg_tab_tips).setVisibility(View.GONE);
                 //getActivity().findViewById(R.id.middle).setVisibility(View.GONE);
@@ -168,9 +152,6 @@ public class MallFragment extends BaseFragment implements OnClickListener{
                 //getActivity().findViewById(R.id.psgod_linear_tab).setVisibility(View.VISIBLE);
                 //getActivity().findViewById(R.id.psgod_rg_tab_tips).setVisibility(View.VISIBLE);
                 //getActivity().findViewById(R.id.middle).setVisibility(View.VISIBLE);
-            }
-            if(progressingDialog != null && progressingDialog.isShowing()){
-                progressingDialog.dismiss();
             }
         }
         public void onPageStarted(WebView view, String url, Bitmap favicon) {

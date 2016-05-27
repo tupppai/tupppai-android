@@ -9,20 +9,17 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.psgod.R;
 import com.psgod.eventbus.RefreshEvent;
 import com.psgod.ui.fragment.HomePageDynamicFragment;
-import com.psgod.ui.fragment.HomePageFocusFragment;
 import com.psgod.ui.fragment.MovieFragment;
-import com.psgod.ui.widget.JsBridgeWebView;
 
 import de.greenrobot.event.EventBus;
 
 /**
- * Created by Administrator on 2016/5/25.
+ * 新版web容器activity
  */
 public class MovieActivity extends Activity implements View.OnClickListener {
 
@@ -39,19 +36,12 @@ public class MovieActivity extends Activity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie);
 
-
         Intent intent = this.getIntent();
         Bundle bundle = intent.getExtras();
         mUrl = bundle.getString("Url");
         mCurrentUrl = mUrl;
-        initView();
-
-        System.out.println("\n" + "第三界面" + "\n" + mUrl);
-
-        //webview.loadUrl(mUrl);
 
         initView();
-
     }
 
     private void initView() {
@@ -64,21 +54,15 @@ public class MovieActivity extends Activity implements View.OnClickListener {
         mBack.setOnClickListener(this);
         mExit.setOnClickListener(this);
 
-
         mWebview.getSettings().setJavaScriptEnabled(true);
         mWebview.setWebViewClient(new MovieWebViewClient());
 
-        //webview.loadUrl("www.baidu.com");
-
         mWebview.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-
 
         Intent intent = this.getIntent();
         Bundle bundle = intent.getExtras();
         mUrl = bundle.getString("Url");
         mWebview.loadUrl(mUrl);
-
-
     }
 
     @Override

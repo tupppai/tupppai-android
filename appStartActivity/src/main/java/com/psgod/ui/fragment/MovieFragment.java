@@ -3,26 +3,18 @@ package com.psgod.ui.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-
-import android.webkit.JsPromptResult;
-import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.ImageButton;
-
 import android.widget.TextView;
 
 import com.psgod.R;
 import com.psgod.UserPreferences;
 import com.psgod.eventbus.RefreshEvent;
 import com.psgod.ui.activity.MovieActivity;
-import com.psgod.ui.widget.JsBridgeWebView;
-import com.psgod.ui.widget.dialog.CustomProgressingDialog;
 
 import de.greenrobot.event.EventBus;
 
@@ -32,15 +24,10 @@ import de.greenrobot.event.EventBus;
 public class MovieFragment extends BaseFragment implements OnClickListener{
 
     public Context mContext;
-    private String mTempUrl;
     private WebView mWebview;
     private TextView mWebtitle;
-    private TextView mBack;
     private String mCookieMOVIE = null;
     private String mToken;
-    private String MOVIE = "http://wechupin.com/index-app.html";
-    private String HASH = "#app/playcategory";
-    private CustomProgressingDialog progressingDialog;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -87,9 +74,6 @@ public class MovieFragment extends BaseFragment implements OnClickListener{
             super.onPageFinished(view, url);
             System.out.println("\n" + "原界面的onPageFinish " + url);
             mWebtitle.setText(view.getTitle());
-            if(progressingDialog != null && progressingDialog.isShowing()){
-                progressingDialog.dismiss();
-            }
         }
     }
 
@@ -98,22 +82,15 @@ public class MovieFragment extends BaseFragment implements OnClickListener{
         mWebview = (WebView) view.findViewById(R.id.fragment_movie_webview);
 
         mWebtitle = (TextView) view.findViewById(R.id.webview_title);
-        mBack = (TextView) view.findViewById(R.id.webview_back);
-        mBack.setOnClickListener(this);
-        mWebview.setWebViewClient(new MovieWebViewClient());
-//        mToken = UserPreferences.TokenVerify.getToken();
-//        MOVIE = MOVIE + "?C=" + mToken + "&from=android" + HASH;
-        mWebview.loadUrl(mCookieMOVIE);
 
+        mWebview.setWebViewClient(new MovieWebViewClient());
+        mWebview.loadUrl(mCookieMOVIE);
     }
 
     public void onEventMainThread(RefreshEvent event) {
         if(event.className.equals(this.getClass().getName())){
             try {
                 mWebview.loadUrl(mCookieMOVIE);
-                if(progressingDialog != null && progressingDialog.isShowing()){
-                    progressingDialog.dismiss();
-                }
             } catch (NullPointerException nu) {
             } catch (Exception e) {
             }
