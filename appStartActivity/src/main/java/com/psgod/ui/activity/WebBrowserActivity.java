@@ -68,4 +68,12 @@ public class WebBrowserActivity extends PSGodBaseActivity {
 
         mWebView.loadUrl(url);
     }
+
+    @Override
+    protected void onPause() {
+        //mWebView.reload();
+        //mWebView.getClass().getMethod("onPause").invoke(mWebView,(Object[])null);
+        super.onPause();
+
+    }
 }

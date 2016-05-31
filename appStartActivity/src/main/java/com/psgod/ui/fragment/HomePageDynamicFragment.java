@@ -36,6 +36,7 @@ public class HomePageDynamicFragment extends BaseFragment {
 
         return view;
     }
+
     private void getCookie() {
         String token = UserPreferences.TokenVerify.getToken();
         cookieDYNAMIC = "http://wechupin.com/index-app.html?c=" + token +"&from=android#app/dynamic";
@@ -44,7 +45,6 @@ public class HomePageDynamicFragment extends BaseFragment {
     private void initView(View view) {
         mWebview = new WebView(getActivity());
         mWebview = (WebView) view.findViewById(R.id.fragment_dynamic_webview);
-
         mWebview.getSettings().setJavaScriptEnabled(true);
         mWebview.setWebViewClient(new DynamicWebViewClient());
         getCookie();
@@ -59,8 +59,13 @@ public class HomePageDynamicFragment extends BaseFragment {
             Intent intent = new Intent();
             intent.setClass(mContext, UserProfileActivity.class);
             Bundle bundle = new Bundle();
+
+            //以url最后7位字符dynamic做为判断,如果不一样时,才进行跳转
             String mStr = url.substring(url.length() - 7, url.length());
+
             if (!mStr.equals("dynamic")) {
+                //点击的url有两种,一种要取用户ID,另一种是影视
+                //当url中包含user-profile时,判断为点击到用户头像
                 if (url.indexOf("user-profile/") > 0) {
                     //取用户ID，转到用户界面
                     String mUserId = url.substring(url.indexOf("user-profile/") + 13, url.length());

@@ -58,7 +58,7 @@ public class PsgodWebView extends WebView {
 
         dialog = new CustomProgressingDialog(getContext());
 
-        setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+       // setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         // 设置内嵌浏览器的属性
         WebSettings websettings = getSettings();
         websettings.setJavaScriptEnabled(true);

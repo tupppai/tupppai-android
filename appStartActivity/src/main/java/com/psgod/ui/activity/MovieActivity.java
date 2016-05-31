@@ -19,6 +19,7 @@ import com.psgod.ui.fragment.MovieFragment;
 import de.greenrobot.event.EventBus;
 
 /**
+ *
  * 新版web容器activity
  */
 public class MovieActivity extends Activity implements View.OnClickListener {
@@ -40,15 +41,12 @@ public class MovieActivity extends Activity implements View.OnClickListener {
         Bundle bundle = intent.getExtras();
         mUrl = bundle.getString("Url");
         mCurrentUrl = mUrl;
-
         initView();
     }
 
     private void initView() {
         mWebview = (WebView) findViewById(R.id.activity_movie_webview);
-
         mWebtitle = (TextView) findViewById(R.id.webview_title);
-
         mBack = (TextView) findViewById(R.id.activity_webview_back);
         mExit = (TextView) findViewById(R.id.activity_webview_exit);
         mBack.setOnClickListener(this);
@@ -56,8 +54,7 @@ public class MovieActivity extends Activity implements View.OnClickListener {
 
         mWebview.getSettings().setJavaScriptEnabled(true);
         mWebview.setWebViewClient(new MovieWebViewClient());
-
-        mWebview.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        //mWebview.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 
         Intent intent = this.getIntent();
         Bundle bundle = intent.getExtras();
@@ -65,6 +62,10 @@ public class MovieActivity extends Activity implements View.OnClickListener {
         mWebview.loadUrl(mUrl);
     }
 
+    // 点击返回时，进行判断
+    // 如果当前网页是最初传入的网页时,返回会直接关闭activity
+    // 如果当前网页不是最初传入的网页时,返回则调用goBack
+    // 点击返回或关闭按钮,都发送eventbus让原fragment刷新
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -100,16 +101,15 @@ public class MovieActivity extends Activity implements View.OnClickListener {
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
             super.onPageStarted(view, url, favicon);
-            //view.loadUrl("www.baidu.com");
         }
 
         public void onPageFinished(WebView view, String url) {
-            //mWebtitle.setText(view.getTitle());
             mCurrentUrl = url;
 
         }
     }
 
+    //设置物理后退按键
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {

@@ -19,7 +19,8 @@ import com.psgod.ui.activity.MovieActivity;
 import de.greenrobot.event.EventBus;
 
 /**
- * Created by Administrator on 2016/5/20.
+ * 影视fragment
+ * Created by xiaoluo on 2016/5/20.
  */
 public class MovieFragment extends BaseFragment implements OnClickListener{
 
@@ -33,13 +34,14 @@ public class MovieFragment extends BaseFragment implements OnClickListener{
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_movie, container, false);
         EventBus.getDefault().register(this);
-
         mContext = getActivity();
+
         getCookie();
         initView(view);
         return view;
     }
 
+    //取得带cookie的url
     private void getCookie() {
         mToken = UserPreferences.TokenVerify.getToken();
         mCookieMOVIE = "http://wechupin.com/index-app.html?c=" + mToken +"&from=android#app/playcategory";
@@ -50,15 +52,16 @@ public class MovieFragment extends BaseFragment implements OnClickListener{
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             super.shouldOverrideUrlLoading(view, url);
-            System.out.println("我想知道url是什么" + url +"\n");
+
+            //以url的最后12位字符做为判断，当新地址最后不是playcategory时，才会进行跳转
             String mStr = url.substring(url.length() - 12, url.length());
 
             if (!mStr.equals("playcategory")) {
                 //重新拼接新URL
-                System.out.println("\n" + "mCookieMOVIE =   " + mCookieMOVIE);
+                //只取点击到的地址的前半部和后半部，去除其中的c=XXX和from=XXX
                 String StrUrl = url.substring(url.indexOf("#") + 1, url.length());
                 String mUrl = "http://wechupin.com/index-app.html#" + StrUrl;
-
+                //新地址传递跳转
                 Intent intent = new Intent();
                 intent.setClass(mContext, MovieActivity.class);
                 Bundle bundle = new Bundle();
@@ -66,13 +69,11 @@ public class MovieFragment extends BaseFragment implements OnClickListener{
                 intent.putExtras(bundle);
                 mContext.startActivity(intent);
             }
-
-            //view.loadUrl(url);
             return true;
         }
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
-            System.out.println("\n" + "原界面的onPageFinish " + url);
+
             mWebtitle.setText(view.getTitle());
         }
     }
@@ -80,13 +81,14 @@ public class MovieFragment extends BaseFragment implements OnClickListener{
     private void initView(View view) {
         mWebview = new WebView(mContext);
         mWebview = (WebView) view.findViewById(R.id.fragment_movie_webview);
-
         mWebtitle = (TextView) view.findViewById(R.id.webview_title);
-
+        mWebview.getSettings().setJavaScriptEnabled(true);
         mWebview.setWebViewClient(new MovieWebViewClient());
         mWebview.loadUrl(mCookieMOVIE);
     }
 
+    // evenbus，用于从Activity返回原来的Fragment时，调用重新载入webview
+    // 此处是为了解决原webview随着点击而跳转的问题
     public void onEventMainThread(RefreshEvent event) {
         if(event.className.equals(this.getClass().getName())){
             try {

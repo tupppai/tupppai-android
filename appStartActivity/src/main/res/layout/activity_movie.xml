@@ -32,7 +32,7 @@
             android:layout_centerVertical="true"
             android:text="关闭"
             android:textSize="16dp"
-            android:layout_marginLeft="3dp"
+            android:layout_marginLeft="10dp"
             android:layout_toRightOf="@id/activity_webview_back"
             android:visibility="visible"/>
 

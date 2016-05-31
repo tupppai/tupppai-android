@@ -43,6 +43,9 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
+
+
+    <!-- 这里的hardwareAccelerated如果使用true，会导致第二个tab里点击后无法加载-->
     <application
         android:name=".PSGodApplication"
         android:allowBackup="true"
@@ -84,10 +87,10 @@
         <activity android:name=".ui.activity.RegisterVerifyActivity" />
         <activity
             android:name=".ui.activity.MovieActivity"
-            android:hardwareAccelerated="false" />
+            android:hardwareAccelerated="true" />
         <activity
             android:name=".ui.activity.MallActivity"
-            android:hardwareAccelerated="false" />
+            android:hardwareAccelerated="true" />
         <activity
             android:name=".ui.activity.LoginActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
@@ -143,7 +146,9 @@
         <activity android:name=".ui.activity.ResetPasswordCaptchaActivity" />
         <activity android:name=".ui.activity.ResetPasswordActivity" />
         <activity android:name=".ui.activity.RecommendFocusActivity" />
-        <activity android:name=".ui.activity.WebBrowserActivity" />
+        <activity
+            android:name=".ui.activity.WebBrowserActivity"
+            android:hardwareAccelerated="true"/>
         <activity android:name=".ui.activity.WithdrawDepositActivity"
             android:windowSoftInputMode="stateHidden|adjustResize"/>
         <activity android:name=".ui.activity.WithdrawPhoneVerifyActivity"

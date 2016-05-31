@@ -19,7 +19,9 @@ import com.youzan.sdk.http.engine.QueryError;
 import com.youzan.sdk.web.plugin.YouzanWebClient;
 
 /**
- * Created by Administrator on 2016/5/25.
+ * 商城activity
+ * Created by xiaoluo on 2016/5/25.
+ *
  */
 public class MallActivity extends Activity implements View.OnClickListener {
 
@@ -35,18 +37,18 @@ public class MallActivity extends Activity implements View.OnClickListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mall);
-
+        //取得传递过来的url
         Intent intent = this.getIntent();
         Bundle bundle = intent.getExtras();
         mUrl = bundle.getString("Url");
+        // 设置当前界面的url,便于后退操作判断
         mCurrentUrl = mUrl;
-        System.out.println("第二界面mUrl " + mUrl + "\n");
-        //webview.loadUrl(mUrl);
+
         initView();
         setWeb();
 
     }
-
+    //同步注册Youzan用户
     private void setWeb() {
         YouzanUser user = new YouzanUser();
         LoginUser myUser = LoginUser.getInstance();
@@ -59,20 +61,17 @@ public class MallActivity extends Activity implements View.OnClickListener {
         YouzanSDK.asyncRegisterUser(user, new OnRegister() {
             @Override
             public void onFailed(QueryError queryError) {
-                System.out.println("账号");
             }
 
             @Override
             public void onSuccess()
             {
                 mWebview.loadUrl(mUrl);
-
             }
         });
     }
 
     private void initView() {
-
         mWebview = (WebView) findViewById(R.id.activity_mall_webview);
         mBack = (TextView) findViewById(R.id.activity_webview_back);
         mExit = (TextView) findViewById(R.id.activity_webview_exit);
@@ -83,31 +82,23 @@ public class MallActivity extends Activity implements View.OnClickListener {
         mWebview.getSettings().setJavaScriptEnabled(true);
     }
 
+    //继承Youzan接口
     private class MallWebViewClient extends YouzanWebClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             super.shouldOverrideUrlLoading(view, url);
-
             view.loadUrl(url);
             return true;
         }
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
             mCurrentUrl = url;
-            System.out.print("aaa");
-            //mWebtitle.setText(view.getTitle());
             if (!url.equals(MALL)) {
                 mBack.setVisibility(View.VISIBLE);
 
-
-                //getActivity().findViewById(R.id.psgod_linear_tab).setVisibility(View.INVISIBLE);
-                //getActivity().findViewById(R.id.psgod_rg_tab_tips).setVisibility(View.GONE);
-                //getActivity().findViewById(R.id.middle).setVisibility(View.GONE);
             } else {
                 mBack.setVisibility(View.GONE);
-                //getActivity().findViewById(R.id.psgod_linear_tab).setVisibility(View.VISIBLE);
-                //getActivity().findViewById(R.id.psgod_rg_tab_tips).setVisibility(View.VISIBLE);
-                //getActivity().findViewById(R.id.middle).setVisibility(View.VISIBLE);
+
             }
         }
 
@@ -131,6 +122,7 @@ public class MallActivity extends Activity implements View.OnClickListener {
         }
     }
 
+    //设置物理后退按键
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
