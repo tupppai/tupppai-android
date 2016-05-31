@@ -17,6 +17,7 @@ import com.youzan.sdk.YouzanUser;
 import com.youzan.sdk.http.engine.OnRegister;
 import com.youzan.sdk.http.engine.QueryError;
 import com.youzan.sdk.web.plugin.YouzanWebClient;
+import com.youzan.sdk.web.plugin.YouzanChromeClient;
 
 /**
  * 商城activity
@@ -54,9 +55,12 @@ public class MallActivity extends Activity implements View.OnClickListener {
         LoginUser myUser = LoginUser.getInstance();
         user.setUserId(myUser.getUid() + "");
         // 参数初始化
-        YouzanBridge.build(this,mWebview).create();
-
-        mWebview.setWebViewClient(new MallWebViewClient());
+        YouzanBridge.build(this, mWebview)
+                .setWebClient(new WebClient())
+                .setChromeClient(new ChromeClient())
+                .create();
+        //YouzanBridge.build(this,mWebview).create();
+        //mWebview.setWebViewClient(new MallWebViewClient());
 
         YouzanSDK.asyncRegisterUser(user, new OnRegister() {
             @Override
@@ -102,6 +106,37 @@ public class MallActivity extends Activity implements View.OnClickListener {
             }
         }
 
+    }
+
+    private class ChromeClient extends YouzanChromeClient {
+
+        @Override
+        public void onReceivedTitle(WebView view, String title) {
+            super.onReceivedTitle(view, title);
+            //这里获取到WebView的标题
+        }
+    }
+
+    private class WebClient extends YouzanWebClient {
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            super.shouldOverrideUrlLoading(view, url);
+            if (url.contains("http://")) {
+                view.loadUrl(url);
+            }
+            return true;
+        }
+        public void onPageFinished(WebView view, String url) {
+            super.onPageFinished(view, url);
+            mCurrentUrl = url;
+            if (!url.equals(MALL)) {
+                mBack.setVisibility(View.VISIBLE);
+
+            } else {
+                mBack.setVisibility(View.GONE);
+
+            }
+        }
     }
 
     public void onClick(View v) {

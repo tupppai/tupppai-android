@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
@@ -44,6 +45,16 @@ public class MovieActivity extends Activity implements View.OnClickListener {
         initView();
     }
 
+    public void onPause() {
+        super.onPause();
+        mWebview.onPause();
+    }
+
+    public void onResume() {
+        super.onResume();
+        mWebview.onResume();
+    }
+
     private void initView() {
         mWebview = (WebView) findViewById(R.id.activity_movie_webview);
         mWebtitle = (TextView) findViewById(R.id.webview_title);
@@ -54,6 +65,18 @@ public class MovieActivity extends Activity implements View.OnClickListener {
 
         mWebview.getSettings().setJavaScriptEnabled(true);
         mWebview.setWebViewClient(new MovieWebViewClient());
+//        mWebview.getSettings().setSupportZoom(true);
+//        mWebview.getSettings().setBuiltInZoomControls(true);
+//        mWebview.getSettings().setUseWideViewPort(true);
+//        mWebview.getSettings().setDomStorageEnabled(true);
+//        // 应用可以有缓存
+//        mWebview.getSettings().setAppCacheEnabled(true);
+        mWebview.getSettings().setAppCacheEnabled(false);
+        mWebview.setWebChromeClient(new WebChromeClient() {
+
+        });
+
+
         //mWebview.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 
         Intent intent = this.getIntent();

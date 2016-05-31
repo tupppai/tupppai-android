@@ -2,14 +2,12 @@ package com.psgod.ui.fragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.webkit.JsPromptResult;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.TextView;
 
@@ -22,11 +20,7 @@ import com.youzan.sdk.YouzanSDK;
 import com.youzan.sdk.YouzanUser;
 import com.youzan.sdk.http.engine.OnRegister;
 import com.youzan.sdk.http.engine.QueryError;
-import com.youzan.sdk.web.plugin.YouzanChromeClient;
 import com.youzan.sdk.web.plugin.YouzanWebClient;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by Administrator on 2016/5/20.
@@ -82,6 +76,7 @@ public class MallFragment extends BaseFragment implements OnClickListener{
         mBack.setOnClickListener(this);
         //设置支持javascript脚本
         mWebview.getSettings().setJavaScriptEnabled(true);
+        mWebview.getSettings().setPluginState(WebSettings.PluginState.ON);
     }
 
     private class MallWebViewClient extends YouzanWebClient {
