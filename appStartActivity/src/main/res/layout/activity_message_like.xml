@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:psgod="http://schemas.android.com/apk/res/com.psgod"
+    xmlns:wesee="http://schemas.android.com/apk/res/com.pires.wesee"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
@@ -8,12 +8,12 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical" >
 
-    <com.psgod.ui.widget.ActionBar
+    <com.pires.wesee.ui.widget.ActionBar
         android:id="@+id/actionbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/actionbar_height"
-        psgod:rightBtnVisibility="gone"
-        psgod:title="收到的赞" />
+        wesee:rightBtnVisibility="gone"
+        wesee:title="收到的赞" />
 
     <com.handmark.pulltorefresh.library.PullToRefreshListView
         android:id="@+id/activity_new_message_like_list_listview"

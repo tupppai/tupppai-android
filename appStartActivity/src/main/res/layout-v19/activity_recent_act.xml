@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:id="@+id/activity_act_parent"
-    tools:context="com.psgod.ui.activity.RecentActActivity">
+    tools:context="com.pires.wesee.ui.activity.RecentActActivity">
 
     <!--<ImageView-->
         <!--android:layout_width="match_parent"-->
@@ -31,7 +31,7 @@
             android:layout_centerVertical="true"
             android:textSize="18dp" />
 
-        <com.psgod.ui.widget.FinishView
+        <com.pires.wesee.ui.widget.FinishView
             android:id="@+id/activity_act_title_finish"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

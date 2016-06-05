@@ -22,25 +22,25 @@
             android:layout_marginTop="40dp"
             android:orientation="horizontal" >
             
-            <com.psgod.ui.widget.ShareButton
+            <com.pires.wesee.ui.widget.ShareButton
                 android:id="@+id/dialog_more_share_sina"
                 style="@style/share_more_dialog_btn_new"
                 android:text="新浪微博"
                 />
 			
-            <com.psgod.ui.widget.ShareButton
+            <com.pires.wesee.ui.widget.ShareButton
                 android:id="@+id/dialog_more_share_qzone"
                 style="@style/share_more_dialog_btn_new"
                 android:text="QQ空间 "
                 />
             
-            <com.psgod.ui.widget.ShareButton
+            <com.pires.wesee.ui.widget.ShareButton
                 android:id="@+id/dialog_more_share_moments"
                 style="@style/share_more_dialog_btn_new"
                 android:drawablePadding="8dp"
                 android:text="朋友圈" />
             
-            <com.psgod.ui.widget.ShareButton
+            <com.pires.wesee.ui.widget.ShareButton
                 android:id="@+id/dialog_more_share_wechat"
                 style="@style/share_more_dialog_btn_new"
                 android:text="微信"  />
@@ -54,7 +54,7 @@
             android:gravity="center_vertical"
             android:orientation="horizontal" >
 
-            <com.psgod.ui.widget.ShareButton
+            <com.pires.wesee.ui.widget.ShareButton
                 android:id="@+id/dialog_more_share_qq_friend"
                 style="@style/share_more_dialog_btn_new"
                 android:text="QQ好友" />

@@ -4,7 +4,7 @@
     android:layout_height="150dp"
     android:background="#FFFFFF">
 
-    <com.psgod.ui.widget.AvatarImageView
+    <com.pires.wesee.ui.widget.AvatarImageView
         android:id="@+id/item_user_list_avatar_imgview"
         android:layout_width="@dimen/user_avatar_size"
         android:layout_height="@dimen/user_avatar_size"
@@ -22,7 +22,7 @@
         android:textColor="#000000"
         android:textSize="15dp" />
 
-    <com.psgod.ui.widget.FollowImage
+    <com.pires.wesee.ui.widget.FollowImage
         android:id="@+id/item_user_list_follow_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

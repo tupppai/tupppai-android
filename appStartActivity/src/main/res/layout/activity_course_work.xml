@@ -13,7 +13,7 @@
         android:layout_height="60dp">
 
 
-        <com.psgod.ui.widget.FinishView
+        <com.pires.wesee.ui.widget.FinishView
             android:id="@+id/view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -76,7 +76,7 @@
             android:padding="13dp"
             android:src="@drawable/shape_scroll_handle" />
 
-        <com.psgod.ui.widget.StopGridView
+        <com.pires.wesee.ui.widget.StopGridView
             android:id="@+id/activity_course_work_grid"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

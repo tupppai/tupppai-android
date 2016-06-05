@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:psgod="http://schemas.android.com/apk/res/com.psgod"
+    xmlns:wesee="http://schemas.android.com/apk/res/com.pires.wesee"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipToPadding="true">
@@ -48,7 +48,7 @@
                             android:background="@drawable/shape_user_profile_circle_imageview"
                             android:gravity="center">
 
-                            <com.psgod.ui.widget.AvatarImageView
+                            <com.pires.wesee.ui.widget.AvatarImageView
                                 android:id="@+id/user_profile_avatar"
                                 android:layout_width="77dp"
                                 android:layout_height="77dp"
@@ -200,13 +200,13 @@
                     </LinearLayout>
                 </LinearLayout>
 
-                <com.psgod.ui.view.PagerSlidingTabStrip
+                <com.pires.wesee.ui.view.PagerSlidingTabStrip
                     android:id="@+id/user_profile_tabs"
                     android:layout_width="match_parent"
                     android:layout_height="52dp"
                     android:layout_below="@+id/user_profile_header_out"
                     android:background="@color/white"
-                    psgod:pstsTextAllCaps="false" />
+                    wesee:pstsTextAllCaps="false" />
             </RelativeLayout>
         </RelativeLayout>
     </RelativeLayout>
@@ -221,7 +221,7 @@
             android:layout_width="match_parent"
             android:layout_height="48dp">
 
-            <com.psgod.ui.widget.FinishView
+            <com.pires.wesee.ui.widget.FinishView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -252,14 +252,14 @@
                 android:textSize="11dp" />
         </RelativeLayout>
     </RelativeLayout>
-    <!--<com.psgod.ui.widget.ActionBar-->
+    <!--<pires.wesee.wesee.ui.widget.ActionBar-->
     <!--android:id="@+id/actionbar"-->
     <!--android:layout_width="match_parent"-->
     <!--android:layout_height="@dimen/actionbar_height"-->
     <!--android:background="@color/transparent"-->
-    <!--psgod:rightBtnVisibility="gone"-->
-    <!--psgod:title=""-->
-    <!--psgod:titleTextColor="@color/white" />-->
+    <!--pires.wesee:rightBtnVisibility="gone"-->
+    <!--pires.wesee:title=""-->
+    <!--pires.wesee:titleTextColor="@color/white" />-->
 
 
 </RelativeLayout>

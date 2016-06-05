@@ -31,7 +31,7 @@
                 android:background="@drawable/shape_user_profile_circle_imageview"
                 android:gravity="center">
 
-                <com.psgod.ui.widget.AvatarImageView
+                <com.pires.wesee.ui.widget.AvatarImageView
                     android:id="@+id/my_profile_avatar"
                     android:layout_width="77dp"
                     android:layout_height="77dp"
@@ -198,7 +198,7 @@
                     android:background="@android:color/transparent" />
             </LinearLayout>
 
-            <com.psgod.ui.view.PagerSlidingTabStrip
+            <com.pires.wesee.ui.view.PagerSlidingTabStrip
                 android:id="@+id/my_profile_tabs"
                 android:layout_width="match_parent"
                 android:layout_height="47dp"

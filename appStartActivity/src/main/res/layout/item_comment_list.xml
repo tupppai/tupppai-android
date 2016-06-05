@@ -14,7 +14,7 @@
         android:paddingBottom="26dp"
         android:layout_marginRight="30dp" >
 
-        <com.psgod.ui.widget.AvatarImageView
+        <com.pires.wesee.ui.widget.AvatarImageView
             android:id="@+id/item_comment_list_avatar_imgview"
             android:layout_width="33dp"
             android:layout_height="33dp"
@@ -91,7 +91,7 @@
             android:layout_height="wrap_content"
             android:visibility="gone" >
 
-            <com.psgod.ui.view.DrawableCenterTextView
+            <com.pires.wesee.ui.view.DrawableCenterTextView
                 android:id="@+id/item_comment_list_like_count_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

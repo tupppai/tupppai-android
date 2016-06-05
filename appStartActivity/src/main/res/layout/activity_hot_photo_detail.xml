@@ -92,12 +92,12 @@
         </LinearLayout>
     </RelativeLayout>
 
-    <!--<com.psgod.ui.widget.CustomScrollView-->
+    <!--<pires.wesee.wesee.ui.widget.CustomScrollView-->
     <!--android:layout_width="match_parent"-->
     <!--android:layout_height="match_parent"-->
     <!--android:layout_below="@id/hot_photo_detail_header" >-->
 
-    <com.psgod.ui.view.BackGroundImage
+    <com.pires.wesee.ui.view.BackGroundImage
         android:id="@+id/backgraound_img"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -137,7 +137,7 @@
                 android:layout_alignParentBottom="true"
                 android:background="#66000000" />
 
-            <com.psgod.ui.widget.AvatarImageView
+            <com.pires.wesee.ui.widget.AvatarImageView
                 android:id="@+id/fragment_hot_detail_user_avatar"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
@@ -227,6 +227,6 @@
         </RelativeLayout>
 
     </LinearLayout>
-    <!--</com.psgod.ui.widget.CustomScrollView>-->
+    <!--</pires.wesee.wesee.ui.widget.CustomScrollView>-->
 
 </RelativeLayout>

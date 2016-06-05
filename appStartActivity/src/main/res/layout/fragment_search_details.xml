@@ -5,7 +5,7 @@
     android:layout_height="fill_parent"
     >
 
-    <com.psgod.ui.view.PullToRefreshStaggeredGridView
+    <com.pires.wesee.ui.view.PullToRefreshStaggeredGridView
         android:id="@+id/page_tab_listview"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"

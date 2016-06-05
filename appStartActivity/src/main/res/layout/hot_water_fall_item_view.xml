@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.psgod.ui.view.HotWaterFallItemView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.pires.wesee.ui.view.HotWaterFallItemView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="5dp"
@@ -12,7 +12,7 @@
         android:background="#FFFFFF"
         android:visibility="visible" >
 
-        <com.psgod.ui.widget.AvatarImageView
+        <com.pires.wesee.ui.widget.AvatarImageView
             android:id="@+id/item_avatar_imageview"
             android:layout_width="30dp"
             android:layout_height="30dp"
@@ -56,7 +56,7 @@
             android:visibility="gone" />
     </RelativeLayout>
 
-    <!-- <com.psgod.ui.view.ScaleImageView -->
+    <!-- <pires.wesee.wesee.ui.view.ScaleImageView -->
 
     <com.dodowaterfall.widget.ScaleImageView
         android:id="@+id/inprogress_ask_item_image"
@@ -147,4 +147,4 @@
             android:textSize="11dp" />
     </RelativeLayout>
 
-</com.psgod.ui.view.HotWaterFallItemView>
+</com.pires.wesee.ui.view.HotWaterFallItemView>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.psgod"
+    package="com.pires.wesee"
     android:versionCode="39"
     android:versionName="1.1.0">
 
@@ -45,7 +45,7 @@
 
 
     <application
-        android:name=".PSGodApplication"
+        android:name="com.pires.wesee.PSGodApplication"
         android:allowBackup="true"
         android:icon="@drawable/new_logo"
         android:label="@string/app_name"
@@ -53,7 +53,7 @@
         android:hardwareAccelerated="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.activity.AppStartActivity"
+            android:name="com.pires.wesee.ui.activity.AppStartActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -62,132 +62,132 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.activity.MainActivity"
+            android:name="com.pires.wesee.ui.activity.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="locked"
             android:windowSoftInputMode="adjustResize"></activity>
 
         <!-- 微信分享回调 -->
         <activity
-            android:name=".wxapi.WXEntryActivity"
+            android:name="com.pires.wesee.wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
-            android:name=".ui.activity.WelcomeActivity"
+            android:name="com.pires.wesee.ui.activity.WelcomeActivity"
             android:launchMode="singleTask" />
-        <activity android:name=".ui.activity.WelcomeScrollActivity" />
-        <activity android:name=".ui.activity.UserAgreementActivity" />
-        <activity android:name=".ui.activity.SetInfoActivity" />
-        <activity android:name=".ui.activity.RegisterPhoneActivity" />
-        <activity android:name=".ui.activity.RegisterVerifyActivity" />
+        <activity android:name="com.pires.wesee.ui.activity.WelcomeScrollActivity" />
+        <activity android:name="com.pires.wesee.ui.activity.UserAgreementActivity" />
+        <activity android:name="com.pires.wesee.ui.activity.SetInfoActivity" />
+        <activity android:name="com.pires.wesee.ui.activity.RegisterPhoneActivity" />
+        <activity android:name="com.pires.wesee.ui.activity.RegisterVerifyActivity" />
         <activity
-            android:name=".ui.activity.MovieActivity" />
+            android:name="com.pires.wesee.ui.activity.MovieActivity" />
         <activity
-            android:name=".ui.activity.MallActivity" />
+            android:name="com.pires.wesee.ui.activity.MallActivity" />
         <activity
-            android:name=".ui.activity.LoginActivity"
+            android:name="com.pires.wesee.ui.activity.LoginActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-        <!-- <activity android:name="com.psgod.ui.activity.PhotoDetailActivity" /> -->
+        <!-- <activity android:name="pires.wesee.wesee.ui.activity.PhotoDetailActivity" /> -->
         <activity android:name=".ui.activity.CarouselPhotoDetailActivity" />
-        <activity android:name=".ui.activity.NotificationListActivity" />
-        <!-- <activity android:name="com.psgod.ui.view.ExtendsScrollView" /> -->
+        <activity android:name="com.pires.wesee.ui.activity.NotificationListActivity" />
+        <!-- <activity android:name="pires.wesee.wesee.ui.view.ExtendsScrollView" /> -->
         <activity
-            android:name=".ui.activity.EditProfileActivity"
+            android:name="com.pires.wesee.ui.activity.EditProfileActivity"
             android:launchMode="singleTop" />
         <activity
-            android:name=".ui.activity.SettingActivity"
+            android:name="com.pires.wesee.ui.activity.SettingActivity"
             android:launchMode="singleTop" />
-        <!-- <activity android:name="com.psgod.ui.activity.UploadImageActivity" /> -->
+        <!-- <activity android:name="pires.wesee.wesee.ui.activity.UploadImageActivity" /> -->
         <activity
-            android:name=".ui.activity.CommentListActivity"
+            android:name="com.pires.wesee.ui.activity.CommentListActivity"
             android:windowSoftInputMode="adjustResize|stateHidden" />
-        <activity android:name=".ui.activity.NewMessageActivity"></activity>
-        <activity android:name=".ui.activity.FollowerListActivity" />
-        <activity android:name=".ui.activity.FollowingListActivity" />
-        <activity android:name=".ui.activity.OthersFollowerListActivity" />
+        <activity android:name="com.pires.wesee.ui.activity.NewMessageActivity"></activity>
+        <activity android:name="com.pires.wesee.ui.activity.FollowerListActivity" />
+        <activity android:name="com.pires.wesee.ui.activity.FollowingListActivity" />
+        <activity android:name="com.pires.wesee.ui.activity.OthersFollowerListActivity" />
         <activity
-            android:name=".ui.activity.MyAskActivity"
+            android:name="com.pires.wesee.ui.activity.MyAskActivity"
             android:launchMode="singleTop" />
         <activity
-            android:name=".ui.activity.MyWorksActivity"
+            android:name="com.pires.wesee.ui.activity.MyWorksActivity"
             android:launchMode="singleTop" />
         <activity
-            android:name=".ui.activity.MyInProgressActivity"
+            android:name="com.pires.wesee.ui.activity.MyInProgressActivity"
             android:launchMode="singleTop" />
         <activity
-            android:name=".ui.activity.MyCollectionsActivity"
+            android:name="com.pires.wesee.ui.activity.MyCollectionsActivity"
             android:launchMode="singleTop" />
         <activity
-            android:name=".ui.activity.UserProfileActivity"
+            android:name="com.pires.wesee.ui.activity.UserProfileActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
-            android:name=".ui.activity.SettingNotificationActivity"
+            android:name="com.pires.wesee.ui.activity.SettingNotificationActivity"
             android:launchMode="singleTop" />
-        <activity android:name=".ui.activity.TestActivity" />
-        <activity android:name=".ui.activity.SetAvatarActivity" />
-        <activity android:name=".ui.activity.SettingPasswordActivity" />
+        <activity android:name="com.pires.wesee.ui.activity.TestActivity" />
+        <activity android:name="com.pires.wesee.ui.activity.SetAvatarActivity" />
+        <activity android:name="com.pires.wesee.ui.activity.SettingPasswordActivity" />
         <activity
-            android:name=".ui.activity.SinglePhotoDetail"
+            android:name="com.pires.wesee.ui.activity.SinglePhotoDetail"
             android:windowSoftInputMode="adjustResize|stateHidden" />
-        <activity android:name=".ui.activity.ChoosePhotoActivity" />
-        <activity android:name=".ui.activity.FeedBackActivity" />
-        <activity android:name=".ui.activity.InvitationListActivity" />
-        <activity android:name=".ui.activity.PhotoBrowserActivity" />
-        <activity android:name=".ui.activity.AccountBindingActivity" />
-        <activity android:name=".ui.activity.ResetPasswordInputPhoneActivity" />
-        <activity android:name=".ui.activity.ResetPasswordCaptchaActivity" />
-        <activity android:name=".ui.activity.ResetPasswordActivity" />
-        <activity android:name=".ui.activity.RecommendFocusActivity" />
+        <activity android:name="com.pires.wesee.ui.activity.ChoosePhotoActivity" />
+        <activity android:name="com.pires.wesee.ui.activity.FeedBackActivity" />
+        <activity android:name="com.pires.wesee.ui.activity.InvitationListActivity" />
+        <activity android:name="com.pires.wesee.ui.activity.PhotoBrowserActivity" />
+        <activity android:name="com.pires.wesee.ui.activity.AccountBindingActivity" />
+        <activity android:name="com.pires.wesee.ui.activity.ResetPasswordInputPhoneActivity" />
+        <activity android:name="com.pires.wesee.ui.activity.ResetPasswordCaptchaActivity" />
+        <activity android:name="com.pires.wesee.ui.activity.ResetPasswordActivity" />
+        <activity android:name="com.pires.wesee.ui.activity.RecommendFocusActivity" />
         <activity
-            android:name=".ui.activity.WebBrowserActivity" />
-        <activity android:name=".ui.activity.WithdrawDepositActivity"
+            android:name="com.pires.wesee.ui.activity.WebBrowserActivity" />
+        <activity android:name="com.pires.wesee.ui.activity.WithdrawDepositActivity"
             android:windowSoftInputMode="stateHidden|adjustResize"/>
-        <activity android:name=".ui.activity.WithdrawPhoneVerifyActivity"
+        <activity android:name="com.pires.wesee.ui.activity.WithdrawPhoneVerifyActivity"
             android:windowSoftInputMode="stateHidden|adjustResize"/>
         <activity
-            android:name=".ui.activity.MultiImageSelectActivity"
+            android:name="com.pires.wesee.ui.activity.MultiImageSelectActivity"
             android:launchMode="singleTask" />
         <activity
-            android:name=".ui.activity.AlbumSelectImageActivity"
+            android:name="com.pires.wesee.ui.activity.AlbumSelectImageActivity"
             android:launchMode="singleTask" />
         <activity
-            android:name=".ui.activity.RecentAsksActivity"
+            android:name="com.pires.wesee.ui.activity.RecentAsksActivity"
             android:launchMode="singleTask" />
         <activity
-            android:name=".ui.activity.RecentWorkActivity"
+            android:name="com.pires.wesee.ui.activity.RecentWorkActivity"
             android:launchMode="singleTask" />
         <activity
-            android:name=".ui.activity.UploadMultiImageActivity"
+            android:name="com.pires.wesee.ui.activity.UploadMultiImageActivity"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustResize|stateHidden" />
-        <activity android:name=".ui.activity.WorksListActivity" />
-        <activity android:name=".ui.activity.UploadSelectReplyListActivity" />
-        <activity android:name=".ui.activity.MessageActivity" />
-        <activity android:name=".ui.activity.SettingLikedActivity" />
-        <activity android:name=".ui.activity.SettingCommentActivity" />
-        <activity android:name=".ui.activity.SettingAccountSafeActivity" />
-        <activity android:name=".ui.activity.SettingChangeActivity" />
-        <activity android:name=".ui.activity.WithDrawMoneyBindWechatActivity" />
-        <activity android:name=".ui.activity.WithdrawSuccessActivity" />
-        <activity android:name=".ui.activity.ChangeDetailActivity" />
-        <activity android:name=".ui.activity.MessageLikeActivity" />
-        <activity android:name=".ui.activity.MessageSystemActivity" />
-        <activity android:name=".ui.activity.MessageCommentActivity" />
-        <activity android:name=".ui.activity.SearchActivity" />
+        <activity android:name="com.pires.wesee.ui.activity.WorksListActivity" />
+        <activity android:name="com.pires.wesee.ui.activity.UploadSelectReplyListActivity" />
+        <activity android:name="com.pires.wesee.ui.activity.MessageActivity" />
+        <activity android:name="com.pires.wesee.ui.activity.SettingLikedActivity" />
+        <activity android:name="com.pires.wesee.ui.activity.SettingCommentActivity" />
+        <activity android:name="com.pires.wesee.ui.activity.SettingAccountSafeActivity" />
+        <activity android:name="com.pires.wesee.ui.activity.SettingChangeActivity" />
+        <activity android:name="com.pires.wesee.ui.activity.WithDrawMoneyBindWechatActivity" />
+        <activity android:name="com.pires.wesee.ui.activity.WithdrawSuccessActivity" />
+        <activity android:name="com.pires.wesee.ui.activity.ChangeDetailActivity" />
+        <activity android:name="com.pires.wesee.ui.activity.MessageLikeActivity" />
+        <activity android:name="com.pires.wesee.ui.activity.MessageSystemActivity" />
+        <activity android:name="com.pires.wesee.ui.activity.MessageCommentActivity" />
+        <activity android:name="com.pires.wesee.ui.activity.SearchActivity" />
         <activity
-            android:name=".ui.activity.NewLoginInputPhoneActivity"
+            android:name="com.pires.wesee.ui.activity.NewLoginInputPhoneActivity"
             android:launchMode="singleTask" />
-        <activity android:name=".ui.activity.NewPhoneLoginActivity" />
-        <activity android:name=".ui.activity.NewRegisterPhoneActivity" />
-        <activity android:name=".ui.activity.NewResetPasswdActivity" />
+        <activity android:name="com.pires.wesee.ui.activity.NewPhoneLoginActivity" />
+        <activity android:name="com.pires.wesee.ui.activity.NewRegisterPhoneActivity" />
+        <activity android:name="com.pires.wesee.ui.activity.NewResetPasswdActivity" />
         <activity
-            android:name=".ui.activity.BindInputPhoneActivity"
+            android:name="com.pires.wesee.ui.activity.BindInputPhoneActivity"
             android:launchMode="singleTask" />
-        <activity android:name=".ui.activity.BindPhoneActivity" />
+        <activity android:name="com.pires.wesee.ui.activity.BindPhoneActivity" />
 
         <!-- sharesdk -->
         <activity
@@ -255,7 +255,7 @@
             </intent-filter>
         </receiver>
 
-        <service android:name=".service.UploadCrashService">
+        <service android:name="com.pires.wesee.service.UploadCrashService">
             <intent-filter>
                 <action android:name="com.psgod.service.UploadCrashServiceT" />
             </intent-filter>
@@ -313,22 +313,22 @@
             android:name="com.umeng.update.UpdateDialogActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>
         <activity
-            android:name=".ui.activity.ChannelActivity"
+            android:name="com.pires.wesee.ui.activity.ChannelActivity"
             android:label="@string/title_activity_channel"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustResize"></activity>
         <activity
-            android:name=".ui.activity.RecentActActivity"
+            android:name="com.pires.wesee.ui.activity.RecentActActivity"
             android:label="@string/title_activity_recent_act"
             android:launchMode="singleTask"></activity>
         <activity
-            android:name=".ui.activity.CourseActivity"
+            android:name="com.pires.wesee.ui.activity.CourseActivity"
             android:launchMode="singleTask" />
         <activity
-            android:name=".ui.activity.CourseDetailActivity"
+            android:name="com.pires.wesee.ui.activity.CourseDetailActivity"
             android:launchMode="singleTask" />
         <activity
-            android:name=".ui.activity.CourseWorkActivity"
+            android:name="com.pires.wesee.ui.activity.CourseWorkActivity"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustNothing|stateHidden" />
 

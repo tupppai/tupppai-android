@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:psgod="http://schemas.android.com/apk/res/com.psgod"
+    xmlns:wesee="http://schemas.android.com/apk/res/com.pires.wesee"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#74C3FF" 
@@ -12,11 +12,11 @@
     	android:layout_height="match_parent"
     	android:background="@color/color_ededed" >
         
-	    <com.psgod.ui.widget.ActionBar
+	    <com.pires.wesee.ui.widget.ActionBar
 	        android:id="@+id/actionbar"
 	        android:layout_width="match_parent"
 	        android:layout_height="@dimen/actionbar_height"
-	        psgod:title="账号绑定" />
+	        wesee:title="账号绑定" />
 	
 	    <TextView
 	        android:layout_width="fill_parent"

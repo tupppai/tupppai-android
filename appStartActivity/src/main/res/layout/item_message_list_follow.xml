@@ -4,7 +4,7 @@
     android:descendantFocusability="blocksDescendants"
     android:background="@drawable/selector_notification_btn_bg">
 
-    <com.psgod.ui.widget.AvatarImageView
+    <com.pires.wesee.ui.widget.AvatarImageView
         android:id="@+id/item_follow_list_avatar"
         android:layout_width="31dp"
         android:layout_height="31dp"

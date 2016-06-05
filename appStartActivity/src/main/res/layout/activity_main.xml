@@ -117,7 +117,7 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <!--<com.psgod.ui.view.CircleImageView-->
+            <!--<pires.wesee.wesee.ui.view.CircleImageView-->
                 <!--android:id="@+id/activity_main_tab_user_case"-->
                 <!--android:layout_width="24dp"-->
                 <!--android:layout_height="24dp"-->
@@ -126,7 +126,7 @@
                 <!--android:layout_centerHorizontal="true"-->
                 <!--android:layout_marginTop="5dp" />-->
 
-            <!--<com.psgod.ui.widget.AvatarImageView-->
+            <!--<pires.wesee.wesee.ui.widget.AvatarImageView-->
                 <!--android:id="@+id/activity_main_tab_user_img"-->
                 <!--android:layout_width="22dp"-->
                 <!--android:layout_height="22dp"-->

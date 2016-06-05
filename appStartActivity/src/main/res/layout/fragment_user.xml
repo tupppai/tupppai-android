@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:psgod="http://schemas.android.com/apk/res/com.psgod"
+    xmlns:wesee="http://schemas.android.com/apk/res/com.pires.wesee"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white" >
 
-    <com.psgod.ui.widget.ActionBar
+    <com.pires.wesee.ui.widget.ActionBar
         android:id="@+id/actionbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/actionbar_height"
-        psgod:leftBtnVisibility="gone"
-        psgod:rightBtnVisibility="gone"
-        psgod:title="我的" />
+        wesee:leftBtnVisibility="gone"
+        wesee:rightBtnVisibility="gone"
+        wesee:title="我的" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/actionbar" >
 
-            <com.psgod.ui.widget.AvatarImageView
+            <com.pires.wesee.ui.widget.AvatarImageView
                 android:id="@+id/fragment_user_avatar_imageview"
                 android:layout_width="81dp"
                 android:layout_height="81dp"

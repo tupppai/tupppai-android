@@ -36,7 +36,7 @@
             android:layout_alignParentStart="true" />
     </RelativeLayout>
 
-    <com.psgod.ui.view.PullToRefreshStaggeredGridView
+    <com.pires.wesee.ui.view.PullToRefreshStaggeredGridView
         android:id="@+id/activity_inprogress_ask_staggered_gridview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

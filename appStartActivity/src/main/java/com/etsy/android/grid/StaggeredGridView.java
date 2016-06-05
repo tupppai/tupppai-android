@@ -27,7 +27,7 @@ import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.psgod.R;
+import com.pires.wesee.R;
 
 import java.util.Arrays;
 

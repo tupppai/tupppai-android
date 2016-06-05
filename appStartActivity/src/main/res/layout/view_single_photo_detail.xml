@@ -11,7 +11,7 @@
         android:layout_height="55dp"
         android:layout_marginLeft="10dp">
 
-        <com.psgod.ui.widget.AvatarImageView
+        <com.pires.wesee.ui.widget.AvatarImageView
             android:id="@+id/single_photo_detail_avatar"
             android:layout_width="30dp"
             android:layout_height="30dp"
@@ -39,7 +39,7 @@
             android:textSize="10dp"/>
 
         <!-- 同时设置margin和padding才有效果，不知为何-->
-        <com.psgod.ui.widget.FollowImage
+        <com.pires.wesee.ui.widget.FollowImage
             android:id="@+id/single_photo_detail_follow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -225,7 +225,7 @@
             android:src="@mipmap/btn_bang"
             android:visibility="gone" />
 
-        <com.psgod.ui.view.LikeView
+        <com.pires.wesee.ui.view.LikeView
             android:id="@+id/single_photo_detail_like"
             android:layout_width="60dp"
             android:layout_height="60dp"

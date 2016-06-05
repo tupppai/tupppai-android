@@ -5,7 +5,7 @@
     android:background="#FFFFFF"
     android:padding="16dp">
 
-    <com.psgod.ui.widget.AvatarImageView
+    <com.pires.wesee.ui.widget.AvatarImageView
         android:id="@+id/item_user_list_avatar_imgview"
         android:layout_width="@dimen/user_avatar_size"
         android:layout_height="@dimen/user_avatar_size"

@@ -18,7 +18,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.view.animation.Interpolator;
 import android.widget.LinearLayout;
 
-import com.psgod.R;
+import com.pires.wesee.R;
 
 import java.util.LinkedList;
 import java.util.List;

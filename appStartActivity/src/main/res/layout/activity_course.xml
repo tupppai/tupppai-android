@@ -23,7 +23,7 @@
             android:text="教程"
             android:textSize="18dp" />
 
-        <com.psgod.ui.widget.FinishView
+        <com.pires.wesee.ui.widget.FinishView
             android:id="@+id/activity_course_title_finish"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

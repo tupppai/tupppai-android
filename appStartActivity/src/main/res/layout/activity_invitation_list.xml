@@ -1,5 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:psgod="http://schemas.android.com/apk/res/com.psgod"
+    xmlns:wesee="http://schemas.android.com/apk/res/com.pires.wesee"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#74C3FF" 
@@ -11,12 +11,12 @@
     	android:layout_height="match_parent"
     	android:background="#F8F8F8" >
         
-	    <com.psgod.ui.widget.ActionBar
+	    <com.pires.wesee.ui.widget.ActionBar
 	        android:id="@+id/actionbar"
 	        android:layout_width="match_parent"
 	        android:layout_height="@dimen/actionbar_height"
-	        psgod:rightBtnText="完成"
-	        psgod:title="邀请页面" />
+	        wesee:rightBtnText="完成"
+	        wesee:title="邀请页面" />
 	
 	    <com.handmark.pulltorefresh.library.PullToRefreshExpandableListView
 	        android:id="@+id/activity_invitation_list_lv"

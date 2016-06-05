@@ -6,7 +6,7 @@
     >
 
 
-    <com.psgod.ui.view.PullToRefreshStaggeredGridView
+    <com.pires.wesee.ui.view.PullToRefreshStaggeredGridView
         android:id="@+id/fragment_homepage_hot_lv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

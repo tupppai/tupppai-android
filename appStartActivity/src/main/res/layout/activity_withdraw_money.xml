@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:psgod="http://schemas.android.com/apk/res/com.psgod"
+    xmlns:wesee="http://schemas.android.com/apk/res/com.pires.wesee"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -18,13 +18,13 @@
         android:scaleType="centerCrop"
         />
 
-    <com.psgod.ui.widget.ActionBar
+    <com.pires.wesee.ui.widget.ActionBar
         android:id="@+id/actionbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/actionbar_height"
         android:background="@color/transparent"
-        psgod:title="提现"
-        psgod:rightBtnVisibility="invisible"/>
+        wesee:title="提现"
+        wesee:rightBtnVisibility="invisible"/>
 
     <TextView
         android:layout_width="wrap_content"

@@ -76,34 +76,34 @@
         android:layout_marginTop="217dp"
         android:orientation="horizontal">
 
-        <com.psgod.ui.widget.ShareButton
+        <com.pires.wesee.ui.widget.ShareButton
             android:id="@+id/work_share_weibo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
-        <com.psgod.ui.widget.ShareButton
+        <com.pires.wesee.ui.widget.ShareButton
             android:id="@+id/work_share_qzone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
             android:layout_weight="1" />
 
-        <com.psgod.ui.widget.ShareButton
+        <com.pires.wesee.ui.widget.ShareButton
             android:id="@+id/work_share_wechatm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
             android:layout_weight="1" />
 
-        <com.psgod.ui.widget.ShareButton
+        <com.pires.wesee.ui.widget.ShareButton
             android:id="@+id/work_share_wechatf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
             android:layout_weight="1" />
 
-        <com.psgod.ui.widget.ShareButton
+        <com.pires.wesee.ui.widget.ShareButton
             android:id="@+id/work_share_qq"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

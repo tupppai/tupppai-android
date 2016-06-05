@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:psgod="http://schemas.android.com/apk/res/com.psgod"
+    xmlns:wesee="http://schemas.android.com/apk/res/com.pires.wesee"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#74C3FF"
@@ -13,12 +13,12 @@
     	android:layout_height="match_parent"
     	android:background="#FFFFFF">
         
-	    <com.psgod.ui.widget.ActionBar
+	    <com.pires.wesee.ui.widget.ActionBar
 	        android:id="@+id/actionbar"
 	        android:layout_width="match_parent"
 	        android:layout_height="@dimen/actionbar_height"
-	        psgod:rightBtnVisibility="gone"
-	        psgod:title="用户协议" />
+	        wesee:rightBtnVisibility="gone"
+	        wesee:title="用户协议" />
 			
 		<TextView 
 			android:layout_width="wrap_content"

@@ -28,7 +28,7 @@ import android.text.style.URLSpan;
 import android.view.MotionEvent;
 import android.widget.TextView;
 
-import com.psgod.ui.activity.WebBrowserActivity;
+import com.pires.wesee.ui.activity.WebBrowserActivity;
 
 /**
  * Copied from http://stackoverflow.com/questions/8558732

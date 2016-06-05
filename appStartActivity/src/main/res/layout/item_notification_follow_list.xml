@@ -3,7 +3,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/selector_notification_btn_bg">
 
-    <com.psgod.ui.widget.AvatarImageView
+    <com.pires.wesee.ui.widget.AvatarImageView
         android:id="@+id/item_notification_follow_list_avatar_imgview"
         android:layout_width="41dp"
         android:layout_height="41dp"
@@ -12,7 +12,7 @@
         android:layout_marginLeft="16dp"
         android:layout_alignParentLeft="true" />
 
-    <!-- <com.psgod.ui.view.CircleImageView
+    <!-- <pires.wesee.wesee.ui.view.CircleImageView
         android:id="@+id/item_notification_follow_list_gender_imgview"
         android:layout_width="@dimen/user_gender_size"
         android:layout_height="@dimen/user_gender_size"

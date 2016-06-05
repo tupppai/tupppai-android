@@ -1,5 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:psgod="http://schemas.android.com/apk/res/com.psgod"
+    xmlns:wesee="http://schemas.android.com/apk/res/com.pires.wesee"
     android:id="@+id/upload_image_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -12,11 +12,11 @@
     	android:layout_height="match_parent"
    		android:background="#FFFFFF" >
         
-	    <com.psgod.ui.widget.ActionBar
+	    <com.pires.wesee.ui.widget.ActionBar
 	        android:id="@+id/actionbar"
 	        android:layout_width="match_parent"
 	        android:layout_height="@dimen/actionbar_height"
-	        psgod:title="上传照片" />
+	        wesee:title="上传照片" />
 	
 	    <View
 	        android:id="@+id/activity_upload_image_line"
@@ -177,7 +177,7 @@
 	            android:textOn="" />
 	    </LinearLayout>
 	
-	    <com.psgod.ui.view.CropImageView
+	    <com.pires.wesee.ui.view.CropImageView
 	        android:id="@+id/activity_upload_image_imageview"
 	        android:layout_width="match_parent"
 	        android:layout_height="match_parent"

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:psgod="http://schemas.android.com/apk/res/com.psgod"
+    xmlns:wesee="http://schemas.android.com/apk/res/com.pires.wesee"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF" 
@@ -13,12 +13,12 @@
     	android:background="#FFFFFF"
     	android:orientation="vertical">
         
-	    <com.psgod.ui.widget.ActionBar
+	    <com.pires.wesee.ui.widget.ActionBar
 	        android:id="@+id/actionbar"
 	        android:layout_width="match_parent"
 	        android:layout_height="@dimen/actionbar_height"
-	        psgod:rightBtnVisibility="gone"
-	        psgod:title="消息提醒" />
+	        wesee:rightBtnVisibility="gone"
+	        wesee:title="消息提醒" />
 	    
 	    <ScrollView
         	android:layout_width="match_parent"

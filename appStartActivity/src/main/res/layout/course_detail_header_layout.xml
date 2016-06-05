@@ -11,7 +11,7 @@
         android:layout_height="65dp"
         android:background="#F7F7F7">
 
-        <com.psgod.ui.widget.AvatarImageView
+        <com.pires.wesee.ui.widget.AvatarImageView
             android:id="@+id/avatar_image"
             android:layout_width="30dp"
             android:layout_height="30dp"
@@ -45,7 +45,7 @@
 
 
 
-        <com.psgod.ui.widget.FollowImage
+        <com.pires.wesee.ui.widget.FollowImage
             android:id="@+id/follow_iamge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -158,7 +158,7 @@
         android:layout_marginTop="17dp"
         android:background="#1A000000"/>
 
-    <com.psgod.ui.widget.ChildListView
+    <com.pires.wesee.ui.widget.ChildListView
         android:id="@+id/course_content_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

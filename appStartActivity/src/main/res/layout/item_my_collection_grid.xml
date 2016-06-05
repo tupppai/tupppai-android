@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:background="#FFFFFF" >
 
-    <com.psgod.ui.view.CircleImageView
+    <com.pires.wesee.ui.view.CircleImageView
         android:id="@+id/item_my_collection_avatar_imageview"
         android:layout_width="30dp"
         android:layout_height="30dp"

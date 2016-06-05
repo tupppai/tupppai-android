@@ -5,7 +5,7 @@
     android:background="@color/white"
     android:layout_height="73dp">
 
-    <com.psgod.ui.widget.AvatarImageView
+    <com.pires.wesee.ui.widget.AvatarImageView
         android:id="@+id/avatar_iamge"
         android:layout_width="25dp"
         android:layout_height="25dp"

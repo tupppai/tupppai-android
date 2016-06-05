@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.psgod.ui.view.PhotoWaterFallItemView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.pires.wesee.ui.view.PhotoWaterFallItemView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="5dp"
@@ -12,7 +12,7 @@
         android:background="#FFFFFF"
         android:visibility="visible" >
 
-        <com.psgod.ui.widget.AvatarImageView
+        <com.pires.wesee.ui.widget.AvatarImageView
             android:id="@+id/item_avatar_imageview"
             android:layout_width="30dp"
             android:layout_height="30dp"
@@ -58,7 +58,7 @@
             android:visibility="visible" />
     </RelativeLayout>
 
-    <!-- <com.psgod.ui.view.ScaleImageView -->
+    <!-- <pires.wesee.wesee.ui.view.ScaleImageView -->
 
     <RelativeLayout
         android:id="@+id/photo_item_image_area"
@@ -184,4 +184,4 @@
             android:layout_toLeftOf="@id/water_fall_simple_type_photo_item_comment_tv"/>
     </RelativeLayout>
 
-</com.psgod.ui.view.PhotoWaterFallItemView>
+</com.pires.wesee.ui.view.PhotoWaterFallItemView>

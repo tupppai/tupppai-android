@@ -171,7 +171,7 @@
                         android:textSize="14dp"
                         android:textColor="#000000" />
 
-                    <com.psgod.ui.view.LabelFlowLayout
+                    <com.pires.wesee.ui.view.LabelFlowLayout
                         android:id="@+id/label_flow_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

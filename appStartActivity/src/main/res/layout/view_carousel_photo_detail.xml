@@ -39,7 +39,7 @@
                 android:layout_centerVertical="true"
                 android:src="@mipmap/tag" />
 
-            <com.psgod.ui.widget.AvatarImageView
+            <com.pires.wesee.ui.widget.AvatarImageView
                 android:id="@+id/view_carp_photo_detail_cover_avatar"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
@@ -175,7 +175,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="24dp" />
 
-            <com.psgod.ui.view.LikeView
+            <com.pires.wesee.ui.view.LikeView
                 android:id="@+id/view_carp_photo_detail_cover_like"
                 android:layout_width="60dp"
                 android:layout_height="55dp"
@@ -184,7 +184,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true">
-            </com.psgod.ui.view.LikeView>
+            </com.pires.wesee.ui.view.LikeView>
         </RelativeLayout>
 
     </RelativeLayout>

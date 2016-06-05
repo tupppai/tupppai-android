@@ -33,7 +33,7 @@
             android:textSize="17dp" />
     </RelativeLayout>
     
-    <com.psgod.ui.view.PullToRefreshStaggeredGridView 
+    <com.pires.wesee.ui.view.PullToRefreshStaggeredGridView
         android:id="@+id/list_work"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

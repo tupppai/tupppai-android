@@ -12,12 +12,12 @@
         android:paddingRight="15dp"
         android:paddingTop="15dp">
 
-        <com.psgod.ui.widget.AvatarImageView
+        <com.pires.wesee.ui.widget.AvatarImageView
             android:id="@+id/item_transactions_avatar"
             android:layout_width="38dp"
             android:layout_height="38dp"
             android:layout_centerVertical="true" />
-        <!--<com.psgod.ui.widget.AvatarImageView-->
+        <!--<pires.wesee.wesee.ui.widget.AvatarImageView-->
         <!--android:id="@+id/item_transactions_avatar"-->
         <!--android:layout_width="38dp"-->
         <!--android:layout_height="38dp"-->
