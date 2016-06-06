@@ -55,7 +55,10 @@ public class PhotoBrowserActivity extends PSGodBaseActivity implements Handler.C
 		mPhotoId = intent.getLongExtra(Constants.IntentKey.PHOTO_ITEM_ID, -1);
 		mType = intent.getStringExtra(Constants.IntentKey.PHOTO_ITEM_TYPE);
 
+
 		if (TextUtils.isEmpty(mImageUrl) || mAskId == -1) {
+			System.out.println("mImageUrl  " + mImageUrl + "\n");
+			System.out.println("mAskId  " + mAskId + "\n");
 			Toast.makeText(this, TAG + ".onCreate(): mReigsterData is null",
 					Toast.LENGTH_LONG).show();
 			finish();

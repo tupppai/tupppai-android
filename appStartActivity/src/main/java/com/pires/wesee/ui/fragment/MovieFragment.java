@@ -45,17 +45,15 @@ public class MovieFragment extends BaseFragment implements OnClickListener{
     private void getCookie() {
         mToken = UserPreferences.TokenVerify.getToken();
         mCookieMOVIE = "http://wechupin.com/index-app.html?c=" + mToken +"&from=android#app/playcategory";
-        System.out.println("cookieurl" + mCookieMOVIE + "\n");
     }
 
     private class MovieWebViewClient extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            super.shouldOverrideUrlLoading(view, url);
+            //super.shouldOverrideUrlLoading(view, url);
 
             //以url的最后12位字符做为判断，当新地址最后不是playcategory时，才会进行跳转
             String mStr = url.substring(url.length() - 12, url.length());
-
             if (!mStr.equals("playcategory")) {
                 //重新拼接新URL
                 //只取点击到的地址的前半部和后半部，去除其中的c=XXX和from=XXX
@@ -73,7 +71,6 @@ public class MovieFragment extends BaseFragment implements OnClickListener{
         }
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
-
             mWebtitle.setText(view.getTitle());
         }
     }

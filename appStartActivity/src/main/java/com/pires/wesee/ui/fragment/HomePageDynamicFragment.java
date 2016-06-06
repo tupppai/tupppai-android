@@ -14,18 +14,21 @@ import com.pires.wesee.Constants;
 import com.pires.wesee.R;
 import com.pires.wesee.UserPreferences;
 import com.pires.wesee.eventbus.RefreshEvent;
+import com.pires.wesee.ui.activity.PhotoBrowserActivity;
 import com.pires.wesee.ui.activity.UserProfileActivity;
 
 import de.greenrobot.event.EventBus;
 
 /**
  * 新版动态页面
+ *  Created by xiaoluo on 2016/5/20.
  */
 public class HomePageDynamicFragment extends BaseFragment {
 
     private WebView mWebview;
     private String cookieDYNAMIC = null;
     private Context mContext;
+    private Long i = 1l;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -57,30 +60,48 @@ public class HomePageDynamicFragment extends BaseFragment {
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
 
             Intent intent = new Intent();
-            intent.setClass(mContext, UserProfileActivity.class);
             Bundle bundle = new Bundle();
 
             //以url最后7位字符dynamic做为判断,如果不一样时,才进行跳转
             String mStr = url.substring(url.length() - 7, url.length());
-
+            System.out.println("点击webview " + url + "\n");
             if (!mStr.equals("dynamic")) {
-                //点击的url有两种,一种要取用户ID,另一种是影视
                 //当url中包含user-profile时,判断为点击到用户头像
                 if (url.indexOf("user-profile/") > 0) {
                     //取用户ID，转到用户界面
+                    intent.setClass(mContext, UserProfileActivity.class);
                     String mUserId = url.substring(url.indexOf("user-profile/") + 13, url.length());
                     Long mLongId = Long.parseLong(mUserId);
                     intent.putExtra(Constants.IntentKey.USER_ID, mLongId);
                     mContext.startActivity(intent);
 
                 } else if (url != cookieDYNAMIC) {
-                    //点的是电影头像，转到电影界面
-                    intent.setClass(mContext, MovieActivity.class);
-                    String StrUrl = url.substring(url.indexOf("#") + 1, url.length());
-                    String mUrl = "http://wechupin.com/index-app.html#" + StrUrl;
-                    bundle.putString("Url", mUrl);
-                    intent.putExtras(bundle);
-                    mContext.startActivity(intent);
+                    // 点击的是图片
+                    // http://wechupin.com/index-app.html#image_popup/http://7u2spr.com1.z0.glb.clouddn.com/20160606-1516535755236545994.jpg
+                    if (url.contains("image_popup")) {
+                        String picUrl = url.substring(url.indexOf("image_popup") + 12, url.length());
+                        intent.setClass(mContext, PhotoBrowserActivity.class);
+                        intent.putExtra(Constants.IntentKey.PHOTO_PATH, picUrl);
+                        intent.putExtra(Constants.IntentKey.ASK_ID, i);
+                        intent.putExtra(Constants.IntentKey.PHOTO_ITEM_ID, i);
+                        intent.putExtra(Constants.IntentKey.PHOTO_ITEM_TYPE, "ask");
+                        mContext.startActivity(intent);
+                        System.out.println("点击图片链接 " + picUrl + "\n");
+                    } else if (url.contains("producerindex")) {
+                        intent.setClass(mContext, MovieActivity.class);
+                        bundle.putString("Url", url);
+                        intent.putExtras(bundle);
+                        mContext.startActivity(intent);
+                    } else {
+                        // 点击到其它
+                        intent.setClass(mContext, MovieActivity.class);
+                        String StrUrl = url.substring(url.indexOf("#") + 1, url.length());
+                        String mUrl = "http://wechupin.com/index-app.html#" + StrUrl;
+                        bundle.putString("Url", mUrl);
+                        intent.putExtras(bundle);
+                        mContext.startActivity(intent);
+                    }
+
                 }
             }
             return true;

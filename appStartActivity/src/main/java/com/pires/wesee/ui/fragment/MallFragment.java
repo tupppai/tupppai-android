@@ -23,7 +23,7 @@ import com.youzan.sdk.http.engine.QueryError;
 import com.youzan.sdk.web.plugin.YouzanWebClient;
 
 /**
- * Created by Administrator on 2016/5/20.
+ * Created by xiaoluo on 2016/5/20.
  */
 public class MallFragment extends BaseFragment implements OnClickListener{
 
