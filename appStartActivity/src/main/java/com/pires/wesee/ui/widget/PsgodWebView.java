@@ -66,18 +66,18 @@ public class PsgodWebView extends WebView {
 
     @Override
     public void loadUrl(String url) {
-        if (dialog != null && !dialog.isShowing()) {
-            dialog.show();
-        }
+//        if (dialog != null && !dialog.isShowing()) {
+//            dialog.show();
+//        }
         super.loadUrl(url);
 
     }
 
     @Override
     public void loadUrl(String url, Map<String, String> additionalHttpHeaders) {
-        if (dialog != null && !dialog.isShowing()) {
-            dialog.show();
-        }
+//        if (dialog != null && !dialog.isShowing()) {
+//            dialog.show();
+//        }
         super.loadUrl(url, additionalHttpHeaders);
 
     }
