@@ -14,8 +14,16 @@ import android.widget.TextView;
 
 import com.pires.wesee.R;
 import com.pires.wesee.eventbus.RefreshEvent;
+import com.pires.wesee.model.LoginUser;
 import com.pires.wesee.ui.fragment.HomePageDynamicFragment;
 import com.pires.wesee.ui.fragment.MovieFragment;
+import com.youzan.sdk.YouzanBridge;
+import com.youzan.sdk.YouzanSDK;
+import com.youzan.sdk.YouzanUser;
+import com.youzan.sdk.http.engine.OnRegister;
+import com.youzan.sdk.http.engine.QueryError;
+import com.youzan.sdk.web.plugin.YouzanChromeClient;
+import com.youzan.sdk.web.plugin.YouzanWebClient;
 
 import de.greenrobot.event.EventBus;
 
@@ -43,6 +51,33 @@ public class MovieActivity extends Activity implements View.OnClickListener {
         mUrl = bundle.getString("Url");
         mCurrentUrl = mUrl;
         initView();
+        setWeb();
+        //mWebview.loadUrl(mUrl);
+    }
+
+    //同步注册Youzan用户
+    private void setWeb() {
+        YouzanUser user = new YouzanUser();
+        LoginUser myUser = LoginUser.getInstance();
+        user.setUserId(myUser.getUid() + "");
+        // 参数初始化
+        YouzanBridge.build(this,mWebview)
+                .setWebClient(new WebClient())
+                .setChromeClient(new ChromeClient())
+                .create();
+
+        //mWebview.setWebViewClient(new MallWebViewClient());
+        YouzanSDK.asyncRegisterUser(user, new OnRegister() {
+            @Override
+            public void onFailed(QueryError queryError) {
+            }
+
+            @Override
+            public void onSuccess()
+            {
+                mWebview.loadUrl(mUrl);
+            }
+        });
     }
 
     public void onPause() {
@@ -64,14 +99,17 @@ public class MovieActivity extends Activity implements View.OnClickListener {
         mExit.setOnClickListener(this);
 
         mWebview.getSettings().setJavaScriptEnabled(true);
-        mWebview.setWebViewClient(new MovieWebViewClient());
+
+        //mWebview.setWebViewClient(new MovieWebViewClient());
+
+       // mWebview.setWebViewClient(new MovieWebViewClient());
 //        mWebview.getSettings().setSupportZoom(true);
 //        mWebview.getSettings().setBuiltInZoomControls(true);
 //        mWebview.getSettings().setUseWideViewPort(true);
 //        mWebview.getSettings().setDomStorageEnabled(true);
 //        // 应用可以有缓存
 //        mWebview.getSettings().setAppCacheEnabled(true);
-        mWebview.getSettings().setAppCacheEnabled(false);
+        //mWebview.getSettings().setAppCacheEnabled(false);
         mWebview.setWebChromeClient(new WebChromeClient() {
 
         });
@@ -82,7 +120,32 @@ public class MovieActivity extends Activity implements View.OnClickListener {
         Intent intent = this.getIntent();
         Bundle bundle = intent.getExtras();
         mUrl = bundle.getString("Url");
-        mWebview.loadUrl(mUrl);
+
+    }
+
+
+    private class ChromeClient extends YouzanChromeClient {
+        @Override
+        public void onReceivedTitle(WebView view, String title) {
+            super.onReceivedTitle(view, title);
+        }
+    }
+
+    private class WebClient extends YouzanWebClient {
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            super.shouldOverrideUrlLoading(view, url);
+            if(!url.contains("weixin://")) {
+                view.loadUrl(url);
+            }
+            return true;
+        }
+
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            super.onPageFinished(view, url);
+            mCurrentUrl = url;
+        }
     }
 
     // 点击返回时，进行判断

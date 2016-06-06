@@ -121,7 +121,11 @@ public class MallActivity extends Activity implements View.OnClickListener {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             super.shouldOverrideUrlLoading(view, url);
-            if (url.contains("http://")) {
+
+
+            if (!url.contains("weixin://")) {
+
+
                 view.loadUrl(url);
             }
             return true;
@@ -169,5 +173,16 @@ public class MallActivity extends Activity implements View.OnClickListener {
             return true;
         } else
             return super.onKeyDown(keyCode, event);
+    }
+
+
+    public void onPause() {
+        super.onPause();
+        mWebview.onPause();
+    }
+
+    public void onResume() {
+        super.onResume();
+        mWebview.onResume();
     }
 }

@@ -9,8 +9,8 @@ android {
         minSdkVersion 14
         targetSdkVersion 18
         multiDexEnabled true
-        versionCode 39
-        versionName "1.1.0"
+        versionCode 50
+        versionName "1.2.0"
         multiDexEnabled true
     }
 
@@ -38,10 +38,10 @@ android {
                     def outputFile = output.outputFile
                     if (outputFile != null && outputFile.name.endsWith('.apk')) {
 
-                        def fileName = "tupppai_v${defaultConfig.versionName}_${variant.productFlavors[0].name}.apk"
+                        def fileName = "wesee_v${defaultConfig.versionName}_${variant.productFlavors[0].name}.apk"
 
-                        if (outputFile.name.contains('tupppai')) {
-                            fileName = "tupppai.apk"
+                        if (outputFile.name.contains('wesee')) {
+                            fileName = "wesee.apk"
                         }
                         output.outputFile = new File(outputFile.parent, fileName)
                     }

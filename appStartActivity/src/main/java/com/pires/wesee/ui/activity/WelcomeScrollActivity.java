@@ -88,7 +88,8 @@ public class WelcomeScrollActivity extends PSGodBaseActivity {
 
 		mViewPager.setAdapter(mPagerAdapter);
 
-		mEnterImage.setOnClickListener(new OnClickListener() {
+		//mEnterImage.setOnClickListener(new OnClickListener() {
+		view3.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View arg0) {
