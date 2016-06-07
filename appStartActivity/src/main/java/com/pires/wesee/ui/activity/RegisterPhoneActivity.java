@@ -148,6 +148,7 @@ public class RegisterPhoneActivity extends PSGodBaseActivity implements
 				mProgressDialog.dismiss();
 			}
 
+
 			// 手机被注册过
 			if (response) {
 				if (!mRegisterData.getThirdAuthType().equals("mobile")) {

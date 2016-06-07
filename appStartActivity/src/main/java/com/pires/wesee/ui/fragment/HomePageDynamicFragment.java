@@ -2,6 +2,7 @@ package com.pires.wesee.ui.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -66,6 +67,7 @@ public class HomePageDynamicFragment extends BaseFragment {
             String mStr = url.substring(url.length() - 7, url.length());
             System.out.println("点击webview " + url + "\n");
             if (!mStr.equals("dynamic")) {
+
                 //当url中包含user-profile时,判断为点击到用户头像
                 if (url.indexOf("user-profile/") > 0) {
                     //取用户ID，转到用户界面
@@ -87,24 +89,40 @@ public class HomePageDynamicFragment extends BaseFragment {
                         intent.putExtra(Constants.IntentKey.PHOTO_ITEM_TYPE, "ask");
                         mContext.startActivity(intent);
                         System.out.println("点击图片链接 " + picUrl + "\n");
-                    } else if (url.contains("producerindex")) {
-                        intent.setClass(mContext, MovieActivity.class);
-                        bundle.putString("Url", url);
-                        intent.putExtras(bundle);
-                        mContext.startActivity(intent);
                     } else {
-                        // 点击到其它
-                        intent.setClass(mContext, MovieActivity.class);
-                        String StrUrl = url.substring(url.indexOf("#") + 1, url.length());
-                        String mUrl = "http://wechupin.com/index-app.html#" + StrUrl;
-                        bundle.putString("Url", mUrl);
-                        intent.putExtras(bundle);
-                        mContext.startActivity(intent);
+                        if (url.contains("producerindex")) {
+                            intent.setClass(mContext, MovieActivity.class);
+                            bundle.putString("Url", url);
+                            intent.putExtras(bundle);
+                            mContext.startActivity(intent);
+                            System.out.println("用户头像 " + url + "\n");
+                        } else {
+                            // 点击到其它
+                            intent.setClass(mContext, MovieActivity.class);
+                            String StrUrl = url.substring(url.indexOf("#") + 1, url.length());
+                            String mUrl = "http://wechupin.com/index-app.html#" + StrUrl;
+                            bundle.putString("Url", mUrl);
+                            intent.putExtras(bundle);
+                            mContext.startActivity(intent);
+                        }
                     }
 
+
                 }
+                mWebview.stopLoading();
             }
             return true;
+        }
+
+        @Override
+        public void onPageStarted(WebView view, String url, Bitmap favicon) {
+            super.onPageStarted(view, url, favicon);
+            if(url.contains("dynamic")) {
+
+            } else {
+                mWebview.stopLoading();
+            }
+
         }
     }
 

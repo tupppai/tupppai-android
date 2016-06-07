@@ -77,6 +77,7 @@ public class MovieActivity extends Activity implements View.OnClickListener {
             public void onSuccess()
             {
                 mWebview.loadUrl(mUrl);
+                System.out.println("MovieActivity  " + mUrl + "\n");
             }
         });
     }
@@ -146,6 +147,7 @@ public class MovieActivity extends Activity implements View.OnClickListener {
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
             mCurrentUrl = url;
+            System.out.println("MovieActivity  onpagefinish  " + url + "\n");
         }
     }
 
@@ -157,8 +159,8 @@ public class MovieActivity extends Activity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.activity_webview_back:
-                EventBus.getDefault().post(new RefreshEvent(MovieFragment.class.getName()));
-                EventBus.getDefault().post(new RefreshEvent(HomePageDynamicFragment.class.getName()));
+//                EventBus.getDefault().post(new RefreshEvent(MovieFragment.class.getName()));
+//                EventBus.getDefault().post(new RefreshEvent(HomePageDynamicFragment.class.getName()));
                 if (mCurrentUrl.equals(mUrl)) {
                     finish();
                 } else {
@@ -166,8 +168,8 @@ public class MovieActivity extends Activity implements View.OnClickListener {
                 }
                 break;
             case R.id.activity_webview_exit:
-                EventBus.getDefault().post(new RefreshEvent(MovieFragment.class.getName()));
-                EventBus.getDefault().post(new RefreshEvent(HomePageDynamicFragment.class.getName()));
+//                EventBus.getDefault().post(new RefreshEvent(MovieFragment.class.getName()));
+//                EventBus.getDefault().post(new RefreshEvent(HomePageDynamicFragment.class.getName()));
                 finish();
                 break;
             default:
@@ -176,34 +178,14 @@ public class MovieActivity extends Activity implements View.OnClickListener {
 
     }
 
-    private class MovieWebViewClient extends WebViewClient {
-
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            view.loadUrl(url);
-            return true;
-        }
-
-
-        @Override
-        public void onPageStarted(WebView view, String url, Bitmap favicon) {
-            super.onPageStarted(view, url, favicon);
-        }
-
-        public void onPageFinished(WebView view, String url) {
-            mCurrentUrl = url;
-
-        }
-    }
-
     //设置物理后退按键
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
 
             if (mCurrentUrl.equals(mUrl)) {
-                EventBus.getDefault().post(new RefreshEvent(MovieFragment.class.getName()));
-                EventBus.getDefault().post(new RefreshEvent(HomePageDynamicFragment.class.getName()));
+//                EventBus.getDefault().post(new RefreshEvent(MovieFragment.class.getName()));
+//                EventBus.getDefault().post(new RefreshEvent(HomePageDynamicFragment.class.getName()));
                 finish();
             } else {
                 mWebview.goBack();   //后退

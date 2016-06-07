@@ -2,6 +2,7 @@ package com.pires.wesee.ui.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,10 +52,10 @@ public class MovieFragment extends BaseFragment implements OnClickListener{
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             //super.shouldOverrideUrlLoading(view, url);
-
+            mWebview.stopLoading();
             //以url的最后12位字符做为判断，当新地址最后不是playcategory时，才会进行跳转
-            String mStr = url.substring(url.length() - 12, url.length());
-            if (!mStr.equals("playcategory")) {
+            //String mStr = url.substring(url.length() - 12, url.length());
+            if (!url.contains("playcategory")) {
                 //重新拼接新URL
                 //只取点击到的地址的前半部和后半部，去除其中的c=XXX和from=XXX
                 String StrUrl = url.substring(url.indexOf("#") + 1, url.length());
@@ -67,11 +68,22 @@ public class MovieFragment extends BaseFragment implements OnClickListener{
                 intent.putExtras(bundle);
                 mContext.startActivity(intent);
             }
+            System.out.println("shouldoverride " + url + "\n");
             return true;
         }
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
             mWebtitle.setText(view.getTitle());
+        }
+
+        @Override
+        public void onPageStarted(WebView view, String url, Bitmap favicon) {
+            if(url.contains("playcategory")) {
+            } else {
+                 mWebview.stopLoading();
+            }
+            System.out.println("onpagestarted " + url + "\n");
+            super.onPageStarted(view, url, favicon);
         }
     }
 

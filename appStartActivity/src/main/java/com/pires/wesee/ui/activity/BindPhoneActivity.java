@@ -236,6 +236,8 @@ public class BindPhoneActivity extends PSGodBaseActivity {
                                         EventBus.getDefault().post(new InitEvent());
                                         EventBus.getDefault().post(new BindEvent(BindEvent.State.OK));
 
+                                        EventBus.getDefault().post(new RefreshEvent(SettingAccountSafeActivity.class.getName()));
+
                                         if ((mProgressDialog != null) && (mProgressDialog.isShowing())) {
                                             mProgressDialog.dismiss();
                                         }

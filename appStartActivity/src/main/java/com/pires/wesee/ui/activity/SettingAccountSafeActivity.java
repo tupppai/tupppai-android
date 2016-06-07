@@ -14,6 +14,7 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -24,6 +25,7 @@ import com.android.volley.VolleyError;
 import com.pires.wesee.Constants;
 import com.pires.wesee.PSGodApplication;
 import com.pires.wesee.WeakReferenceHandler;
+import com.pires.wesee.eventbus.RefreshEvent;
 import com.pires.wesee.model.LoginUser;
 import com.pires.wesee.network.request.ActionBindAccountRequest;
 import com.pires.wesee.network.request.PSGodErrorListener;
@@ -39,6 +41,7 @@ import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.sina.weibo.SinaWeibo;
 import cn.sharesdk.tencent.qzone.QZone;
 import cn.sharesdk.wechat.friends.Wechat;
+import de.greenrobot.event.EventBus;
 
 public class SettingAccountSafeActivity extends PSGodBaseActivity implements
 		Handler.Callback {
@@ -60,6 +63,7 @@ public class SettingAccountSafeActivity extends PSGodBaseActivity implements
 	private ToggleButton mBindWeiboBtn;
 	private ToggleButton mBindWechatBtn;
 	private ToggleButton mBindQQBtn;
+	private RelativeLayout mBindingLayout;
 
 	private boolean isBoundWeiBo = false;
 	private boolean isBoundWechat = false;
@@ -76,7 +80,7 @@ public class SettingAccountSafeActivity extends PSGodBaseActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_setting_account_safe);
 		mContext = this;
-
+		EventBus.getDefault().register(this);
 		initViews();
 		initListeners();
 	}
@@ -88,22 +92,31 @@ public class SettingAccountSafeActivity extends PSGodBaseActivity implements
 		mBindQQBtn = (ToggleButton) findViewById(R.id.account_binding_qq_toggle_btn);
 		mBindWechatBtn = (ToggleButton) findViewById(R.id.account_binding_wechat_toggle_btn);
 		mBindWeiboBtn = (ToggleButton) findViewById(R.id.account_binding_weibo_toggle_btn);
+		mBindingLayout = (RelativeLayout) findViewById(R.id.tobinding);
 
 		// 设置两个toggleBtn的状态
 		isBoundWeiBo = user.isBoundWeibo();
 		isBoundWechat = user.isBoundWechat();
 		isBoundQQ = user.isBoundQQ();
 
-		if (user.getPhoneNum().equals("0")) {
+		if (user.getPhoneNum().equals("")) {
 			mBindingPhoneTv.setText("手机号");
 			mBindPhoneStatusTv.setText("未绑定");
 		} else {
+			System.out.println("手机号 " + user.getPhoneNum());
 			mBindingPhoneTv.setText("手机号" + user.getPhoneNum());
 			mBindPhoneStatusTv.setText("已绑定");
 		}
 		mBindWeiboBtn.setChecked(isBoundWeiBo);
 		mBindWechatBtn.setChecked(isBoundWechat);
 		mBindQQBtn.setChecked(isBoundQQ);
+	}
+
+	public void onEventMainThread(RefreshEvent event) {
+		if(event.className.equals(this.getClass().getName())){
+			mBindingPhoneTv.setText("手机号" + user.getPhoneNum());
+			mBindPhoneStatusTv.setText("已绑定");
+		}
 	}
 
 	private void initListeners() {
@@ -113,6 +126,16 @@ public class SettingAccountSafeActivity extends PSGodBaseActivity implements
 			public void onClick(View v) {
 				Intent intent = new Intent(SettingAccountSafeActivity.this,
 						SettingPasswordActivity.class);
+				startActivity(intent);
+			}
+		});
+
+		// 点击绑定
+		mBindingLayout.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(SettingAccountSafeActivity.this,
+						BindPhoneActivity.class);
 				startActivity(intent);
 			}
 		});
@@ -620,5 +643,12 @@ public class SettingAccountSafeActivity extends PSGodBaseActivity implements
 			break;
 		}
 		return false;
+	}
+
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		EventBus.getDefault().unregister(this);
+
 	}
 }

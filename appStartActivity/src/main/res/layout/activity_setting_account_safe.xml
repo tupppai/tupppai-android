@@ -26,6 +26,7 @@
         android:textSize="13dp" />
 
     <RelativeLayout
+        android:id="@+id/tobinding"
         android:layout_width="match_parent"
         android:layout_height="65dp"
         android:background="#FFFFFF"
@@ -37,7 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="手机号 13510226835"
-            android:textColor="#7F000000"
+            android:textColor="#000000"
             android:textSize="15dp" />
 
         <TextView
@@ -46,8 +47,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginRight="15dp"
-            android:text="已绑定"
-            android:textColor="#7F000000"
+            android:text="还没绑定手机号"
+            android:textColor="#000000"
             android:textSize="14dp" />
     </RelativeLayout>
 

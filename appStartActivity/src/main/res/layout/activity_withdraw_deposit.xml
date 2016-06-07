@@ -56,7 +56,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@+id/withdraw_deposit_channel_img1"
-                    android:text="关注图派公众号领取"
+                    android:text="关注we图派公众号领取"
                     android:textColor="@color/black"
                     android:textSize="16dp" />
 
@@ -66,7 +66,7 @@
                     android:layout_alignLeft="@+id/withdraw_deposit_channel_txt1"
                     android:layout_below="@+id/withdraw_deposit_channel_txt1"
                     android:layout_marginTop="10dp"
-                    android:text="在公众号搜索图派，关注服务号即可提现"
+                    android:text="在公众号搜索we图派，关注服务号即可提现"
                     android:textColor="@color/black_alpha40"
                     android:textSize="12dp" />
 
@@ -105,7 +105,7 @@
                     android:id="@+id/withdraw_deposit_money_txt1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="满¥10.00即可提现"
+                    android:text="满¥20.00即可提现"
                     android:textColor="@color/black_alpha40"
                     android:textSize="14dp" />
 
