@@ -9,7 +9,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.pires.wesee.Constants;
-import com.pires.wesee.ui.activity.MovieActivity;
+import com.pires.wesee.ui.activity.WebViewActivity;
 import com.pires.wesee.ui.activity.PhotoBrowserActivity;
 import com.pires.wesee.ui.activity.UserProfileActivity;
 import com.pires.wesee.ui.view.TupppaiWebViewChrome;
@@ -17,8 +17,8 @@ import com.pires.wesee.ui.view.TupppaiWebViewChrome;
 import java.util.Map;
 
 /**
- * Created by brandwang on 2016/1/20 0020.
- * JsBridge webview
+ * Created by xiaoluo on 2016/6/8.
+ *  自定义webview
  */
 public class IntentWebView extends WebView {
 
@@ -51,7 +51,7 @@ public class IntentWebView extends WebView {
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 Intent intent = new Intent();
                 Bundle bundle = new Bundle();
-
+                System.out.println("点击webview " + url + "\n");
                 if (url.contains("user-profile/")) {  //点击用户头像，转到用户界面
                     intent.setClass(mContext, UserProfileActivity.class);
                     String mUserId = url.substring(url.indexOf("user-profile/") + 13, url.length());
@@ -67,7 +67,7 @@ public class IntentWebView extends WebView {
                     intent.putExtra(Constants.IntentKey.PHOTO_ITEM_TYPE, "ask");
 
                 } else {  //点击评论，电影等，跳到电影界面
-                    intent.setClass(mContext, MovieActivity.class);
+                    intent.setClass(mContext, WebViewActivity.class);
                     String StrUrl = url.substring(url.indexOf("#") + 1, url.length());
                     String mUrl = "http://wechupin.com/index-app.html#" + StrUrl;
                     bundle.putString("Url", mUrl);

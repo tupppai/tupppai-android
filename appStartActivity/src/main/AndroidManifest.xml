@@ -84,7 +84,7 @@
         <activity android:name="com.pires.wesee.ui.activity.RegisterPhoneActivity" />
         <activity android:name="com.pires.wesee.ui.activity.RegisterVerifyActivity" />
         <activity
-            android:name="com.pires.wesee.ui.activity.MovieActivity" />
+            android:name=".ui.activity.WebViewActivity" />
         <activity
             android:name="com.pires.wesee.ui.activity.MallActivity" />
         <activity

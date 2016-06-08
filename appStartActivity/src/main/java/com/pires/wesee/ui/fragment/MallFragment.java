@@ -11,10 +11,10 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.TextView;
 
-import com.pires.wesee.ui.activity.MallActivity;
 import com.pires.wesee.R;
 import com.pires.wesee.UserPreferences;
 import com.pires.wesee.model.LoginUser;
+import com.pires.wesee.ui.activity.WebViewActivity;
 import com.youzan.sdk.YouzanBridge;
 import com.youzan.sdk.YouzanSDK;
 import com.youzan.sdk.YouzanUser;
@@ -23,6 +23,7 @@ import com.youzan.sdk.http.engine.QueryError;
 import com.youzan.sdk.web.plugin.YouzanWebClient;
 
 /**
+ * 商城 Fragment
  * Created by xiaoluo on 2016/5/20.
  */
 public class MallFragment extends BaseFragment implements OnClickListener{
@@ -84,9 +85,9 @@ public class MallFragment extends BaseFragment implements OnClickListener{
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             super.shouldOverrideUrlLoading(view, url);
 
-            //传递点击的url到商城Activity
+            //传递点击的url到WebViewActivity
             Intent intent = new Intent();
-            intent.setClass(mContext, MallActivity.class);
+            intent.setClass(mContext, WebViewActivity.class);
             Bundle bundle = new Bundle();
             bundle.putString("Url", url);
             intent.putExtras(bundle);

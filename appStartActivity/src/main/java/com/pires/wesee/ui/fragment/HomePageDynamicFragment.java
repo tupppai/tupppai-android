@@ -1,21 +1,14 @@
 package com.pires.wesee.ui.fragment;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 
-import com.pires.wesee.ui.activity.MovieActivity;
-import com.pires.wesee.Constants;
 import com.pires.wesee.R;
 import com.pires.wesee.UserPreferences;
 import com.pires.wesee.eventbus.RefreshEvent;
-import com.pires.wesee.ui.activity.PhotoBrowserActivity;
-import com.pires.wesee.ui.activity.UserProfileActivity;
 import com.pires.wesee.ui.widget.IntentWebView;
 
 import de.greenrobot.event.EventBus;

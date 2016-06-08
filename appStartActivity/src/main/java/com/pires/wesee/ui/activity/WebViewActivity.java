@@ -32,7 +32,7 @@ import de.greenrobot.event.EventBus;
  * 新版web容器activity
  *  Created by xiaoluo on 2016/5/20.
  */
-public class MovieActivity extends Activity implements View.OnClickListener {
+public class WebViewActivity extends Activity implements View.OnClickListener {
 
     public Context mContext;
     private WebView mWebview;
