@@ -150,7 +150,7 @@ public class PhotoWaterFallItemView extends RelativeLayout implements Handler.Ca
 		mRecentAskMultiSignImage = (ImageView) this.findViewById(R.id.recent_multi_image_sign);
 
 		mWaterFallComment = (TextView) this.findViewById(R.id.water_fall_simple_type_photo_item_comment_tv);
-		//mWaterFallComment.setOnClickListener(commentListener);
+		mWaterFallComment.setOnClickListener(commentListener);
 
 		mImageArea = (RelativeLayout) this
 				.findViewById(R.id.photo_item_image_area);
@@ -305,7 +305,7 @@ public class PhotoWaterFallItemView extends RelativeLayout implements Handler.Ca
 			Intent intent = new Intent(mContext, CommentListActivity.class);
 			intent.putExtra(Constants.IntentKey.PHOTO_ITEM, mPhotoItem);
 			mContext.startActivity(intent);
-			setEnabled(false);
+			//setEnabled(false);
 			//mHandler.postDelayed(mViewEnabledRunnable, 1000);
 		}
 	};

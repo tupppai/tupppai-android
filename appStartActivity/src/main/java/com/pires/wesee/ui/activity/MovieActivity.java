@@ -77,7 +77,6 @@ public class MovieActivity extends Activity implements View.OnClickListener {
             public void onSuccess()
             {
                 mWebview.loadUrl(mUrl);
-                System.out.println("MovieActivity  " + mUrl + "\n");
             }
         });
     }
@@ -147,7 +146,6 @@ public class MovieActivity extends Activity implements View.OnClickListener {
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
             mCurrentUrl = url;
-            System.out.println("MovieActivity  onpagefinish  " + url + "\n");
         }
     }
 
