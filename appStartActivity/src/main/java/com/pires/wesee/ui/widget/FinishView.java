@@ -5,7 +5,11 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.pires.wesee.eventbus.RefreshEvent;
 import com.pires.wesee.ui.activity.PSGodBaseActivity;
+import com.pires.wesee.ui.fragment.HomePageDynamicFragment;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by Administrator on 2015/12/8 0008.
@@ -23,6 +27,7 @@ public class FinishView extends ImageView {
             public void onClick(View view) {
                 if (getContext() instanceof PSGodBaseActivity) {
                     ((PSGodBaseActivity) getContext()).finish();
+                    EventBus.getDefault().post(new RefreshEvent(HomePageDynamicFragment.class.getName()));
                 }
             }
         });

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -18,8 +19,12 @@ import com.pires.wesee.Constants;
 import com.pires.wesee.R;
 import com.pires.wesee.ThreadManager;
 import com.pires.wesee.WeakReferenceHandler;
+import com.pires.wesee.eventbus.RefreshEvent;
+import com.pires.wesee.ui.fragment.HomePageDynamicFragment;
+import com.pires.wesee.ui.fragment.MovieFragment;
 import com.pires.wesee.ui.widget.dialog.PSDialog;
 
+import de.greenrobot.event.EventBus;
 import uk.co.senab.photoview.PhotoViewAttacher;
 import uk.co.senab.photoview.PhotoViewAttacher.OnPhotoTapListener;
 
@@ -109,9 +114,20 @@ public class PhotoBrowserActivity extends PSGodBaseActivity implements Handler.C
 		mAttacher.setOnPhotoTapListener(new OnPhotoTapListener() {
 			@Override
 			public void onPhotoTap(View arg0, float arg1, float arg2) {
+				EventBus.getDefault().post(new RefreshEvent(HomePageDynamicFragment.class.getName()));
 				finish();
 			}
 		});
 		return true;
+	}
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+				EventBus.getDefault().post(new RefreshEvent(HomePageDynamicFragment.class.getName()));
+				finish();
+			return true;
+		} else
+			return super.onKeyDown(keyCode, event);
 	}
 }

@@ -17,8 +17,8 @@ public class Constants {
 	public static final Boolean IS_DEV = true;
 
 	public static final String APP_NAME = "PSGod";
-	public static final String APP_ID = "wx86ff6f67a2b9b4b8";
-	public static final String APP_SECRET = "c2da31fda3acf1c09c40ee25772b6ca5";
+	public static final String APP_ID = "1376c39e8ea48";
+	public static final String APP_SECRET = "b8b75cd464b9dcff594c8b59edb9ec95";
 	public static final boolean DEBUG = true;
 
 	public static int WIDTH_OF_SCREEN; // 手机屏幕宽度

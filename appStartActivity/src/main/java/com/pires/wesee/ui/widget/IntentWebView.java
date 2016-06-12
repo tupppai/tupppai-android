@@ -7,6 +7,7 @@ import android.util.AttributeSet;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
 
 import com.pires.wesee.Constants;
 import com.pires.wesee.ui.activity.WebViewActivity;
@@ -52,35 +53,41 @@ public class IntentWebView extends WebView {
                 Intent intent = new Intent();
                 Bundle bundle = new Bundle();
                 System.out.println("点击webview " + url + "\n");
-                if (url.contains("user-profile/")) {  //点击用户头像，转到用户界面
-                    intent.setClass(mContext, UserProfileActivity.class);
-                    String mUserId = url.substring(url.indexOf("user-profile/") + 13, url.length());
-                    Long mLongId = Long.parseLong(mUserId);
-                    intent.putExtra(Constants.IntentKey.USER_ID, mLongId);
+                String mStr = url.substring(url.length() - 7, url.length());  //dynamic
+                String nStr = url.substring(url.length() - 12, url.length()); //playcategory
 
-                } else if (url.contains("image_popup")) {  //点击图片，转到图片浏览界面
-                    String picUrl = url.substring(url.indexOf("image_popup") + 12, url.length());
-                    intent.setClass(mContext, PhotoBrowserActivity.class);
-                    intent.putExtra(Constants.IntentKey.PHOTO_PATH, picUrl);
-                    intent.putExtra(Constants.IntentKey.ASK_ID, i);
-                    intent.putExtra(Constants.IntentKey.PHOTO_ITEM_ID, i);
-                    intent.putExtra(Constants.IntentKey.PHOTO_ITEM_TYPE, "ask");
-
-                } else {  //点击评论，电影等，跳到电影界面
-                    intent.setClass(mContext, WebViewActivity.class);
-                    String StrUrl = url.substring(url.indexOf("#") + 1, url.length());
-                    String mUrl = "http://wechupin.com/index-app.html#" + StrUrl;
-                    bundle.putString("Url", mUrl);
-                    intent.putExtras(bundle);
+                if (!mStr.equals("dynamic") && !nStr.equals("playcategory")) {
+                    if (url.contains("user-profile/")) {  //点击用户头像，转到用户界面
+                        intent.setClass(mContext, UserProfileActivity.class);
+                        String mUserId = url.substring(url.indexOf("user-profile/") + 13, url.length());
+                        Long mLongId = Long.parseLong(mUserId);
+                        intent.putExtra(Constants.IntentKey.USER_ID, mLongId);
+                    } else if (url.contains("image_popup")) {  //点击图片，转到图片浏览界面
+                        String picUrl = url.substring(url.indexOf("image_popup") + 12, url.length());
+                        intent.setClass(mContext, PhotoBrowserActivity.class);
+                        intent.putExtra(Constants.IntentKey.PHOTO_PATH, picUrl);
+                        intent.putExtra(Constants.IntentKey.ASK_ID, i);
+                        intent.putExtra(Constants.IntentKey.PHOTO_ITEM_ID, i);
+                        intent.putExtra(Constants.IntentKey.PHOTO_ITEM_TYPE, "ask");
+                    } else {  //点击评论，电影等，跳到电影界面
+                        intent.setClass(mContext, WebViewActivity.class);
+                        String StrUrl = url.substring(url.indexOf("#") + 1, url.length());
+                        String mUrl = "http://wechupin.com/index-app.html#" + StrUrl;
+                        bundle.putString("Url", mUrl);
+                        intent.putExtras(bundle);
+                    }
+                    mContext.startActivity(intent);
+                    //Toast.makeText(mContext,url,Toast.LENGTH_SHORT).show();
                 }
-                mContext.startActivity(intent);
+
 
                 return true;
             }
 
             @Override
             public void onPageFinished(WebView view, String url) {
-                super.onPageFinished(view, url);
+                view.loadUrl("javascript:window.onhashchange = function() { myjsi.doStuff(url); };");
+                //Toast.makeText(mContext,url,Toast.LENGTH_SHORT).show();
             }
         });
         getSettings().setJavaScriptEnabled(true);
@@ -92,6 +99,7 @@ public class IntentWebView extends WebView {
         });
 
         // 设置内嵌浏览器的属性
+        addJavascriptInterface(new MyJSI(), "myjsi");
         WebSettings websettings = getSettings();
         websettings.setJavaScriptEnabled(true);
         websettings.setBuiltInZoomControls(true);
@@ -105,5 +113,40 @@ public class IntentWebView extends WebView {
     @Override
     public void loadUrl(String url, Map<String, String> additionalHttpHeaders) {
         super.loadUrl(url, additionalHttpHeaders);
+    }
+
+    private class MyJSI {
+        public void doStuff(String url) {
+            //Toast.makeText(mContext,"hash change" + "new" + url,Toast.LENGTH_SHORT).show();
+//
+//            Intent intent = new Intent();
+//            Bundle bundle = new Bundle();
+//            System.out.println("点击webview " + url + "\n");
+//            if (!url.contains("dynamic")) {
+//                if (url.contains("user-profile/")) {  //点击用户头像，转到用户界面
+//                    intent.setClass(mContext, UserProfileActivity.class);
+//                    String mUserId = url.substring(url.indexOf("user-profile/") + 13, url.length());
+//                    Long mLongId = Long.parseLong(mUserId);
+//                    intent.putExtra(Constants.IntentKey.USER_ID, mLongId);
+//
+//                } else if (url.contains("image_popup")) {  //点击图片，转到图片浏览界面
+//                    String picUrl = url.substring(url.indexOf("image_popup") + 12, url.length());
+//                    intent.setClass(mContext, PhotoBrowserActivity.class);
+//                    intent.putExtra(Constants.IntentKey.PHOTO_PATH, picUrl);
+//                    intent.putExtra(Constants.IntentKey.ASK_ID, i);
+//                    intent.putExtra(Constants.IntentKey.PHOTO_ITEM_ID, i);
+//                    intent.putExtra(Constants.IntentKey.PHOTO_ITEM_TYPE, "ask");
+//
+//                } else {  //点击评论，电影等，跳到电影界面
+//                    intent.setClass(mContext, WebViewActivity.class);
+//                    String StrUrl = url.substring(url.indexOf("#") + 1, url.length());
+//                    String mUrl = "http://wechupin.com/index-app.html#" + StrUrl;
+//                    bundle.putString("Url", mUrl);
+//                    intent.putExtras(bundle);
+//                }
+//                mContext.startActivity(intent);
+//            }
+
+        }
     }
 }
