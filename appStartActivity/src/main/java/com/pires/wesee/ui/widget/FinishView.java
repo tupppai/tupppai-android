@@ -27,7 +27,7 @@ public class FinishView extends ImageView {
             public void onClick(View view) {
                 if (getContext() instanceof PSGodBaseActivity) {
                     ((PSGodBaseActivity) getContext()).finish();
-                    EventBus.getDefault().post(new RefreshEvent(HomePageDynamicFragment.class.getName()));
+                    //EventBus.getDefault().post(new RefreshEvent(HomePageDynamicFragment.class.getName()));
                 }
             }
         });

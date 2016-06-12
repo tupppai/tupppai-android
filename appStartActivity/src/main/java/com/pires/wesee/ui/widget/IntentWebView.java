@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.AttributeSet;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -25,17 +26,20 @@ public class IntentWebView extends WebView {
 
     private Context mContext;
     private Long i = 1l;
+    private String mWebviewTitle;
     public IntentWebView(Context context) {
         super(context);
         mContext = context;
-
         init();
+    }
+
+    public String getWebViewTitle() {
+        return mWebviewTitle;
     }
 
     public IntentWebView(Context context, AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
-
         init();
     }
 
@@ -50,12 +54,13 @@ public class IntentWebView extends WebView {
         setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.stopLoading();
                 Intent intent = new Intent();
                 Bundle bundle = new Bundle();
                 System.out.println("点击webview " + url + "\n");
                 String mStr = url.substring(url.length() - 7, url.length());  //dynamic
                 String nStr = url.substring(url.length() - 12, url.length()); //playcategory
-
+                // 如果不是初始webview界面，才发生跳转
                 if (!mStr.equals("dynamic") && !nStr.equals("playcategory")) {
                     if (url.contains("user-profile/")) {  //点击用户头像，转到用户界面
                         intent.setClass(mContext, UserProfileActivity.class);
@@ -78,6 +83,8 @@ public class IntentWebView extends WebView {
                     }
                     mContext.startActivity(intent);
                     //Toast.makeText(mContext,url,Toast.LENGTH_SHORT).show();
+                } else {
+                    view.loadUrl(url);
                 }
 
 
@@ -95,6 +102,12 @@ public class IntentWebView extends WebView {
             @Override
             public void onProgressChanged(WebView view, int progress) {
 
+            }
+
+            @Override
+            public void onReceivedTitle(WebView view, String title) {
+                super.onReceivedTitle(view, title);
+                mWebviewTitle = title;
             }
         });
 
@@ -116,6 +129,7 @@ public class IntentWebView extends WebView {
     }
 
     private class MyJSI {
+        @JavascriptInterface
         public void doStuff(String url) {
             //Toast.makeText(mContext,"hash change" + "new" + url,Toast.LENGTH_SHORT).show();
 //

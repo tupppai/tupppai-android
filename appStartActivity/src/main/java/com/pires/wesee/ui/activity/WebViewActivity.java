@@ -11,6 +11,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.pires.wesee.R;
 import com.pires.wesee.eventbus.RefreshEvent;
@@ -46,7 +47,7 @@ public class WebViewActivity extends Activity implements View.OnClickListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie);
-
+        mContext = this;
         Intent intent = this.getIntent();
         Bundle bundle = intent.getExtras();
         mUrl = bundle.getString("Url");
@@ -54,6 +55,7 @@ public class WebViewActivity extends Activity implements View.OnClickListener {
         initView();
         setWeb();
         //mWebview.loadUrl(mUrl);
+        mWebview.loadUrl(mUrl);
     }
 
     //同步注册Youzan用户
@@ -71,12 +73,14 @@ public class WebViewActivity extends Activity implements View.OnClickListener {
         YouzanSDK.asyncRegisterUser(user, new OnRegister() {
             @Override
             public void onFailed(QueryError queryError) {
+
             }
 
             @Override
             public void onSuccess()
             {
                 mWebview.loadUrl(mUrl);
+                Toast.makeText(mContext, mUrl, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -157,8 +161,8 @@ public class WebViewActivity extends Activity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.activity_webview_back:
-                EventBus.getDefault().post(new RefreshEvent(MovieFragment.class.getName()));
-                EventBus.getDefault().post(new RefreshEvent(HomePageDynamicFragment.class.getName()));
+//                EventBus.getDefault().post(new RefreshEvent(MovieFragment.class.getName()));
+//                EventBus.getDefault().post(new RefreshEvent(HomePageDynamicFragment.class.getName()));
                 if (mCurrentUrl.equals(mUrl)) {
                     finish();
                 } else {
@@ -166,8 +170,8 @@ public class WebViewActivity extends Activity implements View.OnClickListener {
                 }
                 break;
             case R.id.activity_webview_exit:
-                EventBus.getDefault().post(new RefreshEvent(MovieFragment.class.getName()));
-                EventBus.getDefault().post(new RefreshEvent(HomePageDynamicFragment.class.getName()));
+//                EventBus.getDefault().post(new RefreshEvent(MovieFragment.class.getName()));
+//                EventBus.getDefault().post(new RefreshEvent(HomePageDynamicFragment.class.getName()));
                 finish();
                 break;
             default:
@@ -182,8 +186,8 @@ public class WebViewActivity extends Activity implements View.OnClickListener {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
 
             if (mCurrentUrl.equals(mUrl)) {
-                EventBus.getDefault().post(new RefreshEvent(MovieFragment.class.getName()));
-                EventBus.getDefault().post(new RefreshEvent(HomePageDynamicFragment.class.getName()));
+//                EventBus.getDefault().post(new RefreshEvent(MovieFragment.class.getName()));
+//                EventBus.getDefault().post(new RefreshEvent(HomePageDynamicFragment.class.getName()));
                 finish();
             } else {
                 mWebview.goBack();   //后退

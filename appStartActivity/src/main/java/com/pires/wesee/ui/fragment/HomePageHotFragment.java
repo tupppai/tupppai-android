@@ -260,7 +260,7 @@ public class HomePageHotFragment extends BaseFragment implements Callback {
         channelPanel.removeAllViews();
         int mSize = mtupppais.size();
 
-        System.out.println("mtupppais.size " + mtupppais.size());
+        //System.out.println("mtupppais.size " + mtupppais.size());
         if (mSize > 0) {
             for (int i = 0; i < mSize; i++) {
                 ImageView mchannelIv = new ImageView(mContext);
@@ -575,7 +575,7 @@ public class HomePageHotFragment extends BaseFragment implements Callback {
             }
 
             mtupppais.addAll(response);
-            System.out.println("tupppais " + mtupppais.size());
+            //System.out.println("tupppais " + mtupppais.size());
 
             if ((mtupppais.size() > 0) && (mBannerItems.size() > 0) && HasAddBanner == false && HasAddChannel == false ) {
                 mViewHolder.mPhotoListView.getRefreshableView().addHeaderView(getHeaderView());

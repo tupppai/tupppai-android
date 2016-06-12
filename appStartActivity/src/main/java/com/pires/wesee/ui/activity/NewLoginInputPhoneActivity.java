@@ -603,7 +603,7 @@ public class NewLoginInputPhoneActivity extends PSGodBaseActivity {
                 SharedPreferences.Editor editor = PSGodApplication
                         .getAppContext()
                         .getSharedPreferences(Constants.SharedPreferencesKey.NAME,
-                                MODE_PRIVATE).edit();
+                                Context.MODE_PRIVATE).edit();
                 editor.putString(Constants.ThirdAuthInfo.THIRD_AUTH_PLATFORM, WEIBOPLAT);
                 editor.putString(Constants.ThirdAuthInfo.USER_OPENID, mThirdAuthId);
                 editor.putString(Constants.ThirdAuthInfo.USER_AVATAR, mThirdAuthAvatar);

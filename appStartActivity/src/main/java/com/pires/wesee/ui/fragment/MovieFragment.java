@@ -2,6 +2,7 @@ package com.pires.wesee.ui.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,13 +20,14 @@ import de.greenrobot.event.EventBus;
  * 影视fragment
  * Created by xiaoluo on 2016/5/20.
  */
-public class MovieFragment extends BaseFragment implements OnClickListener{
+public class MovieFragment extends BaseFragment {
 
     public Context mContext;
     private IntentWebView mWebview;
     private TextView mWebtitle;
     private String mCookieMOVIE = null;
     private String mToken;
+    private String testUrl;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -42,6 +44,7 @@ public class MovieFragment extends BaseFragment implements OnClickListener{
     private void getCookie() {
         mToken = UserPreferences.TokenVerify.getToken();
         mCookieMOVIE = "http://wechupin.com/index-app.html?c=" + mToken +"&from=android#app/playcategory";
+        //testUrl = "http://wechupin.com/index-app.html?c=" + mToken + "&from=android#app/producerindex/146/ask";
     }
 
 
@@ -51,7 +54,13 @@ public class MovieFragment extends BaseFragment implements OnClickListener{
         mWebtitle = (TextView) view.findViewById(R.id.webview_title);
         mWebview.getSettings().setJavaScriptEnabled(true);
         mWebview.loadUrl(mCookieMOVIE);
-        mWebtitle.setText("WEMAKE");
+        //mWebview.loadUrl(testUrl);
+        // 延时获取网页标题
+        new Handler().postDelayed(new Runnable(){
+            public void run() {
+                mWebtitle.setText(mWebview.getWebViewTitle());
+            }
+        }, 500);
     }
 
     // evenbus，用于从Activity返回原来的Fragment时，调用重新载入webview
@@ -66,8 +75,7 @@ public class MovieFragment extends BaseFragment implements OnClickListener{
         }
     }
 
-    public void onClick(View v) {
-    }
+
 
     @Override
     public void onDestroy() {
