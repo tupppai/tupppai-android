@@ -204,7 +204,7 @@ public class BindPhoneActivity extends PSGodBaseActivity {
                     SharedPreferences sp = PSGodApplication.getAppContext()
                             .getSharedPreferences(Constants.SharedPreferencesKey.NAME,
                                     Context.MODE_PRIVATE);
-                    String thirdAuthType = sp.getString(Constants.ThirdAuthInfo.THIRD_AUTH_PLATFORM, "qq");
+                    String thirdAuthType = sp.getString(Constants.ThirdAuthInfo.THIRD_AUTH_PLATFORM, "");
                     String openId = sp.getString(Constants.ThirdAuthInfo.USER_OPENID, "");
                     if (!TextUtils.isEmpty(openId)) {
                         mRegisterData.setOpenId(openId);

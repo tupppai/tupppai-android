@@ -80,7 +80,7 @@ public class WebViewActivity extends Activity implements View.OnClickListener {
             public void onSuccess()
             {
                 mWebview.loadUrl(mUrl);
-                Toast.makeText(mContext, mUrl, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(mContext, mUrl, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -161,8 +161,8 @@ public class WebViewActivity extends Activity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.activity_webview_back:
-//                EventBus.getDefault().post(new RefreshEvent(MovieFragment.class.getName()));
-//                EventBus.getDefault().post(new RefreshEvent(HomePageDynamicFragment.class.getName()));
+                EventBus.getDefault().post(new RefreshEvent(MovieFragment.class.getName()));
+                EventBus.getDefault().post(new RefreshEvent(HomePageDynamicFragment.class.getName()));
                 if (mCurrentUrl.equals(mUrl)) {
                     finish();
                 } else {
@@ -170,8 +170,8 @@ public class WebViewActivity extends Activity implements View.OnClickListener {
                 }
                 break;
             case R.id.activity_webview_exit:
-//                EventBus.getDefault().post(new RefreshEvent(MovieFragment.class.getName()));
-//                EventBus.getDefault().post(new RefreshEvent(HomePageDynamicFragment.class.getName()));
+                EventBus.getDefault().post(new RefreshEvent(MovieFragment.class.getName()));
+                EventBus.getDefault().post(new RefreshEvent(HomePageDynamicFragment.class.getName()));
                 finish();
                 break;
             default:
@@ -186,8 +186,8 @@ public class WebViewActivity extends Activity implements View.OnClickListener {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
 
             if (mCurrentUrl.equals(mUrl)) {
-//                EventBus.getDefault().post(new RefreshEvent(MovieFragment.class.getName()));
-//                EventBus.getDefault().post(new RefreshEvent(HomePageDynamicFragment.class.getName()));
+                EventBus.getDefault().post(new RefreshEvent(MovieFragment.class.getName()));
+                EventBus.getDefault().post(new RefreshEvent(HomePageDynamicFragment.class.getName()));
                 finish();
             } else {
                 mWebview.goBack();   //后退

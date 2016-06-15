@@ -12,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
@@ -34,10 +35,12 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.pires.wesee.BitmapUtils;
 import com.pires.wesee.PsGodImageLoader;
 import com.pires.wesee.Utils;
+import com.pires.wesee.eventbus.RefreshEvent;
 import com.pires.wesee.model.LoginUser;
 import com.pires.wesee.network.request.ActionFollowRequest;
 import com.pires.wesee.network.request.PSGodRequestQueue;
 import com.pires.wesee.ui.adapter.SlidingPagerAdapter;
+import com.pires.wesee.ui.fragment.HomePageDynamicFragment;
 import com.pires.wesee.ui.fragment.ScrollTabHolder;
 import com.pires.wesee.ui.widget.AvatarImageView;
 import com.pires.wesee.ui.widget.FinishView;
@@ -52,6 +55,8 @@ import com.pires.wesee.network.request.UserDetailRequest.UserDetailResult;
 import com.pires.wesee.ui.view.PagerSlidingTabStrip;
 import com.pires.wesee.ui.widget.dialog.CustomProgressingDialog;
 import com.pires.wesee.ui.widget.dialog.ImageDialog;
+
+import de.greenrobot.event.EventBus;
 
 public class UserProfileActivity extends PSGodBaseActivity implements
         OnPageChangeListener, ScrollTabHolder {
@@ -696,6 +701,15 @@ public class UserProfileActivity extends PSGodBaseActivity implements
         RequestQueue requestQueue = PSGodRequestQueue.getInstance(this)
                 .getRequestQueue();
         requestQueue.cancelAll(TAG);
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            EventBus.getDefault().post(new RefreshEvent(HomePageDynamicFragment.class.getName()));
+            finish();
+            return true;
+        } else
+            return super.onKeyDown(keyCode, event);
     }
 
 }

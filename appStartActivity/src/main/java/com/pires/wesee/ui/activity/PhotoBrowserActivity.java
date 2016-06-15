@@ -114,20 +114,20 @@ public class PhotoBrowserActivity extends PSGodBaseActivity implements Handler.C
 		mAttacher.setOnPhotoTapListener(new OnPhotoTapListener() {
 			@Override
 			public void onPhotoTap(View arg0, float arg1, float arg2) {
-				//EventBus.getDefault().post(new RefreshEvent(HomePageDynamicFragment.class.getName()));
+				EventBus.getDefault().post(new RefreshEvent(HomePageDynamicFragment.class.getName()));
 				finish();
 			}
 		});
 		return true;
 	}
 
-//	@Override
-//	public boolean onKeyDown(int keyCode, KeyEvent event) {
-//		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-//				EventBus.getDefault().post(new RefreshEvent(HomePageDynamicFragment.class.getName()));
-//				finish();
-//			return true;
-//		} else
-//			return super.onKeyDown(keyCode, event);
-//	}
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+				EventBus.getDefault().post(new RefreshEvent(HomePageDynamicFragment.class.getName()));
+				finish();
+			return true;
+		} else
+			return super.onKeyDown(keyCode, event);
+	}
 }
