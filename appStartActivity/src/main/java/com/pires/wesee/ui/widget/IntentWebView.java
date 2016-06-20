@@ -116,6 +116,7 @@ public class IntentWebView extends WebView {
         WebSettings websettings = getSettings();
         websettings.setJavaScriptEnabled(true);
         websettings.setBuiltInZoomControls(true);
+        websettings.setDomStorageEnabled(true);
     }
 
     @Override

@@ -53,6 +53,7 @@ public class MovieFragment extends BaseFragment {
         mWebview = (IntentWebView) view.findViewById(R.id.fragment_movie_webview);
         mWebtitle = (TextView) view.findViewById(R.id.webview_title);
         mWebview.getSettings().setJavaScriptEnabled(true);
+        mWebview.getSettings().setDomStorageEnabled(true);
         mWebview.loadUrl(mCookieMOVIE);
         //mWebview.loadUrl(testUrl);
         // 延时获取网页标题
@@ -83,5 +84,16 @@ public class MovieFragment extends BaseFragment {
         EventBus.getDefault().unregister(this);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        mWebview.resumeTimers();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mWebview.pauseTimers();
+    }
 }
 

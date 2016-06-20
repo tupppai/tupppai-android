@@ -240,6 +240,7 @@ public class PhotoItemView extends RelativeLayout implements Callback {
         mWaterFalllike = (TextView) this.findViewById(R.id.like_count_tv);
         mWaterFallComment = (TextView) this.findViewById(R.id.water_fall_simple_type_photo_item_comment_tv);
 
+
         // 单条求助类型操作栏
         mSingleAskBtnsPanel = (RelativeLayout) this
                 .findViewById(R.id.single_photoitem_ask);
@@ -527,6 +528,7 @@ public class PhotoItemView extends RelativeLayout implements Callback {
         mPhotoType = mPhotoItem.getType();
         mScaling = false;
 
+
         mNameTv.setText(mPhotoItem.getNickname());
         mTimeTv.setText(mPhotoItem.getUpdateTimeStr());
         mAllWorksTxt.setText(String.format("已有%s个作品", mPhotoItem.getReplyCount()));
@@ -746,6 +748,7 @@ public class PhotoItemView extends RelativeLayout implements Callback {
         updateShareView();
         updateCommentView();
         mLikeView.setmPhotoItem(mPhotoItem);
+        mWaterFalllike.setText(Integer.toString(mPhotoItem.getLikeCount()));
 
 //        updateFavView();
 //        updateLikeView();
@@ -862,6 +865,7 @@ public class PhotoItemView extends RelativeLayout implements Callback {
         mFocusAskCommentTv.setText(textCommentCount);
         mComplexCommentBtn.setText(textCommentCount);
         mWaterFallComment.setText(textCommentCount);
+
     }
 
 //    /**

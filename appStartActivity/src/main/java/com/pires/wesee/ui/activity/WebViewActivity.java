@@ -88,11 +88,13 @@ public class WebViewActivity extends Activity implements View.OnClickListener {
     public void onPause() {
         super.onPause();
         mWebview.onPause();
+        mWebview.pauseTimers();
     }
 
     public void onResume() {
         super.onResume();
         mWebview.onResume();
+        mWebview.resumeTimers();
     }
 
     private void initView() {
@@ -104,6 +106,8 @@ public class WebViewActivity extends Activity implements View.OnClickListener {
         mExit.setOnClickListener(this);
 
         mWebview.getSettings().setJavaScriptEnabled(true);
+        mWebview.getSettings().setBuiltInZoomControls(true);
+        mWebview.getSettings().setDomStorageEnabled(true);
 
         //mWebview.setWebViewClient(new MovieWebViewClient());
 
