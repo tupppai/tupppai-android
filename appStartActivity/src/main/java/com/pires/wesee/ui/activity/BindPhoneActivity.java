@@ -343,11 +343,11 @@ public class BindPhoneActivity extends PSGodBaseActivity {
 
     private void callInputPanel() {
         // 唤起输入键盘 并输入框取得焦点
-        mCodeText.setFocusableInTouchMode(true);
-        mCodeText.requestFocus();
+        mPhoneText.setFocusableInTouchMode(true);
+        mPhoneText.requestFocus();
 
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.showSoftInput(mCodeText, 0);
+        imm.showSoftInput(mPhoneText, 0);
     }
 
     // 获取到验证码

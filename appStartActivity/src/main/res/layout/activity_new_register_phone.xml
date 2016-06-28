@@ -44,6 +44,19 @@
                 android:hint="密码"
                 android:textSize="13dp"
                 android:textColor="#66000000"/>
+            <EditText
+                android:id="@+id/input_passwd_again"
+                android:layout_width="match_parent"
+                android:layout_height="47dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:paddingLeft="12dp"
+                android:inputType="textPassword"
+                android:background="@drawable/shape_register_login_edit_background"
+                android:hint="再次输入密码"
+                android:textSize="13dp"
+                android:textColor="#66000000"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -51,6 +64,7 @@
                 android:layout_marginLeft="40dp"
                 android:layout_marginRight="40dp"
                 android:layout_marginTop="8dp"
+                android:visibility="gone"
                 android:background="@drawable/shape_register_login_edit_background">
 
                 <Button

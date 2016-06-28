@@ -53,7 +53,7 @@ public abstract class PSGodErrorListener implements ErrorListener {
             }
         } else {
             msg = TextUtils.isEmpty(msg) ? "网络不稳定，请稍后再试" : msg;
-            Utils.showDebugToast(msg);
+            //Utils.showDebugToast(msg);
         }
 //		msg = TextUtils.isEmpty(msg) ? " Empty message" : "网络连接不可用，请稍后再试";
 //		msg = TextUtils.isEmpty(msg) ? " Empty message" : msg;

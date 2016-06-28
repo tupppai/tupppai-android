@@ -44,6 +44,7 @@ public class HomePageDynamicFragment extends BaseFragment {
         mWebview = new IntentWebView(getActivity());
         mWebview = (IntentWebView) view.findViewById(R.id.fragment_dynamic_webview);
         mWebview.getSettings().setJavaScriptEnabled(true);
+        mWebview.getSettings().setDomStorageEnabled(true);
         mWebview.loadUrl(cookieDYNAMIC);
         mWebview.setClickable(true);
         mWebview.setEnabled(true);
@@ -61,5 +62,17 @@ public class HomePageDynamicFragment extends BaseFragment {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mWebview.resumeTimers();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mWebview.pauseTimers();
     }
 }

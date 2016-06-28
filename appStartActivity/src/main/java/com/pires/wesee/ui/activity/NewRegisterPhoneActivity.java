@@ -73,6 +73,7 @@ public class NewRegisterPhoneActivity extends PSGodBaseActivity{
 
     private EditText mPhoneText;
     private EditText mPasswdText;
+    private EditText mPasswdAgText;
     private EditText mVerifyText;
     private Button mResendButton;
     private Button mRegisterBtn;
@@ -120,6 +121,7 @@ public class NewRegisterPhoneActivity extends PSGodBaseActivity{
         mPhoneText = (EditText) findViewById(R.id.input_phone);
         mPhoneText.setText(mPhoneNum);
         mPasswdText = (EditText) findViewById(R.id.input_passwd);
+        mPasswdAgText = (EditText) findViewById(R.id.input_passwd_again);
         mVerifyText = (EditText) findViewById(R.id.verify_code);
         mResendButton = (Button) findViewById(R.id.get_verify_code);
         mRegisterBtn = (Button) findViewById(R.id.register_login_btn);
@@ -127,6 +129,7 @@ public class NewRegisterPhoneActivity extends PSGodBaseActivity{
         mWeiboLoginBtn = (ImageView) findViewById(R.id.weibo_login);
         mWechatLoginBtn = (ImageView) findViewById(R.id.weixin_login);
         mQQLoginBtn = (ImageView) findViewById(R.id.qq_login);
+        mVerifyText.setText("123456");
     }
 
     // BroadcastReceiver拦截短信验证码
@@ -443,6 +446,7 @@ public class NewRegisterPhoneActivity extends PSGodBaseActivity{
                     mRegisterData.setThirdAuthType(type);
                     mRegisterData.setPhoneNumber(mPhoneText.getText().toString());
                     mRegisterData.setPassword(mPasswdText.getText().toString());
+                    //mRegisterData.setVerifyCode(mVerifyText.getText().toString());
                     mRegisterData.setVerifyCode(mVerifyText.getText().toString());
 
                     // 显示等待对话框
@@ -796,6 +800,20 @@ public class NewRegisterPhoneActivity extends PSGodBaseActivity{
             Toast.makeText(NewRegisterPhoneActivity.this, "请填写登录密码", Toast.LENGTH_SHORT)
                     .show();
             mPasswdText.requestFocus();
+            return false;
+        }
+
+        if (Utils.isNull(mPasswdAgText)) {
+            Toast.makeText(NewRegisterPhoneActivity.this, "请再次输入密码", Toast.LENGTH_SHORT)
+                    .show();
+            mPasswdAgText.requestFocus();
+            return false;
+        }
+
+        if(!(mPasswdAgText.getText().toString()).equals(mPasswdText.getText().toString())){
+            Toast.makeText(NewRegisterPhoneActivity.this, "两次密码输入不一致", Toast.LENGTH_SHORT)
+                    .show();
+            mPasswdAgText.requestFocus();
             return false;
         }
 

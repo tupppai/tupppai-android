@@ -61,7 +61,8 @@
                 android:layout_marginLeft="34dp"
                 android:layout_marginRight="34dp"
                 android:layout_marginTop="13dp"
-                android:background="@drawable/shape_register_login_edit_background">
+                android:background="@drawable/shape_register_login_edit_background"
+                android:visibility="visible">
 
                 <Button
                     android:id="@+id/get_verify_code"
