@@ -70,6 +70,7 @@ public class NewLoginInputPhoneActivity extends PSGodBaseActivity {
     private String mThirdAuthName = "";
     private String mThirdAuthGender = "";
     private String mThirdAuthAvatar = "";
+    private String mThirdAuthUnion = "";
 
     private CustomProgressingDialog mProgressDialog;
     private WeakReferenceHandler handler = new WeakReferenceHandler(this);
@@ -331,6 +332,7 @@ public class NewLoginInputPhoneActivity extends PSGodBaseActivity {
                         mThirdAuthAvatar = res.get("headimgurl").toString();
                         mThirdAuthGender = res.get("sex").toString();
                         mThirdAuthName = res.get("nickname").toString();
+                        mThirdAuthUnion  = res.get("unionid").toString();
 
                         /**
                          * 输出res数据
@@ -365,6 +367,7 @@ public class NewLoginInputPhoneActivity extends PSGodBaseActivity {
                                     .setCode(mThirdAuthId)
                                     .setAvatar(mThirdAuthAvatar)
                                     .setNickname(mThirdAuthName)
+                                    .setUnionId(mThirdAuthUnion)
                                     .setSex(mThirdAuthGender)
                                     .setListener(wechatAuthListener)
                                     .setErrorListener(errorListener);

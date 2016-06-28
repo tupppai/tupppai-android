@@ -39,6 +39,7 @@ public class WechatUserInfoRequest extends BaseRequest<WechatUserWrapper> {
         private String mNickname;
         private String mSex;
         private String mAvatar;
+        private String mUnionId = "";
 
         private Listener<WechatUserWrapper> listener;
         private ErrorListener errorListener;
@@ -65,6 +66,11 @@ public class WechatUserInfoRequest extends BaseRequest<WechatUserWrapper> {
 
         public Builder setToken(String token) {
             this.mToken = token;
+            return this;
+        }
+
+        public Builder setUnionId(String unionid) {
+            this.mUnionId = unionid;
             return this;
         }
 
@@ -104,6 +110,7 @@ public class WechatUserInfoRequest extends BaseRequest<WechatUserWrapper> {
         public Map<String, String> createParameters() {
             Map<String, String> params = new HashMap<String, String>();
             params.put("openid", mCode);
+            params.put("unionid", mUnionId);
             if (mToken != null && mToken.length() > 0) {
                 params.put("access_token", mToken);
             }

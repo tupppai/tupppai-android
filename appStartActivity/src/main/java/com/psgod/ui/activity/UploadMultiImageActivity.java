@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
@@ -144,6 +145,8 @@ public class UploadMultiImageActivity extends PSGodBaseActivity {
         } else {
             IMAGE_UPLOAD_TYPE = TYPE_REPLY_UPLOAD;
         }
+
+        Log.d("","imagepathtest" + pathList.get(0));
 
         sharetype = (IMAGE_UPLOAD_TYPE.equals(TYPE_ASK_UPLOAD) == true) ? 1
                 : 2;

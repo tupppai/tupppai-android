@@ -74,6 +74,7 @@ public class NewPhoneLoginActivity extends PSGodBaseActivity {
     private String mThirdAuthName = "";
     private String mThirdAuthGender = "";
     private String mThirdAuthAvatar = "";
+    private String mThirdAuthUnion = "";
 
     private CustomProgressingDialog mProgressDialog;
     private WeakReferenceHandler handler = new WeakReferenceHandler(this);
@@ -305,11 +306,13 @@ public class NewPhoneLoginActivity extends PSGodBaseActivity {
                         mThirdAuthAvatar = res.get("headimgurl").toString();
                         mThirdAuthGender = res.get("sex").toString();
                         mThirdAuthName = res.get("nickname").toString();
+                        mThirdAuthUnion = res.get("unionid").toString();
 
                         // 验证code是否被注册
                         if (!TextUtils.isEmpty(mThirdAuthId)) {
                             WechatUserInfoRequest.Builder builder = new WechatUserInfoRequest.Builder()
                                     .setCode(mThirdAuthId)
+                                    .setUnionId(mThirdAuthUnion)
                                     .setListener(wechatAuthListener)
 //                                    .setToken(mThirdToken)
                                     .setErrorListener(errorListener);

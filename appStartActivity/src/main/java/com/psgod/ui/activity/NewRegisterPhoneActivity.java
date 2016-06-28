@@ -85,6 +85,7 @@ public class NewRegisterPhoneActivity extends PSGodBaseActivity{
     private String mThirdAuthName = "";
     private String mThirdAuthGender = "";
     private String mThirdAuthAvatar = "";
+    private String mThirdAuthUnion = "";
 
     private int mLeftTime = RESEND_TIME_IN_SEC;
     private WeakReferenceHandler mHandler = new WeakReferenceHandler(this);
@@ -358,14 +359,18 @@ public class NewRegisterPhoneActivity extends PSGodBaseActivity{
                     public void onComplete(Platform platform, int action,
                                            HashMap<String, Object> res) {
                         mThirdAuthId = res.get("openid").toString();
+                        mThirdAuthUnion  = res.get("unionid").toString();
                         mThirdAuthAvatar = res.get("headimgurl").toString();
                         mThirdAuthGender = res.get("sex").toString();
                         mThirdAuthName = res.get("nickname").toString();
+
+//                        Toast.makeText(NewRegisterPhoneActivity.this,mThirdAuthUnion,Toast.LENGTH_SHORT).show();
 
                         // 验证code是否被注册
                         if (!TextUtils.isEmpty(mThirdAuthId)) {
                             WechatUserInfoRequest.Builder builder = new WechatUserInfoRequest.Builder()
                                     .setCode(mThirdAuthId)
+                                    .setUnionId(mThirdAuthUnion)
                                     .setListener(wechatAuthListener)
                                     .setErrorListener(errorListener);
 
