@@ -40,6 +40,7 @@ public class ActionBindAccountRequest extends BaseRequest<Boolean> {
 		// 平台类型 weixin weibo mobile
 		private String type;
 		private String openid;
+		private String unionid = "";
 		private int isBind;
 		private Listener<Boolean> listener;
 		private ErrorListener errorListener;
@@ -56,6 +57,11 @@ public class ActionBindAccountRequest extends BaseRequest<Boolean> {
 
 		public Builder setOpenId(String id) {
 			this.openid = id;
+			return this;
+		}
+
+		public Builder setUnionId(String unionid) {
+			this.unionid = unionid;
 			return this;
 		}
 
@@ -101,6 +107,10 @@ public class ActionBindAccountRequest extends BaseRequest<Boolean> {
 			Map<String, String> params = new HashMap<String, String>();
 			if (isBind == TYPE_BIND) {
 				params.put("openid", openid);
+
+				if (unionid != null) {
+					params.put("unionid",unionid);
+				}
 			}
 			params.put("type", type);
 			return params;

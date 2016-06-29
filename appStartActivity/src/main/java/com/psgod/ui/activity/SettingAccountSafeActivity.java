@@ -390,10 +390,12 @@ public class SettingAccountSafeActivity extends PSGodBaseActivity implements
 		public void onComplete(Platform arg0, int arg1,
 				HashMap<String, Object> res) {
 			String wechatOpenId = res.get("openid").toString();
+			String wechatUnionId = res.get("unionid").toString();
 
 			if (!TextUtils.isEmpty(wechatOpenId)) {
 				ActionBindAccountRequest.Builder builder = new ActionBindAccountRequest.Builder()
 						.setIsBind(1).setOpenId(wechatOpenId).setType("weixin")
+						.setUnionId(wechatUnionId)
 						.setListener(wechatAuthListener)
 						.setErrorListener(wechatBindErrorListener);
 
