@@ -103,7 +103,7 @@ public class WithdrawDepositActivity extends PSGodBaseActivity {
                 }
                 if (s.length() >= 1) {
                     double money = Double.parseDouble(s.toString());
-                    if (money >= 1 && money <= LoginUser.getInstance().getBalance()) {
+                    if (money >= 10 && money <= LoginUser.getInstance().getBalance()) {
                         mSure.setBackgroundColor(Color.parseColor("#FFEF04"));
                         mSure.setTextColor(Color.parseColor("#000000"));
                         mSure.setEnabled(true);
